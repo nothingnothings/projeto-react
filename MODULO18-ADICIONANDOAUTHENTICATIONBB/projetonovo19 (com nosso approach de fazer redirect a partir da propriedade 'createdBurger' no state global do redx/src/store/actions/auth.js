@@ -1,0 +1,85 @@
+import * as authActionTypes from './authActionTypes';
+
+import axios from 'axios';
+
+
+export const burgerCreate = () => {
+          return {
+            type: authActionTypes.BURGER_CREATED_WITHOUT_AUTH
+          }
+}
+
+export const burgerFinished = () => {
+    return {
+      type: authActionTypes.BURGER_FINISHED_PURCHASING
+    }
+}
+
+
+
+
+export const authStart = () => {
+  return {
+    type: authActionTypes.AUTH_START,
+  };
+};
+
+// export const authSuccess = (authData) => {
+export const authSuccess = (token, userId, email) => {
+  return {
+    type: authActionTypes.AUTH_SUCCESS,
+    // authData: authData
+    token: token,
+    userId: userId,
+    email: email
+  };
+};
+
+export const authFail = (error) => {
+  return {
+    type: authActionTypes.AUTH_FAIL,
+    error: error,
+  };
+};
+
+export const authLogout = () => {
+  return {
+    type: authActionTypes.AUTH_LOGOUT,
+  };
+};
+
+export const checkTimeout = (expirationTime) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(authLogout());
+    }, expirationTime * 1000);
+  };
+};
+
+export const authAttempt = (email, password, isSignup) => {
+  return (dispatch) => {
+    dispatch(authStart());
+    const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true, ///propriedade obrigatória para FUNCIONAMENTO DO 'REST API' do firebase... ---> deve sempre estar settada como 'true'...
+    };
+    let url =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; /// url usada para SIGNUP/CADASTRO....
+    if (!isSignup) {
+      url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; ///url/endpoint usado para ___SIGNIN/LOGIN...
+    }
+    axios
+      .post(url, authData) ///ESSA 'key' ([API_KEY]) FOI OBTIDA LÁ DO SITE DO GOOGLE FIREBASE, na engrenagem, e depois em 'Configurações do Projeto' > 'Chave de API da web'...
+      .then((response) => {
+        console.log(response);
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(authFail(error.response.data.error));
+      });
+  };
+};

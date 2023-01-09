@@ -1,0 +1,189 @@
+
+
+
+
+.Toolbar {
+  height: 56px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #703b09;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 90;
+}
+
+.Logo {
+  height: 80%;
+
+}
+
+/* 
+.p {
+
+  color: 'white';
+            display: 'block';
+            left: '20%';
+            position: 'absolute';
+            text-transform: 'capitalize';
+
+} */
+
+
+.Paragraph {
+  color: white;
+        top: 0;
+        display: block;
+         left: 8%;
+         position: fixed;
+         text-transform: capitalize;
+
+
+}
+
+
+
+
+.Toolbar nav {
+  height: 100%;
+}
+
+
+
+
+
+
+
+/* @media(max-width: 499px) {
+  .DesktopOnly {
+    display: none;
+  }
+
+  .Paragraph {
+    left: 20%;
+  }
+} */
+
+
+
+
+@media(max-width: 499px) {
+    /* .Paragraph {
+      left: 20%;
+    } */
+    .DesktopOnly {
+      display: none;
+    }
+}
+
+@media(max-width: 900px) {
+  /* .Paragraph {
+    left: 20%;
+  } */
+  /* .DesktopOnly {
+    display: none;
+  } */
+
+  .Paragraph {
+    left: 10%;
+  }
+}
+
+
+
+
+@media(max-width: 720px) {
+  /* .Paragraph {
+    left: 20%;
+  } */
+  /* .DesktopOnly {
+    display: none;
+  } */
+
+  .Paragraph {
+    left: 15%;
+  }
+}
+
+
+
+@media(max-width: 455px) {
+  /* .Paragraph {
+    left: 20%;
+  } */
+  .DesktopOnly {
+    display: none;
+  }
+
+  .Paragraph {
+    left: 18%;
+  }
+}
+
+
+@media(max-width: 330px) {
+  /* .Paragraph {
+    left: 20%;
+  } */
+  .DesktopOnly {
+    display: none;
+  }
+
+  .Paragraph {
+    left: 22%;
+  }
+}
+
+
+
+
+@media(max-width: 300px) {
+  /* .Paragraph {
+    left: 20%;
+  } */
+  .DesktopOnly {
+    display: none;
+  }
+
+  .Paragraph {
+    left: 25%;
+  }
+}
+
+
+
+
+
+
+
+
+@media(max-width: 243px) {
+  /* .Paragraph {
+    left: 20%;
+  } */
+  .DesktopOnly {
+    display: none;
+  }
+
+  .Paragraph {
+    left: 30%;
+  }
+}
+
+
+@media(max-width: 243px) {
+  /* .Paragraph {
+    left: 20%;
+  } */
+  .DesktopOnly {
+    display: none;
+  }
+
+  .Paragraph {
+    left: 40%;
+  }
+}
