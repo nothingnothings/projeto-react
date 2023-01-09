@@ -1,0 +1,8 @@
+export const ORDER_POST = 'ORDER_POST';
+
+
+
+export const ORDER_INITIAL_INGREDIENTS_GET = 'ORDER_INITIAL_INGREDIENTS_GET';
+
+
+
