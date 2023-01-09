@@ -1,0 +1,65 @@
+
+
+
+
+
+
+
+
+
+
+---> nós deployamos nosso aplicativo neste módulo.... --> 
+
+
+NÓS FINALMENTE CONCLUÍMOS NOSSO PROJETO, + OU - -----> 
+
+
+
+
+
+VEMOS 
+
+
+O NOSSO APLICATIVO RODANDO NA INTERNET,
+
+
+
+
+
+e esse 
+
+
+é um PASSO 
+
+
+adiante,
+
+realmente...
+
+
+
+
+
+
+
+
+
+---> DEPLOYMENT É SUPER FÁCIL... --> é só 1 comando 
+
+e algumas coisas 
+
+
+para se ter em mente,
+que nunca mudam, mesmo 
+
+em diferentes 
+
+
+hosting websites...
+
+
+
+
+
+
+----> acabamos o burgerBuilder...

@@ -1,0 +1,120 @@
+
+
+
+
+
+
+---> NÃO EXISTE SÓ O REACT... 
+
+
+
+HÁ ALTERNATIVAS,
+
+
+
+COMO 
+
+
+
+
+O ANGULAR 
+
+
+E O 
+
+
+
+VUE.JS.... 
+
+
+
+
+
+TAMBÉM 'BACKBONE' 
+
+
+
+e o 
+
+
+'EMBER'...
+
+
+
+----------------------------------------
+
+
+
+
+PODEMOS VER AULAS SOBRE ELES, DEPOIS...
+
+
+
+---------------------------------
+
+
+
+
+OS 3 FRAMEWORKS SÃO ÓTIMOS PARA CRIAR 
+
+'HIGHLY-SCALABLE WEB APPS' 
+
+que 
+
+ficam bonitos E funcionam bem...
+
+
+
+user experience ótima...
+
+
+
+--------------------------------------
+
+
+
+
+
+OUTRA ALTERNATIVA, MAS NÃO É BEM UMA ALTERNATIVA... ---> JQUERY ....  --> 
+
+
+é só uma framework que te ajuda a TRAVERSAR O DOM, E A SELECIONAR ELEMENTOS 
+
+NO DOM...
+
+
+
+
+
+
+
+--> COMO VIMOS NO NOSSO EXEMPLO, O REACT É 
+
+'JUST ABOUT' DECLARAR O QUE VOCÊ Vê NA PÁGINA 
+
+E ENTÃO 
+
+'FOCUSING ON THE LOGIC', em vez 
+
+de focar 
+
+
+no 'HOW'...
+
+
+--------------------------------------------
+
+
+
+---> react, angular e vue --> te permitem 
+
+construir APLICATIVOS MAIS FORTES, POIS VOCÊ 
+
+PODE FOCAR NA LÓGICA E 'BUSINESS MODEL' do seu projeto, 
+
+
+e deixa de focar nos aspectos técnicos idiotas, como 'alcançar aquele elemento que quero mudar'...
+
+
+
+(e, sim, PODEMOS USAR JQUERY COM O REACT....)

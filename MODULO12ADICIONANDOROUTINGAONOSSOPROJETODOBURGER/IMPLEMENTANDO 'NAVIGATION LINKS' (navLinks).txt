@@ -1,0 +1,1111 @@
+
+
+
+
+
+
+
+
+
+
+-------> DEVEMOS TOCAR OS NOSSOS 'NavigationItems' ( o component) 
+
+
+E ENTÃO 
+
+
+
+ADICIONAR 
+
+UM 
+
+
+LINK com um valor de 
+
+'to={/orders}' DENTRO DELE....
+
+
+
+
+
+
+
+
+
+
+
+
+OBS: eu já havia feito isso, na verdade...
+
+
+
+
+------------------------------------------
+
+
+
+
+
+O PROFESSOR, LÁ NO component 'NavigationItems',
+
+NÓS 
+
+
+TEMOS 
+
+NOSSOS COMPONENTS/invocação de components 
+
+com um código de 
+
+
+
+
+const navigationItems = (props) => {
+  return <ul className={NavigationItemsStyle.NavigationItems}>
+          <NavigationItem link="/" active>Burger Builder</NavigationItem>
+          <NavigationItem link="/">Orders</NavigationItem>
+          </NavLink>
+          
+       
+
+
+  </ul>
+};
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+AQUELE 
+
+SEGUNDO LINK, QUE ESTÁ COM UM PATH (link) 
+
+de 
+
+'/', 
+
+
+ESTÁ __eRRADO___... esse valor aí deverá 
+
+ser 
+
+'/orders'.... (que é a ROUTE DO COMPONENT 'Orders', lá em App.js...)
+
+
+
+
+
+
+
+
+
+-->ENTRETANTO, LÁ NO NAVIGATION ITEM, NÓS ___TAMBÉM PRECISAMOS__ ALTERAR UMA COISINHA... -----> 
+
+
+você deve dar uma olhada no código atual de 
+
+'navigationItem':
+
+
+
+
+const navigationItem = (props) => {
+    return <li className={NavigationItemStyle.NavigationItem}>
+        
+        
+        <a 
+        
+        
+        href={props.link}
+        className={
+            
+            props.active 
+        
+        ?
+    
+            NavigationItemStyle.active 
+
+        :
+
+        null
+    }
+        >{props.children}</a></li> 
+}
+
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+OU SEJA,
+
+BASTA DARMOS UMA BREVE OLHADA 
+
+PARA 
+
+PERCEBERMOS QUE 
+
+
+
+__ALI NÓS __aINDA ESTAMOS USANDO UMA 'ANCHOR TAG' ('<a></a>').... ---------> 
+
+
+
+
+E COMO NÓS APRENDEMOS, DURANTE AS ÚLTIMAS AULAS,
+
+
+QUANDO 
+
+ESTOU FUÇANDO/UTILIZANDO 
+
+
+'REACT ROUTING',
+
+eu 
+
+realmente 
+
+
+___NÃO ___ VOU QUERER __ USAR ANCHOR TAGS... (pq elas entram em CONFLITO com 
+
+o routing, elas fazem o RELOAD FORÇADO DA PÁGINA QUANDO SÃO CLICADAS...) ------> 
+
+
+EM VEZ DISSO, 
+
+O QUE O PROFESSOR VAI QUERER 
+
+FAZER É USAR ___ O OBJETO/COMPONENT__ 
+
+'Link'..., 
+
+
+PROVIDENCIADO PELO
+
+
+
+
+REACT-ROUTER-DOM...
+
+
+
+CONTUDO, O PROFESSOR VAI USAR 'NavLink' em vez de 'Link', pois 
+
+ELE VAI __QUERER__ ESTILIZAR___ ESSES ELEMENTOS,
+
+USAR O SEU 'activeStyle' para mostrar QUANDO ESTAMOS NA PÁGINA de 
+
+'Orders', por exemplo...
+
+
+
+
+ex:
+
+
+
+import React from 'react';
+
+import NavigationItemStyle from './NavigationItem.module.css';
+
+import { NavLink } from 'react-router-dom'; /////////EIS O CÓDIGO EM QUESTÃO...
+
+
+const navigationItem = (props) => {
+    return <li className={NavigationItemStyle.NavigationItem}>
+        
+        
+        <a 
+        
+        
+        href={props.link}
+        className={
+            
+            props.active 
+        
+        ?
+    
+            NavigationItemStyle.active 
+
+        :
+
+        null
+    }
+        >{props.children}</a></li> 
+}
+
+
+
+export default navigationItem;
+
+
+
+-----------------------------------------------------
+
+
+
+
+Certo... mas é evidente que vamos TER QUE ALTERAR ESSE CÓDIGO JSX DO 'navigationitem'...
+
+
+-------> COM O NAVLINK, PROFESSOR VAI QUERER 
+
+ESTILIZAR O 'ACTIVE LINK'.... ----> e, na verdade, nos explica ele, 
+
+
+
+ELE VAI QUERER __USAR __ AQUELE COMPORTAMENTO DEFAULT DO JAVASCRIPT 
+
+
+DE 
+
+TER UMA 
+
+CLASSE 
+
+
+CSS 
+
+
+DEFINIDA/NOMEADA COMO 'active'... (pq é exatamente isso que 
+
+
+ele definiu lá no arquivo css de 
+
+'NavigationItem', ele definiu 
+
+
+'NavigationItem a:hover,
+.NavigationItem a:active,
+.NavigationItem a.active'...
+
+
+)
+
+
+
+
+
+
+
+----> isso significa que 
+
+ESSE 
+
+'a.active' DEFINIDO NESSE ARQUIVO VAI __ SER ATIVADO___ quando 
+
+
+o 
+
+nosso link estiver ''''ativado'''' (pq quando nosso link é ativado,
+SUA CLASSNAME PASSA A SER 'active', esse passa a ser seu nome, e esse é o seu comportamento... --> 
+
+e como ele 
+vai ser definido como 'active', 
+
+
+aquele estilo de 
+
+'a.active', definido lá no arquivo css por nós, 
+
+SERÁ __aTIVADO__...)
+
+
+
+( se vocÊ definiu a 'activeClass' do Navlink com um OUTRO NOME, você vai ter que 
+
+ajustar, no arquivo .module.css, as classes de acordo com esse nome...)
+
+
+------------------------------------------
+
+
+CERTO... E COM O NAVLINK IMPORTADO EM 
+
+'NavigationItem.js',
+
+
+
+O PROFESSOR VAI QUERER O UTILIZAR ___ NO LUGAR__ DA ANTIGA ANCHOR TAG QUE ESTAVA ALI...
+
+
+
+
+
+
+
+ex:
+
+
+
+import React from 'react';
+
+import NavigationItemStyle from './NavigationItem.module.css';
+
+import { NavLink } from 'react-router-dom'; /////////EIS O CÓDIGO EM QUESTÃO...
+
+
+const navigationItem = (props) => {
+    return <li className={NavigationItemStyle.NavigationItem}>
+        
+        
+       ////// <a ///CCÓDIGO QUE SERÁ REMOVIDO
+        
+        <NavLink  ////////código ADICIONADO
+        
+        href={props.link}
+        className={
+            
+            props.active 
+        
+        ?
+    
+            NavigationItemStyle.active 
+
+        :
+
+        null
+    }
+        >{props.children}</Navlink></li> 
+}
+
+
+
+export default navigationItem;
+
+
+
+
+
+-------------------------------
+
+
+
+CERTO, MAS É EVIDENTE QUE 
+
+NÃO SERÁ ESSA A ÚNICA MODIFICAÇÃO.... ------> o 'href' 
+
+TERÁ 
+
+DE SER SUBSTITUÍDO PELA PROPRIEDADE DE 'to={}',
+
+
+
+
+E AQUELE 
+CLASSNAME COM TERNARY EXPRESSION NÃO __PRECISA MAIS SER DEFINIDO__, NÃO MESMO... ------>
+
+
+podemos tirar aquele código 
+
+'className={props.active ? classes.active : null} '.... ----> não precisamos mais desse código pq O REACT ROUTER __vAI AUTOMATICAMENTE__ DETERMINAR O 'ACTIVE STYLE' PARA NÓS...
+
+
+
+----------------------------------------
+
+
+
+RESUMINDO, OS CÓDIGOS FICARAM ASSIM:
+
+
+(navItem):
+
+
+
+
+
+import React from 'react';
+
+
+
+import NavigationItemStyle from './NavigationItem.module.css';
+
+import { NavLink } from 'react-router-dom';
+
+
+const navigationItem = (props) => {
+    return <li className={NavigationItemStyle.NavigationItem}>
+        
+        
+        <NavLink to={props.link} >{props.children}</NavLink>
+        
+    </li> 
+}
+
+
+
+export default navigationItem;
+
+
+
+----------------------------------
+
+
+
+navItems:
+
+
+import React from 'react';
+
+
+import NavigationItem from '../NavigationItems/NavigationItem/NavigationItem';
+
+
+import NavigationItemsStyle from './NavigationItems.module.css';
+
+
+
+const navigationItems = (props) => {
+  return <ul className={NavigationItemsStyle.NavigationItems}>
+          
+          <NavigationItem link={'/'}>Burger Builder</NavigationItem>
+          
+      
+          <NavigationItem link={'/orders'}>Orders</NavigationItem>
+  
+          
+       
+
+
+  </ul>
+};
+
+
+
+
+export default navigationItems;
+
+
+
+--------------------------------------
+
+
+
+
+AGORA, PORTANTO, NOSSO CÓDIGO FICOU BEM MAIS OPTIMIZADO DO QUE A VERSÃO DE ANTES... (que usava vários 'NavLinks' criados um por um, de forma independente, no component 'NavigationItems'....)
+
+
+
+
+
+
+Certo... -----> feitas todas essas alterações,
+
+professor diz que NÃO PRECISAMOS MAIS SETTAR 
+
+
+AQUELE 
+
+prop de 
+
+'active' 
+
+LÁ 
+
+
+em 
+
+'NavigationItem'... (aquilo era só um placeholder...)
+
+
+
+
+-----------------------------------------
+
+
+Certo... com todas essas alterações feitas,
+
+
+TEREMOS NOSSA PAGE 
+
+DE 
+
+'Orders' 
+
+__SETTADA__.... (pode ser acessada com um clique em 'Orders', lá em cima na página...) ----> certo, mas estamos com um PROBLEMA... --> o estilo 
+
+'active' (sublinhado de azul o link) 
+
+
+NÃO É SETTADO QUANDO ESTAMOS EM ALGUMA DAS PÁGINAS...
+
+
+
+
+
+--> E NÓS AINDA PRECISAMOS DEFINIR UM MÉTODO 
+
+
+EM 
+
+
+'Orders' QUE EFETIVAMENTE FAÇA O 'GET' das 
+
+INFORMAÇÕES/DADOS 
+
+acerca das ORDERS ANTIGAS... --> para isso, vamos criar um state, provavelmente... ------> E TALVEZ TENHAMOS DE USAR 'componentDidMount'....
+
+
+
+
+
+
+
+
+
+
+
+---> BEM.... a boa notícia é que agora o PRICE de nossos burgers também está sendo armazenado no servidor, em '/orders.json'...
+
+
+
+
+
+
+---> agora só falta fazer o RETRIEVE com sucesso desse price e dos ingredients, lá no component 
+
+'Orders'... ----------> e também falta fazer o estilo dos navlinks funcionar...
+
+
+
+
+
+(Não sei mais como proceder, devo ver os vídeos do professor...)
+
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+CERTO, OS ESTILOS 'ACTIVE' de nossos navLinks __NÃO ESTÃO  FUNCIONANDO... --> para 
+
+
+
+mostrar melhor o problema,
+
+professor 
+
+seleciona um 
+
+dos NavItems,
+
+e aí 
+
+nos mostra que 
+
+
+aquele 
+
+elemento 
+
+está, nas devtools,
+
+como 
+
+
+
+'<a class="active">Burger Builder</a>'
+
+
+
+
+
+-----------------------------
+
+
+ok, mas vocÊ sabe POR QUE NOSSO 
+
+ESTILO 'ACTIVE'
+
+não está sendo ativado? (isso é difícil de descobrir/avistar, mas faz perfeito sentido.....) ---> 
+
+
+
+
+faz perfeito sentido aquela classe 'active' não ter tido nenhum efeito sobre nosso elemento 'NavLink'...
+
+
+
+
+
+
+
+----------> A RAZÃO PARA ISSO TEM RELAÇÃO COM __oS CSS MODULES__... ----> tenha em mente 
+
+
+que 
+
+o 
+
+
+'NavLink' ___AUTOMATICAMENTE___ FAZ APPEND DE UMA __CLASS__ (de css) CHAMADA DE 
+
+'active'
+
+NO SEU ELEMENTO WRAPPADO... ---------> E NÓS, É CLARO,
+
+
+
+SETTAMOS UMA CLASSE 
+
+
+'active' LÁ NO 
+
+
+ARQUIVO module.css de 
+
+'NavigationItem',
+
+
+onde podemos ver 
+
+''''''''''''''''''
+
+'    .NavigationItem a:hover,
+    .NavigationItem a:active,
+    .NavigationItem a.active/////ESTA PARTE AQUI {
+        background-color: #8F5C2C;
+        border-bottom: 4px solid #40A4C8;
+        color: white;
+    }
+    
+}
+
+
+
+'''' --------------------> 
+
+
+
+
+
+CERTO..... MAS O QUE VOCê DEVE TER EM MENTE É QUE A RAZÃO DESSE 'NAO ACTIVATE' 
+
+DOS ESTILOS 
+
+
+DE 
+'ACTIVE'
+
+SE DÁ PORQUE 
+
+
+
+O CSS MODULES TEM AQUELA FEATURE DE 'GERAR UNIQUE CLASS NAMES' para __CADA CLASSNAME (nesse arquivo css)...__...
+
+--> isso significa que 
+
+quando nós 
+
+settamos 
+
+
+'.NavigationItem a.active {
+    color: #40A4C8;
+}'
+
+
+
+NO NOSSO ARQUIVO CSS,
+
+
+ESSE ESTILO 'active' aí __NÃO VAI __ SAIR EXATAMENTE COMO 'style=active',
+
+
+
+E SIM VAI SAIR ALGO COMO 
+
+'style=active_2xr41xsc'  (chave aleatória)..... --> essa classe TERÁ ALGO COMO UMA 'HASH' ANEXADA 
+
+A ELA, ELA ___vAI REALMENTE__ SER 'UNIQUE'___.... --------> E É 
+
+
+
+
+
+
+_________eXATAMENTE__ POR ISSO QUE __ A CLASSE 'ACTIVE', anexada DURANTE O RUNTIME POR FORÇA 
+
+DA ATUAÇÃO DE 'NavLink', __NÃO __ VAI SER AFETADA PELOS ESTILOS QUE DEFINIMOS 
+
+NO NOSSO ARQUIVO '.module.css'... ------------------>
+
+
+
+
+
+ENTRETANTO, 
+
+SAIBA QUE ESSE COMPORTAMENTO/INTERAÇÃO ENTRE 
+
+O 
+
+'NavLink' e os '.module.css' PODE __sER__ FACILMENTE __ CONSERTADA....___  ----------->
+
+
+
+
+
+
+
+MAS COMO?  --------> BEM, o elemento/component 
+
+'NavLink' 
+
+
+TEM ___UMA PROPRIEDADE__ EXTRA
+
+QUE PODEMOS SETTAR... ------------------> 
+
+
+
+
+ESSA PROPRIEDADE 
+
+
+EXTRA 
+
+
+É A PROPRIEDADE ___ QUE NOS DEIXA __ SETTAR ____NOSSO PRÓPRIO ___ 'className',
+
+
+como 
+
+aprendemos em aulas anteriores... -------> o nome da propriedade 
+
+
+É 
+
+
+
+'activeClassName'... -----------> E ISSO DEIXA NÓS MUDARMOS O NOME que fica dentro de ''class=active'''' -----> PODEMOS 
+
+FAZER COM QUE FIQUE 
+
+
+'class=xxxx', qualquer COISA QUE QUISERMOS, quando esse elemento/NavLink estiver como 'active'...
+
+
+
+
+O professor, nesse nosso exemplo concreto do burger builder,
+
+
+
+VAI 
+
+
+ESCREVER, dentro de 
+
+'<NavLink />',
+
+
+
+O SEGUINTE 
+
+
+CÓDIGO...:
+
+
+
+
+----------------------------------
+
+<NavLink 
+        to={props.link}
+        activeClassName={NavigationItemStyle.active} ////////EIS O CÓDIGO EM QUESTÃO
+        >
+        {props.children}
+        </NavLink>
+
+
+--------------------------------
+
+
+
+
+OU SEJA, 
+
+
+___eLE VAI USAR ___ O RECURSO DO 'css modules'
+
+
+___DENTRO __ DESSA PROPRIEDADE 
+
+'activeClassName'
+
+
+PARA __ PODER EDITAR ___ OS ESTILOS/APARENCIA QUE SERÁ 
+DEFINIDA 
+
+QUANDO FOR APLICADO O ESTILO 'active' nesse 'NavLink'... ------> e isso fará com que 
+
+os estilos 
+
+de nome 
+
+'a.active'  definidos 
+
+LÁ 
+
+EM 
+
+
+
+'NavigationItem.css' (
+
+    no código 
+
+
+'''''
+        .NavigationItem a:hover,
+    .NavigationItem a:active,
+    .NavigationItem a.active {
+        background-color: #8F5C2C;
+        border-bottom: 4px solid #40A4C8;
+        color: white;
+    }
+    
+}
+
+'''''''''''''''
+
+
+)
+
+
+
+SEJAM APLICADOS COM SUCESSO...
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+ activeClassName={NavigationItemStyle.active} ---------> ISSO, PORTANTO, 
+
+SERÁ 
+
+AGORA 
+
+
+
+
+O 
+
+
+NOME DA CLASSE 'active' QUE FOI __dEFINIDA __ PELO '.module.css'; OU SEJA,
+ 
+
+ VAI SER UM CLASSNAME 
+
+ ACTIVE 
+
+ que 
+
+ será uma bizarrice com hash, como 
+
+
+ 'active_210285r0180'.... (por causa do .module.css) -------> E ISSO FARÁ COM QUE NOSSOS ESTILOS ___DO '.MODULE.CSS' REALMENTE SEJAM APLICADOS/FUNCIONEM COM ESSE NAVLINK...
+
+
+
+
+ ----------------------------
+
+
+ ISSO VAI FAZER COM QUE ESSES ESTILOS FUNCIONEM... ---> CONTUDO,
+  
+  isso traz outro problema para o nosso projeto... ---> agora,
+
+  quando 
+
+
+  CLICAMOS EM 
+
+
+  'ORDERS', o 'Orders' vai ficar ativo/iluminado(estilo active sendo aplicado).... -------> ENTRETANTO, 
+
+
+  O PROBLEMA É QUE 
+
+
+   
+   O LINK DE 'BurgerBuilder' (que é o nosso HOME) __TAMBÉM FICARÁ _ SUBLINHADO___.... ------>Temos que consertar 
+
+   esse problema, tentar consertá-lo sozinhos...
+
+
+
+   -----------------------------------
+
+
+
+
+
+
+   CERTO, CONSERTEI ESSE PROBLEMA... --> FOI SÓ ADICIONAR 'exact' 
+
+   LÁ NO 
+
+
+   <NavLink /> DEFINIDO EM 
+
+   'NavigationItem'....
+
+
+   TIPO ASSIM:
+
+
+
+
+
+   
+   
+
+const navigationItem = (props) => {
+    return <li className={NavigationItemStyle.NavigationItem}>
+        
+        
+        <NavLink exact ///////eis o código em questão.
+        activeClassName={NavigationItemStyle.active}
+        
+        to={props.link}
+        >{props.children}</NavLink></li> 
+}
+
+
+------------------------------
+
+
+
+
+O PROFESSOR NOS EXPLICA QUE É ___EVIDENTE__ QUE 
+
+esse 
+
+'exact'
+
+
+
+
+COLOCADO AÍ 
+
+__vAI AFETAR __tODOS ___ OS 'NavLinks' em 
+
+'NavigationItems'........... 
+
+
+
+
+
+
+
+(DETALHE:
+
+SE VOCÊ QUISER QUE ESSE 
+
+
+'exact' AFETE SÓ 1 __ÚNICO ITEM/NAV LINK DE NOSSA PÁGINA,
+
+VOCÊ DEVE(vários passos):
+
+
+
+
+1) escrever, lá em 'navigationItems',
+
+
+um '<NavigationItem/>' com um prop de 'exact'..., como 
+
+'<NavigationItem link="/" exact>BurgerBuilder</NavigationItem>'
+
+
+
+2) você deverá então BINDAR esse prop de 'exact' que vocÊ definiu NESSE NAVIGATIONITEM específico,
+
+ao <NavLink/> EXISTENTE EM 'NavigationItem', por meio de um codigo específico...:
+
+(
+
+   código que é tipo assim:
+        < NavLink
+            to={props.link}
+            exact={props.exact} //////////ISSO VAI BINDAR AQUELE COMPONENT ESPECÍFICO COM SUCESSO...
+            activeClassName={classes.active}>{props.children}</NavLink>
+
+)
+
+
+
+
+
+
+
+--------> SE VOCê USAR O APPROACH DESSE NOSSO TRECHO 'DETALHE',
+
+
+VOCê
+
+VERÁ QUE ESSA PROPRIEDADE DE 'EXACT' ACABARÁ APLICADA SOMENTE AO 
+
+PRIMEIRO LINK, AO 'BurgerBuilder',
+ 
+ E NÃO AO link de 'Orders'....
+
+)
+
+
+
+
+---> CONTUDO, NÃO INTERESSA O APPROACH DE APLICAR 'exact' QUE VOCÊ ESCOLHER, 
+
+os 2
+
+darão o mesmo resultado.
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+
+--> CERTO, E É ASSIM QUE IMPLEMENTAMOS OS __lINKS __ NO NOSSO PROJETO...
+
+
+
+
+
+
+---> AGORA DEVEMOS ASSEGURAR QUE 
+
+AS ORDERS CONSIGAM SER __fETCHEADAS__ DO SERVIDOR__....

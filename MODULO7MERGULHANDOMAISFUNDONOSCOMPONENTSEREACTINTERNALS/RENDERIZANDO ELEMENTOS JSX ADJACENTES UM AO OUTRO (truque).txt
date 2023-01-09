@@ -1,0 +1,1848 @@
+
+
+
+
+
+
+
+
+
+------> AO LONGO DAS ÚLTIMAS LIÇÕES,
+
+
+
+TIVEMOS 
+
+
+MUITOS 
+
+'deep dives' 
+
+
+EM COMO 
+
+
+
+COMPONENTS funcionam 'under the hood',
+ 
+ vimos 
+
+
+ COMO ELES são CRIADOS (Creation lifecycle) E UPDATADOS (update lifecyclE),
+
+
+
+
+
+E TAMBÉM 
+
+VIMOS 
+
+
+COMO VOCÊ PODE __CONTROLAR ___ 'UPDATES' 
+
+
+E 'HOOK/CYCLES' dentro desses updates,
+
+
+as 'etapas'
+
+dos UPDATES em que você 
+
+
+PODE 
+
+
+INSERIR CÓDIGO A SER EXECUTADO, lógica que você mesmo enfia em métodos como 'shouldComponentUpdate()'... 
+
+
+
+
+
+
+
+
+--> VIMOS OS HOOKS 
+
+
+TANTO 
+
+
+NOS 
+
+'class-based components' 
+
+como 
+
+
+nos 
+
+'functional components'... ------> vimos os 'lifecyclE' hooks NOS CLASS-BASED, e o 'useEffect()" (que simula AS ETAPAS/MÉTODOS MAIS IMPORTANTES DOS LIFECYCLE HOOKS dos class-based components) NOS FUNCTIONAL COMPONENTS....
+
+
+
+
+
+
+
+OBS:  'useEffect' É UM ___rEACT__ HOOK___ ---> e 'REACT HOOKS' NÃO TEM NADA A VER COM 'lifecycle hooks'... são coisas DISTINTAS.
+
+
+
+
+
+-----------------------------------------------------------
+
+
+
+
+
+BEM,
+
+
+
+
+AGORA HÁ MAIS COISAS QUE DEVEMOS SABER SOBRE REACT COMPONENTS...  ----> e agora 
+
+
+
+o professor quer 
+
+nos mostrar 
+
+ALGO QUE VEREMOS MAIS DE 1 ÚNICA VEZ AO LONGO DESTE CURSO... ---> devemos 
+
+
+
+
+
+
+REVISAR/REEXAMINAR 
+
+
+aquela questão de 
+
+
+
+''''você só pode retornar 1 único elemento JSX por return statement em um render''''' ------->
+
+
+ISSO 
+
+
+_NÃO É TOTALMENTE VERDADE___...
+
+
+
+
+
+
+É claro que esse código jsx, esse 'único elemento', 
+
+PODE(e geralmente VAI) conter 
+
+
+OUTROS ELEMENTOS, INSERIDOS NO SEU INTERIOR...
+
+
+
+ex:
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+      <div className={Pessoa.Person}> ////////EIS O CÓDIGO EM QUESTÃO.
+        <p onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </div>
+    );
+  }
+}
+
+
+-----------------------------------------------------------
+
+
+
+
+Como esse component 'person'... ---> veja que 
+
+nós 
+
+temos 
+
+
+
+
+APENAS 1 ÚNICO  ELEMENTO JSX 'root'....  (seja 
+
+
+esse elemento 'JSX' um ___COMPONENT PROPRIAMENTE DITO__ ou um 
+
+ELEMENTO HTML NORMAL/COMUM, como esse '<div className={classes.Person}>'
+)
+
+
+
+
+
+
+----> ISSO SIGNIFICA, PORTANTO, QUE 
+
+EU NÃO 
+
+TENHO PERMISSÃO PARA, POR EXEMPLO, 
+
+COLOCAR UMA 
+
+
+'div adjacente' a essa primeira div, nesse exemplo de 'person'...
+
+
+
+EX(de código INVÁLIDO):
+
+
+
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+      <div className={Pessoa.Person}> ////////EIS O CÓDIGO EM QUESTÃO.
+        <p onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </div>
+      <div></div> ///////////ESTE CÓDIGO É INVALIDO. NÃO PODEMOS RENDERIZAR 2 ELEMENTOS HTML/COMPONENTS, 1 adjacente ao outro, EM UM MESMO RETURN STATEMENT....
+    );
+  }
+}
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+------> VOU GANHAR UM ERRO, SE DEIXAR O CÓDIGO ASSIM.. 
+
+
+vou ganhar um erro 
+
+
+
+de 
+
+
+'Syntax error: Adjacent JSX elements must be wrapped in an enclosing tag(20:6)'
+
+
+
+
+
+
+
+
+--------> BASICAMENTE, NÃO HÁ PERMISSÃO 
+
+PARA RETORNAR 
+
+
+ELEMENTOS ADJACENTES JSX 
+
+
+__NO ROOT LEVEL___ DE UM RETURN STATEMENT__... ----> só podemos retornar ELEMENTOS ADJACENTES JSX __DENTRO DE UMA ÚNICA DIV__.... --> aí é OK...
+
+
+
+
+
+
+---> MAS O 
+
+
+___ROOT ELEMENT__ SEMPRE DEVE SER ÚNICO.... ----------> 
+
+
+
+
+
+
+ENTRETANTO, 
+
+
+ISSO 
+
+
+
+
+
+________NEM SEMPRE É VERDADE______... ESSA REGRA TEM ALGUMAS EXCEÇÕES... ------->
+
+
+
+
+
+
+EX DE EXCEÇÃO:
+
+
+
+
+O componente 'Persons'... 
+
+
+
+
+
+
+CÓDIGO DE 'persons':
+
+
+
+
+const Persons extends PureComponent {
+    
+
+
+
+
+      render() {
+    console.log('[Persons.js] rendering...');
+    return (
+      this.props.persons.map((person, index) => {
+            
+       return <Person  ////////EIS O CÓDIGO EM QUESTÃO.
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}/>  
+          
+    }
+  
+      )
+    )
+    }
+
+
+
+
+}
+
+
+------------------------------------------------------
+
+
+
+
+NESSE 
+
+
+COMPONENT 
+
+'Persons',
+
+
+NÓS 
+
+USAMOS __ O MÉTODO 
+
+'.map()' NAQUELE 
+
+
+ARRAY 
+
+DE PERSONS 
+
+
+PARA ENTÃO CONVERTER 
+
+TODOS AQUELES ELEMENTOS NO ARRAY 
+
+
+__EM COMPONENTS __ 'person', todos esses componentes 
+
+
+estando 
+
+ADJACENTES UM AO OUTRO... 
+
+
+
+
+
+preste atenção no 'return statement' 
+
+
+dentro do render() ----> 
+
+
+esse return 
+
+
+
+STATEMENT 
+
+
+__NÃO RETORNOU 1 ÚNICO ELEMENTO__... -----> NÃO,
+
+
+ELE __RETORNOU ___ UM ARRAY MANIPULADO__....
+
+
+
+(retornou o array 'this.props.persons')...
+
+
+
+
+
+UÉ, MAS PQ ISSO FUNCIONA? FUNCIONA PQ 
+
+
+UM __ARRAY__ AINDA É, TECNICAMENTE, UM ÚNICO 
+
+ELEMENTO... (por isso que o return não buga com ele...) 
+
+
+
+
+
+
+ELE É UM ÚNICO OBJETO, MAS UM OBJETO __COM MÚLTIPLOS ELEMENTOS NO SEU INTERIOR___ (que podem ser objetos, como esses 'person', por exemplo)....
+
+
+
+
+
+
+
+E, DE FATO, 
+
+O REACT 
+
+
+
+_____NOS DEIXA ___ RETORNAR UM 
+
+_____ARRAY___ DE ELEMENTOS ADJACENTES,
+
+
+
+
+DESDE _QUE __ TODOS OS ITEMS/OBJETOS NESSE 
+
+
+ARRAY 
+
+
+TENHAM  
+
+
+
+____UMA ___ KEY_____.... (vemos isso ali embaixo, em 'key={person.id}') ------> ESSA 
+
+
+KEY É SEMPRE REQUISITADA QUANDO QUISERMOS FAZER O RETURN 
+
+DE UM ARRAY DE ELEMENTOS 
+
+ADJACENTES,
+ POIS 
+
+ELA AJUDA O REACT, FAZ COM QUE SEJA MAIS EFICIENTE O PROCESSO 
+
+DE COMPARAÇÃO DO REACt (comparação entre o 'state/props' VELHO e o NOVO.)
+
+
+--------------------------------
+
+
+
+CERTO,
+
+
+
+e onde podemos ver isso em ação?
+
+
+
+
+BEM,
+
+
+DEVEMOS VOLTAR AO COMPONENT 'Person'... ---> 
+
+
+
+CÓDIGO DE PERSON:
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+      <div className={Pessoa.Person}>
+        <p onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </div>
+    );
+  }
+}
+
+
+-----------------------------------------
+
+
+
+NESSE PERSON,
+ 
+
+ TEMOS O RETURN ___DE UMA ÚNICA DIV... (aquela de 'className={Pessoa.Person}') ----> 
+
+
+
+ ESSA É AQUELA DIV COM A NOSSA CLASSE 
+
+ CSS SENDO APLICADA... -----> E É CLARO 
+
+
+ QUE ESSA 
+
+
+ DIV É ALGO QUE 
+
+
+ TEORICAMENTE eu vou QUERER AQUI, NESTE LUGAR.... EU TEORICAMENTE 
+
+ __VOU QUERER___ AQUELE WRAPPING CONTAINER que aplica um ESTILO 
+
+ a todos os elementos dentro dessa 'div'...
+
+
+
+
+
+Certo... vamos querer essa 'wrapping div', mas TEMPORARIAMENTE 
+VAMOS REMOVÊ-LA...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <p onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+    );
+  }
+}
+
+
+
+------------------------------------
+
+
+
+
+ASSIM QUE REMOVERMOS ESSA DIV, É ÓBVIO QUE O 
+
+CÓDIGO SE TORNARÁ ___INVÁLIDO___... esse return se tornará INVÁLIDO. --> torna-se INVÁLIDO
+
+PQ 
+
+
+AGORA TEREMOS ELEMENTOS ADJACENTES... --------> CERTO...
+
+
+
+mas professor diz que 
+
+agora nós 
+
+NÃO DEVEMOS OS RETORNAR DESSA FORMA, DESSA FORMA 'NUA E CRUA',
+
+
+E 
+
+
+SIM QUE DEVEMOS OS RETORNAR 
+
+
+COM/EM UM
+
+
+
+
+___WRAP_____ DE __SQUARE BRACKETS__...  (acho que ENTENDI A MARACUTAIA...)
+
+
+
+ex:
+
+
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+
+        [///////EIS O CÓDIGO EM QUESTÃO.
+        <p onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+
+        ]
+    );
+  }
+}
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+CERTO... OU SEJA,
+
+
+AGORA ESTAREMOS 
+
+
+RETORNANDO TODOS NOSSOS 'ELEMENTOS HTML'
+
+
+
+COMO SE ELES FOSSEM ___ELEMENTOS ___ EM UM ARRAY... 
+
+
+(como se fossem '[<p>, <p>, <input>]') 
+
+
+
+
+
+
+MAS PQ FAZER ISSO? É SIMPLES: FAZEMOS ISSO 
+
+
+PQ UM ARRAY SEMPRE SERÁ CONSIDERADO 
+
+UM 'ELEMENTO SINGULAR' pelo REACT,
+
+AINDA QUE 
+
+ele CONTENHA VÁRIOS ELEMENTOS (nesse caso, elementos HTML) 
+
+no seu interior...
+
+
+
+
+
+
+
+----> professor ADMITE QUE ESSA SINTAXE PODE PARECER ESTRANHA,
+
+MAS ELE AFIRMA QUE DEVEMOS SEMPRE LEMBRAR QUE 
+
+'JSX' É APENAS 'AÇÚCAR SINTÁTICO'; 
+
+é, no final das contas, UM JAVASCRIPT ESPECIAL... -----> ISSO SIGNIFICA, NO FINAL 
+
+DAS CONTAS, QUE 
+
+O QUE ESTAMOS 
+
+FAZENDO/ESCREVENDO, AQUI, 
+
+É APENAS 
+UM 
+
+
+PUNHADO DE CALLS de 'React.createElement()'.....
+
+
+(
+como 
+
+
+'React.createElement('p', 'value')',  'React.createElement('input', 'value')', 
+
+ETC ETC...
+
+
+
+
+
+É POR ISSO QUE ESSE CÓDIGO FUNCIONARÁ.
+
+
+
+
+)
+
+
+
+
+MAS ANTES QUE ESSE CÓDIGO SEJA TIDO COMO __vÁLIDO__, DEVEMOS 
+
+
+___SEPARAR CADA UM DOS ELEMENTOS HTML/JSX__ POR MEIO DE 
+
+
+VÍRGULAS (pq isso é um array, no final das contas...)
+
+
+
+
+
+RESULTADO:
+
+
+
+
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+
+        [
+
+        <p onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p>{this.props.children}</p>,
+
+
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+
+        ]
+    );
+  }
+}
+
+
+
+-----------------------------------------
+
+
+
+
+CERTO...
+
+
+ISSO FARÁ COM QUE 
+
+ESSE ARRAY 
+
+
+DE ELEMENTOS HTML/JSX 
+
+
+SEJA RETORNADO COM SUCESSO....
+
+
+Professor salva e recarrega o aplicativo.
+
+
+
+
+
+
+
+
+---> quando eu clicar em 'Toggle persons', 
+
+
+NOSSO CÓDIGO FUNCIONARÁ,
+
+MAS EU VOU 
+
+
+RECEBER 
+
+UM 
+
+______wARNING__________ no 
+
+
+console... ------> é aquele 
+
+CLÁSSICO 
+
+
+WARNING 
+
+de 
+
+
+'Warning: Each child in a list should have a unique "key" prop.'.... ---------> DEVEMOS COLOCAR uma 'key' PARA CADA ELEMENTO nessa lista/array de ELEMENTOS JSX/HTML... --> deve-se fazer isso para que o REACT CONSIGA FAZER A COMPARAÇÃO ENTRE PROPS/STATES VELHOS E NOVOS COM MAIOR EFICIÊNCIA.
+
+
+
+
+
+---> NÓS DEVEMOS ADICIONAR KEYS NOS NOSSOS 
+
+
+ELEMENTOS HTML/JSX, portanto... -----> 
+
+
+Nós vamos lá e adicionamos 
+
+
+uma key 
+
+
+
+AO PRIMEIRO ELEMENTO '<p>'..
+
+
+
+AQUI, NÓS NÃO VAMOS GERAR NOSSA KEY DINAMICAMENTE,
+
+NÃO VAMOS EXTRAIR UM 'UNIQUE VALUE' DE QUALQUER lugar... não, 
+
+
+aqui nós VAMOS ASSIGNAR NOSSO PRÓPRIO 'UNIQUE VALUE'...
+
+
+professor coloca um nome 
+
+genérico de 
+
+'i1' (item 1) 
+
+
+PARA O PRIMEIRO ELEMENTO HTML/JSX....
+
+
+ex:
+
+
+
+
+<p key="i1"  > TEXTO </p>
+
+
+
+
+
+
+
+
+
+BASTA QUE NÃO REPITAMOS O VALOR DE UMA KEY EM OUTRO ELEMENTO JSX/HTML... --> cada 
+
+KEY DEVERÁ SER ÚNICA, essa é a moral...
+
+
+
+
+ex:
+
+
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+
+        [
+
+        <p key="i1" onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p key="i2">{this.props.children}</p>,
+
+
+        <input
+            key="i3"
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+
+        ]
+    );
+  }
+}
+
+
+
+
+
+
+
+CERTO, AGORA TEMOS 3 DIFERENTES KEYS,
+
+
+E ISSO VAI FAZER COM QUE O 'WARNING' NO CONSOLE 
+
+__SUMA___.... ----> NOSSO CÓDIGO 
+
+FUNCIONARÁ 
+
+
+DA EXATA MESMA FORMA QUE ESTAVA FUNCIONANDO ANTES,
+
+
+COM A EXCEÇÃO DO 
+
+'MISSING STYLING', CAUSADO 
+PELA 
+
+
+___REMOÇÃO___ daquela WRAPPING DIV que aplicava um STYLE, 
+
+que tinha 
+
+um 'className={Pessoa.Person}'...
+
+
+
+ISSO SIGNIFICA QUE AQUELE 'ROOT ELEMENT/DIV' 
+
+NÃO ESTAVA LÁ 
+
+
+APENAS PARA SER UM 'ROOT LEVEL ELEMENT',
+
+POIS 
+
+
+TAMBÉM 
+
+CUMPRIA 
+
+A TAREFA DE 
+
+__APLICAR__ UM ESTILO 
+
+
+AOS ELEMENTOS INSERIDOS NO SEU INTERIOR. --> mas isso não nos incomoda, pq 
+
+
+ o que 
+
+ O PROFESSOR QUERIA NOS MOSTRAR É 
+
+ ESSE CONCEITO DE 'ADJACENT ELEMENT RENDERING'... --> PQ 
+
+ MAIS TARDE NO CURSO 
+
+
+
+ NÓS TEREMOS USE-CASES 
+
+
+ 
+ QUE UTILIZARÃO ESSA MARACUTAIA... ----> EXEMPLOS 
+
+
+
+ EM QUE 
+
+ TEREMOS/TEMOS ____MÚLTIPLOS____ 'TOP-LEVEL ELEMENTS' QUE 
+
+ FICARÃO/FICAM 
+
+ UM AO LADO DO OUTRO.... ----> nesses casos, 
+
+ se fossemos FORÇADOS A ADICIONAR UMA 'WRAPPING DIV' 
+
+
+ em volta desses components (quando NÃO SOMOS OBRIGADOS A FAZER ISSO, de uma 
+ perspectiva HTML/JSX...)
+
+
+ PARA CONSEGUIR 
+
+ RENDERIZAR ESSES ELEMENTOS LADO-A-LADO, 
+
+ 
+
+ ESSA SERIA __UMA REDUNDÂNCIA MUITO GRANDE E DESNECESSÁRIA __ NO NOSSO APLICATIVO/APLICATIVOS...
+
+
+
+
+
+
+
+
+
+
+ -----> É POR ISSO QUE VOCÊ DEVE ENTENDER QUE 
+
+ SE VOCÊ __NÃO TEM NECESSIDADE____ DE UM 'WRAPPING ELEMENT/DIV' 
+ PARA 
+
+ _esTILIZAR/ESTRUTURAR SEU CÓDIGO,
+
+
+ VOCê 
+
+
+ PODE __O EVITAR__ POR MEIO DO USO  
+
+
+
+
+DA SINTAXE/ESCRITA DE UM ARRAY, um array COM TODOS 
+
+OS SEUS 
+
+ELEMENTOS NO SEU INTERIOR...
+
+
+
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+Certo...
+
+
+
+vimos 2 approaches:
+
+
+
+
+1) approach da WRAPPING DIV 
+
+
+
+
+
+2) approach DO ARRAY FALSIFICADO, com html/jsx ELEMENTS ENUMERADOS NO SEU INTERIOR...
+
+
+
+--------------------------------------------------
+
+
+
+
+
+HÁ AINDA __OUTRO APPROACH__...
+
+
+
+
+
+3) approach do ??????? -------> PROFESSOR 
+
+
+
+DIZ QUE ESSE APPROACH É CONVENIENTE... --> ele diz que no segundo 
+
+método,
+
+
+NÓS CERTAMENTE PODEMOS __CONSTRUIR/ESCREVER__ UM ARRAY... nós podemos 
+
+
+FAZER ISSO,
+
+
+mas esse create/ESCRITA 
+
+É BEM __iNCONVENIENTE___... -----> __iNCONVENIENTE___ pq 
+
+VOCÊ 
+
+TEM/TERÁ DE WRAPPAR SEUS ELEMENTOS EM 
+
+'square brackets' E DEPOIS ASSIGNAR UMA 
+
+KEY a cada elementO,
+
+
+E ASSIM POR DIANTE... ---> iSSO PODE SE TORNAR INCONVENIENTE...
+
+
+---------------------------
+
+
+
+*** PROFESSOR ADMITE/EXPLICA QUE 
+
+O __TERCEIRO ___ APPROACH PODE PARECER 
+
+
+'MEIO HACKY' NO INÍCIO,
+
+
+MAS É 'PERFECTLY FINE', 
+
+E 
+
+NA REALIDADE ELE É 'BUILT-IN NO REACT', COMO APRENDEREMOS... ----------> E ELE USA UM MONTE DE COISAS DO REACT......
+
+
+
+
+PARA REALIZAR/UTILIZAR ESSE __TERCEIRO 
+
+
+
+APPROACH,
+
+
+DEVEMOS  SIMPLESMENTE CRIAR/ESCREVER UM 
+
+
+
+'WRAPPING COMPONENT'
+
+
+QUE  __SIMPLESMENTE___  NÃO RENDERIZA/RENDERIZARÁ QUALQUER CÓDIGO HTML,
+
+
+mas que  SIMPLESMENTE ESTARÁ LÁ, NO SEU CÓDIGO,
+
+
+para 
+SATISFAZER 
+
+OS REQUISITOS DO REACT/requisito do REACT de
+
+
+
+__POSSUIR__ UM WRAPPING COMPONENT..
+
+
+
+
+
+-----> ok, mas O QUE É ESSE APPROACH, COMO PODEMOS O UTILIZAr? UTILIZAR 
+
+ESSE WRAPPING COMPONENT QUE __ NÃO FAZ RENDER __ DE NENHUM 'ACTUAL HTML CODE' __ MAS 
+
+QUE SIMPLESMENTE EXISTE/FICA ALI NO SEU CÓDIGO, NO SEU RETURN STATEMENT, PARA 
+
+__SATISFAZER O REQUISITO DO REACT__, AQUELE REQUISITO DE 
+
+'VOCÊ DEVE TER UM WRAPPING COMPONENT'...  ------> PARA 
+
+
+
+
+
+
+UTILIZAR ESSE APPROACH, O PROFESSOR CRIA UM NOVO COMPONENT/FOLDER 
+
+
+COM UM COMPONENT,
+
+QUE ELE 
+
+PASSA A CHAMAR 
+De 
+
+'hoc'    (HOC?  -----> HOC === 'HIGHER ORDER COMPONENT'...)
+
+
+
+
+
+
+
+
+
+NÓS VEREMOS MAIS INFORMAÇÕES 
+
+
+SOBRE 
+
+'higher order components'
+
+
+
+NAS PRÓXIMAS LIÇÕES... --> eles são basicamente 
+
+COMPONENTS 
+
+QUE 
+
+SÃO WRAPPADOS EM VOLTA DE OUTROS COMPONENTS...
+
+
+
+
+---> dentro do folder 'hoc', o professor
+
+vai criar um 
+
+NOVO ARQUIVO 
+
+CHAMADO DE 
+
+
+'Aux.js'...          (PQ 'AUX'? ----> AUX === 'AUXILIARY'...) ------> DETALHE/SIDENOTE PARA __USUÁRIOS DE WINDOWS: SE VOCÊ NÃO ESCREVER 'Auxiliary' em vez de 'Aux', ESSE ARQUIVO NÃO FUNCIONARÁ...
+
+
+
+Ok, por isso escrevemos 
+
+
+'Auxiliary.js'...
+
+
+
+
+
+
+
+(ISSO PQ 'Aux' É UMA __RESERVED KEYWORD/NAME__ NO WINDOWS... é por isso que devemos usar 'Auxiliary.js' em vez de 'Aux.js'...)
+
+
+
+Certo....
+
+
+
+
+
+
+
+OK, MAS QUAL DEVE SER A APARÊNCIA/ESTRUTURA 
+
+
+
+
+DESSe 
+
+
+'Auxiliary.js'?  -----> BEM,
+
+
+
+ANTES DE MAIS NADA, 
+
+EU DEVO 
+
+IMPORTAR 
+
+
+'import React from 'react'; -------> ISSO SEMPRE DEVE SER FEITO, É ESSENCIAL.
+
+
+
+
+
+
+DEPOIS DISSO,
+
+
+VOU CRIAR UM 
+
+FUNCTIONAL COMPONENT 
+
+
+A PARTIR 
+
+de 
+
+
+'const'...
+
+
+
+
+ex:
+
+
+
+
+const aux = props....
+
+
+------------------------------------
+
+
+
+
+
+
+
+MAS AÍ VEM A __PARTE INTERESSANTE___ DE 
+
+
+'aux', desse COMPONENT ESPECIAL... 
+
+
+
+EM VEZ DE ESCREVERMOS
+ 
+
+
+'const aux = (props) => {
+    ...
+}',
+
+
+
+
+NÓS 
+
+
+
+VAMOS ESCREVER 
+
+
+
+'const aux = props => props.children;'
+
+
+
+
+-------------------------------------
+
+
+
+OU SEJA,
+
+
+VAMOS 
+
+
+ESCREVER 
+
+UM FUNCTIONAL COMPONENT 
+
+
+__QUE SIMPLESMENTE___ RECEBE 
+
+'props' 
+
+E QUE 
+
+ENTÃO 
+
+FAZ UM SIMPLES 
+
+__RETURN____ DO VALOR 
+
+
+
+das 
+
+__cHILDREN___ DESSE PROPS QUE FOI RECEBIDO.... (e 'children' é basicamente o __CONTEÚDO__ do props que foi recebido)....
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+'const aux = props => props.children;'
+
+
+
+
+---------------------------------------------
+
+
+
+
+É POR ISSO QUE 
+
+ESSE COMPONENT É 'AUXILIAR',
+
+
+ele AUXILIA 
+
+o funcionamento dos components '''normais'''....
+
+
+
+
+
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+'CHILDREN' É UMA PROPRIEDADE ESPECIAL
+
+
+QUE SIMPLESMENTE 
+
+
+___OUTPUTTA________  
+
+
+
+QUALQUER COISA (TODAS AS COISAS) QUE TENHA 
+
+SIDO 
+
+INPUTTADA/ENFIADA ___ENTRE 
+
+A OPENING__ E CLOSING TAGS ___ 
+
+DESSE COMPONENT 
+
+'aux'... (e é EXATAMENTE NESSE LOCAL, ENTRE 
+
+AS OPENING E CLOSING TAGS DO COMPONENT 
+
+'aux', QUE VAMOS 
+
+ENFIAR 
+
+NOSSOS 
+
+
+MÚLTIPLOS JSX/HTML ELEMENTS....)
+
+
+
+
+
+
+
+
+FEITO ISSO,
+
+A ESCRITA DESSE CÓDIGO/COMPONENT,
+
+
+NÓS O EXPORTAMOS 
+
+POR MEIO 
+
+DE 
+
+'export default aux;'
+
+
+
+------------------------------------------
+
+
+
+
+
+DEPOIS DISSO,
+
+PODEMOS 
+
+___IMPORTAR___ ESSE COMPONENT 
+
+LÁ 
+
+NO COMPONENT 
+
+
+'Person.js'.... ---->
+
+
+' import Aux from '../../../hoc/Auxiliary.js';    '
+
+
+
+
+---------------------------
+
+
+IMPORTADO ESSE NEGÓCIO NO COMPONENT/ARQUIVO 
+
+'Person',
+
+
+
+
+
+nós podemos 
+
+
+O UTILIZAR, COMO SE FOSSE UM COMPONENTE COMUM react,
+
+
+NAQUELE 
+
+
+RETURN STATEMENT 
+
+em 
+
+'Person'...
+
+
+ex:
+
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+      <Aux> ///////////EIS O CÓDIGO EM QUESTÃo.
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p
+        key="i2">{this.props.children}</p>,
+
+        <input
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux> //////EIS O CÓDIGO EM QUESTÃO.
+    );
+  }
+}
+
+
+-----------------------------------------
+
+
+
+
+E ISSO PODE PARECER BEM ESTRANHO, É CLARO, 
+
+
+
+PQ O COMPONENT 'Aux' 
+
+NÃO FAZ NADA POR SI SÓ,
+
+
+
+
+
+MAS ESSE APPROACH REALMENTE FUNCIONA,
+
+e nosso 
+
+CONTENT É RENDERIZADO NORMALMENTE,
+
+MESMO SENDO
+
+OS DIFERENTES 
+
+ELEMENTOS HTML/JSX  de 'Person' RENDERIZADOS 
+
+
+DE FORMA ADJACENTE, UM AO LADO DO OUTRO....
+
+
+
+
+AUX, PORTANTO, É UM 
+
+
+'EMPTY CONTENT WRAPPER', QUE USA 
+
+
+
+AQUELA PROPRIEDADE 
+
+'children' dos props,
+
+
+QUE É 
+
+__rESERVADA A NÓS __ PELO REACT... (é um 'RESERVED PROPERTY NAME'... --> 'props.CHILDREN' SEMPRE VAI SE REFERIR AO CONTEÚDO INSERIDO ENTRE O 'OPENING E CLOSING TAGS' do seu component....)
+
+
+
+--> nesse caso, no caso de 'Aux', 
+
+'children' é TODO AQUELE CONTEÚDO (os 2 <p> e o <input>) 
+
+INSERIDO ENTRE A OPENING E CLOSING TAGS de 'aux'...
+
+---------------------------------------
+
+
+CERTO...
+
+
+mas UMA QUESTÃO:
+
+
+
+
+'props.children' não seria 
+
+basicamente 
+
+TODOS OS ELEMENTOS 
+
+
+
+HTML/JSX 
+
+
+COLOCADOS DE FORMA ADJACENTE UM AO OUTRO... ?? ---> bem, 'it is, but it isnt'... ------> 
+
+
+
+
+
+ELE É UM REQUISITO, MAS O FATO 
+
+DE TERMOS 
+
+UM 
+
+'''WRAPPING COMPONENT'''   os wrappando SOLUCIONA ESSE REQUISITO.. ---> 
+
+
+pq 
+
+
+o requisito de 
+
+
+ter um 
+
+WRAPPER ao redor dos elementos é 
+
+
+__SIMPLESMENTE__ UM REQUISITO 
+
+
+"""TÉCNICO"""", é um requisito 
+
+técnico que 
+
+foi originado 
+
+
+da concepção do javascript (do javascript vanilla, mesmo)  que 
+
+
+VOCÊ 
+
+DEVE SEMPRE 
+
+RENDERIZAR 
+
+1 ÚNICO VALOR/COISA POR RETURN EXPRESSION/STATEMENT.... -----> e é isso que 
+
+
+
+estamos fazendo aqui... (pq 'Aux' é UM ÚNICO ELEMENTO... É UM 
+
+
+ÚNICO ELEMENTO QUE 
+
+__WRAPPA__ TODAS 
+
+
+AQUELAS CALLS 
+
+de 
+
+'React.createElement()', 
+
+
+PQ NO FINAL DAS CONTAS, TODO CÓDIGO JSX É ISSO,
+
+É CÓDIGO 
+
+'React.createElement()' DISFARÇADO 
+
+
+DE CÓDIGO HTML...
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+Essa sintaxe de 'Aux' existe pq 
+
+
+
+EM UM RETURN STATEMENT COMUM,
+
+VOCÊ NÃO PODERIA 
+
+ESCREVER 
+
+
+ALGO COMO ISTO AQUI:
+
+
+'return (React.createElement() React.createElement() React.createElement() )' --------> isso seria SINTAXE INVÁLIDA.
+
+
+
+
+
+
+
+
+
+É POR ISSO QUE ESSA SINTAXE EXISTE... -------> NO MOMENTO EM QUE WRAPPAMOS 
+
+
+TODOS ESSES ''CALLS DE createElement'' 
+
+
+EM 1 ÚNICO COMPONENT CALL (de 'aux'),
+
+
+SEU/NOSSO CÓDIGO PASSA A FUNCIONAR...
+
+
+
+
+
+
+
+
+---> aux funciona PQ LÁ NO SEU ARQUIVO, NO SEU CÓDIGO de 'aux', 
+
+
+VOCÊ ESTÁ APENAS 
+
+RETORNANDO UM ÚNICO INPUT, E ISSO, SOB A PERSPECTIVA DO JAVASCRIPT, 
+
+
+'ESTÁ OK',
+
+PQ ESTAMOS RETORNANDO 1 ÚNICA EXPRESISON NESSE LUGAR....
+
+
+
+
+
+
+
+
+---> ISSO É ALGO TÍPICO DO JAVASCRIPT E DE OUTRAS LINGUAGENS DE PROGRAMAÇÃO: VOCÊ 
+
+
+DEVE RETORNAR __aPENAS 1 ÚNICA EXPRESSION___... e aqui nós estamos retornando 1 única expression...
+
+
+
+
+
+
+
+
+OUTRA NOTA/SIDENOTE: lá em 'Auxiliary', como nós 
+
+
+__NÃO ESTAMOS ESCREVENDO NENHUM__ CÓDIGO JSX DIRETAMENTE 
+
+NESSE ARQUIVO,
+
+NÓS NÃO PRECISAMOS AINDA DO IMPORT DE 'React'
+
+
+NESSE ARQUIVO (podemos comentar esse import para fora do código, por enquanto.)

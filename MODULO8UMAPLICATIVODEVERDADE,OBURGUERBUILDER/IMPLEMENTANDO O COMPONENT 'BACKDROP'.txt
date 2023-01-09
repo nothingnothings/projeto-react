@@ -1,0 +1,936 @@
+
+
+
+
+
+
+
+
+
+DEVEMOS ADICIONAR UM BACKDROP AO NOSSO PROJETO... -----> DEVEMOS ADICIONAR UM 
+
+
+COMPONENT 
+
+'BACKROP' 
+
+
+e então o STYLING 
+
+para esse backdrop... ------->
+
+
+
+VAMOS ATÉ O 
+
+FOLDER 'UI',
+
+e então no folder 'backdrop'... --> backdrop 
+
+
+
+SERÁ UM __FUNCTIONAL COMPONENT__...
+
+
+
+
+
+
+
+
+
+
+PROFESSOR APONTA QUE SERÁ 
+
+__UM COMPONENT ___SIMPLES___...
+
+
+
+
+
+
+
+--------> 
+
+
+C
+ERTO.
+
+
+
+
+
+NO CÓDIGO JSX QUE VOU RETORNAR,
+
+VOU RETORNAR SÓ CÓDIGO JSX...
+
+
+
+
+
+
+--> nesse negócio, vou fazer um CHECK 
+
+por meio 
+
+de uma 
+
+TERNARY EXPRESSION... ---> 
+
+
+
+vou checar:
+
+
+
+
+'props.show ? <div className={}></div> : null'
+
+
+
+
+
+
+
+
+
+
+
+
+OU SEJA,
+
+
+
+'''SE PROPS.SHOW FOR ___VERDADEIRO(TRUE), VOU QUERER RENDERIZAR ESSA DIV 
+
+DE CLASS 'backdrop'(É O NOSSO BACKDROP)... CASO NÃO, NÃO VOU QUERER RENDERIZAR
+COISA ALGUMA (null)....''''
+
+
+
+
+
+--> nessa div que será outputtada 
+
+CONDICIONALMENTE,
+
+não precisamos definir 
+
+
+CONTEÚDO ALGUM... SÓ PRECISAMOS 
+
+
+ADICIONAR ALGUM STYLING... -----> O STYLING DO BACKDROP...
+
+
+
+PARA ISSO, CRIAMOS UM 
+
+ARQUIVO 
+
+'Backdrop.module.css'...
+
+
+-----------------------------
+
+
+EX(CÓDIGO COMPLETO):
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+import Backdrop from './Backdrop.module.css';
+
+
+
+const backdrop = (props) => {
+
+   return props.show ? <div className={Backdrop.Backdrop}></div> : null
+
+}
+
+
+
+
+
+
+
+
+
+
+export default backdrop;
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+CERTO,
+
+AGORA TEMOS UM COMPONENT BACKDROP,
+
+
+
+SÓ PRECISAMOS SABER ONDE VAMOS O UTILIZAR...
+
+
+
+
+
+
+
+
+
+
+--> ONDE O COLOCAMOS? -------> PODEMOS COLOCAR ELE EM MÚLTIPLOS LUGARES, MUITOS DELES FAZEM SENTIDO... --------> 
+
+
+
+
+UM LUGAR SERIA,
+
+PROFESSOR EXPLICA, 
+
+
+O COMPONENT 
+
+
+'App'... ----> 
+
+talvez deixá-lo 
+
+
+
+DO LADO DE FORA DAS COISAS DE LÁ, 
+
+
+DO LADO DE FORA ATÉ MESMO DE 'LAYOUT'...
+
+
+ex:
+
+
+
+render() {
+    return (
+        <div>
+            <Layout>
+                <BurgerBuilder />
+            </Layout>
+        </div>
+    );
+}
+
+
+
+------------------------------------
+
+
+COLOCARÍAMOS AÍ, SUPOSTAMENTE, 
+
+PQ 
+
+O 'BACKDROP' 
+
+
+NÃO FAZ PARTE DO CONTEÚDO 'NORMAL' DA PÁGINA...
+
+
+
+
+
+-----------> MAS TAMBÉM SERIA POSSÍVEL DEIXÁ-LO NO COMPONENT 
+
+'LAYOUT',
+
+
+pois 
+
+'backdrop' não faz parte da 
+
+MAIN PAGE, 
+
+e por isso deveria 
+
+
+NÃO SER PARTE DO 'MAIN', E NEM DO 'TOOLBAR'... -----> todas 
+
+essas alternativas são possíveis,
+
+
+mas vocÊ teria que passar o prop 'show' AO COMPONENT 
+
+'BACKDROP', em cada um desses lugares...
+
+
+
+
+
+
+
+-----> PROFESSOR USARÁ OUTRO APPROACH, NO ENTANTO... ----> PROFESSOR EXPLICA QUE 
+
+ELE VAI 
+
+ADICIONAR ___ ESSE BACKDROP__ estranhamente 
+
+
+AO 
+
+
+
+___MODAL____. ele diz que 
+
+fará isso PQ 
+
+
+
+ESSE BACKDROP ESTÁ __INTIMAMENTE __ RELACIONADO COM O 
+
+
+
+'MODAL'... --------> SE O MODAL É MOSTRADO, O BACKDROP DEVE SER MOSTRADO... essa é a lógica...
+
+
+
+
+
+PARA ISSO, 
+
+O PROFESSOR VAI IMPORTAR O COMPONENT 
+
+'AUXILIARY'
+ 
+
+
+ LÁ NO 
+
+
+ COMPonent 'Modal' ----> isso pq ELE SERÁ NECESSÁRIO, PQ NÓS 
+
+ VAMOS 
+
+ RENDERIZAR 
+
+ O BACKDROP AO LADO DO MODAL , NO FINAL DAS CONTAS (adjacent JSX ELEMENTS).
+
+
+
+ ex:
+
+
+
+
+
+
+
+ 
+
+import React from 'react';
+
+
+import ModalStyle from './Modal.module.css';
+
+
+import Aux from '......';
+
+
+const modal = (props) => {
+
+
+
+    
+  return  <div className={ModalStyle.Modal} style={
+      {
+      transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
+      opacity: props.show ? '1' : '0'
+  }
+  
+  
+  }>
+        {props.children}
+            </div>
+
+
+
+    
+}
+
+
+
+export default modal;
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+CÓDIGO DISSO TUDO:
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+import ModalStyle from './Modal.module.css';
+
+
+
+
+import Backdrop from '../Backdrop/Backdrop';
+
+
+import Aux from '../../../hoc/Auxiliary';
+
+
+
+const modal = (props) => {
+
+
+
+    
+  return   <Aux>
+      <Backdrop />
+  <div className={ModalStyle.Modal} style={
+      {
+      transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
+      opacity: props.show ? '1' : '0'
+  }
+  }>
+        {props.children}
+            </div>
+            </Aux>
+
+
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export default modal;
+
+
+
+--------------------------------------------------------------
+
+
+
+
+
+
+CERTO.... NESSE 'MODAL', o professor diz que devemos configurar 
+
+a propriedade 
+
+'show'/passar o prop 'show' 
+
+AO 
+
+CALL DE 'BACKDROP'....
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+const modal = (props) => {
+
+
+
+    
+  return   <Aux>
+      <Backdrop show={props.show}/>
+  <div className={ModalStyle.Modal} style={
+      {
+      transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
+      opacity: props.show ? '1' : '0'
+  }
+  }>
+        {props.children}
+            </div>
+            </Aux>
+
+
+    
+}
+
+
+
+------------------------------------------
+
+
+
+
+
+CÓDIGO:
+
+
+
+const modal = (props) => {
+
+
+
+    
+  return   <Aux>
+      <Backdrop show={props.show}/>
+  <div className={ModalStyle.Modal} style={
+      {
+      transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
+      opacity: props.show ? '1' : '0'
+  }
+  }>
+        {props.children}
+            </div>
+            </Aux>
+
+
+    
+}
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+OK, ISSO FUNCIONOU... Entretanto, talvez seja legal colocar uma animaçãozinha 
+
+
+no backdrop... 
+
+
+
+E TAMBÉM 
+
+
+___AINDA PRECISAMOS __FAZER COM QUE OS CLICKS NO BACKDROP ___ TRIGGEM __ 
+
+
+O 'CLOSE' desse COMPONENT E DO COMPONENT 'MODAL'...
+
+
+
+
+--> AGORA, QUANDO O 'MODAL' É MOSTRADO,
+
+O BACKDROP TAMBÉM É MOSTRADO... ---------> certo... 
+
+
+
+AGORA PRECISAMOS 
+
+
+IMPLEMENTAR A FEATURE DE 'CLICAR NO BACKDROP PARA ENTÃO FECHÁ-Lo'....
+
+
+
+
+
+
+
+
+
+--> para isso, é bem simples: devemos colocar um 
+
+CLICKLISTENER 
+
+lá no 
+
+código jsx 
+
+do 
+
+
+backdrop, em 
+
+'Backdrop.js'... --------> 
+
+
+
+SERÁ 
+
+
+'const backdrop = (props) => {
+
+   return props.show ? <div className={Backdrop.Backdrop}
+    onClick={}
+  
+   style={
+       {
+           transition: 'opacity 2s linear'
+       }
+   }
+   
+   >
+
+
+
+
+   </div> : null
+
+}
+
+
+''''''''''
+
+
+
+
+CERTO...
+
+
+MAS 
+
+
+ESSE 
+
+'onClick={}' vai receber um  MÉTODO___.... e é claro que 
+
+
+VAMOS DEFINIR ESSE MÉTODO lá no 'Modal.js'.... ---> 
+
+
+
+PROFESSOR DIZ QUE VAMOS 
+
+DEFINIR 
+
+
+UM prop de 'clicked'... ------> 
+
+
+AÍ VAMOS LÁ 
+
+
+NO MODAL E 
+
+ESCREVEMOS:
+
+
+
+const modal = (props) => {
+
+
+
+    
+  return   <Aux>
+      <Backdrop show={props.show} clicked={....}/> ///////EIS O CÓDIGO EM QUESTÃO.
+  <div className={ModalStyle.Modal} style={
+      {
+      transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
+      opacity: props.show ? '1' : '0'
+  }
+  }>
+        {props.children}
+            </div>
+            </Aux>
+
+
+    
+}
+
+
+
+
+
+---------------------------------
+
+
+
+Certo... 
+
+
+VAMOS 
+
+
+CRIAR, PORTANTO, UM MÉTODO PARA VINCULAR A ESSE PROP... --> 
+
+
+VAMOS DEFINIR ESSE METODO 
+
+LÁÁAÁ 
+
+
+em 'BurgerBuilder' (que é onde temos 
+
+nossos handlers/métodos...) --------> 
+
+
+
+AÍ, esse método será armazenado em um prop de nome 
+
+'modalClosed', que será então acessado com o código 
+
+
+'props.modalClosed' em 'Modal'....
+
+
+
+------------------------------
+
+
+
+
+EX(código em MODAL):
+
+
+<Backdrop show={props.show} clicked={props.modalClosed} />
+
+
+
+
+----------------------------------------
+
+
+
+
+
+EX(código em BURGERBUILDEr):
+
+
+<modal show={this.state.purchasing} modalClosed={} />
+
+
+
+
+
+
+--------------------------------------------------
+
+
+
+
+
+CERTO... MAS PRECISAMOS 
+
+
+__PASSAR UM MÉTODO __A esse prop de 'modalClosed' PARA 
+
+QUE O FLOW DE PROPS DE NOSSO CÓDIGO 
+
+SEJA ESTABELECIDO....
+
+
+
+
+
+O PROFESSOR VAI CRIAR UM NOVO MÉTODO NO BURGERBUILDER,
+
+DE NOME 
+
+'purchaseCancelHandler' (outro handler).... ----> vamos querer 
+
+
+
+FECHAR 
+
+O MODAL E FECHAR 
+
+
+O BACKDROP por meio 
+
+desse método Aí....
+
+
+
+
+---------------------------
+
+
+
+
+ex:
+
+
+
+
+purchaseCancelHandler = () => {
+
+}
+
+
+
+
+--------------------------
+
+
+EU PENSEI EM ESCREVER ALGO ASSIM:
+
+
+
+  purchaseCancelHandler = () => {
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+
+
+  }
+
+------------------------------
+
+
+SERÁ QUE ISSO FUNCIONARÁ? não... ESPERE. NA VERDADE, FUNCIONOU, SIM! ---> 
+
+
+
+
+AO MUDARMOS O STATE 
+
+DESSE NEGÓCIO (da propriedade 'purchasing') 
+
+PARA '''FALSE''',
+
+nós 
+
+geramos um efeito EM CADEIA NO NOSSO CÓDIGO...
+
+
+Observe o código de 'BurgerBuilder':
+
+
+
+
+    return (
+      <Aux>
+        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+        <OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice}></OrderSummary>
+        </Modal>
+        <Burger ingredients={this.state.ingredients}/>
+        <BuildControls 
+        disabled={disabledInfo}
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}
+         ordered={this.purchaseHandler}
+      
+         />
+        
+      </Aux>
+    );
+
+----------------------------------------
+
+
+
+
+COMO VOCÊ PODE VER, LÁ NO MODAL,
+
+
+há a propriedade 
+
+
+'show={this.state.purchasing}' --> esse purchasing é ou TRUE ou FALSe... ----> quando ele está 'FALSE', o MODAL NÃO É MOSTRADO... 
+
+
+
+
+
+
+AGORA OLHE O CÓDIGO DE 'Backdrop':
+
+
+
+const backdrop = (props) => {
+
+   return props.show ? ///////////ESTA LINHA AQUI...
+    <div className={Backdrop.Backdrop}
+    onClick={props.clicked}
+  
+   style={
+       {
+           transition: 'opacity 2s linear'
+       }
+   }
+   
+   >
+
+
+
+
+   </div> : null
+
+}
+
+
+------------------------
+
+
+
+
+na linha 894 é possível 
+
+VER O NEGÓCIO: ESSA TERNARY EXPRESSION AÍ __DEPENDE__ DO VALOR BOOLEAN___ do 
+
+'show'... --> e esse show é alterado __JUSTAMENTE__ pelo 'this.setState({purchasing: false})' QUE DEFINIMOS NO MÉTODO 'purchaseCancelHandler()'....
+
+
+
+
+
+
+------------------------------
+
+
+
+
+
+---> AGORA PRECISAMOS ADICIONAR UNS __BOTÕES__ A ESSE 'ORDERSUMMARY'.... --> botão para 'continuar' e um para 'cancelar'..

@@ -1,0 +1,1199 @@
+
+
+
+
+
+
+
+
+-> O PROFESSOR ESCREVEU UM POUCO NO WEBPACK.CONFIG.JS
+
+NA ÚLTIMA AULA...
+
+
+está ficando assim:
+
+
+
+
+
+const path = require('path');
+
+
+ module.exports = {
+    entry: './src/index.js',
+    devtool: 'cheap-module-eval-source-map',
+    output: {
+        publicPath: '',
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'] /////serve para ___FAZER COM QUE O WEBPACK FUNCIONE COM SINTAXE DE IMPORTS ASSIM: 'import BuildControls from './BuildControls', QUE ENTÃO SÃO LIDAS COMO 'Import BuildControls from './BuildCOntrols.js' (OU SEJA, É ADICIONADO O '.js' e '.jsx' AO FINAL DO ARQUIVO AUTOMATICAMENTE, QUANDO NÃO SÃO ENCONTRADAS EXTENSÕES (.js, .jsx) em SUA SINTAXE DE IMPORT...)
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: ,
+                exclude: /node_modules/
+            }
+        ]
+    }
+}
+
+
+
+
+-------------------------------
+
+
+
+CERTO,
+
+MAS 
+
+ESSE CÓDIGO 
+
+
+
+AINDA NÃO TEM UM 'loader' DEFINIDO LÁ NAQUELE objeto 'rule' EM 'rules'...
+
+
+--------------------------------
+
+
+
+--> E, PARA JAVASCRIPT,
+
+
+O PROFESSOR NOS DISSE QUE 
+
+ELE VAI QUERER 
+
+USAR 
+
+
+'BABEL',
+
+que 
+é o principal conversor 
+
+
+de next-gen javascript em 
+current-gen javascript.
+
+
+
+
+
+
+
+
+
+--> para isso,
+
+
+rodamos 
+
+
+'npm install --save-dev babel-loader'... ------> ISSO, NO ENTANTO,
+
+
+APENAS 
+
+PROVIDENCIA 
+
+O 
+
+
+'HOOK' 
+PARA 
+
+O 
+
+
+WEBPACK... ---> sim,
+
+
+
+PQ 
+O 
+
+___BABEL EM SI___
+
+É 
+
+UMA 
+
+LIBRARY 
+
+_ QUE 
+
+'kindof' (em outras palavras)
+
+
+TEM 
+
+A 
+
+'KNOWLEDGE' acerca 
+
+DE 
+
+COMO ___tRANSPILAR__ SEU CÓDIGO JAVASCRIPT... ------>E 
+
+É 
+
+EXATAMENTE 
+
+POR ISSO 
+
+QUE 
+
+
+PRECISAMOS 
+
+
+
+INSTALAR 
+
+
+
+
+'babel-core',
+
+que 
+
+é o negócio que segura essa 'knowledge'...
+
+
+
+
+
+
+
+
+--> E NÓS TAMBÉM PRECISAMOS 
+
+
+
+DE ALGUMAS 'CONFIGURATIONS',
+
+PARA 
+
+ENTÃO 
+
+
+CONSEGUIRMOS 
+
+DIZER AO BABEL QUAIS 
+
+
+TIPOS 
+
+
+DE 
+
+'NEXT-GEN JAVASCRIPT FEATURES/SINTAXES' queremos
+
+
+
+SUPORTAR... ----> ESSAS CONFIGURATIONS SÃO BASICAMENTE 
+
+CHAMADAS
+ 
+
+ DE 
+
+ 'PRESETS',
+
+ 'BABEL PRESETS'... --------------->       O PROFESSOR 
+
+ NOS DIZ QUE 
+
+
+
+ AS PACKAGES DE QUE 
+
+ PRECISAMOS 
+
+ SÃO 
+
+
+ 'babel-preset-react'   (USADO PARA __SUPORTAR__ JSX e react...)
+
+ e 
+
+
+ 'babel-preset-env' ( 'ENVIRONMENT ADJUSTING PRESET' ---> ISSO BASICAMENTE DÁ UMA OLHADA EM TODAS AS FEATURES QUE USAMOS, E ENTÃO AS TRANSPILA CORRETAMENTE...)
+
+
+
+
+
+
+ ---------------------------------------------------
+
+
+
+
+
+ CERTO,
+
+ ESSAS SÃO AS DEPENDENCIES 
+
+ que vamos 
+
+ instalar, então...
+
+
+
+
+
+ npm install --save-dev babel-loader 
+  npm install --save-dev babel-core 
+  npm install --save-dev babel-preset-react 
+  npm install --save-dev babel-preset-env
+
+
+
+
+
+
+---------------------------------------
+
+
+OK,
+
+
+AGORA 
+PRECISAMOS 
+
+
+CONFIGURAR 
+
+O 
+
+BABEL EM SI NO NOSSO PROJETO... (pq só 
+
+o 
+
+
+
+FATO DE QUE 
+
+___INSTALAMOS OS PRESETS__ NÃO QUER DIZER QUE 
+
+EFETIVAMENTE 
+
+
+ESTAMOS OS UTILIZANDO NO NOSSO PROJETO...) --->  ISSO QUER DIZER QUE 
+
+O 
+
+BABEL 
+NÃO 
+
+VAI 
+AUTOMATICAMENTE 
+ANALISAR 
+
+
+TODOS OS NOSSOS PACKAGES 
+
+
+
+e procurar por 'presets' dentro deles....
+
+
+
+
+
+
+
+
+
+
+-> É POR ISSO QUE PRECISAMOS 
+
+ADICIONAR UM 
+
+NOVO ARQUIVO
+
+
+
+NO NOSSO 
+
+SRC 
+
+do projeto,
+
+
+chamado 
+
+de 
+
+.babelrc -----> ESSE SERÁ UM ARQUIVO LIDO AUTOMATICAMENTE 
+
+PELO BABEL..... 
+
+
+
+ELE 
+
+DEVERÁ
+FICAR 
+
+NO MESMO 
+
+FOLDER EM QUE 
+
+DEPOIS 
+
+RODAREMOS 
+
+NOSSO 
+
+'WEBPACK BUILD WORKFLOW'...
+
+
+
+
+
+
+
+
+
+
+
+
+---> E O ARQUIVO 
+
+'.babelrc'
+
+
+TEM UM 
+
+
+INTERIOR __SEMELHANTE __ 
+
+AO ARQUIVO 
+
+'package.json'... ----------->
+
+
+
+
+tipo um arquivo com um GRANDE OBJETO... 
+
+(é uma JSON CONFIGURATION, ESSENCIALMENTE...)
+
+
+----------------------------------------------
+
+
+
+
+--> 
+
+DENTRO 
+
+DESSE 
+
+'JSON CONFIGURATION'/object,
+
+
+VAMOS 
+
+ADICIONAR 
+
+
+UMA 
+key 
+
+
+DE 
+
+
+"presets'... ----> 
+
+
+
+
+
+ex:
+
+
+
+
+{
+
+    "presets": 
+}
+
+
+
+
+
+--------------------
+
+
+
+ESSE 
+
+É 
+
+O 
+
+____NODE_ _ DE 'presets'...
+
+
+
+
+-----> DENTRO DESSA PROPRIEDADE/KEY,
+
+DEVEMOS 
+
+COLOCAR 
+
+TODOS 
+
+OS 
+
+
+PRESETS QUE 
+
+O 
+
+BABEL DEVERÁ APLICAR... -----> E NESSE LUGAR aí,
+
+PROFESSOR 
+VAI QUERER 
+
+ADICIONAR 
+
+
+
+2 
+
+PRESETS,
+
+dispostos em um array...
+
+
+
+
+
+ex:
+
+
+
+
+"presets": [
+    "env",
+    "react"
+
+]
+
+
+-----------------------------
+
+
+ESSES 
+
+SERÃO OS 2 PRESETS INSTALADOS...
+
+EX:
+
+
+
+
+{
+    "presets": [
+        "env",
+        "react"
+    ]
+}
+
+
+
+
+
+---------------------------
+
+
+
+OK, ESSES SÃO OS 2 PRESETS....
+
+
+
+
+
+
+
+
+--> certo,
+
+mas o importante é que 
+
+o 
+
+
+preset 
+
+de 
+
+"env" 
+
+VAI RECEBER UMA CONFIGURAÇÃO ESPECIAL
+
+
+
+POR PARTE DO PROFESSOR..... --> E ELE VAI FAZER ISSO 
+
+POR MEIO 
+
+
+DO __ENCLOSE __ 
+
+de seu nome/valor 
+
+"env" 
+
+
+POR 
+
+SQUARE BRACKETS ('[]')...
+
+
+ex:
+
+
+
+
+
+
+{
+    "presets": [
+        ["env"],
+        "react"
+    ]
+}
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+ELE FAZ ESSE ENCASE AÍ 
+
+PQ 
+
+ELE PRETENDE 
+
+ADICIONAR UM SEGUNDO 'parâmetro' 
+
+
+nesse 'env',
+
+
+QUE 
+
+
+SERÁ 
+
+UM 
+
+OBJETO JAVASCRIPT... ---> é um objeto javascript que 
+
+CONFIGURA 
+
+
+
+ESSE 
+
+
+PRESET 'env'... ------> ALI, DENTRO 
+
+
+
+DESSE OBJETO,
+
+
+PROFESSOR 
+
+
+ADICIONA UMA 
+
+KEY de 
+
+
+"targets",
+
+que 
+é usada 
+
+PARA 
+
+___FOCAR__/ESPECIFICAR ___ OS ____ 'TARGET BROWSERS',
+
+
+QUAIS 
+
+
+VERSÕES
+ 
+
+ DE BROWSER QUEREMOS 
+
+
+ USAR...
+
+
+
+
+
+
+eX:
+
+
+
+
+
+{
+    "presets": [
+        ["env", {
+            "targets": 
+        }],
+        "react"
+    ]
+}
+
+
+----------------------------
+
+
+
+
+
+
+
+ISSO É __MUITO IMPORTANTE____... -> 
+
+
+É IMPORTANTE 
+PQ 
+
+
+
+
+1) O BABEL JÁ DETERMINA AUTOMATICAMENTE/JÁ SABE AUTOMATICAMENTE 
+__QUAIS __ 'NEXT-GEN FEATURES' eu estou utilizando no meu código (ele tem esse conhecimento)....
+
+
+
+
+2) ENTRETANTO,
+O QUE ELE __NÃO SABE__ É QUAL __ VERSÃO/BROWSER VERSION __ VOU QUERER __ 
+OBJETIVAR/TARGETTAR COM MEU CÓDIGO CONVERTIDO... em outras palavras, A VERSAÕ 
+CONVERTIDA DO CÓDIGO 
+DEVERÁ 
+OBJETIVAR __rODAR ___ EM QUAL BROWSER/VERSÃO DE BROWSER?
+
+(QUAL BROWSER VOU QUERER TARGETTAR COM MEU APP? )
+
+
+
+
+
+
+
+
+
+---> PARA DEFINIR ISSO,
+
+temos 
+
+esse segundo parâmetro,
+
+que 
+
+é 
+usado  
+
+para 
+
+DEFINIR 
+ESSE OBJETO,
+que 
+
+poderá 
+
+ter 
+
+essa propriedade 
+
+
+'targets'........
+
+
+
+E 
+
+ESSA 
+
+PROPRIEDADE 
+
+
+'targets',
+
+por sua vez, 
+
+
+
+
+
+VAI TER COMO VALOR OUTRO OBJETO... --> 
+
+e 
+
+
+esse objeto 
+
+VAI 
+
+TER UMA PROPRIEDADE 
+
+'browsers'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+{
+    "presets": [
+        ["env", {
+            "targets": {
+                "browsers": []
+            }
+        }],
+        "react"
+    ]
+}
+
+
+----------------------
+
+
+
+DENTRO 
+
+DE 
+
+'browsers',
+
+
+TEMOS UM ARRAY... --> 
+
+
+
+
+
+NESSE ARRAY,
+
+
+TEMOS/USAMOS 
+
+
+
+'browser list-type of configuration'.... -------> PARA ISSO,
+
+
+
+DEVEMOS 
+
+
+
+
+GOOGLAR
+ 
+ 'browser list'... ------------> 
+
+
+
+
+
+
+
+
+
+ DEVEMOS USAR O SEGUINTE REPOSITÓRIO:
+
+
+
+
+
+ https://github.com/browserslist/browserslist
+
+
+
+
+
+ -----------------------------------------
+
+
+
+
+
+ESSE 
+
+
+REPOSITÓRIO É BOM PARA __APRENDER A SINTAXE QUE VOCÊ PODE USAR 
+
+
+
+PARA CONFIGURAR essa propriedade 
+
+de 
+
+'browsers'....
+
+
+
+
+
+
+---> ENTRETANTO, 
+O PROFESSOR 
+QUER NOS 
+
+MOSTRAR UMA 
+
+SINTAXE BEM COMUM,
+
+QUE 
+
+é 
+
+
+a 
+
+de 
+
+'TARGET  > 1%' do MARKET SHARE.......
+
+
+
+
+
+
+
+na verdade, ele vai querer combinar os critérios 
+
+'> 1%' 
+e 
+
+'LAST TWO VERSIONS'....
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+
+{
+    "presets": [
+        ["env", {
+            "targets": {
+                "browsers": [
+                    "> 1%"
+                    "last 2 versions"
+                ]
+            }
+        }],
+        "react"
+    ]
+}
+
+
+
+
+
+
+
+
+
+
+OU SEJA,
+
+
+
+'> 1% MARKET SHARE, __OR__ LAST 2 VERSIONS'...   (entre esses 2 parâmetros/diretrizes é colocado um ||, por trás das cenas...)
+
+
+
+
+------------------------------------
+
+
+
+
+
+OK,
+
+ESSE 
+É 
+
+O 
+
+
+'TARGET ENVIRONMENT'
+
+QUE VAMOS QUERER SUPORTAR,
+
+NO NOSSO PROJETO....
+
+
+-------------------------
+
+
+
+
+E ISSO,
+
+ESSAS REGRINHAS AÍ,
+
+
+
+SERÃO 
+
+AS COISAS QUE 
+
+
+O BABEL VAI LEVAR EM CONSIDERAÇÃO 
+
+QUANDO 
+
+ESTIVER 
+
+TRANSPILANDO NOSSO CÓDIGO EM 'current gen javascripT'...
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+OK, AGORA ´SO TEMOS QUE ADICIONAR O BABEL-LOADER 
+no 
+
+
+NOSSO 
+BUILD WORKFLOW,
+
+´LÁ NO 
+
+
+'webpack.config.js'...
+
+
+
+
+
+
+
+
+---> LÁ ,
+
+
+O PROFESSOR 
+
+VAI ESCREVER 
+
+
+
+
+
+
+'babel-loader'...
+
+
+
+ex:
+
+
+
+
+
+const path = require('path');
+
+
+ module.exports = {
+    entry: './src/index.js',
+    devtool: 'cheap-module-eval-source-map',
+    output: {
+        publicPath: '',
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'] /////serve para ___FAZER COM QUE O WEBPACK FUNCIONE COM SINTAXE DE IMPORTS ASSIM: 'import BuildControls from './BuildControls', QUE ENTÃO SÃO LIDAS COMO 'Import BuildControls from './BuildCOntrols.js' (OU SEJA, É ADICIONADO O '.js' e '.jsx' AO FINAL DO ARQUIVO AUTOMATICAMENTE, QUANDO NÃO SÃO ENCONTRADAS EXTENSÕES (.js, .jsx) em SUA SINTAXE DE IMPORT...)
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader' ,
+                exclude: /node_modules/
+            }
+        ]
+    }
+}
+
+
+
+------------------------------
+
+
+
+
+OK,
+
+
+
+ESSE 
+
+
+É O PRIMEIRO 
+
+DOS LOADERS QUE 
+
+
+SÃO 
+
+NECESSÁRIOS...
+
+
+
+
+
+--> FALTA O LOADER DE 'CSS' (e talvez um para images... mas não sei se é o de css msm...)
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+OK... O LOADER (o loader 'babel-loader') VAI SER APLICADO 
+
+
+A 
+
+
+
+
+ARQUIVOS 
+
+JAVASCRIPT ('/\.js$/')
+
+
+QUE 
+
+ESTÃO 
+
+
+COMPILANDO
+
+
+
+JSX E NEXT-GEN JAVASCRIPT FEATURES... ------> MAS NOSSO BUILD WORKFLOW 
+
+AINDA 
+
+
+__NÃO VAI FUNCIONAR___... --> NÃO VAI FUNCIONAR PQ 
+
+
+__NÃO ADICIONAMOS UM LOADER 
+
+PARA 
+
+O 
+
+CSS.... --> isso significa que 
+
+O 
+
+WEBPACK SÓ ESTÁ RECONHECENDO 
+
+JAVASCRIPT E NEXT-GEN JAVASCRIPT (jsx),
+
+e que 
+ele 
+não 
+
+está reconhecendo 'images' 
+e 
+
+
+'CSS'...
+
+
+
+
+
+------------> PRECISAMOS 
+
+ADICIONAR 
+
+O 
+
+'css loader',
+
+essencialmente...
+
+
+
+
+VEREMOS ISSO NA PRÓXIMA AULA...

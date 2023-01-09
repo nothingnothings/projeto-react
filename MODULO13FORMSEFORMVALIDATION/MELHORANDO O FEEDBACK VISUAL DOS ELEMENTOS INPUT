@@ -1,0 +1,692 @@
+
+
+
+
+
+
+
+-------> PARA NÃO COMECAR COM UMA 
+
+FORM 
+
+'
+TODA VERMELHA',
+
+
+
+
+
+temos que 
+
+TRACKAR os eventos do usuário,
+
+trackar 
+
+
+SE 
+
+
+ELE JÁ __TOCOU __ EM UM ELEMENTO INPUT.... (se ele já clicou e ESCREVEU 
+em um 
+
+elemento 'input'...)
+
+
+
+
+
+
+
+
+
+
+--> para isso, de volta em 'ContactData',
+
+
+O PROFESSOR 
+
+VAI QUERER 
+
+
+
+
+TAMBÉM 
+
+
+
+ADICIONAR UMA __NOVA PROPRIEDADE ___ AO STATE desse component;
+
+
+
+NA  
+
+
+
+VERDADE, ELE VAI QUERER ADICIONAR ESSA NOVA PROPRIEDADE __ EM CADA ___ 
+
+'formElement' 
+
+
+
+DENTRO 
+
+DO OBJETO 'orderForm' 
+
+NO 
+
+state.... --------> E O PROFESSOR 
+
+VAI 
+
+CHAMAR 
+
+ESSA 
+
+PROPRIEDADE 
+
+
+de 
+
+'touched'... ------> e essa propriedade 
+
+
+vai 
+
+ser 
+
+settada como 
+
+'FALSE', inicialmente... (mas menos no dropdown, é claro... ele vai colocar em todos 
+os elementos que possuírem o objeto 'validation', que são todos MENOS O DROPDOWN, 
+
+pq ele não tem como ser validado, sempre será aquele valores fixos, aquelas 'option'...).
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+class ContactData extends Component {
+
+
+  state = {
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+        validation: {  
+          required: true  
+        } ,
+        valid: false,
+        touched: false
+      },
+
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Street',
+        },
+        value: '',
+validation: {  ///ver método 'checkValidity()'....
+  required: true
+} ,
+valid: false,
+ touched: false
+      },
+
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+validation: {
+  required: true,
+  minLength: 5,
+  maxLength: 5
+} ,
+valid: false,
+
+touched: false
+      },
+
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country',
+        },
+        value: '',
+        validation: {
+          required: true
+        } ,
+
+        valid: false ,
+        touched: false
+
+      },
+
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+validation: {
+  required: true,
+  
+},
+valid: false,
+ touched: false
+      },
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                        value: 'fastest', 
+
+    } },
+
+    loading: false,
+  };
+
+
+
+  -------------------------------
+
+
+
+
+
+
+
+  o intuito 
+
+
+  dessa propriedade 
+
+
+  'touched' 
+
+  é 
+
+
+  MUITO CLARO:
+
+
+
+
+
+  O professor nos diz que 
+
+  _________O MÉTODO 
+
+
+  'checkValidity' (Que faz exatamente isso, checa a validade de nossos INPUTS 
+  
+  nos input fields)
+   
+
+
+   DEVERÁ __________aPENAS_____ SER EXECUTADO ___ QUANDO 
+
+
+   'touched' estiver como 'true'.... (ou seja,
+   
+   ele vai usar um IF CHECK em 'checkValidity', para checar 
+   
+   se esse 'touched' no nosso state
+   
+   __ESTÁ COMO TRUE__...) --->  caso contrário, 
+   
+
+   o professor/nós não vamos querer que o código cheque pela 'validity' 
+
+   do input do usuário...
+
+
+
+
+   --------> E PARA UPDATAR O VALOR DESSA PROPRIEDADE 
+
+   'touched',
+
+   professor 
+
+
+
+   vai 
+
+   USAR 
+
+
+   O 
+
+
+   'inputChangedHandler' (que é disparado SEMPRE QUE O USUÁRIO ____dIGITA__ ALGO 
+   
+   
+   NOS NOSSOS INPUT FIELDS,
+   
+   PQ 
+   
+   QUANDO ELE DIGITA ALGO NOS INPUT FIELDS,
+   O VALOR DO STATE 
+   
+   É ALTERADO, 
+   
+   e isso 
+   
+   vai alterar também 
+   
+   aquele valor 
+   
+   'touched'...)
+
+
+
+
+
+
+
+
+
+   ex(código de inputChangedHandler, no momento):
+
+
+    inputChangedHandler = (event, inputIdentifier) => { 
+
+
+    if (inputIdentifier === 'select') {
+      const updatedOrderForm = {
+        ...this.state.orderForm
+      }
+
+
+      const updatedFormElement = {
+        ...updatedOrderForm[inputIdentifier]
+      }
+
+      updatedFormElement.value = event.target.currentValue;
+
+      updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+      this.setState(
+        {
+          orderForm: updatedOrderForm
+        }
+      )
+
+      console.log(this.state);
+
+    }
+
+
+    const updatedOrderForm = { 
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+    updatedFormElement.value = event.target.value;
+
+    updatedFormElement.touched = true; //////////TIPO ISSO, TALVEZ? (estou chutando). --> e era isso, de fato, MAS __TINHA DE SER COLOCADO ________eMBAIXO________ Da linha 'updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);'...
+
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+
+
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    this.setState(
+      {
+        orderForm: updatedOrderForm
+      }
+    )
+
+
+  console.log(this.state);
+  }
+
+
+  --------------------------------
+
+
+
+
+
+
+
+
+
+
+
+  ---> na verdade, o que o professor escreveu foi isto:
+
+
+
+     inputChangedHandler = (event, inputIdentifier) => { 
+
+
+    if (inputIdentifier === 'select') {
+      const updatedOrderForm = {
+        ...this.state.orderForm
+      }
+
+
+      const updatedFormElement = {
+        ...updatedOrderForm[inputIdentifier]
+      }
+
+      updatedFormElement.value = event.target.currentValue;
+
+      updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+      this.setState(
+        {
+          orderForm: updatedOrderForm
+        }
+      )
+
+      console.log(this.state);
+
+    }
+
+
+    const updatedOrderForm = { 
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+    updatedFormElement.value = event.target.value;
+
+   
+
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+
+updatedFormElement.touched = true; /////////////ISTO AQUI.
+
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    this.setState(
+      {
+        orderForm: updatedOrderForm
+      }
+    )
+
+
+  console.log(this.state);
+  }
+
+
+
+
+
+---------------------------------
+
+
+
+Adicionada essa redefinição 
+
+
+da 
+
+propriedade 
+'touched'
+
+
+no state 
+
+para o valor 
+
+
+de 
+
+'true', 
+
+
+
+O PROFESSOR 
+
+
+
+ainda nos diz que é necessário também colocar um check 
+
+adicional
+ 
+
+ lá 
+
+ em 
+
+ 'ContactData',
+
+ naquele 
+
+
+ '
+
+   if (props.invalid && props.shouldValidate) {
+    inputClasses.push(InputStyle.Invalid);
+  }
+
+'
+,
+
+
+
+
+QUE 
+
+
+FICARÁ 
+
+
+
+
+''''
+
+
+   if (props.invalid && props.shouldValidate && props.touched) {
+    inputClasses.push(InputStyle.Invalid);
+  }
+
+
+'''''''''''''''
+
+
+--------------------------
+
+
+
+
+
+
+E para que isso tudo funcione,
+
+é evidente que 
+
+precisamos 
+
+passar 
+
+
+
+um prop de 
+
+'touched'
+ 
+
+
+ ao component 
+
+ '<Input />',
+
+
+ para que 
+
+ ele seja justamente recebido
+  
+  nesse if check aí, 
+
+  em 
+  'Input'....
+
+
+  ex:
+
+
+
+
+   return (
+                          <Input 
+                          changed={(event) => {this.inputChangedHandler(event, formElement.id)}}
+                          key={formElement.id}
+                          touched={formElement.config.touched} //////////ESTE CÓDIGO AQUI.... (prop passado com valores do STATE...)
+                          invalid={!formElement.config.valid}
+                          elementType={formElement.config.elementType} 
+                          shouldValidate={formElement.config.validation}
+                          value={formElement.value} 
+                          elementConfig={formElement.config.elementConfig} />
+                        )
+
+
+
+----------------------------------
+
+
+
+
+
+Essa última alteração, do 'touched', vai fazer 
+
+
+COM QUE 
+
+
+
+APENAS SEJA REALIZADA 
+
+A 
+
+'VALIDATION'  QUANDO OS INPUT FIELDS REALMENTE FOREM ''''TOCADOS'''' pelo usuário (ou seja, quando 
+
+o código 
+
+
+''''''''updatedFormElement.touched = true; '''''',
+
+
+
+DENTRO DO 'inputChangedHandler',
+
+FOR __DISPARADO__... (ou seja, quando o inputChangedHandler for disparado....)
+)
+
+
+----------------------------------
+
+
+RESUMINDO: 
+
+
+
+ESSE APPROACH/JEITO DE 
+
+
+CODAR 
+
+OS INPUT FIELDS 
+é muito bom,
+
+
+pois 
+
+te 
+
+dá 
+
+UMA 
+
+FORMA 
+
+
+DE FAZER VALIDATION BÁSICA DE SEUS INPUT FIELDS... -----> E essa última mudança,
+
+essa 
+
+de 
+
+deixar 
+
+
+os 
+
+input fields 
+
+
+ficarem 
+__VERMELHOS__  _____APENAS __ QUANDO O USUÁRIO 
+DIGITOU 
+
+
+ALGO 
+
+
+'INVÁLIDO' (ou com tamanho inferior/superior ao necessário)
+
+é 
+
+
+
+MUITO BOM, É O PADRÃO QUE VOCÊ VÊ EM TODOS OS SITES.... 
+
+
+
+
+
+
+
+------> OK... OUTRA COISA QUE NÓS PODEMOS FAZER 
+
+
+É __DEIXAR__ O BOTÃO 
+
+
+DE 
+
+
+ORDER 
+
+
+'Disabled' (não pode ser clicado) ENQUANTO 
+
+
+_____ QUALQUER INPUT FIELD ESTIVER EM BRANCO...___
+
+(acho que consigo fazer isso por conta própria...)

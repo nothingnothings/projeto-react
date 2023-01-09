@@ -1,0 +1,73 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> RENDERIZANDO LISTAS E CONTEÚDO ADICIONAL...
+
+
+
+
+
+
+--> 'creating truly dynamic apps'...
+
+
+--->  
+NO 
+
+ÚLTIMO MÓDULO,
+ 
+ APRENDEMOS SOBRE COMO CRIAR REACT APPS,
+
+
+ COMO CRIAR COMPONENTS E 
+
+
+ COMO USAR 
+
+
+ 'JSX' PARA 
+
+
+ RENDERIZAR ALGO NA TELA... 
+
+
+
+
+
+ --> nesse módulo, vamos levar nossos estudos AO PRÓXIMO NÍVEL... ---> VEREMOS 
+
+
+ COMO OUTPUTTAR CONTEÚDO DINÂMICO ___CONDICIONALMENTE____.... ---> ou seja,
+
+
+
+ vamos fazer coisas 
+
+ como 
+
+
+ 'só vamos renderizar essa parte do DOM/html code SE CERTA CONDIÇÃO FOR TRUE'...
+
+
+
+
+
+
+ --> também vamos ver COMO OUTPUTTAR 
+
+ __LISTAS___ DE DADOS____... ---> nós já tínhamos uma dessas listas no nosso aplicativo do módulo passado, na verdade, AS 'PERSONS' que tínhamos lá eram quase como listas.... mas seria BOM SE PUDÉSSEMOS AS CRIAR ___ CONDICIONALMENTE__, com base NO NÚMERO DE __'PERSONS' ___ QUE TEMOS ___DENTRO DE UM ARRAY___ DENTRO de nosso 'state'...
+
+
+
+
+ --> VAMOS VER TUDO ISSO NESTE MÓDULO.

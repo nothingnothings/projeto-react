@@ -1,0 +1,1235 @@
+
+
+
+
+
+
+--> NA ÚLTIMA LIÇÃO, 
+
+
+APRENDEMOS 
+
+SOBRE COMO 
+
+
+
+
+USAR 
+
+
+'NESTED ROUTES' .... ---------> E você talvez tenha percebido 
+
+uma pequena coisa, 
+
+mais cedo.... ----------> QUANDO ESTAMOS 
+
+
+
+EM 
+
+
+1 DETERMINADO POST E ENTÃO CLICAMOS EM UM 
+
+
+OUTRO POST... ---------> 
+
+
+
+ESSE OUTRO 
+
+
+POST 
+
+
+
+__NÃO É ACTUALLY CARREGADO___.... (continuaremos com o post VELHO...)....
+
+
+
+
+
+
+
+
+
+
+
+---> ou seja,
+
+NOSSO 
+
+
+POST VELHO CONTINUA ALI, E O NOVO __NÃO APARECE/NÃO SUBSTITUI __ O VELHO,
+
+
+mesmo 
+
+que 
+
+
+A NOSSA URL SEJA VISIVELMENTE ALTERADA (podemos ver que ela muda de '2' para '4', etc etc, mas 
+
+essa mudança 
+
+NÃO É REFLETIDA NA NOSSA PÁGINA,
+
+NAQUELE 
+
+
+COMPONENT 'FullPost' que 
+
+deveria renderizar 
+
+o 
+
+
+
+'Post' que fora clicado...) -------------> 
+
+
+
+
+ESSA MUDANÇA DA URL 
+
+
+
+
+
+__________NOS SINALIZA____ QUE O CLICK ___ ESTÁ__, DE FATO_, SENDO 
+
+REGISTRADO,
+
+
+
+mas 
+
+
+
+NENHUMA MUDANÇA 
+
+NO COMPONENT 
+
+'FullPost'
+ 
+ ESTÁ OCORRENDO 
+
+
+ A PARTIR DESSE CLICK E A PARTIR DESSA MUDANÇA DA URL... ---------> a razão para isso 
+
+
+ não 
+
+ ter acontecido/não acontecer,
+
+
+ é que 
+
+
+ ___ O REACT___ ROUTER ___ NÃO 
+
+
+ SUBSTITUI ___ COMPONENTS AUTOMATICAMENTE 'behind the scenes'... (ele não faz isso 'all the time'...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ --> COMO ASSIM? --> BEM, SE VOCÊ ESTIVER CARREGANDO UM COMPONENT___ EM __ UM COMPONENT 
+
+
+ EM QUE 
+
+ VOCÊ 
+
+
+
+
+ _________JÁ ESTÁ_____ ( ou seja,
+ 
+ 
+ 
+ carregando um component 'FullPost' no component 'Blog', component/container 
+ 
+ 
+ EM QUE 
+ 
+ JÁ ESTAMOS SITUADOS, quando clicamos para renderizar 
+ 
+ um novo 'FullPost'... ),
+
+
+
+
+
+ O REACT-ROUTER __NÃO VAI __ RE-RENDERIZAR ___ O COMPONENT 
+
+
+
+ INTEIRO QUE VOCÊ 
+
+ QUER RE-RENDERIZAR (como esse 'FullPost')... ------------> ISSO SIGNIFICA, EM OUTRAS PALAVRAS,
+
+
+ QUE 
+
+
+ O 
+
+
+ ___'ComponentDidMount' ____ 
+
+
+
+ DE 
+
+
+ 'FullPost' 
+
+
+
+ _________NUNCA MAIS É EXECUTADO______... ------> 
+
+ não é 
+
+ mais executado 
+
+
+ PQ __ ELE NÃO HÁ RAZÃO PARA ELE SER EXECUTADO____.... ------> isso pq 
+
+
+
+ O 
+
+ 'componentDidMount' 
+
+
+
+ _____SÓ É EXECUTADO ___ QUANDO O COMPONENT EM SI (o 'FullPost') 
+
+
+ É ALTERADO.... (pq se ele, o 'componentDidMount', fosse executado SEMPRE, isso seria muito inefetivo...)
+
+
+
+
+
+
+ ------->  ok, 
+
+
+ mas o problema é... veja o código de 'componentDidMount', em 'FullPost':
+
+
+
+     componentDidMount () {
+
+
+
+        console.log(this.props);
+        if ( this.props.match.params.postId ) {  
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) ) {
+                axios.get( '/posts/' + this.props.match.params.postId ) 
+                    .then( response => {
+                        
+                        this.setState( { loadedPost: response.data } );
+                    } );
+            }
+        }
+    }
+
+
+
+
+
+
+----------------------------------
+
+
+
+O PROBLEMA É QUE 
+
+
+___ SE ESSE ___ COMPONENTDIDMOUNT __ NÃO 
+
+É EXECUTADO__, NOSSO APLICATIVO/ O COMPONENT FULLPOST 
+
+
+____NÃO CONSEGUE/NÃO__ FAZ ___ 
+
+
+A CONEXÃO/get de informações 
+
+DAQUELE 
+
+
+
+SERVIDOR, por meio do axios (como visto em 'axios.get()'...) ---------> 
+
+
+
+
+
+
+__OU SEJA,_ HÁ 
+
+UMA URGENTE NECESSIDADE DE QUE 
+
+
+
+ESSE 
+
+CÓDIGO DE AXIOS SEJA EXECUTADO... ----->   PROFESSOR 
+
+
+
+EXPLICA QUE 
+
+A SOLUÇÃO 
+
+
+É 
+
+
+
+definir esse código de 'get' do axios 
+
+__LÁ 
+
+
+___ NO 
+
+
+'componentDidUpdate',
+
+
+E NÃO EM 'componentDidMount'   (pq o COMPONENT EM __ SI, 'FullPost', não será REMONTADO NO NOSSO COMPONENT 'Blog'; a única 
+coisa que vai acontecer/acontece, na verdade, é que 
+
+ALGUNS DE SEUS PROPS MUDAM...)
+
+
+
+
+
+
+
+
+
+
+EXPLICAÇÃO DOS 2:
+
+You have to use both.
+
+
+
+componentDidMount() is invoked immediately after a component is mounted. Initialization that requires DOM nodes should go here. If you need to load data from a remote endpoint, this is a good place to instantiate the network request. Setting state in this method will trigger a re-rendering.
+
+
+componentDidUpdate() is invoked immediately after updating occurs. This method is not called for the initial render.
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+É POR ISSO QUE 
+
+O PROFESSOR VAI IMPLEMENTAR/USAR 
+
+
+O MÉTODO 
+
+'componentDidUpdate'
+
+
+
+LÁ EM 'FULLPOST',
+
+
+
+PARA FAZER HANDLE DESSE 'CASE' específico (o case em que o usuário 
+
+QUER __tROCAR__ DE POST QUE FORA CARREGADO NA PÁGINA) --> pq essa '''troca'' aí vai mudar ___OS PROPS___ DE 'FullPost', o que por sua vez VAI __eXECUTAR __ ESSE MÉTODO 'componentDidUpdate'....
+
+
+
+
+
+
+
+
+o código de 'componentDidUpdate' é :
+
+
+
+
+componentDidUpdate(prevProps, prevState, snapshot) {
+
+}
+
+
+
+------------------------------------------------------
+
+
+
+
+
+
+
+
+
+CERTO.... PROVAVELMENTE O PROFESSOR ESCREVERÁ 
+
+ALGO COMO 
+
+
+
+
+
+    componentDidUpdate(prevProps) {
+            if (prevProps.postId !== this.props.postId) {
+           
+
+
+
+
+            }
+
+
+        
+    }
+
+
+
+
+(MAS NÃO SEI SE ISSO ESTÁ CERTO...).
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+
+
+
+--> antes de mais nada, professor cria um método chamado de 
+
+'loadData() {
+
+}',
+
+
+
+
+
+dentro de 'FullPost'... ------------> esse será um 'CONVENIENCE METHOD'... -----> esse método 
+
+
+VAI SIMPLESMENTE 
+
+SEGURAR 
+
+
+
+
+O ___CÓDIGO VELHO___ DE 'axios', aquele código QUE FAZ O 'REACH OUT À WEB'
+
+
+e que CARREGA OS NOSSOS DADOS DOS 'Posts'... (e ele vai roubar o código de 'componentDidMount', aquelas linhas de código antigas, para isso. ELE VAI PEGAR AQUELE CÓDIGO E TRANSPLANTAR PARA 'loadData'....)
+
+
+
+
+
+
+ex(tipo assim):
+
+
+
+
+loadData () {
+
+
+                console.log(this.props);
+        if ( this.props.match.params.postId ) {  
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) ) {
+                axios.get( '/posts/' + this.props.match.params.postId )
+                    .then( response => {
+                        
+                        this.setState( { loadedPost: response.data } );
+                    } );
+            }
+        }
+}
+
+
+
+
+
+  componentDidMount () {
+
+        this.loadData();
+    }
+
+
+
+    componentDidUpdate() {      
+                        this.loadData();
+     
+    }
+
+
+
+-----------------------------------------
+
+
+
+
+(SIM, ISSO VAI FUNCIONAR).... ---------> 
+
+
+
+
+Nós nem precisamos passar os argumentos de 
+
+
+'prevProps' e 'prevState'
+
+
+AO 
+
+
+'componentDidUpdate',
+
+
+PQ 
+
+
+___ELE SERÁ __ EXECUTADO AUTOMATICAMENTE CADA VEZ QUE 
+
+
+
+os 'props' do component 'FullPost' forem 
+
+alterados... ----------> CERTO,
+
+
+
+MAS ISSO 
+
+
+VAI INTRODUZIR __OUTRO 
+
+
+
+PROBLEMA___ NO NOSSO CÓDIGO.... ------> NÓS FICAREMOS COM UM __INFINITE LOOP___ 
+
+
+
+em decorrência 
+
+desse código de 'componentDidUpdate'.... (isso significa que essa NÃO É A SOLUÇÃO PERFEITA). 
+
+
+
+
+
+
+
+
+
+--> esse infinite loop aí será um CLÁSSICO EXEMPLO DE __MEMORY LEAK___...
+
+
+
+
+
+
+
+
+---> eu acho que o problema do nosso código está 
+
+
+
+em 
+
+'componentDidUpdate() {}' ------> provavelmente temos que 
+
+adicionar algum 
+
+IF CHECK... -----> 
+
+um if check 
+
+que 
+
+diga 
+
+
+'só update o nosso component 'FullPost'
+
+
+
+se o PROP QUE ELE VAI RECEBER é diferente do 'prevProps'( props atual/anterior)...
+
+
+---------------------------------
+
+
+
+
+Certo... mas professor diz que o nosso problema acontece 
+
+
+POR CAUSA 
+
+DOS 
+
+IF CHECKS 
+
+
+EM 
+
+
+
+'LoadData(){}' (esse método aí, outsource do nosso AXIOS REQUEST)...
+
+
+
+
+
+EIS O CÓDIGO DE 'loadData':
+
+
+
+ if ( this.props.match.params.postId ) {  
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) ) {
+                axios.get( '/posts/' + this.props.match.params.postId )
+                    .then( response => {
+                        
+                        this.setState( { loadedPost: response.data } );
+                    } );
+            }
+        }
+
+
+-----------------------------
+
+
+
+
+
+Nesse negócio aí,
+
+
+
+aquele if check grandao de baixo (não o de 'this.props.match.params.postId'),
+
+
+
+NÓS 
+
+
+ESTAMOS 
+
+CHECANDO 
+
+
+
+SE 
+
+NOSSO ID 
+
+
+
+MUDOU, E ESTAMOS 'CHECANDO' POR 
+
+
+
+'this.props.id'.... -------> E ISSO ESTÁ ERRADO,
+
+O QUE 
+
+DEVERÍAMOS CHECAR, AQUI, 
+
+
+é por 
+
+
+'this.props.match.params.id',
+
+
+e não 
+
+por 
+
+
+
+'this.props.id'... (pq 'this.props.id' NUNCA SERÁ SETTADO, no nosso código... -----> JÁ 
+
+'this.props.match.params.id eventualmente poderá estar settado, e o fato 
+
+
+de 
+
+ele estar settado 
+
+
+vai 
+
+fazer com que 
+
+
+retorne 'falsy'
+
+
+esse statement 
+
+de 
+
+
+'this.state.loadedPost.id !== this.props.match.params.id' .....  -------> E ISSO, POR SUA VEZ, 
+
+
+FARÁ COM QUE 
+
+
+ESSE COMPONENT DEIXE DE SER RE-RENDERIZADO E DEIXE DE EXECUTAR O CÓDIGO DE 
+
+
+'componentDidUpdate()'.... )
+
+
+
+
+
+
+EX:
+
+
+
+
+
+ if ( this.props.match.params.postId ) {  
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.match.params.id) ) {////////EIS O CONSERTO EM QUESTÃO.
+                axios.get( '/posts/' + this.props.match.params.postId )
+                    .then( response => {
+                        
+                        this.setState( { loadedPost: response.data } );
+                    } );
+            }
+        }
+
+
+
+----------------------------------
+
+
+
+
+ou seja, esse problema aí, 
+
+
+na verdade,
+
+
+é o MESMO PROBLEMA QUE VIMOS 
+
+
+NA AULA 
+
+
+SOBRE 
+
+'HTTP REQUESTS',
+
+aquela aula 
+
+em que 
+
+VIMOS 
+
+QUE 
+
+UM IF CHECK 
+
+
+MALFEITO 
+
+pode 
+
+facilmente resultar em um INFINITE LOOP...
+
+
+
+
+
+
+
+
+
+
+----> CERTO, MAS NÃO É SÓ ESSE LUGAR QUE TEM QUER SER CONSERTADO... ---> TODAS AS OCORRÊNCIAS 
+
+
+
+de 
+'this.props.id'
+
+
+de 'FullPost' 
+
+deverão 
+
+
+ser consertadas, deverão 
+
+ser trocadas 
+
+para 
+
+
+'this.props.match.params.id'...
+
+
+
+
+(ou seja, temos que trocar isso 
+
+no 
+
+
+'''deletePostHandler''' e também em 'render'...)
+--------------------------------
+
+
+
+
+
+
+
+
+ENTRETANTO, PROFESSOR DIZ QUE 
+
+
+MESMO COM 
+
+
+TODAS ESSAS ALTERAÇÕES,
+
+
+NÓS AINDA NÃO VAMOS CONSEGUIR IMPEDIR
+ 
+
+ O LOOP INFINITO
+
+
+
+ DE 
+
+
+ 'componentDidUpdate'... ----> não vamos conseguir 
+
+ pq 
+
+
+
+ 'this.props.match.params.id' 
+
+
+ ____________É UMA STRING___________... --------> ok, e qual é o problema 
+
+ de isso aí 
+
+ ser uma string?
+
+
+
+
+
+ --> simples:
+
+
+
+ veja 
+
+
+ o statement 
+
+ que está dentro do 
+
+
+ 'componentDidUpdate':
+
+
+
+ 'this.state.loadedPost.id !== this.props.match.params.id' 
+
+
+
+ VAI SEMPRE RETORNAR 'TRUTHY'... --> vai retornar TRUTHY 
+
+
+ PQ 
+
+
+
+DE FATO, OS 2 NÃO SÃO IGUAIS... ------> 
+
+
+O
+
+'id' 
+
+
+de 
+
+
+'this.state.loadedPost.id' 
+
+
+
+
+
+É _______UM NÚMERO____,
+
+
+enquanto que 
+
+o 
+
+ID 
+
+
+
+de 
+'this.props.match.params.id'
+
+
+
+__É UMA STRING__.... (diferentes datatypes...) ----> de fato, isso é verdade...
+
+
+
+
+
+
+
+
+OK, COMO SOLUCIONAR ISSO? (acho que já sei a resposta; existem alguns métodos 
+
+javascript que realizam essa conversão.)
+
+
+
+----> tipo 
+
+
+'parseInt()'...
+
+
+
+
+
+
+
+----------
+
+OK, ISSO REALMENTE FUNCIONOU... (só um detalhe:
+
+
+no console apareceu uma bobagem sobre 
+
+Line 30:  Missing radix parameter  radix
+
+
+Line 30:  Missing radix parameter  radix)
+
+
+
+
+O que é isso?
+
+
+
+
+
+
+
+RAZÃO:
+
+
+
+
+It always a good practice to pass radix with parseInt -
+
+parseInt(string, radix)
+
+For decimal -   parseInt(id.substring(id.length - 1), 10)
+
+
+If the radix parameter is omitted, JavaScript assumes the following:
+
+If the string begins with "0x", the radix is 16 (hexadecimal)
+If the string begins with "0", the radix is 8 (octal). This feature is deprecated
+If the string begins with any other value, the radix is 10 (decimal)
+
+
+
+
+
+
+----------------------------------
+
+
+
+UMA ALTERNATIVA 
+
+
+A 
+
+
+TRANSFORMAR 
+
+
+AQUELA STRING DE 'this.props.match.params.id' 
+
+SERIA 
+
+
+SIMPLESMENTE 
+
+ESCREVER 
+
+
+
+
+'this.state.loadedPost.id != this.props.match.params.id'  (essa versão checa só pela IGUALDADE DE __VALORES__, E NÃO DATATYPES....)
+
+
+
+em vez
+
+ 
+
+
+ de 
+
+
+ 'this.state.loadedPost.id !== this.props.match.params.id' (esta versão checa PELOS VALORES E __PELOS DATATYPES __ TAMBÉM...)
+
+
+
+
+
+---------------------------
+
+
+
+
+
+
+
+
+
+
+
+Certo... tudo isso aplicado, nosso código
+
+estará 
+
+funcionando...
+
+
+
+
+
+
+
+
+
+
+OUTRA ALTERNATIVA ao 'ParseInt()'...:
+
+
+
+
+
+'this.state.loadedPost.id !== +this.props.match.params.id'
+
+
+
+
+
+
+
++this.props.match.params.id -----> isso é A MESMA COISA QUE parseInt(this.props.match.params.id);...
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+EVITAMOS 
+
+
+O INFINITE LOOP, PORTANTO... 
+
+
+
+---> esse é um fix importante,
+
+
+usar 
+
+
+
+O 
+
+
+'this.props.match.params.id'  ( ou qualquer outra propriedade dentro de 'params')
+
+
+
+EM VEZ 
+
+
+
+DE 
+
+'this.props.id'/'this.props.xxxxx'...
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+TAMBÉM 
+
+
+É IMPORTANTE 
+
+
+
+_________ENTENDER___ QUE VOCÊ DEVE ADMINISTRAR/'HANDLE' CHANGES (mudanças no seu component, como 'props')
+
+
+LÁ 
+
+
+NO MÉTODO 
+
+
+'componentDidUpdate()', isso quando 
+
+
+O 
+
+__cOMPONENT JÁ TIVER SIDO ____ CARREGADO/LOADED __ POR MEIO DE __ROUTING___... (isso pq 
+
+
+O  ___ROUTER NÃO VAI UNMOUNT E MOUNT __ O COMPONENT QUE ELE JÁ MONTOU __ AUTOMATICAMENTE.... não, 
+
+
+essa tarefa CABE A VOCÊ, e não a ele; ele não vai ler sua mente, não vai entender 
+
+
+
+e fazer as coisas direto, sem comandos...)
+
+
+
+
+
+
+------> A ÚNICA COISA QUE 
+
+O ROUTER VAI FAZER ____ É ___ RE-UTILIZAR O COMPONENT VELHO E 
+
+___ APENAS __ AJUSTAR __ OS 'ROUTE PARAMETERS' (aquela propriedade 'params' dentro de 'match'),
+
+
+
+E É ______SEU TRABALHO, NOSSA INCUMBÊNCIA, _REAGIR__ A ESSE 
+
+
+NOVO PARÂMETRO__ em 'params'... -----> E ESSA REAÇÃO, CODADA POR NÓS,
+
+
+É 
+
+ESCRITA 
+
+LÁ 
+
+
+EM 
+
+
+'componentDidUpdate'...  (DEVE SER ESCRITA AÍ __ pq __ o 'componentDidUpdate' é __SEMPRE CHAMADO__ QUANDO 
+
+OS PROPS MUDAM.... que é o que acontece, nesse use-case específico....) ----> ou seja,
+
+
+
+
+vocÊ 
+
+
+VAI RECEBER UM NOVO 'PROPS', com um novo objeto 'match', 
+
+e com um 
+
+
+novo objeto 
+
+'params' 
+
+dentro desse 'match'... (e esse objeto params TERÁ NOSSO NOVO 'id'/PROPRIEDADE IDENTIFICADORA 
+
+QUE DESEJAMOS...) ---------> 
+
+
+
+ERA/ É COM ISSO QUE ESTAMOS TRABALHANDO AQUI,
+
+
+
+E 
+
+É 
+
+ISSO QUE VOCÊ DEVE TER EM MENTE, QUANDO VOCÊ TRABALHA COM 'NESTED ROUTES'....
+  
+
+

@@ -1,0 +1,210 @@
+
+
+
+
+
+
+
+
+
+-----> QUEREMOS SETTAR NOSSO PRÓPRIO BUILD WORKFLOW... 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> REQUISITOS:
+
+
+
+
+1) QUEREMOS SUPPORTAR 'NEXT-GEN JAVASCRIPT FEATURES'....
+
+
+---> PRECISAMOS SER CAPAZES DE 'TRANSPILE' ESSES CÓDIGOS 
+
+MAIS MODERNOS EM 'CURRENT GEN JAVASCRIPT CODE'... (para que esse código CONSIGA RODAR EM TODOS OS MAJOR BROWSERS, browsers usados hoje em dia...)
+
+
+
+
+
+
+2)  PRECISAMOS SER CAPAZES 
+DE FAZER 
+
+'HANDLE' DE JSX... ------> QUEREMOS 
+
+
+PODER USAR 
+
+JSX NO NOSSO PROJETO, POIS ELE É UM PROJETO REACT...
+
+
+
+
+
+
+
+3) PRECISAMOS 
+
+SER CAPAZES DE 
+USAR 
+
+'CSS AUTOPREFIXING'... ---> QUEREMOS ISSO PARA QUE 
+
+POSSAMOS ESCREVER 
+
+REGRAS CSS SIMPLES,
+
+
+
+PARA CONSEGUIR PREFIXING AUTOMÁTICO,
+
+PARA QUE 
+
+CONSIGAMOS SEMPRE CONSEGUIR AS MELHORES SINTAXES PARA CADA BROWSER,
+
+coisas como 'webkit-moz', etc etc... (isso é obtido por meio do prefixing... )
+
+
+
+
+
+
+4) TAMBÉM QUEREMOS SER CAPAZES 
+
+DE 
+
+__IMPORTAR IMAGENS__... ('support image imports')... --> QUEREMOS 
+SER 
+
+CAPAZES 
+
+
+DE 
+
+__IMPORTAR 
+IMAGES 
+
+
+COMO FIZEMOS 
+
+NO 
+
+'create-react-app',
+
+
+E ENTÃO 
+
+PODER 
+
+
+AS UTILIZAR 
+
+
+DENTRO DO NOSSO 'TEMPLATE'...
+
+
+
+
+
+
+
+5) QUEREMOS __OPTIMIZAR __ O NOSSO CÓDIGO___... ---> antes 
+
+
+DE SER FORMULADO/CUSPIDO O __BUNDLE_,
+
+
+ELE DEVE
+
+SER 
+
+
+
+___OPTIMIZADO___... ---> NOSSO CÓDIGO JAVASCRIPT DEVE 
+
+SER ENCOLHIDO AO LIMITE... 
+
+
+
+
+
+
+
+
+
+
+
+--> ESSES SÃO OS REQUISITOS,
+
+E 
+
+
+ELES 
+
+SÃO 
+
+BASICAMENTE 
+
+
+AS COISAS QUE 
+
+O 
+
+create-react-app nos dá,
+
+
+
+
+
+
+APESAR DE QUE 
+
+ELE 
+
+
+TAMBÉM 
+
+NOS 
+DÁ 
+
+LINTING E MAIS ALGUMAS COISAS...
+
+
+
+------------------------------
+
+
+
+
+
+
+----> MAS ESSES SÃO OS REQUISITOS CORE QUE O PROFESSOR QUER CONSTURIR 
+NESSE 
+
+'custom build workflow'... ---------->
+
+
+
+
+
+DEVEMOS 
+
+VER QUAIS DEPENDENCIES PRECISAMOS INSTALAR,
+
+E COMO 
+
+AS GERENCIAR,
+
+e como configurar o webpack....

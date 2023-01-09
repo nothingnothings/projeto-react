@@ -1,0 +1,332 @@
+
+
+
+
+
+
+
+
+
+
+--->
+ NA ÚLTIMA LIÇÃO, VIMOS COMO 
+
+
+ PODEMOS REMOVER INGREDIENTS DO NOSSO HAMBURGER DE FORMA SEGURA...
+
+
+
+
+
+
+
+
+
+
+
+
+ ---> AGORA VAMOS QUERER FAZER UPDATE DO 'BURGER PRICE' 
+
+ e então 
+
+
+ FAZER 
+
+
+DISPLAY 
+
+DESSE 
+
+PRICE, como parte 
+
+
+do 
+
+elemento 'Burger'...
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+-----> PROFESSOR DIZ QUE O PRICE DEVERÁ FICAR ACIMA DOS 'BUILD CONTROLS',
+
+pq assim ficará mais bonito/visível.
+
+
+
+
+
+--> lá no component 'BuildControls' , temos este código:
+
+
+
+
+
+
+
+
+const buildControls = (props) => {
+
+
+
+    return(
+
+        <div className={BuildControlsStyle.BuildControls}>
+             {
+             controls.map(ctrl => (
+                     <BuildControl key={ctrl.label} //sim, vamos usar o 'label' como ID, também. Isso é só um detalhe.
+                      label={ctrl.label} 
+                      removed={() => {props.ingredientRemoved(ctrl.type)}}
+                      added={() => {props.ingredientAdded(ctrl.type)}} ///CÓDIGO __BEM IMPORTANTE___... ---> esse parâmetro 'ctrl.type' É PASSADO AO MÉTODO 'addIngredientHandler', lá em 'BurgerBuilder'...
+                      disabled={props.disabled[ctrl.type]}
+                      /> 
+                 )
+
+
+
+                 )
+             }
+
+        </div>
+
+
+    );
+}
+
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+CERTO.... 
+
+
+MAS NESSE RETURN STATEMENT,
+
+
+NÓS VAMOS QUERER 
+
+
+FAZER O DISPLAY/OUTPUT 
+
+
+de 
+
+OUtra coisa,
+
+VAMOS QUERER O OUTPUT DO BURGER PRICE... -------> PARA ISSO,
+
+
+PROFESSOR SIMPLESMENTE VAI USAR 
+
+
+UM PARAGRAPH,
+
+
+e 
+
+
+aí 
+
+vai definir 
+
+
+
+'<p>Current Price: {}</p>'  ---------> 
+
+
+
+
+E É NESSE 
+
+'{}' 
+
+QUE VAMOS INSERIR O PREÇO... ---> que vamos pegar como PROP 
+
+
+DE 
+
+'BurgerBuilder', supostamente...
+
+
+
+----------------------------
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return(
+
+        <div className={BuildControlsStyle.BuildControls}>
+            <p>Current Price:{}</p> ///////////EIS O CÓDIGO EM QUESTÃO.
+             {
+             controls.map(ctrl => (
+                     <BuildControl key={ctrl.label} 
+                      label={ctrl.label} 
+                      removed={() => {props.ingredientRemoved(ctrl.type)}}
+                      added={() => {props.ingredientAdded(ctrl.type)}} 
+                      disabled={props.disabled[ctrl.type]}
+                      /> 
+                 )
+
+
+
+                 )
+             }
+
+        </div>
+
+
+    );
+}
+
+
+-------------------------------------
+
+
+
+
+
+
+CONSEGUI 
+
+
+
+
+FAZER O DISPLAY DO PREÇO DO HAMBURGUER
+
+
+
+
+COM A AJUDA DE 'props.price' 
+
+
+
+e '.toFixed(2)' (ISSO FAZ __'''ROUND-UP''' das casas decimais 
+
+do seu número, é usado quando você não quer 
+números com 200 mil caracteres, por serem fracionais/dízimas periódicas)
+
+
+
+
+EIS O CÓDIGO EM QUESTÃO:
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+const buildControls = (props) => {
+
+
+
+    return(
+
+        <div className={BuildControlsStyle.BuildControls}>
+            <p>Current Price: <strong>{props.price.toFixed(2)}</strong></p> /////EIS O CÓDIGO EM QUESTÃo.
+             {
+             controls.map(ctrl => (
+                     <BuildControl key={ctrl.label} //sim, vamos usar o 'label' como ID, também. Isso é só um detalhe.
+                      label={ctrl.label} 
+                      
+                      removed={() => {props.ingredientRemoved(ctrl.type)}}
+                      added={() => {props.ingredientAdded(ctrl.type)}} ///CÓDIGO __BEM IMPORTANTE___... ---> esse parâmetro 'ctrl.type' É PASSADO AO MÉTODO 'addIngredientHandler', lá em 'BurgerBuilder'...
+                      disabled={props.disabled[ctrl.type]}
+                      /> 
+                 )
+
+
+
+                 )
+             }
+
+        </div>
+
+
+    );
+}
+
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+PROFESSOR ADICIONA '<strong></strong>' PARA INCREMENTAR 
+
+O 
+
+ESTILO DA FONTE, DEIXÁ-LA MAIS VIBRANTE... ele também usa '.toFixed(2)' para consertar o número...
+
+
+
+
+
+------------------------------------------------------
+
+
+
+
+
+
+
+---> COM ISSO, 
+
+
+O BURGERBUILDER 
+
+
+ESTÁ EM 'pretty good shape' ---> o 
+
+
+BOTÃO DE 
+
+'CHECKOUT' ainda 
+
+não foi codado,
+
+mas isso é um detalhe...     --> logo vamos adicioná-lo... -----> TAMBÉM
+
+PRECISAMOS 
+
+
+CODAR OS ELEMENTOS 
+
+
+DE 'NAVIGATION', 
+
+
+que ficarão no topo da página...

@@ -1,0 +1,144 @@
+
+
+
+Vou dar uma olhada nas aulas do professor...
+
+
+
+Ele faz a mesma coisa que fizemos, mesma estrutura, mesmas actions...
+
+
+
+
+
+
+Ele então 
+
+
+
+
+
+coloca 
+
+
+
+um
+
+
+
+
+reducer (reducer único)
+
+
+
+COM UM CÓDIGO DE 
+
+
+
+'const initialState = {
+    ingredients: null,
+    totalPrice: 4
+}
+'
+
+
+
+
+
+
+---------------------------
+
+
+
+DEPOIS DISSO ELE CRIA O REDUCER,
+
+
+
+
+
+
+com o código 
+
+
+
+'const reducer = (state = initialState, action) {
+
+}
+
+'
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+Esse 'state = initialState' serve para A PRIMEIRA INICIALIZAÇÃO,
+
+para quando nosso state não estiver settado...
+
+
+
+
+
+
+--> também settamos a ACTION...
+
+
+
+
+
+---------------------
+
+
+NO FINAL DE TUDO ELE EXPORTA O REDUCER....
+
+
+-----------------
+
+
+PROFESSOR DIZ QUE ENCHEREMOS 
+
+
+O REDUCER DE LÓGICA NAS PRÓXIMAS AULAS..,
+
+
+
+
+
+----------------------------
+
+
+
+PROFESSOR ENTÃO WRAPPA NOSSO 
+
+App com 
+
+
+o 
+
+'Redux'... ----> ele denota que NOSSO APP JÁ ESTAVA WRAPPADO COM o '<BrowserRouter></BrowserRouter>',
+
+
+
+
+MAS 
+
+
+
+É CLARO QUE PODEMOS WRAPPAR 
+
+
+o 
+
+
+'Redux' por cima dele... -------> VAMOS WRAPPAR POR FORA...
+
+
+
+
+
+

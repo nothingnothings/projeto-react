@@ -1,0 +1,441 @@
+
+
+
+PODEMOS FACILMENTE ENCONTRAR 
+
+
+
+
+LIMITAÇÕES DE 
+
+CSS ANIMATIONS E TRANSITIONS... --> basta usarmos 
+
+
+as 
+
+
+
+DEV TOOLS DO GOOGLE E ENTÃO INSPECIONARMOS 
+
+OS 
+ELEMENTOS 
+
+DE NOSSA PÁGINA... ---> vamos 
+
+perceber que 
+
+
+O 
+
+
+MODAL 
+
+
+
+__SEMPRE __ ESTÁ PRESENTE/FICA PRESENTE __ NA NOSSA PÁGINA_, 
+
+
+
+O MODAL COM ESTILO DE 'Modal ModalClosed',
+
+no caso... (e isso é MUITO RUIM, 
+
+POIS 
+
+ESSE MODAL __ TOTALMENTE INVISÍVEL__ VAI FICAR __ BLOQUEANDO __ CLICKS
+ 
+ EM OUTROS 
+ 
+ COMPONENTS,
+ 
+ POIS 
+ 
+ ELE AINDA EXISTE NO DOM, apesar de ser invisível....)
+
+
+
+
+----------> O MODALDIV E A BACKDROP DIV __ sempre ficam PRESENTES___  --> eles SÓ NÃO FICAM 
+
+
+
+VISÍVEIS,
+
+
+JUSTAMENTE 
+POR CAUSA 
+
+
+DE NOSSAS ANIMAÇÕES, que fazem com que eles parem FORA DA VISÃO DO USUÁRIO...
+
+
+
+ISSO, É CLARO,
+
+
+
+
+SIGNIFICA QUE 
+
+TODO 
+
+NOSSO CÓDIGO/CO´DIGO HTML ESTÁ 
+
+
+
+__SEMPRE PRESENTE, 100% DAS VEZES,
+
+NO NOSSO DOM... ------> 
+
+
+E ISSO 
+
+É MUITO 
+
+RUIM,
+
+PQ 
+
+
+ESSE APPROACH __aCABA POPULANDO ___ NOSSO DOM COM 
+
+
+1 MILHAO DE ELEMENTOS,
+O QUE 
+DEIXA 
+
+ELE 
+
+MAIS LENTO.... ----> E TAMBÉM 
+
+
+BLOQUEIA __ BOTÕES___.... ---> Fazer o controle 
+
+DO 
+
+DISPLAY_ _ DAS COISAS _ POR MEIO APENAS DE CSS NÃO É TÃO BOM... -----> 
+
+
+
+
+
+Ainda assim, para coisas __MENORES_, isso 
+
+
+é 
+
+'PERFECTLY FINE'... ---> mas 
+
+
+DIGAMOS 
+
+
+
+
+
+QUE QUEREMOS 
+
+ASSEGURAR _ QUE 
+
+ISSO 
+
+
+SEJA 
+
+
+
+'SHOWN/hidden'
+
+
+
+DE MANEIRA DIFERENTE.... ------> 
+
+ ou seja,
+
+
+
+
+
+ vamos querer 
+
+ que 
+
+ o modal 
+ seja 
+
+
+ show/hide 
+
+
+ NÃO 
+
+
+ __ SEGUNDO __ UM PROP DE 
+
+ 'show' 
+
+ NO NOSSO COMPONENT 
+
+ 'App.js',
+
+
+ E SIM 
+
+
+
+ POR MEIO 
+
+
+ DO NOSSO 
+
+
+ STATE 
+ DE 
+
+ 'modalIsOpen' PARA ___REALMENTE__ 'SHOW OU HIDE' os 
+
+
+
+ ELEMENTOS 
+
+
+ 'MODAL' E 'BACKDROP'... ----------> o professor 
+ nos 
+
+ diz que 
+
+
+ é 
+
+ CLARO QUE 
+
+ PODEMOS 
+
+
+ FAZER ISSO 
+
+ POR MEIO 
+
+
+ DE UMA 
+
+
+ TERNARY EXPRESSION,
+
+ LÁ
+  
+
+
+  NO 
+
+  'App.js'...
+
+
+
+  ex:
+
+
+
+
+
+
+    render() {
+    return (
+      <div className="App">
+        <h1>React Animations</h1>
+       
+       
+        {
+            this.state.modalIsOpen
+
+            ?
+
+
+        <Modal show={this.state.modalIsOpen} closed={this.closeModalHandler} /> ////////EIS O CÓDIGO EM QUESTÃO.
+
+            :
+
+            null 
+        }
+
+        {
+
+            this.state.modalIsOpen
+
+            ?
+
+        <Backdrop show={this.state.modalIsOpen} />
+            
+            :
+
+
+            null
+
+        }
+        <button
+          className="Button"
+          onClick={this.openModalHandler}
+        >
+          Open Modal
+        </button>
+        <h3>Animating Lists</h3>
+        <List />
+      </div>
+    );
+  }
+
+
+
+
+
+-----------------------------------
+
+
+
+ISSO, COMO APRENDEMOS 
+
+
+AO LONGO DO CURSO,
+
+
+UTILIZA 
+
+O 
+
+'CONDITIONAL RENDERING' do react... ---> 
+
+
+
+
+
+
+
+
+E VOCê __PODE__ SOLUCIONAR ESSE PROBLEMA 
+
+DO 
+
+
+
+'RENDER INICIAL' DO 
+
+MODAL 
+
+
+
+_POR MEIO __ DESSE CONDITIONAL RENDERING... (como visto logo acima...)
+
+
+
+
+
+---> ENTRETANTO,
+ 
+
+ ESSE RENDER CONDICIONAL (por meio de TERNARY EXPRESSIONS SIMPLES, a partir do state de 'modalIsOpen'),
+
+
+
+ ___TRAZ OUTRO PROBLEMA__.... --> 
+
+
+ O 
+
+ OUTRO 
+
+ PROBLEMA 
+
+ É 
+
+ O PROBLEMA ___ CORE__ ENFRENTADO PELO PROFESSOR DURANTE ESTE MÓDULO.
+
+
+
+
+
+
+
+ O PROBLEMA EM QUESTÃO É QUE 
+
+ ESSE 
+
+ RENDER CONDICIONAL __ DE FATO __ NOS AJUDA 
+
+
+ COM 
+
+
+ O '''SHOW''' DE MODAIS E BACKDROPS... (usamos aquele approach ali, de render condicional...),
+
+
+ MAS 
+
+
+
+ __ELE NOS __aTRAPALHA___ COM 
+
+ O 'HIDE'/'CLOSE' DESSES 
+
+ MESMOS MODAIS (os estilos de 'close' com animações nunca são APLICADOS, são basicamente 
+ 
+ 'SKIPPED' pelo react; isso ocorre DEVIDO AO 
+ 
+ COMPORTAMENTO DO 'RENDER' de react... ) ---> E ESSE PROBLEMA 
+
+ AÍ 
+
+ BASICAMENTE 
+
+ FAZ COM QUE 
+
+ ANIMAÇÕES 
+
+
+ DE 
+ CLOSE 
+
+ __NUNCA TOQUEM___ em react apps... (só o 'OPEN' funciona)...
+
+
+
+ para fazer com que o OPEN 
+
+ DO MODAL E backdrop 
+
+ FUNCIONASSE,
+
+ professor usou o seguinte código, em render:
+
+
+
+'''''''
+ {this.state.modalIsOpen ? <Modal show={this.state.modalIsOpen} closed={this.closeModal}/> : null }
+  {this.state.modalIsOpen ? <Backdrop show={this.state.modalIsOpen} /> : null'''''
+
+
+
+
+
+
+
+---------------------
+
+
+
+
+
+ISSO DE FATO VAI FUNCIONAR PARA O OPEN, MAS NÃO VAI FUNCIONAR PARA O 'CLOSE' desses 
+
+modais/backdrops....
+
+
+
+
+
+DEVEMOS 
+
+
+
+VER QUAIS 
+
+TOOLS SÃO ESSAS, AO LONGO DAS PRÓXIMAS LIÇÕES...

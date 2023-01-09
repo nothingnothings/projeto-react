@@ -1,0 +1,697 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> PROFESSOR DIZ QUE 
+
+DEVEMOS 
+
+MEXER 
+
+NO 
+
+'STATE' FOR ACTUALLY ORDERING A BURGER....
+
+
+
+
+
+
+
+
+
+
+---> até agora, no nosso código,
+
+NÓS FAZEMOS 
+
+__oRDER__ DE NOSSO BURGER __ LÁ NO CONTAINER 
+
+
+
+
+
+de 
+
+'ContactData.js'... -------> LÁ 
+
+TEMOS 
+
+
+O 
+
+MÉTODO
+ 
+ 'orderHandler',
+
+
+ de código
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+  orderHandler = (event) => {
+    event.preventDefault();
+    console.log(this.props.ingr);
+
+
+    this.setState({
+      loading: true,
+    });
+
+    const orderData = {
+      // ingredients: this.props.ingredients, /
+      ingredients: this.props.ingr, //código que agora está usando o REDUX.
+      price: this.props.price, //código que agora está usando o REDUX.
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+    };
+
+
+
+
+    axiosOrder
+      .post('/orders.json', orderData)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          loading: false,
+        });
+      });
+  };
+
+
+
+
+------------------------------
+
+
+
+---> o 'orderHandler' basicamente __fAZ SUBMIT DA ORDER QUE NÓS CRIAMOS NESSE 
+
+CONTAINER 
+
+
+'ContactData'...
+
+
+
+
+
+
+
+
+
+--> e dentro desse 'orderhandler',
+
+
+
+NÓS ENVIAMOS 
+
+UM
+
+HTTP REQUEST 
+
+POR MEIO DAQUELE CÓDIGO 
+
+DE 
+
+
+
+
+'''''''''''''''''''''''''
+
+    axiosOrder
+      .post('/orders.json', orderData)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          loading: false,
+        });
+      });
+  };
+
+'''''''''''''''''''''''
+
+
+
+
+-> DEFINIMOS O STATE PARA 'LOADING' INICIALMENTE, PARA MOSTRAR O SPINNER,
+
+
+depois fica 'false' o loading quando acaba o processo, 
+
+
+e aí nós 'NAVIGATE AWAY' por meio de ' this.props.history.push('/')',
+
+quando 
+
+O PROCESSO 
+
+ACABA.... ---> e nada disso,
+
+desse 
+
+código 
+
+aí,
+
+
+está errado... ----> VOCÊ ___PODE__ FAZER AS COISAS DESSA MANEIRA...
+
+
+
+
+
+
+---> VOCÊ PODE 
+
+USAR 
+
+
+UM 
+
+
+'axios.post'
+
+
+
+DENTRO DE UM HANDLER NO SEU CONTAINER __PARA ___ CARREGAR UMA RESPONSE/UM FETCH/POST DE UM SERVIDOR...
+
+
+com certeza pode... ----> MAS 
+
+VOCê 
+
+
+
+TAMBÉM __ PODE 
+
+FAZER A MESMA COISA COM O __rEDUX__, POR MEIO DO OUTSOURCE 
+
+DESSA LÓGICA/CÓDIGO 
+
+
+
+
+
+
+A 
+
+'ACTION CREATORS' 
+
+
+e 
+
+ao 
+
+
+REDUX...
+
+
+
+
+
+
+
+
+
+
+
+
+----> E ESSA É UMA ESCOLHA QUE CABE A VOCê:
+
+
+
+
+
+1) usar um HANDLER dentro do seu CONTAINER para ___ INTERAGIR COM UM SERVER.... 
+
+
+
+2) OUTSOURCEAR A LÓGICA '''ASSÍNCRONA''', de http requests,
+
+AO REDUX E AOS ACTION CREATORS...
+
+
+
+
+
+---------> MAS A OPÇÃO '2' TEM UM BENEFÍCIO... ---> BENEFÍCIO __BEM GRANDE.... ------> 
+
+
+
+se você, por exemplo,
+
+QUISER QUE 
+
+
+O USUÁRIO POSSA INTERAGIR COM O SERVIDOR COM ___ UM MESMO CÓDIGO, AO LONGO DE MÚLTIPLAS 
+
+PÁGINAS DO SEU APLICATIVO, 
+
+É MUITO MELHOR USAR 
+
+O APPROACH nº2, o approach do REDUX, pq aí 
+
+VOCÊ VAI PODER 
+
+
+SIMPLESMENTE 
+
+VINCULAR TODAS AS PARTES DO SEU APP que você deseja AO 'DISPATCH'/fire-up daquela 
+
+ACTIOn 
+
+
+que 
+
+vai 
+
+
+fazer o handle da interação com o servidor... -------> AÍ VOCê PODERÁ 
+
+
+FAZER ESSE MESMO HTTP REQUEST ____ DE QUALQUER PÁGINA__ DE SEU APP, 
+
+e não 
+
+só 
+
+de 1 única página, como visto com esse 'orderHandler' aí, QUE __SÓ PODE __ SER 
+UTILIZADO
+ 
+ DENTRO 
+
+ DE 
+
+ 'ContactData'...
+
+
+
+
+
+
+
+--> RESUMINDO: É UMA ÓTIMA IDEIA USAR O REDUX E OS ACTION CREATORS( obrigatórios, junto do 'redux-thunk') 
+
+PARA 
+ISSO...
+
+
+
+
+
+----------------------
+
+
+
+NÓS VAMOS 
+
+
+
+FAZER 
+
+EXATAMENTE ISSO:
+
+
+VAMOS 
+
+
+MOVER 
+
+
+ESSA LÓGICA 
+
+DE 
+'submit' vista
+ 
+
+ nesse 
+
+ 'axios.post'
+
+
+
+
+ __PARA __ UM ACTION CREATOR,
+
+ UM ACTION CREATOR EM UM ARQUIVO PRÓPRIO...
+
+
+
+ --------------------------------------------
+
+
+ É POR ISSO QUE O PROFESSOR CRIA UM FOLDER 'actions' lá no 'store' 
+
+
+
+ de nosso aplicativo...
+
+
+
+
+
+
+
+ ---> ele também vai criar um folder chamado de 'reducers',
+
+
+ E ENTÃO 
+
+ VAI MOVER 
+
+ NOSSO REDUCER 
+
+('reducer.js')
+
+
+PARA 
+
+DENTRO 
+
+DESSE FOLDER...
+
+
+
+
+
+--> ele também 
+
+vai ter um 
+
+arquivo 
+
+'actionTypes', coisa padrão... (identificadores para nossas diferentes ORDERS.)
+
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+DENTRO DE 'actions', do folder,
+
+
+o professor 
+
+vai 
+
+CRIAR 
+
+
+UM ARQUIVO 
+
+
+chamado 
+
+'order.js',
+
+
+QUE 
+
+
+
+SERÁ 
+
+
+ONDE 
+
+
+O 
+
+
+ACTION CREATOR 
+
+
+
+de 
+
+'order'( ou seja, DE UMA ACTION que vai lidar com lógica de SEND DE REQUESTS DE TIPO POST AO SERVER...)...
+
+
+
+
+
+
+
+
+
+
+-----------------------------
+
+
+
+FICARÁ TIPO ASSIM:
+
+
+
+
+
+
+import * as actionTypes from './actionTypes';
+
+
+export const order_post = () => {
+        return {
+                type: actionTypes.ORDER_POST
+        };
+};
+
+
+---------------------------------------
+
+
+
+
+
+
+pELO VISTO, PROFESSOR VAI QUERER 
+
+
+splittar 
+
+nosso reducer em múltiplos reducers...
+
+
+
+
+--> ele vai chamar esse reducer de 
+
+
+'orderReducer.js'...
+
+
+
+
+
+--> já o nosso reducer antigo vai ser renomeado para 
+
+
+
+'burgerBuilderReducer.js'...
+
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+Certo... tenho o mesmo código de antes, mas agora com 2 REDUCERS....
+
+(e com um arquivo que vai segurar MAIS ACTIONS ESPECÍFICAS,
+
+o arquivo 
+
+
+
+'order.js'...
+
+
+
+
+
+
+
+------------------------
+
+
+COMBINEI OS 2 REDUCERS... --> FICOU TIPO ISTO AQUI (lá em 'index.js'):
+
+
+
+
+
+
+
+
+const reducer = combineReducers({
+      burger: BurgerReducer,
+      order: orderReducer
+})
+
+
+
+
+const store = createStore(
+  reducer,
+  composeEnhancers(applyMiddleware(logger, thunk)) 
+); 
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+CERTO... MAS ISSO INTRODUZ UM __PROBLEMA____ ----> vou ter que updatar 
+
+
+
+meu 
+
+GLOBAL STATE DO REDUX,
+
+
+
+vou ter que criar 
+
+esse objeto 
+
+'burger', que vai ser regido por 'BurgerReducer'.... ---> vou ter que alterar
+
+
+
+TODO O CÓDIGO DO MEU PROJETO...
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+OBS::: dentro de 'burgerBuild'
+
+
+NÓS 
+
+
+TEREMOS __ APENAS 'SYNCHRONOUS ACTION CREATORS', nenhum
+
+
+
+
+action creator 
+
+de 
+
+AÇÕES DISPATCHADAS ASSÍNCRONAMENTE (como em 'order.js')...
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+---> PROFESSOR DIZ QUE DEVEMOS 
+
+
+COMEÇAR 
+
+
+COM 
+
+
+A ESCRITA 
+
+DOS 
+
+'ACTION CREATORS' 
+
+
+antes 
+
+de começar 
+
+a implementar 
+
+
+
+o 
+
+'store handling' para 
+
+NOSSAS 
+
+'ORDERS'..
+
+
+
+
+-----------------------------

@@ -1,0 +1,1143 @@
+
+
+
+
+
+
+
+
+
+
+
+
+POR ENQUANTO, NO NOSSO APLICATIVO,
+
+
+SOMOS 
+
+
+CAPAZES 
+
+DE NAVEGAR 
+
+
+por aí.... --> somos 
+
+
+capazes DE FAZER 
+
+
+ISSO 
+
+
+SEM RECARREGAR 
+
+A NOSSA PÁGINA (com a ajuda 
+
+do 
+
+package 
+
+
+de 
+
+'react-router-dom',
+
+e seus objetos 
+
+'Link' e 'Router'...)
+
+
+
+
+
+
+
+
+
+
+----------> CERTO.... O PRÓXIMO PASSO 
+
+
+É 
+
+
+________dAR UMA OLHADA____ NA 
+
+INFORMACAO/DATA QUE 
+
+ESTAMOS 
+
+
+'ACTUALLY' 
+
+RECEBENDO/FAZENDO GET 
+
+
+NOS 
+
+
+__cOMPONENTS__ QUE 
+
+
+ESTAMOS CARREGANDO NA NOSSA PÁGINA.... --> isso 
+
+
+pq 
+
+
+
+ O ___REACT ROUTER___ NOS DÁ ALGUMAS INFORMACOES EXTRAS 
+
+SOBRE ___a ROUTE ___ QUE FOI CARREGADA,
+
+
+E ELE NOS DÁ ESSAS INFORMAÇÕES POR MEIO __dOS ___ PROPS___....
+
+
+
+----------------------------------------------
+
+
+
+
+Para examinar essas informações/data,
+
+
+devemos 
+
+estudar 
+
+o component 
+
+
+'Posts'.... --------> 
+
+
+
+
+
+LÁ, 
+
+
+dentro 
+
+do seu método 
+
+
+'componentDidMount',
+
+que 
+
+É AQUELE __COMPONENT__ QUE 
+SERÁ/É EXECUTADO ___ 
+
+
+
+SEMPRE QUE ____ TROCARMOS UMA PÁGINA____  --> ele é sempre
+
+executado 
+
+quando 
+
+trocamos 
+
+de página 
+
+
+
+PQ ___dE FATO___, O COMPONENT EM QUE 
+
+ELE ESTÁ __ INSERIDO__ É REALMENTE __ REMOVIDO ___ E 
+
+INSERIDO DO 'DOM' SEMPRE 
+
+QUE O USUÁRIO 
+
+
+ATIVA a rota que o renderiza/sai da rota que o renderiza... (our components get added and removed from the DOM all the time, and each and every time that occurrs, 'componentDidMount' gets EXECUTED.)
+
+
+
+
+
+
+
+
+
+--------> 
+
+
+
+
+
+
+Certo... e em 
+
+'ComponentDidMount'
+
+
+
+NÓS NÃO SÓ
+
+FAZEMOS REACH OUT à web ('causando side effecst, como 'http requests' '),
+
+
+
+MAS TAMBÉM
+
+
+
+
+É ONDE 
+
+
+
+PODEMOS 
+
+
+OUTPUTTAR 
+
+OS 
+
+
+____PROPS___QUE 
+
+temos
+
+NESSE COMPONENT EM QUE ESSE MÉTODO ESTÁ INSERIDO 
+
+(nesse caso, 
+
+
+
+os props de 
+
+'Posts.js'...) ------> e é POR ISSO QUE O PROFESSOR VAI ESCREVER UM CONSOLE.LOG de 'props' nesse 'componentDidMount' de 'Posts'...
+
+
+
+
+
+
+
+
+
+EX(representação):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    componentDidMount () {
+
+            console.log(this.props);
+
+    
+        axios.get( '/posts' )
+            .then( response => {
+                const posts = response.data.slice(0, 4);
+                const updatedPosts = posts.map(post => {
+                    return {
+                        ...post,
+                        author: 'Max'
+                    }
+                });
+                this.setState({posts: updatedPosts});
+                // console.log( response );
+            } )
+            .catch(error => {
+                console.log(error);
+                // this.setState({error: true});
+            });
+    }
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+BEM, O QUE ELE TEM 
+
+SÃO 
+
+
+
+4 GRANDES PROPRIEDADES....
+
+
+
+
+
+
+history: {length: 29, action: "PUSH", location: {…}, createHref: ƒ, push: ƒ, …}
+location: {pathname: "/", search: "", hash: "", state: undefined, key: "u9fnd2"}
+match: {path: "/", url: "/", isExact: true, params: {…}}
+staticContext: undefined
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+'history', 'location' e 'match' 
+
+
+NÃO 
+
+
+SÃO PROPRIEDADES 
+
+
+DEFINIDAS 
+
+ 
+POR NOSSAS PRÓPRIAS MÃOS...  ----> todas essas 
+
+
+propriedades 
+
+
+aí foram 
+
+
+PASSADAS 
+
+PELO 
+
+
+'REACT ROUTER'...
+
+
+
+
+
+
+
+
+
+
+
+---> e 'match', essa propriedade,
+
+
+NOS DÁ 
+
+ALGUMAS INFORMAÇÕES SOBRE
+
+
+
+A 
+
+'MATCHED ROUTE'... --------> podemos 
+
+
+
+ver, por exemplo,
+
+
+
+que 
+
+definimos 
+
+
+que 
+
+essa propriedade 
+
+'match'
+
+
+
+terá/tem um 
+
+
+
+'isExact' 
+
+de 
+
+'TRUE' (pq é isso que definimos..)
+
+
+
+
+
+
+---> também 
+
+
+é POSSÍVEL__
+
+
+
+ver 
+
+o 
+
+
+PATH 
+
+e 
+a 
+
+
+URL 
+
+
+
+ENCONTRADO PELO 'REACT ROUTER',
+
+
+
+e, por fim,
+
+
+
+'PARAMS EM POTENCIAL' (potential params)..
+
+
+
+
+
+
+--> professor nos explicará
+ 
+
+ mais sobre PARAMS 
+
+
+ mais tarde....
+
+
+
+-------------------------------------
+
+
+
+
+NÓS TAMBÉM 
+
+
+
+CONSEGUIMOS, NESSE OBJETO 
+
+
+'props'
+
+
+
+de 
+
+'Posts',
+
+
+INFORMAÇÕES 
+
+
+
+
+como 
+
+
+'location' (propriedade) -------->
+
+
+
+
+DENTRO 
+
+
+DE LOCATION 
+
+
+
+VEMOS 
+
+
+INFORMAÇÕES COMO 
+
+
+OS 
+
+'queryParams'
+
+
+
+
+de 
+
+'search' 
+
+QUE 
+
+SETTAMOS ANTES...  ---> e também 
+
+é possível 
+
+ver 
+
+o 
+
+'hash fragment'... definido no 'Link'...
+
+
+
+
+---------------------------------
+
+
+
+
+
+POR FIM,
+
+
+TEMOS 
+
+
+A PROPRIEDADE 
+
+
+'history' ---> 
+
+
+essa propriedade 
+
+
+
+
+
+TEM ALGUNS MÉTODOS QUE PODEMOS UTILIZAR... ------>
+
+
+
+
+métodos como 
+
+'.push',
+
+
+QUE 
+
+
+
+NOS PERMITEM 
+
+
+
+
+____iNTERAGIR__ com o component 'Posts'.... ------>
+
+
+
+
+ex: 
+
+'push:f push(path, state)'...
+
+
+
+
+
+
+
+
+
+---> ESSE MÉTODO
+
+'push'
+
+
+NOS DEIXA
+
+__fAZER 'PUSH' (empurrar)
+
+
+DE UMA NOVA PÁGINA, PROGRAMATICAMENTE (ou seja,
+
+
+sem 
+
+necessidade de o usuário clicar nada em nosso site; ou seja,
+
+AUTOMATICAMENTE, E SEM UM COMPONENT 'Link'...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> ESSA COISA DO 'PUSH' 
+
+
+TAMBÉM 
+
+É ALGO QUE O PROFESSOR NOS MOSTRARÁ 
+
+MAIS TARDE...
+
+
+
+
+
+
+
+
+
+
+---> AGORA, CONTUDO, 
+
+DEVEMOS VOLTAR AOS NOSSOS COMPONENTS,
+
+
+e aí 
+
+devemos 
+
+TAMBÉM
+
+
+
+CONSOLE.LOGGAr 
+
+
+
+'props'
+
+
+NAQUELE 
+
+
+COMPONENT/CONTAINER 
+
+
+de 
+
+'newPost'... ---> lá o professor 
+
+
+TAMBÉM
+
+
+VAI ADICIONAR UM 
+
+
+
+MÉTODO 
+
+'componentDidMount', 
+
+
+
+EM QUE 
+ELE VAI 
+
+INSERIR UM CONSOLE.LOG 
+
+DE 
+
+'props'...
+
+
+
+ex:
+
+
+
+    componentDidMount() {
+        console.log(this.props);
+    }
+
+----------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+---> O PROFESSOR FAZ ISSO PQ NESSE CONSOLE.LOG AÍ 
+
+NÓS PROVAVELMENTE 
+
+VAMOS
+
+VER MAIS 
+
+INFORMACOES 
+
+
+ACERCA 
+
+
+DO 
+
+'FRAGMENTO' (aquela propriedade 'HASH') 
+
+
+
+
+E 
+
+
+SOBRE 
+OS 
+
+'SEARCH PARAMS'... (Definidos na propriedade 'search'...)
+
+
+
+
+========================================================
+
+
+
+
+
+
+PARA ISSO,
+
+PARA VER O OUTPUT 
+
+
+DESSES PROPS 
+
+no console,
+
+DEVEMOS 
+
+
+CLICAR 
+
+
+NO LINK 
+
+DE 
+
+'New Post'... ------------> 
+
+
+
+SE FIZERMOS
+
+ISSO,
+
+VAMOS 
+
+VER AQUELAS 
+
+
+MESMAS
+
+
+PROPRIEDADES 
+
+
+DE NOVO,
+
+
+
+
+aquelas 
+
+
+'history',
+
+
+'location',
+
+
+'match'... -----------> 
+
+
+
+
+
+
+
+ENTRETANTO, VAMOS VER ALGO BIZARRO... -------> 
+
+
+
+
+A propriedade 
+
+
+'isExact' AINDA ESTARÁ COMO TRUE (mas nós
+NÃO
+HAVÍAMOS
+
+
+
+SETTADO UM 'exact' 
+
+
+NESSA INSTÂNCIA 
+
+
+DE 'ROUTE', o que faz esse valor aí de 'true' 
+
+
+SER __BIZARRO...) -------> PROFESSOR EXPLICA QUE 
+ISSO
+
+OCORREU 
+
+PQ 
+
+NÓS 
+
+ESTAMOS, NA VERDADE, NO ''''EXATO''''' URL/Path 
+
+descrito 
+
+no 
+
+
+Route,
+
+
+e é por isso que
+
+
+dá 
+
+'isExact: true'.... -------> se nós
+
+escrevermos/escrevessemos
+
+
+
+'localhost:3000/new-post/2351' 
+
+
+
+NA CAIXA DE URL DO NOSSO BROWSER,
+
+
+AINDA CONSEGUIRÍAMOS A PÁGINA 
+
+'new-post' (pq o boolean prop de 'exact' NÃO FOI ESCRITO 
+
+NA DEFINIÇÃO DE SUA ROUTE),
+
+
+
+
+
+Mas essa propriedade 
+
+'isExact' aí ficaria como '__fALSE__',
+
+POIS 
+
+NÓS 
+
+
+____DE FATO___ NÃO ESTARÍAMOS ___ 
+
+
+NA URL/PATH com A EXATA MESMA STRING 
+
+definida 
+
+no 'Route' 
+
+de 'new-post'... (E é essa a informação armazenada 
+
+na propriedade 'isExact', dentro dos PROPS __do component 'Posts'..., propriedade 
+que foi passada/enfiada nos seus props por meio 
+da ação 
+
+DE 
+REACT-ROUTER-DOM...)
+
+
+
+
+
+---> Certo...
+
+
+----------------------------------------
+
+
+
+
+
+NÓS TAMBEM
+
+
+VAMOS 
+
+VER 
+OUTRAS 
+
+
+INFORMAÇÕES/propriedades 
+
+
+dentro 
+
+
+da 
+
+propriedade 
+
+de 
+
+'location'.... ----> podemos observar,
+
+por exemplo,
+
+
+
+a propriedade 
+
+'search:',
+
+
+QUE 
+
+CONTERÁ 
+
+
+
+UM VALOR 
+
+
+QUE 
+
+SERÁ 
+
+
+AQUELA COISA QUE VOCÊ ADICIONOU COMO COMPLEMENTO 
+
+ao 
+
+
+'path' 
+
+anteriormente,
+
+
+
+aqueles queryParams 
+
+
+que você 
+escreveu (aquele '?quick-submit=true'...) -------> E VOCê PODERIA, COM CÓDIGO 
+
+ESPECÍFICO, 
+
+
+FORMULADO POR VOCÊ,
+ 
+
+ __PARSEAR___ esses queryParams
+
+ dentro 
+ 
+
+ dessa propriedade 
+
+ 'search', parseá-los 
+
+
+PARA 
+
+ENTÃO FAZER RETRIEVE DE SUAS INFORMAÇÕES (pq queryParams fazem exatamente isso,
+
+eles ARMAZENAM INFORMAÇÕES...)
+
+
+-------------------------
+
+
+
+
+
+E NÓS TAMBÉM 
+
+PODEMOS VER 
+
+NOSSO 
+
+'HASH FRAGMENT',
+
+
+
+aquele hash que definimos antes,
+
+que 
+
+estará 
+
+
+em uma propriedade 
+
+'hash:' ---->
+
+
+ex:
+
+
+'hash: "#submit" '
+
+
+
+
+
+
+---> VOCÊ PODE USAR ESSA PROPRIEDADE 'hash' 
+
+
+
+PARA ___ENTÃO ___ PULAR PARA UMA 
+
+DETERMINADA PARTE DE SUA PÁGINA 
+
+AUTOMATICAMENTE..., 
+
+ou então 
+
+para ___SCROLLAR ___ 'SMOOTHLY'__ até lá... qualquer
+ 
+
+ coisa que você quiser, desse tipo....
+
+
+
+
+
+
+
+
+
+
+ ---> certo,
+
+ isso tudo, todas essas coisas, 
+
+ SÃO 
+
+
+ ____INFORMAÇÕES ADICIONAIS___ QUE NÓS RECEBEMOS___... ---> e essas informações 
+
+ PASSAM
+
+
+ A 
+
+ SER 
+ PARTE 
+
+
+ DOS 
+
+ 'props' 
+
+ dos seus components,
+
+
+
+ E VOCÊ PODE usar 
+
+
+ essas propriedades 
+
+
+passadas pelo 'Route' 
+
+
+para 
+
+então, POR EXEMPLO,
+
+
+EXTRAIR SEUS 'QUERYPARAMS' (que sempre vao conter algum tipo de informação...),
+
+
+
+OU ENTÃO 
+
+MOVER 
+
+PARA UM 
+
+
+'HASH FRAGMENT' (para o local em que ele foi definido),
+ 
+
+ OU FAZER 
+
+ QUALQUER 
+
+ OUTRA 
+
+
+ COISA QUE 
+
+
+ QUEREMOS FAZER... --------> MAIS 
+
+ TARDE 
+
+
+ VEREMOS 
+
+
+ COMO ___PODEMOS USAR ___ ESSE OBJETO 
+
+ 'history'___ para 
+
+
+
+ USAR 
+
+
+ O MÉTODO QUE ELE NOS PROVIDENCIA... (provavelmente 'push'...)
+
+
+
+
+ ---> esse objeto 'history' tem bastante coisa no seu interior, na verdade...
+ 
+------------------------------------
+

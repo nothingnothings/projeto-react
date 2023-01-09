@@ -1,0 +1,1592 @@
+
+
+
+
+
+
+
+
+
+
+----> DEVEMOS CRIAR O COMPONENT E A NAVEGAÇÃO (route) 
+
+
+DE 
+
+
+
+'Contact Data'... -------> E ESSE 'CONTACT DATA' 
+
+
+
+
+___TAMBÉM SERÁ UM CONTAINER___... ------------>
+
+
+
+
+
+
+
+SERÁ UM CONTAINER NÃO SÓ PQ ELE VAI 
+
+SER CARREGADO POR ROUTING, MAS TAMBÉM PQ __ ELE VAI TER O SEU PRÓPRIO __sTATE__...
+
+
+
+
+
+
+
+------> ele vai ter um state pq ISSO SERÁ IMPORTANTE QUANDO IMPLEMENTARMOS ___fORMS__ NO
+ 
+
+ REACT.... ------> O PROFESSOR ADICIONA ESSE COMPONENT 
+
+
+ COMO 
+
+
+ UM SUBCOMPONENT 
+
+
+
+ de 
+
+ 'Checkout' (que já é um container, na verdade, pois está no folder 'containers')....
+
+
+
+
+ --> esse folder terá o component 
+
+
+ 'ContactDATA'....
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ----> ELE CRIARÁ ESSE COMPONENT COMO UMA CLASSE,
+
+
+ e aí ele 
+
+
+ vai 
+
+
+escrever o código padrão, tudo tradicional...
+
+
+
+
+
+
+
+
+
+-----> CERTO, MAS COMO DEVEMOS CRIAR/IMPLEMENTAR ESSE COMPONENT?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------> DENTRO DESSE COMPONENT, PROFESSOR NOS ESCLARECE QUE 
+
+__PODEMOS ___ 'FETCH' QUALQUER CONTACT DATA QUE 
+
+QUISERMOS... 
+
+
+
+
+
+
+--> para fazer MANAGE desses inputs do usuário,
+
+professor cria um 
+
+
+'STATE'....
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+QUANTO À 'FORM', professor nos explica que ele não vai propriamente 
+
+
+a terminar 
+
+neste 
+
+módulo,
+
+
+
+
+pq no futuro teremos um módulo inteiro sobre forms e sua validação...
+
+
+
+
+
+
+--------> AINDA ASSIM, o professor quer fazer o fetch 
+
+de dados 
+
+
+como 
+
+
+'username',
+
+
+
+'email' 
+
+
+e 
+
+
+
+'address'....
+
+
+
+
+
+
+
+ex:
+
+
+import React, { Component } from "react";
+
+
+
+
+class ContactData extends Component {
+
+
+    state = {
+        name: '',
+        email: '',
+        address: {
+            street: '',
+            postalCode: ''
+        }
+    }
+
+
+
+
+
+
+
+    render() {
+        return (
+
+        )
+    }
+
+
+
+}
+
+
+
+
+export default ContactData;
+
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+O PROFESSOR TAMBÉM NOS AFIRMA QUE ELE VAI RENDERIZAR CÓDIGO JSX AQUI, e por isso 
+
+
+
+ele vai usar o método 'render'... --------->  
+
+
+
+
+
+
+
+
+E COMO ELE NOS DISSE QUE VAI QUERER UMA FORM, 
+
+
+
+ele vai 
+
+
+retornar 
+
+
+código jsx que 
+
+SERÁ UMA __DIV CONTENDO UMA FORM___...
+
+
+
+
+ex:
+
+
+
+
+
+render () {
+
+
+    <div>
+        <form></form>
+    </div>
+
+
+}
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+MAS NÃO É SÓ A FORM QUE VAI DENTRO DESSA DIV,
+
+NÓS TAMBÉM 
+
+VAMOS 
+
+
+COLOCAR 
+
+UMA 
+
+H4 TAG.
+
+
+
+
+ex:
+
+
+
+
+
+render () {
+
+
+    <div>
+    <h4>Enter your Contact Data</h4>
+        <form></form>
+    </div>
+
+
+}
+
+--------------------------------
+
+
+
+
+
+
+DEPOIS NÓS VAMOS COMPLEMENTAR ESSA FORM (não vamos fuçar muito nela agora...).
+
+
+
+
+
+
+
+--------> POR ENQUANTO, PROFESSOR SÓ VAI CRIAR 
+
+
+UMA FORM BÁSICA,
+
+com um 
+
+
+'input' de type 'text' (onde ficará nosso 'NAME')...
+
+
+
+
+
+--> ELE definirá 
+
+
+uma propriedade 
+
+
+'name' de valor inicial 'name',
+
+
+
+para podermos ver o que fica dentro disso... -----> 
+
+
+
+
+
+E ELE TAMBÉM COLOCA UM 
+
+
+'placeholder', que dirá 
+
+
+'Your name'...
+
+
+
+
+
+ex:
+
+
+
+
+render () {
+
+
+    <div>
+    <h4>Enter your Contact Data</h4>
+        <form>
+        <input type="text" name="name" placeholder="Your name" />
+        </form>
+    </div>
+
+
+}
+
+
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+--> DEPOIS DISSO, ELE ADICIONARÁ UM INPUT PARA O EMAIL e outros 
+
+para 
+
+
+
+
+a 
+
+'street'/'postal'...
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+render () {
+
+
+    <div>
+    <h4>Enter your Contact Data</h4>
+        <form>
+        <input type="text" name="name" placeholder="Your Name" />
+        <input type="email" name="email" placeholder="Your Mail" />
+        <input type="text" name="street" placeholder="Street" />
+        <input type="text" name="postal" placeholder="Postal Code" />
+        </form>
+    </div>
+
+
+}
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+ENTÃO, NO FINAL DESSE NEGÓCIO, DESSA DIV, O PROFESSOR VAI QUERER ADICIONAR UM BUTTON,
+
+
+E PARA ISSO ELE VAI USAR O BUTTON COMPONENT QUE JÁ CRIAMOS NO PASSADO...
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+import Button from '../../components/UI/Button/Button'
+
+
+
+
+
+
+render () {
+
+
+    <div>
+    <h4>Enter your Contact Data</h4>
+        <form>
+        <input type="text" name="name" placeholder="Your Name" />
+        <input type="email" name="email" placeholder="Your Mail" />
+        <input type="text" name="street" placeholder="Street" />
+        <input type="text" name="postal" placeholder="Postal Code" />
+        </form>
+    </div>
+
+
+}
+
+
+------------------------------------
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+import Button from '../../components/UI/Button/Button'
+
+
+
+
+render () {
+
+
+    <div>
+    <h4>Enter your Contact Data</h4>
+        <form>
+        <input type="text" name="name" placeholder="Your Name" />
+        <input type="email" name="email" placeholder="Your Mail" />
+        <input type="text" name="street" placeholder="Street" />
+        <input type="text" name="postal" placeholder="Postal Code" />
+        <Button BtnType="Success" clicked={}>ORDER</Button>
+        </form>
+    </div>
+
+
+}
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+-----> CERTO.... E O PROFESSOR VAI QUERER DAR A ESSA 'CONTACT FORM'
+
+
+
+ALGUM STYLING, por isso nós vamos criar um arquivo css de módulos para isso...
+
+
+
+
+
+
+ELE ESCREVE ESTES ESTILOS:
+
+
+
+
+
+
+.ContactData {
+    margin: 20px auto;
+    width: 80%;
+    text-align: center;
+}
+
+
+
+--------------------------------------
+
+
+
+
+margin ----> vai definir uma margin top e bottom de 20px, e definir o CENTERING desse component/item como 'auto'...
+
+
+
+
+
+
+
+------> depois disso, ele vai definir 
+
+
+
+uma MEDIA QUERY,
+
+que vai limitar  A WIDTH 
+
+
+desse component 
+
+
+EM ___ APARELHOS MAIORES___.... (pq aquele estilo ali, de '80%', é para MOBILE DEVICES)
+
+
+
+
+
+
+
+
+--> nesses aparelhos maiores, 
+
+a classe '.ContactData' 
+
+
+terá 
+
+
+uma max-width de 500px, e nada mais...
+
+
+
+
+
+
+eX:
+
+
+
+
+.ContactData {
+    margin: 20px auto;
+    width: 80%;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+@media (min-width: 600px) {
+    .ContactData {
+        width: 500px;
+    }
+}
+
+
+
+
+
+
+-------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+CERTO, AGORA TEMOS O COMPONENT 'ContactData'... ---> o professor vai querer 
+
+carregá-lo por meio de ROUTING...
+
+
+
+
+--------------------
+
+
+
+
+----> para isso, provavelmente vamos colocar uma dessas 
+
+routes lá 
+
+
+em 
+
+
+'Checkout', que é nosso OUTRO CONTAINER, outro container além de 'BurgerBuilder'...
+
+
+
+
+
+
+
+
+--> professor nos explica que 
+
+
+essa route de 'ContactData' DEVERÁ SER UMA ___NESTED ROUTE__, UMA ROUTE 
+
+
+DEBAIXO 
+
+
+
+DE 
+
+'CheckoutSummary'.. 
+
+
+
+
+
+
+
+
+--> professor vai usar essa nested route PARA NOS DEMONSTRAR QUE ELAS 
+
+SÃO USADAS NA VIDA REAL TBM...
+
+
+
+
+ex:
+
+
+
+
+import React, { Component } from 'react';
+
+
+import { Route } from 'react-router-dom';
+
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+
+
+
+
+class Checkout extends Component {
+
+
+
+    state = {
+        ingredients: {
+            bacon: 1,
+            cheese: 1,
+            meat:1,
+            salad: 1,
+        }
+}
+
+
+
+    componentDidMount() {
+
+        const query = new URLSearchParams(this.props.location.search);
+
+
+        console.log(query);
+
+        console.log(query.entries());
+
+
+        const ingredients = {};
+
+
+        for (let param of query.entries()) {
+            
+                console.log(param);
+       
+
+
+                ingredients[param[0]] = +param[1];
+        }
+
+        this.setState(
+            {
+                ingredients: ingredients
+            }
+        )
+
+
+    }
+
+
+    checkoutCancelledHandler = () => {
+        this.props.history.goBack();
+    }
+
+
+    checkoutContinueHandler = () => {
+            this.props.history.replace('/checkout/contact-data')
+    }
+
+
+
+
+    render() {
+
+
+
+            console.log(this.state);
+
+
+
+
+        return(
+            <div>
+            <CheckoutSummary ingredients={this.state.ingredients} checkoutCancelled={this.checkoutCancelledHandler} checkoutContinue={this.checkoutContinueHandler}/>
+            <Route />
+            </div>
+        );
+    }
+}
+
+
+
+export default Checkout;
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+CERTO, MAS O QUE ESCREVEREMOS NESSA 'Route'...?
+
+
+
+
+Bem, vamos escrever um path, que 
+
+
+DEPENDERÁ 
+
+
+
+DO 'PATH QUE NÓS ESTAMOS ATUALMENTE + /ContactData'...
+
+
+
+
+
+------------------------------------
+
+
+para isso,
+
+
+vamos 
+
+
+escrever 
+
+
+
+this.props.match.url + '/contact-data'...
+
+
+
+
+
+
+
+
+
+
+
+----> o professor nos ensina, agora, que 
+
+
+você pode 
+EM VEZ DE USAR 
+
+
+'.url', usar 
+
+'.path', que é uma propriedade 
+
+USADA PARA __cONSTRUIR __ PATHS E ROUTES____...
+
+
+
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+import { Route } from 'react-router-dom';
+
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+
+
+
+
+class Checkout extends Component {
+
+
+
+    state = {
+        ingredients: {
+            bacon: 1,
+            cheese: 1,
+            meat:1,
+            salad: 1,
+        }
+}
+
+
+
+    componentDidMount() {
+
+        const query = new URLSearchParams(this.props.location.search);
+
+
+        console.log(query);
+
+        console.log(query.entries());
+
+
+        const ingredients = {};
+
+
+        for (let param of query.entries()) {
+            
+                console.log(param);
+       
+
+
+                ingredients[param[0]] = +param[1];
+        }
+
+        this.setState(
+            {
+                ingredients: ingredients
+            }
+        )
+
+
+    }
+
+
+    checkoutCancelledHandler = () => {
+        this.props.history.goBack();
+    }
+
+
+    checkoutContinueHandler = () => {
+            this.props.history.replace('/checkout/contact-data')
+    }
+
+
+
+
+    render() {
+
+
+
+            console.log(this.state);
+
+
+
+
+        return(
+            <div>
+            <CheckoutSummary ingredients={this.state.ingredients} checkoutCancelled={this.checkoutCancelledHandler} checkoutContinue={this.checkoutContinueHandler}/>
+            <Route path={this.props.match.path + '/contact-data' } /> ///////EIS O CÓDIGO EM QUESTÃO.
+            </div>
+        );
+    }
+}
+
+
+
+export default Checkout;
+
+
+
+
+
+----------------------------------------
+
+
+
+
+Certo,
+
+
+estamos 
+
+
+definindo essa route, aqui... -----> agora só precisamos 
+
+
+
+DEFINIR ___ QUAL COMPONENT (component 'ContactData') 
+
+
+DEVE SER RENDERIZADO A PARTIR DESSA ROUTE... (por meio do prop 
+
+de 
+
+'component={}'...)  (e é claro que temos que importar o component 'ContactData' DENTRO DESSE COMPONENT 'Checkout', para ser usado nessa ROUTE.)
+
+
+
+ex:
+
+
+
+
+import React, { Component } from 'react';
+
+
+import { Route } from 'react-router-dom';
+
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+
+
+
+import ContactData from './ContactData/ContactData';
+
+
+class Checkout extends Component {
+
+
+
+    state = {
+        ingredients: {
+            bacon: 1,
+            cheese: 1,
+            meat:1,
+            salad: 1,
+        }
+}
+
+
+
+    componentDidMount() {
+
+        const query = new URLSearchParams(this.props.location.search);
+
+
+        console.log(query);
+
+        console.log(query.entries());
+
+
+        const ingredients = {};
+
+
+        for (let param of query.entries()) {
+            
+                console.log(param);
+       
+
+
+                ingredients[param[0]] = +param[1];
+        }
+
+        this.setState(
+            {
+                ingredients: ingredients
+            }
+        )
+
+
+    }
+
+
+    checkoutCancelledHandler = () => {
+        this.props.history.goBack();
+    }
+
+
+    checkoutContinueHandler = () => {
+            this.props.history.replace('/checkout/contact-data')
+    }
+
+
+
+
+    render() {
+
+
+
+            console.log(this.state);
+
+
+
+
+        return(
+            <div>
+            <CheckoutSummary ingredients={this.state.ingredients} checkoutCancelled={this.checkoutCancelledHandler} checkoutContinue={this.checkoutContinueHandler}/>
+            <Route path={this.props.match.path + '/contact-data' } 
+            
+            
+            component={ContactData} /> ///////EIS O CÓDIGO EM QUESTÃO.
+            </div>
+        );
+    }
+}
+
+
+
+export default Checkout;
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+CERTO... ISSO FEITO,
+
+
+
+
+
+DEVEMOS SALVAR TODOS OS ARQUIVOS... ----> agora, quando o professor clicar 
+
+
+
+em 
+
+'Continue', na nossa página 'Checkout',
+
+
+
+O COMPONENT 
+
+
+
+'ContactData' 
+
+VAI ___APARECER ALI EMBAIXO__, 
+
+
+E VAI FICAR JUNTO DA NOSSA PÁGINA CHECKOUT... ( o que não queremos...)
+
+
+
+
+
+
+--> para EVITAR __ que o 'ContactData', esse container/component seja 
+
+RENDERIZADO 
+
+JUNTO 
+DE 
+
+'Checkout'( que é outra página, afinal de contas),
+
+
+DEVEMOS 
+
+
+USAR 
+
+ALGUM 
+
+
+
+APPROACH ESPECIAL... (que o professor já nos mostrou, mas de que não me recordo.)
+
+
+
+
+
+
+
+
+
+
+--> NÓS ___tAMBÉM__ ESQUECEMOS DE IMPORTAR O ARQUIVO CSS 
+
+de 
+
+'ContactData'......
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> ok, nosso comportamento até agora:
+
+
+
+
+
+
+
+SE NÓS SEGUIRMOS O FLUXO DE NOSSA PÁGINA, FIZERMOS UM BURGER E ENTÃO CLICARMOS 'CONTINUE' (na página 'Checkout'),
+
+
+
+UM __NEGÓCIO, O 'ContactData' 
+
+
+VAI ___aPARECER LÁ EMBAIXO__, embaixo de nossa página 
+
+'Checkout'...
+
+
+
+
+
+
+
+
+
+
+--> a razão para form ficar com uma aparência de merda (e ficar embaixo da página 'checkout'), 
+
+
+é que 
+
+O PROFESSOR __NÃO VAI ACABAR__ ESSA FORM __ NESTE MÓDULO, AINDA...
+
+
+
+
+
+
+
+
+
+
+
+
+---> MAS UMA COISA QUE O PROFESSOR QUER FAZER AGORA É __aSSEGURAR__ QUE CADA UM 
+
+
+DOS 
+'INPUTs' dentro da form 
+ 
+
+TENHA SUA PRÓPRIA LINHA (Quebra de linha), 
+
+e o botão também..
+ 
+
+--> para conseguir esse efeito,
+ 
+ ele vai SIMPLESMENTE ADICIONAR UM NOVO ESTILO 
+
+
+
+ NO ARQUIVO 
+
+
+ DE 
+
+
+ 'ContactData.module.css'... 
+
+
+
+
+
+
+
+
+ -> será um STYLING para 
+
+ OS ELEMENTOS INPUT,
+
+
+
+ que 
+
+
+ o 
+
+ professor 
+
+
+ escreverá 
+
+
+
+ '.Input {
+     
+     display: block;
+
+
+
+
+ }
+ '
+
+
+
+
+
+
+
+
+
+
+ ELE coloca um 'display: block' como estilo desses elementos, pq 
+
+ isso vai automaticamente adicionar um LINE WRAP a eles...
+
+
+
+
+ -----
+
+
+ (EU ESCREVI ASSIM):
+
+
+
+ .ContactData {
+    margin: 20px auto;
+    width: 80%;
+    text-align: center;
+}
+
+
+
+
+.ContactData input {
+    display: block;
+}
+
+
+
+
+
+
+@media (min-width: 600px) {
+    .ContactData {
+        width: 500px;
+    }
+}
+
+
+
+------------------
+
+
+Dá na mesma, na verdade, 
+
+
+mas 
+
+
+a versão do professor 
+
+settou um className de 
+
+'Input' 
+
+
+nesse s elementos 'input' (mas eu acho isso meio redundante....).
+
+
+--> também acho melhor colocar um espaçamento entre eles, talvez com margin-top... --> certo, ficou bom.
+
+
+
+
+-----------------------------------
+
+
+
+
+
+-> CERTO, ESSE É O NOSSO 
+
+'CONTACT FORM'...
+
+
+
+
+
+---> professor diz que AINDA PODEMOS MELHORAR O ESTILO 
+
+
+
+DE 
+
+
+'ContactData',
+
+TVZ ADICIONAR UMA BOX SHADOW A ESSE ELEMENTo,
+
+uma BOX-shadow 
+
+
+
+de 
+
+
+
+'0 2px 3x #ccc';
+
+
+
+
+
+
+
+também uma border de 
+
+
+
+'1px solid #eee'...
+
+
+-------------------------
+
+
+
+
+Certo... ---> ele também adiciona uma padding (interna, é claro) 
+
+
+
+de 
+
+'10px',
+
+
+
+
+e ele também define um box-sizing de BORDER-BOX...
+
+
+
+ex:
+
+
+
+.ContactData {
+    margin: 20px auto;
+    width: 80%;
+    text-align: center;
+    box-shadow: 0 2px 3px #ccc;
+    border: 1px solid #eee;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+
+
+
+.ContactData input {
+    display: block;
+    margin-top: 16px;
+}
+
+
+
+
+
+
+@media (min-width: 600px) {
+    .ContactData {
+        width: 500px;
+    }
+}
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+CERTO.... styling melhorado, acho...
+
+
+
+
+
+
+
+--> OK, NÓS CONSEGUIMOS CARREGAR 
+
+O 
+
+
+
+COMPONENT 
+
+'ContactData'... --------> 
+
+O PRÓXIMO PASSO 
+
+
+
+
+
+É 
+
+FAZER AQUELE BOTÃO 
+
+'ORDER'
+
+
+FUNCIONAR... -----> fazer com que 
+
+
+O REQUEST
+ 
+
+
+(axios.post)
+com 
+
+
+o 
+
+
+STATE DOS INGREDIENTS ___REALMENTE_ __ SEJA ENVIADO AO SERVER... (e esse request 
+
+também 
+
+DEVERÁ 
+
+
+TER 
+
+
+ESSES DADOS DO CLIENTE, esse 
+
+
+'name', o 'mail', a 'street' 
+
+e o 
+
+
+'postal code'...)

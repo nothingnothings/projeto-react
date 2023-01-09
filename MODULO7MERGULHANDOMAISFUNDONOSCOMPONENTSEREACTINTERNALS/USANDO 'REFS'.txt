@@ -1,0 +1,1861 @@
+
+
+
+
+
+
+
+
+
+---> ATÉ AGORA, 
+
+DEMOS UM 
+
+
+'SUPER DEEP DIVE'  EM 
+
+
+UM MILHAO DE FEATURES 
+
+
+DOS REACT COMPONENTS... ----->
+
+
+
+
+
+BTW,
+
+ 
+ NÃO SE PREOCUPE SE 
+
+
+ VOCê ESTIVER COM MUITAS COISAS PARA SE LEMBRAR.... ------> NÓS VAMOS 
+
+
+ VER 
+
+
+
+ MTAS UTILIZAÇÕES DESSAS FEATURES 
+
+
+
+ AO LONGO DO CURSO E AO LONGO DOS COURSE MODULES...
+
+
+
+
+
+
+
+
+
+
+ ----------> ESSAS AULAS DE AGORA SÓ SERVEM PARA NOS INTRODUZIR A ESSES CONCEITOS...  --> nós os veremos 
+
+
+ aplicados mais tarde...
+
+
+
+
+
+
+
+
+ --> NÃO ACABAMOS, ENTRETANTO. ----------> 
+
+
+
+ NO COMPONENT 
+
+ 'Person',
+
+
+
+
+ NÓS TEMOS AQUELE 
+
+
+ ___INPUT__ em que 
+
+ podemos 
+
+ __MUDAR O 'NAME' __ DE UMA PESSOA, CERTo?
+
+
+
+ Ex:
+
+
+
+
+
+ class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p key="i2">{this.props.children}</p>,
+        <input     //////////////EIS O CÓDIGO EM QUESTÃO.
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+------------------------------
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+O
+ APPROACH/MANEIRA 
+
+
+
+ DE __MUDAR ___ ESSE 
+
+ 'name'
+
+
+
+ É '''ABSOLUTELY FINE''''..., aqui. --------> ENTRETANTO, 
+
+ SE VOCê 
+
+
+
+ QUISER/DESEJAR 
+
+
+ ___GANHAR ACESSO ___ A UM ELEMENTO 
+
+
+
+ HTML 
+
+
+
+ COMO 
+
+
+
+ ESSE 
+
+ '<input>'     (OBS:::: MAS ESSE MÉTODO/APPROACH QUE O PROFESSOR NOS MOSTRARÁ __FUNCIONA COM __ QUALQUER ELEMENTO HTML/JSX... ),
+
+
+
+ AÍ 
+
+
+
+ VOCÊ 
+
+
+ TEM QUE 
+
+
+ SABER 
+
+
+
+ _QUE VOCÊ __NÃO 
+
+
+ ESTÁ LIMITADO 
+
+ A APENAS 
+
+ SETTAR 
+
+
+ 'TWO WAY-BINDING'  em 
+
+
+
+ 'onChange={this.props.changed}'
+
+ e 
+
+ em 
+
+ 'value={this.props.name}' -----------------> PQ ISSO, 
+
+ É CLARO,
+
+
+ É __NICE___ PARA 
+
+
+ _______cONSEGUIR____O VALOR QUE VOCê/O USUÁRIO 
+
+ __INPUTTOU__ em um field... -----------------------> MAS DIGAMOS QUE 
+
+ VOCÊ 
+
+
+ __QUEIRA___  __FOCAR__ (focus) AQUELE ELEMENTO 'INPUT'...  ------> DIGAMOS QUE, QUANDO 
+
+ NÓS 
+
+
+ __RENDERIZAMOS__ NOSSO ELEMENTO 'PERSONS', aqui, 
+
+ A ÚLTIMA 
+
+ PERSON___  DEVERÁ ___ AUTOMATICAMENTE RECEBER 'focus'...  (ou seja, 
+ 
+ QUEREMOS 
+ 
+ 
+ 
+ ENFIAR UM ESTILO DE 
+ 
+ 
+ ':FOCUS' nesse elemento 'input'...) ------------------> 
+
+
+
+
+ BEM, 
+
+ SE QUISERMOS 
+
+ FAZER ISSO,
+
+ VAMOS 
+
+ __PERCEBER___ QUE 
+
+
+ ISSO 
+
+ É, NA VERDADE,
+
+
+ 'QUITE HARD TO DO, HERE'..... ------> é difícil 
+
+
+ PQ ____ TODOS OS COMPONENTS 'Person' acabarão selecionados/terão o efeito 
+
+ 'focus' aplicado sobre si 
+
+
+ SE ENFIARMOS UM 
+
+ 'className={....:focus}' 
+
+ LÁ 
+
+
+ NO CÓDIGO DE 
+
+ '
+
+
+ class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p key="i2">{this.props.children}</p>,
+        <input  
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+'
+
+
+
+
+-----------------------------------
+
+
+
+BEM,
+
+ENTÃO,
+
+
+COMO PODEMOS 
+
+
+FAZER O 'FOCUS' 
+
+DESSE NEGÓCIO, 
+
+
+FAZER 
+
+
+O ':FOCUS' SER 
+
+APLICADO 
+
+
+
+_____SÓ NO ELEMENTO ___ EM QUE O USUÁRIO COMEÇOU O EVENTO 'TYPE'....?
+
+
+
+
+
+
+
+
+
+------> PROFESSOR EXPLICA QUE, NO JAVASCRIPT COMUM,
+
+
+VOCÊ PROVAVELMENTE  
+
+
+escreveria algo 
+
+como 
+
+
+'document.querySelector('input').focus();'.... ---> 
+
+
+ele até 
+
+MESMO SIMULA A EXECUÇÃO 
+
+
+DESSE CÓDIGO 
+
+
+dentro 
+
+
+de 
+
+'componentDidMount()' --------> (PQ ESSE É UM MÉTODO QUE OCORRE ___DEPOIS DO 'RENDER()', depois da etapa de 'render()'...)
+
+
+
+FICARIA ASSIM (se funcionasse):
+
+
+
+
+
+
+
+
+ class Person extends Component {
+
+            componentDidMount() {
+                document.querySelector('input').focus(); //////////MAS ISSO NÃO FUNCIONARÁ/NÃO FUNCIONA.
+            }
+
+
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p key="i2">{this.props.children}</p>,
+        <input  
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+
+----------------------------------------
+
+
+E SE TENTARMOS ISSO,
+
+DIZ O PROFESSOR... 
+
+
+ISSO VAI FUNCIONAR, de certa forma... MAS NÃO VAI FUNCIONAR 100%... ----> pq 
+
+
+vai funcionar? VAI FUNCIONAR PQ 'componentDidMount()' FOI CHAMADO 
+
+
+DENTRO DE UM 'CLASSBASED COMPONENT'... ( e a sintaxe javascript dentro do seu 
+
+body está VÁLIDA, mesmo que ela SÓ CONSIGA FAZER O ':FOCUS' SER
+
+__APLICADO__ NO ___PRIMEIRO ___ COMPONENT 'Person'...)...
+
+
+
+
+
+
+Ok, mas PQ DIABOS O EFEITO ':FOCUS' 
+
+
+está SENDO APLICADO ___SOMENTE AO input FIELD DO PRIMEIRO 
+
+COMPONENT 'Person' renderizado na página? ---------> 
+
+
+
+
+PROFESSOR EXPLICA QUE A RAZÃO É SIMPLES:
+
+
+'document.querySelector()', como você pode se lembrar,
+
+__SEMPRE SELECIONA __ APENAS O ___PRIMEIRO ELEMENTO___  QUE ELE ENCONTRA COM 
+AQUELE IDENTIFICADOR (nesse caso, 'input')...
+
+
+
+--> e isso, adicionalmente, 'IS NOT THAT GREAT',
+
+pq 
+
+ESSE DOCUMENT.querySelector()
+
+
+
+NÃO VAI SE REFERENCIAR 
+
+
+ESPECIFICAMENTE 
+
+
+AO ELEMENTO 'INPUT' 
+
+
+
+RENDERIZADO PELO COMPONENT 'Person'....    (pq se esse fosse o caso, 
+
+ele sempre iria APLICAR ':FOCUS' NO ___ÚLTIMO 
+
+COMPONENT PERSON___ DA PÁGINA,
+ 
+o ÚLTIMO DA LISTA....) -------------> em vez disso,
+
+
+
+ELE deu focus NO PRIMEIRO ELEMENTO 'INPUT' QUE ELE 
+
+ENCONTROU NA PÁGINA... -----------> ISSO PQ 'document.querySelector()'
+
+
+
+___NÃO É ALGO__ QUE É RELACIONADO AO REACT( é por isso que ele não funciona tão bem)...
+
+
+
+
+
+
+
+
+
+
+
+
+QUERYSELECTOR ---> É UMA FEATURE GERAL DO JAVASCRIPT/DO DOM... -----> e justamente 
+
+POR ISSO ELE 
+
+NÃO É MANEIRA MAIS ÓPTIMA 
+
+DE SELECIONAR ESSE INPUT... -------> É CLARO QUE PODERÍAMOS 
+
+
+
+__SETTAR__ UM 'ID' NO NOSSO COMPONENT, PARA PODERMOS O SELECIONAR POR 'ID' (getElementByid) ,
+
+
+
+MAS O FATO IMPORTANTE 
+
+
+É __QUE O REACT ___ NOS DISPONIBILIZA 
+
+
+___UMA MANEIRA MAIS SIMPLES E FÁCIL ___ DE  
+
+
+
+__SELECIONAR UM ELEMENTO HTML/JSX___......... ------> É UM 
+
+
+
+CONCEITO CHAMADO DE 'REF SWITCHING' ----------> 
+
+
+
+''''''REF''''''''' ----> É ABREVIAÇÃO DE 'References'...
+
+
+
+
+
+
+
+
+
+
+
+---> O QUE É ISSO? ---> BEM,
+
+
+basicamente em 
+
+
+
+QUALQUER ELEMENTO, e por isso o professor quer DIZER REALMENTE QUALQUER ELEMENTO JSX/HTML (inclusive 
+seus PRÓPRIOS COMPONENTS), VOCÊ 
+
+
+PODE ADICIONAR  UMA 
+
+
+
+KEYWORD 
+
+ESPECIAL 
+
+
+'ref'  (quase como se fosse um PROP)...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+ class Person extends Component {
+
+                 componentDidMount() {
+         
+     }
+
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p key="i2">{this.props.children}</p>,
+        <input  
+          ref={} //////////EIS O CÓDIGO EM QUESTÃO.
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+------------------------------------------
+
+
+
+O PROFESSOR EXPLICA QUE 
+
+ESSE 
+
+'REF', ASSIM COMO 'key', 
+
+
+É UMA 
+
+
+___PROPRIEDADE ESPECIAL___ QUE VOCÊ PODE PASSAR 
+
+A UM COMPONENT___.... ------->  ISSO SIGNIFICA 
+
+
+QUE 
+
+
+
+'ref' 
+
+É DETECTADO E ENTENDIDO PELO 'REACT'...
+
+
+
+
+
+
+
+
+CERTO... O INTERESSANTE É QUE 
+
+
+'ref'
+
+
+PODE SER UTILIZADO 
+
+
+
+DE __UM PUNHADO DE MANEIRAS DIFERENTES___... --------> E 
+
+
+
+O PROFESSOR 
+
+VAI NOS MOSTRAR O APPROACH Nº1 ,
+
+
+
+QUE É 
+
+
+o suportado
+ 
+
+ EM BROWSERS MAIS ANTIGOS, E NAS VERSÕES MAIS ANTIGAS DO REACT...
+
+
+
+------------------------
+
+
+
+APPROACH nº 1 DE 
+
+
+
+'ref'... --------> 
+
+
+VOCÊ 
+
+
+PASSA 
+
+
+UMA FUNÇÃO INTERNA COMO PARÂMETRO 
+
+
+DE 
+
+'ref'...
+
+
+
+ex:
+
+
+
+
+ref={() => {}}
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+E ESSA FUNÇAÕ 
+
+
+
+___PODE SER ___ UMA 'ANONYMOUS ARROW FUNCTION'......
+
+
+
+
+E O ARGUMENTO QUE O 'REF' VAI RECEBER/EXIGIR 
+
+
+
+É ___UMA REFERÊNCIA ___ AO ELEMENTO ___ EM QUE 
+
+VOCê O POSICIONOU... (nesse caso, colocamos ele dentro do 'ELEMENTO INPUT' de 
+nosso component 'Person', por isso vamos NOMEAR 
+
+ESSE PARÂMETRO QUE 
+
+ELE VAI RECEBER DE 'inputElement'...)
+
+
+
+
+ex:
+
+
+
+
+
+
+
+ class Person extends Component {
+
+
+                 componentDidMount() {
+         
+     }
+        
+
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p key="i2">{this.props.children}</p>,
+        <input  
+          ref={(inputElement) => {}} //////////EIS O CÓDIGO EM QUESTÃO.
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+DENTRO DESSE FUNCTION BODY DA FUNÇÃO INTERNA,
+
+
+
+você pode, ENTÃO, 
+
+UTILIZAR ESSE PARÂMETRO...  ---------> 
+
+
+
+PROFESSOR teoriza/avacalha, e diz que 
+
+poderíamos 
+
+
+escrever 
+
+
+'ref={(inputElement) => {inuptElement.focus()}}'   (OU SEJA, CHAMAR 'focus' DIRETAMENTE NO INPUTELEMENT DO NOSSO component...) ----------> 
+
+
+
+
+
+MAS AÍ ELE EXPLICA 
+
+
+__QUE ESSE CÓDIGO __ NÃO É A COISA QUE ELE VAI QUERER FAZER, AQUI_.... -------> EM VEZ DISSO,
+ 
+
+
+ EXPLICA ELE, 
+
+
+ DEVEMOS 
+
+
+ USAR 
+
+ esse 'focus'
+  
+
+  EM ALGUM OUTRO LUGAR DO APLICATIVO....
+
+
+
+
+
+
+(OBS::::   // ref={(inputElement) => {inputElement.focus();}} /////////ISSO NÃO FUNCIONARÁ. 'cannot read FOCUS property of NULL'...)....
+
+
+
+
+
+-------------------------------------------------------------
+
+
+
+
+NÃO É ISSO QUE ELE VAI QUERER FAZER... DIGAMOS QUE 
+
+
+VAMOS QUERER 
+
+
+USAR 
+
+
+ESSE 'focus' 
+
+
+EM ALGUM OUTRO LUGAR DE NOSSO APLICATIVO...  -----------> SE QUISERMOS ISSO, O QUE 
+
+PODEMOS 
+
+
+FAZER 
+
+
+___É ADICIONAR __ UMA NOVA ___PROPRIEDADE____ A NOSSA 
+
+
+'Classe' (a 'class' de Person'.... ---> '''class Person extends Component{}' )....
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+
+VOCÊ VAI REALMENTE ADICIONAR ___UMA NOVA PROPRIEDADE____ À CLASSE 'Person' ('class Person extends Component'...)....
+
+
+
+
+
+
+E PARA ADICIONAR PROPRIEDADES A CLASSES,
+
+COMO VOCÊ APRENDEU,
+
+VOCÊ 
+
+DEVE SEMPRE 
+
+ESCREVER,
+
+DENTRO 
+
+
+DA CLASSE:
+
+
+
+'this.propriedadeQueAindaNaoExiste'....
+
+
+------------------------
+
+
+
+AQUI, NO CASO DE 
+
+'ref',
+
+
+NÓS 
+
+VAMOS 
+
+
+ESCREVER 
+
+
+ALGO COMO:
+
+
+
+
+
+
+ref={(inputElement) => {this.inputProperty}}
+
+
+
+
+
+
+
+(VOCÊ PODE NOMEAR ESSA PROPRIEDADE 
+
+
+___DE QUALQUER COISA QUE VOCÊ QUISER..... professor usa o nome 
+
+'
+inputElement', mas nós DECIDIMOS NOMEAR 
+
+'inputProperty'...)...........
+
+
+
+
+
+
+POR FIM, 
+
+
+VOCÊ VAI DEFINIR ('=') O VALOR DESSA PROPRIEDADE __COMO SENDO O __ VALOR QUE 
+
+NÓS __ESTÁVAMOS RECEBENDO/RECEBEMOS NESSA FUNÇÃO INTERNA 
+
+
+DO 'ref', ou seja, 'inputElement'....
+
+
+
+
+
+
+ex:
+
+
+
+ref={(inputElement) => {this.inputProperty = inputElement}}
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+RESULTADO (código completo):
+
+
+
+
+
+
+
+ class Person extends Component {
+
+
+     componentDidMount() {
+
+     }
+        
+
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p key="i2">{this.props.children}</p>,
+        <input  
+          ref={(inputElement) => {this.inputProperty = inputElement}} //////////EIS O CÓDIGO EM QUESTÃO.
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+--------------------------------------
+
+
+
+
+
+ISSO, O 'REF', VAI SIGNIFICAR, BASICAMENTE,
+
+
+QUE NÓS VAMOS GANHAR ACESSO 
+
+
+
+AO NOSSO ELEMENTo 'input'... ('<input>') -----> E AÍ NÓS 
+
+
+ESTAREMOS/VAMOS 
+
+
+ARMAZENAR ESSE
+
+
+VALOR DO 'ELEMENTO INPUT' 
+
+
+DENTRO DESSA 
+
+
+___PROPRIEDADE GLOBAL___ (SIM, REALMENTE __GLOBAL___... GLOBAL COMO EM 
+
+'PODEMOS USAR ESSA PROPRIEDADE ____ EM QUALQUER LUGAR DE NOSSO APLICATIVO____ ---> o que 
+
+É __MUITO ÚTIL__...) 
+
+
+
+
+
+Certo....
+
+
+E como 
+
+
+'componentDidMount()' 
+
+
+
+___É EXECUTADO___ LOGO APÓS O LIFECYCLE/ETAPA/MÉTODO 
+
+
+'render()',
+
+
+
+NÓS 
+
+
+PODEMOS ___ USÁ-LO ___ PARA 
+
+
+DEFINIR 
+
+ESTILOS ESPECIAIS/ESPECÍFICOS A UM ÚNICO ELEMENTO,
+
+
+COMO 
+
+':focus' 
+
+
+EM __1 ___ ELEMENTO 
+
+
+'INPUT' ESPECÍFICO... -------> E COMO 
+
+
+o 
+
+'inputProperty'
+ 
+
+
+ __JÁ TERÁ SIDO SETTADO ___ ANTES 
+
+ DE CHEGARMOS 
+
+
+ à ETAPA DE 
+
+ 'componentDidMount(){
+    
+ }',
+
+
+
+ NÓS PODEREMOS
+  
+
+
+
+
+  EXECUTAR/DEFINIR ESTILOS ESPECÍFICOS 
+
+
+  dentro 
+
+  dessa 'etapa'...  (CONTUDO, LEMBRE-SE QUE VOCÊ DEVE SEMPRE ADICIONAR __'THIS'__ ANTES DA PROPRIEDADE QUE VOCÊ QUISER DEFINIR/EXECUTAR ALI...)
+
+
+  ex:
+
+
+
+  componentDidMount() {
+      this.inputProperty.focus(); ///eis o código em questão.
+  }
+
+
+  ---------------------------
+
+
+
+
+
+  RESULTADO(CÓDIGO COMPLETO):
+
+
+
+
+
+
+
+
+
+   class Person extends Component {
+
+
+     componentDidMount() {
+            this.inputProperty.focus();
+     }
+        
+
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p key="i2">{this.props.children}</p>,
+        <input  
+          ref={(inputElement) => {this.inputProperty = inputElement}} //////////EIS O CÓDIGO EM QUESTÃO.
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+DETALHE FINAL:::::: ESSE APPROACH QUE O PROFESSOR NOS MOSTROU ___SÓ FUNCIONA EM CLASS-BASED COMPONENTS.... (E NÃO FUNCIONA EM FUNCTIONAL COMPONNTS...)
+
+
+
+
+
+
+
+
+
+-----> se salvarmos isso e recarregarmos o projeto,
+
+
+
+O INPUT FIELD EM QUE O USUÁRIO DIGITAR _SEMPRE VAI SER ILUMINADO (focus), 
+
+graças A ESSE 'REF'...
+
+
+
+
+OK... PROBLEMA: EU NÃO VI __DIFERENÇA ALGUMA ___ NO 
+
+
+
+USO 
+
+
+DESSES 'refs', pelo menos 
+
+
+
+quando o assunto é esse estilo ':focus' ----> talvez PQ 
+
+ISSO JÁ ESTÁ DEFINIDO COMO __eSTILO PADRÃO___ DO 
+
+
+'CHROME', nessas versões mais novas....
+
+
+
+--> e o chrome está me mostrando umas CORES BIZARRAS 
+
+no meu aplicativo react, em volta das bordas dos components... --> não sei se isso 
+
+SOME durante a PRODUCTION BUILD, mas ainda é bizarro.
+
+
+
+
+--> para REMOVER esse tipo de estilo de nossos 'input elements',
+
+poderíamos definir um arquivo de estilo/inline style 
+
+
+de 
+
+
+''''
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+''''
+
+
+
+-------------------------------------------
+
+
+
+LEMBRE-SE: PROFESSOR DISSE QUE 
+
+__HÁ 2 APPROACHES__ PARA USAR 'ref'....
+
+
+
+
+AGORA VAMOS VER O SEGUNDO:
+
+
+
+
+
+
+
+2)  
+
+DESDE O 
+
+
+REACT 16.3,
+
+
+TEMOS 
+
+
+OUTRA MANEIRA 
+
+
+DE 
+
+
+SETTAR UMA __REFERENCE___ NO NOSSO CÓDIGO__..... (em class-based components)....
+
+
+
+
+
+---> mas esse approach 
+
+
+__REQUER___ QUE NÓS 
+
+
+SETTAMOS ___ UM CONSTRUCTOR.... ('constructor() {}')
+
+
+
+
+
+
+---> VOCÊ DEVE 
+
+
+___ESCREVER UM CONSTRUCTOR DENTRO DO SEU CLASS-BASED COMPONENT E ENTÃO 
+
+
+
+DEFINIR 
+
+
+A MESMA PROPRIEDADE QUE VOCÊ QUERIA/ESTAVA USANDO MAIS CEDO... ('this.inputProperty'....)....
+
+
+
+
+AÍ VOCÊ VAI DEFINIR O VALOR 
+
+DESSA PROPRIEDADE ('this.inputProperty') 
+
+COMO SENDO IGUAL ('=') 
+
+
+À 
+
+'React.createRef()'....
+
+
+
+
+Ex:
+
+
+
+
+
+
+
+   class Person extends Component {
+
+       
+
+       constructor(props) {
+           super(props);
+           this.inputProperty = React.createRef();
+       }
+
+
+
+
+
+
+
+
+     componentDidMount() {
+            this.inputProperty.focus();
+     }
+        
+
+
+
+
+
+
+
+
+
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p key="i2">{this.props.children}</p>,
+        <input  
+          ref={(inputElement) => {this.inputProperty = inputElement}} //////////EIS O CÓDIGO EM QUESTÃO.
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+
+
+---------------------------- 
+
+
+
+
+RESUMINDO:
+
+
+
+'createRef'
+
+
+É UM __MÉTODO __ EXISTENTE DENTRO 
+
+
+DO OBJETO 
+
+
+
+'React' que importamos no nosso arquivo/no nosso component... ---> E NÓS 
+
+ENTÃO 
+
+
+VAMOS ARMAZENAR 
+
+
+
+ESSA ___REFERÊNCIA __ CRIADA POR MEIO DE '.createRef()' 
+
+
+
+___DENTRO___ DA NOSSA PROPRIEDADE 
+
+
+de 
+
+
+'inputProperty', DENTRO 
+
+
+DO COMPONENT 
+
+'Person'... -------------> MAS ISSO SIGNIFICA, É CLARO,
+
+
+QUE 
+
+ESSA 
+
+
+''''REFERÊNCIA'''' (o 'inputProperty', essa propriedade QUE SEGURA 
+
+A REFERÊNCIA) ____NÃO É____ NECESSARIAMENTE 
+
+
+O elemento '<input>' que temos mais abaixo....; essa 
+
+
+referência pode ser QUALQUER 'REFERENCE OBJECT' QUE O REACT NOS 
+
+DÁ/NOS PASSA, 
+
+
+SEJA QUAL ELE FOR, 'behind the scenes'... ----->  ISSO 
+
+FEITO,
+
+
+
+PODEMOS USAR 
+
+
+
+ESSe 
+
+'inputProperty'  LÁ 
+
+
+
+
+DENTRO 
+
+
+
+DO 
+
+'
+ref={}'....
+
+
+
+
+
+
+
+ou seja,
+
+
+EM VEZ DE VOCÊ PASSAR AQUELA FUNÇÃO INTERNA CONFUSA 
+
+
+ao 
+
+'ref' (que estava tipo assim:  'ref={(inputElement) => {this.inputProperty = inputElement}})',
+
+
+
+
+
+VOCÊ PODE 
+
+
+SIMPLESMENTE 
+
+
+ESCREVER 
+
+
+'ref={this.inputProperty}' ___DENTRO___ DO SEU ELEMENTO '<input>' 
+
+__PARA QUE 
+
+ELE SEJA __AUTOMATICAMENTE VINCULADO __ COMO 'OBJETO REFERÊNCIA' DESSE 
+
+'inputProperty' (essa propriedade que SEGURA __UMA REFERÊNCIA__, E QUE FOI DEFINIDA/INICIALIZADA 
+
+___LÁ NO NOSSO CONSTRUCTOR___...)
+
+------------------------------------
+
+
+
+
+
+
+RESUMINDO, AQUI ESTÃO OS 2 
+
+
+APPROACHES, COMPARADOS:
+
+
+
+
+
+
+
+
+
+1) Approach 'OLD-SCHOOL':
+
+
+
+
+
+
+
+   class Person extends Component {
+
+
+     componentDidMount() {
+            this.inputProperty.focus(); 
+     }
+        
+
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p key="i2">{this.props.children}</p>,
+        <input  
+          ref={(inputElement) => {this.inputProperty = inputElement}} //////////EIS O CÓDIGO EM QUESTÃO.
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+
+
+---------------- VS ------------------ 
+
+
+
+
+2) APPROACH 'moderno', do REACT 16.3:
+
+
+
+
+
+
+
+
+
+
+
+   class Person extends Component {
+
+        constructor(props) {
+            super(props);
+            this.inputProperty = React.createRef(); ////////EIS O CÓDIGO EM QUESTÃO.
+        }
+
+
+
+
+     componentDidMount() {
+            this.inputProperty.current.focus();
+     }
+        
+
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p key="i2">{this.props.children}</p>,
+        <input  
+          ref={this.inputProperty} //////////EIS O CÓDIGO EM QUESTÃO.
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+
+
+--------------------------------------------
+
+
+
+Nesse segundo approach, 
+
+'inputProperty' SEGURA 
+
+UM ACESSO A ESSE OBJETO 'ref' QUE 
+
+O REACT ME DÁ... --------> e aí EU VOU ASSIGNAR ESSE OBJETO 'ref' À MINHA PROPRIEDADE 
+
+'ref', lá no ELEMENTO INPUT do meu component.... ------> e isso funciona PQ 
+
+
+
+__POR TRÁS DAS CENAS___ O REACT VAI FAZER A CONEXÃO ENTRE O OBJETO 'REF' E A 
+
+PROPRIEDADE/PROP 'ref' DEFINIDA LÁ NO SEU ELEMENTO HTML/JSX... ------> 
+
+
+E ISSO, NO FINAL DAS CONTAS,
+
+
+FARÁ 
+
+COM QUE 
+
+'inputProperty' 
+
+__ME Dê __ ACESSO 
+
+
+
+AO PRÓPRIO ELEMENTO 'input' EM QUE 
+
+EU COLOQUEI 
+
+AQUELE 
+
+PROP/PROPRIEDADE DE 'ref={}'...
+
+
+
+
+
+AÍ, ISSO FEITO,
+
+
+
+EM 
+
+
+'componentDidMount()'
+
+
+
+EU VOU 
+
+EXECUTAR UM OUTRO CÓDIGO EM CIMA 
+
+DO 'INPUT ELEMENT' 
+
+representado 
+
+
+por 
+
+'inputProperty'... -----> eu vou 
+
+
+executar 
+
+
+'.current' -------------> 'current' --> É UMA __PROPRIEDADE___  QUE VOCê 
+
+
+DEVE 
+
+__aCESSAr__ ANTES DE PODER __ USAR A SUA 'reference', QUANDO VOCÊ OPTA 
+
+PELO APPROACH DO CONSTRUCTOR...
+
+
+
+
+
+current ---> o QUE ELE FAZ? ----> ELE DÁ ACESSO AO SEU 'CURRENT reference'....
+
+
+
+
+POR FIM, 
+
+EU VOU FAZER __CHAIN__ do método 'focus()' 
+
+EM CIMA 
+
+DESSA PROPRIEDADE/MÉTODO '.current'... --> farei 
+
+isso 
+
+
+pq 
+
+
+__EU VOU QUERER ___ 
+
+ATIVAR O ESTILO 
+
+'FOCUS' 
+
+
+EM CIMA 
+
+
+
+
+do 'CURRENT ELEMENT'  ---> pq o 'CURRENT ELEMENT' sendo REFERENCIADO por 'inputProperty' é __REALMENTE ___ O 'INPUT ELEMENT' DE 'Persons'...
+
+
+
+
+
+
+
+
+
+
+
+(OBS:::: UMA COISA QUE DEVEMOS FAZER É ADICIONAR 'super(props)' DENTRO DO CONSTRUCTOR... E TAMBÉM ADICIONAR 'props' __COMO PARÂMETRO DO CONSTRUCTOR ___>  se não fizermos isso, nADA FUNCIONARÁ, PQ É O 'SUPER()' QUE FAZ ___ AS FEATURES/OBJETOS __ DENTRO DO OBJETO 'React' SEREM ___IMPORTADAS/INCORPORADAS DENTRO DA CLASSE/COMPONENT 'Person' QUE NÓS CRÍAMOS__....
+(OBS:::: UMA COISA QUE DEVEMOS FAZER É ADICIONAR 'super(props)' DENTRO DO CONSTRUCTOR... E TAMBÉM ADICIONAR 'props' __COMO PARÂMETRO DO CONSTRUCTOR ___>  se não fizermos isso, nADA FUNCIONARÁ, PQ É O 'SUPER()' QUE FAZ ___ AS FEATURES/OBJETOS __ DENTRO DO OBJETO 'React' SEREM ___IMPORTADAS/INCORPORADAS DENTRO DA CLASSE/COMPONENT 'Person' QUE NÓS CRÍAMOS__....
+(OBS:::: UMA COISA QUE DEVEMOS FAZER É ADICIONAR 'super(props)' DENTRO DO CONSTRUCTOR... E TAMBÉM ADICIONAR 'props' __COMO PARÂMETRO DO CONSTRUCTOR ___>  se não fizermos isso, nADA FUNCIONARÁ, PQ É O 'SUPER()' QUE FAZ ___ AS FEATURES/OBJETOS __ DENTRO DO OBJETO 'React' SEREM ___IMPORTADAS/INCORPORADAS DENTRO DA CLASSE/COMPONENT 'Person' QUE NÓS CRÍAMOS__....
+(OBS:::: UMA COISA QUE DEVEMOS FAZER É ADICIONAR 'super(props)' DENTRO DO CONSTRUCTOR... E TAMBÉM ADICIONAR 'props' __COMO PARÂMETRO DO CONSTRUCTOR ___>  se não fizermos isso, nADA FUNCIONARÁ, PQ É O 'SUPER()' QUE FAZ ___ AS FEATURES/OBJETOS __ DENTRO DO OBJETO 'React' SEREM ___IMPORTADAS/INCORPORADAS DENTRO DA CLASSE/COMPONENT 'Person' QUE NÓS CRÍAMOS__....
+(OBS:::: UMA COISA QUE DEVEMOS FAZER É ADICIONAR 'super(props)' DENTRO DO CONSTRUCTOR... E TAMBÉM ADICIONAR 'props' __COMO PARÂMETRO DO CONSTRUCTOR ___>  se não fizermos isso, nADA FUNCIONARÁ, PQ É O 'SUPER()' QUE FAZ ___ AS FEATURES/OBJETOS __ DENTRO DO OBJETO 'React' SEREM ___IMPORTADAS/INCORPORADAS DENTRO DA CLASSE/COMPONENT 'Person' QUE NÓS CRÍAMOS__....
+(OBS:::: UMA COISA QUE DEVEMOS FAZER É ADICIONAR 'super(props)' DENTRO DO CONSTRUCTOR... E TAMBÉM ADICIONAR 'props' __COMO PARÂMETRO DO CONSTRUCTOR ___>  se não fizermos isso, nADA FUNCIONARÁ, PQ É O 'SUPER()' QUE FAZ ___ AS FEATURES/OBJETOS __ DENTRO DO OBJETO 'React' SEREM ___IMPORTADAS/INCORPORADAS DENTRO DA CLASSE/COMPONENT 'Person' QUE NÓS CRÍAMOS__....
+
+
+
+
+
+
+
+CERTO... COM ISSO,
+ 
+
+
+
+NÓS 
+
+
+FAZEMOS NOSSO CÓDIGO FUNCIONAR COM ESSE SEGUNDO APPROACH...
+
+
+
+
+------------------------------------------------
+
+
+
+
+QUANDO RECARREGARMOS NOSSO CÓDIGO,
+
+VEREMOS QUE 
+
+A FEATURE 
+
+
+DO 
+
+
+'INPUT FIELD EM QUE O USUÁRIO ESCREVER DEVERÁ 
+
+
+FICAR COM 'FOCUS'  ' 
+
+
+
+AINDA ESTARÁ 
+
+
+
+FUNCIONANDO... ---> tudo graças ao 'REFS'... -------> VOCÊ PODE 
+
+
+
+USAR QUALQUER UMA DAS APPROACHES... ---> USE A APPROACH MODERNA... (mas 
+
+
+a velha pode ser útil.)

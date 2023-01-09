@@ -1,0 +1,936 @@
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ CONSERTEI O PROBLEMA 
+
+
+
+ NA PÁGINA/CONTAINER 'Orders'... ----> o problema 
+
+
+ era que 
+
+
+ eu 
+
+ recebia um 
+
+ erro 
+
+ de 
+
+
+ 'Request failed with status code 401',
+
+ que 
+
+ era 
+
+ gerado 
+
+ por 
+
+ 'FALTA DE AUTENTICAÇÃO/AUTORIZAÇÃO'... ------>
+
+
+
+ isso ocorria 
+
+ pq 
+
+ eu estava 
+
+
+ fazendo um call de 
+
+
+ 'this.props.onFetchOrders(this.props.token)', 
+
+ OU SEJA,
+
+
+
+ ESTAVA 
+
+ USANDO 
+
+ ___A TOKEN__ QUE 
+
+ HAVIA SIDO __ ARMAZENADA __ NO 
+
+
+ STATE DO REDUX.............- ------> e, bem, conforme o professor nos ensinou,
+
+
+ QUANDO 
+
+
+ REINICIAMOS/RELOADAMOS 
+
+ A PÁGINA,
+
+ NOSSO 
+
+ STATE DO REDUX É AUTOMATICAMENTE PERDIDO (e aí, perdemos a 'token', que fica naquele slice 
+ 
+ ali 
+ 
+ de 
+ 'this.props.token' que assignamos...)  ----------> PARA ___CONSERTAr__
+
+
+ ESSE PROBLEMA,
+
+ EU SIMPLESMENTE 
+
+
+ ARMAZENEI A TOKEN 
+
+
+ que estava armazenada NO LOCAL STORAGE DO BROWSER DO USUÁRio (o que ocorre por conta dos action 
+ creators em 'auth.js')
+ 
+
+ DENTRO DE UMA CONSTANTE CHAMADA 'token',
+
+ que foi 
+
+ ENTÃO 
+
+ PASSADA 
+
+ PARA DENTRO DO DISPATCH 
+
+ de 
+
+ 'onFetchOrders()'...
+ 
+ 
+ 
+
+ ex:
+
+ 
+ componentDidMount() {
+
+
+                const token = localStorage.getItem('token');
+                this.props.onFetchOrders(token);
+             
+
+        
+        }
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+PRONTO, COM ISSO, NOSSA PÁGINA 'Orders' agora 
+
+vai 
+
+sempre 
+
+CARREGAR AS ORDERS no início do load da página,
+
+caso 
+
+
+exista o token.... ---> token que vai continuar existindo NO LOCAL STORAGE,
+
+mesmo 
+
+se 
+
+o usuário recarregar/fechar a aba em que 
+
+
+está nossa página...
+
+
+
+
+
+-----------------------
+
+OK... VOLTANDO AO TÓPICO DA AULA DE HOJE,
+
+
+'Ensuring App security'... --------->  
+
+
+
+
+
+
+
+
+O PROFESSOR QUER FALAR UM POUCO DE __sEGURANÇA__... ---> professor 
+
+
+faz 
+
+login novamente... -----> ele nos 
+
+explica que ESTAMOS 
+
+
+___ FAZENDO MANAGE DE NOSSO 'authState' 
+
+
+POR MEIO 
+
+
+DAQUELA 
+
+
+
+'TOKEN' gerada 
+
+pela 
+
+API DO FIREBASE (que é armazenada na LOCAL STORAGE do browser)... ---------> 
+
+
+
+E 
+
+
+AGORA 
+
+NÓS 
+
+JÁ 
+
+AUTORIZAMOS 
+
+O 
+
+USUÁRIO, AUTOMATICAMENTE,
+
+a cada 
+
+
+'RENDER' de nosso app inteiro... -----> e essa token é válida 
+
+POR 
+
+60 MINUTOS... 
+
+
+
+
+
+
+
+-------> 60 MINUTOS ---> POR RAZÕES DE __SEGURANÇA__.... --> 
+
+
+
+isso existe pq SE A TOKEN FOR __ROUBADA__, QUALQUER 
+
+UM 
+
+PODE 
+
+ACESSAR 
+
+SEUS 
+
+DADOS/DATA... ----> e isso é BEM RUIM... -----> e 
+
+
+você 
+
+tem que 
+
+
+ligar que 
+
+essa token é ARMAZENADA 
+
+DENTRO 
+
+
+DE SUA 'APPLICATION', dentro 
+
+do 
+
+'localStorage'... -----------> 
+
+
+
+e 
+
+o 
+
+
+'localStorage' É ____VULNERÁVEL_________... --------> 
+
+
+ELE 
+
+PODE 
+
+
+SER 
+
+ATACADO POR 
+
+
+
+XSS (CROSS SITE SCRIPTING ATTACKS... ).....
+
+
+
+
+
+E ____ ATAQUES XSS___ SÃO  ___PREVENIDOS___ __PELO REACT EM SI__... ---> 
+
+isso 
+
+significa 
+
+
+que 
+
+VOCÊ __NÃO CONSEGUE__/NÃO É CAPAZ 
+
+DE 
+
+OUTPUTTAR 
+
+CÓDIGO 
+
+
+INSEGURO, POR DEFAULT...
+
+
+(e o MESMO SE APLICA AO 'Angular': você __NÃO PODE/NÃO CONSEGUE OUTPUTTAR 
+
+CÓDIGO 
+INSEGURO/VULNERÁVEL 
+
+A 
+
+SCRIPTING ATTACKS usando esses frameworks...) ----------->  ISSO SIGNIFICA QUE 
+
+ESSES 
+
+
+FRAMEWORKS __NOS DÃO MUITA PROTEÇÃO___.... --------> 
+
+
+
+nossa 
+
+data 
+
+em 
+
+'localStorage'
+
+
+
+FICA SEGURA, GERALMENTE... ------> 
+
+
+
+
+UM 'SAFETY NET ADICIONAL' 
+
+é ,
+
+por exemplo,
+
+
+
+
+ESSE 
+
+
+EXPIRE 
+
+
+DA TOKEN 
+
+EM 
+
+1 HORA... --------->  
+
+
+
+MAS 
+
+
+O 
+
+
+
+FIREBASE,
+ 
+ teoricamente,
+
+ NOS 
+
+ _dÁ __ AQUELA 
+
+
+ 'refreshToken',
+
+ QUE 
+
+ PODEMOS 
+
+
+ EXAMINAR 
+
+
+ NAQUELE 
+
+ OBJETO 
+
+ 'RESPONSE' QUE 
+
+ ELE 
+ NOS ENVIA 
+
+ A PARTIR 
+
+ DE QUALQUER REQUEST...
+
+
+
+
+
+
+
+
+
+
+ ---------> podemos observar no objeto:
+
+
+
+data: {
+ displayName:
+email:
+expiresIn:
+idToken:
+kind:
+localId:
+refreshToken: ----> É SOBRE ISSO QUE ESTAMOS FALANDO.
+registered: true
+
+
+
+
+
+}
+
+
+
+--------------------------------
+
+
+
+
+
+
+A 'idToken' __EXPIRA__, REALMENTE... 
+
+
+
+
+
+--> MAS ___ A 'refreshToken' ____________ NUNCA EXPIRA___....  ---------- >
+
+
+
+
+E, ADICIONALMENTE,
+
+
+
+a
+
+
+'refreshToken'
+
+
+
+__PODE SER ARMAZENADA __ (é possível fazer isso)
+
+
+DENTRO 
+
+
+DA 
+
+LOCALSTORAGE 
+
+do seu browser... -------------------> 
+
+
+
+
+
+
+ADICIONALMENTE,
+
+EXISTE UM 
+
+
+
+ENDPOINT ESPECÍFICO 
+
+
+
+NO 
+
+
+'FIREBASE AUTH REST API'
+
+
+AO QUAL 
+
+
+VOCÊ 
+
+PODE 
+
+ENVIAR UM 
+
+REQUEST 
+
+COM 
+
+UMA 
+
+
+refreshToken.... ---> nesse ENDPOINT AÍ,
+
+
+A 
+
+REFRESHTOKEN PODE SER __ TROCADA (exchanged) 
+
+POR 
+
+UMA 
+
+
+'idToken' COMUM... ------------------> 
+
+
+
+ISSO PODE SER VISTO 
+
+NA 
+
+DOCUMENTAÇÃO 
+
+DO 
+
+
+GOOGLE FIREBASE REST AUTH API....
+
+
+ex:
+
+
+
+
+
+
+Exchange a refresh token for an ID token
+You can refresh a Firebase ID token by issuing an HTTP POST request to the securetoken.googleapis.com endpoint.
+
+Method: POST
+
+Content-Type: application/x-www-form-urlencoded
+
+Endpoint
+
+https://securetoken.googleapis.com/v1/token?key=[API_KEY]
+Request Body Payload
+Property Name	Type	Description
+grant_type	string	The refresh token's grant type, always "refresh_token".
+refresh_token	string	A Firebase Auth refresh token.
+Response Payload
+Property Name	Type	Description
+expires_in	string	The number of seconds in which the ID token expires.
+token_type	string	The type of the refresh token, always "Bearer".
+refresh_token	string	The Firebase Auth refresh token provided in the request or a new refresh token.
+id_token	string	A Firebase Auth ID token.
+user_id	string	The uid corresponding to the provided ID token.
+project_id	string	Your Firebase project ID.
+
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+https://securetoken.googleapis.com/v1/token?key=[API_KEY]
+
+
+
+
+
+-----------> se vocÊ 
+
+escrever 
+
+
+no seu 
+
+código 
+
+um request de tipo POST a esse endpoint aí, tendo 
+
+como payload 
+
+O 
+
+
+
+'refreshToken',
+
+VOCê 
+
+
+GANHA 
+
+DE VOLTA UM 
+
+
+'idToken' válido.... --------> TEORICAMENTE, 
+
+
+
+ESSE É UM PADRÃO ___BEM LEGAL, NEAT... --------> 
+
+
+
+
+
+e vocÊ pode fazer ISSO, TEORICAMENTE, COM QUALQUER 
+
+
+REQUEST 
+
+QUE 
+
+VOCê 
+
+ENVIA DE SEU APLICATIVO... ===> ou seja,
+
+você 
+
+
+envia 
+
+o request que você quer enviar 'primariamente' (ex: um post request de uma ORDER),
+
+junto 
+
+desse request 'secundário' QUE 
+
+
+
+TROCA UMA 'refreshToken' por um 'idToken' válido... (esse padrão é POSSÍVEL 
+
+DE SE FAZER, se você quiser...) ----------------->  e você pode escrever 
+
+
+esse 
+
+padrão.... --> com esse padrão aí, MESMO QUE O 'idToken' não tenha EXPIRADO DE VERDADE,
+
+
+VOCÊ SEMPRE __RECEBERÁ __ UM NOVO ID TOKEN QUANDO SEU REQUEST 'primário' e 'secundários' 
+
+forem enviados... --> aí vocÊ sempre receberá 
+
+NOVOS 
+
+'ID TOKENS' a partir desses requests com o 'refreshtoken' no payload/body...
+
+
+
+
+
+----------------------
+
+
+no nosso caso, no nosso app, 
+
+com 
+
+o 
+
+código dos 'idToken',
+
+
+NÓS 
+
+
+__TAMBÉM__ PODERÍAMOS __ (se quiséssemos)
+
+
+
+
+fazer com que NO MESMO TEMPO EM QUE AQUELA 
+
+
+FUNCIONALIDADE DE 'AUTO-LOGIN' é executada,
+
+o refreshtoken ser enviado 
+
+
+para 
+
+conseguir 
+
+um 
+
+NOVO IDTOKEN... --------> MAS O PROFESSOR OPTOU __POR NÃO USAR__ ISSO AQUI,
+
+NO NOSSO APP... ----------->  PROFESSOR NOS EXPLICA QUE 
+
+
+OS 
+
+'refreshTOken'
+
+
+TAMBÉM 
+
+SÃO SEGUROS,
+
+
+QUE 
+ELES 
+
+
+__TAMBÉM __ SÃO ARMAZENADOS NA LOCALSTORAGE DO BROWSER.... e que 
+
+eles 
+
+também 
+
+SÓ PODEM SER ATACADOS/ACESSADOS A FORÇA POR MEIO DE XSS (cross site scripting attacks).
+
+
+
+
+
+
+
+
+---> AINDA ASSIM,
+
+
+
+TER UMA 
+
+TOKEN 
+
+QUE 
+
+____NUNCA EXPIRA___ (pq é isso que é a 'refreshToken',
+
+ELA É __UMA TOKEN QUE __NUNCA EXPIRA___....... não expira em 1 hora/tempo limitado,
+
+como uma 
+
+'idToken' ordinária...) ---------> TER UMA 
+
+TOKEN 
+
+QUE 
+
+NUNCA 
+
+
+EXPIRA/SEMPRE SE REFRESHA __ PODE LEVAR __ A PROBLEMAS DE SEGURANÇA;....
+
+
+
+
+
+
+
+
+
+
+
+--> NO MÍNIMO, VOCÊ DEVE TER MUITO CUIDADO COM A REFRESH TOKEN, se vocÊ 
+
+
+decidir a utilizar...
+
+
+
+
+
+
+
+
+
+
+
+
+----> é só isso que o professor queria falar: você 
+
+
+PODE___ (é possível, realmente)
+
+
+
+
+'ENHANCE THE USER EXPERIENCE' por meio 
+
+da 
+
+
+
+refreshToken; por meio dela,
+
+você pode 
+
+essencialmente assegurar que 
+
+
+O __USUÁRIO__ NUNCA ACABA 
+
+'LOGGED OUT'
+
+
+
+-----------------------------
+
+Using refresh tokens in the browser is weird. Most users do not expect a web application to have long-term access. So why does a web application need a refresh token?
+
+The main reason to use refresh tokens in web applications is to reduce the lifetime of an access token. When a web application obtains an access token with a lifetime of five to 10 minutes, that token will likely expire while the user is using the application. To obtain a new token, web applications needed to rely on clunky constructs, such as an iframe-based silent authentication flow. To make matters even more complicated, some browsers block the use of cookies during silent authentication, which breaks the flow.
+
+In that context, refresh tokens for web applications make much sense. They allow the web application to obtain new access tokens using straightforward API calls without running into cookie blocking issues.
+
+However, web applications are also notoriously insecure. One snippet of malicious JavaScript code, coming in through an XSS vulnerability or a compromised remote code file, can quickly result in the theft of a refresh token. This nightmare scenario gives the attacker long-term access to an API on behalf of the user — something you want to avoid at all costs.
+
+
+
+
+-----------------------------
+
+
+
+COMO O 
+
+
+
+
+refreshTOken __NUNCA 
+
+
+___ EXPIRA,
+
+
+
+
+
+VOCê PODE 
+
+REFRESHAR 
+
+A 
+
+'MAIN TOKEN'
+
+
+
+MESMO DEPOIS DE 
+
+1 SEMANA INTEIRA (desde que o browser esteja aberto...) --> basta 
+
+você 
+
+
+usar o aplicativo de forma normal,
+
+
+que O 
+
+
+refreshTOken 
+
+vai te 
+
+fazer 
+
+conseguir 
+
+UMA 
+
+
+NOVA 
+'idToken',
+
+
+se você não tiver fechado o browser naquela semana inteira....
+
+
+
+
+
+Facebook does not provide a refresh token.
+
+Facebook provides two kinds of access tokens,
+
+Short lived access token: A token that is expired after a short period of time (about 2 hours).
+
+Short lived access tokens are usually used on web clients.
+
+Long-lived access tokens: An access token which has a long life (about 60 days).
+
+Long lived access tokens are usually used on mobile apps and server side.
+
+
+
+
+
+
+
+----------------------------
+
+
+
+--> por causa 
+
+da questão dA SEGURANÇA,
+
+professor 
+
+decidiu 
+
+NÃO USAR refreshTokens 
+
+no nosso aplicatvo...

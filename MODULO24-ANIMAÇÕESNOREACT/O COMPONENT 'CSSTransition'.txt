@@ -1,0 +1,1795 @@
+
+
+
+
+AO LONGO DAS ÚLTIMAS LIÇÕES,
+
+
+
+
+APRENDEMOS MUITO SOBRE 
+
+'<Transition />'...
+
+
+
+
+
+--> CERTO... MAS ÀS VEZES VOCÊ __ NÃO QUER __ CONTROLAR 
+
+
+A 
+
+'TRANSITION' DE UM COMPONENT (como 'modal', em que fazemos o ATTACH manual de CLASSES CSS a partir DO STATE INTERNO do modal, que é derivado do STATE 'modalIsOpen'...)
+
+
+COMO 
+
+
+FAZEMOS AQUI...   ------> é evidente que 
+
+
+esse 
+
+é um 
+
+
+APPROACH 
+
+VÁLIDO,
+
+
+
+funciona,
+
+
+
+
+e estamos fazendo isso já....-------> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ENTRETANTO, HÁ VEZES EM QUE 
+
+VOCê 
+
+
+QUER 
+
+TER 
+
+
+
+
+UM PUNHADO DE 
+
+
+CLASSES 
+
+
+CSS 
+PREDEFINIDAS
+
+
+
+
+PARA OS DIFERENTES 'ANIMATION STATES', 
+
+e aí 
+
+
+VOCê QUER 
+
+
+__ASSEGURAR__ QUE 
+
+ESSAS __CLASSES 
+
+
+CSS __ ACABEM 'ATTACHED' 
+
+
+AO COMPONENT 
+
+
+__DURANTE___ OS DIFERENTES __ 'STATES' (entering, entered, exiting, exited, etc etc....)
+
+
+
+DA ANIMAÇÃO...
+
+
+
+
+
+
+
+
+
+
+
+---> O QUE O PROFESSOR ESTÁ DIZENDO, EM OUTRAS PALAVRAS, É QUE 
+
+VAMOS 
+
+A COISA QUE ESTAMOS FAZENDO MANUALMENTE
+
+ AQUI, NESTA LINHA:
+
+
+  const cssClasses = [ModalStyle.Modal, state === "entering" ? ModalStyle.ModalOpen : state === "exiting" ? ModalStyle.ModalClosed : null];
+
+
+
+
+
+
+  ,
+
+
+
+
+
+
+__PODE SER FEITA __ DE FORMA AUTOMÁTICA___.... ('it would be nice if that could be 
+
+MANAGED __AUTOMATICALLY__....) ----------> 
+
+
+
+
+
+
+
+E O PROFESSOR NOS CONTA, AGORA,
+
+QUE 
+
+
+A 
+
+
+___PACKAGE___ QUE 
+
+
+ESTAMOS 
+
+
+__USANDO__ JÁ 
+
+POSSUI 
+
+
+
+UM 
+
+
+COMPONENT 
+
+
+__ESPECIAL__, chamado 
+
+de 
+
+
+'CSSTransition'....
+
+
+
+'<CssTransition />' ............ --> E ELE __TAMBÉM__ É IMPORTADO 
+LÁ 
+
+
+DO 
+
+'react-transition-group'...
+
+
+
+
+
+
+
+SEU CÓDIGO DE IMPORT É ESTE:
+
+
+
+
+
+'import CSSTransition from 'react-transition-group/CSSTransition;'
+
+
+
+---------------------------------------------
+
+
+
+
+
+NÓS VAMOS IMPORTAR 
+
+ESSE 
+
+
+
+COMPONENT 
+
+LÁ 
+
+
+EM 
+
+
+'Modal.js'...
+
+
+
+
+-----------------------------------
+
+
+
+
+--> CERTO...
+
+
+
+COM ESSE OBJETO IMPORTADO NO NOSSO Modal.js,
+
+
+
+VAMOS SUBSTITUIR 
+
+
+AS 
+
+TAGS 
+
+de 
+
+'<Transition>'
+
+
+POR 
+
+'<CSSTransition/>'...
+
+
+
+
+EX:
+
+
+
+
+return (
+    
+    <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        // timeout={300}
+        timeout={animationTiming}
+    >
+        {
+         (state) => {
+            const cssClasses = [ModalStyle.Modal, state === "entering" ? ModalStyle.ModalOpen : state === "exiting" ? ModalStyle.ModalClosed : null];
+
+
+
+             return(
+                <div className={cssClasses.join(' ')}>
+                <h1>A Modal</h1>
+                <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+            </div>
+           
+             )
+         }
+
+
+
+
+
+
+        }
+    </CSSTransition>
+)
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+CERTO... A PRIMEIRA DIFERENÇA ENTRE OS 
+
+2 
+
+É 
+QUE 
+
+'CSSTransition'
+
+NÃO __ USA FUNÇÃO/curly braces com função _debaixo de seu opening tag...___
+
+
+
+
+EM VEZ DISSO,
+
+VOCÊ SIMPLESMENTE 
+
+ENFIA ____ O CÓDIGO JSX __ QUE VOCÊ QUER OUTPUTTAR NO MEIO DE SUAS 
+
+OPENING E CLOSING TAGS...
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+return (
+    
+    <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        // timeout={300}
+        timeout={animationTiming}
+    >
+                <div className={cssClasses.join(' ')}>
+                <h1>A Modal</h1>
+                <button className={ModalStyle.Button} onClick={props.closed}>
+                Dismiss
+                </button>
+            </div>
+    </CSSTransition>
+)
+
+
+
+----------------------------------------
+
+
+ISSO FEITO,
+
+
+VAMOS 
+
+
+TAMBÉM 
+
+SIMPLESMENTE 
+
+
+TROCAR 
+
+O CÓDIGO 
+
+DE 
+
+<div className={cssClasses.join(' ')}/> ,
+
+
+VAMOS 
+
+
+FAZER COM QUE 
+
+
+FIQUE AQUELA VERSÃO MAIS SIMPLES,
+
+QUE 
+
+SÓ CONTÉM 
+
+o style de 'ModalStyle.Modal'...
+
+
+ex:
+
+
+
+
+''''<div className={ModalStyle.Modal}/> ''''
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+FICOU ASSIM,
+
+BASICAMENTE:
+
+
+
+
+
+return (
+    
+    <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        // timeout={300}
+        timeout={animationTiming}
+    >
+                <div className={ModalStyle.Modal}>
+                <h1>A Modal</h1>
+                <button className={ModalStyle.Button} onClick={props.closed}>
+                Dismiss
+                </button>
+            </div>
+    </CSSTransition>
+)
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+CERTO... MAS O 
+'TRATAMENTO AUTOMÁTICO'
+
+
+AINDA ___NÃO TERÁ SIDO APLICADO____ ---> nós não vamos 
+
+TER 'ANIMAÇÃO AUTOMÁTICA' apenas 
+
+
+a partir desse código aí... ---> a única coisa 
+
+que 
+
+temos 
+
+aqui,
+
+até 
+
+agora,
+
+
+
+É ESSE ELEMENTO 
+
+'CSSTransition'... -----------> 
+
+
+
+se voltarmos 
+
+AO 
+
+
+APP E CLICARMOS 
+
+
+
+
+NO MODAL,
+
+
+
+NÃO VEREMOS ANIMAÇÃO ALGUMA,
+
+tanto 
+
+no 
+
+OPEN 
+como 
+
+no 
+CLOSE 
+
+do modal...
+
+
+
+----------------------
+
+
+
+-------> PARA CONSEGUIR ANIMAÇÕES,
+
+PRECISAMOS 
+
+ 
+
+
+ __ADICIONAR UMA PROPRIEDADE__ ESPECIAL ___ 
+
+
+ AO 
+
+
+ objeto 
+
+ 'CSSTransition',
+
+
+ QUE 
+
+ É 
+
+ CHAMADA 
+
+
+ de 
+
+ 'classNames'... (sim, O PLURAL DE 'className')
+
+
+
+
+
+ classNames={} 
+
+
+
+
+ -----------------------
+
+
+
+
+
+ --> OK... ---> EM CLASSNAMES,
+
+ VAMOS DEFINIR 
+
+
+ ___QUAIS CSS CLASSES 
+
+ DEVERÃO 
+
+ SER ADICIONADAS 
+
+
+ À 
+
+ DIV/ELEMENTO QUE FORA WRAPPADA POR 
+
+ 'CSSTransition' (no caso, a div de className 'ModalStyle.Modal'...), 
+
+ DEPENDENDO 
+
+ DO 
+
+ 'STATE' DA TRANSITION/TRANSIÇÃo....
+
+
+ -------------------------
+
+
+
+
+
+
+
+ FICARÁ TIPO ASSIM, ATÉ AGORA:
+
+
+
+
+
+
+
+ 
+return (
+    
+    <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        // timeout={300}
+        timeout={animationTiming}
+        classNames={}
+    >
+                <div className={ModalStyle.Modal}>
+                <h1>A Modal</h1>
+                <button className={ModalStyle.Button} onClick={props.closed}>
+                Dismiss
+                </button>
+            </div>
+    </CSSTransition>
+)
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+
+--> ESSA PROPRIEDADE 
+
+'classNames'
+
+vai 
+
+SEMPRE 
+
+__MANTER__ AS CLASSES QUE 
+
+NÓS TÍNHAMOS NO ELEMENTO __ ANTERIORMENTE/DEFINIDO DIRETAMENTE 
+
+NA DIV/ELEMENTO JSX,
+
+MAS __VAI IR 
+
+ADICIONANDO 
+
+
+AS 
+
+CLASSES 
+
+DEFINIDAS 
+
+dentro de si (dentro de classNames)
+
+
+A MEDIDA QUE 
+
+
+OS 
+
+'STATES' DE TRANSIÇÃO DA ANIMAÇÃO VAO ACONTECENDo...
+
+
+
+(vai fazer merge DAS CLASSES em 'classNames' AO 'className'/class definida 
+
+NATIVAMENTE 
+
+no elemento wrappado 
+
+por 
+
+'CSSTransition'... ) -----> 
+
+
+
+
+
+
+OK.... MAS QUAIS SERÃO 
+
+ESSAS 
+
+CLASSES? --->  professor diz que 
+
+podemos 
+
+definir 
+
+
+O 
+'TRUNK' dessas classes... ---->   
+
+
+
+ELE 
+
+NOS DIZ QUE 
+
+DEVEMOS 
+
+PRIMEIRAMENTE 
+
+DEFINIR 
+
+um 
+
+'nome' 
+
+
+nesse classNames... ---> ele define um nome 
+
+de 
+
+'fade-slide'... (mas você pode definir QUALQUER COISA QUE VOCê QUISER, nesse nome aí...)
+
+
+
+ex:
+
+
+
+ 
+return (
+    
+    <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        // timeout={300}
+        timeout={animationTiming}
+        classNames="fade-slide"
+    >
+                <div className={ModalStyle.Modal}>
+                <h1>A Modal</h1>
+                <button className={ModalStyle.Button} onClick={props.closed}>
+                Dismiss
+                </button>
+            </div>
+    </CSSTransition>
+)
+
+
+
+
+----------------------
+
+
+
+
+
+
+
+A QUESTÃO, AQUI, É QUE 
+
+O 
+
+'CSSTransition'
+
+VAI 
+
+___AUTOMATICAMENTE __ CICLAR__ POR UM PUNHADO 
+DE 
+
+
+'CSS CLASSES' E ENTÃO 
+
+___VAI OS __MERGEAR (fundir) 
+
+
+A DIV QUE 
+
+TEMOS 
+
+WRAPPADA,
+
+DEPENDENDO 
+
+DO 
+
+STATE 
+
+
+do 'CSSTransition'/Transition EM GERAL...
+
+
+
+
+
+
+
+
+E AS 
+
+CLASSES QUE 
+
+
+ELE 
+
+VAI 
+
+'CICLE THROUGH' 
+
+são:
+
+
+1) 'YOUR TRUNK' ---> a coisa que VOCÊ ESCREVEU COMO STRING no valor de classNames.... (ex: 'classNames="fade-slide" ---> o 'trunk' é o 'fade-slide', nesse caso)....
+        ex:
+        'fade-slide' (exemplo criado pelo professor).
+        'exemplo'
+
+
+
+2) '''-enter'''' ---> classe que vem LOGO DEPOIS,
+                        é um 'className'/SUFIXO que é ADICIONADO __LOGO 
+                        APÓS __O FINAL DO NOME da className que você definiu em 'classNames=...'...
+
+                    ex:
+                    'fade-slide-enter'
+                    'exemplo-enter'
+
+
+'-enter' ---> É O ESTILO QUE É __ADICIONADO___ bem no MOMENTO EM QUE A ANIMAÇÃO/COMPONENT/TRANSITION 'starts entering'...
+
+
+
+3) '-enter-active' ----> É O ESTILO QUE É ADICIONADO __ QUANDO A ANIMAÇÃO/COMPONENT ESTÁ NO 'entering mode'...
+                        ex:
+                        fade-slide-enter-active
+                        exemplo-enter-active
+
+    OBS::: esse negócio é basicamente a MESMA COISA que 'onEntering'...  ( que é a mesma coisa que o período compreendido por 'enter', de 400ms, lá naquele objeto 'animationTiming'..)
+
+
+
+
+
+OBS:::: A CLASSE '-enter-active', por sua vez, VAI _SER REMOVIDA___ E 
+SUBSTITUÍDA __ POR '-enter-active', passado 
+
+1 frame....
+
+
+
+
+4) '-exit' ---> É O ESTILO QUE  É ADICIONADO QUANDO __COMEÇAMOS A 'EXITAR'... --> 
+                    ex: fade-slide-exit 
+                    exemplo-exit 
+
+
+
+5) '-exit-active' --> É O ESTILO QUE É ADICIONADO QUANDO ESTAMOS NO __PROCESSO __ DE 'exiting'...
+                            ex: fade-slide-exit-active 
+                            exemplo-exit-active
+
+
+6) ok, e o 'exited', não existe? (imagino que o EXITED seja simplesmente O __RETORNO__ ao 'your trunk', ou seja, ao 
+
+                'fade-slide',
+                ou 
+                'exemplo', nesses 
+                casos 
+                nossos...)
+
+
+
+----------------------------
+
+
+
+
+OK... NOSSO TRABALHO, AGORA, __ É ADICIONAR __ ESSAS 
+
+VÁRIAS 
+
+CLASSES 
+
+AO NOSSO 
+
+APLICATIVO... --> uma para cada 
+
+'STATE' variável 
+
+desse 'CSSTransition'...
+
+
+
+
+---> E NÓS ESCREVEMOS 
+
+ESSAS CLASSES OU 
+
+
+1) em qualquer ARQUIVO GLOBAL CSS 
+
+
+2) em algum arquivo css SCOPADO a esse component (css modules...)
+
+
+
+
+-----------------------------------
+
+
+
+
+
+NO NOSSO CASO,
+
+
+O PROFESSOR 
+
+
+VAI 
+
+ADICIONAR 
+
+ESSAS 
+
+CLASSES 
+
+
+
+DE TRANSIÇÃO 
+
+
+__LÁ 
+
+
+EM 
+
+
+__ 
+
+
+'Modal.module.css'
+
+
+
+------------------------
+
+
+
+nosso component 'CSSTransition' está assim:
+
+    <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        // timeout={300}
+        timeout={animationTiming}
+        classNames="exemplo"
+    >
+
+
+
+ELE VAI 
+
+LÁ 
+
+EM 'Modal.module.css' e 
+
+
+
+ESCREVE:
+
+
+
+
+
+
+.exemplo-enter {
+
+}
+
+
+
+.exemplo-enter-active {
+
+}
+
+
+.exemplo-exit {
+
+}
+
+
+.exemplo-exit-active {
+
+}
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+OK,
+ 
+ ESSAS 
+
+
+ SÃO 
+
+ AGORA 
+
+ TODAS 
+
+ AS 
+ CLASSES QUE 
+
+ EU 
+
+ POSSO 
+
+
+ 'FILL WITH LIFE',
+
+
+
+
+ e que 
+
+ serão 
+
+
+
+
+ ENTÃO ADICIONADOS AO NOSSO ELEMENTO,
+
+ à nossa div (modal),
+ NO NOSSO CASO,
+
+
+DEPENDENDO 
+
+
+DO 
+
+'STATE'
+ 
+
+
+ DE NOSSO 
+
+
+ OBJETO 
+
+ 'Transition'/CSSTransition...
+
+
+
+--------------------------
+
+
+NÓS 
+
+JÁ 
+
+TEMOS 
+
+ANIMAÇÕES (
+
+    visto nos códigos 
+
+    de 
+
+    'animation: openModal 0.4s ease-out forwards',
+
+    e 
+
+    'animation: closeModal 1s ease-out forwards';
+)
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+--> PROFESSOR DIZ QUE 
+
+
+PODEMOS, AGORA,
+
+ADICIONAR 
+
+O 
+
+'openModal'
+
+
+
+OU 
+
+__ A 
+
+
+'exemplo-enter',
+
+OU 
+
+
+A 
+
+'exemplo-enter-active'... ----> 
+
+
+
+
+
+E O PROFESSOR NOS RELEMBRA:
+
+
+
+'-enter' 
+
+
+e '-exit', SUAS 
+
+CLASSES,
+
+
+VÃO 
+
+SER __REMOVIDAS__ APÓS 1 
+ 
+FRAME... ------> PODEMOS USAR 
+
+ESSAS 
+
+CLASSES 
+PARA 
+FAZER 
+
+UMA 
+
+
+-___INICIALIZAÇÃO __ DE NOSSO COMPONENT,
+
+JUSTAMENTE POR ISSO... --> por 'inicialização',
+
+
+o professor 
+
+quer dizer 
+
+coisas como, por exemplo,
+
+DEFINIR 
+
+A 
+
+'OPACIDADE' (opacity) COMO 
+
+0 
+
+no início da animação... -----> 
+
+
+
+
+
+
+MAS O IMPORTANTE, AQUI, É __sABER QUE 
+
+É __ EM 
+
+
+'-enter-active' 
+
+
+e 
+
+'-exit-active' 
+
+
+QUE 
+
+__vAMOS ___TOCAR ___ 
+
+AS 
+ 
+'ACTUAL ANIMATIONS'... (são eles que formam o 'BOJO' da animação... já '-enter' e '-exit' SÃO MAIS PARA __ INICIALIZAÇÃO__/TÉRMINO__ DAS ANIMAÇÕES...)
+
+
+
+
+
+
+
+
+
+É POR ISSO QUE 
+
+O PROFESSOR 
+
+VAI DEFINIR 
+
+ESSES ESTILOS ASSim:
+
+
+
+
+
+
+.exemplo-enter {
+        
+}
+
+
+
+.exemplo-enter-active {
+    animation: openModal 0.4s ease-out forwards;
+}
+
+
+.exemplo-exit {
+
+}
+
+
+.exemplo-exit-active {
+    animation: closeModal 0.4s ease-out forwards;
+}
+
+
+
+
+----------------------------
+
+
+CERTO...
+
+
+
+ISSO 
+
+AÍ ESTÁ CORRETO, DIZ O PROFESSOR... DEVEMOS TESTAR 
+
+ESSA ANIMAÇÕES 
+
+COM 
+
+NOSOS 
+
+COMPONENT 'Modal'... (que está WRAPPADO pelo 'CSSTransition'...)
+
+
+
+
+
+--> TESTAMOS ISSO...
+
+
+
+
+--> O PROFESSOR DEIXA AS OUTRAS 2 CLASSES 
+
+VAZIAS,
+
+pq 
+
+não são necessárias (poderíamos as remover, mas 
+
+professor 
+vai deixar
+ 
+ ali 
+ 
+ 
+ para que 
+ POSSAMOS 
+ 
+ NOS LEMBRAR 
+ 
+ DELAS...)
+
+
+
+
+
+
+
+ --> AGORA, QUANDO VOLTAMOS AO MODAL, 
+
+ TEORICAMNETE
+
+  NOSSAS 
+
+  ANIMAÇÕES __TOCAM__ (mas não estão tocando, eu fiz algo de errado...) --> acho que 
+
+  entendi...
+
+  meu 
+
+  'className' 
+
+  NA DIV DO MODAL AINDA 
+  ESTAVA ASSIM:
+
+
+
+-------------------------
+
+
+
+
+         (state) => {
+            // const cssClasses = [ModalStyle.Modal, state === "entering" ? ModalStyle.ModalOpen : state === "exiting" ? ModalStyle.ModalClosed : null]; ///REMOVIDO. Nessa versão com 'CSSTransitions', não precisamos mais do ATTACH CONDICIONAL dos estilos 'Open' e 'Closed'...
+             return(
+                <div className={ModalStyle.Modal}>
+                <h1>A Modal</h1>
+                <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+            </div>
+             )
+         }
+
+
+
+
+
+
+        }
+
+
+
+------------------------------
+
+
+
+
+
+E A RAZÃO É BEM CLARA: 
+
+
+
+o problema aqui existe pq EU AINDA ESTOU ESCREVENDO 
+
+AQUELE 
+
+'CÓDIGO DINÂMICO' do curly braces COM O RETURN DA 
+
+DIV DO MODAl.... -->
+ 
+
+ DEVO 
+
+
+ __REMOVER__ ESSE CURLY BRACES COM O RETURN DESSA DIV,
+
+ pq 
+
+ esse CURLY BRACES 
+
+ É __TÍPICO __ DE UM CÓDIGO/SINTAXE QUE 
+
+
+ USA 
+
+ '
+ Transition', O __'''IRMÃO MAIS COMPLEXO''' de 
+
+ 'CSSTransition'...
+
+
+
+
+--------------------------------
+
+
+--> CERTO... MAS SÓ ISSO __NÃO VAI RESOLVER __ O PROBLEMA___.... --> 
+
+
+a solução do PROBLEMA FOI ENCONTRADA EM UM FÓRUM DO stackoverflow....
+
+https://stackoverflow.com/questions/53912256/react-csstransition-with-css-modules
+
+ex:
+
+
+I'm trying to implement a CSSTransition to a modal in my project. The problem is that I am using css modules.
+
+
+
+
+My modal's render method
+
+render() {
+        return (
+            <Aux>
+                <Backdrop
+                    show={this.props.show}
+                    clicked={this.props.modalClosed}/>
+                <CSSTransition
+                    in={this.props.show}
+                    timeout={1000}
+                    mountOnEnter
+                    unmountOnExit
+                    classNames={?}
+                >
+                    <div
+                        className={classes.Modal}
+                    >
+                        {this.props.children}
+                    </div>
+                </CSSTransition>
+            </Aux>
+        )
+    }
+My Modal.css
+
+    .fade-enter {
+
+    }
+
+    .fade-enter-active {
+        animation:openModal 0.4s ease-out forwards;
+    }
+
+    .fade-exit{
+
+    }
+
+    .fade-exit-active{
+        animation: closeModal 0.4s ease-out forwards;
+    }
+What do i pass to the classNames attribute in the CSSTransition component in order to make it work?
+
+
+
+
+
+
+
+
+SOLUÇÃO:
+
+
+
+JSX:
+
+  <CSSTransition in={focused} timeout={500} classNames={{
+    enterActive: styles.MyClassEnterActive,
+    enterDone: styles.MyClassEnterDone,
+    exitActive: styles.MyClassExit,
+    exitDone: styles.MyClassExitActive
+  }}>
+    <span className={styles.MyClass}>animated</span>
+  </CSSTransition>
+
+
+
+
+CSS Module:
+
+.MyClass {
+  position: absolute;
+  left: 5px;
+}
+.MyClassEnterActive {
+  left: 15px;
+  transition: left 500ms;
+}
+.MyClassEnterDone {
+  left: 15px;
+}
+.MyClassExit {
+  left: 15px;
+}
+.MyClassExitActive {
+  left: 5px;
+  transition: left 500ms;
+}
+
+
+
+
+----------------------------------
+
+
+
+
+DEVEMOS COPIAR ESSE MODELO AÍ....
+
+
+
+
+
+-----------------------------
+
+
+OK, ISSO REALMENTE FUNCIONOU.... (consegui conciliar 'css modules' com 'CSSTransitions'...)
+
+
+FICOU TIPO ASSIM:
+
+
+
+
+(CÓDIGO EM 'Modal.js'):
+
+
+
+return (
+    
+    <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        // timeout={300}
+        timeout={animationTiming}
+        classNames={
+            {
+                enterActive: ModalStyle.ModalEnterActive,
+                enterDone: ModalStyle.ModalEnter,
+                exitActive: ModalStyle.ModalExitActive,
+                exitDone: ModalStyle.ModalExit
+            }
+        }
+    >
+                <div className={ModalStyle.Modal}>
+                <h1>A Modal</h1>
+                <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+            </div>
+    </CSSTransition>
+    )
+
+
+
+
+
+
+CÓDIGO EM 
+
+'Modal.module.css':
+
+
+
+
+.ModalEnter {
+
+}
+
+
+.ModalEnterActive {
+    animation: openModal 0.4s ease-out forwards;
+}
+
+
+
+
+
+.ModalExitActive {
+    animation: closeModal 1s ease-out forwards;
+}
+
+.ModalExit {
+
+}
+
+------------------------------
+
+
+
+
+
+CERTO...
+
+
+
+
+
+ASSIM CONSEGUIMOS CONCILIAR 
+
+
+AMBOS 
+
+
+OS 
+
+RECURSOS, 
+
+CSS MODULES 
+
+E 
+
+CSSTransitions,
+
+
+tudo graças 
+
+a essa 
+
+propriedade 
+
+de 
+
+'classNames' 
+
+e esse 
+valor 
+
+
+desse OBJETO com 
+
+'enterActive',
+
+'enterDone',
+
+
+'exitActive' 
+
+e 
+
+'exitDone'....
+
+
+-----------------------------
+
+
+
+
+
+
+
+
+---> OK.... ENTER E EXIT ---> VÃO SER REMOVIDOS APÓS 1 FRAME, por isso são 
+usados com FINALIDADE ___ DE INICIALIZAÇÃO__....
+
+
+
+
+
+
+
+
+
+--> PROFESSOR NOS DIZ UQE 
+
+
+__FREQUENTEMENTE __ UTILIZAMOS 
+
+
+'CSSTransition',
+
+
+
+PQ 
+
+
+AÍ 
+__eVITAMOS ___ TER 
+
+DE 
+
+JUNTAR
+ 
+ MANUALMENTE (join together)
+
+
+
+CLASSES CSS por meio de spaghetti code... -----> EM VEZ DISSO,
+
+
+
+
+AGORA 
+
+
+TIRAMOS 
+
+VANTAGEM 
+
+DESSE 
+
+
+'CSSTransition',
+
+
+QUE 
+
+
+
+
+'MOVES THROUGH THESE CSS CLASSES (no 'module.css), 
+
+COM BASE 
+
+NO 
+
+NOSSO 'TRUNK',
+
+__AUTOMATICAMENTE___....' -----> É POR ISSO 
+
+
+QUE 
+
+GERALMENTE 
+
+VOCÊ 
+
+USA 
+
+O 
+
+'CSSTransition',
+
+PQ 
+
+ELE 
+
+TE DEIXA CONTROLAR 
+
+__tODA A ANIMAÇÃO DO COMPONENT__
+
+
+
+EM 
+
+CÓDIGO CSS,
+
+
+por meio 
+
+
+
+DA SIMPLES DEFINIÇÃO 
+
+DESSAS 
+CLASSES 
+
+CSS 
+
+em 
+'module.css' 
+
+e 
+
+os nome/nomes 
+
+em 
+
+'classNames={{}}'....
+
+
+
+
+
+
+
+
+--> CSSTransition é geralmente o approach mais conveniente de se usar,
+
+
+pq 
+
+vocÊ controla TODA A ANIMAÇÃO POR MEIO DE CÓDIGO CSS... --> simplesmente 
+
+por meio 
+
+da definição dessas classes css em 
+
+'module.css'...
+
+

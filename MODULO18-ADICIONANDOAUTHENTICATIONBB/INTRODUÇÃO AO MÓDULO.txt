@@ -1,0 +1,211 @@
+
+
+
+
+
+--> NESTE MÓDULO, veremos 
+
+
+
+'Authentication in React'...
+
+
+(And in 'SPAs' in General...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------> APRENDEMOS MUITO SOBRE REACT, REDUX E AS CORE FEATURES DAS 2 LIBRARIES...
+
+
+
+
+
+
+
+
+
+--> construímos um app bem bom com essas features....
+
+
+
+
+
+
+---> entretanto, 
+
+há algo que 
+
+está faltando... -----> é uma coisa 
+
+
+que 
+
+
+
+não tem relação própria com o react,
+
+mas 
+que 
+
+é importante; em outras palavras,
+
+
+
+
+__AUTHENTICATION__....
+
+
+
+
+---------------------------------
+
+
+
+
+
+-------------> AUTENTICAÇÃO DE USUÁRIOS....
+
+
+
+
+
+
+
+
+--> e o professor quer nos mostrar como isso funciona/funcionaria 
+
+em 
+
+UMA 
+
+
+__SINGLE PAGE___ APPLICATION___... ---------> SINGLE PAGE APPLICATION 
+
+
+
+PQ 
+
+
+
+se você tiver UMA ___MULTI-PAGE APPLICATION__ ( ou seja, um app em que 
+
+VOCÊ RENDERIZA DIFERENTES HTMLs/Páginas, Cada 1 PARA __ 1 DIFERNETE 
+
+REQUEST ENVIADO AO SEU SERVIDOR), VOCÊ 
+
+
+FAZ HANDLE 
+
+
+
+
+DA 'AUTHENTICATION' por meio da maneira tradicional, 
+
+que 
+
+é 
+
+
+o approach em que você tem uma 'SESSION' NO SERVER, e em que então 
+
+o 
+
+usuário recebe diferentes páginas (server faz RETURN __ DE DIFERENTES PÁGINAS) 
+
+
+de acordo 
+
+com 
+
+
+a 
+
+VALIDITY DO USUÁRIO/validity do 'authentication status'
+
+
+
+
+NO __SERVIDOR EM SI__...
+
+
+
+
+-----------------------
+
+
+
+
+
+
+MAS A COISA/CARACTERÍSTICA ESPECIAL 
+
+DA
+
+
+
+'AUTHENTICATION' NO REACT 
+
+
+É __JUSTAMENTE__ QUE VOCÊ TEM APENAS 1 ÚNICA FILE... (o html inicial...) ---> isso significa 
+
+
+
+QUE 
+
+
+NENHUM ARQUIVO 
+
+É OBTIDO DEPOIS DO 'GET' DO HTML INICIAL... ------> 
+
+
+
+mas isso n quer dizer que 
+
+
+você 
+
+não é verificada a validade do usuário no servidor... --> ela ainda é checada ,
+
+
+
+
+o authentication status do usuário é checado no usuário,
+
+MAS 
+
+NÃO É CHECADO 'PARA CADA REQUEST', pelo menos 
+
+não 
+
+
+da 
+
+
+MANEIRA TRADICIONAL.... ---> veremos 
+
+como 
+
+isso funciona 
+
+
+neste módulo, 
+
+como podemos 
+
+implementar
+
+
+
+AUTHENTICATION NO NOSSO BURGER PROJECT...

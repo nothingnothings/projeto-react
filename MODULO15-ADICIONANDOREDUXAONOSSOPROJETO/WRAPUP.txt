@@ -1,0 +1,593 @@
+
+
+
+
+NAS ÚLTIMAS LIÇÕES APRENDEMOS SOBRE O REDUX... --> e agora estamos 
+
+fazendo 
+
+
+MANAGE DE TODO O 
+
+
+
+'STATE CORE' de nosso aplicativo __POR MEIO DELE__...
+
+
+
+
+
+
+
+
+
+
+--> BEM,  mas no container 'orders',
+
+
+NÓS  _______NÃO ESTAMOS 
+FAZENDO 
+
+
+MANAGE 
+
+
+DAS 
+
+'ORDERS', no state, POR MEIO DO REDUX....
+
+
+
+
+ex (o código do state de 'orders'):
+
+
+
+
+''
+state = {
+    orders: [],
+    loading: true
+}
+'
+
+
+
+
+
+ORDERS TEM RELAÇÃO COM ___ASYNC CODE__, e é por isso que 
+
+não estamos usando 'redux' para fazer handle disso, pelo menos até agora....
+
+
+
+
+
+
+
+--> nos próximos módulos o professor vai querer nos mostrar COMO 
+
+FAZER O HANDLE 
+
+
+
+DE 'FETCH DE DADOS' e ASYNC CODE/async actions COM 
+
+
+O REDUx...
+
+
+
+
+
+
+--> só com esse conhecimento seremos capazes de fazer handle dessa propriedade 
+
+'orders'....
+
+
+
+
+
+------> O MESMO SE APLICA AO 'BurgerBuilder', onde ANTERIORMENTE 
+
+
+NÓS 
+
+
+
+FAZÍAMOS 
+
+
+___FETCH___ de ingredients 
+
+
+de nosso servidor, como visto pelo código (removido)
+
+de
+
+
+
+'componentDidMount() {
+
+    axios.get('httpxxxx')
+    .then( 
+        response => {
+            this.setState({ingredients: response.data})
+        }
+    )
+    .catch(error => {
+        this.setState( {error: true})
+    })
+    }
+    '
+
+
+----------------------------- 
+
+
+
+
+^^^^^^ ESSE CÓDIGO MOSTRADO ACIMA 
+
+nós 
+
+não estamos usando no momento, mas usaremos no futuro... (nos próximos módulos....)
+
+
+
+
+
+
+
+
+
+
+
+
+AGORA, ENTRETANTO, REALMENTE ESTAMOS FAZENDO MANAGE DOS 'CORE INGREDIENTS' por meio 
+
+DO REDUX...
+
+
+
+
+
+
+
+
+
+--> O QUE O PROFESSOR JÁ MENCIONOU, por exemplo, é que 
+
+EM 
+
+'ContactData'
+
+
+
+NÓS 
+
+
+
+
+___________aINDA TEMOS UM MONTE DE __ 'STATE'/propriedades __NAQUELA 
+
+
+
+PROPRIEDADE 
+
+
+'state',
+
+
+como 
+
+
+visto 
+
+
+em:
+
+
+
+
+
+
+
+state = {
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+        validation: {  ///AQUI VÃO TODAS AS REGRAS DE NOSSOS components 'Input' em 'ContactData'....
+          required: true  /////USADO NA VALIDATION DE NOSSOS INPUTS... assistir aula 'Adding Custom Form Validation'... ---> ''''required: true'' significa que ESSE FIELD DEVE SER __PREENCHIDO__ PARA QUE USUÁRIO POSSA ENVIAR A 'ORDER'...
+        } ,
+        valid: false,
+        touched: false
+      },
+
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Street',
+        },
+        value: '',
+validation: {  ///ver método 'checkValidity()'....
+  required: true
+} ,
+valid: false,
+touched: false
+      },
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+validation: {
+  required: true,
+  minLength: 5,
+  maxLength: 5
+} ,
+valid: false,
+touched: false
+      },
+
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country',
+        },
+        value: '',
+        validation: {
+          required: true
+        } ,
+
+        valid: false,
+        touched: false
+
+      },
+
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+validation: {
+  required: true,
+  
+},
+valid: false,
+touched: false
+      },
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                        value: 'fastest', 
+                        validation: {},
+                        valid: true
+                    
+    
+    },
+  },
+    formIsValid: false,
+
+    loading: false,
+  };
+
+
+
+
+
+--------------------------
+
+
+
+
+
+OU SEJA,
+
+
+NESSE NEGÓCIO NÓS TEMOS ___TODA A NOSSA 'FORM',
+
+
+
+
+E TAMBÉM 
+
+A 'validity' DOS NOSSOS CONTROLS.... ------> e isso é __MUITA COISA_ em um mesmo lugar....
+
+
+
+
+
+
+
+
+
+
+--> contudo, PROFESSOR 
+
+nos 
+
+refere que 
+VOCê 
+
+
+PODE 
+
+FAZER 'MANAGE' DA VALIDITY/FORM de sua 
+
+página 
+
+
+dessa forma aí,
+
+
+
+
+MAS QUE 
+
+
+VOCÊ __TAMBÉM ___ PODE USAR 
+
+
+O 
+
+REDUX
+
+
+ __ PARA FAZER ESSE HANDLE/MANAGE__...
+
+
+
+
+ ----> professor nos explica que 
+
+
+
+ PODEMOS __FAZER COM QUE 
+
+ UM 
+
+ 'DISPATCH' 
+
+ seja disparado 
+
+
+ A __CADA ___ KEYSTROKE__ REALIZADO PELO USUÁRIO 
+
+ NA NOSSA PÁGINA (isso fará com que seja VALIDADO O INPUT DO USUÁRIO
+ constantemente, tecla por tecla....) --------> para isso,
+
+
+
+ VOCê 
+
+
+ TERIA 
+
+ QUE 
+
+ PEGAR 
+
+ TODA 
+
+ A LÓGICA 
+
+ QUE 
+
+ VOCê TEM NAQUELE 
+
+
+ 'orderHandler' 
+
+ (de código:
+ 
+ 
+ 
+ 
+  event.preventDefault(); 
+    console.log(this.props.ingr);
+
+ 
+ 
+    this.setState({
+      loading: true,
+    });
+
+    const orderData = {
+      
+      ingredients: this.props.ingr, //código que agora está usando o REDUX.
+      price: this.props.price, //código que agora está usando o REDUX.
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+    };
+
+ 
+ 
+ 
+ 
+
+    axiosOrder
+      .post('/orders.json', orderData)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          loading: false,
+        });
+      });
+ 
+ 
+ 
+ 
+ )
+
+
+
+
+ E então
+
+
+A COLOCAR 
+
+
+
+NO REDUX... --> isso fará COM QUE 
+
+
+
+
+A 'validity' DOS CONTROLS 
+
+SEJA GERENCIADA NO 
+
+_REDUX___,
+
+e também  
+
+
+fará com que 
+
+OS 
+
+
+VALORES DOS 'FORM CONTROLS' por meio do redux... -> redux PARA TUDO... --> vocÊ 
+
+pode 
+
+fazer isso... --------> 
+
+
+E 
+
+
+SE VOCê 
+
+
+
+
+REALMENTE QUER FAZER ISSO, TUDO DEPENDE __ DO ESTILO DO CÓDIGO__ QUE VOCÊ QUER 
+
+
+TER 
+
+NO SEU APLICATIVO...
+
+
+
+------------------
+
+
+
+
+
+VOCÊ QUER TER COMPONENTS BEM __LEAN__ E SIMPLES? ----> se você quiser isso,
+
+
+vocÊ terá 
+
+
+DE COLOCAR
+
+
+TODO 
+
+ESSE CÓDIGO NO REDUX...
+
+
+
+
+
+
+
+
+
+---> VOCê QUER TER O '''STATE MANAGEMENT ''' NO LOCAL EM QUE ELE 
+
+'PERTENCE'?? (component por component...) 
+
+
+
+(EX CLÁSSICO: 'UI STATE', um state que É RELEVANTE SÓ NAQUELE CONTAINER
+ESPECÍFICO..., e não deve afetar nenhum outro component...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> AMBOS APPROACHES ESTÃO CORRETOS... 
+
+
+
+
+
+
+
+
+-------> UM EXERCÍCIO LEGAL É TENTAR COLOCAR TODO ESSE CÓDIGO DE 
+
+'ContactData'
+
+
+
+DENTRO DO REDUX (com os conhecimentos de que dispomos, agora)...
+
+
+
+
+
+
+
+
+--> CONTUDO, PARA O PROFESSOR,
+
+
+é suficiente o SETUP ATUAL DO APLICATIVO....
+
+
+
+
+
+
+
+
+
+--> por enquanto, DEVEMOS EXAMINAR UM POUCO MAIS DOS DETALHES DO REDUX,
+
+como  o handle de async code por ele...

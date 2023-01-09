@@ -1,0 +1,127 @@
+Resolvemos muitas coisas durante as últimas aulas... conseguimos fazer 
+
+a página 
+
+'Orders', 
+
+
+e agora 
+
+
+fizemos 
+
+
+ela 
+
+armazenar 
+
+
+as nossas 
+
+Orders, os hamburgers que foram criados pelos usuários...
+
+
+
+
+
+
+
+--> temos nosso 
+
+
+container de 
+
+'BurgerBuilder', que nos leva
+ 
+
+ a 
+
+ SUBROUTE 
+
+ de 
+ 'checkout' (outro container),
+
+
+ que 
+
+ AÍ 
+
+
+ NOS 
+
+ DEIXA 
+
+
+ ARMAZENAR UM DOS __BURGERS__ (uma 'order') 
+
+
+ NO NOSSO SERVIDOR FIREBASE...
+
+
+
+
+
+
+
+
+
+
+
+ --> uma coisa que podemos MELHORAR É A NOSSA 'CHECKOUT FORM',
+
+
+ de fato....  ----> OUTRA 
+
+ COISA QUE PODE 
+
+ SER MELHORADA,
+
+
+ EM GERAL,
+
+
+
+ __É O STATE MANAGEMENT__ DO NOSSO APLICATIVO... (temos mtos components 
+ 
+ 'stateful'... ------> Pode-se perceber que 
+
+ estamos 
+
+ usando 
+
+ muitas 'gambiarras', mtas tricks e workarounds para resolver problemas....
+ 
+ ) --------> VAMOS CONSERTAR MUITAS DESSAS COISAS NOS PRÓXIMOS MÓDULOS, QUANDO DERMOS 
+
+ UMA OLHADA 
+
+ NO 
+
+ 'REDUX'.... -------> MAS JÁ TEMOS UM APP FUNCIONANDO... excelente trabalho, até agora.... 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ --> AGORA DEVEMOS 
+
+
+ VER 
+
+
+
+ COMO MELHORAR NOSSAS 'FORMS' no aplicativo (negócio de escrever dados do usuário),
+
+
+ e 
+
+
+ também outras features...

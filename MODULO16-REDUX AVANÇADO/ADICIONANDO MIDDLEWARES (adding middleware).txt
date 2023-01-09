@@ -1,0 +1,2201 @@
+ 
+
+
+
+
+
+
+
+
+
+ ANTES DE DIVARMOS EM 
+
+ 'Async code' e sua execução com o redux,
+
+
+
+
+ O PROFESSOR 
+
+
+
+ DEVE 
+
+
+ NOS MOSTRAR 
+
+
+
+ UM 
+
+
+
+ CONCEITO AVANÇADO 
+
+
+
+ ______SUPER IMPORTANTE___... -------> é um conceito que 
+
+
+
+
+
+EXISTE QUANDO __TRABALHAMOS COM O __ REDUX...
+
+
+
+-----------------------------------
+
+
+
+
+
+'''quando trabalhamos com o redux'''' --> professor quer, com isso, dizer A 
+
+
+
+'REDUX PACKAGE' nela mesma, ESTEJA ELA 
+
+
+CONECTADA OU NÃO 
+
+
+
+AO SEU APLICATIVO REACT...
+
+
+
+
+
+
+
+
+
+----> professor nos explica que 
+
+
+
+
+_____PODEMOS ___ ADICIONAR ____ 'MIDDLEWARE' ___ AO REDUX... ___ 
+
+
+
+MIDDLEWARE AO PACKAGE DO 'REDUX'....
+
+
+
+
+
+
+
+
+
+
+
+
+--> RESUMINDO:
+
+
+
+
+
+Você 
+
+
+tem 
+
+
+
+'action sendo dispatcheada'... 
+
+            |
+            |
+            |
+            |
+            |
+            V
+
+
+'action sendo recebida pelo reducer'...
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+O ESPAÇO ENTRE 
+
+
+' a action sendo dispatcheada' 
+
+
+e 
+
+
+'action sendo recebida pelo reducer' 
+
+
+
+
+
+É __O ESPAÇO ___ EM QUE VOCÊ PODE __ ENFIAR/ADICIONAR __ MIDDLEWARE/MIDDLEWARES
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ---> MIDDLEWARE... --> O QUE É ISSO? ---> bem, é um conceito MENCIONADO BASTANTE 
+
+ EM 
+
+ 'SERVERSIDE' development... ------> se você já trabalhou com 
+
+
+ 'express.js',
+
+
+ VOCÊ 
+
+
+DEVE TER UMA IDEIA... (eu acho que 'middlewares' são códigos que são executados entre 1 ponta e outra do código, são coisas que VÃO AFETANDO UM INPUT ATÉ ELE VIRAR/CHEGAR A SER UM OUTPUT... )
+
+
+
+
+
+
+
+
+
+
+
+
+--> MIDDLEWARE ---> É UM TERMO USADO PARA ''FUNÇÕES''/Código em geral... --> OS MIDDLEWARES 
+
+SÃO 
+
+CÓDIGOS QUE VOCê '''HOOKEIA''' EM PROCESSOS e que então 
+
+
+SÃO 
+
+
+
+___EXECUTADOS ___ COMO PARTE ___ DESSES PROCESSOS (seja quais forem) SEM 
+
+
+OS INTERROMPER com sua própria execução....
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+--> ISSO SIGNIFICA, EM OUTRAS PALAVRAS,
+
+QUE 
+
+PODEMOS 
+
+ADICIONAR/EXECUTAR 
+
+middleware no nosso código e AINDA ASSIM AQUELA ACTION (action que 
+deu início ao middleware/que engatilhou o middleware) 
+
+VAI 
+
+ALCANÇAR O REDUCER...
+
+
+
+
+
+
+
+
+
+--> OU SEJA,
+
+
+A 'ACTION' AINDA VAI ___ALCANÇAR O REDUCER, MAS ANTES DE ELA ALCANÇAR O REDUCER,
+
+
+PODEMOS 
+
+A UTILIZAR PARA DAR 'JUMPSTART' EM OUTRO CÓDIGO/LÓGICA (o middleware em questão), como por exemplo um 
+
+
+código 
+
+
+
+
+QUE __LOGGA__ ALGUMA COISA..... mas mais do que simples códigos que 'loggam algo',
+
+
+ESSE MIDDLEWARE/CÓDIGO/LÓGICA 
+
+
+É ALGO QUE 
+
+
+PODERÁ/VAI SE TORNAR IMPORTANTE __MAIS TARDE__, QUANDO nós de fato 
+
+vamos querer 
+
+
+EXECUTAR CÓDIGO ASSÍNCRONO...
+
+
+----------------------------------
+
+
+
+
+
+DEVEMOS VER UM 'MIDDLEWARE' em ação, 
+
+por meio de sua adição ao NOSSO PROJETO DO 
+
+'Counter'...
+
+
+
+
+
+
+(Copiamos o projeto do 'Counter' e colocamos neste módulo do curso...).
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+PARA NOS MOSTRAR O FUNCIONAMENTO DOS 'MIDDLEWARE', professor vai até 
+
+o arquivo 
+
+
+'index.js'
+
+
+do projeto dos 'Counter'...
+
+
+
+
+
+
+--> 'index.js',
+
+
+NO CASO, 
+
+é 
+
+O ARQUIVO EM QUE 
+
+
+DE FATO FOI CRIADO 
+
+
+O 
+
+
+'store' do redux,
+ 
+ por meio do código 
+
+
+
+ 
+
+ 'const store = createStore(rootReducer);'
+
+
+
+
+ --------------------------------------
+
+
+
+
+
+
+
+
+
+ --> E É __DURANTE __ A CRIAÇÃO DESSE 'STORE' QUE __ PODEMOS __ REALMENTE 
+
+ ADICIONAR 
+
+
+
+ 'MIDDLEWARE' 
+
+ AO NOSSO PROJETO...
+
+
+
+
+
+ --> antes disso, contudo, DEVEMOS APRENDER SOBRE COMO FAZER ESSA ADIÇÃO 
+
+ NO PROJETO...
+
+
+
+ 
+ ---------> A PRIMEIRA COISA DE QUE PRECISAMOS ___ É UM MIDDLEWARE___... ----->
+
+
+ E UM MIDDLEWARE, É CLARO, nesse caso do 
+ 
+ REACT-REDUX, é nada mais do QUE UM PEDAÇO DE CÓDIGO,
+
+ UMA 
+
+
+
+ ___FUNÇÃO__, PARA SER MAIS PRECISO....
+
+
+
+
+ ----------------------------------------
+
+
+
+
+
+
+
+ NESSE NOSSO PROJETO-EXEMPLO,
+
+
+ o professor vai 
+
+ USAR 
+
+ UM MIDDLEWARE 
+
+ QUE 
+
+ ELE MESMO VAI CRIAR,
+
+ mas 
+
+ MAIS TARDE 
+
+ VEREMOS 
+
+
+ MIDDLEWARES __PROVIDENCIADOS__ POR 'providers' de verdade...
+
+
+
+
+
+
+
+
+
+ --> para isso, professor quer criar UM MIDDLEWARE QUE VAI FAZER UM 
+
+ SIMPLES 
+
+ 'LOG'
+
+
+
+ DE 
+
+ TODA E QUALQUER 'ACTION' dispatcheada por nós...
+
+
+
+
+
+
+ PARA ISSO, PROFESSOR VAI CRIAR UMA CONSTANTE,
+
+ que chamará 
+
+
+ de 
+
+
+ 'logger'....
+
+
+
+ ex:
+
+
+
+
+ const logger = ...
+
+
+
+
+ -------------------
+
+
+
+
+ E ESSE 'logger'
+
+
+ É O NOME DE NOSSO MIDDLEWARE...
+
+
+
+
+
+ -----------------------------
+
+
+ ISSO AÍ,
+
+
+ no caso, 
+
+
+ VAI 
+
+
+ RECEBER/EXIGIR UMA FUNÇÃO,
+
+
+
+ e o professor nos explica que
+
+ ele vai usar 
+
+
+ a sintaxe 
+
+ ES6 das arrow function...
+
+
+
+
+
+ ex:
+
+
+  const logger = () => {
+
+  }
+
+
+
+
+
+
+--------------------------
+
+
+
+O DIFERENCIAL 
+
+
+DESSE 
+
+
+'MIDDLEWARE' 
+é 
+
+
+justamente 
+
+QUE ELE VAI 
+
+RECEBER 
+
+
+'store' COMO PARÂMETRO... --> ele é recebido como parâmetro pq 
+
+LOGO 
+
+VAMOS 
+
+USAR 
+
+UM MÉTODO 
+
+dentro de 
+
+'store', UM MÉTODO ESPECIAL PROVIDENCIADO PELO ___rEDUX EM SI__... ---> esse método 
+
+
+VAI CONECTAR ___NOSSO ___ PRÓPRIO 'MIDDLEWARE' ao 'store',
+
+
+
+
+E ESSE MÉTODO 
+
+ESPECIAL 
+
+PROVIDENCIADO PELO REDUX __VAI EVENTUALMENTE ____ EXECUTAR A NOSSA 
+
+FUNÇÃO 'MIDDLEWARE' E ENTÃO 
+
+VAI 
+
+NOS 
+
+
+'''ENTREGAR A STORE'''' (give us the store....)
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+ex:
+
+
+  const logger = (store) => {
+
+  }
+
+
+const store = createStore(rootReducer);
+
+-----------------------------------
+
+
+
+
+----------> DENTRO DESSA 'MIDDLEWARE FUNCTION'/function,
+
+
+
+NÓS VAMOS 
+
+
+
+QUERER ___rETORNAR __OUTRA FUNCTION__... --> isso pode ser confuso, mas o fato é que 
+
+ESSA 
+
+FUNÇÃO/middleware
+
+
+
+'logger'
+
+
+__VAI RETORNAR OUTRA FUNÇÃO___....
+
+
+
+ex:
+
+
+
+
+  const logger = (store) => {
+            return 
+  }
+
+
+const store = createStore(rootReducer);
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+ESSA FUNÇÃO INTERNA/FUNÇÃO RETORNADA POR 'logger'
+
+
+VAI 
+
+RECEBER 
+
+
+UM PARÂMETRO/ARGUMENTO 
+
+
+CHAMADO DE 
+
+
+'next'....  (na verdade, o nome desse argumento pode ser qualquer coisa, MAS TODO MUNDO USA 'next' PQ ISSO FAZ MAIS SENTIDO...)
+
+
+
+
+
+
+
+EX:
+
+  const logger = (store) => {
+            return next
+  }
+
+
+const store = createStore(rootReducer);
+
+
+-----------------------------------
+
+
+
+
+
+O NOME 
+
+
+'next' faz sentido pq 
+
+
+ISSO SERÁ UMA __fUNÇÃO___ QUE VOCê PODE/PODERÁ EXECUTAR 
+
+
+__PARA_ __ DEIXAR ___ A ACTION __ SEGUIR O SEU CURSO__ ATÉ 
+
+O 
+
+REDUCER__...
+
+
+
+
+
+
+
+
+
+
+
+Se vocÊ é um DESENVOLVEDOR BOM de 'express.js',
+
+vocÊ vai reconhecer 
+
+
+essa função 
+
+
+'next'....
+
+
+
+-------------------------------------
+
+
+
+
+ESSA FUNÇÃO INTERNA QUE É RETORNADA ALI __TAMBÉM VAI, NO FINAL DAS CONTAS_,
+
+
+
+
+SER 
+
+EXECUTADA PELO 'REDUX'....
+
+
+
+ex:
+
+
+
+
+  const logger = (store) => {
+            return next => {
+
+            }
+  }
+
+
+const store = createStore(rootReducer);
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+E, AGORA, as coisas ficam um bocado confusas...
+
+
+
+
+
+---> ESSA FUNÇÃO INTERNA  TAMBÉM ___ RETORNA ____ UMA FUNÇÃO INTERNA( mas a ÚLTIMA DELAS...)
+
+
+
+E ESSA FUNÇÃO INTERNA-INTERNA 
+
+VAI RECEBER UMA __''ACTION'''__ COMO PARÂMETRO... -----> ESSA ACTION 
+
+
+vai 
+
+
+ser 
+
+
+
+
+__a ACTION QUE VOCê DEU 'dispatch', QUE É RECEBIDA NESSA FUNÇÃO INTERNA COMO ___ UM PARÂMETRO__ (é o input dessa função)...
+
+
+
+ex:
+
+
+
+  const logger = (store) => {
+            return next => {
+                return action =>   ///eis o código em questão.
+            }
+  }
+
+
+const store = createStore(rootReducer);
+
+
+
+
+---------------------------------------
+
+
+
+DE NOVO, 
+
+
+essa função (a 'action => {...}' )
+
+
+
+TAMBÉM 
+
+___ VAI SER EXECUTADA __POR NÓS__...
+
+
+
+
+
+
+
+
+
+--> professor nos explica que essa 'nested function PARTY' aqui É 
+
+____SIMPLESMENTE ___ UM MIDDLEWARE... 
+
+
+
+
+
+
+
+
+--> certo, e dentro dessa inner-inner function,
+
+
+
+QUE RECEBE A 'action',
+
+
+
+__________NÓS __________tAMBÉM _______ PODEMOS ACESSAR 
+
+
+
+a keyword 'next' e 
+
+essa função 
+
+
+'STORE', 
+
+e é claro que 
+
+
+TAMBÉM PODEMOS 
+
+REFERENCIAR/EXECUTAR A 'action' em si....
+
+
+
+
+(ou seja,
+
+
+estarão disponíveis:
+
+
+1) next
+
+2) store
+
+3) action
+
+
+
+__DENTRO DESSA FUNÇÃO INTERNA___...
+
+)
+
+
+
+
+
+
+
+
+
+
+
+FINALMENTE, DENTRO DESSA FUNÇÃO INTERNA-INTERNA,
+podemos 
+
+
+EXECUTAR O CÓDIGO QUE VAMOS QUERER QUE 
+
+SEJA 
+
+executado 
+
+
+
+
+
+_______ENTRE (no momento ENTRE) 
+
+
+o 'DISPATCHING DA ACTIOn' e o 'RECEIVE DA ACTION PELO REDUCER'... 
+
+
+
+
+
+
+--> No nosso código,
+
+
+nesse caso,
+
+
+
+professor 
+
+vai 
+
+
+escrever 
+
+
+
+'console.log('[Middleware]')' -------> ISSO VAI NOS MOSTRAR CLARAMENTE, NO CONSOLE,
+
+
+
+O LUGAR DE ONDE ESTE CONSOLE.LOG ESTARÁ VINDO...
+
+
+
+
+------------------
+
+
+
+NA VERDADE,
+
+
+ELE VAI CONSOLE.LOGGAR
+
+
+isto:
+
+
+
+'console.log('[Middleware] Dispatching', action);'
+
+
+
+-----------------------------------
+
+
+
+MAS É EVIDENTE QUE ESSA FUNÇÃO NÃO É EXECUTADA APENAS COM ESSES COMANDOS... ---> 
+
+
+não, pq ainda havia restado 
+
+
+o PARâMETRO 
+
+DE 
+
+'next'... (essa keyword aí...) ------>
+
+
+
+
+
+
+
+
+PROFESSOR NOS EXPLICA QUE 
+
+
+'next()' É __MUITO IMPORTANTE___ NESSE NOSSO MIDDLEWARE (e em QUALQUER MIDDLEWARE),
+
+
+
+pq é __eLE ___ QUE DEIXA A 'ACTION' seguir em frente até o reducer... (só quando 
+ele é executado 
+
+que a 'action' realmente segue até o reducer e escapa do nosso 'middleware'....)
+
+
+
+
+---> E O PROFESSOR VAI COLOCAR ESSE ' next()' logo abaixo do nosso CONSOLE.LOG...
+
+
+EX:
+
+
+
+
+
+
+  const logger = (store) => {
+            return next => {
+                return action =>   {
+                  console.log('[Middleware] Dispatching', action);
+                  next();
+                }
+            }
+  }
+
+
+const store = createStore(rootReducer);
+
+
+
+
+------------------------------------
+
+
+
+
+CONTUDO, AINDA NÃO ACABAMOS.... ---> para que 
+
+
+
+esse 
+
+
+'PASSE ADIANTE' da action funcione, NÓS PRECISAMOS A PASSAR (a action) 
+
+
+COMO 
+
+
+PARÂMETRO 
+
+DE 
+
+'next()'....
+
+
+
+ex:
+
+
+
+
+
+  const logger = (store) => {
+            return next => {
+                return action =>   {
+                  console.log('[Middleware] Dispatching', action);
+                  next(action); ////EIS O CÓDIGO EM QUESTÃO.
+                }
+            }
+  }
+
+
+const store = createStore(rootReducer);
+
+
+
+---------------------------------------
+
+
+
+
+
+
+E ESSE 
+
+
+CÓDIGO DE 
+
+'next(action)' é IMPORTANTE... é importante pq VOCê __PODERIA/PODE_, TEORICAMENTE, __ 
+
+
+ALTERAR 
+
+ESSA 
+
+
+'ACTION' dentro ___ DO BODY__ DO 'MIDDLEWARE' (nesse caso, no body de 
+
+'logger'...) --------> nós podemos 
+
+PQ 
+
+
+NÓS DE FATO RECEBEMOS 
+
+
+A 
+
+
+'action' nesse middleware. ..... -----> isso significa que 
+
+
+PODERÍAMOS TROCAR O 'type' da action, por exemplo... -----> MAS 
+
+TEMOS QUE 
+
+TER MUITO CUIDADO,
+
+PQ 
+
+QUALQUER ALTERAÇÃOZINHA PODE __QUEBRAR___ NOSSO APLICATIVO... -----> PIOR DO QUE ISSO, 
+
+
+
+PODEMOS 
+
+ATÉ MESMO 
+
+INTRODUZIR ___COMPORTAMENTOS INDESEJADOS, INESPERADOS ('unexpected behaviors'),
+
+NO NOSSO CÓDIGO....
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> É POR ISSO QUE O PROFESSOR VAI AQUI APENAS ESCREVER 
+
+'next()' e então VAI PASSAR A 'UNMODIFIED ACTION'... ----> A COISA LEGAL, nesse 
+
+middleware,
+
+
+É QUE 
+
+
+AGORA 
+
+PODEMOS 
+
+
+___aRMAZENAR___ O RESULTADO __  DO CALL 
+
+de 
+
+'next(action)' 
+
+
+
+EM UMA ___CONSTANTE___ ..... ---> e professor vai chamar essa constante 
+
+
+de 
+
+'result'...
+
+
+
+ex:
+
+
+
+
+
+
+  const logger = (store) => {
+            return next => {
+                return action =>   {
+                  console.log('[Middleware] Dispatching', action);
+                const result = next(action); ////EIS O CÓDIGO EM QUESTÃO.
+                }
+            }
+  }
+
+
+const store = createStore(rootReducer);
+
+
+
+-------------------------------------------------
+
+
+
+FEITO ESSE ARMAZENAMENTO DO CALL DE 'next(action)'
+
+
+em 
+
+UMA CONSTANTE,
+
+PROFESSOR NOS EXPLICA QUE 
+
+
+ESSA 
+
+constante 
+
+'result'
+
+
+DEVERÁ/DEVE __ SER RETORNADA __NO FINAL DESSA FUNÇÃO/middleware 
+
+
+
+'logger', como parte de sua sintaxe....
+
+
+ex:
+
+
+
+
+
+  const logger = (store) => {
+            return next => {
+                return action =>   {
+                  console.log('[Middleware] Dispatching', action);
+                const result = next(action);
+                return result; ////EIS O CÓDIGO EM QUESTÃO. 
+                }
+            }
+  }
+
+
+const store = createStore(rootReducer);
+
+
+
+
+
+
+
+
+
+
+--------------------------------------
+
+
+PROFESSOR ENTÃO NOS RELATA QUE 
+
+ENTRE 
+
+
+
+const result = next(action);
+
+
+e 
+
+
+
+'return result;'
+
+
+
+
+
+
+ELE PODE/VAI ___CONSOLE.LOGGAR__ OUTRA COISA.... --> ele 
+
+
+va importante
+
+CONSOLE.LOGGAR 
+
+
+
+um
+
+código de 
+
+
+'[Middleware] next state', store.getState
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+  const logger = (store) => {
+            return next => {
+                return action =>   {
+                  console.log('[Middleware] Dispatching', action);
+                const result = next(action);
+
+                console.log('[Middleware] next state', store.getState());  ////EIS O CÓDIGO EM QUESTÃO. 
+
+                return result; 
+                }
+            }
+  }
+
+
+const store = createStore(rootReducer);
+
+
+
+
+----------------------------------
+
+
+
+
+OK.... MAS ISSO AÍ vai funcionar? ----> professor diz que sim... --> 
+
+
+essa referência/call de 
+
+
+'store.getState()' 
+
+vai FUNCIONAR PQ __ NÓS 
+
+TEMOS 
+
+'store' COMO __ PARâMETRO A SER RECEBIDO NESSA FUNÇÃO/MIDDLEWARE 'logger' (como visto no código 'const logger = store => {...}') -----> 
+
+
+ISSO QUER DIZER QUE NÓS 
+
+
+
+RECEBEMOS 
+
+ESSE PARÂMETRO NA NOSSA 'OUTER FUNCTION'....
+
+
+
+
+
+
+
+
+---> E NÓS APRENDEMOS, EM AULAS PASSADAS,
+
+
+QUE 
+
+
+O 
+
+
+'store', criado por nós POR MEIO DA PACKAGE/OBJETO 'createStore' do REDUX,
+
+
+POSSUI 
+
+ESSE MÉTODO 
+
+'.getState()'....
+
+
+
+
+----> E É EXATAMENTE POR ISSO QUE O PROFESSOR PODE USAR/CHAMAR 
+
+ESSE 
+
+'store.getState()' 
+
+
+DENTRO DO NOSSO MIDDLEWARE TAMBÉM...
+
+-------------------------------------------
+
+
+
+
+
+
+ISSO SIGNIFICA QUE ESTA 'FUNCTION TREE':
+
+
+
+-------------------------------------------
+
+
+  const logger = (store) => {
+            return next => {
+                return action =>   {
+                  console.log('[Middleware] Dispatching', action);
+
+                const result = next(action);
+
+   console.log('[Middleware] next state', store.getState());  ////EIS O CÓDIGO EM QUESTÃO. 
+
+                return result; 
+                }
+            }
+  }
+
+
+const store = createStore(rootReducer);
+
+
+
+----------------------------------
+
+
+ESSA 
+
+'FUNCTION TREE'
+
+
+É, NO FINAL DAS CONTAS, AS COISAS QUE ACABAM SENDO EXECUTADAS 
+
+
+
+
+
+PELO __ REDUX__, E NÃO POR NÓS___.... -------> E PARA QUE 
+
+ESSAS COISAS 
+
+
+AÍ TODAS 
+
+SEJAM 
+
+EXECUTADAS 
+
+PELO 
+
+REDUX,
+
+
+PRECISAMOS 
+
+
+VINCULAR
+ 
+
+ ESSE 
+
+ 'MIDDLEWARE INTEIRO' de 
+
+
+ 'logger'
+
+
+
+AO NOSSO 'store' 
+
+DE NOSSO APLICATIVO....
+
+
+
+
+
+------------------------------------------
+
+
+
+
+OK, MAS COMO FAZEMOS ISSO? ---------> ANTES DE MAIS NADA,
+
+
+PROFESSOR 
+
+
+
+APONTA QUE 
+
+
+___dEVEMOS IMPORTAR___ 
+
+
+ALGUMA 
+
+COISA DO 'redux'...
+
+
+
+
+
+
+ATÉ AGORA, nossos imports em 
+
+
+'index.js' são:
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+import { combineReducers } from 'redux'; ////////USADO PARA __COMBINAR__ MÚLTIPLOS REDUCERS EM APENAS 1 SÓ (combiná-los, fazê-los virar o ÚNICO REDUCER USADO PELO NOSSO APP, justamente pq APENAS PODE EXISTIR 1 REDUCER POR APp/execução de 'createStore'.......)
+import counterReducer from './store/reducers/counter';
+import resultReducer from './store/reducers/result';
+import { Provider } from 'react-redux';
+
+
+
+-------------------------------
+
+
+
+
+O IMPORT QUE O PROFESSOR VAI QUERER ADICIONAR A ESSES 
+
+é 
+
+
+
+'import { applyMiddleware } from 'redux';
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+ESSA FUNÇÃO, CONFORME O NOME SUGERE,
+
+NOS 
+
+DEIXA 
+
+APLICAR 
+
+
+NOSSO 
+
+___PRÓPRIO MIDDLEWARE___
+
+
+
+AO STORE DE NOSSO APP... ---------------->
+
+
+
+
+E PARA 
+
+APLICAR 
+
+
+
+ESSE 
+
+
+'MIDDLEWARE' 
+
+ao nosso store,
+
+por meio dessa 
+
+FUNÇÃO/OBJETO,
+
+
+nós devemos 
+
+
+EDITAR O CÓDIGO DE 
+
+
+
+'
+const store = createStore(rootReducer)'
+
+
+
+QUE 
+
+JÁ 
+
+
+
+ESTAVA PRESENTE 
+
+
+
+em 
+
+'index.js'...
+
+
+
+
+
+
+
+
+
+
+PROFESSOR NOS EXPLICA QUE 
+
+ESSE 
+
+
+'const store = createStore()'
+
+
+
+
+
+
+VAI __aCEITAR__ MAIS UM PARÂMETRO 
+
+
+NO SEU INTERIOR, ALÉM DE 
+
+
+'rootReducer'...
+
+
+
+
+--> ESSE 2o parâmetro 
+
+
+
+,
+
+
+
+
+DIZ O PROFESSOR,
+
+
+
+
+''''PODE SER''''' 
+
+
+AQUILO 
+
+
+QUE É CHAMADO 
+
+
+DE 
+
+UM
+
+'enhancer'...
+
+
+
+
+
+
+
+
+
+--------> UM ''''ENHANCER''' É 
+
+SÓ 
+
+MAIS UM NOME PARA 'middleware', pq É EXATAMENTE 
+
+ISSO QUE O MIDDLEWARE FAZ; ele 'melhora' a 
+
+EXECUÇÃO DE UM CÓDIGO...
+
+
+E É EXATAMENTE POR ISSO QUE 
+
+
+VAMOS 
+
+PASSAR
+
+
+
+'applyMiddleware()'
+
+
+
+como __SEGUNDO PARÂMETRO 
+
+DESSA FUNÇÃO 
+
+'createStore'...
+
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+'const store = createStore(rootReducer, applyMiddleware());'
+
+
+
+
+--------------------------
+
+
+
+
+FINALMENTE, DEPOIS DE TODO ESSE SETUP,
+
+PODEMOS 
+
+PASSAR 
+
+
+NOSSO MIDDLEWARE/função 
+
+
+'logger' 
+
+
+
+
+A ESSE MÉTODO 
+
+'applyMiddleware()'
+
+QUE ESTÁ SENDO USADO COMO PARâMETRO....
+
+
+
+ex:
+
+
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+
+
+
+
+  const logger = (store) => {
+            return next => {
+                return action =>   {
+                  console.log('[Middleware] Dispatching', action);
+                const result = next(action);
+   console.log('[Middleware] next state', store.getState()); 
+                return result; 
+                }
+            }
+  }
+
+const store = createStore(rootReducer, applyMiddleware(logger)); ////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+---------------------------------
+
+
+FICOU ASSIM:
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+import { combineReducers } from 'redux'; 
+// import reducer from './store/reducer'; 
+import counterReducer from './store/reducers/counter';
+import resultReducer from './store/reducers/result';
+import { Provider } from 'react-redux';
+
+import { applyMiddleware } from 'redux';
+
+
+
+
+const rootReducer = combineReducers({ 
+    counter: counterReducer,
+    results: resultReducer
+})
+
+
+
+const logger = (store) => {  ///EXEMPLO DE MIDDLEWARE. MIDDLEWARE COM O REDUX.
+  return next => {
+    return action => {
+      console.log('[Middleware] Dispatching', action);
+      const result = next(action);
+      console.log('[Middleware] next state', store.getState());
+      return result;
+    }
+  }
+}
+
+
+const store = createStore(rootReducer, applyMiddleware(logger)); /////USADO COM NOSSO 'MIDDLEWARE'... --> esse segundo parâemtro de 'createStore' SERVE PARA __vINCULARMOS__ NOSSO 'Middleware' AO 'store' GLOBAL DE NOSSO APP...
+
+
+
+--------------------------------
+
+
+
+
+CERTO... 
+
+
+
+
+
+
+
+'applyMiddleware(logger)' ------> ISSO VAI APLICAR 
+
+
+
+'logger', que é uM ___ MIDDLEWARE __ VÁLIDO__, que 
+
+será 
+
+então aplicado/executado pelo redux... --> o redux vai CONECTAR ESSE MIDDLEWARE 
+
+AO NOSSO 
+
+'STORE'...
+
+
+
+
+
+
+
+
+----> E ISSO TUDO JÁ ESTÁ AQUI.... 
+
+
+
+
+
+
+
+
+---> PROFESSOR NOS ESCLARECE QUE, dentro desse 'applyMiddleware', VOCÊ PODE, NA VERDADE,
+
+
+PASSAR __MÚLTIPLOS MIDDLEWARES__ .... --->
+
+
+
+ex:
+
+
+
+applyMiddleware(logger, logger2, logger3)....
+
+
+
+
+-------------------------------------
+
+
+
+
+ESSES 
+
+
+MIDDLEWARES QUE VOCê ADICIONAR AQUI __SERÃO ENTÃO __ EXECUTADOS EM ORDEM....
+
+
+
+logger --> logger2 --> logger3
+
+
+
+
+
+----------------------------------
+
+
+ 
+
+
+AQUI, CONTUDO, SÓ TEMOS 1 
+
+ÚNICO 'middleware'... ---> rodamos 
+
+
+
+
+nosso projeto com 
+
+'npm start' para ver os resultados 
+
+de nosso código...
+
+
+
+
+---------------------------
+
+
+
+TEMOS O PROJETO EXATAMENTE COMO TÍNHAMOS ANTES,
+
+
+mas 
+
+agora 
+
+VAMOS 
+
+VER 
+
+ALGUMAS COISAS DIFERENTES SENDO OUTPUTTADAS NO CONSOLE, quando apertarmos nos buttons da página (pq esses buttons são OS ELEMENTOS DE NOSSA PÁGINA QUE EFETIVAMENTE DISPARAM 'ACTIONS', nesse nosso exemplo...)
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+PROFESSOR CLICA EM 'Increment'
+
+
+
+E 
+
+
+ENTÃO OBSERVA O SEGUINTE OUTPUT:
+
+
+
+
+[Middleware] Dispatching {type: "INC_COUNTER"}
+
+02:31:06.820 index.js:30 [Middleware] Next state {counter: {…}, results: {…}}
+
+
+
+------------------------------------------
+
+
+
+OU SEJA,
+
+
+AQUI VEMOS 
+
+
+2 'console.logs'.... ---> 
+
+
+
+
+
+O PRIMEIRO DELES NOS MOSTRA 
+
+
+UM PRINT DE 
+
+'[middleware] dispatching' 
+
+
+E TAMBÉM 
+
+
+DE 
+
+
+'{type: 'INCREMENT'}' (objeto javascript efetivamente dispatcheado)-----
+
+---> ISSO NOS DIZ __eXATAMENTE __ QUAL 
+
+
+ACTION FOI DISPATCHEADA/DISPARADA AO SER CLICADO O BUTTOn...
+
+
+
+
+
+
+
+----> JÁ O PRÓXIMO CONSOLE.LOG,
+
+
+que nos mostra 
+
+
+'[Middleware] Next state {counter: {…}, results: {…}}',
+
+
+
+NOS MOSTRA O 'UPDATED STATE', 
+
+que foi 
+
+alterado
+ 
+ em razão 
+
+ DESSE CLIQUE 
+
+ NO BOTÃO 'increment'.... -----> E É CLARO, DIZ O PROFESSOR,
+
+
+
+ QUE 
+
+
+
+ O STATE É ALTERADO__ UMA VEZ __ PARA CADA VEZ QUE 
+
+ UMA 
+
+ 'action' é dispatcheada....
+
+
+
+
+
+
+
+
+
+ ----------------------------------------
+
+
+
+ PROFESSOR ENTÃO NOS CONTA QUE __MIDDLEWARE__(os middlewares em geral)
+
+
+
+ É BOM EXATAMENTE PARA ISSO: ELE É BOM PARA __LOGGAR__ (console.log)
+  
+
+
+  O SEU STATE DURANTE O DESENVOLVIMENTO, tudo para __vER EXATAMENTE O QUE 
+
+  ESTÁ ACONTECENDO NO SEU CÓDIGO...
+
+
+
+
+
+
+  ---> ESSAS LINHAS AQUI, EM PARTICULAR, SÃO MUITO BOAS:
+
+
+
+        console.log('[Middleware] Dispatching', action); //MOMENTO ___ANTES__ DE DISPATCHEAR A ACTION/DURANTE O DISPATCH DA ACTION.
+      const result = next(action); ////MOMENTO EM QUE É PERMITIDO À 'ACTION' __ALCANÇAR___ O 'reducer'... --> e isso vai ALTERAR __ O STATE, 100% E CERTEZA.... --> actions ALTERAM O STATE quando são lidas no reducer..
+      console.log('[Middleware] Next state', store.getState()); //ISSO VAI NOS MOSTRAR O 'AFTERMATH' da mudança do state por meio da atuaçaõ de 'action'/reducer....
+
+
+
+
+      ----------------------------------------------
+
+
+  
+
+
+  MAS O USO DE 'middleware' NÃO SE RESTRINGE AO 
+
+  'console.log'
+
+
+
+  DESSE PROCESSO 
+
+  DE 
+
+  ENVIO DE 'actions' ao reducer.... ---------> NÃO,
+
+
+
+
+  PQ O MIDDLEWARE/OS MIDDLEWARES SÃO USADOS __PRINCIPALMENTE PARA __
+
+
+  FAZER _________HANDLE____ DO 'ASYNC CODE' nos nossos projetos (como 'http requests'....) 
+
+
+
+
+
+  --------------------
+
+
+  MAS ANTES DE APRENDERMOS A FAZER HANDLE DE 'ASYNC CODE' com o redux/middlewares,
+
+
+
+
+  DEVEMOS 
+
+  VER UM POUCO MAIS DO FUNCIONAMENTO DO 'State' com os 
+
+  middlewares.... ---------> PROFESSOR 
+
+
+
+  NOS EXPLICA QUE 
+
+
+
+  __SERIA MUITO BOM PARA DEBUGGING __ SE FOSSEMOS CAPAZES DE 
+
+  SEMPRE __ TER UMA 'janela' PARA DENTRO DO STORE, SE PUDÉSSEMOS 
+
+  SEMPRE 
+
+
+
+  OBSERVAR O QUE ESTÁ ARMAZENADO DENTRO DE 'Store'..... ------> OU SEJA,
+   
+   tipo esse logging que temos 
+
+
+
+
+   no 
+
+
+   middleware de 'logger',
+
+
+   MAS __UM ____ LOGGING ___MAIS COMPLEXO__, um logging que 
+
+
+   VAI NOS MOSTRAR/ NOS MOSTRARIA 
+
+
+   A SITUAÇÃO ATUAL 
+
+   DO STATE ___MESMO NOS CASOS __ EM QUE NENHUMA ORDER FOI/É DISPATCHEADA...
+
+
+
+
+   ----------->   ou seja, queremos ter o 'store' SEMPRE 'LEGÍVEL'/observável aos nossos 
+
+   olhos...  ------> VEREMOS ISSO NA PRÓXIMA AULA...

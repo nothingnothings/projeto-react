@@ -1,0 +1,356 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> AO LONGO DAS ÚLTIMAS LIÇÕES,
+
+
+
+DEMOS UMA OLHADA EM COISAS COMO 
+
+'GATSBY.JS'
+
+
+
+
+E 
+
+'Material-UI' (component library)...
+
+
+
+
+
+
+
+
+
+OUTRA LIBRARY BOA É O 
+
+'PREACT'.... ----------------> 
+
+
+
+
+
+PREACT 
+
+É 
+
+UMA 
+
+'LIGHTWEIGHT ALTERNATIVE'
+
+ 
+
+ AO REACT... ------------> 
+
+
+
+
+ ELA SÓ TEM 
+
+ 3KB,
+
+
+pesa só isso,
+
+
+
+E 
+
+OFERECE 
+
+PRATICAMENTE 
+
+__a MESMA __ COISA QUE __ O REACT (quase a mesma coisa, não é 100% igual, tem algumas 'deviations'),
+
+
+
+
+
+
+TE DÁ A MESMA 
+
+API 
+
+
+
+DO REACT, PRATICAMENTE .... ---> 
+
+
+
+
+UÉ, 
+
+MAS 
+ENTÃO 
+
+
+A MORAL 
+
+NÃO É SÓ UTILIZAR ESSE PREACT SEMPRE? -----> não ,
+
+pq 
+
+
+
+há 
+
+diferenças 
+
+entre 
+
+
+as 
+
+2 libraries... --------> professor 
+
+vai 
+
+explicar 
+
+essas diferenças 
+
+na próxima aula....
+
+
+
+
+
+
+
+
+
+MAS ANTES DISSO,
+
+PROFESSOR 
+
+QUER 
+
+NOS EXPLICAR O QUE 
+
+ESSA LIBRARY FAZ... --> 
+
+
+
+
+
+
+
+
+SE ABRIRMOS O CÓDIGO 
+
+
+DA PÁGINA,
+VAMOS RECONHECER O CÓDIGO... ---> é react, essencialmente.... 
+
+
+
+
+
+
+
+
+
+
+--> VAMOS TER UM COMPONENT NORMAL,
+
+
+
+
+QUASE IGUAL À CÓDIGO JSX.... ------> 
+
+
+
+
+e também 
+
+temos 
+
+class-based components,
+
+tudo normal... --> é 
+
+tudo 
+
+
+sintaxe do react,
+
+
+QUASE SEMPRE... -------> 
+
+
+
+É 
+
+PRATICAMENTE 
+
+A MESMA 
+
+API,
+
+
+
+
+MAS 
+
+
+
+
+USA UM ALGORITMO DE 'linear dithing' por trás das cenas... (isso é diferente do react)... --> 
+
+
+
+ISSO SIGNIFICA 
+
+
+QUE 
+
+
+PARA 
+
+
+__DETERMINAR ___ SE ELE PRECISA __ UPDATAR O DOM OU NÃO,
+
+ELE 
+
+TEM 
+
+UM __ ALGORITMO MAIS 'LEAN'... --------> 
+
+
+
+
+
+LEAN NEM SEMPRE SIGNIFICA MELHOR,
+ 
+ MAS 
+
+ A VANTAGEM 
+
+ é 
+ o tamanho 
+
+ menor, de 3kb...
+
+
+
+
+
+
+-----> A PARTE IMPORTANTE DISSO AÍ É QUE 
+
+O 
+
+
+
+PREACT__ OFERECE ALGUMAS DIFERNÇAS 
+
+
+
+EM RELAÇÃO AO REACT( até mesmo algumas FEATURES EXTRAS.)
+
+
+
+
+
+
+--> se você googlar por 'preact',
+
+ 
+
+
+
+ VOCÊ VAI ENCONTRAR 
+
+ O 
+
+ 'preact-cli'.... --> 
+
+
+
+ você vai ver que 
+
+
+
+ existe algo semelhante 
+
+ a 
+
+ 'create-react-app',
+
+ algo que 
+
+ te deixa 
+
+ criar 
+
+
+ PREACT APPS... ---> e você tem 3 templates para escolher,
+
+
+
+ pode escolher 1 deles 
+
+ para servir de base para o seu projeto,
+
+
+ o 
+
+
+ 'default',
+
+ o 
+
+ 'material',
+
+
+
+ e 
+ o 
+
+ 'simple'...
+
+
+
+
+ ----------------------
+
+
+
+
+
+ --> A GRANDE MAIORIA 
+
+ DAS COISAS 
+
+ QUE 
+
+ APRENDEMOS DURANTE NOSSO CURSO PODEM SER USADAS 
+
+ LÁ...
+
+
+
+
+
+
+ -->  as coisas que 
+
+ aprendemos neste curso valem lá também....
+
+
+
+
+ 

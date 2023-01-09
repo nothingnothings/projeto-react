@@ -1,0 +1,846 @@
+
+
+
+
+
+
+
+
+PROFESSOR VOLTA AO NOSSO PROJETO DO BURGERBUILDER...
+
+
+
+
+
+
+
+
+--> ele diz que 
+DEVEMOS 
+
+FAZER DEPLOY 
+
+
+DE NOSSO APLICATIVO... 
+
+
+
+
+
+
+
+----> nosso aplicativo ainda continua como antes... --> entretanto,
+
+
+
+DEVEMOS 
+
+NOS LEMBRAR 
+
+DAQUELAS 
+
+___ETAPAS__ QUE O PROFESSOR NOS MOSTROU....
+
+
+
+ex:
+
+
+
+
+
+
+
+---> PRIMEIRO PASSO IMPORTANTE:
+
+
+
+
+
+
+__CHECAR__ E AJUSTAR O 
+
+'BasePath' 
+
+
+de nosso aplicativo... 
+
+
+
+
+
+
+
+
+2) BUILD E OPTIMIZAR O NOSSO PROJETO... ('we need to Build & optimize our project')... ------------>
+
+
+e esse BUILD e OPTIMIZE __ É FEITO __ POR MEIO 
+
+DE UM 
+
+
+
+COMANDO SIMPLES E CONVENIENTE NO TERMINAL,
+
+o comando 
+
+
+'npm run build'... -----------------------> ISSO,
+ 
+
+
+
+em 
+
+
+
+PROJETOS 
+
+'create-react-app',
+
+VAI
+ 
+
+
+ AUTOMATICAMENTE BUILDAR O PROJETO E OPTIMIZAR 
+
+ TODOS 
+
+ NOSSOS
+  
+
+  JAVASCRIPT BUNDLES...
+
+
+
+
+
+
+  
+
+3a COISA IMPORTANTE =-----------> SEU SERVIDOR __ DEVE ___ SEMPRE FAZER __ 
+
+
+'SERVE' DO ARQUIVO 
+
+
+HTML... ---->
+
+
+
+
+
+
+
+
+
+4) FINALMENTE,
+
+VOCÊ 
+
+
+DEVE 
+
+
+UPLOADAR 
+
+
+'BUILD ARTIFACTS' 
+
+
+AO 
+
+'SERVIDOR ESTÁTICO'/UM SERVIDOR ESTÁTICO...
+
+
+
+
+
+('Upload Build Artifacts to (static) Server')...
+
+
+
+
+
+
+
+
+
+--->  ESSES 'BUILD ARTIFACTS' SÃO EXTRAÍDOS JUSTAMENTE 
+
+DA SEGUNDA ETAPA,
+
+etapa 
+
+de 
+
+'Build & optimize project'... --->  
+
+
+DEVEMOS 
+
+
+
+UPLOADAR 
+
+ESSES 
+
+'BUILD ARTIFACTS' 
+a um 
+
+
+servidor... ---> SERVIDOR ___ estático__, na maior parte dos casos...
+
+
+
+
+
+
+UÉ, COMO 
+
+ASSIM, 
+
+'ESTÁTICO?' ---------> por 'ESTÁTICO',
+
+professor quer 
+
+dizer um 
+
+
+SERVIDOR 
+
+QUE 
+
+
+NÃO __ RODA__ 'NODE.JS',
+
+'PHP',
+ou qualquer 
+
+
+outra coisa do gênero... ------------> no final das contas,
+
+
+
+
+A COISA QUE VOCÊ 'DEPLOYARÁ' AQUI 
+
+SERÁ 
+
+UM 
+
+SPA (single page app),
+
+
+
+UM 
+
+
+
+APLICATIVO QUE CONSISTE EM 
+
+
+1 ÚNICO HTML, UM PUNHADO 
+
+DE 
+CSS 
+
+
+E __UM MONTE DE JAVASCRIPT__.... (LINGUAGENS DE SERVIDOR (serverside languages) SÃO __DESNECESSÁRIAS, PORTANTO...) --------> 
+
+
+
+ ISSO SIGNIFICA QUE 
+
+SERVIDORES 
+
+
+'ESTÁTICOS'
+
+
+COMO 
+
+
+'AWS3' (https://aws.amazon.com/pt/s3/),
+
+
+
+'GITHUB PAGES' (https://pages.github.com/),
+
+
+
+'FIREBASE',
+
+
+
+qualquer 
+UM 
+
+
+DESSES 
+
+SERVIRÁ...
+
+
+
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+OK... 
+
+DEVEMOS
+
+
+'TWEAKAR'/adicionar o 
+
+CÓDIGO 
+
+DE 'basepath' 
+
+
+no 
+
+
+NOSSO APLICATIVO,
+
+pois queremos 
+
+
+QUE 
+
+ele 
+
+
+
+NÃO TENHA PROBLEMAS RELATIVOS AO 'ROUTING'...
+
+
+
+
+
+
+
+
+--> professor vai até o 
+
+
+'index.js',
+
+e então 
+
+nos 
+
+informa
+ 
+ que 
+
+ PODERÍAMOS, 
+
+
+ neste código aqui:
+
+
+
+ <Provider store={store}>
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+</Provider>,
+
+
+
+
+
+DEFINIR 
+
+
+
+
+A PROPRIEDADE 
+
+'basename' 
+
+
+NAQUELE 
+
+
+'BrowserRouter' ali,
+
+tipo assim:
+
+
+
+
+<BrowserRouter basename="..." />,
+
+
+
+
+
+
+
+MAS 
+
+COMO 
+
+
+ELE/NÓS PLANEJAMOS 
+
+FAZER 
+
+'SERVE' DE NOSSO APLICATIVO 
+
+
+DIRETAMENTE 
+
+
+
+DE 'nossodomain.com/',
+
+
+
+
+
+E NADA MAIS DO QUE ISSO,
+
+
+
+ELE 
+
+NOS 
+
+DIZ QUE 
+
+
+
+
+__NÃO VAI QUERER __ USAR ESSA FEATURE 
+
+
+
+DE 
+
+
+'basename' 
+
+para 
+
+editar a 'STARTING URL' de nosso aplicativo...
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+
+
+---> OK....
+
+
+
+O SEGUNDO PASSO É __ASSEGURAR __ QUE 
+
+O 
+
+
+SERVIDOR 
+
+__sEMPRE RETORNE
+ 
+
+
+ 'INDEX.HTML',
+
+ não importando 
+
+ o 
+
+ 'case' (como 404..)
+
+
+
+
+
+
+ -----> ISSO, ESSA DEFINIÇÃO DE SEMPRE RETORNAR 'INDEX.HTML',
+
+ É 
+
+ ALGO QUE 
+
+ TODOS OS STATIC HOSTS TIPICAMENTE ___ TE DEIXAM CONFIGURAR____...
+
+
+
+
+
+
+
+
+
+
+ --> E SE VOCÊ NÃO ESTIVER USANDO UM STATIC HOST,
+ MAS 
+
+
+ ESTÁ 
+
+ USANDO UM
+
+
+ SERVIDOR 
+
+ 'NODE.JS',
+
+
+
+ VOCÊ SÓ PRECISA ESCREVER UM CÓDIGO ESPECÍFICO LEGALZINHO,
+
+ PRECISA 
+
+
+ ESCREVER 
+
+ UMA 
+
+ route 
+
+ 'CATCHALL'
+
+
+ E 
+
+ ENTÃO 
+
+ RETORNAR 
+
+ 'INDEX.HTML'.... (para todos os casos, por isso 'catchAll')... -----> 
+
+
+ E 
+ É 
+
+ CLARO QUE 
+
+ O MESMO 
+
+ SE APLICA PARA 
+
+ PRATICAMENTE 
+
+
+ TODAS 
+
+ AS OUTRAS 
+
+
+ SERVERSIDE LANGUAGES...
+
+
+
+
+
+
+
+
+
+
+
+
+ ---> para nós,
+
+ no nosso caso,
+
+
+
+
+ A PRÓXIMA ETAPA É SIMPLESMENTE __ BUILDAR ___ O PROJETO POR MEIO DO COMANDO 
+
+ 'npm run build'...
+
+
+ 
+
+
+
+
+
+ -- >É SÓ DIGITAR 
+
+ 'npm run build'...
+
+ no terminal.
+
+
+
+
+
+
+
+
+ -----> É PARECIDO COM 
+
+ 'NPM START',
+
+
+ mas 
+
+ a diferença 
+
+ É QUE 
+
+ ELE 
+
+ VAI 
+
+ 'CUSPIR' um servidor para fora,
+
+ e não 
+
+ vai 
+
+ só 
+
+ fazer aquele 'store' do resultado do nosso aplicativo na 'memory,
+
+ como 
+
+ fazia 
+
+
+ NO MODO DE DESENVOLVIMENTo...
+
+
+
+
+
+
+
+
+
+ -----------> agora, o folder 'build' vai CONTER NOSSA 
+
+ 'OPTIMIZED PRODUCTION BUILD'...
+
+
+
+
+
+
+
+ ---------------------------
+
+
+ OK....  --> DENTRO DO FOLDER 
+
+ 'BUILD',
+
+
+
+
+
+
+ TEMOS 
+
+
+
+
+ O SEGUINTE:
+
+
+
+ >folder de 'static' 
+
+
+> index.html
+
+
+
+
+
+
+
+--------------------
+
+
+INDEX.HTML ---> nossa SINGLE PAGE,
+
+OPTIMIZADA 
+
+PARA OCUPAR __o MENOR ESPAÇO POSSÍVEL___.... ---> 
+
+se 
+
+
+examinarmos seu código,
+
+
+veremos que 
+
+
+ALGUNS SCRIPTS FORAM ADICIONADOS NO SEU INTERIOR... (como o arquivo 'main.96cashiasi.js' ) ------> 
+
+
+
+E 
+
+ESSE ARQUIVO AÍ PODE SER ENCONTRADO 
+
+
+
+NO 
+
+FOLDER 
+
+'static'.. --->  ALI NÓS TEMOS 
+
+
+'media',
+
+
+QUE É ONDE FICAM NOSSAS IMAGENS,
+
+
+
+
+E 
+
+AÍ 
+
+TEMOS 
+
+
+'js',
+
+que 
+
+é onde TEMOS TODOS OS NOSSOS ARQUIVOS... --> OBS: SE USAMOS 'LAZY LOADING',
+
+
+veremos
+
+
+
+VÁRIOS 
+
+
+ARQUIVOS
+
+
+
+com nomes escrotos... ---> mas mais importante 
+
+é 
+
+o 
+
+arquivo 
+
+'main',
+
+que 
+
+é 
+
+o nosso 
+
+CORPO PRINCIPAL DE CÓDIGO JAVASCRIPT.... (acessado NO HOME de nosso projeto, essencialmente)...
+
+
+
+
+
+---> NÓS TAMBÉM 
+
+TEMOS 
+
+
+SOURCEMAPS NESSE FOLDER de 'js'---> (são os arquivos '.js.map' ) --------> 
+
+
+
+
+ESSES 
+
+ARQUIVOS 
+
+
+NÃO PRECISAM SER DEPLOYADOS,
+
+
+
+SÃO PURAMENTE OPCIONAIS...... ----> MAS MESMO 
+
+ASSIM,
+
+
+
+PROFESSOR 
+
+DIZ QUE 
+
+ELE 
+
+VAI 
+
+FAZER 
+
+DEPLOY 
+
+
+DE 
+
+
+
+___ TODO O CONTEÚDO ___ DO FOLDER 'build',
+
+
+
+
+TANTO 
+
+
+OS CÓDIGOS JS 'originais' COMO OS SOURCEMAPS... ----------------->
+
+
+
+
+IMPORTANTE:
+
+VOCÊ 
+
+SEMPRE 
+
+DEVE SHIPPAR __tODO O CONTEÚDO __ DENTRO 
+
+DO 
+
+
+FOLDER 
+'
+build'...
+
+
+
+
+
+
+
+
+
+
+--> VAMOS DEPLOYAR ESSE FOLDER NA PRÓXIMA AULA...

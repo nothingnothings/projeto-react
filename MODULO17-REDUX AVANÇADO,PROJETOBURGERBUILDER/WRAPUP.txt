@@ -1,0 +1,129 @@
+
+
+
+
+
+
+
+
+
+--> adicionamos um monte de lógica neste módulo... --> agora nós REALMENTE 
+
+TEMOS 
+
+
+'ADVANCED REDUX USAGE',
+
+com 
+
+
+reducers que 
+
+foram 
+
+REFATORADOS (simplificados)
+
+
+
+COM 
+
+
+SWITCH CASE STATEMENTS,
+
+
+
+
+
+TAMBÉM
+
+
+FAZEMOS HANDLE DE ASYNC CODE POR MEIO DE ACTION CREATORS (e redux-thunk..)
+
+
+
+
+--> nós estamos aplicando  middleWARE 
+
+
+no meio 
+
+
+
+DO NOSSO 'INDEX.JS', para ter 
+
+O REDUX-THUNK FUNCIONANDO NO NOSSO PROJETO... (e também para que consigamos usar o 'REDUX DEVTOOLS', no google chrome..)
+
+
+
+
+
+
+----> NÓS ESTAMOS FAZENDO UM MONTE DE COISAS COM O REDUX.... --> mas 
+
+a 
+
+parte importante é:
+
+
+NÓS 
+
+__NÃO ESTAMOS FAZENDO TUDO COM ELE... (tipo UI updates... --> isso podemos fazer LOCALMENTE, como visto 
+
+com o sidedrawer, por exemplo...)
+
+
+
+
+NÃO É NECESSÁRIO GERENCIAR TUDO COM O REDUX; É NICE __CONSEGUIR FAZER O MANAGE DO STATE 
+
+
+DE ALGO COMO 
+
+UM __MODAL__, A UI ou algo do gênero, 
+
+
+por meio do 
+
+APPROACH TRADICIONAL (state local).
+
+
+
+
+
+
+
+------------> nosso aplicativo está bem bom... ---> a próxima etapa 
+
+é 
+
+MOSTRAR 
+
+__COMO __aDICIONAR___ AUTHENTICATION AO NOSSO APP, 
+
+pq 
+
+essa é uma feature 
+
+QUE 
+
+MUITOS 
+
+APLICATIVOS 
+
+
+UTILIZAM/tem,
+
+e 
+por ISSO O PROFESSOR 
+
+QUER 
+
+NOS 
+
+MOSTRAR 
+
+COMO ADICIONAR ISSO por meio do react...
+
+
+
+(isso no próximo módulo.)

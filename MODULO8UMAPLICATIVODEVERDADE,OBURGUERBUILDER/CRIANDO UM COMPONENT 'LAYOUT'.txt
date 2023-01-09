@@ -1,0 +1,1142 @@
+C
+
+
+--> VAMOS COMEÇAR A DESENVOLVER O APP.... -----> PROFESSOR COMEÇA COM 'NPm start' 
+
+
+PARA QUE POSSAMOS VER 
+
+
+O REACT APP RODANDO NO NOSSO LOCALHOST:3000...----------> nós não veremos 
+
+NADA NA NOSSA PÁGINA, POIS ESVAZIAMOS O 
+
+
+ARQUIVO 'APP.js'...
+
+
+
+
+
+
+
+--> DEVEMOS COMEÇAR A ESBOÇAR OS COMPONENTS QUE 
+
+
+DEFINIMOS NAS LECTURES ANTERIORES.... -----> E HÁ,
+
+NA VERDADE,
+
+UM PUNHADO 
+
+DE COMPONENTS DE QUE VAMOS PRECISAR... --> mas podemos + ou - separar 
+
+
+aqueles 
+
+que vamos utilizar.... -----> PODEMOS 
+
+
+SEPARAR NOSSO 
+
+
+PROJETO 
+
+
+
+EM 
+
+
+2 
+
+'BRANCHES'... ---->
+
+
+
+
+ESSES 
+
+2 BRANCHES COMPÕEM AQUILO QUE CHAMAMOS DE COMPONENT 'layout'... --> 
+
+
+mas embaixo desse grande 
+
+
+component 
+
+'layout',
+
+
+NÓS BASICAMENTE 
+
+
+TEREMOS __ '''NAVIGATION RELATED COMPONENTS''', como o 'TOOLBAR' e o 'SIDEDRAWER'... 
+
+
+
+---> depois desses components aí, temos o 
+
+MEAT da nossa application..., QUE É O __BURGER__ BUILDER__...  ------> 
+
+
+
+OU SEJA 
+                        LAYOUT
+
+                ^                  ^
+
+TOOLBAR E SIDEDRAWER  |||||||||| BURGER BUILDER 
+
+
+
+
+--------------------------------------
+
+
+
+ESSE É O ESQUEMA.... --> professor diz que devemos 
+
+COMEÇAR 
+PELO 
+
+__BURGER BUILDER__, PQ ESSA É A PARTE PRINCIPAL DO 
+
+NOSSO APP, e a parte mais divertida.
+
+
+---------------------------------------
+
+
+
+
+MAS ANTES DE MAIS NADA,
+
+ANTES 
+
+
+DE FAZER ESSE COMPONENT '''menor'' (que ainda é VITAL/GIGANTE) 
+
+do 
+
+'BURGER BUILDER',
+
+
+
+NÓS DEVEMOS 
+
+
+CRIAR 
+
+
+O COMPONENT 'PAI', O
+
+
+'LAYOUT'... -----------> ESSE LAYOUT SERÁ ___bASICAMENTE____ UM 
+
+
+
+___WRAPPER___ IMPLEMENTANDO A TOOLBAR/SIDEDRAWER  _E O BURGER BUILDER__....
+
+
+
+
+--------------------------------
+
+
+E MAIS TARDE NESTE CURSO, QUANDO ADICIONARMOS 
+
+__rOUTING___ E MAIS PÁGINAS AO NOSSO APLICATIVO,
+
+
+
+NÓS VAMOS TIRAR VANTAGEM DESSE 'LAYOUT' (com o ROUTING) ,
+
+
+eNQUANTO 
+
+QUE 
+
+
+A 'TOOLBAR' 
+
+SEMPRE 
+
+
+ESTARÁ
+ 
+
+LÁ/estará em todas as nossas páginas... ---> a toolbar vai ficar sempre no mesmo lugar,
+
+sempre da mesma forma... --> o que vai mudar é apenas a área ''CONTENT'' (a parte do burger builder, por  
+exemplo) do nosso 
+
+LAYOUT....
+
+
+
+
+
+-----------------------------------------
+
+
+
+PROFESSOR ADMITE QUE 
+
+
+__PODERÍAMOS SIMPLESMENTE ___ TRANSFORMAR 
+
+
+___ O COMPONENT 'App' 
+
+EM UM LAYOUT... (pq 
+
+ele é, SIM, BASICAMENTE O __ROOT COMPONENT 
+
+DA NOSSA APPLICATION...  ) ------> professor 
+
+diz que 
+
+
+esse approach é/seria perfeitamente aceitável,
+
+
+mas que 
+
+mesmo assim 
+
+ele vai criar 
+
+
+UM 
+
+__ COMPONENT SEPARADO __, um component focado em ser 
+
+
+o 
+
+'ROOT COMPONENT'... ---> ele 
+
+
+fará isso para que 
+
+possam existir 
+
+2 COMPONENTS, UM QUE FOCA EM SER O 'ROOT', E outro que 
+
+FOCA NO LAYOUT... (e o 'layout' SERÁ __ENGLOBADO___ PELO 'ROOT'/APp ___...)
+
+
+
+
+------------------------------------
+
+
+
+PARA COMEÇAR NOSSOS COMPONENTS,
+
+
+PROFESSOR CRIA UM FOLDER DENTRO DE SRC chamado de 
+
+
+'components' (dumb components)...
+
+
+
+--> E ELE VAI CRIAR UM SEGUNDO SUBFOLDER em 'src',
+
+o qual ele vai CHAMAR DE 'CONTAINERS'...
+
+
+
+
+
+
+
+
+---> CONTAINERS (Stateful) VS COMPONENTS (stateless)
+
+
+
+
+
+
+
+----> PROFESSOR EXPLICA QUE 
+
+ELE 
+
+
+___vAI CRIAR __ O COMPONENT 
+
+'LAYOUT' 
+
+
+no 
+
+FOLDER DE 'components'... (dumb) ----> ISSO 
+
+PQ, POR ENQUANTO,
+
+
+
+NÓS/O PROFESSOR NÃO VAI PRECISAR FAZER MANAGE DE NENHUM STATE NELE...
+
+
+
+
+
+
+---> É POR ISSO QUE O PROFESSOR VAI CRIAR UM SUBFOLDER EM 'components' 
+
+CHAMADO DE 
+
+'layout'... --> e aí ele cria um 
+
+'Layout.js'....  
+
+
+
+
+--> 
+
+
+ESSE É UM 
+
+SETUP TÍPICO 
+
+DE UM PROJETO REACT:
+
+
+
+
+src -> components -> NomeDeComponent -> NomeDeComponent.js
+
+src -> containers -> NomeDeContainer -> NomeDeContainer.js 
+
+
+-------------------------------------------------------
+
+
+
+OUTROS FOLDERS 
+
+COMUNS SÃO 
+
+
+'assets' --> veremos isso mais tarde QUANDO ADICIONARMOS UM ___LOGO____ ...
+
+
+
+
+--> E VOCÊ TAMBÉM PODE TER UM FOLDER PARA O 'REDUX STORE' e assim por diante... (ainda não aprendemos sobre isso)...
+
+
+
+
+------------------------------------------------
+
+
+
+PROFESSOR 
+
+
+CRIA UM 
+
+
+FUNCTIONAL COMPONENT 
+
+
+DE NOME 
+
+
+'layout'...
+
+
+
+--> E AGORA DEVEMOS VER COMO ___ESSA FUNCTION ___ DEVERÁ SER ESTRUTURADA... (ou como 
+
+O __CÓDIGO JSX___ RETORNADO POR 
+
+ESSA FUNCTION DEVERÁ SER... )
+
+
+
+
+
+Nesse component 
+
+NÓS TEREMOS 
+
+2 ÁREAS.... -------> TEREMOS UMA 
+
+
+
+ÁREA (uma <DIV>) 
+
+
+EM QUE FICARÁ 
+
+
+O ____TOOLBAR__, o ___SIDEDRAWER___ E ___PROVAVELMENTE__, PARA O SIDEDRAWER, __UM __bACKDROP___....
+
+
+
+
+professor 
+
+
+vai escrever o component (provisoriamente) assim:
+
+
+
+
+
+const layout = (props) => (
+
+    <div>Toolbar, SideDrawer, Backdrop</div>
+)
+
+
+
+--------------------------------------
+
+
+
+
+ELE ESCREVE ISSO AÍ COMO MODELO.... PQ NÓS VAMOS 
+
+TER QUE SUBSTITUIR 
+
+
+ESSA DIV 'simples' 
+
+
+POR ___TRÊS COMPONENTS__, mais tarde.... -----------> NÓS 
+
+
+PLANEJAMOS TUDO ISSO NA AULA ANTERIOR...
+
+
+
+
+
+-----------> DEPOIS 
+
+DESSE TOOLBAR/SIDEDRAWER/BACKDROP,
+
+
+
+VAMOS TER 
+
+
+
+NOSSA 'ÁREA NORMAL', A 'MAIN AREA' (de tag' <main>') ------> AÍ 
+
+
+NÓS VAMOS 
+
+USAR 
+
+
+UM ELEMENTO DE TAG <MAIN>,
+
+TAG PROVIDENCIADA PELO HTML.... -------> 
+
+
+
+E AÍ ,
+
+NESSE <main></main>,
+
+
+O PROFESSOR VAI QUERER 
+
+__OUTPUTTAr__ O COMPONENT QUE 
+
+
+
+_________NÓS VAMOS WRAPPAR___ COM ESSE COMPONENT 
+
+
+'LAYOUT'... ---------> É POR ISSO QUE O PROFESSOR 
+
+VAI 
+
+USAR 
+
+'{props.children}'.... (e o argumento props já está no lugar, como visto acima )
+
+
+
+
+EX:
+
+
+
+
+
+import React from 'react';
+
+
+
+
+const layout = (props) => (
+
+    <div>Toolbar, SideDrawer, Backdrop</div>
+    <main>
+    {props.children} //////////EIS O CÓDIGO EM QUESTÃO.
+    </main>
+)
+
+
+
+
+export default layout;
+
+
+
+
+--------------------------------
+
+
+
+
+É 
+
+
+EVIDENTE QUE 
+
+ESSE CÓDIGO AÍ,
+
+ESSE RETURN 
+
+
+DE 
+
+2 <TAG> 
+
+
+UMA DO LADO DA OUTRA,
+
+
+__NÃO É PERMITIDO __ NATIVAMENTE __ PELO 
+
+REACT... --> precisamos 
+
+
+de HOCs (Higher order components), como 
+
+
+'Auxiliary', que havíamos usado mais cedo....
+
+
+
+--------------------------------------
+
+
+CONTUDO, CONTINUANDO... ---> 
+
+
+
+esse 
+
+'<main>
+    {props.children}
+</main>'
+
+
+
+NOS __PERMITE USAR __ ESSE COMPONENT 
+
+'Layout' 
+
+
+ESSENCIALMENTE COMO UM ___WRAPPEr____em volta 
+
+
+do 
+
+
+'CORE CONTENT COMPONENT' que queremos renderizar à tela (o burger builder e, futuramente, outras páginas...)
+
+
+
+
+
+
+VAMOS 
+
+RECEBER UM ERRO NO IDE ----> '''você não pode retornar mais de 1 único elemento html/jsx''''...
+
+
+
+(ADJACENT JSX ELEMENTS) --------->
+
+
+
+HÁ 
+
+
+2 SOLUÇÕES PARA ISSO:
+
+
+1a solução: ___RETORNAR UM ___ARRAY__ AQUI, um 
+
+__aRRAY___ COM ESSES ELEMENTOS...
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+
+
+
+const layout = (props) => {
+
+
+
+    return(
+        [
+        <div>Toolbar, SideDrawer, Backdrop</div>,
+        <main>
+            {props.children}
+        </main>
+        ]
+    
+    );
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+--> SE __RETORNARMOS UM ARRAY__ E SE ENTREGARMOS 
+
+
+A CADA 
+
+ELEMENTO UMA __KEy__,
+
+
+
+O REACT NOS DEIXA ___ RETORNAR ADJACENT JSX ELEMENTS....
+
+
+
+
+
+-----> A ALTERNATIVA SERIA CRIAR UM ___
+
+HIGHER ORDER COMPONENT (Auxiliary.js, component 'Aux'...).... ------> PROFESSOR 
+
+NOS MOSTROU COMO FAZER ISSO... ------> AUX CUMPRE APENAS 1 
+
+TAREFA: FAZER WRAP DE ALGO E ENTÃO FAZER O IMEDIATO __OUTPUT__ DESSE 
+
+ALGO QUE FOI WRAPPADO (o que satisfaz 
+
+o requisito de 'ter apenas 1 único elemento sendo retornado pelo return statement'...)
+
+
+
+
+
+
+
+
+----> PROFESSOR DIZ QUE AINDA TEMOS A TERCEIRA OPÇÃO:
+
+WRAPPAR TUDO EM UMA DIV...
+
+(ex:
+
+
+
+
+const layout = (props) => {
+
+
+
+    return(
+        <div className="WrapperDiv">
+        <div>Toolbar, SideDrawer, Backdrop</div>,
+        <main>
+            {props.children}
+        </main>
+        </div>
+    
+    );
+
+
+
+
+
+}
+
+
+)
+
+
+
+
+
+
+MAS O PROFESSOR DIZ QUE ELE 
+
+
+__NÃO QUER ___ TER ESSA DIV AÍ, ESSA DIV INÚTIL --> ELE 
+
+
+DIZ 
+
+QUE 
+
+ELE REALMENTE __QUER TER __ ADJACENT__ JSX ELEMENTS... ---> 
+
+
+É POR ISSO 
+
+
+QUE 
+
+ELE VAI USAR O 
+
+
+APPROACH DO 'Aux' (HOCs)....
+
+
+
+
+------------------------------------------------
+
+
+ELE VAI LÁ E CRIA UM FOLDER 'HOC'
+
+
+
+dentro do nosso folder 'src'.... --> dentro disso, ele vai criar 
+
+
+UM 
+
+ARQUIVO CHAMADO 
+
+'Auxiliary.js'... com um component 'Aux'...
+
+
+
+
+
+
+--> CÓDIGO EM 'AUX':     
+
+
+
+---------------------------------
+
+
+
+
+const aux = props => props.children;
+
+
+
+
+
+
+
+
+
+
+export default aux;
+
+
+---------------------------------------
+
+
+
+
+OU SEJA,
+ 
+ ELE BASICAMENTE 
+
+ REPRODUZ O CONTEÚDO, MAS WRAPPADO 
+
+ em 
+
+ um 'higher order component' (que é o AUX).... ---> PRECISAMOS, CONTUDO, IMPORTAR 'AUX' no nosso arquivo 'Layout.js'...
+
+
+
+
+ ---------------------------------
+
+
+
+
+ FICARÁ ASSIM:
+
+
+
+
+import Aux from '../../hoc/Auxiliary';
+
+
+ const layout = (props) => {
+
+
+
+    return(
+        <Aux>
+        <div>Toolbar, SideDrawer, Backdrop</div>,
+        <main>
+            {props.children}
+        </main>
+        </Aux>
+    
+    );
+
+
+
+
+
+}
+
+
+
+
+export default layout...
+
+--------------------------------------
+
+
+
+
+
+
+--> 
+
+Ok, tudo foi wrappado com esse 
+
+COMPONENT 
+
+'Aux'...
+
+
+
+
+
+
+
+--> COM TUDO ISSO FEITO,
+
+AGORA 
+
+
+PODEMOS __IMPORTAR__ ESSE COMPONENT 
+
+
+'LAYOUT'
+
+
+lá no nosso __ROOT COMPONENT__,
+
+lá em 
+
+
+'App.js'...
+
+
+
+-----------------------------------------
+
+
+
+--> PROFESSOR ADMITE QUE VOCÊ PODERIA, É CLARO, 
+
+
+
+IMPORTAR O COMPONENT 
+
+LAYOUT 
+
+
+LÁ 
+
+no 
+
+arquivo 
+
+
+'index.js',
+
+e aí  você poderia simplesmente 
+
+
+RENDERIZAR O COMPONENT 'LAYOUT' como 
+
+
+aquele 
+
+ROOT COMPONENT 
+
+em 
+
+'ReactDOM.render(<Layout />, document.getElementById('root'));' ------> isso seria 
+
+
+a mesma coisa 
+
+que deixar 
+
+o APP.JS file COMO __ROOT COMPONENT DE NOSSO PROJETO__ ---> você poderia 
+
+
+fazer isso, 
+
+e isso não estaria errado... ----> MAS A DECISÃO PESSOAL DO 
+
+PROFESSOR 
+
+É TER 
+
+ESSE ROOT COMPONENT de 'App.js' --> ele sempre gosta de ter 
+
+esse ROOT component de 'App.js' PARA 
+
+CASOS EM QUE 
+
+ELE QUEIRA __rEESTRUTURAR__ O APLICATIVO, talvez adicionar algum 
+
+__sTATE__ AO ROOT COMPONENT__, talvez RENDERIZAR CONDICIONALMENTE __DIFERENTES LAYOUTS, OU 
+
+COISAS DO GÊNERO.... -------> o nosso aplicativo, como está agora,
+
+
+definitivamente poderia ter o 
+
+componente 'layout' EM SI COMO SEU ROOT COMPONENT... (mas não faremos isso)...
+
+
+
+-----------------------------
+
+
+
+
+
+Certo... importamos 
+
+
+
+o layout
+
+NO arquivo 
+
+
+
+APp.js... ---------> 
+
+
+
+AÍ FAZEMOS 
+
+
+O RENDER DO LAYOUT.... 
+
+
+ex:
+
+
+
+class App extends Component {
+  render() {
+
+
+
+    return(
+        <div>
+       <Layout></Layout>
+       </div>
+    )
+  }
+
+}
+
+export default App;
+
+
+
+
+-------------------------------------
+
+
+
+MAS O PROFESSOR EXPLICA QUE 
+
+
+ESSE 
+
+'LAYOUT' __ NÃO DEVERÁ 
+
+SER UM ___'SELF CLOSING COMPONENT'... -----> não deverá 
+
+
+ser isso 
+
+
+
+
+PQ __A IDEIA __ DO 'LAYOUT' É __JUSTAMENTE___ QUE 
+
+
+O PROFESSOR ___PODE __ WRAPPAR __ OUTRO/OUTROS 
+
+
+____COMPONENTS___ AO REDOR DELE.... ------> 
+
+
+
+É POR ISSO QUE VAI FICAR ASSIM:
+
+
+
+-----------------------------------------
+
+
+
+class App extends Component {
+  render() {
+
+
+
+    return(
+        <div>
+       <Layout>
+
+       <p> *Conteúdo* </p>
+
+       </Layout>
+       </div>
+    )
+  }
+
+}
+
+export default App;
+
+
+
+--------------------------------------------
+
+
+
+POR ENQUANTO, O PROFESSOR 
+
+APENAS COLOCA UM 
+'<p>' NO WRAPPER DO LAYOUT,
+
+só para 
+
+TESTAR SE NOSSO LAYOUT REALMENTE ESTÁ SENDO PASSADO 
+
+ao component 'App'...
+
+
+
+--------------------------------
+
+
+
+SALVAMOS TODOS OS ARQUIVOS... ---------> 
+
+
+
+AÍ VAMOS ATÉ O LOCALHOST e vemos 
+
+
+o resultado....
+
+
+------------------------------
+
+'Toolbar, SideDrawer, Backdrop' 
+
+Test 
+
+------------------------------------
+
+
+
+
+
+--> SE VOCÊ INSPECIONAR ESSES ELEMENTOS, 
+
+VOCÊ 
+
+VERÁ 
+QUE 
+
+
+NÓS 
+
+__NÃO USAMOS/NÃO FOI UTILIZADA A FONTE 'OPEN SANS'... --> colocamos os estilos no 
+
+
+
+ARQUIVO CSS DE 'App.css'/index.css... 
+
+
+
+-------------------------
+
+
+HÁ AINDA MUITO TRABALHO PELA FRENTE... ----> COMO 
+
+NÓS __AINDA NÃO TEMOS MÚLTIPLAS PÁGINAS NO NOSSO APLICATIVO,
+
+
+NÃO SOMOS OBRIGADOS 
+
+A RESOLVER 
+
+
+A PARTE 
+
+DA NAVIGATION BAR ('Toolbar, SideDrawer, Backdrop')
+
+nesse exato momento.... 
+
+
+
+
+
+
+--> DEVEMOS, EM VEZ DISSO,
+
+
+FOCAR NA __CORE FUNCTIONALITY DO NOSSO APLICATIVO__,
+
+
+O 'BURGER BUILDER'...

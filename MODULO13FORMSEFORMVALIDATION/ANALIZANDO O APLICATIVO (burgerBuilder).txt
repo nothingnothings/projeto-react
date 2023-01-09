@@ -1,0 +1,821 @@
+ 
+
+
+ --> DEVEMOS DAR UMA OLHADA NO 'STATE' 
+
+
+
+ DE 
+
+ NOSSO 
+
+
+ ATUAL 
+
+APLICATIVO BURGERBUILDER... --------->
+
+
+
+
+
+--> 
+
+
+lá 
+
+no component/container 
+
+'Checkout',
+
+
+
+dentro daquele 
+
+
+
+container de 
+
+
+'ContactData',
+
+
+
+NÓS ENCONTRAMOS O CÓDIGO DE 
+
+
+'
+
+
+import React, { Component } from 'react';
+
+import Button from '../../components/UI/Button/Button';
+
+import ContactDataStyle from './ContactData.module.css';
+
+import axiosOrder from '../../axios-orders';
+
+import Spinner from '../../components/UI/Spinner/Spinner'
+
+import { withRouter } from 'react-router-dom'
+
+
+class ContactData extends Component {
+
+  state = {
+   name: '',
+    email: '',
+      street: '',
+      postalCode: '',
+    loading: false,
+    price: null
+  };
+
+
+
+  contactDataHandler = (event, type) => {
+
+
+
+
+      if(type === "name") {
+
+        this.setState(
+            {
+                    name: event.target.value
+              
+            }
+        )
+        console.log(this.state);
+    }
+
+
+    if(type === "postal") {
+        this.setState(
+            {
+
+                  
+                        postalCode: event.target.value
+                }
+            
+        )
+        console.log(this.state);
+    }
+
+
+    if(type === "street") {
+        this.setState(
+            {
+                         street: event.target.value
+
+                
+            }
+        )
+    }
+
+
+    if(type === "email") {
+
+        
+
+
+
+
+
+
+
+
+        this.setState(
+            {
+  email: event.target.value
+
+            }
+        )
+    }
+
+
+
+  
+
+      }
+    
+  
+
+
+
+
+
+
+  orderHandler = (event) => {
+    event.preventDefault(); ///VAI PREVENIR O RELOAD DA PÁGINA.(e sim, precisamos do parâmetro 'event' para acessar esse método especial, método que PREVINE O COMPORTAMENTO DEFAULT DO BROWSER DE __RECARREGAR___ PÁGINAS QUANDO UM 'SUBMIT' OCORRE DENTRO DE UMA FORM...)
+    console.log(this.props.ingredients);
+    
+
+    this.setState({
+      loading: true,
+    });
+
+    const orderData = {
+      ingredients: this.props.ingredients,
+      price: this.props.price,
+        name: this.state.name,
+        email: this.state.email,
+          street: this.state.street,
+          postalCode: this.state.postalCode,
+      
+      }
+    
+
+        axiosOrder.post('/orders.json', orderData)
+        .then(
+
+            (response) => {
+              console.log(response);
+                this.setState({
+                  loading: false
+                });
+                this.props.history.push('/');
+              }
+        )
+        .catch(error => {
+            this.setState(
+                {
+                    loading: false
+                }
+            )
+        }
+        )
+  };
+
+  render() {
+    console.log(this.state);
+    console.log(this.props);
+
+    let contactDataContent = (<div className={ContactDataStyle.ContactData}>
+    <h4>Enter your Contact Data</h4>
+    <form>
+      <input type="text" name="name" placeholder="Your Name" onChange={(event) => { this.contactDataHandler(event, "name")}}/>
+      <input type="email" id="email" pattern="(?!(^[.-].*|[^@]*[.-]@|.*\.{2,}.*)|^.{254}.)([a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@)(?!-.*|.*-\.)([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,15}" name="email" placeholder="Your Mail" onChange={(event) => { this.contactDataHandler(event, "email")}}/>
+      <input type="text" name="street" placeholder="Street" onChange={(event) => { this.contactDataHandler(event, "street")}} />
+      <input type="number" onWheel={event => event.preventDefault()} name="postal" placeholder="Postal Code" onChange={(event) => { this.contactDataHandler(event, "postal")
+
+
+      }}/>
+      <Button
+        btnType="Success"
+        clicked={(event) => {
+          this.orderHandler(event);
+        }}
+      >
+        ORDER
+      </Button>
+    </form>
+  </div>
+    )
+
+
+
+    if(this.state.loading) {
+         contactDataContent = (<Spinner />);
+    }
+
+
+
+
+
+
+
+
+    return (
+            <div>
+        {contactDataContent}
+        </div>
+
+
+
+
+
+    );
+  }
+}
+
+export default withRouter(ContactData);
+
+
+''
+
+
+----------------------------
+
+
+
+
+
+
+SE DERMOS UMA OLHADA NESSE container,
+
+
+
+vamos observar que 
+
+TEMOS 
+
+um 
+
+
+'STATE' geral 
+
+settado 
+
+
+lá no início...
+
+(
+
+  state = {
+   name: '',
+    email: '',
+      street: '',
+      postalCode: '',
+    loading: false,
+    price: null
+  };
+
+
+
+
+
+
+
+
+
+) ------> NÓS LÁ 
+
+
+
+TAMBÉM 
+
+
+
+TEMOS 
+
+
+
+NOSSO 
+
+
+'método submit', aquele 'axios.post', 
+
+
+
+QUE É O CÓDIGO
+
+
+em que 
+
+
+SUBMITTAMOS NOSSA ORDER ao server,
+
+
+e onde 
+
+
+
+nós 
+
+TAMBÉM 
+
+SETTAMOS 
+
+ALGUNS DADOS (no servidor)... ---> 
+
+
+
+
+
+
+
+
+
+
+OBS:::: O PROFESSOR ENTÃO FALA DE UM PROBLEMA ____DO CÓDIGO DELE ____ ( e não do nosso, que 
+
+JÁ 
+
+
+FAZ 
+
+
+ISSO....) -----> ele 
+
+
+fala que 
+
+
+o código (a 'customerData'...)
+
+
+de 
+
+
+
+
+'const order = {
+    ingredients: this.props.ingredients,
+    price: this.props.price,
+    customer: {
+        name: 'Max SchwarzMuller', 
+        address: {
+            street: 'Teststreet 1',
+            zipCode: '41351',
+            country: 'Germany
+        },
+        email: 'test@test.com'
+    }
+}
+
+'
+
+
+
+
+__NÃO ESTÁ 'SYNCADO'/sincronizado 
+
+
+COM O NOSSO 
+
+STATE
+
+
+(
+
+
+  state = {
+   name: '',
+    email: '',
+      street: '',
+      postalCode: '',
+    loading: false,
+    price: null
+  };
+
+
+
+
+
+),
+
+nem um pouco...
+
+
+
+
+
+
+-----> professor explica/aponta que 
+
+__NEM MESMO OS FIELDS___ desse 'axios.post' 
+
+
+
+e 
+
+O 
+
+___sTATE___ DE 
+
+'contactData' 
+
+estão iguais, que 
+
+
+ESTÁ __tUDO UMA BAGUNÇA__...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> professor nos explica que 
+
+PARTE DE NOSSO MÓDULO SERÁ UM ESFORÇO PARA FAZER OS 2 
+
+'FICAREM SINCRONIZADOS....' (eu acho que JÁ ESTÃO SINCRONIZADOS, na minha versão, mas tudo bem...).
+
+
+
+
+
+
+
+
+
+
+--------> CONTUDO, SE DERMOS UMA 
+
+OLHADA 
+
+
+___NA FORM__ PROPRIAMENTE DITA (lá no código de 
+
+'''''''''
+
+
+<form>
+      <input type="text" className={classes.Input}name="name" placeholder="Your Name" />
+      <input type="text" className={classes.Input} name="name" placeholder="Your Name" />
+      <input type="text" className={classes.Input} name="name" placeholder="Your Name" />
+      <input type="text" className={classes.Input} name="name" placeholder="Your Name" />
+
+
+      }}/>
+
+</form
+
+
+''''
+
+
+),
+
+
+
+
+SE DERMOS 
+
+UMA OLHADA NISSO AÍ, NA FORM EM SI, 
+
+
+VAMOS PERCEBER 
+
+QUE 
+
+
+__NÓS NÃO ESTAMOS__ NEM 
+
+
+MESMO ______ FAZENDO HANDLE DOS INPUTS... (na verdade, nós JÁ ESTAMOS, na minha versão do código...)
+
+
+
+
+
+
+MINHA VERSÃO DO CÓDIGO:
+
+
+
+<input type="text" name="name" placeholder="Your Name" onChange={(event) => { this.contactDataHandler(event, "name")}}/>
+      <input type="email" id="email" pattern="(?!(^[.-].*|[^@]*[.-]@|.*\.{2,}.*)|^.{254}.)([a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@)(?!-.*|.*-\.)([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,15}" name="email" placeholder="Your Mail" onChange={(event) => { this.contactDataHandler(event, "email")}}/>
+      <input type="text" name="street" placeholder="Street" onChange={(event) => { this.contactDataHandler(event, "street")}} />
+      <input type="number" onWheel={event => event.preventDefault()} name="postal" placeholder="Postal Code" onChange={(event) => { this.contactDataHandler(event, "postal")
+
+
+
+
+
+
+
+(E ela está funcionando, é claro...)
+
+
+
+
+
+-------------------------
+
+
+PROFESSOR EXPLICA QUE, NA VERSÃO DELE,
+
+
+nós nem mesmo estamos fazendo handle DO INPUT DESSES 'INPUT elements' AÍ;
+
+
+NÓS 
+
+NEM MESMO ESTAMOS CUIDANDO (HANDLANDO) DAS 
+
+
+OCORRÊNCIAS DE SEU VALOR MUDAR ('when their value changes'...) ---------> 
+
+
+
+
+A PRIMEIRA COISA, SEMPRE, É FAZER 
+
+
+COM QUE 
+
+
+A MUDANÇA DE VALOR DE UM INPUT SEJA ____ HANDLADA___ POR NOSSO APP... 
+
+
+isso é feito por meio do EVENT HANDLER de nome 'onChange', que é vinculado ao código bizarro
+
+de (event) => ....
+
+
+
+
+ESSE '...' VAI SER SUBSTITUÍDO __POR UMA HELPER FUNCTION___, uma função como 
+
+'contactDataHandler',
+
+que 
+
+CRIAMOS 
+
+
+NA NOSSA VERSÃO DO CÓDIgo...
+
+
+(
+
+
+    visto no código 
+
+onChange={(event) => { this.contactDataHandler(event, "name")}}
+
+
+
+
+e
+
+
+no código 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+contactDataHandler = (event, type) => {
+
+
+
+
+      if(type === "name") {
+
+        this.setState(
+            {
+                    name: event.target.value
+              
+            }
+        )
+        console.log(this.state);
+    }
+
+
+    if(type === "postal") {
+        this.setState(
+            {
+
+                  
+                        postalCode: event.target.value
+                }
+            
+        )
+        console.log(this.state);
+    }
+
+
+    if(type === "street") {
+        this.setState(
+            {
+                         street: event.target.value
+
+                
+            }
+        )
+    }
+
+
+    if(type === "email") {
+
+        
+
+
+
+
+
+
+
+
+        this.setState(
+            {
+  email: event.target.value
+
+            }
+        )
+    }
+
+
+
+  
+
+      }
+
+
+)
+
+
+
+
+
+
+
+
+
+---> MAS O PRÓXIMO PASSO É __VALIDAR COM SUCESSO __ OS INPUTS DO USUÁRIO (validação/sanitize de inputs....)
+
+
+
+
+
+
+
+
+
+
+
+--> o professor repete aquilo que já fizemos:
+
+
+
+
+
+1o passo ---------> DESCOBRIR 'QUAIS DADOS DE QUE PRECISAMOS'...
+
+
+
+
+
+2o passo ------> seria bom encontrar um jeito de CRIAR DINAMICAMENTE NOSSA 'Form'...
+
+
+
+3o passo ------> ENCONTRAR UM JEITO DE 
+
+
+FAZER HANDLE DA 'FORM VALIDITY'/check da form validity, E FAZER 
+
+
+___ A MUDANÇA __ DO STYLE __ DE NOSSA FORM COM __bASE__ NESSA 'FORM VALIDITY' (deixar os campos vermelhos quando o input for algo idiota, por exemplo...)
+
+
+
+
+
+
+
+
+-----> CERTO, É ISSO QUE O PROFESSOR VAI QUERER FAZER, AQUI.... ---------> 
+
+
+
+
+E ELE VAI 
+
+COMEÇAR 
+
+
+PELO OUTSOURCE 
+
+DE 
+
+NOSSO 
+
+ELEMENTO 'INPUT'.... -------> ele vai querer 
+
+
+criar 
+
+um 
+
+COMPONENT 
+
+'Input' 
+
+QUE 
+
+SERÁ 
+
+REPETIDO 
+
+4x aqui nessa 'form' (uma para o 'email', outra para o 'name', outra para a 'street', e outra para o 'zipcode'...)
+
+
+
+
+
+
+
+-------------------------> esse INPUT COMPONENT 
+
+vai ter um 
+
+'default styling',
+
+e talvez 
+
+
+UMA LABEL 'default'.... ----> mais tarde 
+
+vamos 
+
+
+
+
+CODAR __TAMBÉM__ MENSAGENS DE ERRO__ NESSES ELEMENTOS 
+
+'Input'...
+
+
+
+------------------------------------------------------
+
+
+
+Ok... passo por passo,
+
+
+devemos 
+
+começar 
+
+
+pelA INSERÇÃO 
+
+
+DESSES 
+
+
+INPUTS 
+
+em 
+
+seu PRÓPRIO COMPONENT... (ver próxima aula).
+
+
+
+
+
+

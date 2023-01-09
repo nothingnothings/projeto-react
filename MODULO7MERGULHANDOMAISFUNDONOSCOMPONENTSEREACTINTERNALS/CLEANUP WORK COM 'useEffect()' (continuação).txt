@@ -1,0 +1,230 @@
+ANTES DE 
+
+
+
+
+
+ESTUDARMOS 
+
+
+AS FORMAS DE USAR 
+
+'shouldComponentUpdate',
+
+
+
+O PROFESSOR 
+
+
+DIZ QUE 
+
+
+
+PENSOU EM UMA 
+
+
+__INTERESSANTE ___ MUDANÇA 
+
+
+
+
+NO 'useEffect'
+
+
+em 'Cockpit'....
+
+
+
+
+
+------> PROFESSOR APONTA QUE QUANDO 
+
+ELE 
+
+__REMOVE___ O COCKPIT 
+
+
+
+POR MEIO DO 'button',
+ 
+
+
+ O 
+
+ ___ALERTA___ ('alert()')
+
+
+ AINDA 
+
+
+ É MOSTRADO NA NOSSA PÁGINA... ----------------> BEM, O PROFESSOR, NA LIÇÃO ANTERIOR,
+
+
+ HAVIA EXPLICADO ___COMO PODEMOS FAZER __ CLEANUP WORK ___ 
+
+
+ com aquele 
+
+
+ código 
+
+
+ 'return() => {}' 
+
+
+
+ DENTRO DO PRIMEIRO PARÂMETRO 
+
+
+ do 'useEffect'... ---------> ué, nós PODEMOS 
+
+
+ TESTAR ISSO COM 
+
+
+ ESSE ALERT AÍ... ------> podemos testar COM ESSE TIMER aí, esse alert vinculado ao TIMER,
+
+ que eu posso CERTAMENTE REMOVER...
+
+
+
+
+
+
+
+
+ É POR ISSO QUE O PROFESSOR CRIA UMA CONST CHAMADA 
+
+ 'alertTimer' 
+
+ e ARMAZENA O TIMER (junto do ALERT) 
+
+ DENTRO 
+
+ DELA... ---------> DEPOIS DISSO, PROFESSOR SE UTILIZA 
+
+
+ DO MÉTODO/FUNÇÃO 
+
+
+ 'clearTimeout()' (nem sabia que essa merda existia) 
+
+
+ PARA __LIMPAR___ AQUELE TIMER... (removê-lo).
+
+
+
+
+ ex(representação do código de 'cockpit'):
+
+
+
+
+
+
+
+
+
+
+
+    useEffect(() => { 
+      console.log('[Cockpit.js] useEffect');
+      const alertTimer = setTimeout(() => {
+        alert('Saved data to the cloud!');
+      }, 1000);
+
+
+      return () => {
+        console.log('[Cockpit.js] cleanup work in useEffect');
+        clearTimeout(alertTimer);
+        
+      }
+    }, []); //isso vai assegurar QUE O __CÓDIGO__ DE 'return () => {}' SEJA EXECUTADO __SEMPRE QUE__ NOSSO COMPONENT 'cockpit' FOR MONTADO... (mounted).
+
+
+
+
+
+----------------------------
+
+
+
+
+
+
+
+CERTO, AGORA QUANDO 
+
+CLICARMOS EM 'remove cockpit', ISSO VAI ___rEALMENTE__ LIMPAR O TIMER, o timer 
+
+SERÁ LIMPADO 
+
+POR ESSA FUNÇÃO 
+
+'
+clearTimeout()'
+
+
+
+EXECUTADA 
+
+NAQUELE 'return() => {}'    (que SIMULA a funcionalidade de 'componentWillUnmount'...)....
+
+
+
+
+
+
+---> NÓS NUNCA VEREMOS O ALERT, POIS O TIMER NUNCA VAI 'GO OFF', PQ EU __LIMPEI ESSE TIMER__ 
+
+QUANDO ESSE COCKPIT FOI 'UNMOUNTED'... ---> e se eu REMOVO MEU COCKPIT __ANTES___ DO 
+
+
+ALERT SER MOSTRADO (em razão do timer), 
+
+
+ESSE TIMER E O ALERT SÃO 
+
+
+__SIMPLESMENTE CANCELADOS__...  ------------> OU SEJA,
+
+
+
+ESSA É UMA PEQUENA VARIAÇÃO DA LIÇÃO DE ANTES, que 
+
+ele queria 
+
+
+nos mostrar.... ---->  é uma pequena variação 
+
+
+
+na 'feature' de cleanup que você pode utilizar 
+
+
+no 
+
+
+'useEffect'.... O PROFESSOR VAI REMOVER ESSA FUNÇÃO 
+
+
+
+DE 'cleanup' (e o timer) 
+
+
+DO NOSSO CÓDIGO,
+
+
+pois não precisamos dela nas próximas lições...
+
+
+(MAS AINDA ASSIM, ESSE É UM ÓTIMO EXEMPLO DE COMO VOCÊ PODE FAZER 
+
+'CLEANUP WORK' 
+
+em 
+
+'useEffect'... )
+
+
+

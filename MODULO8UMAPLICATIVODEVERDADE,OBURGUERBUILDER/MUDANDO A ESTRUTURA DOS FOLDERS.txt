@@ -1,0 +1,453 @@
+
+
+
+
+CERTO, E QUAIS OUTRAS MUDANÇAS PODEMOS IMPLEMENTAR?
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> DEVEMOS VER NOSSA ESTRUTURA DE FOLDERS.
+
+
+
+
+
+
+
+
+
+
+---> VAMOS ATÉ O NOSSO COMPONENT 
+
+'LAYOUT'...
+
+
+
+
+
+
+
+
+
+--> no folder 'Layout', 
+
+vemos 
+
+
+que 
+
+ layout é um 
+
+
+  
+
+  CLASS-BASED COMPONENT COM UM STATE... --> ESSE STATE É USADO 
+
+
+  __PARA fazer 'handle' do 
+
+  'DISPLAYAL' do 
+
+
+
+__sIDEDRAWER__... ----------------> ENTRETANTO, 
+
+
+
+
+___APESAR____ DE SER UM STATE__, 
+
+
+O PROFESSOR 
+
+NÃO CONSIDERA 
+
+
+ESSE COMPONENT 
+
+
+COMO UM 
+
+'CONTAINER' PROPRIAMENTE DITO... ----------> mas você poderia argumentar que sim, ele é um container... -------> SERIA UM CONTAINER PQ ELE CONTÉM OUTROS COMPONENTS, E PORQUE ELE FAZ PASS DE 'state'/do STATE PARA ELES... 
+
+
+
+
+
+
+
+
+
+---> é por isso que NÃO SERIA TÃO ERRADO MOVER ESSE COMPONENT 'LAYOUT' 
+
+
+do folder de 'components '
+
+para 
+
+o 
+
+folder 
+
+
+de 
+
+
+'containers'...
+
+
+
+------------------------------------------
+
+
+
+
+
+----> mas o professor argumenta que você TAMBÉM PODERIA ESTRUTURAR/POSICIONAR 
+
+ESSE LAYOUT DE FORMA DIFERENTE... ------> 
+
+
+dada a nossa estrutura 
+
+atual 
+
+de folders,
+
+
+
+
+
+TEMOS 
+AQUELE 
+
+
+
+FOLDER 
+
+
+'hoc' (Higher order components)... ---> vocÊ poderia/pode argumentar 
+
+que 
+
+
+
+
+
+um 
+
+''LAYOUT'' (o nosso layout) 
+
+
+
+É, NO FINAL DAS CONTAS,
+
+
+APENAS 
+
+UM 
+'HIGHER ORDER COMPONENT'.... -------> isso pq tudo que você 
+
+está 
+
+fazendo com 
+
+
+ele 
+
+é 
+
+__WRAPPANDO__ OS SEUS 
+
+
+__OUTROS COMPONENTS___  COM 
+
+
+ESSE LAYOUT..........
+
+
+
+E, DE FATO, 
+
+
+O COMPONENT 
+
+'LAYOUT' 
+
+é usado, em 'App.js',
+
+assim:
+
+
+<Layout>
+    <BurgerStyle />
+<Layout>
+
+
+
+---------------------------------
+
+
+
+(OU SEJA, O COMPONENT 'BURGERBUILDER', PEÇA-CHAVE DO NOSSO APP, É 
+
+WRAPPADO POR ELE...) --------> e uma 
+
+
+vez que 
+
+começarmos a adicionar mais PARTES DO NOSSO APP (por meio do ROUTING),
+
+
+ESSE ARQUIVO 
+
+Layout' 
+
+VAI PASSAR A WRAPPAR __MAIS COMPONENTS__ AINDA..
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+E, DE FATO, 
+
+
+O COMPONENT 
+
+'LAYOUT' 
+
+é usado, em 'App.js',
+
+assim:
+
+
+<Layout>
+    <BurgerStyle />
+<Layout> --------------------> 
+
+
+
+e por ele 
+
+
+'WRAPPAR' O 
+
+
+COMPONENT 
+
+
+'BURGERBUILDER',
+
+
+ISSO O TORNA, DE CERTA FORMA,
+
+
+UM 
+
+_____HIGHER___ ORDER ___ COMPONENT___ (que loucura)....
+
+
+
+
+
+
+Contudo, isso tudo se trata apenas de SEMÂNTICA, de palavrinhas... ---> nada 
+
+disso 
+
+
+vai mudar 
+
+
+
+A FORMA PELA QUAL SEU APLICATIVO FUNCIONA.  ------> certo, mas devemos fazer isso?
+
+
+
+
+
+
+
+
+------> AINDA ASSIM, VOCê PODE MOVER O 'LAYOUT' 
+
+
+PARA A CATEGORIA DOS CONTAINERS, 
+
+OU ATÉ MESMO MOVÊ-LO PARA 
+
+O FOLDER 
+
+DOS 
+
+'hoc'... ------->  também pode ser o caso QUE NO SEU APLICATIVO VOCÊ 
+
+TALVEZ NEM TENHA UM 
+
+
+FOLDER 'hoc', caso em que 
+
+vocÊ 
+
+SÓ 
+
+
+TERÁ 
+
+
+UM FOLDER PARA COMPONENTS 
+
+
+E OUTRO PARA CONTAINERS... ----------> 
+
+
+
+
+BEM... ISSO QUER DIZER QUE HÁ  _____MAIS DE UMA ÚNICA MANEIRA__ 
+
+DE ESTRUTURAR SEU CÓDIGO, E DE CODAR/ESTRUTURAR 
+
+o 'layout'/posicionar o layout em 
+
+
+seus folders... -------> CONTUDO, 
+
+
+O __PROFESSOR__ PREFERE 
+
+
+
+ESSE APPROACH/
+
+JEITO DE FAZER 
+
+
+AS COISAS 
+
+
+EM QUE 
+
+
+'LAYOUT'
+
+É __SEMPRE ___ DEIXADO 
+
+
+
+
+
+NO 
+
+FOLDER 
+
+
+DE 
+
+'hoc' (Higher order component)... ---> isso pq o professor REALMENTE __o CONSIDERA___ UM 
+
+
+HIGHER ORDER COMPONENT; ele é um HOC, na visão dele, pq 
+
+ELE SÓ 
+
+
+
+ESTÁ NO NOSSO CÓDIGO/PROJETO PARA ____ WRAPPAR___ OUTROS 
+
+COMPONENTS___ (como visto com o wrap de 'BurgerBuilder'..., lá em 'App.js'...)
+
+
+
+
+
+-------------------------- 
+
+
+CERTO,
+
+
+REESTRUTURAMOS NOSSOS FOLDERS E IMPORTS PARA CONSIDERAR 
+
+QUE 
+
+
+O 
+
+
+component 
+
+'Layout' foi movido para o folder de 'hocs' (higher-order components).
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+---> CERTO,
+ 
+
+ O PROFESSOR TAMBÉM VAI CRIAR UM NOVO FOLDER 
+
+
+ EM 
+ 'hoc', 
+
+ chamado 
+
+ de 
+
+ 'Auxiliary', que será 
+
+ ONDE ELE COLOCARÁ O ARQUIVO 
+
+ 'Auxiliary.js'
+  
+
+(que usamos incontáveis vezes ao longo do projeto).
+
+
+
+
+
+------------------------
+
+
+CERTO, NÓS AJUSTAMOS 
+
+
+TODOS OS NEGÓCIOS QUEBRADOS, IMPORTS QUEBRADOS 
+
+
+DE 
+
+
+'Aux'... 
+
+
+--> Certo, nosso app está funcionando, dessa vez sem erros,
+
+e agora com nossa 
+
+FOLDER STRUCUTRE MELHORADA. (mudados o 'Auxiliary' e o 
+
+'Layout' components)

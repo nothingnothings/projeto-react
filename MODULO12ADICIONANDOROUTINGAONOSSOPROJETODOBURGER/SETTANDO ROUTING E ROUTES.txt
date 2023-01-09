@@ -1,0 +1,430 @@
+
+
+
+
+EU VOU COMEÇAR A TENTAR SETTAR ROUTING PARA o 'CHECKOUT SUMMARY',
+ 
+ tudo por conta própria....
+
+
+
+
+
+
+
+
+
+Ok... consegui.
+
+REALMENTE CONSEGUI. Tudo graças às aulas do professor... consegui settar um routing básico... 
+
+
+
+
+Eis o código de 'App.js', com o routing aplicado...
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+import BurgerBuilder from '../src/containers/BurgerBuilder/BurgerBuilder';
+
+
+import {BrowserRouter} from 'react-router-dom';
+
+
+import Layout from '../src/hoc/Layout/Layout';
+
+
+
+import { Route } from 'react-router';
+
+
+import { Switch } from 'react-router-dom';
+
+
+import Checkout from './containers/Checkout/Checkout'
+
+
+
+
+class App extends Component {
+
+
+
+  render() {
+
+
+
+   
+
+
+    return(
+        <BrowserRouter>
+        <div>
+       <Layout >
+         <Switch>
+         <Route path="/checkout" component={Checkout} />
+        <Route path="/" component={BurgerBuilder} />
+        </Switch>
+       </Layout>
+       </div>
+       </BrowserRouter>
+    )
+  }
+
+}
+
+export default App;
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+E EIS O CÓDIGO DE 
+
+
+
+'OrderSummary', que é ONDE EU POSICIONEI O <Link/> que 
+
+leva 
+
+
+a url/path de 
+
+
+'/checkout'....
+
+
+
+
+
+
+eX:
+
+
+
+import React from 'react';
+
+
+
+
+import Aux from '../../../hoc/Auxiliary/Auxiliary';
+
+
+
+import Button from '../../UI/Button/Button';
+
+
+import { Link } from 'react-router-dom';
+
+
+
+
+
+
+        return (
+            <Aux>
+            <h3>Your Order</h3>
+            <p>A delicious burger with the following ingredients:</p>
+            <ul>
+                <li>{capitalizeFirstLetter(ingredientSummary[0][0])}: {props.ingredients.salad}</li>
+                <li>{capitalizeFirstLetter(ingredientSummary[1][0])}: {props.ingredients.bacon}</li>
+                <li>{capitalizeFirstLetter(ingredientSummary[2][0])}: {props.ingredients.cheese}</li>
+                <li>{capitalizeFirstLetter(ingredientSummary[3][0])}: {props.ingredients.meat}</li>
+            </ul>
+            <h2>Total Price: $ {props.price.toFixed(2)}</h2>
+            <Link to="/checkout"> ////////EIS O CÓDIGO EM QUESTÃO....
+            <Button btnType="Success">
+            CONTINUE
+            </Button>
+            </Link>
+            <Button clicked={props.clicked} btnType="Danger">
+            CANCEL
+            </Button>
+    
+            </Aux>
+
+)
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+Mas ainda resta consertar algumas coisas... (E implementar outras).... 
+
+
+
+
+
+
+--> exemplo disso é 
+
+
+
+o 
+
+
+
+
+LINK/Elemento 'checkout' QUE 
+
+FICA LÁ EM CIMA, NO NOSSO APLICATIVO... ----> quando nós formos transportados 
+
+
+para a 
+
+'page' 
+
+
+de 
+
+
+'checkout',
+
+
+
+
+Aquele negócio lá __dEVERÁ SE ILUMINAR__.... ------> (talvez eu precise de 
+
+
+'NavLink' para isso?) (TALVEZ 'NavLink' lá em 'Toolbar'?) -------> não, mas isso não funciona... (ou eu não sei settar, pode ser, também...)
+
+
+
+
+
+
+
+--> ESSE ESTILO AÍ ESTÁ DIFÍCIL DE SETTAR...
+
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+O professor começa dizendo que 
+
+JÁ 
+
+CRIAMOS O COMPONENT 'CHECKOUT'... ------> professor instala o react-router-dom...
+
+
+
+
+
+
+
+
+
+
+--> PROFESSOR FEZ O WRAP DE NOSSO APLICATIVO 
+
+
+COM  O BROWSERROUTER em um lugar diferente, no entanto... (ele WRAPOU 
+
+LÁ 
+
+
+EM 
+
+'index.js')
+
+
+
+
+
+
+
+
+
+ELE ESCREVEU ASSIM:
+
+
+
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+
+import { BrowserRouter } from 'react-router-dom';
+
+
+
+const app = (
+    <BrowserRouter><App/></BrowserRouter>
+)
+
+
+
+
+
+ReactDOM.render(
+  <React.StrictMode>
+     {app}
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+
+MAS 
+
+É BASICAMENTE A MESMA COISA QUE FIZEMOS 
+
+
+EM 
+
+'App.js'...
+
+
+
+
+
+
+
+
+--> O PROFESSOR VAI LÁ E ENTÃO 
+
+
+
+TAMBÉM SETTA 
+
+
+AS ROUTES 
+
+
+em 
+
+'App.js'... ----> o código das routes dele vai estar assim:
+
+
+
+-------------------------------------
+
+<Layout>
+    <Route path="/" exact component={BurgerBuilder} />
+    <Route path="/checkout" component={Checkout} />
+</Layout>
+
+-------------------------------------
+
+
+
+
+É BEM PARECIDO COM NOSSO CÓDIGO, MAS 
+
+nós utilizamos o objeto/component 
+
+'SWITCH' 
+
+PARA 
+
+FAZER COM QUE APENAS 
+
+1 ROUTE SEJA RENDERIZADA POR VEZ.... (E não usamos o 'exact', como ele está usando... --> o exact torna o uso de 'Switch' DESNECESSÁRIO, AQUI...)
+
+
+
+
+
+
+---> MAS COM O 'SWITCH', A ___ORDEM __DAS ROUTES IMPORTA... ---> 
+
+
+vai ficar assim, com switch:
+
+
+
+
+<Layout>
+    <Switch>
+    <Route path="/checkout" component={Checkout} />
+    <Route path="/" component={BurgerBuilder} />
+   </Switch>
+</Layout>
+
+
+
+
+
+
+
+
+
+--> O PROFESSOR VAI USAR O SWITCH, SÓ PARA MOSTRAR O USO DE TUDO.... certo, tudo certo.
+
+
+
+
+
+
+
+
+
+
+
+
+---> o próximo passo, diz o professor, é assegurar que 
+
+QUANDO CLICAMOS EM 'Continue', no OrderSummary,
+
+ISSO FAÇA COM QUE 
+
+
+NÓS CARREGUEMOS 
+
+A OUTRA PÁGINA, A PÁGINA DE 
+
+'Checkout' ('localhost:3000/checkout') no lugar da de 'BurgerBuilder'...
+
+
+

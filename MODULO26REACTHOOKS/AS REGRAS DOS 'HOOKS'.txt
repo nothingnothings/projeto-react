@@ -1,0 +1,400 @@
+
+
+
+
+
+
+
+
+--> PROFESSOR REVERTEU O CÓDIGO  PARA O APPROACH DO 
+
+'MULTI-STATE APPROACH'... --> ver razões na aula 
+
+'Usando, em vez disso, ONE STATE'....
+
+
+
+
+
+
+
+
+
+
+
+----> AGORA, ANTES DE PROSSEGUIRMOS COM 
+
+OUTRO HOOK IMPORTANTE 
+
+
+
+
+
+DESSA FEATURE DOS HOOKS,
+
+
+
+PROFESSOR 
+
+
+DIZ QUE 
+
+
+DEVEMOS 
+
+VER 
+
+AS REGRAS
+ 
+ QUE 
+
+ SE APLICAM 
+
+ a ESSES 
+
+ HOOKS...
+
+
+
+
+
+
+
+
+----------> PRIMEIRA REGRA:
+
+
+
+VOCÊ ___ SÓ __DEVE __ USAR 
+
+'useState()' 
+
+E 
+
+TODOS OS OUTROS HOOKS 
+
+
+
+ENSINADOS NESTE MÓDULO
+
+
+____NO NÍVEL 'TOP' ____ ('at the top level') 
+
+
+DA 
+
+FUNÇÃO DE SEU COMPONENT.... ----->  E ISSO 
+
+
+JÁ 
+
+CONTÉM 
+
+UM MONTE DE COISAS IMPORTANTES... ->
+
+
+
+
+
+
+
+2a regra, DERIVADA DA PRIMEIRA:
+ 
+
+
+
+ SEU COMPONENT __ TEM DE SER UM __ FUNCTIONAL COMPONENT __ PARA QUE 
+ SEJA 
+
+ POSSÍVEL 
+ O USO 
+
+ DESSES HOOKS... --> ISSO QUER DIZER QUE 
+
+
+ SUA FUNÇÃO TEM QUE 
+ SER UMA FUNÇÃO 
+
+ QUE 
+
+
+ ACEITA/EXIGE PROPS E QUE 
+
+ RETORNA JSX... --> É UMA FUNÇÃO QUE 
+
+ O 
+ REACT PODE USAR PARA RENDERIZAR CONTEÚDO/COMPONENT... ----> ISSO QUER 
+
+
+ DIZER QUE 
+
+
+
+ ELA 
+
+ DEVE 
+
+ SER UMA 
+
+ FUNÇÃO EM __ QUE __ NÃO PODEMOS __ CHAMAR 'useState' 
+
+ DENTRO 
+
+ DE 
+
+ UMA FUNÇÃO NO SEU INTERIOR... -----> É CLARO QUE 
+
+ VOCÊ 
+
+ PODE/PODERIA 
+
+ ESCREVER 
+
+ ALGO ASSIM,
+
+ MAS 
+ ISSO 
+
+ AÍ 
+
+
+
+ __NÃO VAI FUNCIONAR CORRETAMENTE.... ---> 
+
+
+ por exemplo,
+
+
+ MUDANÇAS 
+
+
+
+
+DE STATE __ NÃO SERÃO 'PICKED UP' pelo 
+
+REACT.... (se você seguir esse modelo)...
+
+
+
+
+
+
+
+
+
+
+
+
+3a coisa importante ---> 
+
+
+
+
+O 
+
+'TOP LEVEL' 
+
+
+DE SUA FUNÇÃO 
+
+__TEM QUE SER 
+'GUARANTEED'... --->  isso quer dizer que 
+
+'useState()'
+
+
+SÓ PODE 
+
+SER USADO 
+
+DIRETAMENTE 
+
+NO TOPMOST LEVEL 
+
+
+DE 
+SEU COMPONENT FUNCTIONAL.. (no function body)....
+
+
+
+---> ISSO QUER DIZER, ESSENCIALMENNTE,
+
+
+
+
+__QUE VOCÊ _ NÃO PODE FAZER ALGO COMO ISTO:
+
+
+
+---------------------------------------
+
+
+const inputChangedHandler = event => {
+
+
+    useState();  ////////////ISSO NÃO FUNCIONARÁ___...
+
+    setTodoName(event.target.value);
+}
+
+------------------------------
+
+
+
+
+
+OU SEJA, 
+
+VOCÊ 
+
+NÃO PODE CHAMAR 
+
+'useState()'
+
+
+
+'IN A FUNCTION OF THE FUNCTION',
+
+dentro de uma FUNÇÃO DENTRO DESSA FUNÇÃO...
+
+
+
+
+
+
+
+
+
+
+
+OUTRO LUGAR EM QUE 
+
+
+___NÃO PODEMOS __ CHAMAR 
+
+'useState()'
+
+
+É 
+
+
+
+
+
+_________DE DENTRO ___ DE UM 
+
+IF STATEMENT...
+
+
+
+
+ex:
+
+
+
+
+
+if () {
+    useState(); //////////ISSO NÃO FUNCIONARÁ...
+
+}
+
+
+
+----------------------------------
+
+
+
+A MESMA COISA SE APLICA 
+
+A 
+
+FOR LOOPS............... 
+
+
+
+
+
+
+
+
+BASICAMENTE,
+
+QUALQUER FORMA DE NESTING, COM CALLS DE 'useState()',
+
+NÃO FUNCIONA...
+
+
+
+
+
+
+
+
+
+
+
+--> VOCÊ SÓ PODE CHAMAR 
+
+'useState()'
+
+
+NO ROOT LEVEL 
+
+
+
+DE SUA FUNCTION, DE SEU FUNCTIONAL COMPONENT...
+
+
+----------------------------------------
+
+
+
+
+COM 
+
+ESSAS 
+
+REGRAS 
+
+EM LUGAR,
+
+
+
+
+
+
+regras 
+
+de que 
+
+VOCê TEM QUE TER UM 
+REACT COMPONENT FUNCTION para usar os REACTHOOKS,
+
+E 
+
+QUE VOCÊ DEVE OS 
+UTILIZAR 
+
+
+
+NO TOPMOST LEVEL DESSES COMPONENTS,
+
+
+
+
+
+
+
+DEVEMOS ___ VER MAIS UM 'CORE HOOK' adicionado pelo react,
+
+
+
+
+E VER 
+QUAL 
+
+PROBLEMA 
+ESSE 
+
+HOOK ___SOLUCIONA___...

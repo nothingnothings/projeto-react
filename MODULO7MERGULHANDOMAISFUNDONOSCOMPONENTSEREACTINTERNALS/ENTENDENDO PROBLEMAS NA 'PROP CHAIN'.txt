@@ -1,0 +1,1909 @@
+
+
+PARA CONCLUIR 
+
+ESTE MÓDULO,
+
+
+
+
+VAMOS 
+
+
+VER 
+
+
+UMA OUTRA FEATURE EXCITANTE OFERECIDA PELO REACT.... ----------> É UMA 
+
+FEATURE 
+
+
+
+QUE NOS AJUDA 
+
+
+__a EVITAR___ CHAINS 
+
+
+
+EXCESSIVAMENTE LONGAS de pass DE 'props' pelo seu projeto... (já experienciamos isso PESSOALMENTE)...
+
+
+
+----------------------------------------
+
+
+
+
+
+------> PROFESSOR VAI NOS DAR UM EXEMPLO... 
+
+
+
+
+
+
+--> nós temos nosso component 
+
+
+'person'... -----> AGORA 
+
+
+
+digamos 
+
+
+QUE NÓS 
+
+TAMBÉM
+
+
+FAZEMOS 'MANAGE' 
+
+
+de um 
+
+
+
+'AUTHENTICATION STATUS'
+
+nesse nosso aplicativo... -------->  e aí 
+
+
+
+NÓS VAMOS QUERER 
+
+
+OUTPUTTAR 
+
+UMA MENSAGEM 
+
+
+
+DIZENDO SE ESTAMOS AUTENTICADOS OU NÃO, 
+
+
+LÁ No component 
+
+
+'person'... 
+
+
+
+
+-------> ENTRETANTO,
+
+VAMOS QUERER QUE A ___aUTHENTICATION___ EM SI 
+
+seja 
+
+
+'MANAGED' LÁ no cockpit, 
+
+
+E NÃO 
+
+em 'Person'... --------> CERTO. PARA ISSO,
+
+
+
+
+LÁ 
+
+
+NO 
+
+
+COMPONENT 
+
+'COCKPIT',
+
+
+O PROFESSOR VAI ADICIONAR 
+
+
+UM OUTRO 
+
+
+
+ELEMENTO 'button'...
+
+
+
+
+
+ex:
+
+
+
+
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+        ref={toggleBtnRef}
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+       
+
+       <button>Log in</button> ////////////EIS O CÓDIGO EM QUESTÃO
+        </div>
+    );
+
+------------------------------------
+
+
+
+
+
+
+-------->  NESSE BUTTON, O PROFESSOR VAI REGISTRAR UM 
+
+'ONCLICK' listener.... --------> 
+
+
+'onClick={}'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+        ref={toggleBtnRef}
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+       
+
+       <button onClick={}>Log in</button> ////////////EIS O CÓDIGO EM QUESTÃO
+        </div>
+    );
+
+
+
+
+-------------------------------------------
+
+
+
+
+CERTO.... MAS O PROFESSOR ____NÃO VAI QUERER FAZER 'MANAGE' DO 
+
+
+'AUTHENTICATION STATUS' AQUI NESSE LUGAR.... (não, ele vai querer fazer o OUTPUT do STATUS lá 
+
+no 
+
+COMPONENT 'PERSON'...) ---------> A única coisa 
+
+
+que o professor quer 
+
+
+fazer aqui 
+
+
+É ___TRIGGAR ___ UMA MUDANÇA 
+
+NO NOSSO CÓDIGO___ por 
+
+
+meio do CLICK 
+
+nesse botão de 'login'... ---------> É POR ISSO QUE 
+
+ELE 
+
+
+VAI 
+
+
+'ESPERAR RECEBER' (expect to get),
+
+
+como 
+
+
+UM ___PROP____ ('props.xxxx'),
+
+
+UM 
+
+
+PROP 
+
+chamado 'login'...
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+        ref={toggleBtnRef}
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+       
+
+       <button onClick={props.login}>Log in</button> ////////////EIS O CÓDIGO EM QUESTÃO
+        </div>
+    );
+
+
+
+-----------------------------------
+
+
+
+
+
+----> PROFESSOR APONTA QUE, DE FATO, NÓS 
+
+
+USAMOS 
+
+
+NOSSO COMPONENT 
+
+
+'Cockpit'
+
+
+
+LÁ 
+
+
+NO __ ARQUIVO 'App.js'___.... -------> E, LÁ NO CÓDIGO DE 'App.js',
+
+
+ONDE É 
+
+__INVOCADO____ o 'Cockpit', 
+
+
+
+
+de código:
+
+
+    render() {
+
+
+            return() {
+
+
+
+                          {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+          />
+        ) : null}
+            }
+
+        
+
+
+
+    }
+
+
+
+
+
+
+,
+
+
+
+
+
+LÁ NESSE NEGÓCIO AGORA PRECISAMOS 
+
+
+PASSAR 
+
+
+UM PROP
+
+
+de 
+
+
+
+login COM ALGUMA LÓGICA DENTRO... LÓGICA QUE SERÁ USADA 
+
+pelo component 'Cockpit', lá em 'Cockpit.js'...
+
+
+
+
+
+------>
+
+
+
+vamos escrever:
+
+
+
+
+
+
+
+    render() {
+
+
+            return() {
+
+
+
+                          {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={}
+          />
+        ) : null}
+            }
+
+        
+
+
+
+    }
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+PRECISAMOS DEFINIR/ADICIONAR UM 
+
+MÉTODO 
+
+
+NO ARQUIVO 
+
+
+'App.js
+
+
+
+QUE SERÁ ENTÃO REPASSADO 
+
+
+POR 
+
+
+ESSE PROP 'login'...  ------> esse método DEVERÁ FAZER ALGO QUANDO 
+
+
+ESSE BOTÃO DO COCKPIT (da 'authentication') é APERTADO... ------------> 
+
+
+
+PARA ISSO,
+
+
+PARA 
+
+'FAZER ALGO' A PARTIR DESSE BUTTON CLICK,
+
+
+
+
+O PROFESSOR 
+
+
+
+
+COLOCA 
+
+
+UM NOVO MÉTODO 
+
+
+AQUI,
+
+chamado 
+
+
+de 
+
+
+'loginHandler'....
+
+
+
+ex:
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+    loginHandler = () => {
+
+    }
+
+
+
+
+
+
+    render() {
+
+
+            return() {
+
+
+
+                          {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={}
+          />
+        ) : null}
+            }
+
+        
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+DENTRO DESSE MÉTODO, TUDO QUE O PROFESSOR VAI QUERER 
+
+
+FAZER 
+
+É 
+
+
+__SETTAR__ ALGUM 
+
+
+
+'AUTHENTICATION STATE' 
+
+
+
+no nosso código como __SENDO 'TRUE'.... -------> PARA ISSO,
+
+
+DEVEMOS 
+
+
+IR 
+
+
+ATÉ O NOSSO 
+
+'STATE'
+
+
+
+e então 
+
+definir 
+
+
+alguma PROPRIEDADE como sendo 
+
+
+de valor inicial 'false'...
+
+
+
+
+vamos criar uma propriedade 
+
+de nome 
+
+'authenticated', e então definir seu valor como sendo FALSE...
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+class App extends Component {
+
+    state = {
+
+ persons: [
+      // { id: 'aspogashpog', name: 'Max', age: '28' },
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false,
+    showCockpit: true,
+    changeCounter: 0,
+    authenticated: false ////////EIS O CÓDIGO EM QUESTÃO.
+
+    }
+
+
+
+
+
+
+
+
+
+    loginHandler = () => {
+
+    }
+
+
+
+
+
+
+    render() {
+
+
+            return() {
+
+
+
+                          {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={}
+          />
+        ) : null}
+            }
+
+        
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+--------------------------------
+
+
+
+ISSO FEITO,
+
+
+VAMOS PEGAR O MESMO MODELO 
+
+
+DO 
+
+BODY do 
+
+
+'togglePersonsHandler'
+
+
+
+
+
+E ENFIAR NO BODY 
+
+do 
+
+
+'loginHandler'...
+
+
+
+ex:
+
+
+
+
+
+
+class App extends Component {
+
+    state = {
+
+ persons: [
+      // { id: 'aspogashpog', name: 'Max', age: '28' },
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false,
+    showCockpit: true,
+    changeCounter: 0,
+    authenticated: false ////////EIS O CÓDIGO EM QUESTÃO.
+
+    }
+
+
+
+
+
+
+
+
+
+    loginHandler = () => { ///////EIS O CÓDIGO EM QUESTÃO
+        const notLoggedIn = this.state.authenticated;
+        this.setState({authenticated: !notLoggedIn})
+    }
+
+
+
+
+
+
+    render() {
+
+
+            return() {
+
+
+
+                          {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={}
+          />
+        ) : null}
+            }
+
+        
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+-------------------------------------
+
+
+
+
+SERÁ QUE ISSO FUNCIONARÁ?
+
+
+
+DEVEMOS 
+
+
+VER A MANEIRA PELA QUAL 
+
+
+O PROFESSOR ESCREVEU A LÓGICA, E FAZER 
+
+UMA COMPARAÇÃO...
+
+
+
+
+
+
+
+
+--> PROFESSOR EXPLICA QUE __É ÓBVIO__ QUE 
+
+NÃO ESTAMOS/NÃO ESTAREMOS FAZENDO 
+
+'REAL AUTHENTICATION' AQUI, 
+
+só vamos aprender isso MAIS TARDE 
+
+no nosso aplicativo... 
+
+
+
+
+
+---> no loginHandler,
+
+
+ele escreve um CÓDIGO DIFERENTE, MAIS SIMPLES...
+
+
+ELE VAI 
+
+ESCREVER APENAS 
+
+1 LINHA, 1 'setState()'....
+
+
+ex:
+
+
+
+loginHandler = () => {
+    this.setState({authenticated: true});
+}
+
+------------------------------
+
+
+UÉ, MAS PQ ELE ESCREVEU ESSE CÓDIGO DE MANEIRA DISTINTA 
+
+DA NOSSA...? ------> eu IMAGINO que seja pq AQUELE 
+
+TRECHO 
+'
+   const notLoggedIn = this.state.authenticated;
+        this.setState({authenticated: !notLoggedIn})
+',
+
+ESSE MODELO AÍ, 
+
+É ___USADO ___ PRINCIPALMENTE ___ COM HANDLERS QUE 
+TRABALHAM COM ____TOGGLE___ (on/off) DE __sTATES___ (como o SHOW/HIDE 
+dos nossos person components) ------------>
+
+
+COMO AQUI ESTAMOS TRATANDO DE UMA AUTHENTICATION 'DEFINITIVA' (sempre ficará como 'authenticated: true', ele 
+não vai TOGGLAR/SWITCHAR entre 'true'/'false' durante o runtime 
+do nosso app...)
+
+
+
+---------------------------------
+
+
+
+ISSO FEITO,
+
+
+
+O PROFESSOR 
+
+
+
+VAI PASSAR 
+
+
+ESSE 
+
+'loginHandler'
+
+
+
+AO 
+
+
+prop 
+
+
+
+'login' no COCKPIT...
+
+
+(e nós vamos usar o modelo de 'loginHandler' do professor...)
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+class App extends Component {
+
+    state = {
+
+ persons: [
+      // { id: 'aspogashpog', name: 'Max', age: '28' },
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false,
+    showCockpit: true,
+    changeCounter: 0,
+    authenticated: false ////////EIS O CÓDIGO EM QUESTÃO.
+
+    }
+
+
+
+
+
+
+
+
+
+    loginHandler = () => { 
+        
+        this.setState({authenticated: true}); ///////EIS O CÓDIGO EM QUESTÃO
+    }
+
+
+
+
+
+
+    render() {
+
+
+            return() {
+
+
+
+                          {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={this.loginHandler} //////EIS O CÓDIGO EM QUESTÃO
+          />
+        ) : null}
+            }
+
+        
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+------------------------------
+
+
+
+
+
+CERTO. 
+
+
+
+
+--> TUDO ESTÁ 'GOOD', AGORA 
+
+
+ESTAMOS 
+
+
+FAZENDO 
+
+
+'MANAGE' 
+
+
+DO AUTHENTICATION STATUS 
+
+
+LÁ NO 
+
+
+COMPONENT 
+
+'App'... ------------> ENTRETANTO, 
+
+
+
+
+QUEREMOS 
+
+
+
+___MOSTRAR___ OS RESULTADOS 
+
+DESSA 
+
+
+
+'AUTHENTICATION', o output de 'Authenticated',
+
+
+
+LÁ 
+
+
+___NO __ COMPONENT 
+
+
+'Person'... --------->
+
+
+
+
+
+
+
+
+
+
+--------> E É AÍ QUE SURGE O NOSSO PROBLEMA:
+
+
+
+NÓS, NO COMPONENT 'App',
+
+
+SÓ 
+
+_______tEMOS ACESSO AO COMPONENT ___ 
+
+
+'
+PERSONS'
+
+(
+
+
+
+
+if (this.state.showPersons) {
+
+
+  
+  persons = 
+      <Persons  //4 
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} 
+      
+      
+
+
+      />
+
+
+    
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
+, 
+
+
+e não 
+
+AOS COMPONENTS singulares 'person' (englobados 
+
+por 
+
+'PERSONS'...) ---------> 
+
+
+
+E NÓS 
+
+PRECISAMOS 
+
+
+
+INFORMAR/COMUNICAR 
+
+
+O 
+
+COMPONENT 
+
+
+'Person' 
+
+
+QUE ELE DEVE OUTPUTTAR 
+
+
+uma mensagem de 'AUTENTICADO' 
+
+
+
+quando o VALOR 
+
+
+DE 
+
+'authenticated' FOR TROCADO PARA 'TRUE'...
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+--> PROFESSOR APONTA QUE PODERÍAMOS, TEORICAMENTE, 
+
+ADICIONAR 
+
+
+A INFORMAÇÃO DE LOGIN 
+
+
+
+lá em 'Persons', por meio de um PROP... -------> professor 
+
+
+cria um 
+
+PROP 
+
+de nome 
+
+
+'isAuthenticated'... 
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+if (this.state.showPersons) {
+
+
+  
+  persons = 
+      <Persons  //4 
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} 
+        isAuthenticated={} //////EIS O CÓDIGO EM QUESTÃO.
+      
+      
+
+
+      />
+
+
+    
+
+
+
+
+}
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+
+
+
+E AÍ, O NEGÓCIO QUE 
+
+SERÁ PASSADO 
+
+
+
+A ESSE 
+
+prop 
+
+
+
+será 
+
+
+O VALOR DE 
+
+
+'this.state.authenticated' --------> QUE SERÁ ____TRUE___ ou FALSE, dependendo 
+
+
+do __bOTÃO___ 'login' e dos efeitos de 'loginHandler'...
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+if (this.state.showPersons) {
+
+
+  
+  persons = 
+      <Persons  //4 
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} 
+        isAuthenticated={this.state.authenticated} //////EIS O CÓDIGO EM QUESTÃO.
+      
+      
+
+
+      />
+
+
+    
+
+
+
+
+}
+
+
+
+---------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+MAS AÍ SURGE O PROBLEMA: LÁ NO COMPONENT 
+
+
+'Persons', no OUTRO ARQUIVO, arquivo 'Persons.js',
+
+
+
+EU __NÃO ESTOU INTERESSADO___ nesse 
+
+
+prop de 'isAuthenticated'....  -------> A única coisa QUE 
+
+QUERO FAZER, em 'Persons.js',
+
+
+É __FORWARDAR__ ESSE PROP___ ao 
+
+
+COMPONENT 'Person', em 'Person.js', que é ONDE ISSO INTERESSA... (é onde estabeleceremos IFCHECKS com o valor de 'authenticated'...)
+
+
+
+
+
+
+CÓDIGO DE 'Persons.js'/props passados a 'Person', lá em 'Persons.js'...:
+
+
+
+
+
+
+
+  render() {
+    console.log('[Persons.js] rendering...');
+    return (
+      this.props.persons.map((person, index) => {
+            
+       return <Person  /////////EIS O CÓDIGO EM QUESTÃO
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}/>  
+          
+    }
+  
+      )
+    )
+    }
+
+
+
+
+
+
+
+
+
+
+
+---> professor explica que, como "SOLUÇÃO PROVISÓRIA", 
+
+
+ele vai 
+
+
+
+simplesmente adicionar 
+
+
+um PROP de nome 
+
+
+'isAuth' (que vai REPASSAR O 'isAuthenticated'; O PROFESSOR SÓ COLOCOU 'isAuth' PARA __MISTURAR/DIFERENCIAR 
+
+UM POUCO OS NOMES DAS COISAS.... Mas representam o mesmo valor/função).....
+
+
+
+E AÍ ELE VAI PASSAR UM VALOR DE 
+
+'this.props.isAuthenticated' 
+
+A ESSE 
+
+PROP de 'isAuth'...       ('isAuth={this.props.authenticated}')....  (eu escrevi com 'this' (por ser um class-based component) , mas não sei se está certo...) ----> ESTÁ CERTO, O PROFESSOR TINHA ERRADO.
+
+
+
+ex:
+
+
+
+
+
+
+  render() {
+    console.log('[Persons.js] rendering...');
+    return (
+      this.props.persons.map((person, index) => {
+            
+       return <Person  /////////EIS O CÓDIGO EM QUESTÃO
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}
+        isAuth={this.props.authenticated}
+        
+        />  
+          
+    }
+  
+      )
+    )
+    } 
+
+
+
+
+
+CERTO...
+
+
+
+
+-----------------------
+
+
+
+
+AGORA 
+
+
+
+EM 
+
+
+
+'Person.js',
+
+
+
+NO COMPONENT 
+
+
+'Person',
+
+estamos 
+
+
+RECEBENDO 
+
+
+
+'isAuth' 
+
+
+COMO prop/propriedade.... -----------> E AGORA,
+
+
+
+
+
+
+POSSO VINCULAR ESSA PROPRIEDADE (seu 'true/false') CONDICIONALMENTE 
+
+
+
+
+AO 'SHOW' DE UM PARAGRAPH 
+
+
+no RETURN de nosso ELEMENTO 'Person'... (que está wrappado por 'Aux'...)....
+
+
+
+
+
+
+Certo.... tentei resolver o negócio COM MINHAS PRÓPRIAS MÃOS (e com uma 
+
+TERNARY EXPRESSION em vez 
+
+
+de um IF CHECK/STATEMENT comum...) -----> mas isso trouxe OUTROS PROBLEMAS ---> os 
+
+
+___TRÊS___ COMPONENTS 'PERSON' ESTÃO TROCANDO 
+
+
+DE 'validation incomplete' PARA ' VALIDATION SUCCEEDED' ----> isso terá de ser alterado em um posterior momento...
+
+
+
+
+------------------------------
+
+
+
+
+OS ESTILOS DOS BOTÕES TAMBÉM ESTÃO _QUEBRADOS__/FEIOS___... ------> os estilos dos botões estão fodidos por causa 
+
+
+do arquivo 
+de estilo 
+
+
+
+'Cockpit.module.css'  e sua relação com os BOTÕES EM 'cockpit'... (estilos '.Cockpit button'...)
+
+
+
+
+
+
+
+
+-----> CERTO, FINALMENTE ARRUMEI OS ESTILOS UM POUCO... --> mas ainda estão feios... ---> o 
+
+
+estilo 
+
+'toggle' 
+
+
+do button de 'toggle persons' ESTÁ QUEBRADO. (não fica mais vermelho...)
+
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+CERTO, CONSERTEI QUASE TODOS OS ESTILOS...  ---> ESTOU FICANDO BOM NISSO...
+
+
+
+
+
+
+---> CERTO, continuando com a lição do professor....
+
+
+
+
+
+---> professor faz EXATAMENTE A COISA QUE HAVÍAMOS FEITO 
+
+
+DENTRO 
+
+
+DE 'aux' ---> ele faz o RENDER ___CONDICIONAL__ DA MENSAGEM DE 'VALIDATION SUCCESS/FAILED'...
+
+
+
+
+ex (em 'Person.js'):
+
+
+
+    return (
+       
+        <Aux>
+            {this.props.isAuth ? 
+            
+            (
+              <p className={Pessoa.green}>VALIDATION SUCCEEDED</p>
+            ) 
+            
+            : 
+            
+            (
+              <p className={Pessoa.red}>VALIDATION INCOMPLETE</p>
+            ) 
+            
+            }
+
+
+
+--------------------------------------------
+
+
+
+
+PROFESSOR SALVA ESSE NEGÓCIO E RECARREGA A PÁGINA...   ----> E ISSO VAI FUNCIONAR... -------> 
+
+
+
+
+nosso
+
+
+botão 
+
+'login'
+
+
+
+E A REAÇÃO 
+
+
+no <P> VÃO FUNCIONAR... ----> isso significa  
+
+
+______QUE O PASSTHROUGH___ DE DADOS/PROPS ___ESTÁ FUNCIONANDO COMO ANTES.... --------->
+
+
+
+
+
+ENTRETANTO, isso __NÃO É UMA BOA COISA___. ....  --> professor aponta que 
+
+
+ELE ___NÃO ESTÁ CONTENTE COM O ESTADO DO NOSSO CÓDIGO___.... -------> 
+
+
+
+NOSSO SETUP TEM QUE MELHORAR..... ----------> 
+
+ELE DIZ QUE 
+
+
+NOSSO SETUP 
+
+
+
+______NÃO ESTÁ BOM__ PQ NÓS ESTAMOS 
+
+
+PASSANDO 
+
+
+'props' 
+
+
+
+__AO LONGO DE MÚLTIPLOS '''NÍVEIS'''...
+
+
+(estamos passando um prop 
+
+
+'login' LÁÁÁÁ do app.js, que passa por 'Persons.js', PARA SÓ ENTÃO CONSEGUIR SER 
+RECEBIDO 
+
+
+em 'Person.js', QUE É ONDE HÁ NOSSO CÓDIGO de '''VALIDAÇÃO''' (o ifcheck/ternary expression)....
+
+ ) --------> professor 
+
+
+ explica que 
+
+ um 
+
+ PROBLEMÃO
+  
+
+  é o nosso component 'persons'... ----> esse component 
+
+
+  DE FATO __SÓ FAZ___ O FORWARD do 
+
+
+  STATUS DE AUTENTICAÇÃO ('isAuth={this.props.isAuthenticated'}) ao 'Person.js'... ------> ELE 
+
+
+
+  RECEBE 
+
+
+  ESSE 
+
+
+  'isAuthenticated' como um PROP, 
+
+
+  MAS ELE REALMENTE NÃO SE IMPORTA 
+
+  COM ESSE PROP... --------------------> E ISSO 
+
+
+
+  'IS NOT THAT GREAT' -----> não é tão bom/óptimo 
+
+  PQ __SIMPLESMENTE ___ LEVA 
+
+
+  A REDUNDÂNCIAS EXTRAS 
+
+  NO NOSSO CÓDIGO... ---------> E ISSO TAMBÉM 
+
+  FAZ COM QUE NOSSOS COMPONENTS SE TORNEM UM POUCO MENOS 
+
+  __REUTILIZÁVEIS__... ------> se tornarão menos reutilizáveis 
+
+
+
+  PQ ___ EM QUALQUER LUGAR EM QUE USARMOS O COMPONENT 'PERSONS',
+   
+   NÓS TEREMOS QUE ASSEGURAR O PASS DE 'isAuthenticated'...  ( ou seja, que 
+   
+   
+   exista algo como 'isAuthenticated={this.state.authenticated}' NO 
+   
+   
+   CALL 
+   
+   desse component Persons... como vimos 
+   
+   antes,
+   
+   
+   
+   com o código 
+   
+   
+   
+   ''''''''''''''''
+   
+   
+if (this.state.showPersons) {
+
+
+  
+  persons = 
+      <Persons  //4 
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} 
+        isAuthenticated={this.state.authenticated}
+      
+      
+
+
+      />
+
+
+
+}
+   
+   '''''''''''''''''
+   
+   
+   ) ------> PQ precisamos 
+
+
+
+   ____FORWARDAR____ ESSE PROP AO 'person', lembre-se... 
+
+
+
+
+---------------------------
+
+
+
+
+
+PARA SOLUCIONARMOS ESSE PROBLEMA 
+
+
+DE PASS ABSURDO DE PROPS entre components vinculados,
+
+
+
+e para solucionar essas REDUNDÂNCIAS,
+
+
+TEMOS UMA FEATURE 
+
+
+
+CHAMADA 
+
+DE 
+
+'context'.... --------> ''''CONTEXT''''' FOI 
+
+
+
+
+________iNTRODUZIDO PELO REACT____ --> ELE TE AJUDA 
+
+
+GERENCIAR 
+
+CASOS 
+
+MERDAS 
+
+
+QUE NEM ESSE.... --> casos em que 
+
+
+VOCê PRECISA DE ALGUMA DATA/ALGUM STATE ____ EM MÚLTIPLOS COMPONENTS___,
+
+
+E EM QUE 
+
+
+VOCÊ __NÃO QUER/QUER EVITAR  __PASSAR ESSE STATE ___ 'ACROSS MULTIPLE LAYERS' DE COMPONENTS só 
+
+PARA 
+
+CONSEGUIR 
+
+PASSAR ELE DE 'UM CANTO/COMPONENT PARA OUTRO CANTO/COMPONENT' no seu código...
+
+
+
+ex:
+
+
+
+Prop 'Exemplo'.... ---> esse prop existe no component A, mas queremos usá-lo no component D....
+
+
+
+component A ---> tem prop 'exemplo'...
+          v
+component B  ---> esse component NÃO SE IMPORTA COM 'exemplo'
+          v 
+component C ---> também NÃO SE IMPORTA
+          v  
+component D  --> quer o PROP 'exemplo'...        
+
+
+
+
+(AQUI PRECISARÍAMOS DE 3 'PASSES' do PROP para podermos o utilizar em 'D'....)
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+SOLUCIONAMOS ESSE NEGÓCIO/PROBLEMA COM A FEATURE DO 
+
+'CONTEXT'... -----> podemos 
+
+
+__'''PULAR''''/SKIPPAR O COMPONENT 
+
+
+
+'persons' 
+
+
+NA ___'''FLOW''''___ do nosso prop...
+
+
+
+
+
+---> certo,
+
+
+MAS COMO ISSO FUNCIONA? ---------> VEREMOS NA PRÓXIMA LIÇÃO. (É A __CONTEXT API___).

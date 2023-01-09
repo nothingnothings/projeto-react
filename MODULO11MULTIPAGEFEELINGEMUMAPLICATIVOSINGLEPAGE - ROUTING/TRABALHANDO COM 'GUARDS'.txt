@@ -1,0 +1,658 @@
+ 
+
+
+
+
+ AGORA QUE COBRIMOS TODAS AS 'REDIRECTION TECHNIQUES'
+
+
+ com o react,
+
+
+
+
+
+
+
+ devemos 
+
+
+ falar 
+
+
+ DE 
+
+ ALGO QUE 
+
+
+ É + OU - RELACIONADO 
+
+
+
+ COM 
+
+
+ O 
+
+
+ REDIRECTING.... -------> são os 
+
+
+ 'navigation guards'... ---------------> UM 
+
+
+
+ 'GUARD' 
+
+
+ é algo que 
+
+ você talvez já tenha trabalhado, trabalhado com outros frameworks... (frameworks e seus routers...)
+
+
+
+
+
+
+
+
+
+ ---> UM GUARD TIPICAMENTE É USADO 
+
+
+
+ ___QUANDO VOCÊ __NÃO SABE SE O USUÁRIO___ ESTÁ/É AUTENTICADO 
+
+ OU NÃO... ----> E HÁ ALGUMAS 
+
+
+ ROUTES 
+
+ NO SEU CÓDIGO 
+
+
+
+ __QUE VOCÊ ___ SÓ VAI QUERER __ DEIXAR __ O USUÁRIO ___ VISITAR__ SE 
+
+ ELE 
+
+ __ ESTIVER AUTENTICADO... -----------------> E COM O REACT ROUTER,
+
+
+
+
+ VOCê 
+
+
+
+ TALVEZ TENHA QUE PENSAR SOBRE ESSES 'guards'
+
+
+
+
+
+DE UMA FORMA COMPLETAMENTE NOVA... --> por exemplo,
+
+
+
+
+NO COMPONENT/CONTAINER 'BLOG',
+
+
+
+
+EM QUE 
+
+
+SETTAMOS O ROUTING PARA 
+
+
+O 
+
+'NEWPOST' e assim por diante...
+
+
+ex:
+
+
+     <Switch>
+                <Route path="/new-post" component={NewPost}  />
+                <Route path="/cartas" component={Posts} />
+                <Route path="/posts" component={Posts} /> */}
+                <Redirect from="/posts" to="/" />
+                <Route path="/" component={Posts} />
+    </Switch>
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+COMO, NO FINAL DAS CONTAS, TUDO O QUE ESTAMOS FAZENDO AQUI É ___O  RENDER __ DE ALGUNS COMPONENTS__, 
+
+
+
+como  o 
+
+component 
+
+'Route', 
+
+component 
+
+
+'Switch' e 
+
+assim por diante,
+ 
+
+
+
+ SE NÓS __ QUISERMOS ASSEGURAR __ QUE 
+
+
+ ''''<Route path="/new-post" component={NewPost} />''''
+
+
+
+ NÃO __POSSA SER ALCANÇADO__, 
+
+
+
+
+NÓS PODEMOS 
+
+_______sIMPLESMENTE ____ RENDERIZAR ESSA ROTA AÍ (a rote de '/new-post') 
+
+
+
+____CONDICIONALMENTE___...
+
+
+
+
+
+
+
+
+
+---> para isso, professor diz que 
+
+
+
+DEVEMOS 
+
+
+TER UM 
+
+
+STATE DE 
+
+
+
+'auth' 
+
+
+no nosso código... (no código de 'Blog.js')... ---------> E ESSA PROPRIEDADE SERÁ INICIALMENTE DE VALOR 'false'...
+
+
+
+
+ex:
+
+
+
+
+state = {
+
+
+        auth: false
+
+}
+
+
+-----------------------------
+
+
+
+
+CERTO... O QUE O PROFESSOR PODE FAZER, AGORA, é claro,
+
+
+É __
+
+
+DESCER ATÉ O 'RENDER STATEMENT' 
+
+
+de 
+
+'Blog.js'
+
+
+e então fazer aquela velha 
+
+
+
+mandinga 
+
+da 
+
+VARIÁVEL com valor de null lá no início, que depois é alterada 
+
+para ser a 'route'...
+
+
+
+
+
+
+
+
+
+
+--> MAS ELE DIZ QUE TAMBÉM É POSSÍVEL USAR A SOLUÇÃO 'QUICK AND DIRTY', A SOLUÇÃO 
+
+
+__'''INLINE'''___ (ou seja, usar uma TERNARY EXPRESSION BEM EM CIMA 
+
+DA NOSSA ROUTE...)
+
+
+
+
+ex:
+
+
+
+state = {
+        
+        auth: false
+
+}
+
+
+
+
+render() {
+
+
+
+   this.state.auth 
+   
+   ?
+   
+   
+    <Route path="/new-post" component={NewPost} />
+    
+    
+    : null 
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+tipo assim, basicamente...
+
+
+
+
+
+
+SE EU FIZER ISSO, 
+
+
+NÃO EXISTIRÁ __NENHUMA MANEIRA___ DE O USUÁRIO ACESSAR 
+
+
+'/new-post' (essa rota, agora __eSPECIAL__/'RESTRITA A AUTORIZADOS') 
+
+
+
+SEM ESTAR 
+
+EFETIVAMENTE AUTENTICADO ('this.state.auth = true'....) -------------> 
+
+
+
+
+
+SE VOCÊ ESCREVER 
+
+ESSA ROTA CONDICIONALMENTE, DESSA FORMA AÍ,
+
+
+essa 
+
+
+___ROUTE___ ESTARÁ/FICARÁ __ EFETIVAMENTE 
+
+
+'unknown' AO USUÁRIO, unknown 
+
+
+
+PQ __ELA NÃO SERÁ RENDERIZADA____... (se ele não estiver autorizado)...
+ 
+
+
+
+
+
+
+
+
+
+
+ PARA TESTAR, PROFESSOR SALVA E RECARREGA NOSSO CÓDIGO... ------> 
+
+
+
+
+ com o  default de 
+
+ 'auth' é FALSE,
+
+ essa rota nossa aí
+
+
+ ___NEM SERÁ RENDERIZADA____... (e, portanto, a PÁGINA DE 'New Post' FICARÁ __INACESSÍVEL__...)
+
+
+
+
+
+
+
+
+
+ ---> e se o usuário tentar CLICAR NO LINK DE 'New Post', nesse nosso exemplo,
+
+ SEM ESTAR AUTORIZADO, 
+
+
+
+
+ __ELE __SERÁ AUTOMATICAMENTE __ REDIRECIONADO AO NOSSO 'home', ao nosso '/posts', 
+
+ PQ 
+
+
+ NÓS
+
+ ESCREVEMOS 
+
+
+ UM redirect de 
+
+ código 
+
+
+
+ '<Redirect from="/" to="/posts" />' 
+
+
+ (ou 
+ 
+ 
+ 
+ )
+
+
+
+
+
+ ------------------------------------------------
+
+
+
+ Certo, mas aqui ocorre um problema.... --> nós não somos redirecionados à starting page DE VERDADE ('localhost:3000/') --> tenho que consertar esse problema.
+
+
+
+
+
+
+
+
+
+
+
+
+ O problema é consertado quando copio a disposição do código do professor:
+
+
+
+
+
+
+
+       <Switch>
+                  { this.state.auth     ?        <Route path="/new-post" component={NewPost}  /> : null   }
+        
+                <Route path="/posts" component={Posts} />
+                <Redirect from="/" to="/posts" />
+                </Switch>
+
+
+--------------------------------------------
+
+
+CERTO, ISSO AQUI 
+
+QUE DEFINIMOS AGORA É UM TÍPICO 
+
+'GUARD'... -----> OS GUARDS 
+
+
+DE REACT 
+
+SÃO BEM DIFERENTES
+
+
+DOS GUARDS 
+
+
+DE 
+
+'angular'... -----> MAS É ASSIM QUE VOCÊ CONSEGUE CONTROLAR A ENTRADA DO USUÁRIO 
+
+A ROTAS ESPECÍFICAS DO SEU SITE... (páginas específicas do seu app, restritas)..........
+
+
+
+
+---> CERTO... E OUTRA ALTERNATIVA SERIA IR LÁ 
+
+
+NO 'componentDidMount(){}' da ''''página restrita'''
+
+
+
+
+
+E LÁ CHECAR 
+
+
+
+se 
+
+
+o usuário 
+
+
+
+está/é autenticado, etc... (e é claro que essa informação de 'auth= true/false' DEPENDE 
+
+DE ONDE VOCÊ ESTÁ PEGANDO ESSES DADOS NO SEU APP..) ----> mas a moral 
+
+
+é que 
+
+vocÊ poderia 
+
+simplesmente 
+
+
+escrever um check 
+
+nesse 
+
+'componentDidMount' E ENTÃO 
+
+
+USAR 
+
+'this.props.history.replace('/posts')', 
+
+
+OU ALGO ASSIM, CASO 
+
+O USUÁRIO __ NÃO ESTEJA _ ___ AUTENTICADO__...
+
+
+
+ex:
+
+
+componentDidMount() {
+
+
+    if unauth => this.props.history.replace('/posts');
+}
+
+
+
+
+
+
+
+--------------------------------
+
+
+
+Ok, mas como diabos o usuário definirá 
+
+
+
+o 
+
+
+
+
+state de nosso 
+
+'auth' 
+
+
+de 
+
+'false' para 
+'
+true'?
+
+
+
+
+(
+
+    professor nunca 
+
+    acabou nos dizendo como 
+
+        escrever um código de 'senha'/autorização, mas eu 
+
+        ACHO QUE 
+
+
+        é com 'if statements' que escrevemos algo assim... (tipo 'if... --> this.setState({auth: true})')
+)
+
+
+
+
+
+
+
+
+
+--> PROFESSOR DIZ QUE É ASSIM QUE 
+
+
+
+NÓS TRABALHAMOS COM O REACT ROUTER... -----> é assim que 
+
+devemos 
+
+PENSAR 
+
+
+NOSSAS ROUTES E O GUARDING.... ------> devemos 
+
+
+pensar 
+
+
+em questão de components, pq você 
+
+
+PODE CONTROLAR UM MONTE 
+
+
+
+____ O COMPORTAMENTO DE SEU CÓDIGO __ justamente apenas pela 
+
+disposiçao/ordem de components... 
+
+
+
+
+
+
+
+
+
+--> quanto aos GUARDS:
+ 
+
+
+ se uma 
+ ROUTE 
+
+
+ __NÃO ESTÁ RENDERIZADA__, (por meio desse código de 'ternary expression', por exemplo), 
+
+O USUÁRIO EFETIVAMENTE 
+
+__NÃO CONSEGUE__ ALCANÇAR ESSA ROUTE, e, por consequência,
+
+__NÃO CONSEGUE__ ALCANÇAR A TAL PÁGINA VINCULADA À ROUTE...
+
+
+
+
+---> a 'Route' não está renderizada ---> isso vai resultar que o COMPONENT CONECTADO À ROUTE TAMBÉM NÃO VAI RENDERIZAR... (nunca poderá ser carregado)...
+--> e é exatamente assim que devemos pensar 
+
+em 'Guards' e 'Routes', e como devemos ESTRUTURAR NOSSO APLICATIVO...
+
+
+
+
+
+
+É CRUCIAL ENTENDER ISSO, ENTENDER A 'INDISPONIBILIDADE DE COMPONENTS/páginas/containers ATRAVÉS DA INDISPONIBILIDADE 
+DAS ROUTES'...

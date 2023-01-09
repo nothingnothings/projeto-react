@@ -1,0 +1,836 @@
+
+
+
+--> na última lição, 
+
+nós movemos 
+
+
+
+
+O COMPONENT/OBJETO 
+
+
+'Transition' 
+
+PARA 
+
+
+
+__DENTRO __ DO COMPONENT 
+
+
+'Modal.js',
+
+
+
+para 
+
+desafogar um pouco o component 
+
+'App.js'
+
+de código e lógica... (mas tudo tem a mesma lógica, essencialmente)...
+
+
+
+
+
+
+
+
+
+
+--> AINDA ASSIM,
+
+
+
+HÁ ALGO QUE NÓS TALVEZ TENHAMOS PERCEBIDO... ---> 
+
+
+LÁ 
+
+EM 
+
+
+'Modal.js',
+
+
+naquele 
+
+OBJETO 
+
+'Transition',
+
+
+como visto aqui:
+
+
+
+
+    <Transition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        timeout={300}
+    >
+        {
+         (state) => {
+            const cssClasses = [ModalStyle.Modal, state === "entering" ? ModalStyle.ModalOpen : state === "exiting" ? ModalStyle.ModalClosed : null];
+             return(
+                <div className={cssClasses.join(' ')}>
+                <h1>A Modal</h1>
+                <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+            </div>
+           
+             )
+         }
+        }
+    </Transition>
+
+
+
+
+-------------------------------
+
+
+
+
+NESSE OBJETO 
+
+TRANSITION,
+
+
+nós definimos 
+
+UM TIMING ('timeout={}')
+DE 
+
+'300ms'
+
+para 
+
+o 
+
+
+MODAL... --> entretanto, 
+
+a 
+
+ANIMAÇÃO 
+
+QUE 
+FOI TOCADA 
+POR NÓS, 
+
+
+que 
+
+fora 
+
+SETTADA 
+
+EM 
+
+
+'Modal.module.css',
+
+
+
+NA 
+
+VERDADE 
+
+
+
+DITOU 
+
+
+'400ms', pq lá lemos ' 
+
+''''''
+
+
+
+.ModalClosed {
+    animation: closeModal 0.4s ease-out forwards;
+}
+'''
+
+
+
+
+---> ISSO 
+
+NÃO É UM PROBLEMA,
+
+
+
+__NÃO MESMO___.... ---> A ÚNICA COISA QUE 
+
+ACONTECERÁ 
+
+É 
+
+
+__ UMA 'SUPRESSÃO DA ANIMAÇÃO'.... --> 
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+O 
+
+OBJETO 
+
+'TRANSITION' 
+
+
+__SIMPLESMENTE__ NÃO VAI TOCAR __ A ANIMAÇÃO INTEIRA ___ (ele vai parar em '300ms', não vai chegar aos 'momentos' de 400 na curva daquela animação...)
+
+
+
+
+
+
+
+
+
+
+--> E ISSO,
+
+DE 'CORTAR A ANIMAÇÃO', pode virar 
+
+um problema, na verdade... (depende DO QUE VOCÊ QUER FAZER COM UMA ANIMAÇÃO...)
+
+
+
+
+
+
+
+
+
+--> o 'timeout' que vocÊ 
+
+DEFINE 
+
+
+
+
+NO COMPONENT 
+
+
+'Transition'
+
+
+DETERMINA __ QUANTO TEMPO 
+
+O 
+
+
+'ENTERING' 
+
+E 
+
+'EXITING' 
+
+
+STATE, pelos quais checamos,
+
+
+'WILL BE HELD'
+
+
+
+
+
+
+
+
+
+
+---> E SE VOCÊ DEFINE UM 'TIMeout' 
+
+QUE 
+
+É 
+
+MUITO __MENOR __ DO QUE A ANIMAÇÃO ___ DEFINIDA 
+
+NO 
+
+SEU ARQUIVO 
+
+'module.css',
+
+
+
+VOCÊ SIMPLESMENTE 
+
+
+FARÁ COM QUE 
+
+A 
+
+ANIMAÇÃO 'QUITE' __PREMATURAMENTE_... --> isso vai acontecer 
+
+PQ 
+
+VOCÊ ___ VAI ___ '''TROCAR''' o state 
+
+
+__MUITO RÁPIDO, E CEDO DEMAIS.... ( o state vai ser trocado 
+para 
+
+'exited' cedo demais,o que fará com que 
+
+A ANIMAÇÃO __ACABE___, e com que 
+
+o 
+ELEMENTO SEJA REMOVIDO, caso vocÊ tenha settado o boolean prop 
+de 
+
+'unmountOnExit'.......) --------> 
+
+
+
+
+E ISSO,
+É CLARO,
+
+
+
+TALVEZ 
+
+
+NÃO SEJA O COMPORTAMENTO PELO QUAL VOCÊ ESTÁ BUSCANDO... ---> claro que 
+
+isso 
+
+
+NÃO É NECESSARIAMENTE 
+UM PROBLEMA,
+
+
+é só um
+
+
+detalhe 
+
+para 
+
+se ter em mente... -----------> 
+
+
+
+OK.... 
+
+ENTRETATNO,
+
+OUTRA 
+
+COISA QUE 
+
+
+VOCÊ DEVE TER EM MENTE,
+
+E QUE 
+
+TALVEZ TENHA DE CONFIGURAR,
+
+EM ALGUNS 
+CASOS,
+
+
+
+
+É __ REALMENTE O TIMEOUT___.... ------> o TIMEOUT,
+
+agora,
+
+
+É 
+
+
+APENAS 
+
+NOSSO VALOR 
+
+
+EM 
+
+
+
+'MILISSEGUNDOS',
+
+
+definido como 
+
+UM 
+
+
+___NÚMERO__...
+
+(ex:
+
+
+timeout={300} ) ----------> 
+
+
+
+
+
+E SE VOCÊ QUISESSE __DIFERENTES__ TIMINGS,
+
+
+__ DIFERENTES___ 'WINDOWS'/INTERVALOS __ PARA 
+
+O 
+
+'ENTERING' 
+
+E O 
+
+'LEAVING' 
+
+DE UM 
+
+COMPONENT 
+
+DO 
+
+
+DOM/animação de 'entering' e 'leaving'... -----> SE VOCÊ QUER 
+
+
+SETTAR/DEFINIR/ESPECIFICAR/CONFIGURAR 
+
+
+ESSES 
+
+TIMINGS,
+
+
+VOCê 
+
+
+
+__DEVE IMPORTAR __ OUTRO OBJETO 
+
+
+NO 
+
+
+SEU COMPONENT.... -----------> 
+
+
+
+
+
+
+É UM COMPONENT/OBJETO QUE SERÁ IMPORTADO
+ 
+
+
+ COM UMA SINTAXE DIFERENTE,
+
+ NÃO SERÁ COM 
+
+
+ 'import xxx from yyy'...
+
+
+
+----------------------------
+
+
+
+
+
+você 
+
+vai 
+escrever 
+
+
+
+
+
+
+'const animationTiming'.... -----------> 
+
+
+
+
+
+
+DENTRO DISSO, VOCÊ VAI ARMAZENAR UM __OBJETO__... --> 
+
+
+
+
+
+
+ex:
+
+
+
+
+const animationTiming = {
+
+}
+
+----------------------------
+
+
+
+DENTRO 
+
+DESSE OBJETO,
+
+VOCÊ VAI DEFINIR UMA 
+KEY 
+
+DE 
+
+'enter',
+
+
+
+E AÍ 
+
+
+
+
+PODERÁ
+ 
+
+ DEFINIR 
+
+ UMA DURAÇÃO 
+ ESPECÍFICA, EM milissegundos... --> ex:
+
+
+
+
+ 400.
+
+
+
+ ex:
+
+
+
+
+
+ const animationTiming = {
+     enter: 400
+}
+
+
+------------------------------
+
+
+
+
+DEPOIS DISSO,
+
+VOCÊ PODE TER 
+
+UMA 
+
+KEY 
+
+DE 
+
+'exit',
+
+
+
+QUE TAMBÉM RECEBE UM VALOR NUMERAL...
+
+
+
+ex:
+
+
+
+const animationTiming = {
+    enter: 400,
+    exit: 1000
+}
+
+
+------------------------
+
+
+
+
+
+
+
+ENTER E EXIT --> ESSES SÃO 
+
+OS 
+
+2
+ 
+ 'TIPOS'/types
+
+ QUE 
+
+ VOCÊ 
+
+ PODE DEFINIR.... ------> E COMO VOCÊ 
+
+ PODE 
+
+
+ ADIVINHAR,
+
+
+ 'enter'
+
+
+ DEFINE 
+
+ O TEMPO 
+
+
+ QUE SERÁ __GASTO PARA __ ADICIONAR ___ ESSE ELEMENTO__,
+
+ ENQUANTO QUE 
+
+ 'exit' será O TEMPO QUE 
+ SERÁ 
+
+ GASTO, NA ANIMAÇÃO, 
+
+ __PARA __ REMOVER__ ESSE ELEMENTO...___
+
+
+
+ ----------------------------------
+
+
+
+ ---> CRIADA ESSA CONSTANTE/OBJETO, 
+
+
+ VOCê 
+
+ DEVE SIMPLESMENTE O PASSAR 
+
+ PARA 
+
+ DENTRO 
+
+ do 
+
+ 'timeout={}' 
+ LÁ 
+
+ NO OBJETO 'Transition'....
+
+
+ ex:
+
+
+
+
+
+
+
+const animationTiming = {
+    enter: 400,
+    exit: 1000
+}
+
+
+
+
+
+
+const modal = (props) => {
+
+
+
+ return (
+    
+    <Transition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        timeout={animationTiming} //////////EIS O CÓDIGO EM QUESTÃO.
+    >
+        {
+         (state) => {
+            const cssClasses = [ModalStyle.Modal, state === "entering" ? ModalStyle.ModalOpen : state === "exiting" ? ModalStyle.ModalClosed : null];
+
+
+
+             return(
+                <div className={cssClasses.join(' ')}>
+                <h1>A Modal</h1>
+                <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+            </div>
+           
+             )
+         }
+
+
+
+
+
+
+        }
+    </Transition>
+    )
+
+
+    }
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+SALVAMOS TUDO ISSO...
+
+E TESTAMOS... --> 
+
+
+
+
+AGORA 
+
+ 
+
+
+ O 'Transition'
+
+ vai 
+
+ usar 
+
+
+ ESSES 
+ VALORES 
+
+ DE 
+
+ 'DURAÇÃO'
+
+ para 
+
+ AS ANIMAÇÕES,
+
+ PARA 
+
+ OS 
+ DIFERENTES 
+
+ 'TYPES' 
+
+ de transitions... ----> É CLARO QUE 
+
+ ESSES 
+
+ SÃO 
+ OS 
+
+ 'TRESHOLD',
+
+
+ são os ___LIMITES___.... --> 
+
+
+ se 
+ você 
+
+ não definir 
+
+ UMA ANIMAÇÃO COM TEMPO GRANDÃO 
+
+ LÁ 
+
+ no 
+
+
+ '.module.css' USADO 
+
+ PARA A ANIMAÇÃO 
+ DESSE ELEMENTO,
+
+ NADA 
+
+ de diferente vai acontecer... (pq esse objeto 'animationTiming'  SÓ VAI 
+ 
+ DEFINIR OS __LIMITES___, e não as durações em si... as durações em si CABEM ao arquivo 
+ '.module.css'...)
+
+
+
+
+
+
+
+
+ --> E SE ALTERARMOS 
+
+ OS VALORES  
+
+ DAS ANIMAÇÕES NO ARQUIVO 
+
+ '.module.css',
+
+ tipo assim:
+
+
+
+
+
+ .ModalOpen {
+     animation: openModal 0.4s ease-out forwards;  
+}
+
+
+.ModalClosed {
+    /* animation: closeModal 0.4s ease-out forwards; */ ///código antigo...
+    animation: closeModal 1s ease-out forwards; ///EIS O CÓDIGO ALTERADO/NOVO
+}
+
+
+
+---------------------,
+
+
+
+
+VEREMOS VISIVELMENTE A DIFERENÇA, QUANDO FECHARMOS 
+
+NOSSO MODAL...
+
+
+
+
+
+
+
+
+--> ok, 
+
+é isso que devemos 
+
+reparar 
+
+em 
+
+'timeout={}' e em 'animationTiming', aquele objeto lá....

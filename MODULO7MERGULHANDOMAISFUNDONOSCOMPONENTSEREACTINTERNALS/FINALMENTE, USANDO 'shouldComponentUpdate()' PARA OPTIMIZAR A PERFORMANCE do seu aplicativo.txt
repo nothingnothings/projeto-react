@@ -1,0 +1,1248 @@
+
+
+
+
+
+---> O PROFESSOR DIZ QUE ELE QUER NOS MOSTRAR UM EXEMPLO DE 
+
+
+UMA COISA __QUE ESTÁ___ 'GOING WRONG' ___ no nosso aplicativo...
+
+
+
+
+
+
+
+--> Em 'Persons.js',
+
+
+O PROFESSOR 
+
+
+
+ESTÁ USANDO 
+
+O LIFECYCLE HOOK/METHOD 
+
+
+
+de 
+
+
+
+'shouldComponentUpdate'.... --> e ele está fazendo return de 'TRUE'
+
+
+NEsse lifecycle hook... -------> ISSO SIGNIFICA 
+
+
+QUE, POR DEFAULT,
+ 
+ SEMPRE QUE 
+
+
+ ALGO FOR ALTERADO NESSE COMPONENT 
+
+ 'Persons.js',
+
+
+ ELE SERÁ ___UPDATADO__ (re-renderizado)....
+
+
+
+
+ ------------------------------------------
+
+
+
+ CERTO... O PROBLEMA É QUE 
+
+
+ 'Persons.js'
+
+
+ JÁ __ACABA SENDO RE-RENDERIZADO___ QUANDO 
+
+
+ EM 'APP.JS' ALGUMA COISA MUDA... (a mudança nem precisa ocorrer propriamente em 'Persons.js' para que 
+ 
+ esse component 'Persons.js' seja  re-renderizado....) ----> ISSO ACONTECE PQ 
+
+
+ 'persons' É, NO FINAL DAS CONTAS,
+  
+  UM CHILD 
+
+
+  COMPONENT DO COMPONENT 
+
+
+  'App.js'... (visto no código  'if (this.state.showPersons) { 
+      persons = (
+          <Persons 
+          .....
+          />
+      )
+  }')
+
+
+  -------------------------------------------------
+
+
+
+
+  ISSO SIGNFICA, EM OUTRAS PALAVRAS, QUE 
+
+  MESMO SE 
+
+
+  ALTERARMOS 
+
+  ALGO 
+
+
+  EM APP.JS,
+
+
+  ALGO QUE APENAS __aFETE__ O COCKPIT, por exemplo, (e não que afete diretamente o component 'Persons'),
+
+
+  OU QUALQUER OUTRA COISA EM APP.JS,
+
+
+
+  O 
+
+
+  COMPONENT 
+
+  'persons'
+
+
+
+  AINDA 
+
+  ACABA SENDO RE-RENDERIZADO... ---------> ISSO ACONTECE  ________pQ _______ 
+
+
+  A FUNÇÃO 
+
+
+
+
+  'render()' (que renderiza o component 'App.js') dentro 
+
+
+  de 'App.js'
+
+
+  ACABA SENDO CHAMADA QUANDO ALGO Em 'App.js' 
+
+  MUDA NO SEU INTERIOR... ---------> 
+
+
+  E, COMO SABEMOS, O  COMPONENT 'persons' 
+
+  SE ENCONTRA DENTRO DO 
+
+  'render()' 
+
+
+  DO COMPONENT 'App.js'...
+
+
+
+
+Basta examinarmos o código de 'render()', que tem 'Persons', esse componente aí, 
+
+ENFIADO NO SEU INTERIOR, o que faz com que ele seja renderizado tbm quando o 'App.js' muda...
+
+
+
+
+-------------------------------------
+
+EIS O CÓDIGO de 'render()':
+
+
+
+
+ render = () => { 
+    
+
+    console.log('[App.js] render');
+
+
+
+
+let persons = null;
+
+
+
+
+let cockpit = null
+
+
+
+
+
+if (this.state.showPersons) {
+
+
+  
+  persons = 
+      <Persons  //4 
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} 
+      
+      
+
+
+      />
+
+
+
+}
+
+
+
+
+
+
+
+if(this.state.showCockpit) {
+
+ cockpit =  <Cockpit //4
+  title={this.props.appTitle} 
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+  </Cockpit>
+  
+}
+
+
+
+
+
+
+
+
+
+return (
+
+  <div className={classes.App}>
+    <button onClick={() => {this.setState({showCockpit: false})}} >Remove Cockpit</button>
+  {/* <Cockpit //4
+  title={this.props.appTitle} 
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+  </Cockpit> */}
+  {cockpit}
+  {persons}
+  </div>
+);
+
+
+   }
+
+
+
+   --------------------------------------------------------------
+
+
+
+
+
+
+   OU seja,
+
+
+   o 'render()' é chamado 
+
+
+
+   E ENTÃO O REACT VAI POR DENTRO DE TODO AQUELE 'COMPONENT TREE' (App.js -> persons -> person)
+
+
+
+
+
+E ISSO FAZ SENTIDO, PQ POR ISSO SER UMA FUNÇÃO,
+
+
+ELA SEMPRE É EXECUTADA 
+
+
+DE CIMA PARA BAIXO...
+
+
+
+
+
+RESUMINDO:
+
+
+
+'Persons' está sendo re-renderizada
+
+
+
+SEMPRE QUE 
+
+
+ALGO EM APP.JS muda...
+
+
+
+
+
+E UM BOM EXEMPLO DISSO 
+
+é o botão 'remove cockpit' ---> se apertamos 
+
+NESSE BOTÃO,
+
+
+
+____ SÓ NOSSO COCKPIT___ É REMOVIDO DO 
+
+NOSSO APLICATIVO... (e as persons, o componente 'Persons', CONTINUAM 
+
+INAFETADAS), 
+
+
+
+MAS MESMO SENDO APENAS 
+
+
+O 'COCKPIT' 
+
+REMOVIDO, 
+
+
+
+
+SENDO INAFETADo o componente 'Persons',
+
+
+
+NÓS 
+
+
+
+AINDA CONSEGUIMOS 
+
+
+VER UM OUTPUT 
+
+NO CONSOLE 
+
+
+
+DE 
+
+'[Person.js] shouldComponentUpdate' 
+
+E O
+
+RENDER 
+
+
+de 
+'[Person.js]'... ------> ISSO SIGNIFICA QUE O COMPONENTE 'Persons' ESTÁ SEMPRE 
+
+
+SENDO RE-RENDERIZADO QUANDO UMA MUDANÇA OCORRE NO NOSSO component 'App'...
+
+
+
+
+
+
+
+
+
+VEMOS UM __MONTE____ DOS HOOKS de 'persons' e dos 'person'...
+   ----------------------------------------------
+
+
+
+
+... SERIA MUITO BOM SE CONSEGUÍSSEMOS 
+
+
+PREVENIR 
+
+
+ESSE 'shouldComponentUpdate'
+
+
+
+de 
+
+
+'persons' 
+
+
+RODAR 
+
+
+sempre que 
+
+algo em 'app.js' 
+
+é alterado... -------------> PODEMOS ALTERAR 
+
+
+
+ESSE COMPORTAMENTO  
+
+
+lá 
+
+EM 
+
+'shouldComponentUpdate'...
+
+
+
+
+
+
+
+
+EIS O CÓDIGO DELE:
+
+
+
+
+  shouldComponentUpdate(nextProps, nextState) { 
+    console.log('[Persons.js] shouldComponentUpdate');
+    return true;  
+  } 
+
+
+----------------------------------------------
+
+
+
+
+NESSE 'shouldComponentUpdate', 
+
+
+
+
+DEVEMOS ___CHECAR____ O QUE EFETIVAMENTE MUDOU (por meio do write de uma lógica específica)...
+
+
+
+ISSO QUER DIZER QUE VAMOS TER QUE ESCREVER UM IF CHECK nele.... -------->
+
+
+vamos 
+
+checar 
+
+'if (nextProps.persons)'         
+
+
+
+
+(OU SEJA, 
+
+
+
+
+professor VAI CHECAR 
+
+por esse negócio aí...
+
+
+  )
+
+
+
+  if(nextProps.persons !== this.props.persons )
+
+
+
+
+
+
+
+
+
+  OU SEJA:
+
+
+  ELE ESTÁ COMPARANDO A PROPRIEDADE/ARRAY 'persons' __DO __ PRÓXIMO 'props' (que vai certamente 
+  conter o array 'persons', mas o array PERSONS PODERÁ ESTAR DIFERENTE, ESSA SEMPRE É UMA POSSIBILIDADE)
+
+COM 
+
+A PROPRIEDADE/ARRAY 
+
+  'persons' atual (que é representada por 'this.props.persons'... ----> é o mesmo 'this.props.persons' usado com o método '.map()' no método 'render()' de Persons.js...)....
+
+
+
+
+
+
+
+SE ELES FOREM REALMENTE DIFERENTES, VAMOS QUERER QUE SEJA RETORNADO o valor 'true'... (deve-se realmente updatar o COMPONENT 'persons.js')...
+
+
+
+
+MAS CASO ELES SEJAM __iGUAIS____ (else case), 
+
+
+DEVE-SE RETORNAR 'false'...
+
+
+
+
+
+
+ex(REPRESENTAÇÃO):
+
+
+
+
+
+
+
+
+  shouldComponentUpdate(nextProps, nextState) { 
+    console.log('[Persons.js] shouldComponentUpdate');
+    
+    if (nextProps.persons !== this.props.persons) {
+        return true;
+    }
+    return false;  
+  } 
+
+
+
+OU:
+
+
+
+
+  shouldComponentUpdate(nextProps, nextState) { 
+    console.log('[Persons.js] shouldComponentUpdate');
+    
+    if (nextProps.persons !== this.props.persons) {
+        return true;
+    } else {
+    return false;  }
+
+  } 
+
+
+
+
+
+
+-----------------------------------------------
+
+
+
+CERTO... E ESSE SERÁ O CÓDIGO QUE VAI MELHORAR/OPTIMIZAR NOSSA PERFORMANCE,
+
+
+QUE VAI 
+
+
+ACABAR COM OS RE-RENDERS DESNECESSÁRIOS 
+
+
+de 'persons', tudo pq agora 
+
+O PERSONS __SÓ SERÁ UPDATADO/RE-RENDERIZADO__ QUANDO 
+
+O ARRAY 
+
+'persons' em 'App.js' 
+
+
+EFETIVAMENTE MUDAR,
+
+e não quando QUALQUER MUDANÇA OCORRER NO APP.JS (como mudanças no cockpit, por exemplo).
+
+
+
+
+------------------------------------------------------
+
+
+
+
+
+
+certo... 
+
+
+
+---> AGORA QUANDO DAMOS TOGGLE EM PERSONS 
+
+
+
+E DEPOIS REMOVEMOS O 'COCKPIT',
+
+
+
+percebemos 
+
+
+que o 
+
+
+
+'shouldComponentUpdate' 
+
+
+
+
+DO COMPONENT 
+
+'PERSONS' CONTINUA SENDO OUTPUTTADO (significa que esse lifecycle hook/method 
+
+CONTINUA SENDO EXECUTADO... mas isso é bom, pq É JUSTAMENTE 
+
+
+O RETURN DE 'false' dele, no else statement, 
+
+QUE FAZ 
+
+COM QUE O RESTO dos outputs, o render() DOS COMPONENTS 'person' NO INTERIOR 
+
+do 'persons' 
+
+SEJA ___INTERROMPIDO____... (render/update interrompido em função da execução
+ de 'shouldComponentUpdate' com um return de 'FALSE'.))
+
+
+
+
+
+
+
+---> OU SEJA, CONSEGUIMOS IMPEDIR O RE-RENDER 
+
+DOS CHILD COMPONENTS 'person' dentro do component 'persons'...
+
+
+
+ ------------------------------------------------------------
+
+
+
+
+ -> AGORA, NESSE MODELO OPTIMIZADO DE NOSSO APP, 
+
+ OS COMPONENTS 'person' 
+
+ SÓ SERÃO RE-RENDERIZADOS 
+
+ __QUANDO DIGITARMOS ALGO NOS INPUT FIELDS DELES___... (pq isso realmente MUDA 
+ 
+ O STATE DE 'persons', o que REALMENTE PROVOCA SEU RE-RENDER...) --------> 
+
+
+
+
+ ISSO FAZ COM QUE OS COMPONENT 'person' 
+
+
+ SÓ SEJAM RE-RENDERIZADOS 
+
+
+ QUANDO O ARRAY 
+
+ 'persons' 
+
+
+
+ __REALMENTE __ FOR ALTERADO... ----> e isso é mt forte, 
+
+
+
+
+ POIS ISSO JÁ PODE NOS SALVAR ___MUITAAA PERFORMANCE____... ----> 
+
+
+
+ PQ TIPO, QUANDO NÓS REMOVEMOS O COCKPIT, O REACT NÃO TEM QUE IR 
+
+ POR DENTRO DE TODA A TREE DE 'PERSONS' PARA RENDERIZAR E CHECAR 
+
+ VIRTUALMENTE OS components 'person' (pq é isso que o react faz naturalmente, ele renderiza os components em um DOM virtual e então COMPARA ESSE DOM VIRTUAL com o DOM de verdade... --> se ele constata que HÁ DIFERENÇAS entre o dom de verdade atual E O DOM VIRTUAL RENDERIZADO por ele, ELE ATUALIZA O DOM REAL SEGUNDO O DOM VIRTUAL QUE ELE IMAGINOU/RENDERIZOU.... ---> mas por meio de 'shouldComponentUpdate', PODEMOS ___IMPEDIR____ esse 'CHECK' que gasta performance...)
+
+
+
+
+
+
+
+
+GRAÇAS AO 
+'shouldComponentUpdate' 
+
+PODEMOS 
+
+__SKIPPAR___ ESSE CHECK,
+
+
+pq aí o 
+
+react 
+
+vai pensar 
+
+
+'hmmm se o 'nextProps.persons' não mudar, 
+
+ficar igual ao 'this.props.persons',
+
+EU NÃO VOU NEM COMPARAR O DOM VIRTUAL COM O REAL,
+
+eu simplesmente 
+
+
+NÃO VOU ATUALIZAR esses components, isso vai me poupar performance, não há necessidade 
+
+de re-renderizar esses components"
+
+
+
+------------------------------------
+
+
+
+
+-----> E É ASSIM QUE DEVEMOS USAR 
+
+
+
+'shouldComponentUpdate()' PARA GANHAR 
+
+MAIS PERFORMANCE... esse é o exato procedimento que todo mundo usa...
+
+
+
+
+
+
+
+
+
+
+
+
+
+OBS: IMPORTANTE!!!!!!!!! ----> UM IMPORTANTE DETALHE SOBRE 
+
+ESSE 
+
+'check': -------> 'nextProps.persons' e 'this.props.persons' SÃO 
+
+
+___ARRAYS____ ............. E ARRAYS, ASSIM COMO OBJETOS NO JAVASCRIPT, 
+
+
+SÃO ___REFERENCE TYPES____.... ---------------> ISSO SIGNIFICA QUE 
+
+
+SEMPRE QUE ARMAZENAMOS ESSES NEGÓCIOS EM VARIÁVEIS/CONSTANTES/PROPRIEDADES,
+
+
+ESTAMOS ARMAZENANDO __pOINTERS___ AO LUGAR EM QUE 
+
+ESSES NEGÓCIOS ESTÃO ARMAZENADOS 
+NA MEMÓRIA, 
+
+e não 
+
+CÓPIAS DO OBJETOS/ARRAYS EM SI...  
+
+
+
+
+
+---> isso significa que 
+
+
+a COISA QUE 
+
+NÓS 
+
+ESTAMOS 
+
+
+COMPARANDO AQUI 
+
+POR MEIO DA EXPRESSÃO
+ 
+
+
+ '(nextProps.persons !== this.props.persons)' 
+
+
+
+É, NA VERDADE, O/OS __POINTERS___.... --------> isso significa QUE 
+
+
+SE ALGO NAQUELE
+
+
+COMPONENTE  'person'  FOR/FOSSE ALTERADO, e o pointer ainda 
+
+permanecer o mesmo, 
+
+ISSO RESULTARIA 
+
+
+NESSE UPDATE DO COMPONENT __não sendo ___ EXECUTADO___....
+
+
+
+UÉ, COMO ASSIM... ENTÃO PQ DIABOS O COMPONENTE 'person' 
+
+ESTÁ SENDO UPDATADO QUANDO DIGITAMOS NOS INPUT FIELDS?
+
+
+
+
+
+---> a única razão para isso estar acontecendo, esse update estar acontecendo, 
+
+
+é SIMPLES:   EM APP.JS, 
+
+quando eu 
+
+DE FATO 
+
+
+atualizo/updato 
+
+
+meu array 
+
+
+
+de 
+
+'persons', 
+
+
+
+como naquela função 
+
+
+'nameChangedHandler'... 
+
+
+
+ex:
+
+  nameChangedHandler = (event, id) => { 
+    const personIndex = this.state.persons.findIndex(
+      p => {
+        return p.id === id;
+      }
+    );
+
+    const person = {
+      ...this.state.persons[personIndex]
+    }
+
+
+    person.name = event.target.value;
+
+
+    const persons = [...this.state.persons];
+
+
+
+    persons[personIndex] = person;
+
+    this.setState({  
+      persons: persons
+    });
+
+    console.log(event.target.value);
+  }
+
+
+
+
+--------------------------------------------
+
+
+
+
+como em 'nameChangedHandler',
+
+
+NAQUELE código de 
+
+
+'const person = {
+    ...this.state.persons[personIndex]
+}   (APPROACH DO SPREAD OPERATOR...),
+
+
+
+
+
+
+
+ALI NESSE CÓDIGO EU, NA VERDADE____,  REALMENTE__ CRIEI UMA CÓPIA___ DA 
+
+
+
+__PERSON___ QUE EU QUERO MUDAR POR MEIO DA AÇÃO 'type' DO USUÁRIo....
+
+
+
+
+e eu também, 
+
+ALI,
+ 
+
+ CRIEI UMA CÓPIA DAQUELE 
+
+
+
+ ARRAY DE 'PERSONS',
+
+
+ por meio do código 
+
+
+ 'const persons = [...this.state.persons];'
+
+
+
+OU SEJA, 
+
+ 
+ALI EU REALMENTE CRIEI UM NOVO OBJETO 'PERSON',
+
+
+
+
+
+E UM NOVO OBJETO ARRAY/PERSONS... ---> e esses objetos/arrays 
+
+
+
+OCUPARAM UM NOVO ESPAÇO NA MEMÓRIA DO MEU APLICATIVO... ---------> E POR 
+
+OCUPAREM 
+
+
+___NOVOS ESPAÇOS NA MEMÓRIA___, 
+
+ELES CONSEGUIRAM 
+
+
+___NOVOS POINTERS___ ESPECÍFICOS A ELES.... ----> E É POR ISSO QUE 
+
+
+aquele código de 
+
+
+
+'  shouldComponentUpdate(nextProps, nextState) { 
+    console.log('[Persons.js] shouldComponentUpdate');
+    
+    if (nextProps.persons !== this.props.persons) {
+        return true;
+    }
+    return false; '
+
+
+
+
+    QUE TEM 
+
+
+    AQUELE 
+
+
+    CHECK 
+
+
+    de 
+
+    'nextProps.persons !== this.props.persons)' 
+
+
+
+    ESTÁ FUNCIONANDO DA MANEIRA QUE QUEREMOS... 
+
+
+    ESTÁ FUNCIONANDO DA MANEIRA QUE QUEREMOS 
+
+    PQ ___OS POINTERS REALMENTE FORAM MUDADOS___ em razão 
+
+
+    daquela operação com o spread operator que criou novos objetos/array.... ------->
+
+
+
+
+    ISSO SIGNIFICA QUE SE O PROFESSOR NÃO TIVESSE COPIADO O ARRAY/OBJETOS ANTIGOS POR MEIO 
+
+    DESSE APPROACH DO 'spread operator', SE ELE TIVESSE 
+
+   APENAS MANIPULADO O ARRAY ____VELHO___ (o que faria com que 
+   
+   o objeto NA MEMÓRIA CONTINUASSE O MESMO, o LUGAR NA MEMÓRIA 
+   OCUPADO POR AQUELE OBJETO CONTINUASSE O MESMO), aí 
+
+
+   NOSSO 
+
+
+
+   CHECK 
+
+
+   DE 
+
+   
+    'nextProps.persons !== this.props.persons)' 
+
+
+    NÃO FUNCIONARIA,
+
+
+
+    POIS ESSE CHECK AÍ NÃO 
+
+
+
+    FAZ UM 'DEEP COMPARE' (ele não VAI CHECAR PELAS PROPRIEDADES """DEEP INSIDE THE 'PERSONS'""", 
+    
+    não vai comparar as propriedades ''deep inside the person/persons objects/arrays'... ----> 
+    
+    ISSO SIGNIFICA QUE
+    
+    
+    ELE SÓ FAZ 
+    
+    UM 
+    'SHALLOW COMPARE', 
+    
+    ELE SIMPLESMENTE 
+    
+    
+    COMPARA 
+    
+    SE ESSES 2 VALORES EXPRESSADOS ALI SÃO OS MESMOS... ----->  e os valores expressados 
+    
+    nessa expressão 
+    
+    
+    SÃO POINTERS, e o negócio SÓ FUNCIONA 
+    
+    
+    CORRETAMENTE 
+    
+    NESTE EXEMPLO PQ __o PROFESSOR UPDATOU ___ OS OBJETOS/ARRAYS DE FORMA 
+    
+    CORRETA,
+    
+    COM OS SPREAD OPERATORS... ---> e isso faz o fato 
+    
+    de esses negócios serem pointers não importar nem um pouco... ---> se vocÊ 
+    
+    NÃO COPIAR O ARRAY 
+    
+    
+    COM OS SPREAD OPERATORS, DAQUELE MODO LEGIT,
+     como fez 
+     
+     o professor,
+     
+     
+     ESSE SEU 
+     
+     
+     check no 'shouldComponentUpdate' VAI 
+     
+     SEMPRE FUNCIONAR ERRADO/NÃO FUNCIONAR/NÃO VAI UPDATAR NADA NUNCA.  )
+
+
+
+
+
+
+     ----------------------------------
+
+
+
+
+
+     shouldComponentUpdate ------> SUPER IMPORTANTE,
+
+     NOS AJUDA 
+
+
+
+     A MELHORAR A PERFORMANCE.... 
+
+
+
+
+
+
+
+
+     -----> OUTRO HINT: 
+
+     no chrome devtools,
+
+
+
+     você pode ir nas tools e então em 
+
+     'rendering'... (usar o COMMAND COISA)... 
+
+
+
+     --> lá na aba 'rendering', 
+
+
+     você 
+
+     pode habilitar o 
+
+
+     'PAINT FLASHING'... ----> ISSO PODE SER BEM ÚTIL, 
+
+
+     POIS TE AJUDA A VER 
+     
+
+     O QUE REALMENTE ACABA SENDO 
+
+
+     RE-RENDERIZADO NO SEU PROJETO QUANDO COISAS ACONTECEM...
+
+
+
+
+
+
+     ---> eu clico em 'toggle persons' -----> aparece um FLASH 
+
+     em volta de 'persons' --------> ISSO SINALIZA 
+
+
+     QUE 
+
+     O COMPONENT 
+
+
+
+     'PERSONS '
+
+
+     acabou sendo renderizado NO DOM REAL/DE VERDADE.... -------> FOI RENDERIZADO 
+
+
+     NO DOM DE VERDADE, E NÃO NO DOM VIRTUAL (criado/manipulado pelo react).
+
+
+
+
+
+     E SE EU AGORA TEMPORARIAMENTE 
+
+
+
+     COMENTAR 
+
+
+
+     MEU 'código condicional' 
+
+
+
+     de 
+
+     'shouldComponentUpdate' para fora do código, 
+
+
+     PARA QUE 
+
+     NÓS 
+
+     TENHAMOS 
+
+     AQUELA '''FEATURE'''' 
+
+
+     DE UPDATAR NOSSO 
+
+
+     Component 'persons' toda hora que algo 
+
+     em 'App.js' é alterado,
+
+     podemos 
+
+     ver que 
+
+
+     AINDA ASSIM O PAINT FLASHING NÃO NOS MOSTRA QUE 
+
+     ESSE COMPONENT 'PERSONS' FOI RE-RENDERIZADO quando 
+
+     o cockpit foi removido ---> mas isso n quer dizer nada,
+
+
+     POIS 
+
+
+     O IMPORTANTE AQUI É O CHECK ENTRE O DOM VIRTUAL E O DOM REAL 
+
+
+     'BEHIND THE SCENES' PELO REACT,
+
+     é isso que consome 
+
+
+     A PERFORMANCE DO NOSSO APLICATIVO,
+      
+      E É ISSO 
+
+      QUE 
+
+
+      É OPTIMIZADO POR MEIO 
+
+
+      DO CÓDIGO 
+
+      CONDICIONAL ENFIADO EM 
+
+      'shouldComponentUpdate' 
+
+
+      LÁ NO 
+
+      component 'Persons' (e essa é a importância do método 'shouldComponentUpdate'...)

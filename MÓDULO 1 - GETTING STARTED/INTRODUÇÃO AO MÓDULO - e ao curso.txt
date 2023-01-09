@@ -1,0 +1,96 @@
+
+
+
+
+
+-----> react --> é uma library mt boa para
+
+
+criar aplicativos 'powered by javascript'...
+
+
+
+
+
+------> Como o javascript roda no browser, 
+
+
+ele te deixa rodar aplicativos SUPER RÁPIDOS, aplicativos tão 
+
+rápidos 
+
+que nem 
+
+parece que o usuário 
+
+está esperando carregamentos...
+
+
+
+
+
+--> REACT --> library mais popular de javascript que 
+
+você pode aprender 
+
+
+hoje em dia....
+
+
+
+
+---> VAMOS APRENDER __SOBRE O QUE É O REACT, COMO ELE FUNCIONA,
+
+
+e porque vamos querer o utilizar...
+
+
+--> VAMOS APRENDER SOBRE COMO CONSTRUIR 'COMPONENTS' COM REACT, 
+
+
+
+como usar 'redux' para melhor 'state management', 
+
+
+
+TAMBÉM 
+
+COMO USAR 
+
+
+O REACT ROUTER...
+
+
+
+
+---> vamos construir  
+
+
+UM APLICATIVO 
+
+DURANTE 
+
+ESSE CURSO, 
+
+o 'Burger builder' ,
+
+
+que é 
+
+UM APLICATIVO LEGAL 
+
+QUE USARÁ 
+
+
+MUITOS DOS CONCEITOS 
+
+
+ENSINADOS DURANTE ESSE CURSO...
+
+
+
+--> ao final do curso, você terá muito mais do que apenas um entendimento sólido sobre 
+
+o react ---> você poderá trabalhar com react 
+
+e dev jobs... ---> como um freelancer.

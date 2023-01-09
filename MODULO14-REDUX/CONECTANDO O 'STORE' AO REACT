@@ -1,0 +1,2858 @@
+
+
+
+
+
+
+
+
+
+
+------> DEVEMOS CONECTAR NOSSO 'STORE' ao react... --------> nós 
+
+
+JÁ 
+
+TEMOS 
+
+UM 
+
+'STORE' criado em 
+
+'index.js'...  ---------> AGORA, PARA CONECTAR ESSE STORE, precisamos 
+
+DE UMA 
+
+
+
+__PACKAGE__ ESPECIAL__........ ------> isso pq 
+
+
+O 
+
+REACT POR SI SÓ NÃO VAI BASTAR... --> não vai bastar pq 
+
+O 
+
+
+
+
+
+'REDUX'
+
+
+É 
+
+'STANDALONE', ele é independente do react, e totalmente desvinculado a ele.... 
+
+
+
+
+
+
+--> para conseguir 
+
+essa package aí,
+
+devemos rodar, no terminal, 
+
+o código 
+
+
+
+
+'npm install --save react-redux'...
+
+
+
+
+
+
+
+
+NPM INSTALL --SAVE REACT-REDUX.......
+
+
+
+
+
+
+
+
+----> ELE FAZ EXATAMENTE O QUE SEU NOME SUGERE:
+
+
+ELE NOS DEIXA 
+
+
+HOOKAR o 
+
+
+
+'REDUX STORE' 
+
+AO NOSSO APLICATIVO 
+
+
+'react'...
+
+
+
+-----------------------------
+
+
+
+
+
+CERTO.... COM ESSA PACKAGE INSTALADA, O PROFESSOR PODE IMPORTAR 
+
+
+
+UM OBJETO DESSA PACKAGE, LÁ EM 
+
+
+'index.js'...
+
+
+
+
+
+
+
+
+---> ele vai importar 
+
+
+o objeto 
+
+
+''''{ Provider } '''''',
+
+
+diretamente 
+
+
+da package 
+
+
+'react-redux'...
+
+
+
+
+
+ex:
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+import reducer from './store/reducer';
+import { Provider } from 'react-redux'; ///////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+const store = createStore(reducer);
+
+
+
+
+
+
+
+ReactDOM.render(
+
+    <App />,
+  document.getElementById('root')
+);
+
+
+
+--------------------------------------------
+
+
+
+
+ISSO FEITO,
+
+PARA 
+
+
+PODER 
+
+
+
+UTILIZAR 
+
+
+O 
+
+
+REDUX NO 'REACT', no nosso APLICATIVO REACT,
+
+
+NÓS 
+
+
+DEVEMOS 
+
+
+WRAPPAR 
+
+
+O 
+
+NOSSO APLICATIVO 
+
+
+
+REACT (ou seja, '<App />' ) 
+
+
+
+COM 
+
+
+___ESSE COMPONENT '<Provider></Provider>'...
+
+
+
+
+ex:
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+import reducer from './store/reducer';
+import { Provider } from 'react-redux'; ///////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+const store = createStore(reducer);
+
+
+
+
+
+
+
+ReactDOM.render(
+
+    <Provider> ///////////////////EIS O CÓDIGO EM QUESTÃO.
+    <App />
+    </Provider>,
+  document.getElementById('root')
+);
+
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+<Provider /> ---------> ISSO É UM 
+
+
+
+_________HELPER COMPONENT________ QUE NOS DEIXA 
+
+
+
+
+'KINDOF' 
+
+
+injetar O NOSSO 
+
+'store' 
+
+
+
+DENTRO __dOS REACT COMPONENTS DE NOSSO APLICATIVO__...
+
+
+
+
+
+
+
+
+
+---> para HOOKAR o component 'Provider' COM NOSSA 
+
+
+STORE 
+
+criada 
+
+com o código 
+
+
+
+
+'const store = createStore(reducer);',
+
+
+
+
+
+
+
+O PROFESSOR EXPLICA QUE 
+
+__ELE PRECISA SETTAR___ 
+
+
+
+
+
+UMA _____PROPRIEDADE____... uma propriedade/prop
+
+
+ESPECIAL 
+
+
+
+QUE 
+
+__É ESPERADA (expected) 
+
+
+POR 
+
+AQUELE COMPONENT 
+
+
+
+'<Provider />'... ---------> 
+
+
+
+
+O NOME 
+
+
+DESSA PROPRIEDADE 
+
+
+É 
+
+'store',
+
+
+E DENTRO DA MARCAÇÃO DINÂMICA DESSA PROPRIEDADE 
+
+NÓS 
+
+
+VAMOS 
+
+PASSAR 
+
+O NOME 
+
+DA CONSTANTE QUE ESTÁ SEGURANDO 
+
+
+A STORE QUE FOI CRIADA COM 'createStore(reducer)'...
+
+
+
+
+ex:
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+import reducer from './store/reducer';
+import { Provider } from 'react-redux';
+
+
+
+
+const store = createStore(reducer);
+
+
+ReactDOM.render(
+    <Provider store={store}>  ///////////EIS O CÓDIGO EM QUESTÃO.
+    <App />
+    </Provider>,
+  document.getElementById('root')
+);
+
+
+
+
+
+-------------------------------------
+
+
+
+DE FATO,
+
+VAMOS 
+
+ESCREVER 
+
+
+'<Provider store={store}>'....
+
+
+
+
+---------------------------------
+
+
+
+OK... AGORA, COM ISSO, __PARECE__ QUE O STORE QUE CRIAMOS ESTÁ CONECTADO 
+
+COM 
+
+
+o nosso aplicativo...
+
+
+
+---------------------------------------
+
+
+
+
+Professor explica que 
+
+
+AGORA O __sTORE__ ESTÁ CONECTADO AO NOSSO APLICATIVO 'react'... (pelo menos UM POUQUINHO CONECTADO, E NÃO INTEIRAMENTE...).
+
+
+
+
+--------------------------------
+
+
+
+o store está 'MEIO' conectado, não está completamente conectado ainda... 
+
+
+
+
+
+
+
+
+
+---> AINDA HÁ ALGO FALTANDO... -----> A COISA FALTANDO É:
+
+
+
+
+
+COMO DIABOS 
+
+actually pegamos 
+
+'DATA' 
+
+dessa store (como o valor da propriedade 'counter', no 'state', por exemplo), nos nossos components/CONTAINERS?
+
+
+
+
+
+
+
+
+
+
+---> ex: QUEREMOS ACESSAR O VALOR DE 
+
+'counter', lá no nosso store,
+
+
+
+__LÁ__ NO CONTAINER 
+
+'Counter.js'... 
+
+
+(que é o container em que 
+
+NÓS 
+
+
+FAZEMOS O MANAGE DO valor de 'counter', essa propriedade no state,
+
+DE FORMA 
+
+__INTERNA__, própria desse container...)
+
+
+
+
+
+
+BEM, PARA ISSO, EXPLICA O PROFESSOR,
+
+
+PRECISAMOS 
+
+
+CONECTAR
+
+
+
+ESSE 
+
+
+CONTAINER INDIVIDUAL (o container 'Counter') 
+
+
+
+
+AO 
+
+'store'... --------> na verdade, para ser mais preciso,
+
+
+
+
+
+O QUE NÓS QUEREMOS FAZER, NA VERDADE,
+
+É ___sETTAR____ UMA SUBSCRIPTION ___ LÁ 
+
+
+
+EM 
+
+
+'Counter.js'... (aaaah... acho que agora estou entendendo...) ----------> 
+
+
+
+
+
+OU SEJA, VAMOS QUERER SETTAR UMA SUBSCRIPTION ('.subscribe')
+
+
+LÁ 
+
+
+NO 
+
+
+'Counter.js',
+
+NESSE CONTAINER 'counter.js'...
+
+
+
+
+
+
+
+
+
+
+----> ENTRETANTO, 
+
+PARA 
+
+SETTAR 
+
+
+
+'SUBSCRIPTIONS' NO REACT,
+
+
+nós 
+
+
+fazemos as coisas 
+
+
+
+
+
+DE UMA MANEIRA UM POUQUINHO DIFERENTE.... ------> isso significa que 
+
+
+NÓS 
+
+NÃO VAMOS 
+
+ESCREVER/SETTAR 
+
+
+AS 
+
+SUBSCRIPTIONS 
+
+
+DE 
+
+FORMA 
+
+'MANUAL' (tipo 'store.subscribe(() => {})'....) ----------> EM VEZ DISSO,
+
+
+
+VAMOS USAR 
+
+
+UMA FEATURE 
+
+
+
+PROVIDENCIADA 
+
+POR AQUELA 
+
+
+PACKAGE 
+
+'react-redux' que recém instalamos....
+
+
+
+
+
+
+
+
+
+
+
+
+MAS QUE FEATURE É ESSA? 
+
+
+
+
+
+
+
+
+
+---> devemos ir até o container 'Counter'... --------->  
+
+
+
+
+
+
+
+OBS:::::: ESSE PADRÃO QUE O PROFESSOR VAI NOS MOSTRAR ______NUNCA MUDA____... --> nunca vai 
+
+mudar pq 
+
+É SEMPRE OS NOSSOS 'CONTAINERS' QUE VÃO FAZER O PROPER ___ 'MANAGEMENT' DO STATE___.... (os components 'dumb' não 
+tem essa faculdade/atribuição).... 
+
+
+
+
+(NA VERDADE, OS COMPONENTS FUNCTIONAL HOJE EM DIA PODEM FAZER MANAGEMENT DE STATE.... entretanto,
+
+____ELES NÃO RECEBEM___ ESSA FEATURE DE 'SUBSCRIBE' do redux... ---> esse é um detalhe importante.)
+
+
+
+
+
+
+
+
+
+
+
+
+----> NÓS AINDA USAMOS 
+
+'CONTAINER COMPONENTS', containers que então redistribuem 
+
+
+
+
+os 'STATES' '''DOWN THEIR COMPONENTS'''... (os components embeddados nos 'containers'...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> mas a moral aqui é QUE NÓS NUNCA MUDAMOS O NOSSO PADRÃO DE TER UNS POUCOS 
+
+CONTAINERS GRANDOES, selecionados, QUE VAO CONSEGUIR 
+
+O 'STATE'/ E ENTÃO VÃO 
+
+PASSÁ-LO ADIANTE... -------------> ESSE PADRÃO CONTINUA O MESMO AQUI,
+
+
+
+NESSE PROJETO... (embora, EVENTUALMENTE,  vamos nos LIVRAR DE 'state' nesses 
+
+CONTAINERS...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> o professor vai IMPORTAR, LÁ EM 'Counter.js' (container),
+
+
+UM OBJETO
+
+
+
+DO 
+
+'react-redux'....
+
+
+
+
+
+
+
+
+
+
+O OBJETO IMPORTADO
+ 
+ VAI 
+
+ SER 
+
+
+
+ 'connect'...
+
+
+
+
+
+
+  
+
+
+  'connect' -------------> É UMA __FUNCTION__, UM HOC (higher-order component),
+
+
+
+
+UM HOC QUE USAMOS 
+
+
+NO ___EXPORT__ DE NOSSO CONTAINER/NOSSOS CONTAINERS....
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import CounterControl from '../../components/CounterControl/CounterControl';
+import CounterOutput from '../../components/CounterOutput/CounterOutput';
+
+
+import connect from 'react-redux'; //////////////EIS O CÓDIGO EM QUESTÃO.
+
+class Counter extends Component {
+  state = {
+    counter: 0,
+  };
+
+  counterChangedHandler = (action, value) => {
+    switch (action) {
+      case 'inc':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + 1 };
+        });
+        break;
+      case 'dec':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - 1 };
+        });
+        break;
+      case 'add':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + value };
+        });
+        break;
+      case 'sub':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - value };
+        });
+        break;
+
+      default:
+        return;
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        <CounterOutput value={this.state.counter} />
+        <CounterControl
+          label="Increment"
+          clicked={() => this.counterChangedHandler('inc')}
+        />
+        <CounterControl
+          label="Decrement"
+          clicked={() => this.counterChangedHandler('dec')}
+        />
+        <CounterControl
+          label="Add 5"
+          clicked={() => this.counterChangedHandler('add', 5)}
+        />
+        <CounterControl
+          label="Subtract 5"
+          clicked={() => this.counterChangedHandler('sub', 5)}
+        />
+      </div>
+    );
+  }
+}
+
+export default connect(Counter); //////////ESSE CÓDIGO ESTÁ ERRADO...
+
+
+
+
+
+-----------------------------------
+
+
+---->
+
+MAS O PROFESSOR NOS EXPLICA QUE NÓS NÃO DEVEMOS 
+
+USAR 
+
+UMA SINTAXE COMO 
+
+ESTA:
+
+
+export default connect(Counter);
+
+
+
+
+
+
+ISSO ESTÁ ERRADO....
+
+
+
+
+
+
+
+
+
+---> em vez disso, 
+
+professor explica que 
+
+
+
+'connect' é uma ___FUNÇÃO____ QUE ____rETORNA UMA FUNÇÃO___... --> e É ESSA FUNÇÃO 
+
+
+RETORNADA POR ELA 
+
+
+QUE 
+
+
+ACEITA
+UM 
+
+
+'COMPONENT/container' como input....
+
+
+
+
+
+
+
+
+
+---> isso quer dizer, em outras palavras, que 'connect' NÃO É BEM UM 
+
+
+'HIGHER ORDER COMPONENT',
+
+
+e 
+
+sim 
+
+
+é uma _______FUNÇÃO _________ QUE RETORNA UM HIGHER-ORDER COMPONENT___...
+
+
+
+
+
+
+
+
+
+--> a noção/ideia por trás desse setup todo complicado é que 
+
+
+
+
+
+'connect' pode/deve ser chamado COMO UMA ___FUNÇÃO____.... e 
+
+
+
+como 
+
+
+
+ESSE 
+
+'connect' retorna uma função,
+
+
+
+NÓS EXECUTAMOS O SEU 'RESULTADO' diretamente em cima do nosso component/container 'Counter'...
+
+
+
+ex(representação):
+
+
+
+--------------------------------
+
+
+export default connect()(Counter); ///////////SIM, É ASSIM MESMO....
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+Mas não é só isso a 'fórmula'... ----------> não é só isso pq 
+
+NAQUELE 
+
+
+parâmetro/argumento DA PRIMEIRA EXECUÇÃO DE FUNÇÃO, nós 
+
+
+PODEMOS 
+
+PASSAR 
+
+
+UMA
+
+_________CONFIGURAÇÃO____ para esse dado container (no caso, 'Counter')...
+
+
+
+
+
+
+ex:
+
+
+export default connect(CONFIGURAÇÃO...)(Counter); 
+
+
+
+
+-----------------------------------
+
+
+
+
+Para ser mais preciso,
+
+
+dentro 
+
+desse primeiro () nós 
+
+
+PASSAMOS 2 PEDAÇOS DE INFORMAÇÃO...
+
+
+
+
+
+
+
+
+
+
+OK, MAS QUAIS SÃO ESSES 2 PEDAÇOS DE INFORMAÇÃO? 
+
+
+
+
+
+
+1) QUAL PARTE DE TODO O 'APPLICATION STATE' é interessante para nós... (nesse container 'Counter', no caso...). -----> no caso de nosso projeto, a ÚNICA PROPRIEDADE QUE TEMOS NO STATE É 'counter', por isso só estamos interessados em 'counter'... --------> contudo, em APLICATIVOS MAIORES VOCÊ PODE TER DEZENAS, CENTENAS DE DIFERENTES STATES/PROPRIEDADES NO STATE... ( e aí vocÊ não vai precisar de todos esses 'pedaços de informação', apenas de alguns...) 
+        EM OUTRAS PALAVRA: ESSE PRIMEIRO PARÂMETRO É A 'SLICE DE INFORMAÇÃO DO STATE' que nós vamos querer, nesse container...
+
+
+
+
+2) QUAIS ____ACTIONS____ NÓS VAMOS QUERER FAZER DISPATCH...  ---> DE NOVO, em APLICATIVOS MAIORES, VOCÊ talvez tenha MILHARES DE AÇÕES que você vai querer 'dispatch', sendo transmitidas/dispatcheadas DE TODOS OS CANTOS DO APLICATIVO... ---> mas nesses aplicativos maiores, UM DADO CONTAINER (container individual) APENAS É RESPONSÁVEL PELO DISPATCH DE umas poucas ações... (assim fica mais organizado)...
+
+
+
+
+
+
+
+
+
+
+OK.
+
+
+ENTÃO 
+
+OS PEDAÇOS SÃO:
+
+
+
+1) A PARTE DO APP STATE QUE VAMOS QUERER, QUE É INTERESSANTE PARA NÓS
+
+
+
+
+2) QUAIS ACTIONS VAMOS QUERER DISPATCHAR NESSE COMPONENT ESPECÍFICO....
+
+
+
+
+
+
+---------------------------------------
+
+
+
+PROFESSOR EXPLICA QUE DEVEMOS 
+
+COMEÇAR 
+
+PELO 
+
+
+'state we want to get',
+
+
+ou seja,
+
+pelo 
+
+PRIMEIRO PARÂMETRO 
+
+
+desse 
+
+
+'connect()'....
+
+
+
+
+
+
+
+----> PARA ISSO O PROFESSOR CRIARÁ UMA NOVA CONSTANTE em 
+
+'Counter'...
+
+
+
+
+OBS::: PERECBA QUE 
+
+
+O PROFESSOR 
+
+
+
+___vAI DEFINIR ESSA CONSTANTE ____________dEPOIS__________ 
+
+
+
+DO COMPONENT/CONTAINER/'CLASS extends xxxx' ....,
+
+
+
+E __aNTES DO EXPORT....
+
+
+
+
+
+
+ou seja (esquema):
+
+
+
+------------------------------------------
+
+import xxxx 
+import xxxx 
+
+class Counter extends Component {
+
+}
+
+const ....
+
+
+export default connect()(Counter);
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+ESSA CONSTANTE 
+
+
+
+É UMA CONSTANTE ESPECIAL,
+
+a qual 
+
+
+vamos 
+
+chamar 
+
+de 
+
+
+'mapStateToProps'...
+
+
+
+
+
+
+
+
+
+
+'mapStateToProps' ----------> ESSE É UM NOME QUE VAMOS VER FREQUENTEMENTE 
+
+EM 
+
+
+ARTIGOS E TUTORIAIS.... -------> esse nome é mt bom, pq é claro 
+
+
+SOBRE 
+
+A 
+
+COISA QUE 
+
+
+VOCê VAI ARMAZENAR 
+
+NESSA 
+
+
+CONSTANTE...  ----------> NESSA CONSTANTE, ESSENCIALMENTE,
+
+
+VOCÊ VAI 
+
+ARMAZENAR 
+
+
+
+________INSTRUÇÕES ACERCA ___ DE COMO __  O 
+
+
+
+________STATE_______ GERENCIADO PELO REDUX____ deverá 
+
+SER ___MAPPEADO___ AOS PROPS __ QUE SÃO UTILIZADOS/SERÃO UTILIZADOS 
+
+
+NESSE 
+
+CONTAINER (no caso, em 'Counter'...). ----> 
+
+
+
+
+
+
+OBS (importante)::::: O STATE MANAGEADO PELO REDUX 
+
+
+
+
+
+________NÃO É RECEBIDO ___ COMO 'STATE' em 
+
+algo como 
+
+
+'state = {
+    counter: 0
+}',
+
+
+dentro do 
+
+
+'class Counter extends Component {}'...
+
+
+
+
+
+
+
+ex:
+
+
+
+
+class Counter extends Component {
+    state = {
+        counter: 0 /////////////////////////////////////////// O STATE MANAGEADO PELO REDUX __NÃO SERÁ RECEBIDO ____ AQUI....
+    }
+}
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+
+RESUMINDO: 
+
+
+O 
+
+STATE MANAGEADO PELO REDUX (o state de 'central store') 
+
+VAI 
+
+SER RECEBIDO ___COMO PROPS__ NOS NOSSOS CONTAINERS,
+
+
+E 
+
+
+
+A FUNÇÃO RESPONSÁVEL POR ESSA CONVERSÃO DO 'STATE' DE REDUX 
+
+em 
+
+
+PROPS UTILIZÁVEIS 
+
+
+POR ALGUM DE NOSSOS CONTAINERS é __JUSTAMENTE ESSA FUNÇÃO__ 
+
+
+
+'''''mapStateToProps'''''
+
+
+
+
+
+
+
+
+
+UÉ MAS PQ ISSO? -----> é pq 
+
+
+'state'  É AQUELA COISA QUE VOCÊ DEFINE _______ INTERNAMENTE EM UM 'COMPONENT/CONTAINER'... ------> 
+
+
+e esses TEMPOS ________aCABARAM______... -------------> REDUX É AGORA 
+
+
+O LUGAR IDEAL,
+
+É 
+
+
+O LUGAR 
+
+PERFEITO
+ 
+ PARA 
+
+
+ FAZER MANAGE 
+
+
+
+ E MUDAR O STATE... (isso significa que NÓS NÃO VAMOS QUERER PEGAR 
+ 
+ 
+ QUALQUER COISA QUE NÓS PODEMOS MUDAR INTERNAMENTE.... (?)) --------> 
+
+
+
+
+ E OS 'PROPS' 
+
+
+ __NÃO SÃO MUDADOS INTERNAMENTE, E É __POR ISSO __ QUE 
+
+MAPPEAMOS
+
+
+ ___ O 
+
+
+ 'REACT STATE' 
+
+ AOS 
+
+ PROPS... --------> e é por isso que o nome do negócio é 'mapStateToProps'
+
+
+
+
+
+
+
+
+ O que 'mapStateToProps' faz, na verdade, 
+
+
+ É __ARMAZENAR UMA FUNÇÃO__... ------> é 
+
+
+
+ uma função que 
+
+
+ ESPERA (expect)
+
+
+
+ O 
+
+ ___STATE____ (o state ARMAZENADO NO REDUX, NO CASO) como 
+
+
+ input... 
+
+
+
+ E QUE ENTÃO RETORNA UM OBJETO JAVASCRIPT....
+
+
+
+ ex:
+
+
+
+ const mapStateToProps = state => {
+     return {
+
+     }
+ }
+
+
+
+ ------------------------------
+
+
+
+
+
+ STATE ===== É AQUELA COISA QUE VOCÊ MUDA INTERNAMENTE, por meio de código inserido __DENTRO DE UM COMPONENT____ -------> 
+
+
+ E 
+
+
+ O 
+
+ STATE DO 'REDUX'
+  
+  não é assim.... -----------> quando temos 
+
+
+  o 
+
+
+
+  STATE __ MANAGEADO POR MEIO DO REDUX__,
+
+
+  nós 
+
+
+  temos um 
+
+
+  'central store' que tem um state,
+
+  e 
+  nós 
+
+
+  __NÃO FAZEMOS MANAGE DE 'State' ('state = {}' )
+
+
+  DENTRO 
+
+  
+
+  DOS NOSSOS CONTAINERS....
+
+
+
+
+
+
+
+
+
+  PROPS, POR SUA VEZ, NÃO SÃO COISAS __MUDADAS __ NO INTERIOR 
+
+
+  DE 
+
+  NOSSOS 
+
+
+  'Containers', e é POR ISSO 
+
+  QUE 
+
+  VAMOS 
+
+  MAPPEAR 
+
+
+  O 
+
+
+  'STATE' DO REDUX 
+
+
+  AOS 
+  'props'
+
+
+
+  de um determinado container... ( por isso que o nome é 'mapStateToProps')....
+
+
+
+
+
+  -------------------------------------------
+
+
+
+
+
+
+
+
+
+  
+
+ const mapStateToProps = state => {
+     return {
+
+     }
+ }
+
+
+
+ -------------------------------
+
+
+
+
+
+ ELE 
+
+
+
+ __VAI RECEBER O STATE (do redux) como parâmetro,
+
+ e aí 
+
+ VAI 
+
+
+
+ CUSPIR ___ UM OBJETO JAVASCRIPT QUE 
+
+
+
+ SERÁ/É 
+
+ um 
+ 
+
+
+ 'MAP' de 'prop names' 
+
+
+ e 
+
+
+ de 
+
+ 'SLICES DO STATE ARMAZENADO NO STORE DO REDUX'...
+
+
+
+
+
+
+
+
+
+
+ ---------> certo.... e professor nos explica que 
+
+ essa função 
+
+
+ 'mapStateToProps'
+
+
+ SERÁ ___eVENTUALMENTE __ EXECUTADA 
+
+ PELA 
+
+ PACKAGE 
+
+
+ de 
+
+ 'react-redux'... (pq nós vamos passar essa função COMO PARÂMETRO A ESSA PACKAGE AÍ...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ em outras palavras, o 
+
+ 'mapStateToProps' 
+
+
+ É 
+
+
+ __NOSSA MANEIRA ___ DE CONFIGURAR QUAIS INFORMAÇÕES/DATA __ NÓS PRECISAMOS, em um
+ determinado 
+
+
+ container ('on a given container')....
+
+
+
+
+
+
+
+
+
+
+ --------> CERTO.... 
+
+
+
+ E NESSE ''''map''''' que retornamos 
+
+ nessa 
+
+ função 
+
+
+ 'mapStateToProps',
+
+ PROFESSOR 
+
+ DIZ QUE 
+
+ DEVEMOS 
+
+
+ _________dEFINIR PROP NAMES___, prop names que 
+
+
+
+ SÃO NOMEADOS POR NÓS.... (podemos escolher QUALQUER NOME....) 
+
+
+
+
+
+
+
+
+
+
+ ---> o professor, nesse nosso exemplo, vai criar um 
+
+
+ PROP/propriedade 
+
+ de 
+
+
+ nome 
+
+
+
+ 'ctr' (short for 'counter'...)
+
+
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+ 
+ const mapStateToProps = state => {
+     return {
+            ctr: ...
+     }
+ }
+
+
+
+ ----------------------------------
+
+
+
+ ISSO FEITO,
+
+ DEFINIDO O __NOME___ DE SUA 
+
+ PROP 
+ (o 'prop name'),
+
+
+
+ VOCê 
+
+
+
+ DEVE 
+
+ DEFINIR O SEU VALOR... ------> e o valor TIPICAMENTE 
+
+
+ SERÁ 
+
+
+
+ 'state.xxxxx'.... 
+
+
+
+
+
+
+ (OBS::::: ESSE 'state' AÍ __REPRESENTA/É O ___STATE___ ARMAZENADO NO '''CENTRAL STORE''' DO REDUX...) ------> 
+
+
+
+
+
+ esse state do redux é DADO A NÓS PELO 'REACT-REDUX'... ------------> ok, 
+
+
+ mas 
+
+
+
+ QUAL 
+
+ É 
+
+ ESSE 'STATE', 
+
+
+
+ no caso de nosso aplicativo? -------> bem simples,
+
+
+ É
+
+ o 
+
+
+
+ state 
+
+
+
+VISTO LÁ NAQUELE 
+
+
+'reducer.js',
+
+
+EM QUE 
+
+TEMOS O CÓDIGO 
+
+
+
+
+''''''''''''''''''''
+
+
+
+const initialState = { /////////STATE SERÁ ISSO AQUI, BASICAMENTE... (pq é o valor INICIAL/DEFAULT)...
+    counter: 0
+}
+
+const reducer = (state = initialState, action) => { ///////devemos sempre definir o parâmetro 'state' dessa forma, dessa forma/formato de 'default parameter value', esse negócio de '= initialState' ----------> ISSO VAI FAZER COM QUE, QUANDO O parâmetro 'state'  '''''inicial''''' (primeira execução) estiver como 'undefined', SERÁ __aDOTADO ___ O VALOR DE 'initialState', aquela CONSTANTE QUE DEFINIMOS LOGO ACIMA, que então entrará como valor de 'state' (e por isso é considerado um 'PARÂMETRO DEFAULT' dessa função 'reducer', nesse caso... (e em todos os outros)) ------> é LÓGICO QUE NAS FUTURAS EXECUÇÕES DE 'reducer', será adotado o VALOR 'value' mesmo, e não esse 'initialState', que SÓ SERVE PARA A PRIMEIRA EXECUÇÃO (mesmo assim, ele é crucial, pois precisamos dessa primeira execução)...
+    return state;
+}
+
+
+export default reducer;
+
+
+
+-------------------------------------
+
+
+
+
+
+
+---> certo.... e como nesse 'STATE DO REDUX' 
+
+
+nós 
+
+temos 
+
+
+ESSA PROPRIEDADE 
+
+'counter', professor 
+
+nos explica que podemos 
+
+simplesmente 
+
+
+escrever 
+
+
+'ctr: state.counter',
+
+LÁ 
+
+NAQUELE 'map'/objeto retornado pelo return statement da função 'mapStateToProps'...
+
+
+
+
+ex:
+
+
+
+
+
+ 
+ const mapStateToProps = state => {
+     return {
+            ctr: state.counter /////////eis o código em questão.
+     }
+ }
+
+
+-------------------------------
+
+
+
+
+
+CERTO, 
+
+ISSO SIGNIFICA QUE 
+
+
+A PROPRIEDADE 
+
+
+'counter', 
+
+do 
+
+STATE DO REDUX,
+
+
+VAI SER 
+
+
+ACESSADA 
+
+
+NESSA NOSSA 
+
+FUNÇÃO 
+
+'mapStateToProps'...
+
+
+
+
+
+
+
+
+
+---> ok.... e essa expressão inteira:
+
+ const mapStateToProps = state => {
+     return {
+            ctr: state.counter /////////eis o código em questão.
+     }
+ }
+
+
+
+
+ESTARÁ 
+
+DIZENDO:
+
+
+
+
+'HEY, POR FAVOR, ME DÊ O VALOR DO 'COUNTER' DENTRO 
+DO nosso 'GLOBAL STATE' (manageado pelo REDUX).... E, POR FAVOR,
+ME DÊ ESSE VALOR __NA FORMA/FORMATO __ DE UMA ___PROPRIEDADE/PROP 
+CHAMADA 'ctr', QUE ENTÃO EU PODEREI USAR LÁ EMBAIXO, no 'render()' de 
+'Counter'...    '
+
+
+
+
+(
+        com isso, com essa função definida, poderemos usar 
+
+ESSE 'PROP'/'REFERENCIA AO STATE GLOBAL' 
+
+lá 
+naquele código 
+
+de 
+
+
+
+''''''''''''''''''''''''
+
+
+
+
+
+  render() { ////////VAMOS PODER USAR AQUI....
+    return (
+      <div>
+        <CounterOutput value={this.state.counter} />
+        <CounterControl
+          label="Increment"
+          clicked={() => this.counterChangedHandler('inc')}
+        />
+        <CounterControl
+          label="Decrement"
+          clicked={() => this.counterChangedHandler('dec')}
+        />
+        <CounterControl
+          label="Add 5"
+          clicked={() => this.counterChangedHandler('add', 5)}
+        />
+        <CounterControl
+          label="Subtract 5"
+          clicked={() => this.counterChangedHandler('sub', 5)}
+        />
+      </div>
+    );
+  }
+
+
+------------------------------
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+OK, MAS COMO PODEMOS REALMENTE USAR 
+
+
+ESSE state/propriedade 'ctr' no state 
+
+___LÁ NAQUELE__ LUGAR do 'render()' de 'Counter'...? --------> PARA ISSO, 
+
+
+PROFESSOR 
+
+
+NOS EXPLICA QUE 
+
+DEVEMOS 
+
+CONECTAR/PASSAR 
+
+
+ESSA FUNÇÃO 
+
+
+
+À 'HOC'/função de 
+
+
+'connect', 
+
+lá embaixo no código de 'Counter.js'...
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import CounterControl from '../../components/CounterControl/CounterControl';
+import CounterOutput from '../../components/CounterOutput/CounterOutput';
+
+class Counter extends Component { 
+  state = { ////NÓS AINDA TEMOS ESSE STATE, ENTRETANTO... --> professor vai deixá-lo aqui, por enquanto.
+    counter: 0,
+  };
+
+  counterChangedHandler = (action, value) => {
+    switch (action) {
+      case 'inc':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + 1 };
+        });
+        break;
+      case 'dec':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - 1 };
+        });
+        break;
+      case 'add':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + value };
+        });
+        break;
+      case 'sub':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - value };
+        });
+        break;
+
+      default:
+        return;
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        <CounterOutput value={this.state.counter} />
+        <CounterControl
+          label="Increment"
+          clicked={() => this.counterChangedHandler('inc')}
+        />
+        <CounterControl
+          label="Decrement"
+          clicked={() => this.counterChangedHandler('dec')}
+        />
+        <CounterControl
+          label="Add 5"
+          clicked={() => this.counterChangedHandler('add', 5)}
+        />
+        <CounterControl
+          label="Subtract 5"
+          clicked={() => this.counterChangedHandler('sub', 5)}
+        />
+      </div>
+    );
+  }
+}
+
+
+
+
+ const mapStateToProps = state => {
+     return {
+            ctr: state.counter
+     }
+ }
+
+
+export default connect(mapStateToProps)(Counter); /////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+
+CERTO.... Agora, será que podemos usar 
+
+esses 'PROPS'/state global, PROVIDENCIADO PELO REDUX?
+
+
+
+
+
+
+
+
+--> professor nos explica que agora 'connect' (que é aquele negócio que vai 
+
+RECEBER TANTO A FUNÇÃO 'mapStateToProps' como a função 'Counter') 
+
+
+
+
+__________vAI NOS DAR ___ ESSE 
+
+CONTAINER 
+
+
+
+DE 
+
+'Counter',  
+
+MAS COM ACESSO 
+
+
+A ESSA PROPRIEDADE 
+
+
+ESPECIAL 
+
+
+DE 
+
+'ctr' (Que é uma propriedade/prop que segura o valor de 'state.counter' (que é a propriedade 'counter' DEFINIDA NO NOSSO STATE GLOBAL DO REDUX, LÁ NO 'CENTRAL STORE'...))
+
+
+
+
+
+
+
+ISSO, POR SUA VEZ, 
+
+
+NOS PERMITE FINALMENTE ____OUTPUTTAR__ ESSA PROPRIEDADE 
+
+'ctr', por meio de código NO INTERIOR 
+
+
+DO RENDER de 'Counter'...
+
+
+
+
+
+
+
+
+
+
+OBS::: NÓS AINDA TEMOS AQUELE 'state', o STATE __INTERNO ___ DO CONTAINER 'Counter', escrito 
+
+em 'Counter'... ----> e o professor nos explica que ELE VAI MANTER ESSE NEGÓCIO NO NOSSO CÓDIGO, por enquanto... 
+
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+
+CERTO... E PARA DEMONSTRAR QUE AS REFERÊNCIAS/PASS/USO 
+
+DO 'GLOBAL STATE' do redux funciona, professor 
+vai 
+
+
+ATÉ 
+
+
+O CÓDIGO 
+
+de 
+
+
+'render()' 
+
+de 
+
+'Counter'...:
+
+
+  render() {
+    return (
+      <div>
+        <CounterOutput value={this.state.counter} />
+        <CounterControl
+          label="Increment"
+          clicked={() => this.counterChangedHandler('inc')}
+        />
+        <CounterControl
+          label="Decrement"
+          clicked={() => this.counterChangedHandler('dec')}
+        />
+        <CounterControl
+          label="Add 5"
+          clicked={() => this.counterChangedHandler('add', 5)}
+        />
+        <CounterControl
+          label="Subtract 5"
+          clicked={() => this.counterChangedHandler('sub', 5)}
+        />
+      </div>
+    );
+  }
+
+
+--------------------------------------
+
+
+
+
+DENTRO DESSE CÓDIGO,
+
+
+
+PROFESSOR NÃO VAI MAIS PASSAR 
+
+UM VALOR 
+
+
+
+de 
+
+'value={this.state.counter}' 
+
+
+NESSE COMPONENT 'CounterOutput'... ----------> EM VEZ DISSO,
+ 
+
+ O QUE 
+
+ ELE VAI ESCREVER 
+
+
+ É UM 
+
+
+ SIMPLES 
+
+
+ 'this.props.ctr' (PQ ___AGORA ESSA PROPRIEDADE 'ctr' VAI JUSTAMENTE __eSTAR INSERIDA __ NOS PROPS DE NOSSO CONTAINER... ---> realmente, bem útil...)
+
+
+
+
+
+
+ ------------------------------------
+
+
+
+ ISSO É __INSANO__, E MUITO ÚTIL... -------> não vamos mais precisar de query params para 
+
+ CARREGAR DADOS EM PÁGINAS DIFERENTES DE NOSSO HOME, POR EXEMPLO...
+
+
+
+
+
+
+
+
+ --> esse 'this.props.ctr' 
+
+ VAI ESTAR SE REFERINDO A PROPRIEDADE 
+
+
+
+ '
+ {
+     ctr: state.counter
+ }
+ ',
+
+
+ QUE, POR SUA VEZ,
+
+ É 
+
+
+ 'counter: 0', 
+
+ LÁ NO 
+
+
+ STATE (initialState/state inicial) 
+
+ DEFINIDO 
+
+
+ NO NOSSO INDEX.JS/NO REDUX...
+
+
+
+
+
+ -------------------
+
+
+
+ EIS O CÓDIGO EM QUESTÃO:
+
+
+
+
+
+
+ import React, { Component } from 'react';
+
+import CounterControl from '../../components/CounterControl/CounterControl';
+import CounterOutput from '../../components/CounterOutput/CounterOutput';
+
+class Counter extends Component {
+  state = {
+    counter: 0,
+  };
+
+  counterChangedHandler = (action, value) => {
+    switch (action) {
+      case 'inc':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + 1 };
+        });
+        break;
+      case 'dec':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - 1 };
+        });
+        break;
+      case 'add':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + value };
+        });
+        break;
+      case 'sub':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - value };
+        });
+        break;
+
+      default:
+        return;
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        {/* <CounterOutput value={this.state.counter} />  //////////USO INTERNO DE 'STATE'. COISA COMUM... (ver código logo abaixo, que é a mesma coisa, MAS __UTILIZANDO O STATE GLOBAL DE 'REDUX', que é armazenado no seu 'CENTRAL STORE'...*/}
+        <CounterOutput value={this.props.ctr} />  /////////EIS O CÓDIGO EM QUESTÃO.
+        <CounterControl
+          label="Increment"
+          clicked={() => this.counterChangedHandler('inc')}
+        />
+        <CounterControl
+          label="Decrement"
+          clicked={() => this.counterChangedHandler('dec')}
+        />
+        <CounterControl
+          label="Add 5"
+          clicked={() => this.counterChangedHandler('add', 5)}
+        />
+        <CounterControl
+          label="Subtract 5"
+          clicked={() => this.counterChangedHandler('sub', 5)}
+        />
+      </div>
+    );
+  }
+}
+
+
+
+mapStateToProps = (state) => {
+        return {
+            ctr: state.counter
+        }
+}
+
+
+export default connect(mapStateToProps)(Counter); /////////
+
+
+---------------------
+
+
+ISSO FEITO,
+
+
+
+
+RODAMOS 
+
+'npm STARt'
+
+
+
+PARA VER ISSO APLICADO NO NOSSO APP...
+
+
+
+
+
+
+
+
+
+--> AO CARREGAR A PÁGINA, VAMOS PERCEBER QUE __NÓS NÃO RECEBEMOS UM ERRO___ (o que é muito bom...)
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+CERTO... MAS SURGIU UM PROBLEMA, AO CARREGAR O NOSSO PROJETO... -----> nossos 
+
+
+
+ELEMENTOS/COMPONENTS ESTÃO SEM ESTILO, ESTÃO SEM STYLING... (não sei a razão para isso ter acontecido...)
+
+
+
+
+
+
+
+
+
+
+BEM ESTRANHO.... ---> parece que quando estamos usando 'REACT REDUX',
+
+não podemos 
+
+importar 
+nosso 
+
+
+arquivos .module.css 
+
+
+
+da maneira 
+
+normal 
+
+
+(
+
+
+    por meio daquela sintaxe 
+
+
+    'import CounterOutputStyle from './CounterOutput.module.css'; 
+) -------> 
+
+
+
+EM VEZ DISSO,
+
+TEMOS QUE 
+
+
+ESCREVER ALGO COMO 
+
+
+
+'import CounterOutputStyle from '../CounterOutput/CounterOutput.module.css'; 
+
+
+
+
+
+
+
+(NÃO, espere, não consertei o problema ainda...) ---------->
+
+
+
+parece 
+
+QUE 
+
+
+OS ESTILOS 
+
+
+.CSS ESTÃO SENDO 
+
+
+
+CARREGADOS NA PÁGINA,
+
+mas ainda 
+
+assim 
+
+
+ELES NÃO SÃO ____ INCORPORADOS AOS ELEMENTOS....
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+HMMMMMMMMMMMM.............. PARECE QUE A __SINTAXE__ MUDOU/MUDA COMPLETAMENTE __ QUANDO 
+
+USAMOS 
+
+
+'REACT REDUX' 
+
+
+EM CONJUNTO COM O 
+
+'CSS MODULES'.... ---------> 
+
+
+ESSE CÓDIGO AQUI FUNCIONOU:
+
+
+
+
+
+
+-------------------------------------------------------
+
+
+
+import React from 'react';
+
+
+
+import CounterControlStyle from '../CounterControl/CounterControl.module.css' ////////ESTA SINTAXE DE IMPORTS FUNCIONA, COMBINADA COM AQUELA MAIS DE BAIXO...
+
+
+
+
+
+
+const counterControl = (props) => {
+    return (<div className="CounterControl" onClick={props.clicked}> /////////ESTA SINTAXE DE IMPORTS DE STYLE FUNCIONA, COMBINADA COM A MAIS DE CIMA....
+        {props.label}
+    </div>)
+};
+
+
+export default counterControl;
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+__MUITO___ BIZARRO___ ESSE PROBLEMA DOS 
+
+ESTILOS... ---------> 
+
+
+EIS 
+
+O SEGUNDO 
+
+CÓDIGO QUE DEU CERTO:
+
+
+
+
+
+----------------------------------------------
+
+
+import React from 'react';
+
+
+
+import CounterOutputStyle from '../CounterOutput/CounterOutput.module.css';
+
+
+
+
+
+const CounterOutput = (props) => {
+
+           return <div className="CounterOutput">
+                Current Counter: {props.value}
+            </div>
+}
+
+
+
+
+export default CounterOutput;
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+OBS::: O PROFESSOR AINDA NÃO TOCOU NESSE ASSUNTO; AINDA NÃO FALOU 
+
+SOBRE 
+
+
+A BUGADICE 
+
+DE USAR 
+
+'css modules' e 'redux' EM UM MESMO PROJETO...
+
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+CERTO.... CONTINUANDO... ---> no nosso aplicativo,
+
+
+
+assim que recarregarmos a página, veremos que 
+
+
+
+NÃO SERÃO RECEBIDOS ERROS.... -------> contudo, 
+
+
+um problema é que 
+
+
+
+OS __bOTÕES__ NÃO ESTÃO/NÃO ESTARÃO FUNCIONANDO... (tvz 
+
+pq 
+
+não vinculamos 
+
+o 
+
+state do 'redux' aos nossos subcomponents/components embeddados nos 
+
+
+containers? não tenho certeza.) -------------> 
+
+
+
+
+
+
+DE FATO,
+
+
+
+O PROFESSOR CONFIRMA NOSSOS PENSAMENTOS:
+
+
+
+VEJA O CÓDIGO 
+
+
+DE 
+
+
+'counterChangedHandler':
+
+
+
+
+counterChangedHandler = (action, value) => {
+    switch (action) {
+      case 'inc':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + 1 };
+        });
+        break;
+      case 'dec':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - 1 };
+        });
+        break;
+      case 'add':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + value };
+        });
+        break;
+      case 'sub':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - value };
+        });
+        break;
+
+      default:
+        return;
+    }
+
+------------------------------------------------
+
+
+
+
+
+
+Em cada um desses 'switch cases' dos buttons,
+
+
+
+NÓS 
+
+
+EXECUTAMOS 
+
+
+'this.setState(
+  {
+    ....
+  }
+)
+' --------------------> E ESSE 'THIS.SETSTATE' vai __SOMENTE__ AFETAR 
+
+
+O STATE ___iNTERNO____ DO 
+
+
+'Counter.js',
+
+
+__e NÃO O STATE __ GLOBAL (armazenado no 'central store' do redux...)...
+
+
+
+
+
+
+
+
+
+--->E NAQUELE 'Current Counter: 0',
+
+
+
+
+O QUE ESTÁ SENDO OUTPUTTADO É O ____STATE ___ DO REDUX, E NÃO O STATE INTERNO DE 
+
+'Counter', desse nosso container....
+
+
+
+
+
+
+EX(representação):
+
+<CounterOutput value={this.props.ctr} />  ---------> o valor de 'value' é JUSTAMENTE O VALOR DA PROPRIEDADE 'ctr/counter' existente no STATE DO REDUX...
+
+
+
+
+--> e esse 'value' do 'counter' do STATE DO ___REDUX __ É INICIALMENTE ___ZERO__, 
+
+
+e no momento NÃO TEMOS NENHUMA MANEIRA DE AUMENTAR/DIMINUIR ESSE VALOR NESSA PROPRIEDADE 
+
+
+NESSE STATE DO REDUX....
+
+--------------------------------------------------------------------------
+
+
+
+
+
+--> vamos mudar essa situação NA PRÓXIMA AULA...
+
+

@@ -1,0 +1,1101 @@
+
+
+
+
+
+
+--> AGORA NÓS USAMOS 2 INSTÂNCIAS 
+
+
+
+
+
+DA FUNÇÃO DE 
+
+'useState'...
+
+
+
+
+eX:
+
+
+
+
+
+  const [todoName, setTodoName] = useState(''); 
+
+  const [todoList, setTodoList] = useState([]); 
+
+
+
+
+  ----------------------------------------
+
+
+
+
+
+
+
+
+
+CHAMAMOS 
+
+2 
+
+INSTÂNCIAS, 
+
+
+E ISSO 
+
+É 
+PERFECTLY FINE... ---> e essa é a maneira que o professor nos recomenda 
+
+escrever 
+
+nosso código... ---> cada 
+
+HOOK 
+
+__DEVERÁ __ FAZER 
+MANAGE 
+
+DE 
+
+1 STATE/propriedade no state INDIVIDUAL 
+
+
+---------------------------------------
+
+
+
+
+AQUI, NESSE NOSSO EXEMPLO,
+
+É EVIDENTE QUE 
+
+USAMOS 
+
+
+
+
+O 'user input',
+
+representado pelo state do 
+
+
+'todoName', EM 
+
+
+
+
+OUTRA 'PARTE DE NOSSO STATE',
+
+a parte 
+
+de 
+
+'todoList',
+
+MAS 
+
+__ISSO É PERFECTLY FINE_,,,
+
+
+
+
+PQ QUANDO 1 DOS STATES MUDA,
+
+
+
+
+ELE __MUDA ___ INDEPENDENTEMENTE __ DO OUTRO (como em class-based components comuns)  ----> 
+
+
+ISSO SIGNIFICA QUE 
+
+QUANDO 
+
+
+
+ 
+ O USUÁRIO 
+
+
+ INPUTTA ALGO NO 'USERINPUT',
+
+
+ NÓS 
+
+
+ __NÃO PRECISAMOS __ TROCAR 
+
+ a 
+
+ 'todoList'
+  
+IMEDIATAMENTE (pq ele não clicou no button, que está vinculado ao 'todoAddHandler', que é o negócio QUE 
+
+REALMENTE 
+
+ALTERA
+NOSSO 
+
+STATE 
+
+do 
+
+'todoList'...) --------> E VICE-VERSA,
+
+
+QUANDO
+
+ADICIONAMOS ALGO 
+
+À 'LIST',
+
+
+NÓS __NÃO PRECISAMOS/NÃO FORÇAMOS 
+
+O 
+
+userInput/todoName 
+
+A SER ALTERADO... 
+
+
+-----------------------
+
+
+
+
+
+
+
+
+
+
+
+ENTRETANTO,
+
+
+PROFESSOR NOS DIZ, AGORA, QUE __ TAMBÉM __ É POSSÍVEL 
+
+
+FAZER 
+
+'MERGE' 
+
+de vários
+
+
+STATES/propriedades do state EM 1 ÚNICO OBJETO... ---> 
+
+E ELE 
+
+TAMBÉM QUER 
+
+MOSTRAR isso...
+
+
+
+
+
+PARA MOSTRAR ISSO,,
+
+
+
+
+PROFESSOR 
+
+
+ADICIONA UMA NOVA CONSTANTE 
+
+NO NOSSO FUNCTIONAL COMPONENT,
+
+
+
+
+
+E AÍ 
+
+
+ELE ESCREVE:
+
+
+
+
+const [] = useState();
+
+
+
+
+
+------------------------
+
+
+
+
+CERTO...
+ 
+ e dentro desse 
+
+ 'useState()'
+
+
+ O PROFESSOR 
+
+
+ __PASSA UM OBJETO __ JAVASCRIPT  (pq você pode PASSAR QUALQUER COISA QUE VOCÊ QUISER, DENTRO DESSE PARÂMETRO...)
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+const [] = useState({});
+
+
+
+
+-----------------------
+
+
+
+
+
+DENTRO DESSE PARÂMETRO,
+
+
+O PROFESSOR 
+
+
+ADICIONA 
+UM 
+
+'field'
+ 
+
+
+ DE 
+
+ 'userInput: '' ',
+
+ E OUTRO 
+
+
+ DE 
+
+
+ 'todoList: []'....
+
+
+
+
+
+ ex:
+
+
+
+
+ const [] = useState(
+     {
+         userInput: '',
+         todoList: []
+     }
+ )
+
+
+
+ -----------------------------------
+
+
+
+
+
+
+ CERTO... (ele está basicamente TRADUZINDO O CÓDIGO DE ANTES, que era '1 STATE/PROPRIEDADE DO STATE PARA CADA 
+ COISA',
+ 
+
+EM 
+
+1 STATE SÓ... state com 'comunicação' entre as propriedades...)
+
+
+
+
+
+
+--> na parte da ESQUERDA,
+ 
+ na parte do DESTRCUTURING,
+
+ o professor 
+
+ escreve 
+
+
+ os NOMES DAS CONTANTES QUE 
+
+ VAI QUERER 
+
+ QUE 
+
+ SEGUREM 
+
+
+ AQUELAS PROPRIEDADES/STATES....
+
+
+
+
+ --> 
+
+
+ ele escreve 
+
+ a primeira como '
+
+ 'todoState',
+
+ e 
+
+ a segunda como 
+ 'setTodoState'...
+
+
+
+ ex:
+
+
+
+
+ const [todoState, setTodoState] = useState(
+     {
+         userInput: '',
+         todoList: []
+     }
+ )
+
+
+
+----------------------------------------
+
+
+
+
+
+OS NOMES
+DEVEM 
+
+FAZER SENTIDO,
+
+REFLETIR
+
+QUAL TIPO DE CHANGE VOCÊ PODE 
+
+TRIGGAR CHAMANDO ESSAS 
+
+'CONSTS'..
+
+
+
+
+
+
+
+
+
+--> AGORA, O QUE PODEMOS FAZER,
+
+É QUE QUANDO 
+
+
+
+QUISERMOS 
+
+QUE 
+
+O 
+
+STATE MUDE,
+
+É 
+
+EVIDENTE QUE 
+
+TEREMOS 
+
+DE CHAMAR 
+
+
+
+'setTodoState()',
+
+
+MAS 
+
+
+AGORA 
+
+
+EU TENHO 
+
+
+
+
+UM OBJETO 
+
+JAVASCRIPT __ QUE 
+
+TEM 
+
+NÃO 
+
+SÓ 
+
+
+O 'userInput',
+
+MAS TAMBÉM 
+
+A 
+
+'todoList'...
+
+
+
+
+
+
+E PARA QUE CONSIGAMOS ACESSAR a propriedade/state certinha QUANDO CHAMAMOS 
+
+'setTodoState()' NOS LUGARES DE NOSSO CÓDIGO,
+
+
+
+PRECISAMOS 
+
+
+PASSAR UM 
+
+__OBJETO__ COMO PARÂMETRO DESSE CALL...
+
+
+
+ex:
+
+
+
+
+const inputChangedHandler = event => {
+    setTodoState(
+        {
+
+        }
+    )
+}
+
+
+
+--------------------------------
+
+
+
+
+E É EVIDENTE QUE 
+
+ESSE 
+
+parâmetro 
+
+de 
+
+'setTodoState()'
+
+
+NÃO SERÁ UM _oBJETO VAZIO__... --> não,
+
+dentro 
+
+desse objeto DEVEMOS 
+PASSAR 
+
+
+
+
+___A PROPRIEDADE __ QUE 
+
+QUEREMOS __ QUE 
+
+SEJA 
+
+ALTERADA/UPDATADA__ por meio 
+desse call aí... ---> 
+
+
+
+
+
+NO CASO,
+
+VAMOS QUERER 
+
+que 
+
+'userInput' (que antes/agora é '', uma empty string)
+
+
+
+SEJA 
+
+TRANSFORMADO/ALTERADO PARA 
+
+SER 
+
+
+'event.target.value'...
+
+
+
+ex:
+
+
+
+
+
+
+const inputChangedHandler = event => {
+    setTodoState(
+        {
+            userInput: event.target.value
+        }
+    )
+}
+
+
+----------------------------------
+
+
+
+
+
+
+
+ENTRETANTO,
+
+É EVIDENTE QUE 
+
+NÃO PARAMOS POR AQUI.... --> AINDA TEMOS DE ESCREVER MAIS UMA COISINHA,
+PARA 
+FAZER COM 
+
+QUE 
+
+O 
+
+STATE SEJA UPDATADO DE FORMA 'IMMUTABLE'... (pq se nós 
+
+fizermos o state UPDATAR DE FORMA 'MUTABLE', introduziremos 
+
+repercussões negativas no nosso código, código fica imprevisível e lixo...) ----> 
+
+PARA 
+
+ISSO,
+
+PROFESSOR 
+
+
+
+DIZ QUE 
+
+NÃO DEVEMOS USAR 
+
+'spread operators' como fazíamos 
+
+com 
+
+
+o REDUX,
+
+E SIM 
+
+QUE 
+
+DEVEMOS 
+
+
+
+SIMPLESMENTE 
+
+escrever 
+
+
+a parte 
+
+de 
+'todoList'
+
+assim:
+
+
+
+'todoList: todoState.todoList'...
+
+
+
+
+ex(RESULTADO):
+
+
+
+
+
+
+
+
+const inputChangedHandler = event => {
+    setTodoState(
+        {
+            userInput: event.target.value,
+            todoList: todoState.todoList ////////EIS O CÓDIGO EM QUESTÃO.
+        }
+    )
+}
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+ISSO VAI FAZER COM QUE SEJA SIMPLESMENTE REPRODUZIDO 
+
+O ÚLTIMO VALOR QUE 
+EU HAVIA __ARMAZENADO__ NESSE STATE AÍ (resultando em um update IMMUTABLE...)
+
+
+
+
+
+--> E SE EU OPTAR POR ESSA 
+
+SINTAXE 
+
+do 
+
+'todoState' __GERAL__ (que estamos mostrando agora, que COMPILA/COMBINA 
+TODOS 
+
+OS STATES/propriedades
+
+EM 
+
+
+'APENAS 1 SÓ'...),
+
+
+
+VOU TER QUE FAZER ISSO _EM TODOS ___ OS CALLS DE 
+
+'setTodoState'...
+
+
+
+
+
+
+
+EX (agora em 'todoAddHandler', também...):
+
+
+
+
+
+
+const todoAddHandler = () => {
+    setTodoState(
+        {
+            userInput: todoState.userInput,
+            todoList: todoState.todoList.concat(todoState.userInput)
+        }
+    )
+}
+
+
+
+
+
+
+
+----------------------------------
+
+
+(VER ARQUIVO 'TODO2'....)
+
+CÓDIGO FICARÁ TIPO ASSIM:
+
+
+
+
+
+
+
+
+
+  const inputChangedHandler = (event) => {
+
+    setTodoState(
+      {
+        userInput: event.target.value,
+        todoList: todoState.todoList
+      }
+    )
+  };
+
+  const todoListAddHandler = () => {
+
+    setTodoState(
+      {
+        userInput: todoState.userInput,
+        list: todoState.todoList.concat(todoState.userInput);
+      }
+    )
+
+  };
+
+
+
+
+
+  ----------------------------------------------
+
+
+
+
+
+  ---> E AGORA 
+
+  VOCÊ 
+
+  JÁ PODE TER PERCEBIDO __ PQ ___ TER 
+
+  'SEPARATE STATES' 
+
+  PODE 
+
+
+  ___SER BEM BENEFICIAL, MUITO MELHOR DO QUE USAR 
+
+  UMA SINTAXE DE 
+
+  UM
+  'COMBINED STATE' falso...  --> 
+
+  essas 
+
+
+  referências e referências ABSURDAS
+   
+
+   __FICAM MUITO DIFÍCEIS __ DE SE ENTENDER... ---> 
+
+
+   PQ,
+    
+
+    AO CONTRÁRIO 
+
+    DE 
+
+    'this.setState()',
+
+    NOS CLASS-BASED COMPONENTS,
+
+
+    QUE 
+
+    FAZIA 
+
+    O 
+
+
+
+    MERGE AUTOMÁTICO 
+
+
+    DAS 
+
+    PROPRIEDADES COM VALORES DIFERENTES QUE 
+    ERAM 
+
+    PASSADOS 
+    COMO PARÂMETROS A SI,
+
+
+
+
+AQUI 
+
+
+__O  'HOOK' __ 
+
+
+
+de 
+
+'useState' 
+
+
+
+
+__NÃO ____ VAI MERGEAR/FUNDIR__ O QUE 
+
+VOCÊ 
+
+
+PASSOU COMO PARÂMETRO 
+
+
+COM O QUE JÁ EXISTIA ANTES AUTOMATICAMENTE... (não vai mergear o new state com o old state)... ---> 
+
+
+
+ISSO 
+
+SIGNIFICA QUE 
+
+
+
+_NATIVAMENTE__ ELE VAI 
+
+__APENAS __ SUBSTITUIR 
+
+O 
+
+OLDSTATE 
+
+
+COM 
+
+O 
+
+
+'NEWSTATE' 
+
+passado por você 
+
+
+em 
+
+funções 
+
+como 
+
+'setTodoList()'
+
+e 
+
+'setTodoState()'..
+
+
+
+
+
+
+
+
+^^^^^^^ ISSO É SUPER IMPORTANTE,
+
+
+ISSO QUER DIZER QUE 
+
+TODO 
+
+E QUALQUER 
+
+'MERGING' DE STATES,
+ 
+
+ quando estamos usando REACTHOOKS,
+
+ DEVE 
+
+ SER 
+
+ __FEITO___ MANUALMENTE POR NÓS, O QUE É UM SACO...
+
+
+-------------------------------
+
+
+
+
+--> É POR ISSO QUE 
+'SPLIT IT UP'
+
+É BEM MELHOR,
+
+
+PQ 
+
+
+
+QUANDO ESCREVEMOS ASSIM,
+
+com 
+
+o 
+
+'state mergeado' falso,
+
+
+
+
+NÓS ACABAMOS ESCREVENDO _BEM MAIS CÓDIGO__, 
+
+E 
+
+
+CÓDIGO MAIS DIFÍCL DE SER LIDO,
+
+E MAIS 
+
+'ERROR PRONE'...
+
+
+
+
+
+
+EX:
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo2 = (props) => {
+  // const inputState = useState(''); //versão FEIA de escrever o HOOK de 'useState'... (não usa array destructuring)...
+
+  // const [todoName, setTodoName] = useState(''); ////versão __BONITA__ de escrever o hook de 'useState()' (usa ARRAY DESTRUCTURING...)
+
+  // const [todoList, setTodoList] = useState([]); ///PODEMOS CHAMAR 'useState()' QUANTAS VEZES QUISERMOS...
+
+
+
+
+
+  const [todoState, setTodoState] = useState(
+    {
+      userInput: '',
+      todoList: []
+    }
+  )
+
+
+
+  const inputChangedHandler = (event) => {
+    // inputState[1](event.target.value);
+    // setTodoName(event.target.value);
+
+
+
+    setTodoState(
+      {
+        userInput: event.target.value,
+        todoList: todoState.todoList
+      }
+    )
+  };
+
+  const todoListAddHandler = () => {
+    // setTodoList(todoName);
+    // console.log(todoList.concat(todoName));
+    // setTodoList(todoList.concat(todoName));
+    // console.log(new Date().getTime());
+
+
+    setTodoState(
+      {
+        userInput: todoState.userInput,
+        list: todoState.todoList.concat(todoState.userInput);
+      }
+    )
+
+
+
+  };
+
+  ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        // value={inputState[0]}
+        value={todoState.userInput}
+        //   onChange={inputState[1]}
+        onChange={inputChangedHandler}
+      />
+      <button type="button" onClick={todoListAddHandler}>
+        Add
+      </button>
+      {/* <ul>{inputState[0]}</ul> */}
+      {/* <ul>{todoName}</ul> */}
+      {/* <ul>{todoList}</ul> */}
+
+      <ul>
+        {todoState.todoList.map((todoItem, index) => {
+          return (
+            <li
+            key={new Date().getTime() * Math.random()}
+              style={{
+                listStyle: 'none',
+              }}
+            >
+              {todoItem}
+            </li>
+          );
+        })}
+      </ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo2;
+
+
+
+--------------------------------
+
+
+
+
+CLARO QUE ESSE CÓDIGO __ AINDA FUNCIONA__,
+
+
+ele só é ESCRITO DE MANEIRA PIOR...
+
+
+
+NÃO É O APPROACH 'OPTIMAL'..
+
+
+
+
+
+--------------------------------
+

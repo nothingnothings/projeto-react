@@ -1,0 +1,991 @@
+
+
+
+
+
+
+
+
+
+
+
+----> CERTO, 
+
+
+NA ÚLTIMA LIÇÃO O PROFESSOR NOS MOSTROU MUITA COISA:
+
+
+
+ELE NOS MOSTROU SOBRE COMO FAZER 
+
+O 
+
+
+'FETCH' DE DADOS, COMO FAZER O __GET___ DE DADOS 
+
+
+POR MEIO DE UM FETCH...(por meio do http request enviado/formulado pelo AXIOS)....
+
+
+
+-------------------------------
+
+
+
+
+AGORA O PROFESSOR QUER NOS MOSTRAR 
+
+
+
+O APPROACH 
+
+QUE 
+
+DEVEMOS 
+
+
+
+
+SEGUIR 
+
+__PARA FAZER O __pOST___ 
+
+
+DE DADOS EM UM SERVIDOR (enviar dados e armazenar em um servidor)...
+
+
+
+
+  
+
+  -------------------------------------
+
+
+
+
+
+  É PARA ISSO QUE SERVE 
+
+
+
+A ÁREA de 'New Post'...,
+
+
+
+ALI EMBAIXO NO NOSSO CÓDIGO,
+
+
+AQUELA 
+
+ÁREA 
+
+
+
+com 
+
+
+
+'Add a Post' 
+
+
+'Title'
+
+
+'Content'
+
+
+
+
+Author 
+
+
+(BOTÃO) Add Post...
+
+-----------------------------------
+
+
+
+
+
+
+
+'NEWPOST' --> é um CLASS-BASED COMPONENT 
+
+
+QUE 
+
+FAZ 
+
+
+
+__MANAGE___  DO SEU PRÓPRIO STATE___... -------> 
+
+
+
+
+POR FAZER MANAGE DE __SEU PRÓPRIO STATE__, 
+
+ele não 
+
+é considerado 
+
+propriamente um '''CONTAINER''' (pq, segundo o professor, containers são 
+
+APENAS AQUELES COMPONENTS COM __STATE__ QUE ___tAMBÉM___ FAZEM O 'PASS' DE SEU STATE PARA OUTROS COMPONENTS... (por meio de props)...) ---> um exemplo de 'container' seria 
+
+'Blog.js',
+
+por exemplo....
+
+
+
+--------------------------------------
+
+
+
+
+----> O QUE O PROFESSOR QUER FAZER, AQUI NESSE COMPONENT,
+ 
+
+ É HOOKAR __ o BOTÃO 
+
+
+ 'aDD Post' 
+
+ A UM MÉTODO 
+
+
+
+ __QUE ENVIE UM POST __ REQUEST ___ AO NOSSO SERVIDOR (jsonplaceholdertypicode)...
+
+
+
+
+
+ ---> faremos isso com a ajuda do AXIOS, é claro.
+
+
+
+
+
+
+
+
+
+
+
+
+ EU IMAGINO ALGO ASSIM:
+
+
+   newPostSendHandler = () => {
+    	    axios.post('https://jsonplaceholder.typicode.com/posts')
+          .then(
+            
+          )
+  }
+
+
+
+
+
+
+
+DENTRO DO 
+
+
+'NewPost.js',
+
+
+MAS É EVIDENTE QUE 
+
+ESSE CÓDIGO AÍ DEVE ESTAR ERRADO... 
+
+
+
+
+
+
+
+---> vamos querer enviar um REQUEST DE TIPO __POST___ AO NOSSO 
+
+'DUMMY BACKEND' (e esse post NÃO SERÁ SALVO, mas vamos FINGIR 
+QUE 
+
+FOI ENVIADO E SALVO NO SERVIDOR...)
+
+
+
+
+
+
+
+
+---> para isso, 
+
+professor 
+
+
+admite que 
+
+TERÁ 
+
+DE CRIAR 
+
+UM MÉTODO 
+
+
+EM 
+
+
+'NewPost.js'... 
+
+
+
+---> será o 
+
+método 
+
+
+
+'postDataHandler'  (quase a mesma coisa que nós escrevemos 
+
+ali em cima...)
+
+
+-------------------------------
+
+
+
+
+DENTRO DESSE MÉTODO, É CLARO, VAMOS QUERER 
+
+USAR 
+
+O __aXIOS__...
+
+
+
+
+EX:
+
+
+
+
+   postDataHandler = () => {
+    	    axios.post('https://jsonplaceholder.typicode.com/posts')
+          .then(
+              
+          )
+  }
+
+
+
+
+
+<button onClick={this.postDataHandler}>Add Post</button>
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+**** NÃO PODEMOS NOS ESQUECER DE IMPORTAR 'axios' 
+
+
+NESSE NOSSO ARQUIVO...
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+import axios from 'axios';
+
+
+
+
+   postDataHandler = () => {
+    	    axios.post('https://jsonplaceholder.typicode.com/posts')
+          .then(
+              
+          )
+  }
+
+
+
+
+
+<button onClick={this.postDataHandler}>Add Post</button>
+
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+CERTO,
+
+
+escrevemos o objeto axios ali... -----> MAS COM O MÉTODO 
+
+'.post'... ---------> 
+
+O
+ POST __ EXIGE __ O NOSSO URL 
+
+
+
+ DO GET REQUEST, padrão, jsonplaceholdertypicode...
+
+
+ ----------------------------------------
+
+
+
+
+
+
+---> CERTO,
+ 
+ 
+
+ MAS UM ____POST___ REQUEST_ _ SEMPRE VAI EXIGIR MAIS DO QUE APENAS UMA URL, É CLARO...
+
+
+
+
+
+
+
+
+ UM POST REQUEST, FEITO PELO AXIOS, VAI EXIGIR:
+
+
+
+
+
+ 1) A URL 
+
+
+
+ 2) UM SEGUNDO ARGUMENTO, QUE É A 'DATA' QUE QUEREMOS 
+
+ __ENVIAR___... (pq um POST REQUEST SEM DATA NÃO FAZ SENTIDO...)
+
+
+
+3) É OPCIONAL. É O 'OBJETO DE CONFIG' DO POST REQUEST (axios.post() ) que vocÊ vai fazer...
+
+
+
+
+
+
+
+
+ ----> CERTO... E A 'DATA' QUE VAMOS QUERER ENVIAR SERÁ ___UM OBJETO__ JAVASCRPINT 
+
+
+ CONTENDO/QUE CONTERÁ 
+
+
+ 'title'
+
+
+
+ 'body/content' 
+
+
+ e 
+
+
+
+ 'author'....
+
+
+
+
+ ------------------------------------
+
+
+
+
+
+
+ CÓDIGO INTEIRO FICOU UMA GOROROBA ASSIM:
+
+
+
+
+
+
+
+import axios from 'axios';
+import React, { Component } from 'react';
+
+import NewPostStyle from './NewPost.module.css';
+
+class NewPost extends Component {
+
+
+
+
+
+  // newPostSendHandler = () => {
+  //   	    axios.post('https://jsonplaceholder.typicode.com/posts', {
+
+  //         })
+  //         .then(
+
+  //         )
+  // }
+
+
+
+
+  postDataHandler = () => {
+
+
+         
+            axios.post('https://jsonplaceholder.typicode.com/posts', {  
+              "title": this.state.title,
+              "content": this.state.content, 
+              "author": this.state.author
+          })
+          .then( 
+              console.log(
+                {
+                  "title": this.state.title,
+                  "content": this.state.content, 
+                  "author": this.state.author
+                }
+              ),
+              alert('POST Sent!')
+          
+              
+          )
+        
+
+
+    	
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  state = {
+    title: '',
+    content: '',
+    author: 'Max',
+  };
+
+  render() {
+    return (
+      <div className={NewPostStyle.NewPost}>
+        <h1>Add a Post</h1>
+        <label>Title</label>
+        <input
+          type="text"
+          value={this.state.title}
+          onChange={(event) => this.setState({ title: event.target.value })}
+        />
+        <label>Content</label>
+        <textarea
+          rows="4"
+          value={this.state.content}
+          onChange={(event) => this.setState({ content: event.target.value })}
+        />
+        <label>Author</label>
+        <select
+          value={this.state.author}
+          onChange={(event) => this.setState({ author: event.target.value })}
+        >
+          <option value="Max">Max</option>
+          <option value="Manu">Manu</option>
+        </select>
+        <button onClick={this.postDataHandler}>Add Post</button>
+      </div>
+    );
+  }
+}
+
+
+
+
+export default NewPost;
+
+
+
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+EU ___aCHO___ QUE O __ 
+
+
+
+POST ESTÁ SENDO ENVIADO, MAS NÃO TENHO CERTEZA. -----------> PROFESSOR 
+
+
+DEIXOU O CÓDIGO UM POUCO MAIS BONITINHO, MAS É A MESMA COISA... ---> ele fez 
+
+
+OUTSOURCE do código 
+
+do OBJETO 'post' 
+
+
+EM UMA 
+
+
+CONST DE NOME 
+
+'post'...
+
+
+-------------------------------------
+
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import axios from 'axios';
+import React, { Component } from 'react';
+
+import NewPostStyle from './NewPost.module.css';
+
+class NewPost extends Component {
+
+
+  postDataHandler = () => {
+
+
+                    const post = {
+                        "title": this.state.title,
+              "content": this.state.content, 
+              "author": this.state.author
+                    }
+
+         
+            axios.post('https://jsonplaceholder.typicode.com/posts', 
+            post)  ///////EIS A 'TROCA' QUE O PROFESSOR FEZ
+          .then( 
+              console.log(post),
+              alert('POST Sent!')
+          
+              
+          )
+        
+
+
+    	
+  }
+
+
+  state = {
+    title: '',
+    content: '',
+    author: 'Max',
+  };
+
+  render() {
+    return (
+      <div className={NewPostStyle.NewPost}>
+        <h1>Add a Post</h1>
+        <label>Title</label>
+        <input
+          type="text"
+          value={this.state.title}
+          onChange={(event) => this.setState({ title: event.target.value })}
+        />
+        <label>Content</label>
+        <textarea
+          rows="4"
+          value={this.state.content}
+          onChange={(event) => this.setState({ content: event.target.value })}
+        />
+        <label>Author</label>
+        <select
+          value={this.state.author}
+          onChange={(event) => this.setState({ author: event.target.value })}
+        >
+          <option value="Max">Max</option>
+          <option value="Manu">Manu</option>
+        </select>
+        <button onClick={this.postDataHandler}>Add Post</button>
+      </div>
+    );
+  }
+}
+
+
+
+
+export default NewPost;
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+CERTO...
+
+
+
+DEPOIS DISSO, 
+
+
+
+
+
+
+CREIO QUE NOSSO POST FOI ENVIADO....
+
+
+
+
+
+
+
+
+
+
+
+----> CONTUDO, PROFESSOR APONTA QUE __UM TERCEIRO ARGUMENTO __ PODE SER ADICIONADO 
+
+
+AO MÉTODO 'post' 
+
+
+
+DE __AXIOS___...  ----> ESSE TERCEIRO ARGUMENTO É USADO PARA __cONFIGURAR ___ O POST REQUEST....
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+IMPORTANTE PARA NÓS É ___ENTENDER ___ QUE.. 
+
+
+
+
+
+ISSO AQUI:
+
+
+
+post = {
+    title: this.state.title,
+    body: this.state.content,
+    author: this.state.author
+}
+
+
+
+
+
+
+___É UM OBJETO___ JAVASCRIPT___... ( o que teoricamente é INCOMPATÍVEL COM HTTP REQUESTS 
+COMUNS, NATIVOS) --------> ENTRETANTO, 
+
+O AXIOS 
+
+É MÁGICO, 
+
+E VAI FAZER 
+
+
+O ___STRINGIFY___ DESSE 
+
+OBJETO/OBJETOS JAVASCRIPT 
+
+QUE ENVIAMOS POR MEIO DE 
+
+'POST'... ---> 
+
+
+ele vai fazer 
+
+
+'Object.stringify(post)' 
+
+
+EM CIMA 
+
+DO NOSSO OBJETO, O QUE O CONVERTERÁ 
+
+
+___EM CÓDIGO JSON__, QUE É
+
+O FORMATO SUPORTADO POR SERVIDORES COMUNS...
+
+
+
+-----------------------------------------
+
+
+
+
+
+---> E O AXIOS, VALE A PENA RELEMBRAR, FAZ A MESMA COISA QUANDO 
+
+FAZEMOS '.GET' REQUESTS,
+
+
+ELE CONVERTE A JSON DATA ARMAZENADA NO SERVER ___ EM __ OBJETOS 
+
+JAVASCRIPT PARA NÓS... (para que 
+
+esse código possa ser lido por nossos browsers...)
+
+
+
+
+
+
+
+
+---> É EVIDENTE 
+
+QUE 
+
+
+o 'axios.post' 
+
+
+
+FUNCIONA ___aSSINCRONAMENTE__... -------> E É POR ISSO 
+
+
+QUE PRECISAMOS 
+
+
+ADICIONAR 
+
+UM 
+
+'.then()' BLOCK 
+
+
+DEPOIS DO __
+'AXIOS.POST'... -----------> 
+
+
+
+
+O PROFESSOR, EM VEZ DE FAZER COMO NÓS, QUE 
+
+FIZEMOS UM SIMPLES CONSOLE.LOG 
+
+
+de 
+
+'REQUEST SENT!',
+
+
+
+VAI 
+
+
+
+__ESCREVER 
+
+
+'.then(
+    response => {
+        console.log(response);  ---------> ISSO VAI NOS MOSTRAR NO CONSOLE SE __ O SERVIDOR ___ REALMENTE __ ENVIOU UMA RESPOSTA, SE O SERVIDOR EXISTE, ETC....
+    }
+)
+'
+
+
+
+
+--------------------
+
+
+COLOCAMOS ISSO NO NOSSO CÓDIGO,
+
+
+SALVAMOS E RECARREGAMSO... ---> RECEBEMOS ISSO AQUI NO CONSOLE:
+
+
+{data: {…}, status: 201, statusText: "", headers: {…}, config: {…}, …}
+config: {url: "https://jsonplaceholder.typicode.com/posts", method: "post", data: "{\"title\":\"aaaa\",\"content\":\"aaaaa\",\"author\":\"Manu\"}", headers: {…}, transformRequest: Array(1), …}
+data: {title: "aaaa", content: "aaaaa", author: "Manu", id: 101}
+headers: {cache-control: "no-cache", content-length: "76", content-type: "application/json; charset=utf-8", expires: "-1", location: "http://jsonplaceholder.typicode.com/posts/101", …}
+request: XMLHttpRequest {readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, onreadystatechange: ƒ, …}
+status: 201
+statusText: ""
+__proto__: Object
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+OU SEJA, 
+
+
+O NEGÓCIO FUNCIONOU,
+
+
+RECEBEMOS UMA 
+
+'RESPONSE' 
+
+
+VÁLIDA DAQUELE SERVIDOR...
+
+
+
+
+status: 201 ---> isso informa QUE NOSSO 
+
+SEND DE UM REQUEST 'POST'
+ 
+
+ FOI __BEM SUCEDIDO__....
+
+
+------------------------------------------------
+
+
+
+
+
+
+ENTRETANTO, PROFESSOR 
+
+EXPLICA QUE 
+
+ESSE SERVIDOR DUMMY OBVIAMENTE NÃO VAI ARMAZENAR 
+
+NOSSOS DADOS DE VERDADE; 
+
+
+NÃO, 
+
+
+A ÚNICA COISA QUE 
+
+ELE FAZ 
+
+É __RETORNAR __ A DATA EM 'RESPONSE' __ para 
+
+nos informar que 
+
+
+NÓS CONSEGUIMOS ENVIAR NOSSO POST REQUEST 
+
+ADEQUADAMENTE....
+
+
+
+
+
+
+--> EM UM SERVIDOR DE VERDADE, NÓS SEMPRE VAMOS TER LÓGICAS ESPECÍFICAS 
+
+PARA 
+
+ARMAZENAR HTTP REQUESTS DE TIPO 
+
+
+'Post'
+ 
+
+
+ EM DATABASES... ------> E É ASSIM QUE PODEMOS FAZER 
+
+ 'POST' 
+
+
+ DE DADOS... ----> bem mais fácil do 
+
+ que 
+
+ enviar 
+
+ GET REQUESTS, 
+
+
+ pq 
+
+ só precisamos 
+
+
+ escrever 
+
+ 'axios.post(url do site a que queremos enviar o http request de tipo post, dadosQueQueremosEnviar)...
+
+
+
+ ----------------------------
+
+
+ CERTO,
+
+ AGORA PODEMOS TAMBÉM 
+
+ __ENVIAR DADOS__ A SERVERS....

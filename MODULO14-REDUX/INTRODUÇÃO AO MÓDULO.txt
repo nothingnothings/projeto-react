@@ -1,0 +1,184 @@
+
+
+
+
+
+
+
+
+
+
+----> ESTE MÓDULO É MUITO IMPORTANTE. É UMA PARTE 'CORE' DO CURSO...
+
+
+
+
+
+
+
+
+
+
+----------------> É SOBRE __REDUX___ 
+
+
+
+
+
+
+
+
+--> Redux é geralmente mencionado junto do 'react'.... ------> mas, na verdade,
+
+O 
+
+
+_REDUX___ É UMA 
+
+
+
+THIRD PARTY LIBRARY __ INDEPENDENTE, separada do react... (é standalone)...
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+
+
+-----------------> ENTRETANTO, ELA DE FATO É MUITO USADA COM O REACT, 
+
+É USADA COM O REACT PARA 
+
+
+__fAZER STATE MANAGEMENT,
+
+
+
+O __MANAGE __ 
+
+
+DO 
+
+'APPLICATION STATE' ser mais fácil.... ------> 
+
+
+ISSO 
+
+
+PQ 
+
+
+EM PROJETOS REACT MAIS COMPLEXOS, pode ficar bem difícil o 'keep up' com as mudanças no nosso state... 
+
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+--> NÓS JÁ VIMOS COMO PODE SER DIFÍCIL O STATE MANAGEMENT EM ALGUNS CASOS, NO NOSSO PROJETO... ---> 
+
+já 
+vimos 
+
+alguns casos 
+
+em que 
+
+tivemos 
+
+
+
+que 
+
+passar 
+
+
+
+DATA (em geral)
+
+
+
+POR AÍ __POR MEIO __ DE QUERY PARAMS.......... ----> e isso 
+
+
+deixou 
+
+
+nosso 
+
+
+
+STATE MANAGEMENT 
+
+
+____DESNECESSARIAMENTE __ DIFÍCIL_... ----------> PORTANTO, 
+
+NESTE MÓDULO,
+
+ 
+ VAMOS APRENDER 
+
+ SOBRE 
+
+ REDUX,
+
+ UMA solução  
+
+
+
+ A ESSE PROBLEMA, QUE PODE 
+
+ NOS AJUDAR A DEIXAR 
+
+  
+  O STATE MAIS 
+
+  'manageable' (para nós)....
+
+
+
+
+  --------------------------------------
+
+
+
+
+
+  MAS ANTES 
+
+  DISSO,
+
+
+  DEVEMOS 
+
+  ENTENDER 
+
+
+  __eXATAMENTE __ O QUE É 
+
+  O 
+
+  'STATE', para então 
+
+
+  saber 
+
+
+
+  O QUE EXATAMENTE É O REDUX,
+
+  e como ele funciona....

@@ -1,0 +1,689 @@
+
+
+
+
+
+JÁ SOMOS CAPAZES DE FAZER MANAGE DE NOSSA 'LIST' 
+
+lá 
+em 
+
+'Todo.js',
+
+
+COMO VISTO NESTE CÓDIGO AQUI:
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+  // const inputState = useState(''); //versão FEIA de escrever o HOOK de 'useState'... (não usa array destructuring)...
+
+  const [todoName, setTodoName] = useState(''); ////versão __BONITA__ de escrever o hook de 'useState()' (usa ARRAY DESTRUCTURING...)
+
+  const [todoList, setTodoList] = useState([]); ///PODEMOS CHAMAR 'useState()' QUANTAS VEZES QUISERMOS...
+
+  const inputChangedHandler = (event) => {
+    // inputState[1](event.target.value);
+    setTodoName(event.target.value);
+  };
+
+  const todoListAddHandler = () => {
+    // setTodoList(todoName);
+    console.log(todoList.concat(todoName));
+    setTodoList(todoList.concat(todoName));
+    console.log(new Date().getTime());
+  };
+
+  ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        // value={inputState[0]}
+        value={todoName}
+        //   onChange={inputState[1]}
+        onChange={inputChangedHandler}
+      />
+      <button type="button" onClick={todoListAddHandler}>
+        Add
+      </button>
+      {/* <ul>{inputState[0]}</ul> */}
+      {/* <ul>{todoName}</ul> */}
+      {/* <ul>{todoList}</ul> */}
+
+      <ul>
+        {todoList.map((todoItem, index) => {
+          return (
+            <li
+            key={new Date().getTime() * Math.random()}
+              style={{
+                listStyle: 'none',
+              }}
+            >
+              {todoItem}
+            </li>
+          );
+        })}
+      </ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+
+É EVIDENTE QUE PODEMOS FAZER MAIS COISAS AQUI... --> poderíamos DELETAR ITEMS COM UM CLICK,
+
+ ETC ETC... --> e faremos 
+
+ isso, 
+
+ realmente,
+
+
+ MAS 
+ POR ENQUANTO DEVEMOS 
+
+ IMAGINAR...  ---> IMAGINAR QUE 
+
+ QUEREMOS __ 
+
+ SALVAR __ NOSSA 
+
+
+
+
+
+ ____LIST___ EM ALGUM LUGAR DA INTERNET... ---> queremos 
+
+ salvar 
+
+
+ essa nossa list 
+
+ EM UM SERVIDOR... --->  
+
+
+
+
+
+
+
+ PRECISAMOS DE UM BACKEND... --> como visto no nosso MAIN COURSE PROJECT... -->
+
+
+
+
+
+ PARA ISSO,
+
+
+
+ O PROFESSOR 
+ VAI USAR 
+
+ O 
+
+ FIREBASE DE NOVO...
+
+
+
+
+
+
+
+
+
+ --> O PROFESSOR SIMPLESMENTE QUER NOS MOSTRAR COMO PODEMOS 
+
+ FAZER 
+
+ HTTP REQUESTS COM HOOKS... ---> 
+
+
+
+ PARA ISSO,
+
+
+ ELE CRIOU/CRIA UM 
+ PROJETO BEM SIMPLES DO FIREBASE,
+
+
+
+
+
+ ELE USA 
+
+ O 
+
+ 'REALTIME DATABASE',
+
+ e não o 
+
+ 'cloud firestore'...
+
+
+
+ ------------------------------
+
+
+
+
+
+ --> ELE ENTÃO DEFINE ALGUMAS REGRAS,
+
+
+
+RULES
+ 
+
+ QUE 
+
+ DIZEM QUE 
+
+ NENHUMA AUTHENTICATION É NECESSÁRIA (read and write definidos como TRUE)...
+
+
+
+
+
+
+
+
+
+
+
+
+ --> E AGORA O PROFESSOR QUER 
+
+ SALVAR OS 
+
+ 'Todo' 
+
+
+
+ NO SERVIDOR __ SEMPRE QUE __ UM 
+
+ NOVO 
+
+ 'todo' 
+
+ for adicionado... ------->
+
+
+
+
+
+
+
+
+
+ ISSO QUER DIZER, ESSENCIALMENTE,
+
+ QUE VAMOS TER QUEE 
+
+ ESCREVER UM CÓDIGO 
+
+
+ DE 
+
+ 'REACH OUT À WEB'
+
+
+
+ LÁ EM 
+
+ 'todoAddHandler',
+
+
+ logo depois 
+
+ 
+
+ do código de 
+
+
+ 'setTodoList()'....
+
+
+
+ ex:
+
+
+
+
+
+
+   const todoListAddHandler = () => {
+
+    setTodoList(todoList.concat(todoName));
+            /////TIPO AQUI...
+
+  };
+
+
+
+
+
+--------------------------
+
+
+
+
+
+
+
+
+PODEMOS FAZER ISSO, SIM,
+
+PODEMOS 
+
+FAZER COM __O __ AXIOS__, 
+
+
+
+
+POR ISSO INSTALAMOS O AXIOS NO NOSSO PROJETO, PARA MANDAR 
+
+HTTP REQUESTS 
+
+
+DE DENTRO 
+
+
+DO NOSSO CÓDIGO JAVASCRIPT...
+
+
+
+
+
+ex:
+
+
+
+npm install --save axios 
+
+
+
+
+
+
+--------------------------
+
+
+PROFESSOR ADMITE QUE PODERÍAMOS USAR A 
+
+'FETCH API',
+mas que 
+aqui 
+ele vai querer usar o AXIOS...
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+--> DEPOIS IMPORTAMOS 
+
+O AXIOS 
+
+
+
+no nosso arquivo 
+
+'todo'...
+
+
+
+ex:
+
+
+
+import axios from 'axios';
+
+
+-------------------------
+
+
+AGORA, VOU LÁ E ESCREVO ESTE CÓDIGO:
+
+
+
+
+  const todoListAddHandler = () => {
+    setTodoList(todoList.concat(todoName));
+
+
+    axios.post()
+  };
+
+
+
+
+  --------------------------
+
+
+
+  O PRIMEIRO ARGUMENTO É A URL A QUAL 
+
+
+  VOU QUERER 
+
+  ENVIAR 
+
+  MEU
+   
+
+   'todoItem'...
+
+
+
+
+
+
+
+   --> 
+
+
+   SIMPLESMENTE PEGAMOS NOSSA URL 
+
+   do 
+
+   firebase,
+
+   e aí 
+   colocamos 
+
+   lá,
+
+
+   com 
+
+
+   '.json' adicionado ao final do NODE em que queremos 
+
+   que 
+
+   nossa 
+
+   DATA 
+
+   seja adicionada...
+
+
+
+
+
+FICOU TIPO ASSIM:
+
+
+
+
+
+  const todoListAddHandler = () => {
+    // setTodoList(todoName);
+    // console.log(todoList.concat(todoName));
+    setTodoList(todoList.concat(todoName));
+    // console.log(new Date().getTime());
+
+    axios.post("https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json", )
+  };
+
+
+
+
+  --------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+  CERTO... AGORA PRECISAMOS DA 'DATA' em si para o segundo parâmetro... 
+
+
+
+
+
+
+
+
+--> VOU QUERER MANDAR 'MY LATEST TODOLIST ITEM'... --> 
+
+
+
+ou seja,
+
+vamos 
+
+
+
+mandar 
+
+
+'todoName'..., que é o que DESEJAMOS...
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+EX:
+
+
+
+
+
+  const todoListAddHandler = () => {
+    // setTodoList(todoName);
+    // console.log(todoList.concat(todoName));
+    setTodoList(todoList.concat(todoName));
+    // console.log(new Date().getTime());
+
+    axios.post("https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json", todoName )
+  };
+
+
+
+--------------------------
+
+
+
+
+
+MAS É CLARO QUE NÃO ACABAMOS POR AÍ... --> 
+
+
+
+
+
+COMO ESSE CÓDIGO DO AXIOS NOS 
+
+
+RETORNA UMA __PROMISE__, 
+
+
+precisamos 
+
+adicionar um .then() block
+ 
+ PARA 
+
+ FAZER RESOLVE DISSO...
+
+
+
+ professor 
+
+ escreve 
+
+
+
+
+ .then(res => {
+     console.log(res);
+ })
+
+ .catch(err => {
+     console.log(err);
+ })
+
+
+
+
+
+
+
+
+ ----------------
+
+
+ O NEGÓCIO ESTAVA DANDO ERRO '405' por bastante tempo,
+
+ depois 
+
+
+
+ que 
+
+ escrevi 
+
+ '{name}' como segundo parâmetro 
+
+ de axios,
+
+ O ERRO 
+
+ PAROU DE ACONTECER,
+
+ E 
+
+
+
+ meu 
+
+ 'latest todo' 
+
+
+ DA LIST 
+
+ __FICOU ARMAZENADO/AGORA FICA ARMAZENADO NO SERVIDOR__....
+
+
+ --------------
+
+
+
+
+
+
+
+ CERTO.... 
+
+ com isso,
+
+
+ conseguimos 
+
+ enviar 
+
+ dados 
+ via http 
+
+
+ COM USO 
+
+ DE 
+
+ REACT HOOKS...
+
+
+
+
+
+ --------------------------
+
+
+
+
+
+
+
+
+ OK, DEVEMOS VER A PRÓXIMA AULA...
+
+
+
+
+
+
+
+ --> NÃO HÁ NADA DE ESPECIAL/DIFERENTE 
+
+
+
+ quando 
+
+
+
+ falamos de AXIOS.POSTS e reacthooks... -------> 
+
+
+
+ MAS 
+
+
+
+ __a COISA MUDA QUANDO FALAMOS 
+
+ DE 
+
+ 'AXIOS.GET'... 
+
+
+
+
+ GET REQUESTS SÃO UM POUCO DIFERENTES...
+ 

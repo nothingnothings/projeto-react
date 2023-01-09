@@ -1,0 +1,952 @@
+
+
+HORA DE VER __ OUTRO HOOK___....
+
+
+
+
+
+
+
+
+
+
+Ainda não consegui descobrir a razão para minha UI __UPDATAR__ quando um elemento for removido... (realmente não sei qual é o problema.)
+
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+--------------> OK... VOLTANDO à QUESTÃO DOS HOOKS____ --> 
+
+quando 
+
+trabalhamos 
+
+COM CLASS-BASED 
+
+COMPONENTS,
+
+vocÊ 
+
+
+deve 
+
+se 
+
+lembrar
+ 
+ que 
+
+ havia 
+ um 
+ negócio 
+
+
+ de 
+
+ 'references'... ----> ERAM USADAS __ PARA INTERAGIR __ COM QUALQUER 
+
+ ELEMENTO 
+
+
+ DE NOSSA 
+
+ PÁGINA... ------> 
+
+
+ BEM,
+
+
+
+ EM FUNCTIONAL COMPONENTS,
+
+ ISSO 
+
+
+ _NÃO ERA POSSÍVEL__... --> NÃO 
+
+ ERA POSSÍVEL__ 
+ PQ 
+
+
+
+ JUSTAMENTE 
+
+ FUNCTIONAL
+
+
+ COMPONENTS __ NÃO __ POSSUEM 
+
+
+ 'PROPERTIES', 
+
+
+
+ E AS PROPRERTIES
+  
+  SÃO 
+
+
+  USADAS 
+
+  __PARA ARMAZENAR AS REFERENCES EM SI... (cheque a seção sobre 'references' lá no COMPONENT DEEP DIVE do curso...)
+
+
+
+
+
+
+
+
+
+
+--> ENTRETANTO, COM 
+OS 
+
+HOOKS,
+
+FINALMENTE 
+
+PODEMOS 
+
+COMEÇAR 
+
+a USAR 
+
+
+REFERENCES 
+
+COM 
+
+FUNCTIONAL COMPONENTS...
+
+
+
+
+-----------------------
+
+
+
+CERTO... MAS EM QUE LUGAR ELE VAI QUERER USAR ISSO DAÍ?
+
+
+
+
+
+
+
+
+
+
+
+--> ele nos diz que vai querer usar 
+
+NO 
+
+__INPUT__ dentro 
+
+
+de 
+'Todo.js'....
+
+
+
+ex:
+
+
+
+
+
+ return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        onChange={inputChangedHandler}
+        value={todoName}
+      />
+      <button type="button" onClick={todoAddHandler}>
+        Add
+      </button>
+      <ul>
+        {todoList.map(todo => (
+          <li key={todo.id} onClick={todoRemoveHandler.bind(this, todo.id)} style={{listStyle: 'none'}}>
+            {todo.name}
+          </li>
+        ))}
+      </ul>
+    </React.Fragment>
+  );
+};
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+CERTO... ----->  PROFESSOR DIZ QUE 
+
+NÃO VAI QUERER 
+
+SETTAR 
+
+
+O VALOR 
+
+
+DE 
+
+'todoName'
+
+
+POR MEEIO 
+
+
+
+
+DE 
+
+'onChange={inputChangedHandler} 
+e 
+value={todoName}',
+
+
+E SIM 
+
+
+
+
+
+
+___ QUE QUER USAR __ UMA REFERêNCIA 
+
+PARA 
+
+SETTAR 
+ESSE VALOR 
+
+NO NOSSO STATE... -->
+
+
+
+pARA ISSO,
+
+professor 
+NOS EXPLICA QUE 
+
+
+
+
+__dEVEMOS IMPORTAR MAIS UMA FUNÇÃO 
+
+nesse 
+
+'Todo.js'... -->
+
+
+
+
+
+
+O HOOK DE 'useRef'...  --------> 
+
+
+
+
+
+ISSO FEITO,
+
+
+VAMOS CRIAR UMA REFERENCE 
+
+POR MEIO 
+
+DA SIMPLES 
+
+ESCRITA 
+
+
+de uma CONSTATNE...
+
+ 
+
+
+ ex:
+
+
+
+
+ const todoInputRef = useRef();
+
+
+
+
+ ----------------------------------
+
+
+
+
+
+
+
+ --> CERTO, VAMOS CRIAR UMA 'REFERENCE' 
+
+ PARA 
+
+
+ O INPUTELEMENT 
+
+ de 
+
+ 'Todo'... ---------> 
+
+
+
+
+
+ PARA CRIAR ESSA REFERÊNCIA,
+
+ USAMOS 
+
+ 'useRef()'... --> 
+
+
+
+
+ OBS:::: O PARÂMETRO DE 'useRef()' (QUE É OPCIONAL),
+
+
+ É O __ VALOR INICIAL __ QUE ESSA REFERENCE DEVERÁ TER...
+
+
+
+
+
+
+
+
+
+ ---> O PROFESSOR NÃO ESCREVE COISA ALGUMA, pq ele vai começar com NENHUM VALOR INICIAL DEFINIDO 
+
+ nessa referência...
+
+
+
+
+
+
+ ficou tipo assim:
+
+
+
+ const todoInputRef = useRef();
+
+
+
+ ------------------------------
+
+
+
+
+ ISSO FEITO,
+
+ VAMOS DESCER 
+
+ ATÉ 
+
+ O RETURN 
+
+
+ DO 
+
+
+ CÓDIGO JSX,
+
+
+ E 
+ LÁ, 
+
+ EM VEZ 
+
+ DE USAR 
+
+
+
+ AQUELAS 2 LINHAS ANTIGAS,
+
+
+
+
+ O PROFESSOR 
+
+
+ __ VAI AGORA __ PASSAR UMA 
+
+ PROPRIEDADE 
+
+
+ de 
+
+ 'ref',
+
+ QUE TERÁ UM VALOR DE 'todoInputRef' (Que é aquela constante/objeto 'reference' QUE CRIAMOS HÁ POUCO).... 
+
+
+
+
+
+
+
+ --> FICARÁ TIPO ASSIM:
+
+
+
+ const todoInputRef = useRef();
+
+
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+
+            ref={todoInputRef}
+      />
+
+
+------------------------------------------------
+
+
+
+
+
+--> SE FIZERMOS ISSO, 
+
+UMA __CONEXÃO__ SERÁ CRIADA _ ENTRE 
+
+ESSE 
+
+ELEMENTO INPUT (e esse approach funciona com QUALQUER TIPO DE ELEMENTO, não só input tags....)
+
+
+
+E NOSSA 
+REFERENCE....
+
+
+
+
+
+
+
+
+
+
+--> isso feito, PODEMOS _USAR __ ESSA REFERÊNCIA,
+
+PODEMOS 
+
+
+
+A UTILIZAR PARA 
+
+
+
+
+____ CONSEGUIR __ O NOSSO 'ENTERED NAME', nosso 
+
+
+'todoName', em outras palavras....
+
+
+
+
+
+
+
+
+---> PARA ISSO, O PROFESSOR COMEÇA __ PELO 'COMMENT OUT'
+
+
+DAQUELE 
+
+
+CÓDIGO 
+
+DE 
+
+'STATE HANDLING', aquela linha de 
+
+
+
+'  // const [todoName, setTodoName] = useState('');'''' -----> 
+
+
+
+
+
+COM ISSO,
+
+DEIXAMOS 
+
+
+
+DE USAR 
+
+
+'useState()'
+
+PARA 
+
+FAZER 
+
+MANAGE 
+
+
+DO NOSSO STATE 
+
+nesse component aí... --------------> 
+
+
+
+
+
+
+
+
+
+
+
+O PROFESSOR SÓ ESTÁ FAZENDO ISSO (deixando de usar 'useState' )
+
+para 
+
+NOS 
+
+MOSTRAR 
+O MAIOR NÚMERO DE HOOKS POSSÍVEIS... ------> 
+
+
+
+
+CERTO... -->
+ 
+ AÍ LÁ EMBAIXO,
+
+
+ EM 
+
+ TODOS 
+
+ OS LUGARES 
+
+
+ NOS QUAIS 
+
+
+ PRECISAMOS 
+
+
+ DO 
+
+ VALOR 
+
+
+ DO 
+
+ 'todoName',
+
+
+ DAQUELE STATE/PROPRIEDADE 
+
+ NO STATE 
+
+ QUE 
+
+ ERA SETTADA/ALTERADA
+  
+  POR MEIO 
+
+
+  DO INPUT FIELD,
+   
+
+
+   NÓS 
+
+
+   __vAMOS __TROCAR/REMOVER ALGUNS CÓDIGOS ANTIGOS... -------> 
+
+
+
+
+
+
+
+
+   A primeira coisa qeu 
+
+   removemos 
+
+
+   é 
+
+
+
+   O CÓDIGO 
+   DE 
+
+   'inputChangedHandler' INTEIRO,
+
+   que possuia 
+
+
+   este código aqui:
+
+
+
+
+
+
+   const inputChangedHandler = event => {
+            
+
+            setTodoName(event.target.value);
+   }
+
+
+
+
+   --------------------------------
+
+
+
+   ISSO NÃO PRECISA MAIS SER USADO/não cabe mais no nosso código,
+
+
+   JUSTAMENTE 
+
+   PQ 
+
+
+
+   ESSE 
+
+
+   NEGÓCIO DE 
+
+   'setTodoName'
+
+   FOI REMOVIDO... -------> FOI REMOVIDO PQ __ NÓS NÃO VAMOS MAIS UPDATAR NOSSO 
+
+
+   VALOR DO STATE 
+
+   POR MEIO 
+
+   DAQUELE 
+
+
+   LISTENER 
+
+   DE 
+
+   'onChange'... --> não, em vez disso, agora 
+   USAREMOS 
+
+
+   'references'.... (E 'useRef()' ).... ----------> EM VEZ DISSO,
+
+
+
+
+   AGORA ESTAMOS USANDO O 'INTERNAL STATE MANAGEMENT DO INPUT ELEMENT',
+
+   E AÍ __ USAMOS 'xxxxxref.current.value' 
+
+
+   PARA __ EXTRAIR __ ESSE VALOR 
+
+
+   QUE 
+   A NÓS 
+
+   É PERTINENTE... (sempre que precisarmos desse valor)... --------> 
+
+
+
+
+
+   E NÓS 
+
+   DE FATO 
+
+   PRECISAREMOS 
+
+
+   DESSE VALOR 
+
+   EM VÁRIOS LUGARES DE NOSSO CÓDIGO,
+
+   como por exemplo 
+
+
+   em 
+
+
+   'todoAddHandler'... (em que ADICIONAMOS UM NOVO 'todo' À nossa list...)...
+
+
+
+
+   ex (CÓDIGO ANTIGO):
+
+
+
+
+
+
+
+  const todoAddHandler = () => {
+
+
+
+    axios
+      .post('https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json', { name: todoName }) ///CÓDIGO VELHO..
+      .then(res => {
+        setTimeout(() => {
+          const todoItem = { id: res.data.name, name: todoName }; //CÓDIGO VELHO....
+          dispatch({ type: 'ADD', payload: todoItem });
+        }, 3000);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+
+
+
+
+
+
+
+esses 'todoName' escritos ali 
+
+__SÃO __ O NOSSO 'todoName', o state, ANTIGO... ------> AGORA 
+
+DEVEMOS 
+
+
+__tROCAR __ _ESSES 
+
+
+
+
+
+POINTERS AO VALOR DO STATE __ ANTIGO __ POR ___ 
+
+
+
+
+NOSSA REFERENCIAL/VALOR __ DE NOSSA REFERENCIAL  DE 
+
+'todoInputRef'.... -->  
+
+
+
+
+
+
+PARA 
+
+EXTRAIR 
+
+O VALOR __ATUAL___ DESSA 
+
+
+
+VARIÁVEL/REFERENCIAL NO NOSSO CÓDIGO,
+
+
+DEVEMOS 
+
+
+
+ESCREVER,
+
+
+dentro 
+
+de 
+
+'todoAddHandler',
+
+
+
+
+
+
+
+
+uma CONSTANTE QUE 
+
+
+VAI SEGURAR 
+
+um valor 
+
+de 
+
+'todoInputRef.current.value'... -------> ISSO 
+
+VAI 
+
+NOS DAR EXATAMENTE ISSO,
+
+O 
+
+
+'CURRENT VALUE' 
+
+
+
+
+desse REFERENCIAL 'todoInputRef',
+
+QUE NO CASO 
+
+É O ___ ELEMENTO 'INPUT',
+
+
+CUJO VALOR 
+
+
+ATUAL __ SEMPRE __ SERÁ _ O NEGÓCIO QUE 
+
+
+O USUA´RIO INPUTTOU NELE (state interno desse component 'input', basicamente...)
+
+
+
+
+
+
+
+
+
+EX(REPRESENTAÇÃo):
+
+
+
+
+
+
+  const todoAddHandler = () => {
+
+
+      const todoName = todoInputRef.current.value; /////EIS O CÓDIGO EM QUESTÃO.
+
+
+    axios
+      .post('https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json', { name: todoName }) ///CÓDIGO VELHO..
+      .then(res => {
+        setTimeout(() => {
+          const todoItem = { id: res.data.name, name: todoName }; //CÓDIGO VELHO....
+          dispatch({ type: 'ADD', payload: todoItem });
+        }, 3000);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+
+
+
+---------------------------------
+
+
+
+
+
+'todoInputRef' --> é um OBJETO __ QUE REPRESENTA __ 
+
+A 
+ 
+ TAG 
+
+ '<input>' ... --> dentro 
+ desse objeto, TEMOS UMA PROPRIEDADE
+ 'current', 
+
+
+ E 
+
+ É ESSE 
+
+ 'CURRENT' QUE 
+
+ __SEGURA _ 'THE ACTUAL HTML ELEMENT REFERENCE'... --> E DENTRO 
+
+ DESSE 
+
+ 'current',
+
+ DEVEMOS 
+
+ ACESSAR 
+
+ 'value',
+
+
+
+ PQ 
+
+VAMOS QUERER __ O 'value' 
+
+DO INPUT FIELD (input fields em javascript sempre possuem VALUES...)
+
+
+
+
+
+
+
+
+--> ISSO VAI NOS DAR O CURRENT VALUE,
+
+essencialmente...
+
+
+
+
+
+
+
+
+
+--> SE AGORA VOLTARMOS E FIZERMOS LOGIN DE NOVO,
+
+O NEGÓCIO VAI FUNCIONAR da mesma forma, mas agora com 'useRef()' e REFERENCES, QUE AGORA 
+
+PODEM SER USADAS 
+
+DENTRO 
+DE FUNCTIONAL COMPONENTS...

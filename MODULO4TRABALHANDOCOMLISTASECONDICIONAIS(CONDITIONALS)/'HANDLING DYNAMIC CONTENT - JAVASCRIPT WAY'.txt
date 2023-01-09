@@ -1,0 +1,1151 @@
+
+
+
+
+
+
+---> NA ÚLTIMA LIÇÃO, APRENDEMOS SOBRE COMO 
+
+
+RENDERIZAR CONTEÚDO DINAMICAMENTE NO REACT... ---> para 
+
+
+escrever conteúdo dinâmico no react,
+
+
+
+Nós realmente 
+
+APENAS 
+
+NOS APROVEITAMOS DO FATO DE 
+
+
+TODO O CÓDIGO DENTRO 
+
+
+
+DO 'RETURN()" (que retorna CÓDIGO JSX) 
+
+
+
+
+SER, NA VERDADE, CÓDIGO JAVASCRIPT,
+
+E, PORTANTO, CAPAZ DE SER MANIPULADO/MANIPULAR CÓDIGO 
+
+
+DINÂMICO/DE FORMA DINÂMICA....
+
+
+(
+
+
+
+    ex:
+
+
+return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button 
+        style={style}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+        {
+
+          this.state.showPersons 
+          
+          ?
+
+          <div>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={this.switchNameHandler.bind( this, 'Max!' )}>  
+        My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+        </div>
+
+        :
+        
+            null
+        }
+
+
+)
+
+
+
+
+
+
+TODO O CÓDIGO DENTRO 
+DE 
+
+
+'{}' pode ser 
+
+__DINÂMICO__....
+
+
+
+
+----------------------------------
+
+
+
+
+
+ESSE É O MANTRA DO REACT: ''TUDO É JAVASCRIPT'' ....
+
+
+
+
+
+Entretanto,
+
+
+aquela 
+
+
+
+TERNARY EXPRESSION QUE 
+
+O PROFESSOR NOS ENSINOU 
+
+NA ÚLTIMA LIÇÃO,
+
+
+
+algo como 
+
+
+
+
+'this.state.showPersons ?
+
+
+<div escrota>
+
+
+: 
+
+null
+
+'
+
+
+
+
+
+---> ESSE CÓDIGO NÃO É EXATAMENTE 'ÓPTIMO'...
+
+
+
+
+-----> aqui, esse código é perfeitamente OK, mas 
+
+A MEDIDA QUE NOSSO Aplicativo VAI CRESCENDO, e a medida em que 
+
+
+VAMOS NESTEANDO CONDIÇÕES, ficará cada vez MAIS DIFÍCIL
+ 
+
+ ACOMPANHAR qual expressão é responsável para o que, 
+
+ e spottar isso no nosso código JSX (uma ternary expression já é feia de se ler,
+ 
+ imagine várias nesteadas, uma nesteada dentro da outra)....
+
+
+
+
+
+ --> é por isso que EXISTE UMA SOLUÇÃO MAIS SIMPLES E 
+
+ LEGÍVEL DE ESCREVER/OUTPUTTAR CONTEÚDO DINÂMICO 
+
+por meio do JSX/REACT...
+
+
+
+------------> o professor REMOVE A SINTAXE/CÓDIGO 
+
+DA TERNARY EXPRESSION E OS CURLY BRACES QUE FAZIAM SUA SINTAXE SER POSSÍVEL.... 
+
+
+
+ok, o código ficará, de novo, assim:
+
+
+
+
+ex:
+
+
+
+
+
+
+
+          <div>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={this.switchNameHandler.bind( this, 'Max!' )}>  
+        My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+        </div>
+
+
+
+---------------------------------------------------
+
+
+
+
+Certo,
+
+agora voltamos para o 'starting point', para o ponto 
+
+
+EM QUE NÃO CONSEGUÍAMOS FAZER 
+
+TOGGLE DESSE CONTEÚDO...
+
+
+
+---> devemos TER EM MENTE ___QUE TODO ESSE CÓDIGO AQUI___, QUE TODO ESSE 'PSEUDOHTML'___ É,
+ NO FINAL 
+ DAS CONTAS,
+
+ UM JAVASCRIPT COM AÇÚCAR... -----------> É um código javascript como qualquer outro, mas 
+
+ um código 
+
+
+
+ JAVASCRIPT QUE É RETORNADO POR MEIO DO 'RETURN STATEMENT' (que fica dentro do método 'render(){}') e que então é compilado 
+
+ e transformado (transpilado) EM CÓDIGO REACT ('React.createElement()') POR 
+
+ MEIO DO PACOTE 'React'...
+
+
+ --------------------
+
+
+
+ UMA COISA QUE DEVEMOS TER EM MENTE:
+
+
+ QUANDO O REACT ___RENDERIZA___ ALGUMA COISA NA TELA; QUANDO 
+
+ ELE DECIDE QUE ___PRECISA___ UPDATAR A TELA, 
+
+ ele sempre 
+
+ executa 
+
+
+
+ ESSE MÉTODO 'render(){}'.................
+
+
+
+
+ ELE SEMPRE VAI EXECUTAR ESSE MÉTODO 'RENDER()' QUANDO DECIDIR QUE 
+ PRECISA __UPDATAR__ A TELA.... --------------> isso significa 
+
+ que 
+ 
+
+ ELE NÃO VAI SOMENTE RODAR AQUELE 'RETURN STATEMENT' e o código que está no seu interior...
+
+
+
+
+ ex(do métood 'render()'):
+
+
+const style = {
+         backgroundColor: 'white', 
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+}
+
+
+
+
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button 
+        style={style}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+ 
+          <div>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={this.switchNameHandler.bind( this, 'Max!' )}>  
+        My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+        </div>
+
+      </div>
+    );
+
+
+--------------------------
+
+
+
+
+
+COMO ASSIM? ---> bem, podemos já observar isso 
+
+
+se examinarmos aquela constante de nome 'style' ----------> ESSA CONSTANTE/OBJEto
+
+___TAMBÉM___ É EXECUTADA PELO MÉTODO 'render()' quando 
+
+ele é executado...
+
+
+---------------------------------
+
+
+
+TUDO DENTRO DE 'render()' É EXECUTADO, TODO O CÓDIGO DENTRO DE 'RENDER()' É EXECUTADO 
+
+
+SEMPRE QUE O 'REACT' RE-RENDERIZA esse componente específico ('um componente aleatório'.)  
+
+
+
+
+--> MAS QUAL É A IMPORTÂNCIA DISSO? ---> É BEM SIMPLES,
+
+
+NÓS PODEMOS 
+
+
+NOS APROVEITAR DESSE FATO... PODEMOS TIRAR VANTAGEM DO FATO DE QUE TODOS OS CÓDIGOS 
+
+
+NO INTERIOR DE 'render()' SÃO EXECUTADOS QUANDO ELE É EXECUTADO...
+
+
+
+------> E COMO TIRAMOS VANTAGEM DISSO? ---> bem, 
+
+
+PODEMOS ADICIONAR ALGUM CÓDIGO/ESCREVER UM CÓDIGO 
+
+_________ANTES____________ DO RETURN STATEMENT, QUE SERÁ EXECUTADO
+
+
+__ANTES DA EXECUÇÃO DO RETURN STATEMENT...
+
+
+
+--------------------------------------
+
+
+
+Para demonstrar esse truque/feature, o professor adiciona uma 
+
+
+
+VARIÁVEL DE NOME 
+
+'persons'....
+
+
+
+ele vai lá 
+
+
+E DEFINE 
+
+
+ESSA VARIÁVEL COMO SENDO 'null'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+render () {
+
+
+const style = {
+         backgroundColor: 'white', 
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+}
+
+
+
+let persons = null; ////////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button 
+        style={style}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+
+          <div>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={this.switchNameHandler.bind( this, 'Max!' )}>  
+        My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+        </div>
+ 
+      </div>
+    );
+
+
+}
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+O professor diz que esse 'let persons = null' será o DEFAULT.
+
+
+
+
+
+
+DEPOIS DESSA EXPRESSÃO DE 'let persons = null', 
+
+
+o professor vai 
+
+ESCREVER UM 
+
+'IF STATEMENT'... (sim, ele pode fazer isso...)
+
+
+
+
+
+ex:
+
+
+
+
+
+render () {
+
+
+const style = {
+         backgroundColor: 'white', 
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+}
+
+
+
+let persons = null; 
+
+
+
+if () {     ////////eis o código em questão.
+
+}
+
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button 
+        style={style}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+
+          <div>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={this.switchNameHandler.bind( this, 'Max!' )}>  
+        My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+        </div>
+
+      </div>
+    );
+
+
+}
+
+
+
+----------------------------------------
+
+
+
+
+
+
+OBS:::: ---> IMPORTANTE!!!!!! ---> O PROFESSOR 
+
+
+
+EXPLICA QUE 
+
+
+ELE PODE 
+
+FAZER ISSO AQUI, PODE ADICIONAR ESSE 'IF STATEMENT' NESSE 
+
+
+TRECHO DO CÓDIGO __PQ ___ ELE/NÓS __NÃO ESTAMOS ___ ENFIANDO 
+ESSE IF STATEMENT NO MEIO DE UM CÓDIGO 'JSX'.... (e, de fato, esse código aqui 
+
+É SIMPLESMENTE O CÓDIGO DE 'render(){}', NÃO É UM CÓDIGO JSX COMO AQUELE QUE NÓS 
+
+ESCREVEMOS DENTRO DO 'RETURN STATEMENT' que existe mais abaixo...)
+
+
+
+
+
+
+CERTO... dentro do 
+
+
+IF STATEMENT, o professor vai querer 
+
+checar 
+
+por 
+
+
+
+'this.state.showPersons'.... ----------------> 'se esse negócio for TRUE, execute o seguinte código...'
+
+
+
+
+
+ex:
+
+
+
+'
+if (this.state.showPersons) {
+
+}
+'
+
+
+
+
+--------------------------------
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+render () {
+
+
+const style = {
+         backgroundColor: 'white', 
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+}
+
+
+
+let persons = null; 
+
+
+
+if (this.state.showPersons) {     ////////eis o código em questão.
+
+}
+
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button 
+        style={style}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+
+          <div>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={this.switchNameHandler.bind( this, 'Max!' )}>  
+        My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+        </div>
+
+      </div>
+    );
+
+
+}
+
+
+
+
+
+----------------------------------
+
+
+
+
+LEMBRE-SE: O VALOR INICIAL DE 
+
+'showPersons' é de FALSE...
+
+
+
+PROFESSOR EXPLICA QUE SE ESSE IF STATEMENT RETORNAR 'TRUE', 
+
+ELE VAI QUERER 
+
+definir 
+
+
+
+'persons = ()' -----------> OU SEJA, ' SE O IF STATEMENT FOR 'TRUE', VOU QUERER __eXECUTAR__ O SEGUINTE CÓDIGO JSX, DENTRO DESSES PARÊNTESES..."
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+
+render () {
+
+
+const style = {
+         backgroundColor: 'white', 
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+}
+
+
+
+let persons = null; 
+
+
+
+if (this.state.showPersons) {    
+    persons = (
+         
+    );
+
+}
+
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button 
+        style={style}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+
+          <div>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={this.switchNameHandler.bind( this, 'Max!' )}>  
+        My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+        </div>
+
+      </div>
+    );
+
+
+}
+
+
+-----------------------------------
+
+
+
+
+
+Se isso for true, VOU QUERER _______RENDERIZAR MINHA DIV__________...
+
+
+
+(por isso copiamos nossa DIV e então COLAMOS dentro do '()'...) (a div que CONTÉM AS 'PERSONS'...)
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+render () {
+
+
+const style = {
+         backgroundColor: 'white', 
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+}
+
+
+
+let persons = null; 
+
+
+
+if (this.state.showPersons) {    
+    persons = (
+            <div>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={this.switchNameHandler.bind( this, 'Max!' )}>  
+        My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+        </div>
+    );
+
+}
+
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button 
+        style={style}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+      </div>
+    );
+
+
+}
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+Certo... o código ficou meio bizarro...
+
+
+
+O professor nos explica:
+
+
+
+O que estou fazendo 
+
+é:
+
+
+
+
+
+
+POR DEFAULT, 
+
+
+A variável 'persons' será inicialmente __DE VALOR__ 'NULL'... --------> MAS 
+
+
+
+SE ___ O 'this.state.showPersons' for __TRUE___, eu vou 
+
+querer/OBRIGAR 
+
+
+'persons' (A variável) 
+
+A SEGURAR 
+
+
+AQUELE CÓDIGO 
+
+'JSX' 
+
+
+
+de 
+
+
+
+'<<div>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={this.switchNameHandler.bind( this, 'Max!' )}>  
+        My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+        </div>'
+
+
+
+---------------------------------------------------
+
+
+
+
+
+Certo... eu acho que O PROFESSOR ESTÁ TRAMANDO!!! ----> ele provavelmente vai referenciar 
+
+essa variável LÁ EMBAIXO, no final do código (logo depois do button, do elemento button.)...
+
+
+
+ACERTEIIIII
+
+
+
+
+O que eu quis dizer é que devemos 
+
+ESCREVER ASSIM O NOSSO CÓDIGO:
+
+
+
+
+
+
+
+render () {
+
+
+const style = {
+         backgroundColor: 'white', 
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+}
+
+
+
+let persons = null; 
+
+
+
+if (this.state.showPersons) {    
+    persons = (
+            <div>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={this.switchNameHandler.bind( this, 'Max!' )}>  
+        My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+        </div>
+    );
+
+}
+
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button 
+        style={style}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+      </div>
+      {persons} /////////EIS O CÓDIGO EM QUESTÃO.
+    );
+
+
+}
+
+
+
+
+-------------------------------
+
+
+
+
+ISSO VAI FAZER COM QUE NOSSO 'HIDE/SWITCH' button FUNCIONE... --> 
+ 
+
+
+ pq agora 'persons' será ou 
+
+
+ NULL ou aquela div louca 
+
+
+
+ SEMPRE QUE NOSSA PÁGINA for re-renderizada... (pq o if check vai checar pelo valor boolean 'true/false' de showPersons no nosso state...)
+
+
+
+
+
+
+
+ ----------------------------------------------
+
+
+
+
+ certo....
+
+
+
+
+
+
+ ----> RENDERIZAREMOS OU 1) NADA 
+
+
+
+ OU 
+
+
+ 2) AS persons...
+
+
+
+
+
+
+
+ --> tenha em mente que __UMA DAS COISAS QUE CAUSARÁ ____ UM UPDATE 
+
+ NA PÁGINA (tipo o hide/show da div....) SERÁ 
+
+
+ UM ___STATE CHANGE___... (que ocorre em 'togglePersonsHandler', com 'setState'...)
+
+
+
+
+
+ -------------------------------
+
+
+
+
+
+Professor clica em 'Toggle persons' --> Nosso código funciona como antes, mas agora 
+
+
+ele funciona DESSA MANEIRA MAIS ELEGANTE, 
+
+
+
+
+ESSA MANEIRA QUE FAZ 'KIND OF' um 'outsourcing' desse 
+
+CÓDIGO JSX QUE NÓS VAMOS QUERER RETORNAR CONDICIONALMENTE (por 'código jsx', queremos dizer aquela 'div' com as 'person'...).... --->
+---> um outsourcing --> outsourcing pq NÓS ASSIGNAMOS ESSE CÓDIGO JSX A UMA VARIÁVEL (realmente variável, pq vai alternar 
+entre o valor de 'null' e a 'div' em si) ANTES DE A RETORNAR POR MEIO DO RETURN 
+STATEMENT DO MÉTODO 'render()'....
+
+
+
+
+
+
+
+---> AINDA ASSIM, TUDO ISSO OCORRE/OCORRERÁ 
+
+
+__NO MÉTODO __ 'RENDER()', ocorre dentro do método 'render()', MAS 
+
+___ANTES___ do return statement desse método (que sempre existe em 'render(){}') ocorrer...
+
+
+
+
+
+---> com isso, nós MANTEMOS O JSX que nós retornamos ORIGINALMENTE, mantemos 
+
+o ___'CORE TEMPLATE___' DO NOSSO COMPONENT, ao mesmo tempo em que 
+
+OUTPUTTAMOS DINAMICAMENTE AQUELE TRECHO DE CONTEÚDO/ELEMENTO QUE QUEREMOS 
+
+QUE SEJA OUTPUTADO DINAMICAMENTE/CONDICIONALMENTe (como essa div aí, sujeita ao if statement)...
+
+
+
+
+
+com isso, nós 'keep it clean', 
+
+
+e asseguramos que 
+
+
+SÓ AQUELA PEQUENINA REFERÊNCIA DE 
+
+
+'{persons}' fica 
+
+dentro 
+
+
+do 
+
+'core template' (parte imutável do nosso componente) do component... --------> ESSA 
+
+É A MELHOR FORMA DE OUTPUTTAR CONTEÚDO __CONDICIONALMENTE___ ('conditional content').... é a forma que o professor usa.
+---------------------------------------------
+
+

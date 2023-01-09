@@ -1,0 +1,1430 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+O efeito que queríamos, agora, no nosso código, 
+
+
+era
+ 
+
+ deixar 
+
+ o botão 
+
+ de 
+
+
+ 'Order'
+
+ lá em 
+
+
+ 'ContactData'
+
+
+ ___iNVÁLIDO__ se algum 
+
+ dos 
+
+ input fields 
+
+
+ também 
+
+ estiver 
+
+
+ a propriedade 
+
+ 'valid' como 
+
+ 'false'... --------->
+
+
+
+
+
+
+
+
+ na verdade, eu tentei várias formas de sintaxe, mas nenhuma funcionou.... --> vou ter que 
+
+ seguir o approach do professor...
+
+
+
+
+
+ -----------------------------
+
+
+
+
+ --> ele nos diz que DEVEMOS DESCOBRIR SE A NOSSA 'OVERALL FORM' 
+
+ está como 'invalid'... --> como fazemos isso? -----> 
+
+
+ professor 
+
+ explica 
+ 
+
+ que 
+
+
+ EXISTEM MUITAS MANEIRAS.... ----------->
+
+
+
+
+ 1a maneira) ------> PODERÍAMOS 
+
+
+
+ ADICIONAR UMA PROPRIEDADE 
+
+
+ 'Controls' na 
+
+ 'orderFOrm' 
+
+
+ de nosso STATE;
+
+
+
+ essa propriedade 
+
+
+ iria 
+
+ segurar 
+
+ um 
+
+ ARRAY......
+
+
+
+
+ ex:
+
+
+
+ orderForm: {
+     controls: [],
+     name: {
+         ...
+     }
+ }
+
+
+
+---------------------------------------
+
+
+
+
+
+
+DENTRO DESSA PROPRIEDADE 
+
+'CONTROLS', colocaríamos TODOS OS CONTROLES DENTRO DELE... (ou seja, colocaríamos 
+
+todos os detalhes dos input fields,
+
+cada objeto como 'name', 'street', 'country', etc, cada um com seu elementType,
+
+elementConfig e propriedades... essas que settamos nas últimas aulas...) ------>
+
+Aí todo 
+
+nosso código das últimas aulas ficaria 
+
+dentro 
+
+desse grande objeto 
+
+'controls'... --------> feito isso,
+
+
+NÓS SIMPLESMENTE ADICIONARÍAMOS 
+
+UMA PROPRIEDADE 
+
+'valid',
+
+que 
+
+governaria o valor true/false ___PARA A 'OVERALL FORM'__, 
+
+a form 
+
+representada por todos esses objetos como 'name', 'street', etc...
+
+
+
+
+ex:
+
+
+
+state = {
+    orderForm: {
+        controls [...todoNossoCódigoDosObjetos],
+        valid: ...
+    }
+}
+
+
+
+--------------------------------------
+
+
+
+
+E AÍ, O VALOR DESSA PROPRIEDADE 
+
+'valid'
+
+SERIA 
+
+__ATUALIZADA__ DE ACORDO COM A AÇÃO DO USUÁRIO, DE ACORDO 
+
+COM 
+
+OS SEUS INPUTS na nossa página.... 
+
+
+
+
+
+
+
+--> essa PRIMEIRA MANEIRA AÍ,
+
+esse primeiro approach, 
+
+___DEMANDARIA__ BASTANTE 'REFACTORING' DE NOSSO CÓDIGO...
+
+
+-------------------------
+
+Essa primeira 
+
+
+maneira é BEM TRABALHOSA, mas funcionaria...
+
+
+
+-----------------------------
+
+
+
+a __SEGUNDA MANEIRA____ é simplesmente ____ADICIONAR UMA NOVA ___ PROPRIEDADE __ 
+NO NOSSO 
+
+'STATE'.... (ou seja, DEPOIS DA 'orderForm', que é o nosso objeto 'GRANDAO', que segura 
+todos os outros objetos...) -------> 
+
+
+NA SEGUNDA MANEIRA,
+
+
+
+NÓS VAMOS ADICIONAR UMA PROPRIEDAE 
+
+simples de 
+
+'formIsValid',
+
+que 
+
+será 
+
+INICIALMENTE __FALSE__...
+
+
+
+
+
+ex:
+
+
+
+
+
+  state = {
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+        validation: {  ///AQUI VÃO TODAS AS REGRAS DE NOSSOS components 'Input' em 'ContactData'....
+          required: true  /////USADO NA VALIDATION DE NOSSOS INPUTS... assistir aula 'Adding Custom Form Validation'... ---> ''''required: true'' significa que ESSE FIELD DEVE SER __PREENCHIDO__ PARA QUE USUÁRIO POSSA ENVIAR A 'ORDER'...
+        } ,
+        valid: false,
+        touched: false
+      },
+
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Street',
+        },
+        value: '',
+validation: {  ///ver método 'checkValidity()'....
+  required: true
+} ,
+valid: false,
+touched: false
+      },
+
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+validation: {
+  required: true,
+  minLength: 5,
+  maxLength: 5
+} ,
+valid: false,
+touched: false
+      },
+
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country',
+        },
+        value: '',
+        validation: {
+          required: true
+        } ,
+
+        valid: false,
+        touched: false
+
+      },
+
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+validation: {
+  required: true,
+  
+},
+valid: false,
+touched: false
+      },
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                        value: 'fastest', 
+
+  
+    
+    
+    } },
+            formIsValid: false, ////////TIPO ASSIM.
+            loading: false
+
+  }
+
+
+
+  ------------------------------
+
+
+
+-------->
+
+
+ISSO FEITO,
+
+ADICIONADA 
+
+ESSA PROPRIEDADE,
+
+
+VAMOS QUERER 
+
+
+A 
+UPDATAR
+ 
+ PARA 
+
+ 'true'
+
+
+
+ NA HIPÓTESE EM QUE USUÁRIO REALMENTE 
+
+ 1) escreveu em TODOS OS INPUT FIELDS 
+
+
+ 2) SATISFEZ OS REQUISITOS DE TAMANHO E TIPO...
+
+
+
+
+
+
+
+
+
+ --> o importante, o método que vai nos ajudar agora, é o 'inputChangedHandler', 
+
+ que 
+
+ é 
+
+
+ o método que 
+
+____sEMPRE É EXECUTADO_____ QUANDO ___dIGITAMOS ALGO NA PÁGINA___... (nos input fields)... ------> 
+
+
+
+nesse método aí,
+
+
+o professor vai querer 
+
+
+ ____CHECAR__ SE TODOS OS ELEMENTOS (input fields preenchidos pelo input do usuário)
+
+
+ ESTÃO VÁLIDOS NO PRESENTE... ----------->
+
+
+
+
+ E SE TODOS ESSES INPUT FIELDS ESTIVEREM 'VÁLIDOS', tiverem seus inputs como 'válidos',
+
+
+ O PROFESSOR 
+
+
+ ___vAI QUEREr__ DEFINIR 
+
+ AQUELE 
+
+
+ STATE 
+
+ DE 
+
+
+'formIsValid' (que é o state dos inputs OVERALL; ou seja, da form, pq 'form' === ELEMENTO 
+
+QUE SEGURA TODOS OS OUTROS ELEMENTOS INPUT... --> e se apenas 1 elemento input 
+estiver errado, o botão 'order' já terá sido bloqueado...) COMO 
+
+
+SENDO 'true'... (pq ele é inicialmente FALSE.)
+
+
+
+--------------> para conseguir definir 
+
+
+'formIsValid' como sendo 'TRUE',
+
+PROFESSOR 
+
+NOS 
+
+EXPLICA QUE 
+ELE VAI CRIAR UMA NOVA CONSTANTE,
+
+
+dentro de 
+
+'inputChangedHandler',
+
+chamado 
+
+de 
+
+
+
+
+'formIsValid'... ----> essa constante será definida inicialmente como 'FALSE'...
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+
+
+inputChangedHandler = (event, inputIdentifier) => { 
+
+
+    if (inputIdentifier === 'select') {
+      const updatedOrderForm = {
+        ...this.state.orderForm
+      }
+
+
+      const updatedFormElement = {
+        ...updatedOrderForm[inputIdentifier]
+      }
+
+      updatedFormElement.value = event.target.currentValue;
+
+      updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+      this.setState(
+        {
+          orderForm: updatedOrderForm
+        }
+      )
+
+      console.log(this.state);
+
+    }
+
+
+    const updatedOrderForm = { ////VER AULA 'FAZENDO HANDLE DE USER INPUT'. --> aqui professor usa UMA GRANDE GAMBIARRA para poder UPDATAR O STATE DE 'ContactData' de forma IMUTÁVEL.... (ele faz isso PQ SEMPRE QUE NÓS QUEREMOS UPDATAR UM STATE E VAMOS QUERER USAR OS DADOS DO STATE ANTERIOR, É MUITO MELHOR UPDATAR NOSSO STATE DE FORMA IMUTÁVEL, COM A AJUDA DOS SPREAD OPERATORS...) -----> entretanto, aqui surgiu um problema, pois OS SPREAD OPERATORS CRIAM CÓPIAS 'shallow' ( e não 'deep', que tem todas as propriedades e seus valores representados na cópia) --> isso significa que a ''''NOVA CÓPIA'''' não vai ser uma cópia total, algumas propriedades bem internas (como 'placeholder' e  'type' ) VÃO CONTINUAR SENDO 'pointers' ao OBJETO 'state' original, o que é péssimo... ------> para evitar isso aí, professor escreve as linhas abaixo de 'updatedOrderForm'.... (ele CLONA VERDADEIRAMENTE a propriedade 'value' dentro de nossos 'inputIdentifier' (que são os elementos 'name', 'street', 'email', 'country', no nosso state....))
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+    updatedFormElement.value = event.target.value;
+
+    console.log(updatedFormElement.touched);
+
+
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
+
+    updatedFormElement.touched = true;
+
+
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+
+    let formIsValid = false; //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+    this.setState(
+      {
+        orderForm: updatedOrderForm
+      }
+    )
+
+
+  console.log(this.state);
+  }
+
+
+
+
+
+
+-----------------------------------
+
+
+definido o valor inicial de 'formIsValid'
+
+nesse 
+
+método 
+
+'inputChangedHandler' 
+
+COMO SENDO FALSE,
+
+professor 
+
+nos explica que 
+
+
+AGORA 
+
+ELE 
+
+TERÁ __ DE CHECAR____ A 'VALIDADE' (ou seja, se FORAM PREENCHIDOS E SE SATISFIZERAM 
+NOSSOS 'RULESETS') DE TODOS 
+
+ELEMENTOS 
+
+
+'INPUT'
+
+na nossa form... --------------> para isso, professor diz que 
+
+
+ELE 
+
+
+SIMPLESMENTE 
+
+VAI 
+
+EXECUTAR
+ 
+
+
+ UM 
+
+ FOR IN LOOP...
+
+
+
+ nesse for in loop 
+
+
+ ele
+
+
+  vai querer 
+
+  IR POR DENTRO DE 
+
+  TODOS 
+
+  'inputIdentifiers' (os objetos 'name', 'street', 'country', etc, tudo no nosso 'OrderForm'...)-------->
+
+
+
+
+
+  ele vai escrever:
+
+
+---------------------------------------------------
+
+
+  let formIsValid = false;
+
+
+for (let inputIdentifier in updatedOrderForm) {
+    ...
+}
+
+
+
+---------------------------------------------
+
+
+
+
+LEMBRE-SE: 
+
+'updatedOrderForm' é uma 
+CÓPIA 
+
+DE 
+
+NOSSO 
+
+STATE 
+
+E 
+
+
+DE 
+
+
+'this.state.orderForm'............
+
+
+
+-----------------------------
+
+
+
+
+
+
+enfim, dentro do body daquele FOR IN LOOP,
+
+professor 
+
+vai 
+
+
+definir 
+
+o valor daquela variável 
+
+
+'formIsValid'
+
+
+COMO 
+
+SENDO 
+
+
+'formIsValid = updatedOrderForm[inputIdentifier].valid;'............. 
+
+
+
+
+
+
+
+
+ OU SEJA, PROFESSOR VAI QUERER O VALOR DA PROPRIEDADE 
+
+
+ '.valid' 
+
+
+ DENTRO DO ELEMENTO/INPUT DINÂMICO REPRESENTADO 
+
+ POR 
+
+
+ 'updatedOrderForm[inputIdentifier]'...
+
+
+
+(que é o ELEMENTO EM JOGO, o elemento em jogo PRESENTE 
+
+NAQUELA CÓPIA DE NOSSO STATE INICIAL..)
+
+
+
+
+
+
+-------------> ou seja,
+
+
+
+
+esse loop aí vai PASSAR POR DENTRO DE TODOS OS ELEMENTOS,
+
+
+
+e ele vai 
+
+
+DEFINIR 
+
+O VALOR 
+
+DE 
+
+'formIsValid' 
+
+
+COMO 
+
+
+SENDO O VALOR 'valid'
+
+DENTRO 
+
+
+DAQUELE 
+
+
+COMPONENT/inputIdentifier dinâmico... (pode ser qualquer um 
+
+dos 'input fields', nesse nosso exemplo, justamente 
+
+por causa 
+
+
+da referência à '[inputIdentifier]', logo depois 
+
+da escrita de
+
+'updatedOrderForm'...)
+
+
+
+
+
+
+
+
+---> para que tudo certo, no entanto, professor decide deixar 
+
+o valor 
+
+de 
+
+'formIsValid'
+
+
+inicial 
+
+como sendo 
+
+
+'TRUE', e não 'FALSE'.... 
+
+
+
+
+
+ficará assim:
+
+
+
+
+
+------------------------------
+
+
+  let formIsValid = true;
+
+
+for (let inputIdentifier in updatedOrderForm) {
+    formIsValid = updatedOrderForm[inputIdentifier].valid
+}
+
+
+
+------------------------------
+
+
+
+
+
+Mas não acabamos com esse código ainda...  -------> para evitar 
+
+ o 
+
+
+ erro/comportamento indesejado de 
+
+
+ APENAS o último valor de 'updatedOrderForm[inputIdentifier].valid'
+
+
+ DETERMINAR O 'TRUE/FALSE' de formIsValid,
+
+
+ O PROFESSOR 
+
+ VAI 
+
+
+
+REALIZAR 
+
+UM SEGUNDO 'CHECK' AQUI,
+
+
+ele 
+
+vai 
+
+também 
+
+colocar 
+
+
+ '&& formIsValid;'  
+
+
+
+
+
+
+ ( ou seja,
+ 
+ 
+ 
+ 'formIsValid', ESSA VARIÁVEL AÍ, __SÓ VAI SER SETTADA COMO 'TRUE'__ SE TANTO 
+ 
+ A PROPRIEDADE 
+ 
+ VALID 
+ 
+ 
+ DE ___tODOS OS ELEMENTOS___ ESTIVER 'TRUE' ____ E ____ (&&)  SE 
+ 
+ 
+ 
+O 'formIsValid' __ EM SI _ _TAMBÉM JÁ ESTIVER COMOO 
+
+'TRUE'...) --------> REPRESENTAÇÃO:
+
+
+
+
+
+
+-----------------------------------
+
+
+  let formIsValid = true;
+
+
+for (let inputIdentifier in updatedOrderForm) {
+    formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+}
+
+
+------------------------------
+
+
+
+
+
+
+
+Certo... agora, portanto, temos uma variável 
+
+
+
+'formIsValid'
+
+
+QUE 
+
+
+
+ACOMPANHA 
+O STATUS 
+
+
+DE NOSSOS INPUT FIELDS,
+
+alterna 
+
+entre 
+
+
+'true' e 
+
+'false' 
+
+de 
+
+acordo 
+
+
+com as propriedades 'valid'
+
+dentro 
+
+dos elementos/objetos '[inputIdentifier]' na nossa 'updatedOrderForm'...
+
+
+
+
+---> PARA FINALIZAR AS ALTERAÇÕES NO NOSSO CÓDIGO, O PROFESSOR 
+
+
+VAI EDITAR 
+
+AQUELE 
+
+
+'this.setState(
+    {
+        orderForm: updatedOrderForm
+    }
+)'
+
+
+
+___PARA TAMBÉM INCLUIR ___ A ALTERAÇÃO __ 
+
+
+DO 
+
+
+STATE/PROPRIEDADE 
+
+de 
+
+
+'formIsValid', para que 
+
+ESSA PROPRIEDADE/OBJETO 
+
+
+TENHA 
+
+
+O VALOR JUSTAMENTE 
+
+DE 
+
+
+'formIsValid' (aquela 'let formIsValid = true/false'...)...
+
+
+
+
+
+
+ex (rESULTADO):
+
+
+
+  let formIsValid = true;
+
+for (let inputIdentifier in updatedOrderForm) {
+    formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+}
+
+
+this.setState(
+    {
+        orderForm: updatedOrderForm,
+        formIsValid: formIsValid ////////EIS O CÓDIGO EM QUESTÃO.
+    }
+)
+
+
+--------------------------------
+
+
+
+
+
+
+
+Certo.... com tudo isso aplicado, 
+
+
+
+nosso 
+
+
+estilo 
+
+
+do botão 'order' realmente é ajustado 
+
+
+PARA 
+
+
+'DISABLED: TRUE', 
+
+
+tudo graças ao pass de props 
+
+de 
+
+
+'disabled={!this.state.formIsValid}'
+
+
+
+-----------------------
+
+Contudo, um problema aqui, no nosso código,
+
+é que 
+
+
+esse botão NUNCA __aCABA SENDO ATIVADO___.... ele fica sempre cinza,
+desabilitado...
+
+(alguma coisa deu errado.... talvez o for in loop 
+
+
+para 
+
+definir 
+
+'formIsValid' está executando esse check para o 'deliveryMethod', também...?)
+
+
+
+
+
+------------------------------
+
+Ok, consertei esse problema.... ---> só 
+
+falta 
+
+
+consertar o problema 
+
+do 
+
+
+ORDER BUTTON NUNCA SENDO ATIVADO.... ---> acabei de ver o problema:
+
+
+
+'formIsValid' está como 'UNDEFINED' 
+
+no 
+
+nosso state... --> e isso acaba resultando 
+
+
+no 
+
+BUTTON NUNCA SENDO ATIVADO.... (nunca sendo 
+ENABLED...) --------> E O PROFESSOR 
+
+
+
+REPETE NOSSOS PENSAMENTOS:
+
+
+o 
+
+'formIsValid' 
+
+está 
+
+como 
+
+___UNDEFINED___... --> ou seja, a origem do problema está 
+
+
+
+em 
+
+'inputChangedHandler',
+
+que é onde 
+
+ESSA VARIÁVEL/VALOR É FORMULADO, NO FINAL DAS CONTAS... ----------> 
+
+
+
+
+
+E 
+
+ESSE PROBLEMA, É ___ÓBVIO___, ESTÁ RELACIONADO AOS NOSSOS INPUTS, PARTICULARMENTE 
+
+AO 
+
+INPUT 
+
+FIELD 
+
+DE 
+
+'select'/dropdown,
+
+
+QUE 
+
+É 
+
+AQUELE 
+
+ÚNICO ELEMENTO/OBJETO NO _ STATE__ QUE 
+
+___NÃO POSSUI NENHUM OBJETO 'validation' (pq ele não precisa ser validado, justamente por isso...).
+
+
+
+
+---> E COMO ESSE OBJETO 'select/dropdown' __NÃO TEM ESSE OBJETO 'validation', 
+
+ELE __tAMBÉM ___ NÃO TEM UMA PROPRIEDADE 
+
+'valid'... --> e é ISSO QUE GERA O NOSSO PROBLEMA.... o problema de 'formIsValid' estar como UNDEFINED...
+
+
+----> E É JUSTAMENTE 
+
+POR ISSO 
+
+
+QUE 
+
+
+este código, este loop:
+
+
+for (let inputIdentifier in updatedOrderForm) {
+    formIsValid = updatedOrderForm[inputIdentifier].valid////////ESTA PARTE AQUI
+}
+
+
+
+É POR ISSO QUE ESSA PARTE ALI DÁ ERRADO, 
+DÁ 
+
+ERRADO 
+
+PQ 
+
+
+ESSE STATEMENT AÍ N VAI RETORNAR NEM 'TRUE', NEM 'FALSE',
+
+vai retornar 'UNDEFINED' PQ __um dos elementos __ no objeto/elemento 
+
+'updatedOrderForm[inputIdentifier]' (que é todos os elementos ao mesmo tempo)
+
+__NÃO VAI ___ TER A PROPRIEDADE 
+
+'.valid'
+
+dentro 
+
+do seu objeto 'validation'... ---------> E UNDEFINED É SEMPRE ___tRATADO COMO 'FALSE'_, mas a diferença é que ELE NUNCA É SETTADO PARA 'TRUE'...
+
+
+
+
+
+
+
+
+
+
+
+--> A SOLUÇÃO PARA ISSO É SIMPLESMENTE 
+
+ADICIONAR UMA PROPRIEDADE 'valid' 
+
+
+AO OBJETO/elemento 
+
+'select' mesmo assim, MESMO ELE NÃO POSSUINDO NENHUMA REGRA DE VALIDAÇAÕ (não precisa ser validado nunca... sempre está validado por default).
+
+
+
+
+
+EX:
+
+
+
+
+
+
+  state = {
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+        validation: {  ///AQUI VÃO TODAS AS REGRAS DE NOSSOS components 'Input' em 'ContactData'....
+          required: true  /////USADO NA VALIDATION DE NOSSOS INPUTS... assistir aula 'Adding Custom Form Validation'... ---> ''''required: true'' significa que ESSE FIELD DEVE SER __PREENCHIDO__ PARA QUE USUÁRIO POSSA ENVIAR A 'ORDER'...
+        } ,
+        valid: false,
+        touched: false
+      },
+
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Street',
+        },
+        value: '',
+validation: {  ///ver método 'checkValidity()'....
+  required: true
+} ,
+valid: false,
+touched: false
+      },
+
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+validation: {
+  required: true,
+  minLength: 5,
+  maxLength: 5
+} ,
+valid: false,
+touched: false
+      },
+
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country',
+        },
+        value: '',
+        validation: {
+          required: true
+        } ,
+
+        valid: false,
+        touched: false
+
+      },
+
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+validation: {
+  required: true,
+  
+},
+valid: false,
+touched: false
+      },
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                        value: 'fastest', 
+                        valid: true ///////////EIS O CÓDIGO EM QUESTÃO.
+                       
+
+                   
+    
+    
+    },
+  },
+    formIsValid: false,
+
+    loading: false,
+  };
+
+
+
+--------------------------------
+
+
+
+CERTO,
+ 
+
+ CONSEGUIMOS FAZER ESSE CÓDIGO FUNCIONAR (AEEE)....
+
+
+
+ ----------------------------------
+
+
+
+ Professor fala de um breve erro que 
+
+ talvez já tenhamos consertado (e já consertamos!), 
+
+
+ que é um erro que 
+
+ acontece
+  
+  com 
+
+  O DROPDOWN --> se você 
+
+troca/seleciona a segunda 
+
+
+opção no dropdown,
+
+
+aparece 
+
+um 
+
+erro de 
+
+
+'TypeError: Cannot read property 'required' of undefined'... ------->
+
+
+E ESSE ERRO APARECE EXATAMENTE NA LINHA 
+
+'if (rules.required) {
+    isValid = value.trim() !== '' && isValid;
+}'
+
+
+
+
+
+
+---------PROFESSOR DIZ QUE DEVEMOS CONSERTAR ESSE ERRO NA PRÓXIMA AULA..... (mas ele já está consertado...) -------> SIM, EU HAVIA 
+
+CONSERTADO POR CONTA PRÓPRIA.... ----> a maneira que 
+
+eu encontrei foi adicionar 
+
+
+um if check 
+
+de 
+
+'    if (!rules) {
+      return;
+    }
+'
+
+
+
+
+ANTES DESSE CÓDIGO DE 
+
+'rules.required' -----> esse 'if (!rules)' VAI SER 
+
+
+__dISPARADO__ SEMPRE QUE 
+
+
+estivermos falando de um objeto/elemento QUE NÃO TEM um objeto 'rules'... (tipo select/dropdown, que NÃO TEM ESSE CÓDIGO....)

@@ -1,0 +1,387 @@
+
+NA ÚLTIMA LIÇÃO, APRENDEMOS 
+
+SOBRE 
+
+COMO 
+
+
+PASSAR DADOS/DATA 
+
+
+COM 
+
+'action',
+
+
+e como 
+
+RETRIEVAR
+ 
+ ESSES 
+
+
+ DADOS 
+
+ LÁ NO 
+
+ 'REDUCER'...
+
+
+
+-------------------------------------------------
+
+
+
+COM ISSO, APRENDEMOS ALGUNS DOS CONCEITOS 100% CORE DO REDUX...
+
+
+
+
+
+
+
+
+--> bem, mas se nós DERMOS UMA OLHADA 
+
+
+NO 
+
+
+NOSSO 
+
+'reducer',
+
+lá 
+
+
+em 
+
+
+'reducer.js',
+
+
+NÓS IMEDIATAMENTE 
+
+VAMOS 
+
+
+
+PERCEBER QUE 
+
+
+ELE 
+
+já 
+
+
+TEM UM MONTE 
+
+
+DE 
+
+'CODE REPLICATION', um monte de código em excesso, 
+
+if checks 
+
+
+
+muito repetidos,
+ 
+ um monte de if statements...
+
+
+------------------------
+
+
+
+PROFESSOR NOS SUGERE 
+
+___TROCAR__ ESSES IF STATEMENTS 
+
+POR 
+
+
+UM 
+
+
+SWITCH-CASE STATEMENT...
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> ele nos diz que NÃO HÁ NADA DE ERRADO EM USAR IF STATEMENTS SE VOCÊ GOSTA DELES,
+
+
+
+mas 
+
+que 
+
+ele 
+
+PREFERE USAR UM TIPO DE EXPRESSÃO DIFERENTE, NO JAVASCRIPT, QUE 
+
+
+é 
+
+
+o switch-case statement...
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+o professor vai escrever 
+
+
+
+
+
+'
+
+
+const reducer = (state = initialState, action) => {
+    switch(action.type) {
+
+
+
+
+        case: 'INC_COUNTER': ....
+    }
+}
+
+
+
+
+
+E ASSIM POR DIANTE....
+
+
+
+
+(faça você mesmo...)
+
+
+
+
+
+---------------------------
+
+
+
+
+
+
+
+
+Eu escrevi o código, e ele ficou assim:
+]
+
+
+
+
+
+
+
+
+
+
+const reducer = (state = initialState, action) => {
+
+
+
+  switch (action.type) {
+    case 'INC_COUNTER':
+      return {
+        ...state,
+        counter: state.counter + 1,
+      };
+      break;
+    case 'DEC_COUNTER':
+      return {
+        ...state,
+        counter: state.counter - 1,
+      };
+      break;
+      case 'ADD_COUNTER':
+        return {
+          ...state,
+          counter: state.counter + action.value,
+        };
+        break;
+        case 'SUB_COUNTER':
+          return {
+            ...state,
+            counter: state.counter - action.value,
+          };
+    default:
+      return state;
+  }
+};
+
+export default reducer;
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+IMPORTANTE!!!! --> EU coloquei 'break;' entre 
+
+
+os 
+
+case statements,
+
+
+
+MAS 
+
+
+NÃO MUDOU EM NADA A EXECUÇÃO DO CÓDIGO... (talvez as coisas fiquem diferentes se eu escrever 
+
+código mais complexo, com múltiplos 'blocos' de cases... é possível...)
+
+
+
+
+
+
+
+------> RELEMBRANDO 'switch statement' -----> quando um dos cases 
+
+é 
+
+
+SATISFEITO,
+
+nós 
+
+
+
+__PULAMOS PARA FORA DESSA FUNÇÃO__ (do 'reducer'), sendo 
+
+
+EXECUTADO 
+
+
+APENAS O CÓDIGO DO 'case' QUE FOI SATISFEITo... (as outras linhas não são alcançadas....)
+
+
+
+
+
+
+
+
+
+
+
+AGORA, COM ESSA MUDANÇA,
+
+
+NOSSO 
+
+
+'reducer' 
+
+
+se torna um pouco mais 'LEAN' 
+
+e fácil de ser lido... ----> pq agora é bem claro que estamos 
+
+
+
+considerando o 'action.type' e então fazendo handle de diferentes 'cases' de acordo com 
+
+seu 
+
+valor...
+
+
+
+
+
+
+
+
+
+
+
+--> E, SE NÓS NUNCA ENTRARMOS EM UM DESSES 'CASE', __nós sempre temos O 'DEFAULT CASE', que é um return simples de 'state' (o mesmo state que havíamos antes...) --> vai retornar ou O 'INITIALSTATE', ou o 'CURRENTSTATE' (se a primeira execução/inicialização já ocorreu....) ----------------> 
+
+
+
+
+É MUITO IMPORTANTE DEFINIR ESSE DEFAULT CASE de 
+
+'return state'... --------> pq se VOCê NÃO DEFINIR ESSE NEGÓCIO, E O USUÁRIO ENTÃO 
+
+CLICAR EM ALGUMA COISA NO CÓDIGO QUE ACABE ENVIANDO 
+
+UMA 
+
+'action' 
+
+
+de algum valor QUE NÃO SEJA UM DAQUELES 'cases' no switch statement, SEU 
+
+CÓDIGO __vAI QUEBRAR___... (pq aí o reducer não vai conseguir 
+executar nada a partir de um valor que NÃO FORA DEFINIDO/É INVÁLIDO.) ------> ISSO ACONTECE/ACONTECERIA 
+
+
+PQ 
+
+
+
+__SEMPRE QUE UMA ACTION É DISPATCHEADA__, ELA VAI POR DENTRO DAQUELE 
+
+___ÚNICO REDUCER___ QUE VOCÊ TEM NO SEU APLICATIVO... (portanto, você 
+
+tem que 
+
+fazer 
+
+
+esse return do 'current state' mesmo, senão vai dar merda, pode 
+
+acontecer essa situação descrita acima...)
+
+
+----------------------------
+
+
+
+SALVAMOS TODOS NOSSOS ARQUIVOS E VOLTAMOS AO APP.... --> ele ainda funciona como 
+
+antes,
+
+
+MAS AGORA COM 
+
+ESSE 
+
+'Central reducer', mas agora com esse 
+
+SWITCH STATEMENT...

@@ -1,0 +1,947 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> CERTO, NÓS INTRODUZIMOS 'action creators'
+
+
+NAS ÚLTIMAS LIÇÕES... ---> e nós 
+
+TAMBÉM 
+
+APRENDEMOS 
+
+
+QUE 
+
+ELES 
+
+SÃO 
+
+ESPECIALMENTE ÚTEIS 
+
+QUANDO 
+
+VOCÊ 
+
+PRECISA 
+
+
+EXECUTAR/DISPATCHAR 
+
+
+ACTIONS DE 
+
+FORMA ___aSSÍNCRONA__ COM O REDUX... ( ou quando você precisa EXECUTAR CÓDIGO ASSÍNCRONO COM O REDUX...)
+
+
+
+
+
+
+
+
+
+
+
+
+--> (async) ACTION CREATORS + THUNK --> com isso 
+
+CONSEGUIMOS 
+
+BASICAMENTE 
+
+
+ENCONTRAR UM LUGAR 
+
+PARA 
+
+EXECUTAR 
+
+
+
+__NOSSOS CÓDIGOS __ ASSÍNCRONOS, códigos assíncronos 
+
+QUE 
+
+SÃO 
+
+
+EXECUTADOS QUANDO NÓS DISPATCHAMOS UMA ACTION... -------->
+
+
+o que 
+
+o 
+
+'redux-thunk' faz é 
+
+
+JUSTAMENTE ____BLOQUEAR___ O 'DISPATCH ORIGINAL' de uma action, 
+
+bloquear 
+
+esse dispatch original 
+
+PARA ENTÃO 
+
+DISPATCHEAR 
+
+
+
+UMA ACTION IGUAL À PRIMEIRA,
+
+
+
+
+MAS '''ATRASADA''' (async code).... --> ESSA ACTION É DISPATCHEADA, PELO REDUX THUNK,
+
+
+NO INSTANTE EM QUE 
+
+O 
+
+
+'ASYNC CODE' termina sua tarefa...
+
+
+
+
+-------------------------- COM ISSO, 
+
+
+
+NÓS 
+
+
+TEMOS 
+
+
+
+ESSE 
+
+
+
+NOVO 
+
+
+ARQUIVO 
+
+
+'
+actions.js'... ---------> 
+
+
+
+E 
+
+ESSE 
+
+
+ARQUIVO 
+
+actions.js,
+
+AGora,
+
+
+NÃO 
+
+
+ESTÁ 
+
+APENAS 
+
+
+
+SEGURANDO NOSSOS 'ACTIONTYPES' (como antes, os UNIQUE IDENTIFIERS DE NOSSAS ACTIONS),
+
+
+MAS 
+
+TAMBÉM
+
+
+
+
+
+__TODAS___ ESSAS 
+
+'CREATOR FUNCTIONS'..  (como 'asyncStoreResult', e 'storeResult'...)
+
+
+
+ex:
+
+
+
+
+
+
+
+export const INC_COUNTER = 'INC_COUNTER';  
+
+export const DEC_COUNTER = 'DEC_COUNTER';
+
+export const ADD_COUNTER = 'ADD_COUNTER';
+
+export const SUB_COUNTER = 'SUB_COUNTER';
+
+export const RESULT_STORE = 'RESULT_STORE';
+
+export const DELETE_RESULT = 'DELETE_RESULT';
+
+
+
+
+
+
+export const inc_counter = () => {
+        return {
+            
+            type: INC_COUNTER  
+        }
+}
+
+
+
+export const dec_counter = () => { 
+    return {
+        
+        type: DEC_COUNTER  
+    }
+}
+
+export const add_counter = (value) => { 
+    return {
+        
+        type: ADD_COUNTER, 
+        value: value
+    }
+}
+
+export const sub_counter = (value) => { 
+    return {
+        
+        type: SUB_COUNTER,
+        value: value
+    }
+}
+
+
+
+
+export const storeResult = (result) => { 
+    return { 
+type: RESULT_STORE,
+result: result
+}
+}
+
+
+
+export const asyncStoreResult = (result) => {
+return dispatch => {
+setTimeout(() => {
+dispatch(storeResult(result)); 
+}, 2000);
+} 
+}
+
+
+
+
+
+
+
+
+
+
+
+export const delete_result = (id) => { 
+    return {
+        
+        type: DELETE_RESULT,
+        resultId: id
+    }
+}
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+CERTO... ESTAMOS FICANDO COM UM ARQUIVO __UM POUCO GRANDE___...
+
+
+
+
+
+
+
+
+
+--> professor admite que, NESSE DEMO PROJECT,
+
+
+ESTE ARQUIVO 'actions.js'
+
+NÃO SERÁ/NÃO É TÃO GRANDE... --> É POR CAUSA DISSO QUE PODEMOS USAR 
+
+APENAS 1 ARQUIVO...
+
+
+
+
+
+
+
+
+--> MAS NÓS TAMBÉM, ANTERIORMENTE,
+
+
+DIVIDIMOS O 'REDUCER' 
+
+
+EM 
+
+ARQUIVOS 
+
+'counter.js'
+
+e 
+
+'result.js'...
+
+
+
+
+----------------------------
+
+
+
+
+--> E VOCÊ __TIPICAMENTE ___ FAZ A MESMA COISA COM AS SUAS 
+
+ACTIONS, À medida que seu APLICATIVO VAI CRESCENDO.... ------> 
+
+
+E VOCÊ VAI VER ISSO NO PROJETO DO 'BURGERBUILDER': vários 
+
+arquivos 
+
+'actions',
+
+cada 
+
+um PARA 
+
+
+UMA TAREFA/ACTION ESPECÍFICA....
+
+
+
+
+
+
+
+
+
+
+--> PARA NOS DEMONSTRAR COMO É FEITA ESSA DIVISÃO, 
+
+O PROFESSOR 
+
+VAI CRIAR NOVOS ARQUIVOS 
+
+NAQUELE 
+
+FOLDER 
+
+DE 
+
+'actions'...
+
+
+
+
+
+
+
+----> ELE VAI CRIAR 
+
+UM ARQUIVO 
+
+
+'counteractions.js'
+
+
+e 
+
+'resultactions.js'...
+
+
+
+
+
+
+
+
+--> JÁ 'actions.js'
+
+
+SERÁ 
+
+RENOMEADO, VAI SE CHAMAR 'actionTypes' agora.... ---> PROFESSOR VAI FAZER ESSA MUDANÇA 
+
+PQ 
+
+AGORA 
+
+ELE 
+
+VAI QUERER 
+
+
+________aPENAS___ TER OS 'UNIQUE IDENTIFIERS' de nossas 
+
+ACTIONS 
+
+nesse 
+
+arquivo 
+
+'actionTypes' (ele vai querer ter só aquelas linhas 'export const INC_COUNTER = 'INC_COUNTER', etc etc...)
+
+
+
+
+--> CERTO, REESTRUTUREI TUDO...
+
+
+
+
+
+
+
+Será que há mais alguma coisa?
+
+
+
+
+
+
+
+BEM, PROFESSOR DIZ QUE AGORA 
+
+NÓS TEMOS 
+
+NOSSOS
+
+
+'action creators'
+ 
+
+
+ JÁ 
+
+ OUTSOURCEADOS....
+
+
+
+
+
+
+
+
+
+
+----> e agora 'actionsTypes'
+
+
+
+SÓ CONTÉM 
+
+MEUS 
+
+
+'actionTypes'
+
+E ENTÃO OS EXPORTA...
+
+
+
+------------------------
+
+
+
+
+
+
+AGORA O PROFESSOR VAI QUERER __tER 1 ARQUIVO __SÓ FAZENDO __ O EXPORT 
+
+SIMULTÂNEO 
+
+
+DE ___TODOS MEUS 
+
+'ACTION CREATORS'... (e não os UNIQUE IDENTIFIERS/actionsTypes) -----> 
+
+
+
+
+
+PARA ISSO, 
+
+ELE VAI CRIAR UM ARQUIVO CHAMADO 
+
+DE 
+
+'index.js'...
+
+
+
+
+
+
+
+
+
+-------> dentro 
+
+desse arquivo, ele vai USAR UMA SINTAXE ESTRANHA, SINTAXE QUE 
+
+
+PROVAVELMENTE NUNCA VIMOS ANTES... (mas acho que já vi...)
+
+
+
+
+
+
+
+
+ELE VAI ESCREVER 
+
+
+
+'export {} from ''  ' 
+
+
+
+
+
+
+
+( OU SEJa: 'exporte ALGUMA COISA/OBJETO DE UM __ARQUIVO AÍ___..'') ------> 
+
+
+
+
+
+
+
+
+
+
+
+RESUMINDO: NÓS VAMOS ESTAR ___EXPORTANDO ___ ALGO DE UM ARQUIVO __ 
+
+SEM 
+
+PRECISAR __ ESTAR NAQUELE ARQUIVO... (e esse export aí NÃO VAI/NEM MESMO 
+
+
+ESTARÁ 
+
+SENDO IMPORTADO NESSE ARQUIVO 'INDEX'... --> só vai ser exportado, e nada mais...)
+
+
+
+
+
+
+
+
+'index.js', 
+
+
+para as nossas ACTIONS e ACTION CREATORS, é útil PQ SERVE COMO UM 'PAGINADOR', um índice de QUAIS ACTION CREATORS nós temos....
+
+
+
+
+
+
+
+
+
+
+---> a moral do 'index.js'
+ 
+
+ É ___SIMPLESMENTE ___ AGRUPAR ___tODOS OS 'exports'
+
+
+
+
+
+
+DE __dIFERENTES __ ARQUIVOS___... ---------> SUA UTILIDADE SERÁ:
+
+
+
+QUANDO QUISERMOS IMPORTAR ALGO __ DE QUALQUER UM DOS ARQUIVOS, 
+
+dos arquivos 
+
+'counterActions.js' ou 
+
+'resultActions.js',
+
+
+
+PODEREMOS/PODEMOS 
+
+
+
+__SIMPLESMENTE ___ APONTAR A ESSE ARQUIVO 
+
+
+'index.js'
+
+
+PARA 
+
+
+
+OBTER ESSAS ACTIONS... -------> para isso,
+
+professor
+
+ vai começar 
+
+ pela escrita do código 
+
+
+
+
+
+
+ 'export {} from './counterActions'; 
+
+
+
+
+
+
+ (EXPORT ALGUMA COISA DO ARQUIVO counterActions.js')
+
+
+
+
+
+
+
+
+ --> E ESSA 'ALGUMA COISA' será, na verdade,
+
+ UMA __ LISTA ___ DE TUDO ___ AQUILO QUE __ É OFERECIDO POR ESSE 
+
+ ARQUIVO 
+
+ 'counterActions.js'...
+
+
+
+
+ ---> 
+
+
+ no caso, 
+
+
+ será 
+
+
+ '{
+     add,   
+    subtract,
+    increment,
+    decrement
+ }
+ ' 
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+export { 
+    add,
+    subtract,
+    increment,
+    decrement
+} from './counterActions'; 
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+ESSA SINTAXE, PARA INÍCIO DE CONVERSA, É UTILIZADA EM PROJETOS __ GRANDES, PROJETOS COM MUITAS E MUITAS ACTIONS
+
+
+E ACTION CREATORS....
+
+
+
+
+
+
+--> essa sintaxe/feature é __OVERKILL __ PARA 
+
+ESTE PEQUENO PROJETO,
+
+
+
+
+MAS 
+
+
+_ VAI FAZER MAIS SENTIDO MAIS TARDE,
+
+
+
+QUANDO ___ MEXERMOS NO NOSSO BURGER BUILDER... -------> 
+
+
+
+
+
+
+
+
+
+ESSE PRIMEIRO BLOCO 
+
+DE 
+
+'export' 
+
+
+SERÁ 
+
+O BLOCO 
+
+DO 
+
+
+ARQUIVO 
+
+'counterActions.js'...
+
+
+
+
+
+
+--> JÁ O SEGUNDO BLOCO VAI SER 
+
+OS 
+
+exports do arquivo 
+
+'resultActions.js'....
+
+
+
+ex:
+
+
+
+
+
+
+export { 
+    add,
+    subtract,
+    increment,
+    decrement
+} from './counterActions'; 
+
+export {
+    storeResult,
+    deleteResult
+} from './resultActions';
+
+
+
+
+-----------------------------
+
+
+
+ISSO FEITO,
+
+O QUE 
+
+ESSE CÓDIGO VAI NOS PERMITIR É 
+
+__'REDIRECT DE EXPORTS/imports'... ------> 
+
+
+NÓS VAMOS PODER IMPORTAR 
+ESSAS 
+
+'actions' 
+
+por meio 
+
+
+
+DA REFERÊNCIA 
+
+à 'index.js', 
+
+em vez 
+
+de 
+a 
+
+'counterActions.js',
+
+ou 
+
+'resultActions.js'...
+
+
+
+
+-----------------------------
+
+
+
+
+
+--> CERTO, MAS ESSE É SÓ UM PEQUENO UPGRADE NO NOSSO APP....
+
+
+
+---> nossos arquivos ficam um pouco mais 'lean'...
+
+
+
+
+
+
+-----> uma mudança final que precisamos fazer é 
+
+
+ESCREVER, LÁ EM 
+
+'Counter.js',
+
+
+um código 
+
+
+de imports 
+
+
+
+que ficará 
+
+assim:
+
+
+
+
+'import * as actionsCreators from '../../actions/index;'  ----------> SÓ ASSIM VAMOS EFETIVAMENTE UTILIZAR AQUELE 'index.js'...
+
+
+
+
+
+
+
+FICOU ASSIM:
+
+
+import * as actionsCreators from '../../store/actions/index';
+
+
+
+
+
+------------------------------
+
+
+
+
+--> AGORA NÓS TEMOS UM APLICATIVO QUE FUNCIONA COMO ANTES, COM ASYNC STORAGE 
+
+FUNCIONANDO,
+ 
+ MAS AGORA 
+
+
+ COM UNS ACTION CREATORS MAIS '''SPLITTADOS''' EM MÚLTIPLOS ARQUIVOS... ---> 
+
+
+ para 
+
+ este projeto de demonstração pode ser overkill, mas EM PROJETOS 
+
+ MAIORES ISSO É MT CONVENIENTE, PQ AÍ VOCê TERÁ 
+
+
+ UNS ARQUIVOS 
+
+ COM APENAS 
+
+ ALGUNS POUCOS 
+
+
+ ACTION CREATORS DEDICADOS, e aí um paginador ('index.js') que 
+
+ vai exportar todos eles para vocÊ .... ---> aí você só precisa 
+
+ importar 
+
+ esse 'index.js'
+  
+
+no container desejado para __ que __ VOCê POSSA EFETIVAMENTE __ USAR
+
+
+AS 
+
+'actions' que você quer...

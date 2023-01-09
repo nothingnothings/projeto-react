@@ -1,0 +1,634 @@
+
+
+
+
+
+APRENDEMOS O BÁSICO SOBRE 
+
+
+'next.js'... ---> 
+
+MAS 
+
+
+E SE 
+
+
+ 
+
+ EU QUISESSE COMPOR 
+
+
+ MEU APLICATIVO 
+
+
+ A PARTIR 
+
+ DE 
+
+ 'COMPONENTS',
+
+
+
+ e não apenas 
+
+ a partir 
+
+ de 
+
+ 'pages'... ----> DEVO DEIXAR DE FAZER ISSO,
+
+ DEIXAR 
+
+
+
+ DE COMPOR MEU APLICATIVO 
+
+ A PARTIR 
+
+
+ DE 
+
+ 'COMPONENTS'? -----> NÃO, NÓS DEVEMOS CONTINUAR CONSTRUINDO NOSSO APLICATIVO 
+
+ REACT COMO ANTES....
+
+
+
+
+
+
+
+ ---> isso significa que 
+
+ A MANEIRA PELA QUAL 
+
+ VOCÊ 
+
+
+
+ constrói 
+
+ SEU 
+
+ 'REACT APP'
+
+
+ NÃO __MUDA__... -----> 
+
+
+
+ 
+
+
+ OU SEJA,
+
+
+ AINDA 
+ É UMA 
+
+ EXCELENTE 
+ 
+ PRÁTICA 
+
+ COMPOR 
+
+ SEU 
+
+ APLICATIVO 
+
+
+ A PARTIR 
+
+
+ DE 
+
+ DIVERSAS 
+
+ PARTES 
+
+ MENORES.... (small pieces).... --> 
+
+
+
+
+
+ E É POR ISSO QUE 
+
+ DEVEMOS 
+
+ CRIAR UM 
+
+ NOVO FOLDER,
+
+
+
+ chamado 
+
+ de 
+
+ 'components'... ---> 
+
+ E 
+
+ ESSE 
+
+ FOLDER 
+
+ NAME 
+
+ PODE 
+
+ SER QUALQUER UM,
+
+ NÃO PRECISA 
+
+ SER 
+
+ 'components', pq 
+
+ O 
+
+ NEXT.JS 
+
+ NÃO SE IMPORTA 
+
+ COM  
+ ESSA CONVENÇÃO... ----- VOCÊ 
+
+ PODE 
+
+
+
+ CHAMAR 
+
+ de 
+
+ 'c', 'cmp',
+
+ QUALQUER COISA...
+
+
+
+
+
+
+
+
+
+ --> dentro de 'components'
+
+ o 
+
+ professor 
+
+ CRIA UM 
+
+ ARQUIVO 
+
+
+ 'User.js',
+
+
+
+ EM QUE 
+
+
+
+
+ ELE ESCREVE 
+
+ UM 
+
+ FUNCTIONAL COMPONENT... 
+
+
+
+
+
+
+
+
+
+
+ ex:
+
+import React from 'react';
+
+const user = (props) => {
+    return <div> </div>
+};
+
+export default user;
+
+
+----------------------------
+
+
+
+
+DENTRO 
+
+
+DESSA <DIV>
+,
+
+
+professor 
+
+
+VAI QUERER OUTPUTTAR
+ 
+ ALGUMA 
+
+ 'USER DATA'.... --> 
+
+
+
+
+
+
+ <h1>{props.name}</h1>
+ <p>Age:{props.age}</h1>
+
+
+
+
+
+
+ -----------------------------
+
+
+ PROFESSOR 
+
+ VAI ESPERAR 
+
+ RECEBER 
+
+ ESSES 
+
+ DADOS 
+
+ VIA 
+
+ 'PROPS'...  ----> 
+
+
+ É UM 
+
+ COMPONENT 
+
+
+ BEM 
+
+
+ SIMPLES,
+
+
+
+
+ SÓ PQ O PROFESSOR 
+
+ QUER 
+ NOS MOSTRAR 
+
+  
+
+  COMO FUNCIONA UM APP NEXT.JS... --------> 
+
+
+
+
+  DEPOIS 
+
+  DISSO,
+
+  NÓS USAMOS 
+
+
+  NOSSO 
+
+  COMPONENT 
+
+  COMO 
+
+
+  SEMPRE... ---> vamos 
+
+  o importar 
+  lá 
+
+
+  em 
+
+  'index.js',
+
+  O 
+
+  DO 
+  'Auth Index Page'...
+
+
+-----------------------
+
+
+
+
+import User from '../../components/User';
+
+
+
+
+--------------------------
+
+
+
+
+
+AÍ O PROFESSOR ADICIONA O COMPONENT USER ali dentro,
+
+normal....
+
+
+
+ex:
+
+
+
+
+
+
+import User from '../../components/User';
+
+const AuthIndexPage = (props) => {
+
+
+        const router = useRouter();
+        return(
+            <div>
+            <h1>The Auth Index Page</h1>
+            <User /> ////////EIS O CÓDIGO EM QUESTÃO.
+            <p>Go to <Link href="/"><a>Main Page</a></Link></p>
+            <button onClick={() => router.push('/')}>Go to Main Page</button> 
+          </div>
+        )   
+
+
+}
+
+export default AuthIndexPage;
+
+
+----------------------------------------------
+
+
+
+
+
+COMO 
+
+O COMPONENT 
+
+'user' 
+
+ESPERA UM PROP 
+
+DE 
+'name',
+
+POSSO SIMPLESMENTE 
+
+PASSAR 
+
+UNS VALORES HARDCODADOS...
+
+ex:
+
+
+
+
+
+
+import User from '../../components/User';
+
+const AuthIndexPage = (props) => {
+
+
+        const router = useRouter();
+        return(
+            <div>
+            <h1>The Auth Index Page</h1>
+            <User name="Max" age="29" /> ////////EIS O CÓDIGO EM QUESTÃO.
+            <p>Go to <Link href="/"><a>Main Page</a></Link></p>
+            <button onClick={() => router.push('/')}>Go to Main Page</button> 
+          </div>
+        )   
+
+
+}
+
+export default AuthIndexPage;
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+CERTO... 
+
+
+SALVAMOS TODOS OS ARQUIVOS 
+
+E VOLTAMOS...
+
+
+
+---> O NEGÓCIO FUNCIONA EXATAMENTE COMO ANTES;
+
+
+AINDA 
+
+TRABALHAMOS 
+
+COM 
+
+
+COMPONENTS 
+
+EM UM APLICATIVO 
+
+'Next.js',
+
+
+
+A ÚNICA DIFERENÇA 
+É QUE 
+
+TEMOS 
+
+
+AQUELE 
+
+FOLDER 
+DE 
+
+'pages',
+
+
+
+QUE 
+
+É UM 
+
+FOLDER ___ QUE TAMBÉM ___ CONTÉM
+ 
+
+ COMPONENTS (sejam eles FUNCTIONAL ou CLASS-BASED),
+
+
+
+
+ MAS QUE 
+
+ É __ O ÚNICO _____ FOLDER QUE RECEBE 'TRATAMENTO ESPECIAL'__,
+
+ POIS 
+
+ O 
+
+
+ NEXT.JS 
+
+ SÓ 
+
+ TRATA 
+
+ ESSE 
+
+ FOLDER 
+
+ ESPECÍFICO COMO ALVO PARA O SEU 'ROUTING'... ----> ISSO 
+
+ PQ 
+
+
+ O NEXT.JS ___ VAI PARSEAR __ TODOS OS ARQUIVOS 
+
+ ALI DENTRO 
+
+ COMO 
+ 'PAGES', e então VAI CRIAR 'ROUTES' para cada um deles, e AÍ VAI AUTOMATICAMENTE 
+
+ 'CODESPLIT' seu código... 
+
+
+
+
+
+ -->>>>BTW,
+
+ O 
+
+ 'CODESPLIT' (lazy loading)
+
+
+ REALIZADO 
+
+
+ PELO 
+
+ 'NEXT.JS'
+
+
+ __INCLUI __ TAMBÉM, É CLARO,
+
+
+ _______COMPONENTS___ 
+
+ ENFIADOS/INSERIDOS ___DENTRO DAQUELA '''page'''' 
+
+ (
+
+     nesse caso do nosso projeto, por exemplo,
+
+     O 
+
+     COMPONENT 'User', que é CARREGADO 
+
+     POR 'index.js' do 'auth', 
+
+
+     __TAMBÉM __ É CARREGADO __ POR 
+     'LAZY LOADING'... ------------> ISSO SIGNIFICA QUE 
+
+     O 
+
+     CÓDIGO 
+
+     DE 
+
+     'User.js',
+
+     desse component aí, 
+
+     __SÓ É CARREGADO __ EFETIVAMENTE __ QUANDO 
+
+     A '''PÁGINA'' 
+
+     DE 
+
+     'index.js' 
+
+     DE 'auth' 
+
+     __É ___ RENDERIZADA (pq está enfiado 
+     
+     no meio 
+     
+     desse component/página,
+     
+     como visto 
+     
+     no código
+     
+     
+     '''''''''''
+     
+     
+             return(
+            <div>
+            <h1>The Auth Index Page</h1>
+            <User name="xxxx" age="yyyy" /> ////////EIS O CÓDIGO EM QUESTÃO.
+            <p>Go to <Link href="/"><a>Main Page</a></Link></p>
+            <button onClick={() => router.push('/')}>Go to Main Page</button> 
+          </div>
+        )   
+     
+     '''''''''''''''''
+     
+     
+     
+     
+     )
+ )
+
+
+
+
+
+
+
+
+ CERTO... ACHO QUE ENTENDI.
+
+
+
+
+
+
+
+ ---------> O LAZY LOADING DO REACT.JS É MUITO BOM...

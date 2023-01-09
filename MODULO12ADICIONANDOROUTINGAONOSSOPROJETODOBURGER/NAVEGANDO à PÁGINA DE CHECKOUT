@@ -1,0 +1,1063 @@
+
+
+
+
+
+
+
+
+
+NA ÚLTIMA AULA, O PROFESSOR SETTOU ROUTING NO NOSSO PROJETO... 
+
+
+
+
+
+
+
+
+
+
+
+
+agora ele vai querer MELHORAR ISSO.... --------> ele quer que NÓS REALMENTE SEJAMOS 
+
+
+NAVEGADOS 
+
+aTÉ 
+
+
+'Checkout' 
+
+
+QUANDO 
+
+
+AQUELE 
+
+LINK 
+
+
+DE 
+
+'Continue' 
+
+
+NO OrderSummary é clicado...
+
+
+
+--------------------
+
+
+
+Ok, parece que meu 
+
+CÓDIGO FICOU TODO ERRADO... eu havia escrito algo como isto (em 'OrderSummary'):
+
+
+        return (
+            <Aux>
+            <h3>Your Order</h3>
+            <p>A delicious burger with the following ingredients:</p>
+            <ul>
+                <li>{capitalizeFirstLetter(ingredientSummary[0][0])}: {props.ingredients.salad}</li>
+                <li>{capitalizeFirstLetter(ingredientSummary[1][0])}: {props.ingredients.bacon}</li>
+                <li>{capitalizeFirstLetter(ingredientSummary[2][0])}: {props.ingredients.cheese}</li>
+                <li>{capitalizeFirstLetter(ingredientSummary[3][0])}: {props.ingredients.meat}</li>
+            </ul>
+            <h2>Total Price: $ {props.price.toFixed(2)}</h2>
+            {/* <button onClick={this.props.clicked}>CANCEL</button>
+            <button>CONTINUE</button> */}
+            <Link to="/checkout">
+            {/* <Button clicked={props.success} btnType="Success"> */}
+            <Button btnType="Success">
+            CONTINUE
+            </Button>
+            </Link>
+            <Button clicked={props.clicked} btnType="Danger">
+            CANCEL
+            </Button>
+    
+            </Aux>
+
+)
+
+
+------------------------------------------------
+
+
+
+
+
+
+CONTUDO, APARENTEMENTE ESSE MEU CÓDIGO ESTÁ ERRADO...
+
+
+
+
+
+
+--> o professor vai até o código de 'BurgerBuilder'... ----->
+
+
+
+AÍ ELE 
+
+VAI 
+
+LÁ 
+
+
+e sublinha aquele 
+
+método 
+
+
+de 
+
+
+'this.purchaseContinueHandler...'
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+     modalContent = (<OrderSummary ingredients={this.state.ingredients} 
+      price={this.state.totalPrice} 
+      
+      clicked={this.purchaseCancelHandler} 
+      
+      
+      success={this.purchaseContinueHandler}></OrderSummary>) //2
+    }
+
+
+    if (this.state.loading) { //3
+      modalContent = <Spinner />
+   }
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+E O CÓDIGO DESTE MÉTODO É:
+
+
+
+purchaseContinueHandler = () => { 
+    
+    this.setState({
+      loading: true
+    })
+  
+  
+  const orderData = {
+      
+      ingredients: this.state.ingredients,
+    price: this.state.totalPrice,
+      customer: {
+        name: 'Max schwarzmuller',
+        address: {
+          street: 'Teststreet 1',
+          zipCode: '41351',
+          country: 'Germany'
+        },
+        email: 'test@test.com'
+      },
+
+      deliveryMethod: 'fastest'
+  
+  
+  
+  }
+  
+  
+  
+  axiosOrder.post('/orders.json', orderData).then(
+
+    (response) => {
+      this.setState({
+        loading: false,
+        purchasing: false
+      });
+    }
+  )
+  .catch(error => {
+    this.setState(
+      {
+        loading: false,
+        purchasing: false
+      }
+    )
+  }
+  )
+
+}
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+professor explica que dentro 
+
+
+desse 
+
+'purchaseContinueHandler'
+
+
+É 
+
+
+O LUGAR EM QUE 
+
+
+
+DEFINIMOS O STATE DA PROPRIEDADE 'loading' como 'true',
+
+
+e onde 
+
+NÓS 
+
+
+'PLACE OUR ORDER'
+
+
+e então 
+
+
+
+
+ENVIAMOS UM HTTP REQUEST (com essa order)
+
+
+à WEB... ----------> O professor então diz 
+
+
+
+QUE 
+
+VAI COMENTAR TODO ESSE CÓDIGO NO INTERIOR 
+
+
+DE 
+'purchaseContinueHandler' PARA ___fORA ___ DO CÓDIGO___... (isso pq ele ainda vai querer MAIS UMA PÁGINA, mais uma 'checkout form', antes de enviar nossa 'order' à web...)
+
+
+
+
+--> ele diz que vai comentar para fora esse código aí pq ELE NÃO VAI QUERER IMEDIATAMENTE ARMAZENAR 
+
+NOSSA 
+
+ORDER NO FIREBASE...
+
+
+
+
+ex:
+
+
+
+
+
+
+purchaseContinueHandler = () => {
+    
+  //   this.setState({
+  //     loading: true
+  //   })
+  
+  
+  // const orderData = {
+      
+  //     ingredients: this.state.ingredients,
+  //   price: this.state.totalPrice,
+  //     customer: {
+  //       name: 'Max schwarzmuller',
+  //       address: {
+  //         street: 'Teststreet 1',
+  //         zipCode: '41351',
+  //         country: 'Germany'
+  //       },
+  //       email: 'test@test.com'
+  //     },
+
+  //     deliveryMethod: 'fastest'
+  
+  
+  
+  // }
+  
+  
+  
+  // axiosOrder.post('/orders.json', orderData).then(
+
+  //   (response) => {
+  //     this.setState({
+  //       loading: false,
+  //       purchasing: false
+  //     });
+  //   }
+  // )
+  // .catch(error => {
+  //   this.setState(
+  //     {
+  //       loading: false,
+  //       purchasing: false
+  //     }
+  //   )
+  // }
+  // )
+
+
+
+
+
+
+}
+
+
+
+-----------------------------------
+
+
+
+
+
+
+Certo.... -----------> o professor afirma que 
+
+ELE VAI QUERER, EM VEZ DISSO, 
+
+
+IR 
+
+
+ATÉ O COMPONENT 
+
+DE 
+
+
+'CHECKOUT'... ---------> isso feito, 
+
+professor 
+
+explica que 
+
+
+COMO 
+
+
+
+'BurgerBuilder' 
+
+ESTÁ __WRAPPADO___ EM 
+
+
+
+'BrowserRouter',
+
+
+
+
+NÓS 
+
+temos acesso 
+
+
+ÀQUELES PROPS/PROPRIEDADES 
+
+
+especiais 
+
+de 
+
+
+
+'match',
+
+'location'
+
+
+
+e 
+
+
+'history'... ------------> PARA PROVAR 
+
+
+A EXISTÊNCIA DESSES PROPS, 
+
+o professor 
+
+
+
+adiciona 
+
+um 
+
+
+'console.log(this.props)'
+ 
+
+ dentro 
+
+ do 
+
+
+
+ COMPONENTDIDMOUNT 
+
+
+ de 
+
+ 'BurgerBuilder'....
+
+
+
+
+
+
+--> e realmente, vamos ver essas propriedades mostradas no console, graças a esse console.log...
+
+
+
+
+
+
+
+
+
+
+
+
+--> CONTUDO, CONFORME DEVEMOS NOS LEMBRAR,
+
+
+
+OS 'ROUTING RELATED PROPS' (match, history e location...) 
+
+
+
+SÓ FICAM DISPONÍVEIS 
+
+NO 
+
+
+'PARENT COMPONENT' WRAPPADO PELO BROWSERROUTER... -------> isso significa que 
+
+
+SE NÓS 
+
+
+
+ENFIARMOS UM 'console.log(props)' 
+
+LÁ NO COMPONENT 'bURGER' (qUE É UM CHILD COMPONENT DE 'BurgerBuilder'),
+
+ 
+
+
+ NÓS NÃO VAMOS VER ESSASS PROPRIEDADES ESPECIAIS... --------> para que CONSIGAMOS VER ESSAS PROPRIEDADES 
+
+ ESPECIAIS 
+
+
+
+ EM 
+
+ 'CHILD COMPONENTS' de 'BurgerBuilder' 
+
+ e 
+
+ 'Checkout',
+
+
+
+ NÓS __VAMOS PRECISAR ___ WRAPPAR ___ ESSES CHILD COMPONENTS EM UM OBJETO ESPECIAL, AQUELE 
+
+
+
+OBJETO IMPORTADO DO 
+
+'react-router-dom',
+
+
+O OBJETO 
+
+
+
+
+ 'withRouter()' -------> faremos isso para GANHAR ACESSO 
+
+
+
+ À 
+
+
+ 'match',
+
+
+ 'location'
+
+
+
+ e 
+
+
+ 'history', nos props desses child components...
+
+
+
+
+
+
+
+
+
+
+
+
+ OK, mas como usamos/importamos esse objeto? ---> simples, 
+
+
+ é só 
+
+
+ escrever 
+
+
+
+ 'import { withRouter } from 'react-router-dom'; 
+
+
+
+
+ NO LUGAR/ARQUIVO/CHILD COMPONENT 
+
+ EM QUE 
+
+
+ QUEREMOS O UTILIZAR.... -------> feito esse import,
+
+
+ você 
+
+
+
+ deve 
+
+ WRAPPAR 
+
+ O ___eXPORT____ DESSE CHILD COMPONENT __ COM 
+
+
+
+ ESSE OBJETO AÍ... --------> 
+
+
+ tipo assim(exemplo do módulo passado):
+
+
+
+
+-----------------------------------------------------
+
+
+
+import React from 'react';
+
+import './Post.css';
+
+
+import { withRouter } from 'react-router-dom'; ///////////EIS O CÓDIGO EM QUESTÃO.
+
+const post = (props) => {
+    // console.log(props);
+    return (
+
+    <article className="Post" onClick={props.clicked}>
+        <h1>{props.title}</h1>
+        <div className="Info">
+            <div className="Author">{props.author}</div>
+        </div>
+    </article>
+    );
+
+    }
+
+export default withRouter(post);  //////////////////EIS O CÓDIGO EM QUESTÃO.
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+
+ISSO (essa ausência de 'route-related props' NATIVAMENTE nos child components) 
+
+ocorre 
+
+pq 
+
+
+___SÓ __ AS 'DIRECT ROUTES' (routes IMEDIATAS, bem juntinhas do BrowserRouter),
+
+como 
+
+
+'BurgerBuilder' e 
+
+
+'Checkout', nesse nosso projeto; 
+
+
+ou seja,
+
+OS COMPONENTS __CONECTADOS __ DIRETAMENTE___ 
+
+AO 
+
+'BrowserRouter',
+
+é 
+
+que 
+vao receber 
+
+
+esses props nativamente....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------> e, agora, O PROFESSOR QUER CONSEGUIR ALGUNS DESSES 'ROUTING RELATED PROPS'
+
+
+lá no component 
+
+
+'Burger'... (filho de 'BurgerBuilder')...
+
+
+
+
+
+
+para isso, ele escreverá:
+
+
+
+
+-------------------------------------------------------
+
+
+import React from 'react';
+
+import BurgerStyle from './Burger.module.css';
+
+import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
+
+
+import { withRouter } from 'react-router-dom'; /////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+
+
+
+
+const burger = props => {
+
+  
+  
+
+  let transformedIngredients = Object.keys(props.ingredients)
+  .map(igKey => {
+    return [...Array(props.ingredients[igKey])].map(
+
+      ( _, i ) => {
+        return <BurgerIngredient key={igKey + i} type={igKey} />
+      }
+    
+
+    
+    )
+  }
+  ).reduce(
+    (arr, el) => {
+      return arr.concat(el)
+    },
+    []);
+  
+
+
+
+  if (transformedIngredients.length === 0) {
+    transformedIngredients = <p>Please start adding ingredients!</p>
+  }
+
+
+
+
+
+
+
+
+  return (
+  
+    <div className={BurgerStyle.Burger}>
+      <BurgerIngredient type="bread-top" />
+            {transformedIngredients}
+      <BurgerIngredient type="bread-bottom" />
+    </div>
+  );
+};
+
+
+
+
+
+export default withRouter(burger); ////////EIS O CÓDIGO EM QUESTÃO....
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+AGORA SIM, VAMOS RECEBER AQUELES PROPS...
+
+
+
+
+
+
+
+
+
+
+---> teremos 
+
+'match', a propriedade 
+
+'match'
+
+
+de 
+
+
+'Burger'... ------> a propriedade 
+
+'MATCH'
+
+
+
+sempre nos __MOSTRA__ O 'NEAREST MATCH'; ou seja,
+
+
+NOS MOSTRA A 'NEAREST ROUTE QUE FOI MATCHEADA NO PASSADO'.... ----> nesse caso, 
+
+É 
+
+
+
+'/' (pq isso aí é que carregou o BURGERBUILDER, que é a coisa que 
+
+CARREGOU ESSE COMPONENT cHILD 'Burger'...)
+
+
+
+
+
+
+
+
+
+
+
+-------> E ISSO ERA ALGO QUE O PROFESSOR QUERIA COMPARTILHAR CONOSCO: 
+
+
+nós vamos utilizar esse recurso mais tarde, quando ELE FOR REALMENTE NECESSÁRIO,
+
+
+
+
+
+mas ele só queria nos mostrar esse pequeno truque agora.... -----> qual truque? ------> 
+
+
+
+ESSE TRUQUE AÍ,
+
+do 
+
+
+
+'withRouter(objeto/childComponentEmQueVocêQuerAcessarRoutingRelatedProps)' -----------> 
+
+
+
+
+ESSE TRUQUE É BOM PARA 
+
+
+CASOS EM QUE 
+
+VOCÊ NÃO QUER TER QUE 
+
+PASSAR MANUALMENTE routing related PROPS dos 'parent components' para 
+os 'child components'... (nós já vimos isso, é aquela sintaxe de (ex):  '<Burger {...this.props} />'...)
+
+
+
+
+---------------------------
+
+BEM, DE VOLTA A NOSSA TAREFA ORIGINAL... ------> 
+
+
+
+
+no burgerbuilder container,
+
+
+
+
+NAQUELE MÉTODO 
+
+'purchaseContinueHandler',
+
+
+que é executado QUANDO CLICAMOS 
+
+EM 
+
+'Continue',
+
+
+
+
+ALI O PROFESSOR NOS DIZ que podemos 
+
+
+acessar/executar
+
+
+'this.props.history.push()' ---------->
+
+
+
+
+VAMOS USAR 
+
+
+
+
+O PROP/MÉTODO 
+
+
+'.push', que 
+
+
+NOS 
+
+
+
+PERMITE 
+
+
+
+''''EMPURRAR''' 
+
+
+O USUÁRIO 
+
+
+PARA 
+
+UM NOVO PATH/URL, fazendo com que ele acesse uma NOVA ROUTE no nosso aplicativo....
+
+
+
+
+
+
+a route que vamos 'pushar', é claro, é 
+
+'/checkout'...
+
+
+
+
+
+
+
+
+
+---- o método 
+
+
+'push()'
+
+
+
+
+
+EMPURRA 
+
+ESSA 
+
+
+
+PÁGINA '/posts' 
+
+PARA CIMA DO NOSSO STACK (ele empilha essa página sobre todas as outras, por isso que podemos clicar 
+
+' <--' no browser e então retroceder a páginas mais antigas/anteriores...).
+
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+CERTO, 
+
+
+SALVAMOS ESSE NEGÓCIO... ----------> 
+
+
+
+eu clico em 'continue', e então vamos/somos direcionados até a página de CHECKOUT...
+
+
+
+
+
+
+
+
+
+
+---> o professor explica que ele vai deixar aquele link bosta/inutilizado de 
+
+
+'Checkout' ali em cima na direita pq __ELE LOGO VAI O SUBSTITUIR POR UM 
+
+LINK 
+
+'MY ORDERS'...
+
+
+
+
+
+
+
+
+
+--> entretanto,
+
+
+ele quer adicionar MAIS FUNCIONALIDADES... ELE QUER QUE 
+
+QUANDO NÓS CLIQUEMOS 
+
+NO BOTÃO 
+
+
+
+'cancel'
+
+
+lá 
+
+
+no 
+
+
+'Checkout' (esse component/container aí...) 
+
+
+NÓS 
+
+SEJAMOS 
+
+
+REDIRECIONADOS 
+
+___PARA___ 
+
+O 'BurgerBuilder' (Essa página/container...).
+
+
+
+
+
+--> e quando clicamos em 'continue', deverá ser mostrada uma FORM, uma form 
+
+EM QUE 
+
+PODEMOS 
+
+INSERIR ALGUNS DADOS (endereço, pagamento, etc etc....).
+

@@ -1,0 +1,268 @@
+
+
+
+
+
+
+
+
+
+---> CERTO, 
+
+
+ENTÃO COMO É FEITO O SEND DE HTTP REQUESTS 
+
+
+NO REACT.?
+
+
+
+
+
+---> COMO ISSO FUNCIONA? 
+
+
+
+
+
+--> como ____''''TIPICAMENTE''''___ ISSO FUNCIONA????  (tipicamente --> quando falamos de SINGLE-PAGE APPLICATIONS ('SPAs'))
+
+
+
+
+
+
+
+
+
+
+---> ''''''TIPICAMENTE''''', pq se VOCê 
+
+
+___ESTIVER_ __ CONSTRUINDO UMA 
+
+____MULTI-PAGE APPLICATION___ (uma página padrão, com várias 
+
+páginas, que faz reload para cada uma),
+
+
+
+NÃO HAVERÁ NADA DE ESPECIAL NESSE 
+
+
+SEND DE HTTP REQUESTS... (ele será 
+
+o mesmo send de http requests visto em uma página comum.) -----> nesses casos, você 
+
+
+
+PROVAVELMENTE VAI TER UM APLICATIVO/PÁGINA EM QUE VOCÊ 
+
+
+FAZ O SUBMIT DE UMA FORM, e isso aí vai mandar UM HTTP REQUEST __AO BACKEND__, E ESSE 
+
+REQUEST, POR SUA VEZ, VAI SUSCITAR UMA __RESPONSE DO SERVIDOR__, RESPONSE QUE 
+
+TIPICAMENTE SERÁ UMA 
+
+__NOVA PÁGINA HTML___... (e essa página retornada pela response poderá, potencialmente, ter 
+
+MAIS CÓDIGO REACT/NOVO CÓDIGO REACT NO SEU INTERIOR..)
+
+
+
+
+--> NESSES CASOS ESPECÍFICOS (casos 'frau'),
+
+
+NÓS 
+
+
+__NÃO TEMOS UMA SINGLE-PAGE APPLICATION, 
+
+
+E NÓS 
+
+
+
+NÃO TEMOS UM 
+'STRONG DECOUPLING' (decoupling browserside-serverside)
+
+ACONTECENDO....
+
+---------------------------------------------------------
+
+
+
+
+
+
+
+---> MAS SE VOCê ___REALMENTE__ TEM/TIVER UMA 
+
+
+SINGLE-PAGE APPLICATION, AÍ VOCê 
+
+TERÁ/TEM 
+
+
+__UMA FORTE DIFERENCIAÇÃO__ ENTRE 
+
+O SEU 'FRONTEND'/seu react APP 
+
+
+e 
+
+__O SEU BACKEND__/serverside... 
+
+
+
+---------------------------------
+
+
+
+
+OK. Quero uma explicação...
+
+
+
+
+
+
+
+
+Professor explica que O SERVIDOR(backend) 
+
+e o 
+
+
+REACT APP (browserside) 
+
+
+AINDA 
+
+
+PRECISAM SE COMUNICAR, DE TEMPOS EM TEMPOS.... ------> ENTRETANTO, 
+
+
+ELES NÃO SE COMUNICAM PELO '''EXCHANGE''' DE PÁGINAS HTML, 
+
+COMO 
+
+
+AS 'MULTI-PAGE APPLICATIONS'' FAZEM... --------------------------> 
+
+
+
+
+
+EM OUTRAS PALAVRAS: SE 
+
+
+UM REACT APP __ENVIA __ UM HTTP REQUEST A UM SERVIDOR, 
+
+
+ELE NÃO 
+
+___RECEBE___ DESSE SERVIDOR 
+
+
+UMA PÁGINA HTML PROPRIAMENTE DITA... -----> em vez de receber 
+
+uma página 
+
+HTML,
+
+
+o que 
+
+o nosso react app vai 
+
+
+RECEBER ___ SERÁ __ JSON DATA__.... (tipicamente JSON DATA)....
+
+
+
+
+
+
+
+
+OU, ALTERNATIVAMENTE, SEU REACT APP ___ENVIA ALGUNS __ DADOS 'JSON' AO SERVIDOR (isso quando 
+
+você/o react app QUER __cRIAR ALGUNS RECURSOS/COISAS NO SERVIDOR EM SI__, POR EXEMPLO....)
+
+
+
+
+
+
+
+
+---> certo,
+
+E É ASSIM QUE ESSE NEGÓCIO (O DECOUPLING) FUNCIONA,
+
+
+É ASSIM QUE OCORRE O FLOW DE DADOS COM ESSA MODALIDADE DE APLICATIVO, COM OS 'SPAs'...
+
+
+
+
+
+
+
+REACT APP ---- (http request) ---> SERVER 
+ REACT   <------- (JSON DATA) ------ SERVER
+
+
+
+
+ -----> certo, com esse decoupling,
+
+
+
+
+ QUANDO ESTABELECIDO/CODADO,
+
+
+
+ SEU ___sERVER___ GERALMENTE (mais comum) OCORRE 
+
+
+ QUE SEU ___ SERVER ________ É/SERÁ UMA APLICAÇÃO 
+
+
+
+
+ DE UMA 
+
+
+ 'RESTFUL API'... -------> ISSO SIGNFICA QUE 
+
+
+
+ __SEU SERVIDOR __ SERÁ SIMPLESMENTE UM BACKEND QUE 
+
+ ___DEIXARÁ __EXPOSTOS __ ALGUNS 
+
+
+'API ENDPOINTS' AOS QUAIS VOCÊ/O USUÁRIO 
+
+PODE/PODERÁ 
+
+MANDAR, por meio do seu  STANDALONE BROWSERSIDE/REACT APP,
+
+
+REQUESTS  __PARA ___ CONSEGUIR DAR FETCH/ENVIAR DADOS (tvz json?) __ 
+
+
+
+
+------------------------------------------
+
+
+
+É ESTE O APPROACH QUE O PROFESSOR NOS MOSTRARÁ 
+
+NESTE MÓDULO.

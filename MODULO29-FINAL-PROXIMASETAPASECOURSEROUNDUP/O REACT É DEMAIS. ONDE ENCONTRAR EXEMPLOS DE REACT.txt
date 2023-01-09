@@ -1,0 +1,146 @@
+
+
+
+
+
+
+
+
+
+
+----> PRIMEIRA DICA:
+
+
+'react.rocks'... -> É UMA 
+
+
+WEBPAGE 
+
+QUE 
+
+
+TEM UM MONTE DE 
+
+PROJETOS 
+
+REACT... --------> 
+
+
+VOCÊ 
+
+PODE 
+
+
+
+BOTAR KEYWORDS NO SEARCH, como 
+
+'redux',
+
+PARA 
+
+ENTÃO 
+
+ENCONTRAR 
+
+PROJETOS 
+
+
+QUE 
+
+VOCÊ PODE CHECAR... ---------> VOCê 
+
+CLICA 
+
+
+
+
+nos negócios,
+
+
+E AÍ 
+
+VOCÊ 
+
+
+
+
+
+ENCONTRA LINKS DE DEMONSTRAÇÃO,
+
+
+
+
+para ver como eles foram feitos....
+
+
+
+
+
+
+
+---> ELE TE LEVA A LINKS DO GITHUB,
+
+e aí 
+
+
+podemos 
+
+ver 
+
+o código 
+
+escrito 
+
+por 
+
+outros 
+
+
+desenvolvedores react.... ------> esses 
+
+códigos 
+
+podem 
+
+te 
+
+dar algumas ideias 
+
+sobre 
+
+como 
+
+
+
+
+melhorar seus apps...
+
+
+
+
+
+
+
+
+
+----> outra ideia 
+é 
+
+PEGAR O VISUAL DE ALGUM DESSES APPS 
+
+E ENTÃO 
+
+TENTAR 
+
+O CONSTRUIR POR CONTA PRÓPRIA,
+
+sem olhar o código...
+
+
+(depois comparamos nossa solução com a solução do autor...)
+
+
+
+
+
+------------------

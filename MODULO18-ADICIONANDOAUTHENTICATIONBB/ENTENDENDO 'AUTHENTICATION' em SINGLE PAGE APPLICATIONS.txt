@@ -1,0 +1,853 @@
+
+
+
+
+COMO AUTHENTICATION FUNCIONA EM 'SPAs'?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> OK, mas como authentication funciona 
+
+
+em 
+
+SINGLE PAGE APPLICATIONS?
+
+
+
+
+
+
+
+
+
+---> BEM, NÓS TEMOS 1 SERVER 
+
+
+e 
+
+
+
+1 
+
+
+SINGLE PAGE APPLICATION RODANDO NO BROWSER DO INDIVÍDUO....
+
+
+
+
+ex:
+
+
+
+
+
+
+| SERVER | 
+
+    ^
+    |
+    |
+    |
+    V
+
+| SPA  |
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+--> BEM... o SPA manda a 'authentication data'  ('Auth')
+
+
+
+AO 
+
+SERVIDOR... --> essa authData é enviada PROVAVELMENTE 
+
+POR UMA PÁGINA 'SIGN-UP'/'SIGN-IN' no nosso 
+
+
+SPA... ----> e aí, nesse campo,
+
+
+NÓS 
+
+
+
+VAMOS PROVAVELMENTE CONSEGUIR 
+
+O 
+
+'email address' 
+
+e o 
+
+'password' do usuário... ------> E NÓS 
+
+
+ENTÃO 
+
+
+ENVIAMOS 
+
+
+ISSO 
+
+AO SERVIDOR,
+ 
+ PARA 
+
+ SER VALIDADO LÁ,
+
+
+ pq 
+
+ LÓGICAS COMO ESSAS, DE VALIDAÇÃO,
+
+ SEMPRE 
+
+
+ DEVEM OCORRER POR LÁ.... ---> tbm 
+
+ pq 
+
+ LÁ 
+
+ É 
+
+ ONDE 
+
+ NÓS 
+
+ ARMAZENAMOS 
+
+ A 
+
+ 'PERSISTENT DATA' 
+
+ 
+
+ do aplicativo,
+
+
+ dentro da 'DATABASE NO SERVER'........... --> E O SERVIDOR,
+
+ É CLARO, 
+
+
+ NÃO PRECISA OBRIGATORIAMENTE SER 
+ 'FIREBASE' (que é o que utilizamos no nosso projeto...).
+
+
+
+ -----------------------------------
+
+
+
+ NÃO, NOSSO SERVIDOR NÃO PRECISA SER 'FIREBASE'... --> ele pode ser QUALQUER SERVIDOR... 
+
+
+ PARA SER MAIS __PRECISO__, 
+
+ NOSSO SERVIDOR PODE SER __QUALQUER___ RESTFUL API___....
+
+
+
+
+
+
+
+
+ RESTFUL API... -------> NOS COMUNICAMOS GERALMENTE COM 'RESTFUL APIs' 
+
+ QUANDO 
+
+ UTILIZAMOS/CODAMOS 
+
+
+ SINGLE PAGE APPLICATIONS... -----> ISSO FEITO,
+
+ O 
+
+
+
+ SERVIDOR 
+
+
+
+ ENTÃO 
+
+ ENVIA 
+
+ ALGO DE VOLTA...
+
+
+
+
+
+ ex:
+
+
+
+
+
+ 
+| SERVER | 
+
+    ^       |
+    |       |
+    |       |
+  auth      |
+    |       |
+            V
+
+| SPA  |
+
+
+-------------------------
+
+
+
+
+
+
+
+VOCê PODERIA CHUTAR QUE 
+
+O QUE 
+
+O 
+
+SERVIDOR ENVIA DE VOLTA É UMA 
+
+'session'.... ENTRETANTO, 
+
+
+COMO 
+
+
+
+OS___ SERVIDORES__, NO MUNDO DAS SPAs, __ GERALMENTE 
+
+É 
+
+
+UMA  
+
+
+'STATELESS RESTFUL API',
+
+
+
+ 
+
+ NÓS __NÃO VAMOS __ RECEBER 
+
+ UMA 
+
+ 'SESSION' DE SUA 'RESPONSE'... --> não vamos receber 
+
+
+ uma 
+
+
+ SESSION JUSTAMENTE ___ PQ O __ SERVER, o servidor de tipo 'restful api', que é stateless,
+
+
+TIPICAMENTE __NÃO SE IMPORTA_ _  COM 
+
+OS 
+
+DIFERENTES 
+
+CLIENTES 
+
+CONECTADOS 
+
+A ELE.... ------------------------> NÃO, EM VEZ DISSO, O QUE 
+
+É 
+
+RECEBIDO 
+
+DO 
+
+
+SERVIDOR 
+
+É __UMA _TOKEN___....
+
+
+
+
+
+
+ex:
+
+
+
+
+
+| SERVER | 
+
+    ^       |
+    |       |
+    |       |
+  auth      TOKEN
+    |       |
+            V
+
+| SPA  |
+
+
+
+-----------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+A 'token', qualquer token,
+
+DEVE 
+
+SER 
+
+__PENSADA COMO UM OBJETO JAVASCRIPT__.... -----> 
+
+
+
+
+
+
+A TOKEN VAI SEMPRE SER __ UM OBJETO JAVASCRIPT __ ENCODADO COMO 
+
+'.JSON'... ---> OU SEJA,
+
+
+'JSON WEBTOKENS' 
+
+são tipicamente 
+
+O FORMATO DE TOKENS QUE É RECEBIDO PELOS USUÁRIOS....
+
+
+
+
+
+---------------------------
+
+
+
+
+certo, a token, RESPONDIDA/retornada pelo 'server',
+
+
+esse objeto javascript, 
+
+
+É 
+
+
+ENTÃO ARMAZENADA 
+
+
+
+____NO CLIENT__ DO USUÁRIO... ----> um lugar comum, por exemplo,
+
+
+é 
+
+
+
+o __LOCALSTORAGE___.... --> as tokens são armazenadas NESSE LOCAL...
+
+
+
+
+
+
+localStorage... ---------------------> PROFESSOR 
+
+NOS 
+
+
+EXPLICA QUE 
+
+
+OUTRO 
+
+
+LUGAR 
+
+POSSÍVEL
+ 
+
+
+ É 
+
+
+ A 
+
+ 'REDUX STORE',
+
+ mas 
+
+
+ esse local 
+
+
+ NÃO É IDEAL/NÃO É BOM, 
+
+
+
+
+ pois 
+
+
+  
+
+
+  O REDUX STORE __sempre __ É PERDIDO __ QUANDO O USUÁRIO REFRESHAR/DEIXAR A PÁGINa.... --------> 
+
+
+  já 
+
+  com o 'localStorage',
+  ISSO __NÃO ACONTECE__...
+
+
+
+
+
+
+
+
+
+  ---------> nós usamos o 'localStorage' pARA ARMAZENAR TOKENS __PQ os dados 
+
+
+  ARMAZENADOS LÁ 'PERSISTEM' (persists),
+
+  O QUE 
+
+  SIGNIFICA QUE ELES TIPICAMENTE __ RESISTEM A PAGE REFRESHES__... ====> e isso 
+
+  permite 
+
+  REUTILIZAR/FAZER RE-FETCH DAQUELA __TOKEN___ MESMO QUE O USUÁRIO EVENTUALMENTE 
+
+  SAIA 
+
+  DE NOSSA PÁGINA (saia da página, mas não feche o browser...) --> se a token for realmente 
+
+  armazenada 
+
+  no 
+
+  'localStorage' ( o que é o ideal),
+
+  o USUÁRIO 
+
+
+
+
+  VAI CONTINUAR LOGGADO NA PÁGINA, mesmo que saia dela... (se ele revisitar mais tarde,
+  ainda estará loggado...)
+
+
+
+   
+
+   -----------------------------------
+
+
+
+
+
+OK, MAS PQ DIABOS PRECISAMOS DESSE TOKEN, na realidade?
+
+
+
+
+
+
+--> bem, imagine que ESTAMOS 
+
+
+__FAZENDO requests__ a UM 'PROTECTED RESOURCE' 
+
+
+no nosso server... --> como, por exemplo, TENTATIVAS 
+
+
+DE 
+
+
+MUDANÇA DE PASSWORD, OU ENTÃO UM REQUEST PARA __cRIAR UM NOVO 'BLOG POST'_... ---> 
+
+requests como esses, é óbvio,
+
+
+
+TIPICAMENTE 
+
+
+SÓ SÃO PERMITIDOS A USUÁRIOS AUTENTICADOS... ----> 
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+
+| SERVER | 
+
+    ^       |
+    |       |
+    |       |
+  auth      TOKEN
+    |       |
+   |        V ------> |
+request               |
+privilegiado          |
+                      |
+ | SPA  | <-----------LOCAL STORAGE   
+
+
+
+
+--------------------------
+
+
+
+
+
+
+
+
+certo.... 
+
+
+E ESSAS FEATURES/REQUESTS 
+
+
+SÓ 
+SÃO PERMITIDOS 
+
+
+A USUÁRIOS 
+
+
+
+AUTENTICADOS... ---> E COMO NÓS ___NÃO CHECAMOS CONSTANTEMENTE o 
+
+
+
+STATUS DE AUTENTICAÇÃO NO SERVIDOR (pq NÃO TEMOS 'SESSION' no servidor),
+
+o que 
+
+nós tipicamente fazemos é __PASSAR __ A TOKEN ___ JUNTO DOS REQUESTS __ FORMULADOS 
+
+PELO USUÁRIO...
+
+
+
+
+
+
+
+
+OU SEJA, 
+
+
+É ISTO QUE ACONTECE:
+
+
+
+
+
+
+
+| SERVER | 
+
+    ^       |
+    |       |
+    |       |
+  auth      TOKEN
+    |       |
+   |        V ------> |
+request               |
+privilegiado          |
+                      |
+    +                 |
+                       |
+    TOKEN              |
+                       |
+     |                 |
+     |                 |
+ | SPA  | <----------- LOCAL STORAGE  (token é armazenada aqui.)
+
+
+
+
+
+
+ ------------------------------------
+
+
+
+
+
+
+
+
+ O 'REQUEST' pedindo por conteúdo privilegiado 
+
+
+
+ __É ENVIADO JUNTO DE UM __TOKEN__... 
+
+
+
+
+
+
+
+
+ ---> E ESSE TOKEN AÍ (e isso é IMPORTANTE; CRUCIAL) 
+
+
+
+ É __cRIADO __ PELO SERVIDOR___... --> e ele é __cRIADO  
+
+
+ DE UMA 
+
+
+ MANEIRA 
+
+ QUE 
+
+ O 
+
+
+ SERVIDOR 
+
+
+ __CONSEGUE __vERIFICAR___... ---> servidor consegue VERIFICAR __ SE 
+
+ ESSE TOKEN AÍ __ É UM 'TOKEN VÁLIDO' (criado pelo servidor )_ OU __INVÁLIDO... (não foi criado por aquele servidor)
+
+
+
+
+
+ --> OU SEJA... ---> O SERVIDOR TEM AS PRERROGATIVAS DE:
+
+
+ 1) CRIAR O TOKEn 
+
+
+
+ 2) PASSAR O TOKEN AO USUÁRIO 
+
+
+
+ 3) CHECAR A VALIDADE DO TOKEN, RECONHECER SE ELE É FALSO/VÁLIDO... (Criado por ele....).
+
+
+
+
+
+ ---------------------- 
+
+
+ isso ,
+
+ esse flow aí,
+
+
+ BASICAMENTE 
+
+
+ SIGNFIICA QUE 
+
+
+
+ ________ NÓS NÃO PODEMOS __ CRIAR/FAKAR ESSE 
+
+ TOKEN 
+
+ NO NOSSO 
+
+ 'CLIENT'... ---> não podemos criar essa token no nosso 
+
+ client,
+  
+  isso não funciona... 
+
+
+
+
+
+
+
+
+
+
+  RESUMINDO:
+
+
+
+
+
+  SÓ __ A TOKEN _____cRIADA PELO SERVIDOR__ É ACEITA __ NO SERVIDOR ___ (só a token criada POR AQUELE DETERMINADO SERVIDOR É ACEITA NELE....)
+
+
+
+
+
+
+
+
+
+
+  --> É ASSIM, PORTANTO,
+
+   
+
+   que 
+
+   NOS 
+
+   AUTENTICAMOS 
+
+   EM 
+
+   'REQUESTS' posteriores... (em requests ___DEPOIS __ DE TERMOS RECEBIDO 
+   AQUELE 
+   
+   TOKEN....) ------> E ESSE É O _ PADRÃO QUE VAMOS IMPLEMENTAR_ __ 
+
+
+   DURANTE 
+
+   ESTE MÓDULO.... -----> E NÓS 
+
+   VAMOS 
+
+   CONTINUAR 
+
+   USANDO 
+
+
+   O 
+
+   FIREBASE COMO BACKEND,
+
+   COMO 
+
+   ANTES, JUSTAMENTE 
+
+   pq 
+
+
+
+
+
+
+ELE É BEM FÁCIL DE SETTAR... ------> MAS O PADRÃO DO 'AUTHENTICATE REACT' 
+
+
+
+VAI 
+
+SER O MESMO ,
+
+
+VAI 
+
+SER SEMPRE ESTE AQUI,
+
+
+
+independentemente 
+
+
+
+do 
+
+
+aplicativo que você escrever/servidor-backend que utilizar... -------> 
+
+
+
+
+
+SE O SEU SERVIDOR É __UMA __ 'RESTFUL API', É UM SERVIDOR 
+
+'restful api', stateless,
+
+
+
+
+ELE __VAI SEGUIR 100% esse padrão que o professor nos ensinará...
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->OK , MAS QUAIS SÃO OS AJUSTES NECESSÁRIOS, NO NOSSO APP, 
+
+PARA TER 
+
+ESSA AUTENTICAÇÃO?

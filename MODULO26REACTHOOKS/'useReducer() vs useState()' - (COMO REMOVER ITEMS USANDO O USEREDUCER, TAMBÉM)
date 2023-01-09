@@ -1,0 +1,1168 @@
+
+
+
+
+
+--> PARA DELETAR ITEMS, 
+
+
+É CLARO, 
+
+
+VAMOS QUERER __ QUE __ CADA 
+
+
+ITEM __ '<li>'
+ 
+
+ NO NOSSO 
+
+ ARRAY 
+
+ FIQUE 
+
+ CLICKABLE/TENHA UM BOTÃO... -------> 
+
+
+
+
+
+ E 
+
+
+ em 
+
+ 'onClick',
+
+ PROFESSOR VAI QUERER 
+
+
+ EXECUTAR 
+
+ UM HANDLER 
+
+ ESPECÍFICO... --> 
+
+
+
+
+
+ ele vai querer 
+
+ escreverf
+  
+
+
+
+
+  'const todoRemoveHandler = todoId => {
+
+  }' 
+
+
+
+
+
+
+
+  (ELE VAI ESPERAR 
+  
+  'todoId' COMO UM PARâMETRO,
+  
+  COMO UM __IDENTIFICADOR __ PARA 
+  
+  DEPOIS __ FAZER 
+  
+  '.filter' 
+  
+  
+  DE NOSSA 
+  
+  TODOLIST 
+  
+  COM ESSE 
+  
+  ELEMENTO AÍ... --> isso lá NO REDUCER....)
+
+
+
+
+
+
+
+
+
+  ---------
+
+
+
+  CREIO QUE SERÁ TIPO ISTO AQUI:
+
+
+
+   const todoRemoveHandler = (todoId) => {
+    // setTodoList() 
+
+
+    dispatch(
+      {
+        type: 'REMOVE',
+        payload: {
+          id: todoId
+        }
+      }
+    )
+  }
+
+
+
+
+  E ISTO AQUI:
+
+
+
+
+
+
+      const todoListReducer = (state, action) => { ///ALTERNATIVA __SUPERIOR__ ao approach de usar 'useState()' para definir/managear nosso state....
+        switch(action.type) {
+          case 'ADD':
+            return state.concat(action.payload);
+
+            case 'SET': 
+            return action.payload;
+
+            case 'REMOVE':
+            return state.filter((todo) => { return todo.id !== action.payload.id});
+
+
+            default: 
+            return state;
+        }
+    }
+
+
+
+E ISTO
+
+AQUI:
+
+
+
+
+      <ul>
+        {todoList.map((todoItem, index) => {
+          return (
+            <li
+              // key={new Date().getTime() * Math.random()}
+              
+              key={todoItem.id}
+              style={{
+                listStyle: 'none',
+              }}
+            >
+              {todoItem.todoName}
+              <button onClick={() => {todoRemoveHandler(todoItem.id)}}></button> ///EIS O CÓDIGO EM QUESTÃO.
+            </li>
+          );
+        })}
+      </ul>
+
+
+------------------------
+
+
+
+
+E ISSO FUNCIONOU......
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+OK.... ------>
+
+
+
+
+SÓ TEVE UMA PEQUENA DIFERENÇA NO NOSSO CÓDIGO... --> o professor escreveu 'onClick={todoRemoveHandler.bind(this, todo.id)}', EM VEZ DE 'onClick={() => {todoRemoveHandler(todo.id)}}', como nós escrevemos...
+
+
+
+
+
+
+
+AGORA O PROFESSOR 
+VAI 
+
+FALAR 
+
+SOBRE 
+
+
+
+'useReducer() vs useState()'...
+
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+--> EVIDENTEMENTE,
+ 
+
+ ESSE ITEM __ SÓ ACABA REMOVIDO ___ NO FRONTEND... --> no BACKEND,
+
+ ele CONTINUA LÁ... --> 
+
+
+
+SE QUISÉSSEMOS/QUISERMOS DELETAR 
+
+UM ___ ELEMENTO LÁ NO BACKEND TAMBÉM,
+
+
+PRECISAMOS ENVIAR UM AXIOS REQUEST 
+LA´
+
+EM 
+
+'todoRemoveHandler'...
+
+
+
+
+
+
+
+
+
+
+axios.delete...
+
+
+axios.delete('url', {config})
+
+
+
+
+
+
+---------------------------
+
+
+
+
+TIPO ISTO AQUI,
+
+
+TALVEZ:
+
+
+
+
+    axios.delete(
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json', {
+          data: {
+            todos: todoId
+          }
+      }
+    )
+
+
+
+
+
+
+
+DENTRO 
+
+DESTE CÓDIGO AQUI:
+
+
+
+
+  const todoRemoveHandler = (todoId) => {
+    // setTodoList() 
+
+
+    axios.delete(
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json', {
+          data: {
+            todos: todoId
+          }
+      }
+    )
+
+    dispatch(
+      {
+        type: 'REMOVE',
+        payload: {
+          id: todoId
+        }
+      }
+    )
+
+
+  }
+
+
+
+
+
+
+
+
+
+  --> FIZ ALGO ERRADO... --> ele está DELETANDO __TODOS OS ITEMS__ por meio 
+
+  desse 
+
+  axios delete request, 
+
+  e não só o que desejamos...
+
+
+
+
+
+
+
+
+
+  --ok, não sei como fazer isso (pq o axios não me dá nenhuma variável para 
+  
+  eu 
+  
+  
+  determinar 
+  
+  QUAL ITEM VOU QUERER QUE SEJA DELETADO/identifier para fazer isso..)
+
+
+
+
+
+
+
+  --> PROFESSOR JÁ 
+
+  NOS 
+
+  EXPLICA.... --> 
+
+  PARECE
+   
+   QUE 
+
+   PRECISAMOS __ ENCODAR__ O 
+
+
+   ID 
+
+
+   DO 
+   ITEM QUE 
+
+   QUEREMOS DELETAR ___DENTRO ___ 
+
+   DESSA URL Aí.... (método oldschool) --> 
+
+
+   para 
+
+   isso,
+
+
+   PROFESSOR
+
+   VAI TRANSFORMAR 
+
+   NOSSA URL EM UM __ TEMPLATE LITERAL___....
+
+
+
+   eX:
+
+
+
+
+
+
+     const todoRemoveHandler = (todoId) => {
+    // setTodoList() 
+
+
+    axios.delete(
+      `https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json `, 
+      {
+        todoId
+      }
+      
+    )
+    .then(
+      (response) => {
+          console.log(response);
+      }
+    )
+
+    dispatch(
+      {
+        type: 'REMOVE',
+        payload: {
+          id: todoId
+        }
+      }
+    )
+
+
+  }
+
+
+
+
+
+
+  ----------------------------------
+
+
+
+
+
+  ISSO FEITO,
+
+
+  ELE 
+
+  VAI 
+
+  ADICIONAR UMA MARCAÇÃO DINÂMICA 
+
+  depois 
+
+  de 
+
+  '/todos',
+
+  ELE VAI COLOCAr 
+
+
+
+  ''''${todoId}.json'''
+
+
+
+
+
+
+
+
+
+  TIPO ASSIM:
+
+
+
+
+
+
+
+
+
+
+     const todoRemoveHandler = (todoId) => {
+    // setTodoList() 
+
+
+    axios.delete(
+      `https://reacthooks21901290291-default-rtdb.firebaseio.com/todos/${todoId}.json `, 
+      {
+        todoId
+      }
+      
+    )
+    .then(
+      (response) => {
+          console.log(response);
+      }
+    )
+
+    dispatch(
+      {
+        type: 'REMOVE',
+        payload: {
+          id: todoId
+        }
+      }
+    )
+
+
+  }
+
+
+
+
+
+
+
+  ----------------
+
+
+
+
+  EX:
+
+
+
+
+      axios.delete(
+      `https://reacthooks21901290291-default-rtdb.firebaseio.com/todos/${todoId}.json`,  ///NECESSÁRIO PARA __ DELETAR__ ITEMS COM SUCESSO no database do firebase...
+      {
+        todoId
+      }
+      
+    )
+    .then(
+      (response) => {
+          console.log(response);
+      }
+    )
+    .catch(
+        (error) => {console.log(error)}
+    )
+
+    dispatch(
+      {
+        type: 'REMOVE',
+        payload: {
+          id: todoId
+        }
+      }
+    )
+
+
+  }
+
+
+
+
+
+  ----------------------
+
+
+
+
+  ENTRETANTO, PROFESSOR FAZ MAIS UMA ALTERAÇÃOZINHA,
+   
+   para fazer sentido nossa página.... --> 
+
+   ele 
+
+   vai  
+
+   lá 
+
+
+   e coloca 
+
+   o 
+
+   DISPATCH DE 'REMOVE',
+    
+    QUE 
+    __REMOVE __ NOSSO ELEMENTO 
+
+    DO 
+
+    DOM (mas não do servidor; isso é nosso AXIOS REQUEST MESMo)
+
+
+
+    __DENTRO ___ DO 'THEN BLOCK'
+     
+     do 
+
+     __axios request___.... --> 
+
+
+     ISSO 
+
+     VAI SIGNIFICAR, BASICAMENTE:
+
+
+
+
+'''só remova esse elemento do dom SE A OPERAÇÃO DE 'DELETE' REALMENTE FOR UM SUCESSO LÁ NO SERVIDOR''... (resolved in the 'then block', instead of REJECTED, catch block'....)
+
+
+
+
+
+
+EX:
+
+
+
+
+    axios.delete(
+      // 'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json', 
+      `https://reacthooks21901290291-default-rtdb.firebaseio.com/todos/${todoId}.json`,  ///NECESSÁRIO PARA __ DELETAR__ ITEMS COM SUCESSO no database do firebase...
+      {
+        todoId
+      }
+      
+    )
+    .then(
+      (response) => {
+          console.log(response);
+          dispatch({type: 'REMOVE', payload: todoId}); //////EIS O CÓDIGO EM QUESTÃo.
+      }
+    )
+    .catch(
+        (error) => {console.log(error)}
+    )
+
+    dispatch(
+      {
+        type: 'REMOVE',
+        payload: {
+          id: todoId
+        }
+      }
+    )
+
+
+  }
+
+
+  ---------------------------------------------
+
+
+
+
+
+  SALVAMOS TUDO ISSO E TESTAMOS....
+
+
+
+
+
+  ---> VEREMOS UM __BUG__ NO NOSSO APLICATIVO.. --> 
+
+  qunado 
+
+
+  clicarmos 
+
+
+  no REMOVE de algum ITEM,
+
+
+
+ELE __ NÃO SERÁ REMOVIDO __ DO DOM... (? não sei porque....) --> realmente não estou entendendo...
+
+
+
+
+
+
+
+
+
+---> agora outro problema: 
+
+
+as coisas que eu digito no INPUT FIELD
+
+NÃO ESTÃO SENDO MAIS USADAS 
+
+
+para meus list items... (deve ser por causa de 'useEffect'....)
+
+
+
+
+
+
+
+
+
+
+---> vamos continuar MESMO COM OS ERROS/problemas --->  
+
+PROFESSOR 
+
+DIZ QUE 
+
+
+
+
+DEVEMOS 
+
+REMOVER 
+
+A LÓGICA 
+
+DE 
+
+'''  const [submittedTodo, setSubmittedTodo] = useState(null);''''.... --> 
+
+
+
+
+
+
+ELE DIZ QUE 
+PODEMOS 
+
+TIRAR ISSO DO CÓDIGO... -->  
+
+E 
+
+
+TAMBÉM 
+
+PODEOMS 
+
+NOS _
+
+LIVRAR 
+
+DAQUELE 
+
+'CÓDIGO DE FIX'
+
+que tínhamos em um 
+
+DOS 
+USEEFFECT(),
+
+
+aquele 
+
+código 
+
+
+de 
+
+'
+''''
+
+
+
+
+  useEffect(
+    () => {
+      if (submittedTodo) {
+        // setTodoList(todoList.concat(submittedTodo))
+        dispatch({
+          type: 'ADD',
+          payload: submittedTodo
+        })
+      }
+ 
+  },
+      [submittedTodo]
+  )
+
+
+
+''''''''''''''''''''''''
+
+
+
+
+
+
+
+
+ISSO FEITO,
+
+PROFESSOR 
+VAI 
+
+
+ATÉ 
+
+'todoAddHandler',
+
+
+
+
+
+
+
+
+ONDE 
+
+
+
+TEMOS ESTE CÓDIGO AQUI:
+
+
+
+
+
+
+
+
+
+  const todoAddHandler = () => {
+    console.log(todoName);
+
+    axios
+      .post(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json',
+        { todoName: todoName }
+      ) 
+      .then((res) => {
+
+
+setTimeout(() => {
+
+  const todoItem = {
+    id: res.data.name,
+    name: todoName
+  }
+
+  setSubmittedTodo(todoItem); ///////AQUI ESTÁ O PROBLEMA...
+
+
+}, 3000)
+
+        console.log(res);
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+
+
+  ----------------------------
+
+
+
+
+
+
+  PROFESSOR NOS EXPLICA QUE COMO __ REMOVEMOS _ AQUELE FIX de 'submittedTodo',
+
+
+  DEVEMOS 
+
+  REMOVER 
+
+  AQUELE 
+
+  CALL DE 
+
+  'setSubmittedTodo'... --> DEVEMOS O SUBSTITUIR POR UM 
+
+  DISPATCH 
+
+
+
+
+DE UMA 
+
+ACTION 
+
+DE 
+
+TYPE 
+
+'ADD',
+
+com um 
+
+payload 
+que 
+
+será 
+
+'todoItem'...
+
+
+
+
+
+  ex:
+
+
+
+
+
+
+
+  const todoAddHandler = () => {
+    console.log(todoName);
+
+    axios
+      .post(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json',
+        { todoName: todoName }
+      ) 
+      .then((res) => {
+
+
+setTimeout(() => {
+
+  const todoItem = {
+    id: res.data.name,
+    name: todoName
+  }
+
+    dispatch({
+        type: 'ADD',
+        payload: todoItem
+    })
+
+
+}, 3000)
+
+        console.log(res);
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+--------------------------------
+
+
+
+
+E ISSO REALMENTE __ FUNCIONARÁ____... ---> Funcionará 
+
+SEM AQUELE __ BUG __ DE 
+
+escrever 
+
+items mt rápido e aí  a list do DOM bugar, renderizar incorretamente...
+
+
+
+
+
+
+
+
+
+
+--> OK, MAS PQ FUNCIONOU AGORA,
+
+QUANDO ANTES NÃO HAVIA FUNCIONADO? -------> 
+
+
+É 
+
+
+JUSTAMENTE 
+
+PQ __ ___ 
+
+
+
+A MANEIRA PELA QUAL SETTAMOS O 'STATE'
+
+
+__MUDOU____ ---> 
+
+
+ISSO 
+
+PQ 
+
+AGORA, QUANDO CHAMAMOS 
+
+'dispatch()',
+
+VAMOS 
+
+
+__ ESTAR ENVIANDO ____ UMA ACTION 
+
+A UMA FUNÇÃO QUE 
+
+SEMPRE VAI RECEBER 'THE LATEST STATE'
+
+quando executa  
+
+E ENTÃO 
+
+VAI MANIPULAR 
+
+ESSE STATE, de acordo com as actions... --> esse é o 
+
+REDUCER,
+
+E É ISSO QUE DEVEMOS 
+
+UTILIZAR,
+
+QUANDO 
+
+CODAMOS 
+
+REACTHOOKS....
+
+
+
+-------------------------------------
+
+
+
+
+--> E O FATO DE QUE 
+
+SEMPRE RECEBEMOS 'THE LATEST STATE' 
+
+
+É ALGO QUE É _GARANTIDO __ PELO REACT__... ---> o
+
+
+
+REACT 
+HOOKA 
+
+
+
+ao seu 
+'internal management system'
+
+E NOS 
+
+DÁ ESSE STATE...
+
+
+
+
+
+---------> PORTANTO,
+
+
+
+AQUI NO REDUCER PODEOMS __ SALVAR __ O TEMPO DE ADICIONAR 
+
+
+
+UM
+
+
+'useEffect()'
+e 
+
+um
+
+'useState()' COM UM ___ 'EXTRA STATE' (esse negócio chato aí do 'submittedTodo', basicamente)....
+
+
+
+
+
+--> EM VEZ DE FAZER ISSO TUDO,
+
+PODEMOS 
+
+SIMPLESMENTE 
+
+USAR 
+
+
+ESSA 
+
+
+REDUCER FUNCTION CONVENIENTE... isso 
+
+
+pq DEVIDO AO FUNCIONAMENTO DO 
+
+REACT,
+
+
+
+POR ELE NOS DAR SEMPRE O LATEST STATE,
+
+
+SEMPRE 
+
+
+PODEMOS 
+
+CONFIAR 
+
+QUE 
+
+__ESTAREOMS ___ TRABALHANDO COM o
+
+
+'LATEST STATE' 
+
+dentro 
+
+desse reducer (não importando  QUANTOS ITEMS 
+
+ADICIONAMOS 
+
+EM 
+
+1 
+
+E MESMO 
+
+
+'timeout period',
+
+TODOS 
+
+ELES 
+
+CONTINUARÃO 
+
+___ENTRANDO __ NO STATE CORRETAMENTE,
+
+
+
+
+isso pq 
+
+SEMPRE QUE 
+
+ESSA REDUCER FUNCTION FOR EXECUTADA,
+
+
+ESSE 
+
+'state' no seu interior 
+
+SERÁ 
+
+A 
+'LATEST STATE SNAPSHOT',
+
+e não 
+
+
+UMA STATE SNAPSHOT que foi tirada no MOMENTO em que 
+
+começamos alguma lógica em alguma função (como visto antes, com as aulas sobre 'submittedTodo'...)
+ )

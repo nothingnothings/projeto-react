@@ -1,0 +1,85 @@
+
+
+
+
+DA TEORIA À PRÁTICA.
+
+
+
+
+
+
+
+--> CONSTRUINDO UM HAMBURGUER
+
+
+
+
+
+
+
+
+
+
+----> JÁ VIMOS MUITO SOBRE A TEORIA 
+
+
+E OS BASICS DO REACT...
+
+
+
+
+
+---> AGORA DEVEMOS 
+
+
+
+CONSTRUIR 
+
+UM APLICATIVO REACT DE VERDADE para que 
+
+
+possamos entender
+ 
+
+
+
+COMO VÁRIOS DOS CONCEITOS ENTRAM EM JOGO... -------> também 
+
+
+
+para ver 
+
+COMO 
+
+É FEITO O PLANEJAMENTO 
+
+DE UM APLICATIVO,
+ 
+
+
+
+ COMO É FEITA A CONSTRUÇÃO DA 'TREE' DE COMPONENTS e etc...
+
+------------------------------
+
+
+
+
+
+
+---> VAMOS FAZER UM APLICATIVO EM QUE CONSTRUÍMOS UM HAMBURGUER 
+
+DINAMICAMENTE... 
+
+
+
+
+
+----> COMEÇAREMOS COM A FASE DE 'PLANNING'... --> é a primeira fase...
+
+
+--> COMO DEVEMOS PLANEJAR UM 
+
+
+APLICATIVO REACT?  

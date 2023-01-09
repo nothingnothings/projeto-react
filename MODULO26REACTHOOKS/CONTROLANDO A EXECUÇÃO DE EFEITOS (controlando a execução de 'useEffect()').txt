@@ -1,0 +1,642 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> O PROFESSOR ADICIONOU 
+
+ 
+
+O  HOOK 
+
+
+DE 
+
+'useEffect()'
+
+
+
+NO NOSSO COMPONENT 
+
+'Todo'
+
+
+PARA 
+
+
+___CAUSAR___ SIDE EFFECTS__... -----> FUNCIONOU,
+
+
+MAS 
+
+NÓS CRIAMOS UM
+
+
+SIDE EFFECT BEM GRANDINHO,
+
+PQ 
+
+ACABAMOS 
+ENTRANDO EM UM 
+
+
+___iNFINITE LOOP (visto nos console.logs no console...).
+
+
+
+
+
+
+
+
+---> A RAZÃO PARA ISSO TER ACONTECIDO É QUE 
+
+
+'useEffect()'
+
+
+
+
+__NÃO RODA APENAS 1 VEZ, como algo como 'componentDidMount' faz,
+
+
+
+MAS 
+
+
+
+SIM RODA ___ SEMPRE 1 VEZ A CADA RENDER CYCLE___.... --> 
+
+ISSO SIGNIFICA QUE 
+
+
+
+NÓS 
+
+ACABAMOS 
+
+FAZENDO 
+
+
+MAIS 
+
+E MAIS 
+
+HTTP REQUESTS
+
+AQUI,
+
+
+
+PQ 
+
+
+O LOOP FICA ASSIM:
+
+
+
+
+
+HTTP REQUEST É FEITO ---> STATE É UPDATADO ---> RE-RENDERIZADA A UI --> HTTP REQUEST É FEITO --> STATE É UPDATADO ---> RE-RENDERIZADA A UI --> HTTP REQUEST É FEITO DE NOVO.... (esse é o loop)...
+
+
+
+
+
+
+
+
+O HTTP REQUEST 
+
+É 
+
+SEMPRE FEITO ___APÓS ___ ALGUM RENDER CYCLE... (se não o configurarmos)....
+
+
+
+
+
+
+
+
+
+---> COMO CONSERTAR ESSE NEGÓCIO? --> eu me lembro 
+
+
+
+que 
+
+UM JEITO 
+
+É 
+
+ADICIONAR UM 
+
+
+ARRAY ___VAZIO__ COMO SEGUNDO PARÂMETRO 
+
+DA FUNÇÃO INTERNA DE 
+
+'useEffect'...
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+  useEffect(() => {
+
+    axios.get(
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+    ).then(
+      result => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+        
+
+
+        for (const key in todoData) {
+          todos.push(
+            {
+              id: key,
+              todoName: todoData[key].todoName
+            }
+          )
+        }
+        console.log(todos);
+        setTodoList(todos);
+      }
+    )
+
+  },  []) ////EIS O CÓDIGO EM QUESTAÕ.
+
+
+
+
+
+
+
+
+
+
+
+  -------------------------------------
+
+
+
+
+
+  CERTO, ISSO FUNCIONA, MAS 
+
+  EU NÃO ME LEMBRO A RAZÃO PARA TAL...
+
+
+
+
+
+
+
+  -> BEM,
+
+  useEffect()
+
+
+
+  ACEITA/
+
+  EXIGE 
+
+  2 ARGUMENTOS... ---> 
+
+
+
+  ELE 
+
+
+
+  ACEITA 
+  MAIS DO QUE 
+
+  ESSE PRIMEIRO ARGUMENTO, ARGUMENTO QUE É 
+
+
+  A FUNÇÃO QUE EXECUTA.... ---> 
+
+
+
+  ELE 
+
+
+  ACEITA UM SEGUNDO 
+
+  ARGUMENTO,
+
+  QUE 
+
+  É ___ UM ARRAY__ DE VALUES__,
+
+
+
+
+
+  ARRAY DE VALUES QUE QUEREMOS DAR UMA OLHADA/VERIFICAR __________ANTES________ DA 
+
+  ENGINE DO JAVASCRIPT/O REACT 
+
+  EXECUTAR 
+
+
+  O PRIMEIRO PARÂMETRO 
+
+
+
+  DE NOVO... -----> E __SOMENTE___ SE OS VALORES QUE 'DEMOS UMA OLHADA' (Aqueles valores naquele ARRAY QUE É O SEGUNDO PARÂMETRO)
+
+
+  __MUDARAM__/mudarem,
+
+
+SÓ NESSES CASOS,
+
+
+  É QUE 
+
+  VAMOS 
+
+  QUERER 
+
+QUE 
+
+ESSE 
+
+'EFECT' DEFINIDO NO PRIMEIRO PARÂMETRO __ SEJA_ _EXECUTADO MAIS 1 VEZ...
+
+
+----------------------------------
+
+
+
+
+
+------> OK, MAS O QUE ISSO SIGNIFICA PARA NÓS? --> bem digamos QUE 
+
+
+__SÓ QUEIRAMOS/QUEREMOS__ CONSEGUIR 
+UMA 
+
+NOVA 'LIST' 
+
+
+DE 'todos' 
+
+
+__SÓ __ QUANDO 
+
+
+
+'todoName' (esse state aí)
+
+FOR ALTERADO....
+
+
+
+PARA ISSO,
+
+
+TEREMOS DE ESCREVER ASSIM:
+
+
+
+
+
+useEffect(() => {
+
+    axios.get(
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+    ).then(
+      result => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+        
+
+
+        for (const key in todoData) {
+          todos.push(
+            {
+              id: key,
+              todoName: todoData[key].todoName
+            }
+          )
+        }
+        console.log(todos);
+        setTodoList(todos);
+      }
+    )
+
+  },  [todoName]) ////EIS O CÓDIGO EM QUESTAÕ.
+
+
+
+
+
+  ------------------------------
+
+
+  LOOPS INFINITOS === EXEMPLO DE SIDE EFFECT...
+
+
+
+
+  ISSO SIGNIFICA: SEMPRE QUE INPUTTARMOS ALGUMA COISA (mudarmos o VALOR NO INPUT FIELD),
+
+  O REACT VAI AUTOMATICAMENTE 
+
+  EXECUTAR 
+
+  O CÓDIGO DO PRIMEIRO PARÂMERO 
+
+  DE
+  
+  '
+    useEffect',
+
+    QUE É JUSTAMENTE 
+
+    AQUELE 
+
+    CÓDIGO QUE 
+
+    VAI 
+    FAZER UM AXIOS REQUEST DE GET 
+
+     E ENTÃO 
+
+     VAI ALTERAR 
+
+     a 'todoList'
+
+     por meio de 
+
+     'setTodoList'...
+
+
+
+    
+
+    --> E ISSO __REALMENTE FUNCIONOU__...
+
+
+
+
+
+    
+
+-----------------------------------------
+
+
+
+
+
+
+SEGUNDO ARGUMENTO DE 'useEffect'----> É UM 
+
+
+ARRAY 
+EM QUE 
+
+VOCÊ PASSA __ TODOS OS VALORES (values)/VARIÁVEIS QUE 
+
+_vOCÊ 
+
+
+QUER 
+
+'LOOK FOR'... ----> E APENAS SE 1 __ DESSES VALORES PASSADOS 
+
+
+DENTRO DESSE ARRAY FOR __ ALTERADO__ vamos ter uma execuçaõ do CÓDIGO 
+
+ESCRITO NO PRIMEIRO ARGUMENTO DE 
+
+'useEffect()'...
+
+
+-----------------------------------------------
+
+
+
+-------> ISSO SIGNIFICA QUE: 
+
+se VOCÊ
+
+TEM 
+
+MÚLTIPLOS ARGUMENTOS/COISAS PELAS QUAIS VOCê ESTÁ 'watching for' 
+
+
+NESSE SEGUNDO 
+
+ARGUMENTO,
+
+
+AÍ __ QUALQUER__ MUDANÇA, EM QUALQUER UM DESSES ITEMS (referenciados nesse array),
+
+
+
+SERÁ __ SUFICIENTE
+PARA 
+
+
+RE-EXECUTAR 
+
+O CÓDIGO 
+
+DE 
+'useEffect'... 
+
+
+
+
+
+
+RESUMINDO... NESSE NOSSO CASO, se 
+'todoName' for alterado,
+
+O REACT __ VAI FAZER __ COM QUE O CÓDIGO INSERIDO NO PRIMEIRO PARÂMETRO 
+DE 'useEffect'
+
+seja __ executado___... (e isso NÃO CRIA UM LOOP, É ÓBVIO)...  (e se esse 'todoName'/outra variável/variáveis passadas nesse segundo parâmetro __NÃO FOREM ALTERADAS DURANTE O RUNTIME, o código no primeiro parâmetro de 'useEffect()' NÃO SERÁ EXECUTADO, NADA ACONTECERÁ...)
+
+
+
+
+
+
+
+
+
+
+---> CERTO,
+
+
+
+MAS 
+
+
+SE VOCÊ QUER __ RODAR 1 EFEITO ('use an effect')
+
+
+APENAS 
+
+1 ÚNICA VEZ,
+
+BEM 
+
+NO __MOUNT__ DO SEU COMPONENT 
+
+'Todo', por exemplo,
+
+
+VOCÊ 
+
+
+DEVE
+ 
+ SIMPLESMENTE 
+
+ PASSAR 
+
+ COMO 
+
+
+ SEGUNDO PARÂMETRO UM 
+
+
+ __ARRAY___ VAZIO___ (pq aí a '''CONDIÇÃO''' prevista nesse segundo parâmetro 
+ 
+SÓ SERÁ SATISFEITA 
+
+NA PRIMEIRA EXECUÇÃO, justamente pq 
+
+
+
+ESSE ARRAY VAZIO AÍ __ SÓ VAI EXISTIR (ou 'inexistir') NO COMEÇO 
+
+DO 
+
+RUNTIME 
+
+DESSE SEU COMPONENT,
+
+BEM NA HORA EM QUE 
+
+ELE 
+
+É 
+CARREGADO NA PÁGINA...) ---> e como você tem '[]', ISSO SIGNIFICA QUE 
+
+ELE 
+
+NÃO TEM 'CRITERIA TO WATCH OUT FOR',
+
+por isso 
+
+esse código 
+
+de 'useEffect()', do primeiro parâmetro,
+
+
+NUNCA SERÁ EXECUTADO DEPOIS DE SUA PRIMEIRA EXECUÇÃO, AO CARREGAR O COMPONENT...
+
+
+
+
+--------------------------
+
+
+
+
+
+
+
+
+QUER REPLICAR 'componentDidMount?' -----> use '[]' como segundo parâmetro...
+
+
+QUER REPLICAR 'componentDidMount' combinado com 'componentDidUpdate', com um IF CHECK DENTRO DESSE 'componentDidUpdate'? ------> AÍ VOCÊ VAI TER DE USAR 'todoName' como segundo parâmetro, nesse exemplo.... ---> pq isso aí vai ser EXATAMENTE COMO A IMPLEMENTAÇÃO, em class-based components, do LIFECYCLEHOOK de 'componentDidUpdate' (em que você TAMBÉM CHECA se o state de 'todoName' foi alterado.... )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OBS:::: um detalhe QUE ESQUECI: 
+
+
+
+quando passamos um VALOR/VARIÁVEL como 
+
+segundo parâmetro de 'useEffect()' (e aí evitamos de usar '[]', que é essencialmente o componentDidMount),
+
+
+NÓS VAMOS 
+
+ACABAR 
+
+
+__COMBINANDO___ OS '''EFEITOS''' 
+
+DE 
+
+'componentDidMount' 
+
+
+e 
+
+'componentDidUpdate'... ---> ISSO 
+
+PQ 
+
+'componentDidMount' --> AQUELE CÓDIGO ESCRITO DENTRO DO 1º parâmetro de 'useEffect' REALMENTE VAI SER EXECUTADO _ QUANDO O NOSSO COMPONENT FOR 'LOADED' NA PÁGINA... (isso independente do que passamos naquele segundo parâmetro....)
+(a mera ESCRITA DO PRIMEIRO PARÂMETRO ja incide nesse efeito de 'componentDidMount', automaticamente...)
+
+
+aí, como bonus,
+
+temos 
+
+o efeito 
+
+de 
+
+'componentDidUpdate()' --> ele EXISTE JUSTAMENTE POR CAUSA DO SEGUNDO PARÂMETRO, que vai fazer com que seja RE-EXECUTADO O CÓDIGO DENTRO DO primeiro parâmetro caso seja constatado que seu valor/variável (do 2o parâmetro) foi alterado...
+
+
+
+
+------------------------------------------------------------

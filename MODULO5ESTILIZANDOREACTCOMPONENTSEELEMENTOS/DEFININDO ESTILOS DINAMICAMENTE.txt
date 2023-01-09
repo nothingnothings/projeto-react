@@ -1,0 +1,589 @@
+
+
+
+
+---> COM OS PROBLEMAS DELINEADOS NA ÚLTIMA LIÇÃO, agora 
+
+devemos 
+
+DEFINIR DINAMICAMENTE O ESTILO DO BOTÃO segundo 
+
+
+o estado de nosso app,
+
+
+
+
+
+
+isso quer dizer:
+
+
+
+
+1) SE QUISERMOS ___MOSTRAR__ A LISTA DE PERSONS, OUTLINE DO BOTÃO DEVERÁ SER VERDE.
+
+
+
+
+
+2 ) SE QUISERMOS ESCONDER A LISTA DE PERSONS (hide), OUTLINE FICARÁ VERMELHO.
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+---> nós já vimos COMO NÓS PODEMOS RENDERIZAR CONTEÚDO DINAMICAMENTE...  ---> vimos 
+
+
+isso com 
+
+os if statements com JSX,
+
+
+
+como nesse trecho de código:
+
+
+
+'
+let persons = null;
+
+
+if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        name={person.name} 
+        age={person.age} 
+        key={person.id}
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>
+      })}
+    </div>
+  )
+'
+
+{persons}
+
+-------------------------------------
+
+
+
+--> nesse exemplo, 
+
+nós 
+
+
+ARMAZENAMOS CERTO CÓDIGO JSX EM UMA VARIÁVEL ('persons')
+
+
+
+E ENTÃO 
+
+
+OUTPUTTAMOS 
+
+
+ESSA VARIÁVEL/CONST 
+
+
+
+mais abaixo, 
+
+
+
+POR MEIO 
+
+DO CÓDIGO
+ 
+
+
+
+ '{persons}'...  (onde queremos fazer o display desse negócio --> fazemos display no nosso ''''template''''/nossa return function, por assim dizer)...
+
+
+
+---------------------------------
+
+
+
+
+--> COMO SEMPRE, 
+
+
+TUDO ISSO QUE ESCREVEMOS 
+
+
+
+NO REACT ___ É JAVASCRIPT____  ----> ISSO QUER 
+
+
+DIZER QUE 
+
+
+
+AQUELE 
+
+CÓDIGO 
+
+
+'{style}' ------> O QUE PODEMOS ENFIAR DENTRO 
+
+DESSES {} pode ser ___QUALQUER CÓDIGO JAVASCRIPT____... pode ser QUALQUER EXPRESSÃO JAVASCRIPT....
+
+
+
+
+
+---> claro, poderíamos 
+
+fazer o simples PASS 
+
+de uma constante aqui que 
+
+definirá 
+
+
+os styles.... (como com nosso código anterior, 'style={style}'...)...
+
+
+
+-----------------------------------
+
+
+
+
+OU, SE QUISERMOS SER MAIS CRIATIVOS/INTELIGENTES,
+
+
+PODEMOS 
+
+FAZER 
+
+REACH OUT 
+
+
+
+À PROPRIEDADE 'style' ('const style = {...}')
+
+
+
+E ENTÃO 
+
+
+
+___aJUSTAR _____ 
+
+
+
+ESSA VARIÁVEL
+
+
+'STYLE' DINAMICAMENTE, EM OUTRAS PALAVRAS... -------------->
+
+
+
+
+
+
+
+
+Professor vai em frente 
+
+
+
+
+e DÁ HIGHLIGHT 
+
+
+
+em 
+
+'if (this.state.showPersons) {
+
+}' --------------------> isso aí, 
+
+
+
+SE ESSA CONDIÇÃO 
+
+
+
+FOR 
+
+
+'TRUE',
+ 
+
+ISSO 
+
+SIGNFICA/SIGNIFICARÁ 
+
+
+____ QUE 
+
+'persons' (o array/lista de persons) 
+
+
+___SERÁ ___ VÍSIVEL ____.... (pq 'showPersons' segura um valor boolean ou DE TRUE ou de FALSE, dependendo se seu state está como VISÍVEL ou nÃO.)
+
+
+
+
+--------------------------------------------
+
+
+
+
+----> O PROFESSOR NOS PEDIU, NA ÚLTIMA LIÇÃO, 
+
+PARA 
+
+
+DEFINIRMOS 
+
+
+O 'STYLE' ( O ESTILO) DO OUTLINE 
+
+DO NOSSO 
+
+BOTÃO COMO 
+
+
+''RED'' SE ELE ESTIVESSE COMO 
+
+'hide'... e como 'green' se ele estivesse 
+
+como show.....
+
+
+
+--------> SE JUNTARMOS 2 + 2 NAS NOSSAS CABEÇAS,
+
+PERCEBEREMOS O QUE 
+
+ELE QUER DIZER 
+
+
+AO CITAR 
+
+'if (this.state.showPersons)'..... ----------> 
+
+
+ELE QUER DIZER QUE 
+
+NÓS PODEMOS 
+
+
+
+________ DEFINIR O STYLE, A VARIÁVEL/CONST 'style' QUE ABRIGA 
+
+OS ESTILOS DO NOSSO COMPONENT, DENTRO 
+
+
+DESSE IF STATEMENT, 
+
+e com ISSO 
+
+PODEREMOS __GERENCIAR/HANDLE____ ESTILOS 
+
+
+_____DINAMICAMENTE____....
+
+
+
+------------------------------
+
+
+
+E NÓS 
+
+REALMENTE 
+
+
+CONSEGUIMOS FAZER ISSO,
+
+POR CONTA PRÓPRIA, POR MEIO
+
+ DESTE CÓDIGO:
+
+
+
+
+
+
+
+    let style = {
+      backgroundColor: 'green',  //////EIS O CÓDIGO EM QUESTÃO.
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+      
+    }
+
+
+
+
+if (this.state.showPersons) {
+
+  style = {
+    backgroundColor: 'red',  ////////EIS O CÓDIGO EM QUESTÃO
+    font: 'inherit',
+    border: '1px solid blue',
+    padding: '8px',
+    cursor: 'pointer'
+  }
+
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        name={person.name} 
+        age={person.age} 
+        key={person.id}
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>
+      })}
+    </div>
+  )
+
+
+
+-----------------------------
+
+
+
+Certo... mas ainda resta 
+
+O PROBLEMA 
+
+
+___DOS PSEUDOSELECTORS____ (ou seja, de ':hover', ':active', BASICAMENTE 
+
+
+NÃO CONSEGUIMOS AINDA IMPLEMENTAR 
+
+
+AQUELA FEATURE DE 'SE EU PASSAR O MOUSE EM CIMA DESSE ELEMENTO ELE FICARÁ VERDE (hover)', 
+
+POIS 
+
+
+AQUI ESTAMOS USANDO _____INLINE-STYLES____, e inline-styles não 
+
+suportam pseudoseletores nativamente....)
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+E professor vai lá e faz exatamente isso....
+
+
+
+
+
+
+Mas ele usa uma SINTAXE UM POUCO DIFERENTE NO 
+'if (this.state.showPersons) {...}' ----------->
+ 
+
+
+
+ ELE USA APENAS 
+
+ 'style.backgroundColor = 'red' ' PARA 
+
+
+ CONSEGUIR ALTERAR A COR DO NOSSO BOTÃO, estilizado com 'style', que agora 
+ é aquela  variável/const...
+
+
+ (E AO FAZER ISSO, ELE NÃO PRECISOU MUDAR o 'const style' para 'let style', como nós fizemos)....
+
+
+
+
+
+ ex:
+
+
+
+
+     const style = { //////EIS O CÓDIGO EM QUESTÃo.
+      backgroundColor: 'green',  //////EIS O CÓDIGO EM QUESTÃO.
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+      
+    }
+
+
+
+
+if (this.state.showPersons) {
+
+
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        name={person.name} 
+        age={person.age} 
+        key={person.id}
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>
+      })}
+    </div>
+  )
+  style.backgroundColor = 'red'; //////////EIS O CÓDIGO EM QUESTÃO.
+}
+
+
+
+
+-------------------------------------------------------
+
+
+
+backgroundColor --->  é definido como RED para aquela situação/state... -----> como 
+
+
+NÓS 
+
+NÃO 
+
+
+ MUDAMOS O VALOR DO 'OBJETO' QUE 'style' está abrigando, 
+
+
+ NÃO ACABAMOS BATENDO DE CARA COM A LIMITAÇÃO DA 'const'... (pq aqui nós 
+ 
+ estamos alterando 
+ 
+ APENAS O VALOR DE UMA DE SUAS PROPRIEDADES (para 'red'),
+  
+  E NÃO O OBJETO DE 'style' EM SI....)
+
+
+-------------------------------------------
+
+
+
+COM ESSA PEQUENA MUDANÇA, 
+
+NÓS AGORA 
+
+
+JÁ TEMOS 
+
+___STYLING DINÂMICO___ ------> ISSO 
+
+
+NOS MOSTRA 
+
+
+UMA 
+
+COISA REALMENTE 
+
+
+CRUCIAL,
+ 
+
+ UMA COISA QUE 
+
+ DEVEMOS 
+
+ ENTENDER DESDE LOGO, CASO 
+
+
+
+ AINDA NÃO TENHAMOS ENTENDIDO.... ---------> TUDO NO REACT É JAVASCRIPT, COMO O PROFESSOR DISSE ANTES.
+
+
+
+
+ -------------------------------------
+
+
+
+ --> NÓS MUDAMOS O ESTILO DINAMICAMENTE ASSIM COMO NÓS MUDAMOS 
+
+ O OBJETO/VARIÁVEL
+
+ 'persons' DINAMICAMENTE....  -------> assim como MUDAMOS 
+
+ QUALQUER COISA DO JAVASCRIPT DINAMICAMENTE ---> VOCÊ PODE 
+
+
+ MANIPULAR O OBJETO 'STYLE' COM QUALQUER CÓDIGO JAVASCRIPT 
+
+ QUE VOCê QUISER... ---> e aí 
+
+
+ o 
+
+ 'style={...}' VAI 
+
+ SIMPLESMENTE 
+
+
+ APLICAR ESSE CÓDIGO JAVASCRIPT 
+
+ QUE VOCÊ ESCREVEU, INDEPENDENTEMENTE 
+
+
+ DO JEITO QUE VOCê O ESCREVEU. -------> ESSE É UM TAKEAWAY __cRUCIAL___  --> isso te mostra COMO VOCÊ PODE SETTAR STYLES DINAMICAMENTE....
+
+
+
+
+
+
+
+
+CERTO, 
+
+MAS 
+
+
+E 
+
+'classNames'... podemos 
+
+os passar DINAMICAMENTE, TAMBÉM?
+
+
+
+PODEMOS PASSAR UMA ___LISTA DE CLASSNAMES___ DINAMICAMENTE, TAMBÉM? ------->
+
+
+SIM, NÓS PODEMOS, E O PROFESSOR 
+
+
+VAI EXPLICAR COMO FAZER ISSO 
+
+
+NA PRÓXIMA LIÇÃO.
+
+ --------------------------

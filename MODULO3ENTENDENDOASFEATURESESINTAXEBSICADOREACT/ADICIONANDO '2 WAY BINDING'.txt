@@ -1,0 +1,1416 @@
+ 
+
+
+
+
+ ---> NÓS ABRANGIMOS MUITA COISA.... TAMBÉM TROCAMOS MUITOS 
+
+
+ NOMES DE NOSSO CÓDIGO...
+
+
+
+
+
+
+
+ ---> OK, MAS AGORA, 
+
+
+ E SE NÓS QUISÉSSEMOS 
+
+
+
+ ____TROCAR___ O NOME POR CONTA PRÓPRIA? SE QUISÉSSEMOS O ALTERAR DE ACORDO 
+
+ COM O QUE DESEJAMOs?
+
+
+
+
+
+ ---> digamos que 
+
+
+ no component 'person' 
+
+ nós 
+
+
+ NA VERDADE TEMOS 
+
+
+ ___OUTRO ELEMENTO____, um elemento 
+
+ 'INPUT' normal... --------> 
+
+
+
+
+ESSE INPUT será de type 'text', e não deverá 
+
+ter mais NADA, 
+
+ele deverá ser 'self-closing' (aquela sintaxe de '<Exemplo />'...)
+
+
+ ex:
+
+
+
+
+
+
+ 
+const person = (props) => { 
+  
+  
+  
+  
+  return (
+    
+  
+  <div>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" />
+  </div>
+
+
+
+  )
+};
+
+
+
+
+------------------------------------
+
+
+
+CERTO.
+
+
+
+AGORA, QUEREMOS QUE 
+QUALQUER 
+
+COISA QUE SEJA DIGITADO NESSE FIELD/INPUT FIELD 
+
+
+ACABE 
+
+OUTPUTTADA
+ 
+
+ como um novo 'name'... ---->
+
+
+ PARA ISSO, 
+
+
+ EXPLICA O PROFESSOR,
+
+
+ PODEMOS 
+
+
+ FAZER 
+
+
+
+ 'listen to' A UM EVENTO 
+
+ ESPECIAL (por meio daqueles 'onXXXXXX') ,
+
+
+
+
+ o evento 
+
+ especial 
+
+
+ 'onChange'....
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+ 
+const person = (props) => { 
+  
+  
+  
+  
+  return (
+    
+  
+  <div>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange=/> /////////EIS O CÓDIGO EM QUESTÃO.
+  </div>
+
+
+
+  )
+};
+
+
+
+-----------------------------------
+
+
+'onChange' SERÁ 
+
+
+___DISPARADO/TRIGGADO___ SEMPRE QUE 
+
+
+
+
+O VALOR INSERIDO NESSE __INPUT FIELD__ FOR __ALTERADO___...  ----> e, aqui, 
+
+o professor 
+
+vai querer 
+
+EXECUTAR UM MÉTODO (por meio de '={}'...)
+
+
+
+
+ex:
+
+
+
+
+
+
+const person = (props) => { 
+  
+  
+  
+  
+  return (
+    
+  
+  <div>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={}/> /////////EIS O CÓDIGO EM QUESTÃO.
+  </div>
+
+
+
+  )
+};
+
+
+
+----------------------------------
+
+
+
+
+
+ESSE MÉTODO, COMO BEM RECORDAMOS, PRECISA __SER PASSADO ('needs to be passed down')___ LÁ DE DENTRO ___ DO 
+
+
+component 'App', lá no meu arquivo 'App.js'... 
+
+
+
+
+
+
+CERTO....
+
+
+
+LÁ EM 
+
+
+'App.js'
+ 
+
+
+ NÓS TEMOS AQUELE 
+
+
+ método 
+
+ 'switchNameHandler'
+
+
+
+
+
+ ex(switchNameHandler):
+
+
+
+
+
+
+
+ 
+  switchNameHandler = (newName) => {
+    console.log('Button was Clicked!'); 
+   
+    this.setState({  
+      persons: [
+        { name: newName, age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    })
+  }
+
+
+
+  -----------------------------------------
+
+
+
+
+  ALÉM DESSE 
+
+
+
+  'switchNameHandler', 
+
+
+  AGORA DEVEMOS 
+
+
+  ___ADICIONAR UM NOVO ___ HANDLER___ a 
+
+
+  esse component 
+
+
+  'App'...
+
+
+
+
+
+
+PROFESSOR NOMEARÁ ESSE NEGÓCIO DE 
+
+
+'nameChangedHandler'.....
+
+
+
+
+
+
+
+Nesse 'nameChangedHandler', o professor vai esperar (expect) 
+
+
+
+RECEBER UM OBJETO 
+
+'event'...
+
+
+
+
+
+ex:
+
+
+
+
+nameChangedHandler = (event) => {
+
+}
+
+
+
+----------------------------------
+
+
+
+(OBS: nós ainda NÃO UTILIZAMOS ESSE objeto 'event'...)
+
+
+
+
+
+CERTO...
+
+
+
+MAS DENTRO 
+
+
+
+DE 
+
+'nameChangedHandler', O PROFESSOR 
+
+
+____AINDA VAI QUERER ___ MUDAR O ___'STATE' __ DO NOSSO 
+
+
+APLICATIVO...
+
+
+
+
+é por isso que 
+
+
+ele vai lá 
+
+
+e copia 
+
+
+o código de 
+
+
+'
+this.setState({  
+      persons: [
+        { name: newName, age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    })
+'
+
+
+
+DEFINIDO LÁ 
+
+NO 
+
+'switchNameHandler'...
+
+
+
+
+
+
+
+----> BEM, EXPLICA O PROFESSOR, TEORICAMENTE É ÓBVIO QUE 
+
+VOCÊ SEMPRE GOSTARIA DE MUDAR o 'state'/name DA PESSOA PARA 
+
+A QUAL 
+
+NÓS 
+
+digitamos/digitássemos naquele input... -------> ISSO É ALGO QUE 
+
+FAREMOS 
+
+
+___MAIS TARDE___ NO NOSSO CURSO, pois é mais COMPLEXO do que o negócio que queremos fazer agora... ---> 
+
+
+vamos aprender a fazer isso quando soubermos COMO ___RENDERIZAR ___ CORRETAMENTE ___ UMA LISTA___ DE ELEMENTOS DINÂMICOS__...  
+
+
+
+
+
+
+----> é por isso que, por enquanto, o professor só vai 
+
+querer 
+
+alterar O NOME DE 
+
+
+'Manu' (do elemento que tem 'Manu' como 'name') na nossa página...
+
+
+
+  ------------------------------------------
+
+
+
+
+  Certo, 
+
+  o código 
+
+  de 
+
+  'nameChangedHandler' FICARÁ (por enquanto):
+
+
+
+
+
+
+
+
+
+
+
+  nameChangedHandler = (event) => {
+      this.setState({
+          persons: [
+              { name: 'Max', age: 28 },
+              { name: 'Manu', age: 29 },
+              { name: 'Stephanie', age: 26 }
+          ]
+      })
+}
+
+
+
+
+---------------------------
+
+
+
+CERTO, ficará assim, MAS O 
+
+
+'Manu' 
+
+
+NÓS TEREMOS DE ALTERAR... essa string 'Manu' deverá ser alterada 
+por nosso input..
+
+
+
+
+--------------------------------------
+
+
+
+o professor deixa 'Max' como 'Max' mesmo.... (e não 'newName'...) --- >
+
+
+
+
+MAS 'Manu' DEVERÁ 
+
+
+MUDAR 
+
+
+DE VALOR ---> deve mudar de valor 
+
+NÃO INTERESSANDO EM QUAL 
+
+'instance' daquele 
+
+
+
+componente 'Person' o professor digitar dentro do input.... (ou seja, não interessa em qual input field dos components nós digitarmos, nós SEMPRE VAMOS 
+ACABAR enfiando esse valor do usuário NO SLOT QUE ANTES ERA OCUPADO POR 'Manu'....) -------->
+
+
+
+
+
+Certo...
+
+
+
+então, nesse código de 
+
+'nameChangedHandler', o professor 
+ 
+vai RECEBER UM EVENT...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+  nameChangedHandler = (event) => {
+      this.setState({
+          persons: [
+              { name: 'Max', age: 28 },
+              { name: 'Manu', age: 29 },
+              { name: 'Stephanie', age: 26 }
+          ]
+      })
+}
+
+
+
+
+
+----------------------------
+
+
+
+como você sabe,
+ 
+
+
+esse 'event' que recebemos aqui 
+
+
+TEM VÁRIAS PROPRIEDADES/MÉTODOS.... ----> uma dessas 
+
+
+propriedades 
+
+é a propriedade 
+
+
+'.target'... ----------> 
+
+
+
+'event.target' ----> entretanto, explica o professor, 
+
+usar 
+
+
+'event.target' 
+
+NÃO é um 'bom nome' ---> 
+
+salvamos e recarregamos nosso código/página....  ---> 
+
+
+
+os INPUT FIELDS APARECERAM EM CADA ELEMENTO, mas 
+
+eles NÃO 
+
+__fAZEM NADA___....
+
+
+
+
+
+
+---> ENTRETANTO, 
+
+O PROFESSOR EXPLICA 
+
+QUE 
+
+'event.target' DEVERÁ __ NOS DAR __ O INPUT __ QUE NÓS ____ DIGITAMOS... ('event.target' SHOULD GIVE THE NAME THAT WE TYPED...)
+
+
+
+
+--> podemos checar isso por meio de UM CONSOLE.LOG 
+
+de 'event.target' 
+
+
+DENTRO DO 
+
+'nameChangedHandler'... ----> MAS 
+
+ESSE CONSOLE.LOG AINDA 
+
+NÃO VAI FUNCIONAR, NÃO VAI FAZER NADA/NÃO SERÁ EXECUTADO,
+ 
+ pois ainda não vinculamos 
+
+ essa funçaõ 
+
+ 'nameChangedHandler' A COISA ALGUMA...
+
+
+
+ --------------------------------------
+
+
+
+
+ --> ok, mas professor não acabou por aqui...
+
+
+
+ ele não vai colocar simplesmente 
+
+
+ 'name: event.target'.... ----> PQ 'event.target' É O OBJETO INTEIRO QUE FOI TYPADO, o elemento inteiro... --> 
+
+ A ÚNICA COISA QUE QUEREMOS 
+
+ DO INPUT DO USUÁRIO/NÓS 
+
+
+ __É O __ 'VALOR' (value) DESSE INPUT... ---> 
+
+ é por isso que 
+
+ o professor vai 
+
+ escrever 
+
+ 'name: event.target.value'...
+
+
+
+
+ ---> COM ISSO, AGORA TEMOS 'UM BOM UPDATED VALUE PARA O NOME'... (nas palavras do professor)...
+
+
+
+
+
+
+ CERTO, ENTÃO AGORA 
+
+ QUEREMOS 
+
+ QUE O INPUT DO USUÁRIO (representado por 'event.target.value') 
+ 
+
+ SEJA INSERIDO NO LUGAR DE 'Manu', 
+
+ não importando 
+
+ o input field em que ele o digitar...
+
+
+
+
+
+ 'nameChangedHandler' SERÁ ___ MEU HANDLER__ (como diz o nome...) ---> 
+
+
+ ENTRETANTO, 
+
+ NÓS PRECISAMOS 
+
+ QUE ESSE HANDLER SEJA PASSADO A UM COMPONENT (um das calls de component) 
+
+ PARA QUE 
+
+ ELE CONSIGA SER EXECUTADO... (pq o componente precisa ACESSAR E O EXECUTAR...)
+
+
+ ------------------------------------
+
+
+ Como 
+
+
+ Essa função VAI AFETAR SOMENTE A 'PERSON' DE 'MANU' (que tem 'Manu' como valor inicial de name),
+
+ O PROFESSOR 
+
+ VAI PASSAR 
+
+ ESSE HANDLER SOMENTE A ESSA INSTÂNCIA DO COMPONENT.... (mas poderíamos passar a qualquer uma das 
+ 'persons', se desejássemos) ----------> 
+
+
+ PARA ATRIBUIR ESSE HANDLER À 'PERSON' específica/passá-lo ao nosso 
+
+ COMPONENT, 
+
+ O professor
+  vai simplesmente 
+
+  criar um 'prop/propriedade' 
+
+  de 'changed' (nome criado pelo professor) 
+
+  E ENTÃO PASSARÁ 
+
+O CALL DA FUNÇÃO 'nameChangedHandler'...
+
+
+
+ex:
+
+
+
+
+class App extends Component {
+  nameChangedHandler = (event) => {
+    this.setState({
+          persons: [
+              { name: 'Max', age: 28 },
+              { name: 'Manu', age: 29 },
+              { name: 'Stephanie', age: 26 }
+          ]
+      })
+  }
+}
+
+
+
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler.bind(this, 'Maximillian')}>Switch Name</button> 
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        click={() => this.switchNameHandler('MAXIMILLIAN!!!')}
+        changed={this.nameChangedHandler>My Hobbies: Racing</Person>   ///////EIS O CÓDIGO EM QUESTÃO.
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+      </div>
+    );
+
+
+
+------------------------------------------
+
+
+
+
+Em razão 
+
+desse 'pass' de 
+
+'this.nameChangedHandler', 
+
+
+EU POSSO AGORA 
+
+ACESSAR 
+
+ESSE MÉTODO/PROPRIEDADE 
+
+por meio 
+
+do atributo/prop/propriedade 
+
+de 
+'props.changed' 
+
+DENTRO 
+
+DO MEU COMPONENTE 'Person'... --> vou usá-lo naquele campo de 'onChange'....
+
+
+
+
+ex:
+
+
+
+
+
+const person = (props) => {
+  
+  
+  
+  
+  return (
+    
+  
+  <div>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed}/> ////////eis o código em questão.
+  </div>
+
+
+
+  )
+};
+
+
+
+------------------------
+
+
+
+
+'props.changed' ----> isso vai se REFERIR AO MÉTODO 
+
+QUE NÓS 
+
+DECLARAMOS (o método 'nameChangedHandler') 
+
+
+em 'App.js'.. 
+
+
+--------------------------
+ 
+
+
+ O objeto 'event' 
+
+ SERÁ PASSADO 
+
+
+ AO método 'nameChangedHandler'
+
+ AUTOMATICAMENTE 
+
+
+ ___PELO REACT____.... (é como no javascript comum, em que nós TAMBÉM GANHAMOS ACESSO AO OBJETO 'event' por default...)
+
+
+
+ ---------------------------
+
+
+
+
+ CERTO...
+
+ nós salvamos 
+
+ e observamos os efeitos 
+
+ dessas alterações 
+
+ no nosso código.... --> AGORA, 
+
+ QUANDO 
+
+ DIGITAMOS
+ COISAS 
+
+ NAQUELE INPUT FIELD DO OBJETO 'Person' de 'Manu', 
+
+
+ a string 'Manu' 
+
+ É SUBSTITUÍDA POR AQUILO QUE DIGITAMOS, 
+
+
+ por aquele valor de 
+
+
+ 'event.target.value'....
+
+
+
+ -------------------------
+
+ Ok, 
+
+ agora 
+
+ cada 
+
+
+ vez QUE APERTAMOS 1 TECLA, 
+
+ o NOME/STRING no lugar de manu é UPDATADA...
+
+
+
+ ISSO ACONTECE PQ 
+
+ NÓS 
+
+
+ BINDAMOS 
+
+ ESSE 
+
+
+ 'onChange' a 
+
+ esse 
+
+ 'props.changed', que NA VERDADE É AQUELA FUNÇÃO DE 'nameChangedHandler'... (pq 'props.changed' SEGURA UMA REFERÊNCIA A ESSA FUNÇÃO..)
+
+
+
+
+--> chamado o nameChangedHandler, nós 
+
+acabamos USANDO 
+
+ESSE OBJETO DEFAULT 'event' PARA 
+
+EXTRAIR O 'target' (o target, que é o O 'INPUT ELEMENT', que é a COISA INPUTTADA PELO USUÁRIO )... por fim, 
+extraímos o 'value' do target, que é, no final das contas, A COISA QUE INPUTTAMOS/o usuário inputtou...
+
+
+
+
+
+--> todo esse procedimento/código nos 
+
+
+MOSTRA 2 COISAS:
+
+
+
+
+1) COMO UPDATAR ALGUMA COISA DINAMICAMENTE 
+
+NA NOSSA PÁGINA... / como CHAMAR DINAMICAMENTE UM EVENTO, como 'pass down event references/method references'
+
+
+
+
+
+2) TAMBÉM NOS MOSTRA 
+
+COMO PODEMOS  ___'HANDLE INPUTS'____....
+ ------------------------------
+
+
+
+
+ MAS SERIA 
+
+
+
+LEGAL SE FOSSEMOS CAPAZES 
+
+
+DE VER O 
+
+
+
+'CURRENT VALUE' 
+
+
+do 
+
+'name'  ___ NO INPUT FIELD____ DIRETO DO COMEÇO ('right from the start'...)...
+
+
+
+ou seja, 
+
+vamos querer 
+
+ver na página a seguinte coisa:
+
+
+
+
+------------------------------
+
+
+'Im max and I am 28 years old! 
+
+
+INPUT FIELD --> (Max)  (já escrito desde o início)
+
+
+
+
+'Im manu and I am 29 years old! '
+
+INPUT FIELD --> (Manu) (JÁ ESCRITO DESDE O INÍCIO).
+
+
+
+'I'm stephanie and i am 26 years old!' 
+
+INPUT FIELD --> (STEPHANIE) (já escrito desde o início)...
+
+
+
+----------------------------------------------
+
+
+
+PARA FAZER ISSO, DEVEMOS 
+
+
+FAZER ALGUMAS ALTERAÇÕES...
+
+
+
+
+--> para conseguir esse resultado, 
+
+precisamos 
+
+
+definir/setup '2-WAY BINDING'...  ----------> OU SEJA, 
+
+quando 
+
+nós 
+
+__aLTERAMOS __ O ELEMENTO 'INPUT' ('event.target.value'), 
+
+NÓS QUEREMOS/vamos querer
+
+____PROPAGAR___
+
+
+ESSA MUDANÇA PARA QUE CONSIGAMOS UPDATAR O 'state' do nosso aplicativo.... ---> MAS NÓS 
+
+AO MESMO TEMPO TAMBÉM QUEREMOS VER o 'current STATE' dos INPUT FIELDS (a 'string inicial', por assim se dizer) 
+
+DIRETO DO COMEÇO ('right from the start'...) ----------> PARA FAZER ISSO, 
+
+
+
+
+
+o professor vai até o 
+
+component 'person'...
+
+
+
+ex:
+
+
+
+
+
+
+const person = (props) => {
+  
+  
+  
+  return (
+    
+  
+  <div>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed}/>
+  </div>
+
+
+
+  )
+};
+
+
+
+-------------------------------------
+
+
+
+ELE VAI LÁ 
+
+e define um 
+
+novo ''''ATTRIBUTE''' no 'input'.....  
+
+ele define 
+
+
+'value'...
+
+
+ex:
+
+
+
+
+
+const person = (props) => {
+  
+  
+  
+  return (
+    
+  
+  <div>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value=/>
+  </div>
+
+
+
+  )
+};
+
+
+
+
+------------------------------------
+
+
+
+aí ele vai lá 
+
+e define 
+
+'value'
+
+como sendo igual 
+
+a 
+
+
+'props.name'...
+
+
+ex:
+
+
+
+
+
+const person = (props) => {
+  
+  
+  
+  return (
+    
+  
+  <div>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+
+---------------------------------------------
+
+
+
+professor 
+
+
+explica que 
+
+'name' 
+
+
+É O ATRIBUTO 'name' mesmo, aquele definido LÁ NA CALL DE 'Person' em 'App', afinal de contas...
+
+
+
+
+
+----> E AGORA, COM ESSEs '''atributos'''/códigos 
+de 
+
+
+'onChange={props.changed}' e 'value={props.name}',
+
+
+NÓS TEMOS/ACABAMOS CONSEGUINDO  
+
+
+NOSSO PRÓPRIO SETUP de tipo 'TWO WAY BINDING' ---> 
+
+
+Como assim 
+
+'two way binding'? ---------> 
+
+
+Bem, 
+
+nós 
+
+FAZEMOS 'listen' de CHANGES por meio de 
+
+'onChange'... ---> se ocorrem mudanças, É CHAMADO O 
+
+MÉTODO 'changed', que é na verdade o método 
+
+'nameChangedHandler'.... -----> 
+
+esse método, por sua vez, vai lá 
+
+E UPDATA o state do nosso aplicativo por meio de 
+
+'this.setState()'... --------> POR FIM, 
+
+ESSE 'STATE' DEFINIDO COM 
+
+'setState' 
+
+__É PASSADO ___ AO NOSSO 
+
+COMPONENTE 
+
+de 'Person' chamado em 'App.js', chamado com o código
+ 
+
+ '<Person 
+ name={xxx}
+ age={xxx}
+ click={xxx}
+ changed={xxx}
+ '
+
+....
+
+
+
+Esse 'state' É 'PASSED DOWN' a esses components person.... ----> E, POR FIM, 
+
+ESSE 'name' (esse atributo) É PASSADO 
+
+COMO o __VALUE____ DO INPUT.... (pq 
+
+'value', em que escrevemos 'value={props.name}', É 
+
+REALMENTE O VALOR/'value' do ___INPUT____; É O VALOR QUE 
+
+APARECE INICIALMENTE NO 'INPUT', antes do usuário/vocÊ digitar qualquer coisa naquele campo...)
+
+
+
+
+--------------------------
+
+
+
+
+E ISSO REALMENTE FUNCIONA --> 
+
+Isso nos 
+
+PERMITE 
+
+
+MOSTRAR AQUELE VALOR de 'props.name' 
+
+NOS INPUT FIELDS 
+
+
+__'RIGHT FROM THE START'__...
+
+
+---------------------------------
+
+
+
+
+--> PROFESSOR APONTA QUE ELE (E VOCÊ) VAI 
+
+RECEBER 
+
+UM 'WARNING' no console... --> esse warning, diz ele, faz sentido, 
+
+pois 
+SE VOCÊ 
+
+PROVIDENCIAR UM PROP DE 'value' 
+
+
+sem um 
+
+
+HANDLER DE 'onChange' (onChangeHandler), VOCê 
+
+
+PODE ACABAR SE DEPARANDO COM PROBLEMAS __PQ VOCÊ ESTARÁ/ESTÁ__ BINDANDO 
+
+UM 'VALUE' A uma PROPRIEDADE ('props.name') SEM 
+
+ESTAR 
+
+DEIXANDO QUE VOCê ____REAJA___ A MUDANÇAS...  ---------> isso significaria que 
+
+
+nós 'would LOCK YOUR INPUT DOWN'.... (TRAVARIÁMOS O NOSSO INPUT)... ---> podemos 
+
+observar isso, 
+
+explica o professor, 
+
+
+
+SE ELE/NÓS REMOVERMOS O CÓDIGO DE 
+
+
+ 'onChange={props.changed}' e deixarmos apenas o 'value={props.name}' ----> 
+
+
+
+ SE FIZERMOS ISSO, 
+
+ OS INPUTS FICARAM 
+
+ ETERNAMENTE COM AQUELE INPUT INICIAL, não seremos capazes de digitar 
+
+ nada nos campos... (PQ SE TIRARMOS 'onChange={props.changed}', NÓS TIRAMOS A CAPACIDADE DOS INPUT FIELDS 
+ 
+ DE __REAGIR__ A MUDANÇAS...) ---> 'we wont be handling changes if we do that' -------> E ESSA AUSÊNCIA 
+
+ DO 'handling' de MUDANÇAS FARÁ 
+
+ COM QUE 
+
+ QUALQUER COISA QUE NÓS DIGITEMOS SEJA 'OVERWRITTEN' 
+
+ PELO VALOR INICIAL DO INPUt/pelo 'props.name' inicial ('manu', 'stephanie' ou 'max', dependendo do input field)...
+
+
+
+
+
+
+
+
+
+
+
+Mas se deixarmos os 2 códigos 
+
+no lugar, 
+
+NÓS AINDA RECEBEREMOS AQUELE ALARME... --> é um FALSO ALARME, diz o professor. ----> falso alarme PQ 
+
+
+NÓS SOMOS CAPAZES, NA VERDADE, DE FAZER 'HANDLE' DE NOSSAS CHANGES E DE UPDATAR NOSSO STATE, NOSSO 'PROP', E TAMBÉM 
+DE REFLETIR ESSAS CHANGES NO 'input field/element' também ----------->
+
+
+-------> ISSO QUER DIZER QUE AGORA 
+
+TEMOS UMA '2 WAY BINDING' FUNCIONAL, e que agora 
+
+SOMOS CAPAZES  ____DE _____ MUDAR AQUELE '.name' DINAMICAMENTE, AGORA... --> (mas apenas para 
+
+'Manu', pois não definimos essa lógica PARA OS OUTROS INPUTS, e por isso não podemos digitar nada lá... --> e é provavelmente 
+por isso 
+
+que estamos recebendo esse warning no nosso console...  )
+
+
+
+
+--> VAMOS MELHORAR ESSES 2 INPUT FIELDS QUANDO TIVERMOS UMA MANEIRA MELHOR DE 
+RENDERIZAR 
+OS INPUT ELEMENTS EM UMA LISTA...
+
+
+ -------------------------------------------------------------------------------------
+
+
+
+
+<li>Add two-way-binding to your input (in UserInput) to also display the starting username</li>

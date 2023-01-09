@@ -1,0 +1,570 @@
+
+
+NÓS ADICIONAMOS LOADERS DE JAVASCRIPT E DE CSS__ (os de css foram um pouco mais complexos de implementar/incorporar ao nosso build workflow)...
+
+
+
+
+
+
+
+
+
+
+
+
+---> AGORA, PORTANTO,
+
+PROFESSOR DIZ QUE 
+
+
+
+DEVE-SE 
+
+
+ADICIONAR UMA __NOVA __ RULE__, independente das outras...
+
+
+
+
+
+
+COMO SEMPRE,
+
+COMEÇAMOS 
+
+ESSA RULE POR MEIO DO WRITE 
+
+
+DE UM 
+
+
+'test',
+
+que terá como valor UMA REGULAR EXPRESSION...
+
+
+
+
+ex:
+
+
+
+{
+    test: /\.(png|jpe?g|gif)$/     /// ISSO ESSENCIALMENTE DIZ: 'PARA TODOS OS ARQUIVOS QUE ACABEM COM PNG, JPG, JPEG E GIF, APLIQUE ESSAS REGRAS...'
+}
+
+
+
+
+
+----------------------------
+
+
+
+DEPOIS DISSO, PROFESSOR DEFINE A PROPRIEDADE 
+
+'loader',
+
+
+
+QUE SERÁ O LOADER EM QUESTÃO....
+
+
+
+
+
+
+--> o loader em questão será 
+
+o 
+
+
+
+'url-loader',
+
+QUE INSTALAREMOS 
+
+NO NOSSO PROJETO,
+
+POR MEIO 
+
+
+
+DO CÓDIGO, NO TERMINAL, 
+
+
+
+DE 
+
+
+'npm install --save-dev url-loader'...
+
+
+
+-----------------------------------
+
+
+
+
+CERTO...
+ 
+
+ O URL-LOADER 
+
+ É UM LOADER QUE 
+
+ VAI PEGAR NOSSAS 
+
+ IMAGES,
+
+
+ E SE 
+
+ ESSAS IMAGES 
+
+ FOREM 
+
+ ___ABAIXO__ DE UM CERTO LIMITE QUE ___ DEFINIMOS ___, 
+
+
+
+ELES VÃO ACTUALLY CONVERTER 
+
+ESSAS IMAGES 
+
+EM 
+
+URLs 
+
+
+'DATA64',
+
+
+
+
+que são 
+
+
+URLS QUE __ PODERÃO __ SER 
+
+__INLINEZADAS__ ('inline') 
+
+
+NOS NOSSOS DOCUMENTOS... --> ele faz isso para que 
+NÃO PRECISEMOS 
+
+BAIXAR ARQUIVOS EXTRAS......... ------> MAS PARA 
+
+ARQUIVOS 
+
+
+
+MAIORES (limite definido POR NÓS), ARQUIVOS ENORMES os quais seria 
+
+INEFICIENTE ESSA CONVERSÃO EM DATA64,
+
+
+
+ESSES ARQUIVOS GRANDES VÃO SIMPLESMENTE 
+
+
+SER __cOPIADOS__ PARA O NOSSO 
+
+FOLDER 
+
+DE 
+
+'output'... O LOADER ENTÃO VAI GERAR 1 LINK 
+
+A ESSES 
+
+ARQUIVOS,
+
+
+
+E ENTÃO VAI COLOCAR ESSE LINK 
+
+
+NOS IMPORTS 
+
+QUE 
+USAMOS 
+
+NOS 
+
+NOSSOS COMPONENTS DIVERSOS...
+
+
+
+
+
+
+
+
+para adicionar isso, depois de instalado,
+
+ao nosso BUILD WORKFLOW 
+
+do webpack,
+
+
+a rule vai ficar assim:
+
+
+
+
+
+
+{
+    test: /\.(png|jpe?g|gif)$/,
+    loader: 'url-loader'
+}
+
+
+---------------------------
+
+
+
+
+
+
+CERTO... MAS SÓ ISSO __NÃO BASTA___... PRECISAMOS 
+
+CONFIGURAR 
+
+ESSE LOADER POR MEIO DE __ QUERY PARAMS__.... ('?') ---> 
+
+
+
+
+E 
+
+NÓS FAZEMOS ISSO POR MEIO DE QUERYPARAMS
+ 
+
+ PARA 
+ QUE 
+
+
+
+ JUSTAMENTE A CONFIGURAÇÃO DEFINIDA AQUI SEJA 
+
+ __AUTOMATICAMENTE ___ 'PASSED ON' A UM FALLBACK QUE 
+
+ USAREMOS _CASO O __ LIMITE DEFINIDO POR NÓS __ SEJA 
+ 'EXCEEDED'.... ---------> MAS ESSE FALLBACK,
+
+
+ POR SUA VEZ,
+
+ É __OUTRO ___ LOADER QUE PRECISAMOS/PRECISAREMOS 
+
+ INSTALAR....
+
+
+
+ --> O NOME DESSE LOADER, ESPECIAL,
+
+ é 
+
+
+ 'file-loader'... --> 
+
+
+ NÓS O INSTALAMOS 
+ POR MEIO 
+
+
+ DO CÓDIGO, NO TERMINAL,
+
+ DE 
+
+
+ 'npm install --save-dev file-loader'...
+
+
+ ------------------------------------
+
+
+
+ ESSE LOADER AÍ É BEM SIMPLES,
+
+ A ÚNICA COISA QUE ELE FAZ É __ESSENCIALMENTE ___ COPIAR O ARQUIVO__...
+
+
+
+ELE COPIA O ARQUIVO/OS ARQUIVOS EM UMA NOVA DIREÇÃO,
+E ENTÃO 
+
+NOS 
+DÁ UM 
+
+LINK PARA ESSES ARQUIVOS... (e esse loader será usado AUTOMATICAMENTE,
+PARA A GIVEN IMAGE, CASO 
+SEJA 
+
+ULTRAPASSADO O LIMITE DEFINIDO NESSA PROPRIEDADE 'loader: url-loader?limit'....)
+
+
+
+ ex:
+
+
+
+
+
+ {
+    test: /\.(png|jpe?g|gif)$/,
+    loader: 'url-loader?'
+}
+
+
+
+
+
+--------------------------
+
+
+
+
+
+
+
+
+CERTO; USANDO QUERYPARAMS,
+
+VOCÊ VAI DEFINIR UMA
+ 
+ KEY 
+
+
+ DE 
+
+ 'limit',
+
+ E AÍ 
+
+ VAI DEFINIR 
+ SEU VALOR 
+
+ COMO SENDO 
+
+
+
+ 8000b  (esse valor é medido em BYTES, e não KILOBYTES....)
+
+
+
+
+ ex:
+
+
+ {
+    test: /\.(png|jpe?g|gif)$/,
+    loader: 'url-loader?limit=8000'
+}
+
+
+
+----------------------------------------------------
+
+
+
+PROFESSOR DEFINE 
+
+'8 MIL BYTES', o que 
+
+é traduzido 
+
+para 
+
+
+8KB, essencialmente... ----> ESSE SERÁ O LIMIT,
+
+
+
+NÃO VAMOS CONVERTER INLINEZAR UMA 'IMAGE' SE ELA
+EXCEDER ESSE LIMITE 
+
+DE 8KB... 
+
+
+
+(se excederem 8KB, as images serão COPIADAS, e um LINK a 
+elas será passado...)
+
+-----------------------------------
+
+
+
+------------------------>  CERTO, 
+
+MAS 
+
+NÃO 
+
+É 
+
+SÓ 
+
+ 
+
+ISSO AÍ QUE VAMOS ESCREVER.. (não é só essa key de 'limit'...);
+
+
+
+NÃO,
+
+NÓS TAMBÉM __PRECISAMOS __ PASSAR UMA 
+
+KEY 
+
+DE 
+
+'name',
+
+
+
+QUE É O ___PATH__ EM QUE __ QUEREMOS __ ARMAZENAR 
+
+OS 
+
+ARQUIVOS 
+
+DE IMAGEM COPIADOS....
+
+
+
+
+
+
+--> o professor vai definir um valor de 
+
+'images/[name].[ext]' ------> ISSO SERÁ UM PLACEHOLDER QUE PEGARÁ O 'ORIGINAL NAME' e a 'EXTENSÃO' do arquivo....
+
+
+
+
+
+
+ex:
+
+
+ {
+    test: /\.(png|jpe?g|gif)$/,
+    loader: 'url-loader?limit=8000&name=images/[name].[ext]'
+}
+
+
+
+----------------------------
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+A IMAGE GRANDONA 
+
+VAI 
+
+
+SER COPIADA 
+
+
+PARA 
+
+
+ESSE 
+
+FOLDER 
+
+'images' 
+
+DENTRO 
+
+
+DO 
+
+
+FOLDER 'dist',
+
+no nosso projeto.... (e sua extensão será dinâmica, junto do nome... --> será mantido o nome e extensão do arquivo de image original....)
+
+
+
+----------------------------------------------
+
+
+
+----> OK, ESSE ERA O NOSSO LOADER (NOSSOS loaders, na verdade, pq eram mais de 1)
+
+PARA 
+
+IMAGEs...
+
+
+
+
+
+
+
+
+
+--> AGORA AS IMAGES QUE 
+
+NÓS IMPORTAMOS NOS NOSSOS ARQUIVOS JAVASCRIPT 
+
+
+__NÃO SERÃO MAIS UM PROBLEMA___... 
+
+
+
+
+
+---> mas é claro que 
+
+VOCÊ PODE DEFINIR DIFERENTES 
+
+OBJETOS 
+
+'rule';
+
+VOCÊ 
+
+PODE 
+
+ESCREVER 
+
+UM 
+
+
+OBJETO 
+
+'rule' PARA FONT-TYPES,
+por exemplo....... --> mas 
+o professor 
+
+
+não vai elaborar mais do que isso...
+
+
+
+
+
+
+
+
+
+--> A COISA QUE O PROFESSOR QUER NOS MOSTRAR AGORA 
+
+SÃO __PLUGINS__... --> e também 
+
+
+ver 
+
+
+COMO 
+
+ESSE WEBPACK BUILD WORKFLOW FUNCIONA,...

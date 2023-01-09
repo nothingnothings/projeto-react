@@ -1,0 +1,287 @@
+CRUD --> CREATE, READ, UPDATE, DELETE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> CERTO, 
+
+APRENDEMOS SOBRE 
+
+COMO FAZER ___ HTTP REQUESTS __ DE TIPO 
+
+
+'GET' E DE TIPO 'POST' ___
+
+
+
+
+
+NO REACT.JS ..... --------> 
+
+
+
+
+
+
+
+
+--> AGORA PRECISAMOS 
+
+
+SABER COMO 
+
+É FEITO 
+
+
+
+O __ SEND __ DE HTTP REQUESTS___ DE TIPO 'DELETE'___...
+
+
+
+
+
+
+
+--> PARA FAZER DELETE DE 
+
+DADOS DENTRO DE UM SERVIDOR,
+
+
+TEMOS 
+
+
+O BOTÃO 
+
+'delete' 
+
+
+NA NOSSA PÁGINA, LÁ NAQUELE CAMPO DE 'FULLPOST'...
+
+
+
+EIS OS MÉTODOS DE 'AXIOS':
+
+
+
+
+
+axios.request(config)
+axios.get(url[, config]) =-----------> já vimos
+axios.delete(url[, config]) --------> veremos agora.
+axios.head(url[, config])
+axios.options(url[, config]) 
+axios.post(url[, data[, config]]) ----> já vimos
+axios.put(url[, data[, config]])  -----------> In general the HTTP PUT method replaces the resource at the current URL with the resource contained within the request. PUT is used to both create and update the state of a resource on the server.
+axios.patch(url[, data[, config]])
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> contudo, nosso botão 'delete' na nossa página não vai deletar coisa alguma do nosso 
+
+BACKEND,
+
+
+ele só existe para 
+
+
+FINGIR que deletará... (pq é um DUMMY BACKEND, o jsonplaceholdertypicode)
+
+
+
+
+
+
+
+
+
+
+
+
+
+ESCREVEMOS ISTO AQUI:
+
+
+
+
+
+      deletePostHandler = () => {
+            axios.delete('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+            .then(
+
+
+
+              (response) => {
+                console.log(response);
+
+
+
+               
+              }
+            )
+      }
+
+
+
+
+
+
+
+-----------------------------------------------------------
+
+
+
+
+É CLARO QUE ISSO AÍ NÃO VAI ____REALMENTE___ DELETAR 
+
+ESSE POST AÍ 
+
+
+
+LÁ NO NOSSO DUMMY BACKEND,
+
+mas 
+
+é exatamente isso que 
+
+seria feito, caso o server fosse de verdade.
+
+
+
+
+
+
+
+
+
+OBS: 
+
+
+existem métodos axios também 
+
+para 
+
+'.PUT' 
+
+
+
+e 
+
+'.PATCH'...
+
+
+
+--------------------------------------
+
+
+
+
+CERTO... MAS AINDA NÃO ESTOU CONTENTE:
+
+
+
+QUERIA 
+
+
+
+QUE 
+
+OS COMPONENTS VISUAIS ___TAMBÉM FOSSEM ___ DELETADOS __ A PARTIR 
+
+
+__ DO CLICK EM 'delete'
+
+NAQUELE BUTTON... ---> e professor não nos mostra como fazer isso...
+
+
+
+
+
+
+
+
+
+
+---> ok, consegui fazer o código reagir um pouco... agora 
+
+nosso post realmente é ''DELETADO'' quando clicamos no 'delete'... --> contudo, 
+
+ainda quero que 
+
+
+O ELEMENTO VISUAL EM SI DAQUELE POST SEJA REMOVIDO DA NOSSA PÁGINA, TAMBÉM...
+
+
+-----------------------------------
+
+
+
+Between Siblings — Combine the above
+Not surprisingly, to pass data between siblings, you have to use the parent as an intermediary. First pass the data from the child to the parent, as an argument into a callback from the parent. Set this incoming parameter as a state on the parent component, then pass it as a prop to the other child (see above example). The sibling can then use the data as a prop.
+Passing data between React components can be a little tricky at first (without using Redux that is), but once you practice these three techniques you’ll be able to pass data between whichever components you’d like.
+
+
+--------------------------
+
+
+
+quero passar um prop (id do COMPONENT/elemento 'post' a ser deletado) 
+
+
+PARA MEU PARENT, 
+
+PARA 
+
+
+MEU 
+
+PARENT 
+
+'Blog' (em relação ao 'fullpost'....)
+
+
+
+
+Ok, não consegui fazer isso.... vou ter que tentar outra hora;
+
+
+
+vou prosseguir com o tutorial do professor,
+
+
+e outra hora tentar 
+
+
+resolver esse problema nessa página...

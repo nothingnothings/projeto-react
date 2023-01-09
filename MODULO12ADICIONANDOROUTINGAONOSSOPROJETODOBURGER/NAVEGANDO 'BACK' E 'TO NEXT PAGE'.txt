@@ -1,0 +1,635 @@
+
+
+
+
+
+
+Agora temos que 
+
+fazer com que 
+
+os links de 'continue' e 'cancel' 
+
+
+
+em 
+
+
+'Checkout':
+
+
+
+1) RETORNEM O USUÁRIO À PÁGINA DE 'BURGERBUILDER'...
+
+
+
+
+2) No caso de 'continue', FAÇA O __OPEN__ de um 'checkout form', em que o usuário poderá 
+
+inserir informações...
+
+
+-------------------------------
+
+
+
+
+
+
+Bem... eu importei 'Link' em 
+
+
+
+
+'CheckoutSummary'
+
+
+
+E DIGITEI ISSO AQUI:
+
+
+
+
+
+
+import React, { Component }  from 'react';
+
+import Burger from '../../Burger/Burger';
+
+import Button from '../../UI/Button/Button';
+
+
+import checkoutSummaryStyle from './CheckoutSummary.module.css';
+
+
+import { withRouter } from 'react-router-dom'
+
+import { Link } from 'react-router-dom';
+
+
+class CheckoutSummary extends Component  {
+
+
+
+      checkoutCancelHandler = () => {
+            this.props.history.push('/');
+            console.log(this.props);
+      }
+
+
+      render() {
+
+      
+  return (<div className={checkoutSummaryStyle.CheckoutSummary}>
+
+        <h1>We hope it tastes well!</h1>
+          <div style={{width: '100%',
+                        margin: 'auto' }}>
+        <Burger ingredients={this.props.ingredients}/>
+        </div>
+        <Link to="/">
+        <Button btnType="Danger">CANCEL</Button>
+        </Link>
+        <Button btnType="Success">CONTINUE</Button>
+
+  </div> )
+        }
+
+      }
+
+
+
+
+
+
+
+export default withRouter(CheckoutSummary);
+
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+Bem... o professor admite que 
+
+
+__PODERIA__ TRANSFORMAR O COMPONENT 
+
+'CHECKOUTSUMMARY' EM 
+
+
+UM CLASS-BASED COMPONENT 
+
+E ENTÃO 
+
+fazer o handle 
+
+
+dos buttons 
+
+de 
+
+'Cancel' e 
+
+
+'
+Continue' lá... (como nós fizemos... eu fiz exatamente isso...)
+
+
+
+
+
+
+
+
+--> entretanto, professor diz que não vai fazer desse jeito... ----> o approach 
+
+
+do professor 
+
+
+vai começar 
+
+por um código assim:
+
+
+
+
+
+
+<Button 
+    btnType="Danger"
+    clicked={}>CANCEL</Button>
+
+<Button
+    btnType="Success" 
+    clicked>CONTINUE</Button>
+
+------------------------------------
+
+
+
+
+
+ELE DIZ QUE 
+
+VAI QUERER ________eXPOR______ 
+
+
+
+ESSE 
+
+'event' 
+
+
+de 
+
+'clicked', basicamente.... ------> ele vai querer EXPOR ESSE EVENTO LÁ 
+
+
+____ NO CONTAINER 
+
+'checkout',
+
+
+que é o component 
+
+QUE 
+
+__wRAPPA___ O 'checkoutSummary'.... -------> ele usará 
+
+
+o bom 
+
+e velho 
+
+
+approach 
+
+
+de 
+
+
+escrever 
+
+
+'clicked={props.qualquerNomeDePropsQueEuDesejar}'...
+
+
+
+
+
+
+
+
+
+
+
+---> OU SEJA,
+
+
+
+ELE VAI __dEFINIR UM MÉTODO___ LÁ 
+
+
+
+EM 
+
+'Checkout',
+
+
+E ENTÃO 
+
+VAI APENAS 
+
+
+
+PASSAR A REFERÊNCIA DELE A ESSE 'Button'.... (dá na mesma, mas é uma forma mais elegante de estruturar o código)...
+
+
+
+
+
+
+código ficará assim:
+
+(OBS: PROFESSOR USOU 'this.props.history.goBack()' em vez de 'this.props.history.push('/')'....
+
+
+
+
+
+(CheckoutSummary):
+
+
+
+
+-----------------------------------------------------------
+
+const checkoutSummary = (props) => {
+
+      console.log(props);
+  return (<div className={checkoutSummaryStyle.CheckoutSummary}>
+
+        <h1>We hope it tastes well!</h1>
+          <div style={{width: '100%',
+                        margin: 'auto' }}>
+        <Burger ingredients={props.ingredients}/>
+        </div>
+        <Button btnType="Danger" clicked={props.checkoutCancelled}>CANCEL</Button>
+        <Button btnType="Success">CONTINUE</Button>
+
+  </div> )
+        }
+
+
+export default withRouter(checkoutSummary);
+
+
+------------------------------------------------------
+
+
+
+
+('Checkout'):
+
+
+--------------------------------------------------------
+
+
+import React, { Component } from 'react';
+
+
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+
+
+class Checkout extends Component {
+
+    checkoutCancelledHandler = () => {
+        this.props.history.goBack();
+    }
+
+
+
+
+    state = {
+            ingredients: {
+                bacon: 1,
+                cheese: 1,
+                meat:1,
+                salad: 1,
+            }
+    }
+
+
+
+    render() {
+        return(
+            <div>
+            <CheckoutSummary ingredients={this.state.ingredients} checkoutCancelled={this.checkoutCancelledHandler}/>
+            </div>
+        );
+    }
+}
+
+
+
+export default Checkout;
+
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+Certo... agora só falta configurar o 
+
+
+
+botão 
+
+de 
+
+'continue'...
+
+
+
+
+
+
+ELE CRIARÁ UM 
+
+MÉTODO 
+
+
+
+DE 
+
+'CHECKOUTContinueHandler'
+
+lá em 
+
+
+'Checkout',
+
+
+
+
+E AÍ 
+
+VINCULARÁ 
+
+
+ESSE 
+
+negócio por meio dos props, coisa padrão....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+  import React, { Component } from 'react';
+
+
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+
+
+class Checkout extends Component {
+
+    checkoutCancelledHandler = () => {
+        this.props.history.goBack();
+    }
+
+
+    checkoutContinueHandler = () => {
+            this.props.history.replace('/')
+    }
+
+
+
+    state = {
+            ingredients: {
+                bacon: 1,
+                cheese: 1,
+                meat:1,
+                salad: 1,
+            }
+    }
+
+
+
+    render() {
+        return(
+            <div>
+            <CheckoutSummary ingredients={this.state.ingredients} checkoutCancelled={this.checkoutCancelledHandler} checkoutContinue={this.checkoutCancelledHandler}/>
+            </div>
+        );
+    }
+}
+
+
+
+export default Checkout;
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+DEPOIS DISSO, ELE NOS EXPLICA QUE 
+
+ELE 
+
+
+VAI UTILIZAR 
+
+
+'replace' (this.props.history.replace() ) para 
+
+
+SUBSTITUIR __ A ÚLTIMA PÁGINA__ DE 
+
+
+NOSSO APP ( a página que é 'localhost:3000/checkout' )
+
+
+
+POR 
+
+
+UMA PÁGINA 
+
+
+CHAMADA DE 
+
+
+'/checkout/contact-data' .... (seria uma 'subdivisão' da página do 'checkout', mas na verdade VAI SER UMA PÁGINA INDEPENDENTE...)
+
+
+
+
+
+
+
+--> professor explica que 
+
+a CURRENT ROUTE SERÁ SUBSTITUÍDA POR ESSA 
+
+de 
+
+'/checkout/contact-data'... ------> professor explica que 
+
+
+
+NÓS AINDA __NÃO FAZEMOS HANDLE DESSE PATH EM UMA ROUTE__, 
+
+mas que logo 
+
+
+VAMOS HANDLAR com uma delas.... (nós nem mesmo temos esse component, ainda....)
+
+
+
+ex:
+
+
+    checkoutContinueHandler = () => {
+            this.props.history.replace('/checkout/contact-data')
+    }
+
+
+
+--------------------------------------------
+
+
+
+
+
+--->  QUANDO CLICAMOS EM 'CONTINUE',
+
+A URL MUDA,
+
+MAS MAIS NADA ACONTECE, PQ NÃO ESTAMOS HANDLANDO ESSA MUDANÇA...
+
+
+
+
+---> MAS UMA COISA QUE 
+
+O PROFESSOR QUER RESOLVER __aGORA___ É ____ FAZER 
+
+
+COM QUE 
+
+O PREVIEW __ DO BURGER (em 'Checkout' ) ___ SEJA __REALMENTE ___ O BURGER__ QUE ESTÁVAMOS CONSTRUINDO, __ 
+
+
+E NÃO __ UM BURGER 'default', pré-construído...
+
+
+
+
+
+
+
+
+
+
+--> PARA RENDERIZAR O BURGER QUE NÓS REALMENTE CONSTRUÍMOS,
+
+
+nós vamos ter que passar a 'data' respectiva sobre meu 
+
+BURGER À ___PÁGINA ___ DE 
+
+
+
+'CHECKOUT'... ---------> isso significa que 
+
+
+VAMOS TER QUE 
+
+
+TRANSFERIR 
+
+A 
+
+
+DATA 
+
+
+
+
+DA PÁGINA/COMPONENT/CONTAINER 
+
+
+'BurgerBuilder' 
+
+
+
+ATÉ 
+
+
+O 
+
+
+
+COMPONENT/CONTAINER 
+
+'Checkout'... --> (talvez tenhamos que usar a URL para passar 
+
+esses 
+
+
+dados?) ---------> TOUCHÉ, EU ACERTEI.... ----> o professor 
+
+
+
+vai querer 
+
+
+passar 
+
+
+esses 
+
+
+
+dados 
+
+
+POR MEIO DE __qUERY PARAMS___....
+
+
+
+
+(vamos tentar um pouco, por conta própria...)

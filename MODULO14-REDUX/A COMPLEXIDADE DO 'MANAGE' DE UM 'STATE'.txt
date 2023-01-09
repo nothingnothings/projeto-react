@@ -1,0 +1,692 @@
+
+
+
+
+
+
+
+
+
+---------> STATE PODE SER BEM COMPLEXO....
+
+
+
+
+
+
+
+
+
+
+
+--> STATE MANAGEMENT DE UM APP PODE SER __  ALGO BEM COMPLEXO__...
+
+
+
+
+
+
+
+
+
+--> certo... o REACT É ÓTIMO, 
+
+
+
+REAGE MUITO BEM 
+
+A 
+
+'STATE CHANGES', e ao 
+
+'UPDATE OF THE UI ACCORDINGLY'... -----------> 
+
+
+
+
+MAS 
+
+
+O __MANAGE___ DESSE STATE AÍ__ PODE FICAR ABSURDAMENTE DIFÍCIL __ 
+
+à MEDIDA QUE NOSSO APLICATIVO VAI CRESCENDO....
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+É evidente que 
+
+o react 
+
+nos 
+
+dá 
+
+aquela 
+
+
+'built-in'
+
+
+propriedade 
+
+'state = {}',
+
+
+que 
+
+USAMOS 
+
+
+ATÉ AGORA,
+
+
+
+
+mas nós já conseguimos observar no nosso projeto burger builder que 
+
+O 
+
+
+PASS 
+
+DE 
+
+
+INGREDIENTS 
+
+
+DE 
+
+
+UM 
+
+
+'COMPONENT A' 
+
+para 
+
+um 
+
+'COMPONENT B'
+
+
+
+
+____PODE SER ___________bEEEEEEEM DIFÍCIL___ (basta ver a manha dos 'QueryParams'....)..
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+PODE SER BEM DIFÍCIL, E TIVEMOS DE USAR 
+
+
+ROUTING QUERYPARAMS 
+
+PARA 
+
+
+
+RESOLVER ESSA QUESTÃO... ------> certamente esse __É __ UM WORKAROUND VÁLIDo,
+
+
+
+
+mas 
+
+NÃO É NADA ELEGANTE, NÃO É UM WORKAROUND ELEGANTE... (
+
+    é uma merda de settar....
+)
+
+
+
+
+--------> EM OUTRAS PALAVRAS,
+
+
+'STATE MANAGEMENT'
+
+
+tem que ser  __MAIS FÁCIL__... -------> o exemplo 
+
+
+do 
+
+
+BURGER BUILDER 
+
+É 
+
+UM 
+
+
+CLÁSSICO EXEMPLO, um exemplo comum, nada de especial.......
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+AGORA 
+
+
+CONSIDERE ESTE OUTRO APLICATIVO (que é bem mais complexo):
+
+
+
+
+
+
+                                        app 
+                                        |
+                                        |
+                    -----------------------------------------------------|
+                    |                                                   |
+                    |                                                   |
+                    Users                                                |
+                    |                                                   Products 
+                    |                                                       |
+--------------------|-----------                              ------------  | --------------
+|                            |                                  |                           |
+Authentication              Dashboard                           cart                      ProductList
+|   |   |                    |                                  |   |                           |
+... ... ...               (...)                             ....    ....                        (...)
+
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+ESSE APLICATIVO AÍ,
+
+
+de fato,
+
+
+É BEM MAIS COMPLEXO... --> é um 
+
+APP 
+
+
+com um component 
+
+
+root 
+
+de 
+
+'App'  E AÍ 
+
+
+UNS 2 CONTAINERS, O CONTAINER 
+
+
+'Users' e o container 
+
+'Products'... ----------> dentro 
+
+
+deles
+
+
+
+temos aqueles 
+
+
+subcomponents,
+
+
+
+
+'Auth', 'Dashboard', 'Cart' e 'ProductList'...
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+AGORA DIGAMOS QUE 
+
+
+TEMOS ___'AUTHENTICATION' SETTADA/ADICIONADA 
+
+
+NESTE APLICATIVO... (ou seja,
+
+Usuários podem fazer 'SIGN UP' e 'SIGN IN'... )
+
+
+
+
+
+
+Bem... se tivermos 'authentication',
+
+
+
+
+PARA ACESSAR A __DASHBOARD____ (que é um subcomponent de 'Users', esse container) NA ÁREA DE 'Users',
+
+
+
+
+NÓS PRECISAMOS ____CHECAR____ SE O USUÁRIO REALMENTE ESTÁ 'SIGNED IN',
+
+
+e 
+
+APENAS __ CONCEDER ACESSO A ELE __ SE ELE REALMENTE ESTIVER 'SIGNED IN'/logged in... ------->
+
+
+
+esse estado 'isSignedIn' precisa ser RESOLVED como 'true'... ----------> CERTO.... --------> 
+
+
+
+FAZER ESSE CHECK AÍ EM SI __NÃO É TÃO DIFÍCIL..__ ----------> não é/não será tão difícil 
+
+
+PQ 
+
+
+
+___NÓS PROVAVELMENTE ___ ESTAREMOS/VAMOS __ FAZER MANAGE DO 'AUTHENTICATION STATUS'
+
+
+lá 
+
+no 
+
+
+component/subcomponent 'Auth'...
+
+
+
+
+
+
+
+
+**** MAS O PROBLEMA AGORA É:
+
+
+
+E SE NÓS PRECISÁSSEMOS DESSA INFORMAÇÃO,
+
+dessa informação de autenticação PRESENTE EM 'Auth' (nesse subcomponent)
+
+
+EM 
+
+
+_______ALGUM LUGAR ____COMPLETAMENTE DIFERENTE DE NOSSO APP? (ou seja, como em 'Cart', ou 'ProductList', components que estão na página/container 'Products'...)
+
+
+
+
+
+--------> ISSO FOI VISTO NO BURGERBUILDER,
+
+
+naquela 
+
+parte em que 
+
+
+PRECISÁVAMOS 
+
+ACESSAR 
+
+AS INFORMAÇÕES 
+
+
+
+DE 
+
+'ingredients'
+
+
+
+EM UMA 
+
+PARTE COMPLETAMENTE 
+
+DIFERENTE DO APP,
+
+naquela parte de 
+
+
+'Checkout', que é uma página/container 
+
+DISTINTA 
+
+DE 
+
+'BurgerBuilder' (nossa home page...).
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+------> BEM, SE NÓS REALMENTE QUISERMOS ACESSAR ESSA INFORMAÇÃO DE AUTENTICAÇÃO 
+
+NESSE OUTRO LUGAR (como em 'Cart'), 
+
+
+NÓS 
+
+PRECISAMOS, __ DE ALGUMA FORMA__, 
+
+ESTABELECER UMA CONEXÃO
+
+
+
+____ENTRE O COMPONENT 'Auth' (nesse exemplo) 
+
+
+E O 
+
+COMPONENT 
+
+'Cart'... ---------------------------> HAHAHAHAHA.... 
+
+
+
+E ISSO AÍ, MEU AMIGO, É UM PESADELO... -------> 
+
+
+é um 
+
+pesadelo pq você 
+
+
+precisaria 
+
+SETTAR 
+
+UMA 
+SUPER 
+
+COMPLEXA CHAIN DE PROPS,
+
+
+OU ENTÃO 
+
+DE QUERY PARAMS,
+
+
+
+ou qualquer outra forma horrível...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----> e professor nos diz que É UMA PENA QUE SEJA TÃO DIFÍCIL ASSIM... ---> é uma 
+
+
+pena pq, NO FINAL DAS CONTAS,
+
+
+ESTAMOS 
+
+ESCREVENDO 
+
+JAVASCRIPT, CERTO? ---------->      e no nosso build workflow,
+
+estamos 
+
+
+
+ESCREVENDO ARQUIVOS QUE SERÃO __BUNDLADOS___... (no final, na verdade,
+
+esses arquivos todos SERÃO COMPILADOS EM 1 SÓ...) --------> 
+
+
+bem, isso não é 100% correto: Às vezes usaremos lazy loading, e o lazy loading 
+
+sempre 
+
+se utiliza de MÚLTIPLOS ARQUIVOS (pq essa é a moral do lazy loading).... -------> 
+
+
+
+AINDA ASSIM,
+
+
+
+É MEIO NATURAL
+ 
+ A NOÇÃO 
+
+
+ DE QUE 
+
+ todos os arquivos 
+
+ serão 
+
+
+ compilados em 1 só, no final.... -------------> É 
+
+
+
+ POR ISSO 
+
+
+ QUE 
+
+
+
+ A SEGUINTE PERGUNTA SE DESTACA:
+
+
+
+
+
+ PQ 
+
+ DIABOS 
+
+
+NÃO PODEMOS 
+
+SETTAR UMA ___VARIÁVEL GLOBAL___, UMA VARIÁVEL QUE 
+
+SEGURE 
+
+UM JAVASCRIPT OBJECT  
+
+QUE 
+
+
+SIMPLESMENTE ARMAZENE TODO O _STATE__ DE NOSSO APLICATIVO.... UMA 
+
+VARIÁVEL 
+
+
+A QUAL 
+
+PODERÍAMOS ACESSAR EM QUALQUER LUGAR DE NOSSO APP.... ?
+
+
+
+
+
+
+
+
+---> sim, isso é possível, com o ___REDUX__... -----> E O REDUX 
+
+
+NOS 
+
+AJUDA,
+
+POIS 
+
+NOS DEIXA
+
+
+___EVITAR __ A 'ROTA COMPLICADA', O 'APPROACH BOSTA' 
+
+dos 
+
+query params... (ou do pass PESADO de props no nosso código...)
+
+
+
+
+
+
+
+
+
+
+
+
+--> ou seja, com o REDUX, nós simplesmente USAMOS JAVASCRIPT, javascript legal
+ 
+ PARA 
+
+ ENTÃO __ 
+
+
+ BYPASSAR esses problemas com o state management, esse pass de informações do state 
+
+ por aí...
+
+
+
+
+
+
+
+
+
+
+ --------------> OK, MAS É POSSÍVEL FAZER ISSO? É POSSÍVEL DEFINIR UMA VARIÁVEL GLOBAL COM 
+
+ O NOSSO STATE? 
+
+
+
+
+
+
+
+
+
+ -------> primeiro o professor nos responde que o REACT NÃO DEIXA ISSO ACONTECER NATURALMENTE ('out of the box')
+
+ PQ 
+
+ O 
+
+ SISTEMA DELE, 
+
+ O 
+
+
+
+ 'React's reactivity system'
+
+
+
+ __NÃO REAGE__ A MUDANÇAS EM UMA VARIÁVEL GLOBAL QUE VOCê DEFINE.... ----------> 
+
+
+
+ E, DIZ O PROFESSOR,
+
+
+ É __BOM QUE ELE NÃO REAJA__..., PQ É JUSTAMENTE 
+
+ ISSO 
+
+ QUE 
+
+ O DEIXA TÃO EFICIENTE.... ----------> ENTRETANTO, 
+
+ TER 
+
+
+ ESSE 
+
+
+ 'GLOBAL STORE' (storage) 
+
+
+DO 
+
+
+STATE 
+
+
+AINDA 
+
+
+É 
+
+ALGO MUITO PERSUASIVO, 
+
+
+ÚTIL...
+
+
+
+
+
+
+
+--------> E É EXATAMENTE ESSA A FEATURE QUE 
+
+O REDUX NOS DEIXA UTILIZAR...

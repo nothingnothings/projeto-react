@@ -1,0 +1,1842 @@
+
+
+
+----> useEffect é bem nice....
+
+
+
+->ok ,mas e quanto ao 'CLEANUP WORK'?
+
+
+
+
+
+---> Bem, a questão é que o professor nem mesmo nos mostrou isso 
+
+
+
+COM OS OUTROS COMPONENTS, 
+
+
+
+COM OS 
+
+'CLASS-BASED ONEs',
+
+
+
+
+por isso 
+
+
+
+DEVEMOS 
+
+COMEÇAR COM ELES,
+
+
+
+
+DEVEMOS 
+
+
+VER COMO 
+
+
+FUNCIONA 
+
+
+
+O 'CLEANUP WORK'
+
+
+
+
+
+
+com os CLASS-BASED COMPONENTS 
+
+e seus 
+
+LIFECYCLE HOOKS...
+
+
+
+
+---------------------------------
+
+
+Certo...
+
+
+
+
+
+O componente 'persons' em 'persons.js'
+
+
+
+É UM COMPONENT QUE 
+
+
+
+
+__VAI __,NA VERDADE (actually),
+ 
+
+
+
+ SER ___REMOVIDO___ DO DOM 
+
+
+ QUANDO NÓS CLICAMOS 
+
+
+ Em 
+ 
+
+
+
+ 'toggle persons'.... ----------> oK, MAS 
+
+
+
+ DIGAMOS QUE 
+
+ NESSE CASO AQUI NÓS 
+
+
+
+ __QUEREMOS FAZER UM 'CLEANUP WORK'____,
+
+
+
+ digamos que queremos, nesse cenário específico, 
+
+
+
+ ___LIMPAR ('clear') ALGUNS 
+
+
+
+ 'EVENTLISTENERS'
+
+
+
+ QUE VOCê SETTOU
+  
+
+
+  EM ALGUM LUGAR, 
+
+
+  em qualquer lugar.... ------> ok, mas como fazer isso...?
+
+
+
+
+  COmo fazer 
+
+
+
+  CLEANUP WORK 
+
+
+  dentro 
+
+
+  de um 
+
+
+  react component 
+
+
+  de tipo 
+
+
+  'CLASS-BASED'? ---------->   NÓS NÃO 
+
+
+  TEMOS NENHUM 
+
+
+
+  'CLEANUP WORK' 
+
+
+  settado 
+
+  no nosso 
+
+  'persons.js',
+
+
+
+  MAS SE VOCÊ TIVER ALGUM APLICATIVO 
+
+  DE VERDADE EM QUE 
+
+  VOCÊ TEM UMA 
+
+
+  CONEXAO DE VERDADE (live connection ) 
+
+
+  A ALGUM SERVIDOR OU ALGO DO GÊNERO,
+
+
+  esse cenário 
+
+
+
+  em que você 
+
+  PRECISA 
+
+
+  de um 
+
+  CLEANUP WORK 
+
+
+  é bem realista...
+
+(você sempre vai precisar 'CLEAN SOME STUFF' 
+
+QUANDO VOCÊ ESTIVER 
+
+
+CONECTADO A UM SERVIDOR...)
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+PARA FAZER ESSE 'cleanup work' 
+
+
+EM CLASS-BASED COMPONENTS,
+
+
+
+VAMOS USAR 
+
+
+O 
+
+
+MÉTODO/LIFECYCLE HOOK 
+DE 
+
+
+
+'componentWillUnmount()'..
+
+
+----------------------------
+
+
+
+
+
+PROFESSOR COLOCA UM DESES MÉTODOS/LIFEHOOKS 
+
+
+DENTRO 
+
+do 
+
+
+'Persons.js'...
+
+
+
+ex:
+
+
+
+
+
+class Persons extends Component {
+
+
+    componentWillUnmount() {
+        console.log('[Persons.js] componentWillUnmount');
+    }
+    .......
+
+
+
+
+
+
+}
+
+
+
+------------------------
+
+
+ELE DIGITA E SALVA ESSE CÓDIGO...
+
+
+
+
+
+QUANDO ABRIMOS NOSSA PÁGINA,
+
+
+NÃO VEMOS 
+
+'componentWillUnmount'.... ------> NÓS ___ SÓ VAMOS __ VER O OUTPUT 
+
+
+DO CONSOLE.LOG DESSE NEGÓCIO (simbolizando que ele FOI EXECUTADO)
+
+quando 
+
+
+
+NÓS CLICARMOS 
+
+EM 
+
+'toggle'
+
+
+PARA ____ESCONDER____ o nosso 'persons'...
+
+
+
+
+VEMOS 
+
+
+
+'[Persons.js] componentWillUnmount'....
+
+
+-----------------------------------------
+
+
+
+
+DENTRO DESSE MÉTODO AÍ,
+ 
+ você pode ter 
+
+ QUALQUER CÓDIGO... ESSE CÓDIGO ___QUE VOCÊ DIGITAR DENTRO DELE___ SERÁ 
+
+ _____ EXECUTADO ___ POUCO ANTES ____ DO 
+
+ COMPONENTE SER 
+
+ ____REMOVIDO DO SEU DOM____ (por isso o nome 'componentWillUnmount()'...)
+
+
+
+
+
+ ---> OU SEJA,
+  
+
+  SEU CÓDIGO SERÁ EXECUTADO 'RIGHT BEFORE YOU GET RID OF IT'... ----->
+
+
+
+  
+  
+  -----> se você estiver USANDO 'HOOKS' (como o hook de 'useEffect', em FUNCTIONAL COMPONENTS),
+
+
+VOCÊ 
+
+
+
+___TAMBÉM 
+
+
+PODE ___ USAR 
+
+
+'useEffect'  
+PARA 
+
+
+REALIZAR 
+
+ESSE 
+
+'CLEANUP WORK'... --------> OK, 
+
+
+MAS COMO ISSO FUNCIONA???
+
+
+
+
+
+LEMBRE-SE DO CÓDIGO DE 
+
+'cockpit':
+
+
+
+
+
+
+const Cockpit = (props) => {
+
+
+    useEffect(() => {
+      console.log('[Cockpit.js] useEffect');
+      setTimeout(() => {
+        alert('Saved data to the cloud!');
+      }, 1000)
+    }, [props.persons]);
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+PROFESSOR 
+
+
+EXPLICA 
+
+QUE PARA REALIZAR ESSE CLEANUP WORK COM O 'useEffect', 
+
+
+
+NÓS DEVEMOS, NA FUNÇÃO QUE VOCÊ PASSA COMO PRIMEIRO PARÂMETRO 
+
+
+
+DE 
+
+'useEffect' (aquela arrow function), 
+
+
+
+VOCÊ PODE/DEVERÁ
+ 
+
+
+ RETORNAR 
+
+___ ou 
+
+
+'NADA' (return vazio )
+
+
+
+
+como assim, vazio?
+
+
+
+
+
+
+
+É ASSIM:
+
+
+
+
+
+
+
+
+
+
+const Cockpit = (props) => {
+
+
+    useEffect(() => {
+      console.log('[Cockpit.js] useEffect');
+      setTimeout(() => {
+        alert('Saved data to the cloud!');
+      }, 1000);
+
+      return () => {}; /////CÓDIGO EM QUESTÃO
+    }, [props.persons]);
+
+
+
+
+--------------------------------------
+
+
+
+
+
+OU SEJA, 
+
+
+O RETURN DE UMA __ARROW FUNCTION VAZIA___.... --------> mas, na verdade,
+
+ela não ficará vazia...  ---> o professor 
+
+
+vai colocar 
+
+um 
+
+'console.log(xxxxx)'....
+
+
+
+
+
+ESSA FUNÇÃO PASSADA NESSE ESPAÇO AÍ 
+
+__VAI SEMPRE___ SER EXECUTADA _______aPÓS ______ CADA 
+
+
+
+
+'RENDER CYCLE'....                    (PARA SER MAIS PRECISO, essa função vai SEMPRE ___RODAR____ ____aNTES____ DA função ''''principal'''' de 'useEffect' rodar, MAS ___DEPOIS___ DO PRIMEIRO render cycle....)
+
+
+
+
+
+
+
+
+PROFESSOR VAI ESCREVER ASSIm:
+
+
+
+
+
+
+
+
+const Cockpit = (props) => {
+
+
+    useEffect(() => {
+      console.log('[Cockpit.js] useEffect');
+      setTimeout(() => {
+        alert('Saved data to the cloud!');
+      }, 1000);
+
+      return () => {
+         console.log('[Cockpit.js] cleanup work in useEffect')   /////CÓDIGO EM QUESTÃO
+      }; 
+    }, [props.persons]);
+
+
+
+
+------------------------------------------
+
+
+
+
+
+DEPOIS DISSO,
+
+
+PROFESSOR VAI SALVAR E RECARREGAR O CÓDIGO.... ----> assim que 
+
+RECARREGARMOS A PÁGINA,
+
+
+
+veremos imediatamente (sem apertar o button)
+
+
+O OUTPUT 
+
+do 
+
+'useEffect' 
+
+LÁ NO CONSOLE... (mas não vemos 
+
+
+'cleanup work in useEffect', aquele negócio que colocamos como 
+
+RETURN 
+
+naquele primeiro PARÂMETRO DE 
+
+
+'useEffect'...)
+
+
+
+---------------------------------------
+
+
+
+
+--> ENTRETANTO, NÓS NUNCA VAMOS VER 
+
+
+'cleanup work in useEffect', 
+
+esse output,
+
+
+durante esse nosso exemplo... ---------> NÃO O VEREMOS PQ 
+
+
+NOSSO 
+
+COMPONENTE 
+
+'COCKPIT'
+
+
+
+___NUNCA ___ É EFETIVAMENTE ('actually') 
+
+
+REMOVIDO DO NOSSO DOM... (ele sempre fica lá, e não tem nada no nosso código que o remove...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------> PARA DEMONSTRAR ___COMO PODEMOS __ NOS LIVRAR ___ DESSE 
+
+'cockpit',
+ 
+
+
+
+ DEVEMOS IR 
+
+
+ ATÉ 
+
+ O ARQUIVO 
+
+
+ 'App.js'  
+
+
+ E ENTÃO 
+
+
+ DEVEMOS 
+
+
+
+ ADICIONAR UM NOVO BUTTON,
+
+
+ chamado de 'Remove Cockpit',
+
+
+ APENAS PARA QUE 
+
+ CONSIGAMOS NOS LIVRAR DO COCKPIT do nosso aplicativo....
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+ return (
+
+
+
+
+
+
+  <div className={classes.App}>
+    <button>Remove Cockpit</button>
+  <Cockpit //4
+  title={this.props.appTitle} 
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+  </Cockpit>
+  {persons}
+  </div>
+
+
+ )
+
+
+
+
+ -----------------------------
+
+
+ PARA REALIZAR 
+
+
+
+
+  O 'REMOVE' desse cockpit,
+   
+
+   PROFESSOR EXPLICA QUE 
+
+
+   ELE VAI SIMPLESMENTE 
+
+   'quick and dirty' ADICIONAR UMA 
+
+
+
+
+   NOVA PROPRIEDADE 
+
+
+   no 'state',
+
+
+
+   PROPRIEDADE QUE 
+
+
+   ELE VAI UTILIZAR 
+
+
+   PARA 
+
+
+   ____REMOVER ___ O COCKPIT 
+
+
+   QUANDO AQUELE BOTÃO FOR PRESSIONADO...
+
+
+
+
+
+   ELE COLOCA :
+
+
+
+
+
+
+
+
+
+   
+  state = {        
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false,
+    showCockpit: true //////EIS O CÓDIGO EM QUESTÃO.
+
+  }
+
+
+
+----------------------------------------
+
+
+
+
+
+(INICIALMENTE, ESSE 'showCockpit' ESTARÁ COMO 'true',
+
+
+MAS AQUELE BOTÃO 
+
+VAI DEFINIR ESSE STATE COMO 'false'...)
+
+
+
+
+
+
+FEITO ISSO, 
+
+
+O PROFESSOR VAI ADICIONAR UM 'listener' 
+
+de 
+
+'onClick'
+ 
+
+ NAQUELE 
+
+
+ '<button>' de 
+
+ 'Remove Cockpit'...
+
+
+
+
+ ELe 
+
+
+
+
+ ENTÃO DECIDE QUE NÃO VAI NEM AO MENOS CRIAR UM 
+
+ 'HANDLER' (como 'togglePersonsHandler', e 'nameChangedHandler'...);
+
+
+
+ NÃO, AQUI ELE VAI SIMPLESMENTE 
+
+
+ ___EXECUTAR UMA 'INLINE ARROW FUNCTION' 
+
+
+ QUE VAI 
+
+ DEFINIR 
+
+
+ O 
+
+
+ 'showCockpit' COMO SENDO 'FALSE'...
+
+
+
+
+
+ (POR MEIO DO MÉTODO 'setState()'...)
+
+
+
+ ex:
+
+
+
+
+ return (
+
+  <div className={classes.App}>
+    <button onClick={() => {this.setState({showCockpit: false})}} >Remove Cockpit</button> ////////EIS O CÓDIGO EM QUESTÃO.
+  <Cockpit //4
+  title={this.props.appTitle} 
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+  </Cockpit>
+  {persons}
+  </div>
+);
+
+
+
+--------------------------
+
+
+
+ISSO FEITO,
+
+
+ELE ___PROVAVELMENTE___ VAI ADICIONAR UM IF CHECK 
+
+
+
+antes 
+
+
+
+de 
+
+
+'
+
+ return (
+
+  <div className={classes.App}>
+    <button onClick={() => {this.setState({showCockpit: false})}} >Remove Cockpit</button> ////////EIS O CÓDIGO EM QUESTÃO.
+  <Cockpit //4
+  title={this.props.appTitle} 
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+  </Cockpit>
+  {persons}
+  </div>
+);
+
+'
+
+
+
+
+
+
+CHECANDO 
+
+
+por 
+
+
+'if (this.state.showCockpit)'...
+
+
+
+
+
+
+E EU ESTAVA CERTO!!!! --> olhe o que o professor fez:
+
+
+
+
+
+
+
+
+DEFINIU 'let cockpit = null' 
+
+LÁ NO INÍCIO DO CÓDIGO...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+let cockpit = null...
+
+
+
+
+
+
+---------------------------
+
+
+
+
+
+DEPOIS, ELE 
+
+DEFINIU 
+
+
+UM 
+
+'if.state.showCockpit' 
+
+
+com um
+
+CÓDIGO 
+
+
+QUE DEFINIRÁ 
+
+AQUELA VARIÁVEL 
+
+'cockpit' 
+
+
+COMO SENDO 
+
+
+O CÓDIGO JSX DO NOSSO COCKPIT....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+let cockpit = null...
+
+
+
+
+if(this.state.showCockpit) {
+
+ cockpit =  <Cockpit //4
+  title={this.props.appTitle} //sim, ESSE CÓDIGO É VÁLIDO. ESTAMOS ACESSANDO UM __PROP__ QUE FOI REPASSADO POR 'index.js' A ESSE ELEMENTO 'APP', E QUE SERÁ AGORA REPASSADO AO COMPONENT 'Cockpit' POR MEIO DESSE PROP 'title'...
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+  </Cockpit>
+  
+}
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+DEPOIS DISSO,
+
+
+
+ELE SIMPLESMENTE 
+
+
+
+colocou 
+
+'{cockpit}' LOGO ACIMA 
+
+
+DO NOSSO 
+
+'{persons}' 
+
+
+
+LÁ NO '__return__' 
+
+
+DO NOSSO MÉTODO 'render' ___NO 
+
+
+COMPONENT CLASS-BASED 
+
+
+'APP'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+  state = {         //também pode ser definido DENTRO do constructor (pq a sintaxe ''''state = {}''''' fora do constructor é A SINTAXE MAIS MODERNA, NEM SEMPRE SUPORTADA NOS PROJETOS)
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false,
+    showCockpit: true
+
+  }
+
+
+
+let cockpit = null...
+
+
+
+
+if(this.state.showCockpit) {
+
+ cockpit =  <Cockpit //4
+  title={this.props.appTitle} 
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+  </Cockpit>
+  
+}
+
+
+
+return (
+
+  <div className={classes.App}>
+    <button onClick={() => {this.setState({showCockpit: false})}} >Remove Cockpit</button>
+  {cockpit} //////////EIS O CÓDIGO EM QUESTÃO.
+  {persons}
+  </div>
+);
+
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+PROFESSOR, NO ENTANTO, 
+
+
+FEZ DE UM JEITO DIFERENTE... -----> ELE USOU 
+
+
+_UMA TERNARY EXPRESSION____ .... --------> VAI DAR NA MESMA, 
+
+
+
+EXECUTA A MESMA LÓGICA DO NOSSO CÓDIGO,
+
+
+
+MAS COM UMA SINTAXE ASSIM:
+
+
+
+--------------------------------
+
+
+{this.state.showCockpit ? 
+
+<Cockpit 
+  title={this.props.appTitle} 
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+  </Cockpit>
+
+:
+
+null
+}
+
+{persons}
+
+
+-------------------------------------
+
+
+
+
+
+O RESULTADO DESSE(S) código(S) 
+
+
+
+É QUE 
+
+
+
+NÓS COMEÇAMOS COM UM COCKPIT,
+
+
+MAS QUANDO CLICAMOS 
+
+
+em 
+
+
+'remove cockpit', naquele botão,
+
+
+
+O COCKPIT __É REMOVIDO__ DO DOM... ------> e quando ele 
+
+
+É __ REALMENTE REMOVIDO DO DOM__, NÓS 
+
+
+PODEMOS VER 
+
+
+
+'cleanup work in useEffect'  (QUE ESTÁ VINDO LÁÁÁÁÁÁ do cockpit.... está vindo lá do REACTHOOK de 'useEffect' em COCKPIT.) -------> pq esse código do 'console.log' É EXECUTADO BEM __NA HORA __ EM QUE O 'useEffect' É UTILIZADO PELA ÚLTIMA VEZ, por assim se dizer... 
+ 
+
+OUTPUTTADO NO NOSSO CONSOLE...
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+
+
+CERTO.... mas o fato de 'pq esse código do 'console.log' É EXECUTADO BEM __NA HORA __ EM QUE O 'useEffect' É UTILIZADO PELA ÚLTIMA VEZ, por assim se dizer... '
+
+
+
+DEPENDE 
+
+
+DO ___sEGUNDO PARÂMETRO__ QUE PASSAMOS 
+
+à 
+
+FUNÇÃO INTERNA DE 'useEffect', lá no cockpit...   (o array de 'DEPENDENCIES') ---> depende se ELE ESTIVER __VAZIO (caso do exemplo) OU NÃO....
+
+
+ex:
+
+
+
+
+
+const Cockpit = (props) => {
+
+
+    useEffect(() => { 
+      console.log('[Cockpit.js] useEffect');
+      setTimeout(() => {
+        alert('Saved data to the cloud!');
+      }, 1000);
+
+
+      return () => {
+        console.log('[Cockpit.js] cleanup work in useEffect');
+      }
+    }, []); ///////////EIS O CÓDIGO EM QUESTÃO 
+
+
+
+
+    -----------------------------------------------------
+
+
+
+
+
+
+ARRAY VAZIO... --------> SE VOCÊ DEIXA ESSE SEGUNDO 
+
+PARÂMETRO COMO UM ARRAY VAZIO, 
+
+ISSO FARÁ COM QUE 
+
+
+O CÓDIGO QUE VOCÊ COLOCOU DEPOIS DAQUELE 'return'
+
+
+
+___SEJA EXECUTADO________ APENAS___  QUANDO AQUELE COMPONENT É __RENDERIZADO____ E ENTÃO 'UNMOUNTED'...
+
+
+
+
+
+
+PARA DEMONSTRAR A DIFERENÇA 
+
+___ENTRE DEFINIR ESSE ARRAY VAZIO E NÃO O DEFINIR__, 
+
+
+
+O PROFESSOR DEFINE OUTRO 'useEffect' (pq, como ele explicou, podemos ter MÚLTIPLOS CALLS DESSE MÉTODO)...
+
+
+
+
+
+
+DENTRO 
+
+
+DESSE segundo 'useEffect',
+
+
+
+O PROFESSOR FAZ UM CONSOLE.LOG 
+
+
+
+de 
+
+'[Cockpit.js] 2nd useEffect'...
+
+
+
+
+
+O PROFESSOR TAMBÉM 
+___REMOVE___ DESSE SEGUNDO 'useEffect()' 
+
+
+O INTERVALO DO PRIMEIRO, 
+
+
+E TAMBÉM REMOVE 
+
+
+O __sEGUNDO PARÂMETRO__ (aquele ARRAY VAZIO).
+
+
+
+
+ex:
+
+
+
+
+
+const Cockpit = (props) => {
+
+
+    useEffect(() => { 
+      console.log('[Cockpit.js] useEffect');
+      setTimeout(() => {
+        alert('Saved data to the cloud!');
+      }, 1000);
+
+
+      return () => {
+        console.log('[Cockpit.js] cleanup work in useEffect');
+      }
+    }, []); 
+
+
+
+      useEffect(() => { 
+      console.log('[Cockpit.js] 2nd useEffect');
+
+      return () => {
+        console.log('[Cockpit.js] cleanup work in 2nd  useEffect');
+      }
+    }); 
+
+
+
+
+} 
+
+
+
+--------------------------------
+
+
+
+
+
+COMO 
+
+
+___o PROFESSOR NÃO DEFINIU UM SEGUNDO PARÂMETRO (array com AS DEPENDENCIES) 
+
+
+
+NAQUELE SEGUNDO 
+
+'useEffect',
+
+
+ISSO SIGNIFICA QUE 
+
+ELE VAI ___RODAR ____ O SEU CÓDIGO ___ PARA 
+
+
+CADA __UPDATE CYCLE___ DE NOSSO COMPONENT 'cockpit'.... 
+
+
+-------------------------------------
+
+
+
+
+
+RESULTADO DISSO:
+
+
+
+
+Quando o professor RECARREGAR A PÁGINA,
+
+
+o '2nd useEffect'
+
+
+VAI APARECER NO CONSOLE...
+
+
+
+
+
+QUANDO ELE 
+
+
+CLICAR EM 'toggle Persons' (e não em 'REMOVE COCKPIT', que está diretamente relacionado com COCKPIT),
+
+
+O 
+
+
+'2nd useEffect' 
+
+
+
+
+e 
+
+
+o 
+
+
+
+'cleanup work in 2nd useEffect'
+ 
+
+
+
+ ___tAMBÉM VÃO APARECER NO CONSOLE__....
+
+
+
+
+
+
+
+
+ -------------------------------------------
+
+
+
+
+
+ MAS O IMPORTANTE AQUI É QUE ELES VAO APARECER ASSIm:
+
+
+
+
+
+[Cockpit.js] cleanup work in 2nd useEffect
+
+
+[Cockpit.js] 2nd useEffect
+
+
+
+
+---------------------------------
+
+
+OU SEJA,
+ 
+
+ O 
+
+
+ 'cleanup work' (aquele recurso/feature de 'componentWillUnmount', SIMULADO __ PELO ___ 'useEffect' NOS FUNCTIONAL COMPONENTS, e por meio daquela sintaxe específica mostrada logo acima...)
+
+
+
+ __VAI SER EXECUTADO__ PRIMEIRO, VAI SER EXECUTADO ____ ANTES___ DO PARÂMETRO 'principal' 
+
+ DO PRIMEIRO PARÂMETRO 
+
+ do 
+
+
+ 'useEffect'....       --------> E ISSO (esse código de 
+ 'cleanup work') VAI RODAR ANTES___ DO PARÂMETRO PRINCIPAL do 'useEffect', 
+
+ QUANDO O COMPONENT FOR UPDATADO, __SEMPRE__..... (e sempre que o component for updatado,
+ lembre-se.) ----------->
+
+ ----------> E ISSO PODE SER ÚTIL EM CASOS EM QUE ____VOCê ____ TEM ALGUMA 
+
+
+ OPERAÇÃO 'principal' __QUE ACTUALLY DEVERÁ/DEVE  SER CANCELADA ____SEMPRE QUE 
+
+O COMPONENT ESCOLHIDO É __RE-RENDERIZADO___... ( ou seja,
+
+
+__DEPOIS ___ DELE SER ATUALIZADO, POR ASSIM DIZER.) -------> isso, portanto, 
+
+
+
+TE DÁ UM POUCO MAIS DE 
+
+
+___FLEXIBILIDADE___ ..... mais flexibilidade 
+
+
+
+PQ VOCÊ PODE 
+
+USAR ESSA ___fUNÇÃO QUE É EXECUTADA__ SEMPRE ANTES 
+
+
+da função/operação 'principal' 
+
+
+do 
+
+
+'useEffect' 
+
+
+
+
+PARA ___ LIMPAR ____ o seu código (limpar listeners, por exemplo)...
+
+
+
+
+
+
+
+----> RESUMINDO:
+
+
+
+O que o professor está dizendo é que vocÊ 
+
+
+pode ESCOLHER O MOMENTO EM QUE 
+
+ESSA FUNÇão de 'cleanup' 
+
+É 
+
+EXECUTADA nos seus 'functional components' (quando usando REACTHOOKS)....
+
+
+
+
+Você pode:
+
+
+
+1) escolher rodar essa função QUANDO/APÓS O MOMENTO EM QUE O COMPONENT É ___dESTRUÍDO__ (
+
+
+    se você quiser que ela rode nesse momento, você deve 
+
+    passar 
+
+    um ARRAY VAZIO como segundo parâmetro do 'useEffect'...
+
+
+
+
+    EX:
+
+
+
+
+        useEffect( () => {
+            console.log('[Cockpit.js] useEffect');
+            return() => { 
+                console.log('[Cockpit.js] cleanup work in  useEffect'); 
+            };
+        }, []); //////EIS O CÓDIGO IMPORTANTE EM QUESTÃO.
+
+
+)
+
+
+
+
+
+
+
+
+2) escolher rodar ___eSSA FUNÇÃO___ EM CADA __UPDATE CYCLE DO SEU COMPONENT (
+
+
+    se você quiser que ela rode em CADA UPDATE CYCLE DO SEU COMPONENT,
+
+    você NÃO DEVE 
+
+    PASSAR UM SEGUNDO PARÂMETRO 
+
+    ao 'useEffect',
+
+    você deve PASSAR SÓ O SEU PARÂMETRO PRINCIPAL E ENTÃO 
+
+    SUA FUNÇÃO COM O 'cleanup work/code'...
+
+
+    ex:
+
+
+
+        useEffect( () => {
+            console.log('[Cockpit.js] 2nd useEffect');
+            return() => { ////////EIS O CÓDIGO EM QUESTÃO.
+                console.log('[Cockpit.js] cleanup work in 2nd useEffect'); 
+            };
+        });
+
+
+)
+
+
+
+
+------------------------------------------------
+
+
+
+
+A TERCEIRA OPÇÃO EXISTE... --> TERCEIRA
+
+OPÇÃO 
+
+seria 
+
+PASSAR UM ARRAY COM A __dEPENDENCY__ desse 'useEffect', 
+
+a dependency que essa função deverá 
+
+fazer 'watch' por mudanças... -------> SE VOCÊ 
+
+
+ESCOLHER ESSA OPÇÃO, vocÊ vai acabar DIRECIONANDO
+ 
+
+ A FUNÇÃO DE 'cleanup work' (aquela função 'return () => {cleanupCode}' )
+
+
+ SOMENTE ÀQUELA DEPENDENCY... (basicamente, isso fará com que O CÓDIGO DEFINIDO NO PARÂMETRO PRINCIPAL DO 'useEffect' SEJA SEMPRE EXECUTADO QUANDO ESSA DEPENDENCY FOR ALTERADA, e então vai TAMBÉM RODAR A FUNÇÃO DE 'cleanup' dentro desse primeiro parâmetro... )
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+OK, VIMOS MUITA COISA 
+
+
+SOBRE LIFECYCLES 
+
+
+E useEffect...
+
+
+
+
+---> professor admite que 
+
+muitas dessas coisas podem parecer muito abstratas, aqui... ------> pq nós 
+
+
+não usamos nada disso até agora,
+
+
+
+
+
+não usamos nada disso em exemplos concretos... ---> vamos fazer isso ao longo do curso.
+
+
+
+
+
+------------------------------------
+
+
+
+
+AINDA ASSIM, PROFESSOR APONTA __qUE HÁ CENÁRIOS E LIFECYCLES  QUE 
+
+___RARAMENTE UTILIZAREMOS, 
+ 
+pq são mt nicho... -----> MESMO ASSIM,
+
+
+PROFESSOR QUER NOS MOSTRAR 
+
+
+PARA QUE SEMPRE 
+
+NÓS TENHAMOS ESSAS FEATURES NO FUNDO DE NOSSAS MENTES, 
+
+para que 
+
+
+
+possamos EVENTUALMENTE as utilizar...
+
+
+
+
+
+
+
+HOOKS ---> TEREMOS UM MÓDULO INTEIRO SOBRE ELES NO FINAL DO CURSO... --> professor 
+
+vai converter nosso aplicativo do hamburguer em um aplicativo 
+
+
+que usa APENAS REACT HOOKS....
+
+
+-----------------------
+
+
+
+
+
+
+
+
+POR ENQUANTO, no entanto, 
+
+DEVEMOS CONTINUAR 
+
+
+
+___COM NOSSAS OPTIMIZAÇÕES DE PERFORMANCE com a ajuda de 'shouldComponentUpdate'... ---> 
+
+
+PQ ISSO É 
+
+___ALGO SUPER IMPORTANTE__ DE SE SABER.........
+
+
+
+
+
+
+DEVEMOS SABER 
+
+
+
+___COMO USAR ___ 'shouldComponentUpdate'!!!! ---------->  
+
+
+
+
+ATÉ AGORA,
+
+
+
+NÓS ESTAMOS SEMPRE DEIXANDO 
+
+
+
+assim:
+
+
+
+
+shouldComponentUpdate(nextProps, nextState) {
+    console.log(xxx);
+    return true;
+
+}
+
+
+
+
+---------------------
+
+
+
+
+O RETURN DE 'true' NESSA FUNÇÃO SIGNIFICA QUE 
+
+
+NÓS ESTAMOS DEIXANDO O REACT __SEMPRE __ RE-RENDERIZAR ___ NOSSO APLICATIVO 
+
+
+INTEIRO ___ (the entire 'component tree for this component') SEMPRE QUE 
+
+
+___ALGO MÍNIMO___ (bem pequeno mesmo) 
+
+
+É ALTERADO 
+
+NESSE COMPONENT.... ---> (E ISSO É __PÉSSIMO__ PARA PERFORMANCE...) --------->
+
+
+
+
+---------->
+
+
+--------> CONTUDO, ISSO NÃO SIGNIFICA (como disse o professor) que 
+
+
+O REACT UPDATA O ___DOM DE VERDADE___ PARA CADA 
+
+
+UMA DESSAS MUDANÇAS, MAS AINDA ASSIM, ISSO SIGNIFICA QUE 
+
+___ELE PRECISA SEMPRE ********___CHECAR_________*******
+
+
+SE PRECISA ATUALIZAR O DOM DE VERDADE (ou não), INTERNAMENTE,
+
+
+E É ISSO QUE COME A PERFORMANCE...  (e se conseguirmos 
+
+
+
+__PREVENIR__ ISSO COM A AJUDA 
+
+DO 
+
+
+'shouldComponentUpdate', 
+
+NÓS JÁ PODEREMOS __SALVAR UM BOCADO DE PERFORMANCE__...)
+
+
+Ok, mas como podemos trabalhar com 
+
+
+esse método/lifecycle hook?

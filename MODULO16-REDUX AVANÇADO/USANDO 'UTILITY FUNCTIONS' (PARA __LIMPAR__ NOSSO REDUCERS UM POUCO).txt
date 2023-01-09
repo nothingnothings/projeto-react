@@ -1,0 +1,1268 @@
+
+
+
+
+
+
+
+
+
+
+AO LONGO DESTE MÓDULO, APRENDEMOS UM MONTE SOBRE 
+
+AS COISAS AVANÇADAS QUE NÓS PODEMOS FAZER 
+
+
+COM O 
+
+
+REDUX... especialmente 
+
+'ACTION CREATORS' e middlewares, QUE SÃO AS FEATURES 'CORE' QUE NOS 
+
+__PERMITEM__ RODAR 
+
+
+ASYNC CODE COM O REDUX/ASYNC CODE QUANDO 
+
+
+DISPATCHEAMOS NOSSAS ACTIONS...
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+AGORA O PROFESSOR QUER NOS MOSTRAR 'ADVANCED REDUCER SETUPS'... 
+
+
+
+
+
+
+
+----> ATÉ AGORA, NÓS TEMOS 2 REDUCERS... ------->  e nosso setup já é um pouco avançado,
+
+
+PQ 
+
+
+NÓS 
+
+
+
+JÁ DIVIDIMOS NOSSO REDUCER DEFAULT ('reducers.js') 
+
+
+EM 
+
+2 
+
+REDUCERS,
+
+o 
+
+
+
+'counter.js'
+
+
+e 
+
+o 
+
+'result.js'....
+
+
+
+--> E NÓS COMBINAMOS esses 2 reducers, é claro, por meio de 'combineReducers',
+
+lá em 
+
+
+'index.js'...
+
+
+
+------------------------------
+
+
+
+
+
+
+
+
+--> ENTRETANTO,
+
+
+
+AMBOS REDUCERS de nosso projeto __aINDA POSSUEM __ SWITCH STATEMENTS ___RELATIVAMENTE ___LONGOS____...
+
+
+
+
+
+
+
+
+
+---> E MESMO QUANDO VOCÊ ___SPLITTAR/BREAK UP ___ SEUS REDUCERS 
+
+
+EM MÚLTIPLOS ARQUIVOS,
+
+
+
+
+VOCê PROVAVELMENTE __ AINDA TERÁ __ RELATIVAMENTE LONGOS SWITCH CASE 
+
+STATEMENTS 
+
+
+PARA 
+CADA 
+
+
+REDUCER (se o seu reducer faz handle de mais de 2 actions, ele sempre vai ficar meio gordinho/grande...).
+
+
+
+
+
+
+
+
+----> É POR ISSO QUE O CLEANUP ADICIONAL DE 
+
+
+ARQUIVOS 
+
+
+'REDUCER'
+
+
+
+PODE SER UMA BOA IDEIA... -----> ______''''PODE SER'''________ ----> isso 
+
+
+não é obrigatório, é só uma 
+
+sugestão...
+
+
+
+
+
+
+
+
+--> É UMA BOA PRACTICE, MAS VOCê NÃO É OBRIGADO A FAZÊ-LO...
+
+
+
+
+---------------------------------------
+
+
+
+
+
+MAS O PROFESSOR AINDA QUER NOS MOSTRAR COMO FAZER ISSO;
+
+
+
+COMO 
+
+
+
+'CLEAN UP' ESSE REDUCER, etapa por etapa,
+
+para 
+
+ACABAR 
+
+COM 
+
+UM 
+
+
+
+REDUCER BEM __CLEAN___....
+
+-------------------------------------
+
+
+
+
+
+
+--> A PRIMEIRA COISA QUE PODEMOS FAZER, NO CASO, TEM A VER COM 
+
+'IMMUTABILITY'...
+
+
+
+
+
+
+
+
+
+eis o código atual de 
+
+'counter.js',
+
+
+um de nossos reducers...:
+
+
+const counterReducer = (state = initialState, action) => {
+  switch (action.type) {  
+    case actionTypes.INC_COUNTER:
+      return {
+        ...state,
+        counter: state.counter + 1,
+      };
+    case actionTypes.DEC_COUNTER:
+      return {
+        ...state,
+        counter: state.counter - 1,
+      };
+      case actionTypes.ADD_COUNTER:
+        return {
+          ...state,
+          counter: state.counter + action.value,
+        };
+
+        case actionTypes.SUB_COUNTER:
+          return {
+            ...state,
+            counter: state.counter - action.value,
+          };
+
+
+
+    default:
+      return state;
+  }
+};
+
+export default counterReducer;
+
+
+
+
+------------------------------------
+
+
+
+VAMOS MEXER UM POUCO 
+
+
+
+NA 
+
+'IMMUTABILITY' desse código aí...
+
+
+
+
+
+
+---> NÓS, NOS MÚLTIPLOS 'CASES' DESSE reducer,
+
+
+
+CONSTANTEMENTE__ UPDATAMOS UM OBJETO__, no final das contas...  ----> isso significa que 
+
+
+QUANDO 
+
+NÓS 
+
+RETORNAMOS UM 'NEW STATE' por meio desses case statements,
+
+nós sempre retornamos 
+
+
+um 
+
+'UPDATED OBJECT'...
+
+
+
+
+--> esse object tem uma estrutura assim:
+
+
+
+'''''
+{
+  ...state,
+  counter: state.counter..........
+}
+
+''''
+
+
+
+OU SEJA,
+
+
+ESSE OBJETO COPIA as propriedades do 'old state' (por meio de '...state') 
+
+
+
+E ENTÃO 
+
+
+__SUBSTITUI UMA PROPRIEDADE EM ESPECÍFICO DESSE STATE VELHO__.... (retornando um objeto novo com essa propriedade alterada...)
+
+
+
+
+
+
+
+
+
+
+
+
+--> E, OBVIAMENTE, PODERÍAMOS FAZER 
+
+
+ESSE UPDATE DESSA FORMA, CONTINUAR FAZENDO DESSE JEITO...
+
+
+
+
+
+
+
+--> PORÉM, É POSSÍVEL__ CRIAR UMA UTILITY FUNCTION__ para 
+
+o return 
+
+desse objeto, que é MEIO __PADRONIZADO__...
+
+
+
+
+---> E PODEMOS/PODERÍAMOS ESCREVER UMA UTILITY FUNCTION TAMBÉM PARA 
+
+RETORNAR __ ARRAYS__, que são semelhantes a objetos...
+
+
+
+
+
+
+
+
+--> se fizéssemos isso, se criássemos essa utility function, poderíamos 
+
+SIMPLESMENTE 
+
+CHAMAR 
+
+ESSA 
+
+
+UTILITY FUNCTION 
+
+EM 
+
+CADA 
+
+UM 
+
+DOS CASES,
+
+
+e aí 
+
+
+____SALVAR __ UM POUCO DE CÓDIGO 
+
+repetido... (repetido em cada um dos cases...)
+
+
+
+
+
+
+
+
+
+
+
+OK, MAS COMO PODERÍAMOS FAZER ISSO? -----> professor nos explica que, para começo de conversa,
+
+ELE VAI 
+
+CRIAR UM NOVO ARQUIVO 
+
+EM 
+
+'store', o qual ele chamará 
+
+de 
+
+'utility.js'...
+
+
+
+
+
+---------------------------
+
+
+DENTRO DESSE ARQUIVO, 
+
+professor 
+
+
+CRIARÁ
+ 
+  
+
+UMA CONSTANTE que segurará 
+
+UMA FUNÇÃO,
+
+
+ a qual ele chamará 
+
+
+ de 
+
+
+
+ 'updateObject'... ---> e professor vai usar a sintaxe ES6 das ARROW FUNCTIONS...
+
+
+
+ ex:
+
+''''''''''''''''''
+
+ const updateObject = () => {
+
+ }
+
+
+ '''''''''''''''''''''''
+
+
+
+
+
+
+
+
+ ESSA FUNÇÃO DE UTILITY AÍ __VAI 'EXPECT' 
+
+ 2 ARGUMENTOS...
+
+
+
+
+
+
+ --> O PRIMEIRO ARGUMENTO SERÁ:
+
+
+
+ 'oldObject',
+
+
+ QUE 
+
+ SERÁ 
+
+
+ ___ O ANTIGO OBJETO___ QUE O PROFESSOR 
+
+ ESPERA UPDATAR 
+
+ DENTRO 
+
+ DESSE 
+
+ 'updateObject'...
+
+
+
+
+
+
+
+ --> JÁ O SEGUNDO ARGUMENTO SERÁ: 
+
+
+ 'updatedValues',
+
+
+ QUE 
+
+ SERÁ 
+
+ OS valores 
+
+
+
+
+ QUE SERÃO ALTERADOS 
+
+ NESSE 
+
+ 'oldObject'...
+
+ 
+
+
+
+
+
+ EX:
+
+
+
+
+
+  const updateObject = (oldObject, updatedValues) => {
+
+ }
+
+
+
+
+ -------------------------------------
+
+
+
+
+ DENTRO DESSE OBJETO, O QUE O PROFESSOR VAI QUERER FAZER É SIMPLES:
+
+
+
+
+
+ ele vai querer fazer AS COISAS QUE ELE ESTAVA FAZENDO ANTERIORMENTE,
+
+
+ nos CASES,
+
+
+
+ MAS AQUI... ------> ou seja,
+
+
+ ELE 
+
+
+ VAI QUERER 
+
+
+
+ RETORNAR 
+
+ UM 
+
+ 'UPDATEDOBJECT'...
+
+
+
+
+
+
+
+
+ ---> e é por isso que ele vai copiar a lógica 
+
+ de um dos CASES....
+
+ vai ficar assim:
+
+
+
+
+
+
+   const updateObject = (oldObject, updatedValues) => {
+          return {
+            ...state,
+            counter: state.counter - action.value
+          }
+ }
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+DENTRO DO BODY DESSE 
+
+'updateObject',
+
+
+
+a primeira coisa que o professor vai querer 
+
+
+fazer 
+
+
+É 
+
+
+
+SUBSTITUIR 
+
+
+'...state' por 
+
+
+
+'...oldObject',
+
+
+
+PQ 
+
+
+É ISSO QUE ESSENCIALMENTE 
+
+
+VAI 
+
+SER 
+
+
+esse 
+
+parâmetro 
+
+'oldObject',
+
+É 
+
+O 
+
+'STATE' 
+
+de nosso app...
+
+
+
+ex:
+
+
+
+
+
+
+
+   const updateObject = (oldObject, updatedValues) => {
+          return {
+            ...oldObject, /////////eis o código em questão.
+            counter: state.counter - action.value
+          }
+ }
+
+
+----------------------------
+
+
+
+DEPOIS,
+
+ELE VAI 
+
+SUBSTITUIR 
+
+
+
+'state.counter' por 'oldObject.counter'...
+
+
+
+ex:
+
+
+
+
+
+
+   const updateObject = (oldObject, updatedValues) => {
+          return {
+            ...oldObject, /////////eis o código em questão.
+            counter: oldObject.counter - action.value
+          }
+ }
+
+
+
+
+
+ -------------------------------------
+
+
+
+
+ AGORA, A ÚLTIMA COISA QUE FALTA 
+
+ É 
+
+ ALTERAR O 
+
+
+ 'action.value'... (esse 'updatedValues' precisa ser enfiado ali, de alguma forma...)
+
+
+
+ -------------------------------
+
+
+ MAS O PROFESSOR NOS DIZ QUE 
+
+
+ 'counter' (o nome da propriedade/lado esquerdo)
+
+ TAMBÉM 
+
+ TERÁ DE SER ALTERADO... -----> professor 
+
+ não vai 
+
+ escrever '''counter: oldObject.counter - action.value''''...
+
+
+
+ NÃO, EM VEZ DISSO,
+
+
+ ELE VAI SUBSTITUIR 
+ ESSA LINHA 
+
+ DE CÓDIGO 
+
+
+ POR 
+
+
+ '...updatedValues',
+
+
+ pois 
+
+
+ ___ELE ESPERA__ QUE 
+
+ ESSE 'updatedValues'
+
+
+
+ SEJA __UM OBJETO JAVASCRIPT___... --> e ele vai querer ESPALHAR AS PROPRIEDADES DESSE OBJETO 'updatedValues' DENTRO DESSE NOVO OBJETO RETORNADO COM 'updateObject'...
+
+
+
+
+ ---------------------
+
+
+
+
+
+ professor vai querer '...updatedValues' 
+
+
+ PQ 
+
+ ELE VAI QUERER ESPALHAR, DENTRO DO BODY DESSE objeto retornado, 
+
+ TODAS 
+
+ AS PROPRIEDADES/VALUES QUE ELE VAI QUERER OVERWRITTAR...
+
+
+
+FICARÁ ASSIM:
+
+
+
+   const updateObject = (oldObject, updatedValues) => {
+          return {
+            ...oldObject, 
+            ...updatedValues /////////eis o código em questão.
+          }
+ }
+
+
+
+ ----------------------------------------
+
+
+
+
+
+ ESSA SERÁ NOSSA 'UTILITY FUNCTION' PARA __aTUALIZAR UM DETERMINADO 'object' (que é o nosso state, state global 
+ 
+ de redux, na verdade...)
+
+
+
+
+
+
+
+ --> E O PROFESSOR VAI NOS 
+
+
+ MOSTRAR 
+
+ COMO USAR 
+
+ ESSA 
+
+ 'utility function'... -------> 
+
+
+
+ ELE
+
+
+ VAI IMPORTAR 
+
+ ESSE 
+
+ 'updateObject'
+
+LÁ 
+
+
+
+NO 
+
+REDUCER 
+
+de '
+
+counter.js'... -------> 
+
+ELE VAI 
+
+
+ESCREVER 
+
+
+'import { updateObject } from '../utility';
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+
+
+
+------> E ELE VAI USAR ESSA FUNÇÃO DE 'UTILITY' AÍ __JUSTAMENTE __ NOS NOSSOS CASES DIVERSOS 
+
+NESSE 
+
+reducer aí...
+
+
+
+
+
+
+
+--> professor
+
+
+vai basicamente 
+
+SUBSTITUIR 
+
+
+
+este código aqui (ex):
+
+
+
+
+
+
+
+'''''''
+
+
+case actionTypes.SUB_COUNTER: 
+      return {
+        ...state,
+        counter: state.counter - action.value
+      }
+
+
+''''''
+
+
+
+
+POR ESTA VERSÃO:
+
+
+
+
+
+case actionTypes.SUB_COUNTER: 
+      updateObject();
+
+
+
+----------------------------
+
+
+É 
+
+
+__eVIDENTE___ QUE 
+
+DEVEMOS PASSAR 
+
+ALGUNS 
+PARÂMETROS A ESSA FUNÇÃO, PARA QUE ELA FUNCIONE... --> e nós vamos 
+
+passar 
+
+
+'state' (1o parâmetro, 'oldObject') 
+
+
+
+
+
+--> JÁ O  SEGUNDO PARÂMETRO ___ ('updatedValues', esse slot aí) SERÁ UM ___OBJETO _ COM TODAS 
+AS PROPRIEDADES 
+QUE 
+
+VAMOS 
+
+QUERER 
+
+ESPALHAR 
+
+NAQUELE 
+
+'return {}' no 
+
+'updateObject()'...
+
+
+
+
+
+
+
+--> E ESSE OBJETO SERÁ JUSTAMENTE 
+
+ISTO AQUI:
+
+'{counter: state.counter - action.value}' 
+
+
+
+
+
+EX:
+
+
+
+
+
+case actionTypes.SUB_COUNTER: 
+      updateObject(state, {counter: state.counter - action.value});
+
+
+
+--------------------------------------------------
+
+
+
+
+
+ 
+
+
+E ISSO __rEALMENTE VAI FUNCIONAR___... --> vai funcionar pq 
+
+
+aquele código de 
+
+
+'...updatedValues' VAI JUSTAMENTE __ESPALHAR 
+
+'counter: state.counter - action.value', esse 
+
+
+
+CÓDIGO CONTIDO DENTRO DE '{}' (objeto), 
+
+
+
+PARA DENTRO 
+
+DO OBJETO 
+
+RETORNADO 
+
+com 
+
+'return {}' LÁ NO 
+
+
+'updateObject' (que tem um código de 'const updateObject = (oldObject, updatedValues) => { ...oldObject, updatedValues}').
+
+
+
+
+
+-----------------------------------------
+
+
+
+FICOU ASSIM:
+
+
+
+
+          case actionTypes.INC_COUNTER:
+            return updateObject(state, {counter: state.counter + 1});
+          case actionTypes.DEC_COUNTER:
+            return updateObject(state, {counter: state.counter - 1});
+            case actionTypes.ADD_COUNTER:
+              return updateObject(state, {counter: state.counter + action.value});
+      
+              case actionTypes.SUB_COUNTER:
+                return updateObject(state, {counter: state.counter - action.value});
+
+
+
+
+
+
+-------------------------------------------------------------------
+
+
+
+
+
+SALVAMOS TUDO ISSO E TESTAMOS...
+
+
+
+
+
+
+
+
+
+--> TUDO ESTÁ FUNCIONANDO COMO ANTES, MAS AGORA COM ESSA UTILITY FUNCTION ('updateObject') NOS AJUDANDO...
+
+---> ISSO DEIXA NOSSO CÓDIGO DOS 'REDUCER' mais LEAN...
+
+
+
+--->  DEVEMOS __fAZER A MESMA COISA ___ 
+
+
+LÁ NO CÓDIGO 
+
+
+DE 
+
+'result.js' (o OUTRO REDUCER)...
+
+
+
+
+-----------------------
+
+
+
+
+EU CONSIGO FACILMENTE CONVERTER O CÓDIGO DE 'STORERESULT' (esse case aí...)
+
+
+em 
+
+um 
+
+CÓDIGO 
+QUE UTILIZA 
+
+a __UTILITY FUNCTIOn___....
+
+
+
+
+
+
+
+
+
+
+--> contudo, O CÓDIGO DE 'DELETERESULT'
+não 
+
+é tão simples....
+
+
+
+
+
+
+
+--> CERTO, E O PROFESSOR NOS DIZ QUE O CÓDIGO DE 
+
+'actionTypes.DELETE_RESULT'
+
+
+é um pouco ESPECIAL MESMO...
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+  case actionTypes.DELETE_RESULT:
+
+      const updatedArray = state.results.filter((result) => { ///ESPECIAL POR CONTA DISTO....
+        return result.resultId !== action.resultId; 
+      });
+      return {
+        ...state,
+        results: updatedArray,
+      };
+
+
+
+
+----------------------
+
+
+PROFESSOR NOS CONTA QUE 
+
+ELE __NÃO VAI REMOVER 
+
+
+AQUELE 
+
+'const updatedArray', pq isso é ALGO ESPECÍFICO A ESSE 'delete_Result', e é uma função/método 
+
+EXECUTADO ('.filter()' )
+
+SOBRE 
+
+
+UM ARRAY DE FORMA ESPECÍFICA..... -----> em vez DISSO
+
+
+o que 
+
+
+ele vai fazer É __MANTER___ ESSA constante, para que então seja pOSSÍVEL UTILIZAR 
+
+
+
+AQUELA CONSTANTE 'updatedArray' COMO 
+
+
+
+__VALOR 
+
+de 'results', no SEGUNDO PARÂMETRO DA CALL/RETURN 
+
+de 
+
+'updateObject'...
+
+
+
+ex:
+
+
+
+
+  case actionTypes.DELETE_RESULT:
+
+      const updatedArray = state.results.filter((result) => { ////ISSO FICA COMO ANTES( não há necessidade de tirar).
+        return result.resultId !== action.resultId; 
+      });
+      return updateObject(state, {results: updatedArray}); //////CÓDIGO ALTERADO....
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+
+
+SALVAMOS TUDO E TESTAMOS... ---> tudo parece funcionar... ---> 
+
+
+'updateObject' -------> 
+
+
+UMA 
+
+
+BOA UTILITY FUNCTION QUE PODEMOS 
+
+ADICIONAR NO NOSSO CÓDIGO, E QUE 
+
+DEIXA 
+
+
+NOSSOS 
+
+'REDUCERS'
+
+UM POUCO MAIS LEAN...

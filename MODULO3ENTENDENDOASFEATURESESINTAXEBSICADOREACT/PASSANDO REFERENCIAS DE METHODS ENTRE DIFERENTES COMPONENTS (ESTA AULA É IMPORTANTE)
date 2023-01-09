@@ -1,0 +1,1515 @@
+
+
+
+
+
+----> ok, digamos QUE QUEREMOS 
+
+
+CHAMAR 
+
+
+O 
+
+
+'switchNameHandler()' 
+
+
+
+
+ 
+NÃO SÓ  QUANDO NÓS CLICAMOS aquele 
+
+botão que está com 'onClick', 
+
+
+MAS TAMBÉM __QUANDO CLICAMOS ___ EM QUALQUER 
+
+
+PARAGRAPH DE NOSSO CÓDIGO, como os 
+
+PARAGRAPH 
+
+
+QUE CONTÊM 
+
+'name' e 'age'...  ---> como os PARAGRAPH '<p>' QUE FICAM DENTRO DE UM COMPONENTE/DE TODOS OS COMPONENTES 'Person'....
+
+
+
+--------------------------------------
+
+Ok, mas como fazer isso?
+
+
+
+Bem, o professor explica que poderíamos 
+
+
+ADICIONAR 
+
+
+o atributo/eventHandler de 
+
+'onClick' 
+
+
+
+na tag '<p>'....
+
+
+
+ex:
+
+
+
+import React from 'react';
+
+
+
+const person = ( props ) => {
+
+    return(
+        <div>
+            <p onClick>I'm {props.name} and I am {props.age} years old!</p> ////////EIS O CÓDIGO EM QUESTÃO.
+            <p>{props.children}</p>
+        </div>
+    )
+};
+
+
+export default person;
+
+
+---------------------------------------------
+
+
+
+Certo... MAS ISSO __NÃO VAI FUNCIONAR___.... 
+
+não vai funcionar 
+
+pq o 'onClick' 
+
+
+SEMPRE DEVERÁ SER ATRELADO (por meio de '=') 
+
+
+A UM MÉTODO/FUNÇÃO QUE SERÁ CHAMADO/CHAMADA 
+
+
+a partir de seu click.... ----> e o método que queremos chamar aqui, o 
+
+'this.switchNameHandler()',
+
+
+ESTÁ ___EM OUTRO ARQUIVO___ DE NOSSO CÓDIGO, ESTÁ 
+
+
+EM 'App.js', na classe 'App'...
+
+
+
+
+--> como podemos solucionar isso? ---> BEM, O PROFESSOR DIZ QUE 
+
+
+__PODEMOS__, NA VERDADE_,  __PASSAR UMA ___ REFERÊNCIA 
+
+A ESSE 
+
+Handler/method/'switchNameHandler'... PODEMOS 
+
+
+FAZER isso, passar essa referência, SE A PASSARMOS  (passarmos esse 'handler/method/switchNameHandler') 
+
+____COMO UMA ___PROPRIEDADE____ AO 
+
+__NOSSO ___ COMPONENT DE 'Person'... ( ou seja, 
+
+
+passar ele
+
+como propriedade 
+
+
+aos calls 
+
+
+'<Person name={...}'......) ----------> E ISSO, 
+
+EXPLICA O PROFESSOR, 
+
+NÃO 
+
+É UM 
+
+'FANCY HACK'....
+
+
+
+
+NÃO, isso é na verdade 
+
+__UM PADRÃO ___ EXTREMAMENTE COMUM.... ---> o professor vai, 
+
+antes de mais nada, 
+
+
+
+
+REESTRUTURAR 
+
+
+
+O código 
+
+dos calls dos components/components 
+
+
+EM MÚLTIPLAS LINHAS, para que consigamos ler melhor...
+
+
+
+ex:
+
+
+
+
+
+
+  render = () => {
+    
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}>My Hobbies: Racing</Person>
+        <Person 
+        name={this.state.persons[2].age} 
+        age={this.state.persons[2].age}/>
+      </div>
+    );
+
+
+
+-----------------------------------------------
+
+
+
+
+CERTO... 
+
+AGORA NÓS CONSEGUIMOS 
+
+
+VER QUAIS PROPRIEDADES/ATRIBUTOS ESTAMOS PASSANDO BEM CLARAMENTE...
+
+
+
+Mas agora,
+ 
+
+ digamos 
+
+ QUE EU QUERO QUE ESSE NEGÓCIO DE 
+
+ 'clicar em <p> resulta na mudança de state do component' 
+
+ APENAS PARA 1 DESSES COMPONENTS... ---> para fazer isso, 
+
+
+ o professor adiciona 
+
+ UMA NOVA 
+
+ PROPRIEDADE 
+
+
+ no segundo call de 'Person'/no segundo COMPONENT 'Person'...
+
+
+
+ ele adiciona um 'click' (essa é a propriedade)... ele então 
+
+ passa UMA SIMPLES 
+
+ REFERÊNCIA 
+
+
+ ao método de 'this.switchNameHandler()'....
+
+
+
+
+
+
+
+ 
+
+
+  render = () => {
+    
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        click={this.switchNameHandler}>My Hobbies: Racing</Person>
+        <Person 
+        name={this.state.persons[2].age} 
+        age={this.state.persons[2].age}/>
+      </div>
+    );
+
+-------------------------------------------
+
+
+ou seja,
+ 
+
+ agora o código 
+
+ que trigga a mudança é 
+
+
+ TANTO 
+ 
+
+ AQUELE BUTTOn como 
+
+ esse paragraph aí...
+
+
+
+ Certo... mas aqui há um __PROBLEMA___: O  professor 
+
+ passou 
+
+ uma PROPRIEDADE 
+
+ de 'click'... (e não aquele 'onClick'..., não aquele 'onClick={código}'... )
+
+
+
+
+ ------------------------------------------
+
+
+
+
+
+ certo... 
+
+ mas professor diz que 
+
+ ENTÃO PODEMOS 
+
+ USAR ESSA 
+
+
+ PROPRIEDADE 
+
+ 'click' 
+
+
+ NA NOSSA DEFINIÇÃO DO COMPONENT 'PERSON'/NO COMPONENTE PERSON EM SI....
+
+
+
+ ----> ele diz que podemos usar essa propriedade 
+
+ PQ ELA ESTARÁ 
+
+
+ REUNIDA NAQUELE ARGUMENTO DE 'PROPS' RECEBIDO POR NOSSO COMPONENT...
+
+
+
+
+
+ CÓDIGO DE 'person' ATÉ AGORA:
+
+
+
+
+
+ import React from 'react';
+
+
+
+const person = ( props ) => {
+
+    return(
+        <div>
+            <p onClick>I'm {props.name} and I am {props.age} years old!</p> 
+            <p>{props.children}</p>
+        </div>
+    )
+};
+
+
+export default person;
+
+
+
+
+---------------------------------------------------
+
+
+
+PROFESSOR EXPLICA QUE __AGORA __ ELE PODE REALMENTE 
+
+adicionar 
+
+um 
+
+
+
+'={}' 
+
+DO LADO DO 
+
+
+'onClick' desse negócio, desse nosso 'stateless component'....
+
+
+então vai ficar:
+
+
+
+
+
+
+ import React from 'react';
+
+
+
+const person = ( props ) => {
+
+    return(
+        <div>
+            <p onClick>I'm {props.name} and I am {props.age} years old!</p> 
+            <p>{props.children}</p>
+        </div>
+    )
+};
+
+
+export default person;
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+DEPOIS DISSO, O PROFESSOR NOS EXPLICA QUE DEVEMOS SIMPLESMENTE 
+
+CHAMAR 'props.click' (é a nossa propriedade 
+'click' que passamos lá no CALL do component/USO 
+DO COMPONENT) a partir desse negócio 'onClick'....
+
+
+
+
+FICA ASSIM:
+
+
+
+
+
+import React from 'react';
+
+
+
+const person = ( props ) => {
+
+    return(
+        <div>
+            <p onClick={props.click}>I'm {props.name} and I am {props.age} years old!</p>  //EIS AQUI O CÓDIGO EM QUESTÃO.
+            <p>{props.children}</p>
+        </div>
+    )
+};
+
+
+export default person;
+
+
+
+-----------------------------
+
+
+
+isso funciona pq 
+
+
+DEFINIMOS A PROPRIEDADE 
+
+'click'
+ 
+
+ LÁ NAQUELE CALL DE PERSON....
+
+
+ Lembre-se do código da propriedade click:
+
+
+
+ 'click={this.switchNameHandler}'.... -------> E ISSO, EXPLICA O PROFESSOR, 
+
+ VAI 
+
+
+ ACABAR 
+
+ EXECUTANDO 
+
+ ESSA FUNÇÃO 
+
+
+ 'this.switchNameHandler' 
+
+
+QUE NÓS ___PASSAMOS COMO REFERÊNCIA___....
+
+
+
+
+
+
+CERTO, 
+
+
+AGORA NOSSO CÓDIGO ESTÁ ___FUNCIONANDO___ --> agora sempre que o botão OU O '<P>' daquele elemento específico ('manu') são pressionados, O STATE__ de nossa página___ é atualizado/alterado...
+
+
+
+
+------------------------------------
+
+
+
+
+
+E ESSE É UM __PATTERN ESPECÍFICO__ QUE DEVEMOS ENTENDER --> 
+
+
+
+ESSE PATTERN ===== 
+
+
+
+você PODE PASSAR ____MÉTODOS_____ (como 'this.switchNameHandler')  ___TAMBÉM ___ COMO '''''PROPS'''' (basta que nós OS ENFIEMOS em uma propriedade/atributo passado ao nosso component...)
+
+AOS SEUS COMPONENTS... --------->   VOCê FAZ ISSO 
+
+                                    PARA QUE VOCÊ 
+                                    CONSIGA CHAMAR UM 
+                                    MÉTODO QUE TVZ mude o state 
+                                    EM 
+                                    __OUTRO ____ COMPONENT QUE 
+
+                                    __NÃO TEM ACESSO __ DIRETO A ESSE TAL 
+                                    MÉTODO___, e QUE 
+                                    NÃO TEM ACESSO DIRETO AO NOSSO STATE
+                                     (é exatamente o caso que temos, nessa lição... e está 
+                                     certo ESSE MÉTODO 'dumb' NÃO TER ACESSO AO 'state', isso 
+                                     está certo...)...
+
+-----------------------------
+
+
+
+É UM PADRÃO COMUM, 
+
+
+E É IMPORTANTE 
+
+
+ENTENDÊ-LO.... ------> É IMPORTANTE 
+
+
+
+__ENTENDER___ QUE VOCÊ PODE, SIM, PASSAR 
+
+'click Handlers', click handlers QUE 
+
+TE PERMITEM __MUDAR __ OS DADOS 
+
+NO 'Parent component'... (ou seja, aqui nesse exemplo, MUDAMOS O 'APP COMPONENT', os dados 
+do component 'APP', A PARTIR DE  ___UM CLICK____  EM UM COMPONENT MENOR, EM UM 'CHILD COMPONENT'... --> child component, nesse caso, é o 'PERSON' component... )
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+TALVEZ, ADEMAIS, 
+
+NÓS TAMBÉM QUEIRAMOS 
+
+
+PASSAR UM 
+
+
+___VALOR___ 
+
+
+
+à NOSSA FUNÇÃO.... (à função de 'switchNameHandler()'....  ) 
+
+
+
+
+
+
+COMO ASSim?
+
+
+
+
+--> professor diz que podemos passar um novo valor 
+
+à 'switchNameHandler()',
+
+
+talvez 
+
+
+
+aqui em 
+
+switchNameHandler
+
+NÓS 
+
+__ACEITEMOS__/PASSEMOS A ACEITAR 
+
+
+um parÂmetro de 
+
+
+
+
+'newName'....
+
+
+
+ex:
+
+
+
+
+
+  switchNameHandler = (newName) => { /////////EIS O CÓDIGO EM QUESTÃO.
+    console.log('Button was Clicked!'); 
+
+    this.setState({ 
+      persons: [
+        { name: 'Maximillian', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    })
+  }
+
+
+
+
+---------------------------------
+
+
+
+
+--> faríamos/fazemos isso 
+
+para que 
+
+ALI,
+
+no lugar em que 
+
+
+
+o PROFESSOR FAZ O 'HARDCODE'
+
+
+de 'Maximillian' como o novo 'name', 
+
+
+nós possamos SETTAR 
+
+
+o 'newName' como esse valor....
+
+
+
+ex:
+
+
+
+
+
+  switchNameHandler = (newName) => {
+    console.log('Button was Clicked!'); 
+
+    this.setState({ 
+      persons: [
+        { name: newName, age: 28 },   ////////eis o código em questão.
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    })
+  }
+
+
+
+----------------------------
+
+
+
+CERTO, 
+
+
+ATÉ AÍ TUDO BEM...
+
+
+mas como DIABOS 
+
+passaremos 
+
+
+esse parâmetro/valor/constante/propriedade 
+
+
+'newName'
+
+para a função 'switchNameHandler'? Como 
+
+
+passamos essa DATA???? -------------> 
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+EXISTEM 
+
+
+
+2__ MANEIRAS DISTINTAS DE FAZER ISSO, DE PASSAR O VALOR/COISA DESSE ARGUMENTO....:
+
+
+
+
+
+1)  A PRIMEIRA MANEIRA É 
+
+___CHAMAR____ ( fazer o call de )
+
+
+'.bind()'  EM 'this.switchNameHandler' LÁ 
+
+
+NO componente 'App.js'... -------> vocÊ escreveria 'this.switchNameHandler.bind()'... -------->
+
+
+além disso, você teria de passar o 'THIS' como parâmetro desse método 'bind'....
+
+
+'this.switchNameHandler.bind(this)' ---------> ISSO VAI BINDAR 
+
+
+o 'this' de nosso call 'this.switchNameHandler' À CLASSE 'App', que É O QUE QUEREMOS....  ---------> 
+
+
+essa sintaxe pode parecer 
+
+estranha, mas 
+
+
+ESSA É UMA MANEIRA COMUM DE SOLUCIONAR O PROBLEMA DO 'THIS' no javascript comum...
+
+
+(
+
+
+
+
+
+this.setStateHandler().bind(this) 
+sets the context for the function setStateHandler()
+ to be the class object. This is necessary so that 
+ you could call this.setState({...}) inside the method, 
+ because setState() is the method of React.Component. If you 
+ do not .bind(this) you would get an error that setState() method is undefined.
+
+
+https://stackoverflow.com/questions/42434232/what-is-the-usage-of-this-method-bindthis
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+----> professor diz que, no entanto, não precisaríamos fazer isso normalmente.... não 
+
+precisaríamos usar essa sintaxe normalmente, mas AQUI, COMO O PROFESSOR 
+
+VAI QUERER
+
+ 
+PASSAR UM __SEGUNDO __ ARGUMENTO ao 'bind', ele o UTILIZARÁ...
+
+
+
+
+
+----> professor explica que
+
+'bind()' 
+
+será, agora, na verdade, 
+
+
+UMA 
+
+__LISTA ___ DE ARGUMENTOs QUE 
+
+
+
+___SERÃO ___ PASSADOS PARA A NOSSA 
+
+FUNÇÃO 
+
+'switchNameHandler'...
+
+
+
+
+
+E, AQUI, ESSE SEGUNDO ARGUMENTO DEVERÁ SER 
+
+
+O MEU 
+
+'newName'.... 
+
+
+
+(é bem simples a razão disso tudo:
+
+
+
+o formato/estrutura de 'bind()' é sempre 
+
+'bind(thisArg[, arg1[, arg2]], etc.. ))'
+
+
+
+
+
+
+
+
+
+CERTO....
+
+
+
+
+RESULTADO DO CÓDIGO (representação):
+
+
+
+
+
+
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler.bind(this, 'Maximillian')}>Switch Name</button> /////EIS O CÓDIGO EM QUESTÃO..
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        click={this.switchNameHandler}>My Hobbies: Racing</Person>  {/* aqui vemos o uso de uma gambiarra COMUM com MÉTODOS e propriedades, em que passamos essa propriedade ao nosso component, ao 'props' de nosso component, onde essa propriedade 'click' é utilizada...  */}
+        <Person 
+        name={this.state.persons[2].age} 
+        age={this.state.persons[2].age}/>
+      </div>
+    );
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+e para CONSEGUIRMOS VER UMA DIFERENÇA 
+
+ENTRE NOSSO 
+
+
+CÓDIGO DE ___AGORA___ E 
+
+NOSSO CÓDIGO ANTERIOR (ambos convertem o nome 'Max' para 'Maximillian'....),
+
+
+
+
+O PROFESSOR TAMBÉM 
+
+COLOCA 
+
+
+ESSE CÓDIGO 
+
+do 
+
+'this.switchNameHandler.bind(this, 'Maxmillian')' ali embaixo, NAQUELA
+ 
+
+ PARTE EM QUE PASSAMOS A FUNÇÃO/metodo
+
+ 'switchNameHandler' AO 'props' como  __UMA REFERENCIA__....  ---> o professor 
+
+ também 
+
+ vai lá 
+
+ e altera 
+
+ o código, coloca 'Max!!!' em vez de 'Maximillian' ------->>> ISSO FARÁ 
+ 
+
+ COM QUE FIQUE TRANSPARENTE NO NOSSO CÓDIGO os momentos em que 
+
+ apertamos 
+
+
+ no botão 'switch' 
+
+
+ e quando apertamos 
+
+
+ no '<p>' do segundo elemento 'Person'...
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler.bind(this, 'Maximillian')}>Switch Name</button> /////EIS O CÓDIGO EM QUESTÃO..
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        click={this.switchNameHandler.bind(this, 'Max!!!!!!')}>My Hobbies: Racing</Person> ///eis aqui o outro código em questão. 
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+      </div>
+    );
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+CERTO... NOSSO CÓDIGO ___ESTÁ FUNCIONANDO____ ---> agora 
+
+sempre que 
+
+clicamos 
+
+
+no '<p>', troca-se o output daquele elemento para 'Max!!!" 
+
+
+
+--> sempre que clicamos em '<button>', 
+
+altera-se o output para 
+
+'Maximillian'...
+
+
+
+---> tudo isso graças a '.bind(this, arg1)' e 
+
+
+ao código 'switchNameHandler = (newName) => {...}'...      (O '.bind()' faz com que os valores passados a ele (como 'arg1') SEJAM PASSADOS COM SUCESSO como argumento 'newName' de switchNameHandler...)
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+------> certo....  --> ENTÃO, ESSA É UMA DAS MANEIRAS DE __PASSAR UM ARGUMENTO/método__ 
+
+AOS NOSSOS REACT COMPONENTS...(como props)   (por meio do '.bind()' )
+
+
+
+--> MAS ESSA __NÃO É A __ÚNICA ___ MANEIRA DE 
+
+PASSAR UM ARGUMENTO___ ...   ------------> PROFESSOR NOS MOSTRARÁ UMA SINTAXE ___aLTERNATIVA___... ----> ainda assim, 
+
+o professor vai deixar 
+
+esse código de 'bind()' aqui, esse código de bind() que FAZ O ___PASS___ de nossa função 'switchNameHandler' COMO 
+__parte do argumento 'props' __ DO ___ COMPONENTE 'Person'.... ____ -------> pq, afinal de contas, apesar de ser uma bosta, 
+ESSA É A MANEIRA MAIS 'BÁSICA' de passar uma função como argumento (como 'props', que é usado como argumento) A UM 
+REACT COMPONENT...
+
+('this.switchNameHandler.bind(this, 'Maximilian')')
+
+
+
+-------------------------------------------
+
+
+
+
+
+2) a sintaxe alternativa TEM UMA APARÊNCIA DIFERENTE DA SINTAXE DO '.bind()'...
+
+--> nessa sintaxe alternativa, 
+
+
+
+lá em 
+
+'<button onClick={this.switchNameHandler}', 
+
+o professor VAI, ' ACTUALLY', 
+
+
+ESCREVER
+
+UMA ___ARROW FUNCTION____...
+
+
+essa função NÃO RECEBERÁ __ARGUMENTO ALGUM___ (mas teoricamente/tecnicamente ELA RECEBE UM OBJETO 'event' como argumento/parâmetro...)
+
+
+
+Como não usaremos 'event', esse objeto, nós 
+
+deixaremos o '()' vazio...
+
+
+ex:
+
+
+
+
+
+
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={() => this.switchNameHandler()}>Switch Name</button> //////eis o código em questão.
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        click={this.switchNameHandler}>My Hobbies: Racing</Person>
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+      </div>
+    );
+
+
+---------------------------------
+
+
+
+ou seja, 
+
+
+vamos 
+
+escrever 
+
+
+'() => {}' DENTRO 
+
+
+daquele 
+
+
+'atributo' de 'onClick'...
+
+
+na verdade, 
+
+
+vamos escrever 
+
+
+'() => {this.switchNameHandler()}'...... ---> esse código SIGNIFICA/faz 
+
+
+O RETURN 
+ 
+
+
+ ___DA SIMPLES 'FUNCTION CALL'  DE 
+
+ 'this.switchNameHandler()'...
+
+
+
+___ 
+
+
+
+EX(representação):
+
+
+
+
+
+
+
+
+
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={() => this.switchNameHandler()}>Switch Name</button> //////eis o código em questão.
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        click={this.switchNameHandler}>My Hobbies: Racing</Person>
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+      </div>
+    );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+aqui, nesse trecho, há 
+
+ALGUMAS COISAS QUE VOCÊ tem de entender...
+
+
+
+
+--> 1a coisa: QUANDO VOCÊ ESTÁ 
+
+USANDO 
+
+UMA ARROW FUNCTION, elas são 'burras', elas FAZEM 
+
+
+O CONTEXTO DO 'this' EQUIVALER AO CONTEXTO 'NORMAL/GLOBAL' de uma função (ou seja, 
+
+aqui o contexto SERÁ A __CLASSE___ 'App'... --> o 'this' apontará para a CLASSE 
+'APP'... )
+
+
+
+
+---> 2a coisa: esse código 
+
+'this.switchNameHandler();'   __SOLTO___ nessa arrow function 
+
+__VAI __ IMPLICITAMENTE (escondido) 
+
+
+TER um 'return statement' na sua frente... (
+
+
+    ou seja, 
+
+    o código 
+
+    'this.switchNameHandler()' dentro 
+    da arrow function é NA VERDADE 
+
+    'return this.switchNameHandler()'...
+)  ----------> MAS PQ ISSO VAI ACONTECER?  -------> PQ SE ___ VOCÊ __ ESCREVE UM ___ 'function call' QUE USA 'THIS' EM ARROW FUNCTIONS ___ EM APENAS 1 ÚNICA LINHA ___, ESSE CÓDIGO É __ AUTOMATICAMENTE 'returned' pela arrow function (o 'return' é adicionado automaticamente)... --> o 'return' é atraído pelo 'this', mas só se o seu function call for de 1 ÚNICA LINHA.
+
+
+
+
+
+
+
+A ALTERNATIVA, EXPLICA O PROFESSOR, 
+
+
+é 
+
+'wrappar' o function body da arrow function 
+
+EM CURLY BRACES 
+
+
+e então adicionar 'return' no início...
+
+
+
+ex:
+
+
+
+
+<button onClick={() => { return this.switchNameHandler()} }>Switch Name</button> 
+
+
+--------------------------------------------------------------------
+
+
+
+
+
+
+CERTO.
+
+
+
+O 
+
+'this.switchNameHandler()' 
+
+
+ACABA SENDO 
+
+__RETORNADO__ por 
+
+essa ARROW FUNCTION... ---> e o que ACABA SENDO RETORNADO __É UMA 'FUNCTION CALL'___.... (é por isso que o professor colocou os PARÊNTESES, para realmente conseguir o RETURN DE UMA FUNCTION CALL...)
+
+
+
+
+
+-----> Bem, em uma lição anterior, 
+
+O PROFESSOR EXPLICOU 
+
+
+QUE __NÓS __ NUNCA DEVEMOS 
+
+chamar 
+
+
+'this.switchNameHandler' (ou qualquer outra função 'handler') com um
+PARÊNTESES DO LADO... (Ex: 'this.switchNameHandler()') ----> pois isso faria com que 
+essa sua função fosse executada IMEDIATAMENTE, em vez de fazer ela esperar por um EVENT (como queremos, atrelada a um pseudoEventListener).. ---->
+
+----> BEM, MAS AQUI 
+nós 
+
+NÃO TEMOS UM NEGÓCIO RETORNADO __ QUE SERÁ EXECUTADO ___ IMEDIATAMENTE, no primeiro parsing... ---> 
+
+o que temos 
+
+AQUI É 
+
+__UMA FUNÇÃO ANÔNIMA___ QUE SERÁ ____ EXECUTADA ___ A PARTIR ___ DE UM CLICK___ E QUE 
+
+ENTÃO VAI RETORNAR 
+
+
+___O RESULTADO ___ DESSA 
+
+FUNÇÃO 
+
+
+'this.switchNameHandler()' SER EXECUTADA... (
+
+
+    o que, por consequência, acaba fazendo 
+
+    a função 
+
+    'this.setState( {
+        persons: [
+            {name: newName, age: 28}
+            {name: 'Manu', age: 29}
+            {name: 'Stephanie', age: 22}
+        ]
+    })
+)
+
+
+
+
+SER ____EXECUTADA____...
+
+
+
+----------------------------------------------------
+
+
+
+Isso, essa sintaxe da ARROW FUNCTION nesse lugar, É ÚTIL PQ 
+
+__NÓS AGORA PODEMOS ___ FACILMENTE PASSAR ___ nosso 'data' (nossos DADOS) 
+
+A ESSE CALL DE 
+
+' this.switchNameHandler()'... podemos passar nosso data COMO O SEU PARÂMETRO (que será passado como 'newName', como o parâmetro/slot 'newName' na função 'switchNameHandler'....)
+
+
+
+
+
+NESSE NOSSO EXEMPLO, 
+
+VAMOS PASSAR 
+
+'Maximillian!!'....
+
+
+
+
+ex (código de 'switchNameHandler' e de 'return()'.... ):
+
+
+
+
+
+
+
+
+
+
+switchNameHandler = (newName) => { ///'this.switchNameHandler('Maximillian') ---> o 'Maximillian' acaba sendo passado como parâmetro 'newName' dessa função (tudo graças a sintaxe daquela arrow function)....
+    console.log('Button was Clicked!'); 
+  
+    this.setState({  
+      persons: [
+        { name: newName, age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    })
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={() => this.switchNameHandler('Maximillian!!!')}>Switch Name</button> //////eis o código em questão.
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        click={this.switchNameHandler}>My Hobbies: Racing</Person>
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+      </div>
+    );
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+SALVAMOS ESSE CÓDIGO E ENTÃO RECARREGAMOS...
+
+
+
+SALVAMOS TUDO ISSO E RECARREGAMOS... ---> 
+
+
+
+
+
+o switch Name 
+
+
+e o 
+
+
+'<p>' funcionam 
+
+para trocar 
+
+
+entre output dos elementos...
+
+
+
+----------------------------------
+
+
+
+
+--> PROFESSOR EXPLICA QUE A SEGUNDA VERSÃO/ALTERNATIVA ____PODE SER CONVENIENTE___, 
+
+mas às vezes PODE SER ___iNEFICIENTE__...  -------------> pode ser 
+
+ineficiente PQ O 
+
+___REACT___ PODE ACABAR 'RE-RENDERIZANDO' coisas 
+
+no seu aplicativo COM 
+
+FREQUÊNCIA EXCESSIVA... ---------> é por isso que 
+
+o professor 
+NÃO RECOMENDA utilizarmos 
+
+essa sintaxe 
+
+das arrow functions, salvo em casos 
+
+em que 
+
+REALMENTE PRECISAMOS DISSO...  ---> DEVEMOS SEMPRE 
+
+USAR a
+
+ SINTAXE '.bind()', se conseguirmos... ---------> DEVEMOS 
+
+ APENAS 
+
+ USAR 
+
+
+ A SINTAXE DA ARROW FUNCTION 
+
+
+ se acharmos que nosso aplicativo é muito grande... (é bom para performance, essa sintaxe das arrow functions...)

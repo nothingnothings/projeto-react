@@ -1,0 +1,2459 @@
+
+
+
+
+
+
+
+
+
+
+--> NA ÚLTIMA LIÇÃO, 
+
+
+SETTAMOS 
+
+NOSSO 
+
+'rootReducer' 
+
+e 
+nossa 
+
+
+'store'....
+
+
+
+
+
+EIS O CÓDIGO DE 'redux-basics.js':
+
+
+
+
+
+const redux = require('redux');
+const createStore = redux.createStore;
+
+const initialState = {
+    counter: 0
+}
+
+
+const rootReducer = (state = initialState, action) => { 
+    return state;  
+}
+
+
+const store = createStore(rootReducer);
+
+
+console.log(store.getState()); 
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+
+AGORA, NESTA AULA,
+
+
+O PROFESSOR QUER 
+
+USAR 
+
+
+
+AQUELE 
+
+
+'store'.... professor quer usar esse 
+
+
+'STORE' 
+
+
+e então NÃO APENAS 
+
+FAZER O SIMPLES OUTPUT 
+
+de seu valor 
+
+
+com aquele 
+
+
+
+statement 
+
+de 
+
+'console.log(store.getState()); ',
+
+
+
+
+E SIM 
+
+
+___ FAZER ALGO MAIS__, FAZER O _____dISPATCH __ DE UMA 
+
+
+
+
+
+
+__________aCTION___________....
+
+
+ 
+
+
+
+----------------------------
+
+
+OK, MAS COMO É FEITO O DISPATCH DE UMA ACTION?
+
+
+
+
+---> o dispatch de uma action é feita 
+
+
+POR MEIO DO SIMPLES ACESSO 
+
+AO 
+
+
+'STORE',
+
+
+
+
+por meio da referência a constante que o segura (e então o código do 'dispatch' da action...)
+
+
+
+ex:
+
+
+const createStore = redux.createStore;
+
+const rootReducer = (state = initialState, action) => {
+    return state;
+}
+
+const store = createStore(rootReducer);
+
+
+store.  ///////////eis o código em questão...
+
+
+
+
+
+
+---------------------------
+
+
+
+
+
+CERTO; ACESSADO AQUELA 
+
+
+'STORE', aquela 
+constante que 
+
+SEGURA 
+
+'store',
+
+
+NÓS PODEMOS 
+
+
+SIMPLESMENTE 
+
+USAR 
+
+
+O 
+
+
+MÉTODO 
+
+'.dispatch()'...
+
+
+
+ex:
+
+
+
+
+const createStore = redux.createStore;
+
+const rootReducer = (state = initialState, action) => {
+    return state;
+}
+
+const store = createStore(rootReducer);
+
+
+store.dispatch();
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+
+
+.dispatch() ----------> é uma FUNÇÃO....
+
+
+
+
+
+
+IMPORTANTE!!!!! ----> essa função 
+
+'dispatch' aqui 
+
+
+ACEITA/EXIGE UM ___aRGUMENTO/PARÂMETRO___... ---> e esse 
+
+argumento 
+
+é 
+
+uma 
+
+
+'ACTION'... 
+
+
+
+
+
+
+OK, MAS O QUE É UMA 'ACTION'? 
+
+
+
+
+
+
+uma action ----------> É UM OBJETO JAVASCRIPT ___ QUE PRECISA TER UMA PROPRIEDADE 
+
+___ de nome 'type'...
+
+
+
+
+
+
+
+
+
+formato de uma 'action':
+
+
+
+'''''''''''''''''''''
+
+{
+    type: ...
+}
+
+''''''''''''''''''''''
+ 
+
+
+
+
+-------------------------------------------------
+
+
+
+
+IMPORTANTE!!!! --> VOCÊ __NÃO PODE ERRAR ESSE MODELO, NÃO PODE ESCREVER 
+'Type' ou 
+
+'Tipe', ou qualquer outra coisa.... --> é OBRIGATORIAMENTE 
+
+'type'
+
+a propriedade 
+
+que 
+
+deve 
+ser inserida nesse objeto.... -------> só um OBJETO JAVASCRIPT com uma propriedade 
+
+'type' 
+
+É QUE PODE SER 
+
+CHAMADO 
+
+DE 
+
+'ACTION'...
+
+
+
+
+ex:
+
+
+
+store.dispatch(
+    {
+        type:
+    }
+)
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+CERTO... E 
+
+
+A 'ACTION'/actions 
+
+
+
+serãO, MAIS TARDE,
+
+
+____IMPORTANTES BUILDING BLOCKS,
+
+serão 
+
+essenciais 
+
+PARA __CONSEGUIR __ A INFORMAÇÃO 
+
+
+ACERCA 
+
+
+DE 
+
+___QUAL TIPO (type)
+ 
+
+ DE ACTION 
+
+
+ QUE FOI 'DISPATCHADA', e também para conseguir a informação 
+
+ DE QUAL OPERAÇÃO QUE DEVEMOS 
+
+ REALIZAR 
+
+
+ NO ___rEDUCER____....
+
+
+
+
+
+
+
+
+ Ou seja,
+
+
+ dentro desse objeto 
+
+
+ 'action' ({type: ...}) 
+
+
+ VAMOS 
+
+
+
+ TER 
+
+
+
+ 1) informação de QUAL 'TYPE' de action se trata...
+
+
+
+
+
+
+ 2) INFORMAÇÃO ACERCA DE __QUAL OPERAÇÃO __ DEVE SER REALIZADA NO 'reducer' (no 'rootReducer', nesse nosso exemplo... )
+
+
+
+
+ ----------------------------------
+
+
+
+
+
+
+ E É POR ISSO QUE A PROPRIEDADE 
+
+ 'TYPE'
+
+ é tão importante... 
+
+
+
+
+
+
+
+CERTO... ---> e essa propriedade 
+
+'type' é, NO FINAL DAS CONTAS,
+
+
+
+APENAS UM ___SIMPLES___ 'unique identifier' (id).... ------>
+
+
+
+é um 
+
+UNIQUE IDENTIFIER DE SUA ESCOLHA,
+
+você pode ESCOLHER __QUALQUER NOME___... (o único propósito de 'type' 
+
+é 
+
+DIFERENCIAR 
+
+UMA 'ACTION' DE OUTRAS 'ACTION'...)
+
+
+
+
+   
+
+
+
+
+---> A CONVENÇÃO DAS 'ACTION' é 
+
+
+__SEMPRE __ USAR UMA 
+
+
+STRING TOTALMENTE UPPERCASE...
+
+
+
+ex:
+
+
+ store.dispatch(
+     {
+         type: 'INC_COUNTER' //////////por exemplo, isso aqui nos diria que ESSA ACTION ESTÁ RELACIONADA AO 'INCREMENT DO COUNTER' de nosso aplicativo....
+     }
+ )
+
+
+
+
+
+ ---------------------------------
+
+
+ A MORAL É QUE 
+
+ ESSE 
+
+ IDENTIFIER 
+
+ 
+
+
+ 'type'
+
+
+ DEVE SER SEMPRE ALL UPPERCASE, com um '_' separando as palavras, 
+
+
+ e com uma string BEM 
+
+
+ DESCRITIVA 
+
+
+ DA OPERAÇÃO A QUAL ESTÁ RELACIONADA
+
+ ESSA 'ACTIOn'... (para qual propósito essa 'action' está sendo DISPATCHED)
+
+
+
+
+
+ --------------------------------------
+
+
+
+ ex(resultado de nosso código):
+
+
+
+
+const rootReducer = (state = initialState, action) => {
+    return state;
+}
+
+
+const store = createStore(rootReducer);
+
+
+  store.dispatch(
+     {
+         type: 'INC_COUNTER' 
+     }
+ )
+
+
+
+
+ ---------------------------------
+
+
+
+
+
+
+
+ CONTUDO, O PROFESSOR NOS DISSE QUE 
+
+ PODEMOS PASSAR UM 'OPTIONAL PAYLOAD'
+
+
+
+ a qualquer 'action'.... 
+
+
+
+
+
+
+
+ --> e, de fato, 
+
+ podemos 
+
+ adicionar um payload opcional mesmo....
+
+
+
+
+
+
+ --> PROFESSOR NOS MOSTRA COMO É FEITA A DEFINIÇÃO DESSE 'optional payload'
+
+
+ COM A PRÓXIMA ACTION QUE ELE DEFINE (de novo com a sintaxe 'store.dispatch({action})') --> 
+
+
+
+
+
+ a segunda action que 
+
+ ele 
+
+ coloca 
+
+ é 
+
+
+ 'ADD_COUNTER',
+
+
+ que 
+
+ ele define assim:
+
+
+
+
+ store.dispatch(
+     {
+         type: 'ADD_COUNTER'
+     }
+ )
+
+
+
+
+
+ ---------------------------
+
+
+ OBS::::: NOSSO BOTÃO/component 'increment 1', lá no NOSSO PROJETO REACT,
+
+ vai apenas 
+
+ INCREMENTAR NOSSO STATE (a propriedade 'counter: xxxx') POR 
+
+
+1 unidade de cada vez...
+
+
+
+JÁ NOSSO BOTÃO 'add counter'/'add value' 
+
+
+
+__vAI ADICIONAR UM NÚMERO ESPECÍFICO_____... (como 5, 7, 3, 15, qualquer coisa...)
+
+
+
+
+
+
+E COMO 
+
+
+
+ESSE 
+
+
+BOTÃO/COMPONENT 
+
+ESPECIAL 
+
+
+de 
+
+'add'
+
+
+vai adicionar 
+
+UM NÚMERO ESPECÍFICO AO COUNTER,
+
+
+
+
+
+
+ESSA É UMA ___INFORMAÇÃO ESPECIAL __ QUE PRECISAMOS 
+
+
+FORNECER __ AO 
+
+
+'rootReducer' PARA QUE 
+
+ELE CONSIGA 
+
+
+
+realizar sua operação de forma adequada... -------> ESSA INFORMAÇÃO,
+
+
+
+a 
+
+data 
+
+sobre o 
+
+
+'VALUE' específico,
+
+PRECISA 
+
+
+___SER PASSADA__ JUNTO DO 'type'... (só o type NÃO BASTA, também precisamos 
+
+desse 
+
+'OPTIONAL PAYLOAD', que não é exatamente OPTIONAL nesse nosso caso...)
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+Certo.... e o professor nos explica que 
+
+
+'type' é a ÚNICA PROPRIEDADE QUE 
+
+TEMOS QUE UTILIZAR DE UMA FORMA 'FIXA'... (isso quer 
+
+dizer que 
+
+ele 
+
+é 
+
+A 
+
+
+_______ÚNICA PROPRIEDADE 'MUST-HAVE'/obrigatória PARA QUE 
+UM OBJETO 
+
+JAVASCRIPT 
+
+SEJA 
+
+CARACTERIZADO/RECONHECIDO 
+
+
+COMO 
+
+UMA 
+
+'action' 
+
+PELO 
+
+REDUX.... ------------------------------> ISSO SIGNIFICA QUE, FORA 'type',
+
+
+VOCÊ 
+
+TEM 
+
+LIBERDADE 
+
+COMPLETA, PODE 
+
+ESCREVER QUALQUER 
+
+COISA/INFORMAÇÃO/VALOR 
+
+
+
+DENTRO 
+
+
+DA
+
+ACTION, valores que 
+
+
+VÃO ENTÃO SER USADOS MAIS TARDE,
+
+em 
+
+'rootReducer'....)
+
+
+
+
+
+
+Ex (aqui adicionamos várias propriedades __OPCIONAIS__/aleatórias...):
+
+
+
+
+
+ store.dispatch(
+     {
+         type: 'INC_COUNTER'
+     }
+ )
+
+
+
+
+ store.dispatch(
+     {
+         type: 'ADD_COUNTER', 
+         value,
+         name,
+         address, ///////////////E ASSIM POR DIANTE...
+         id
+     }
+ )
+
+
+
+
+
+ ----------------------------------------------------------------
+
+
+
+
+ PROFESSOR NOS EXPLICA QUE, ALTERNATIVAMENTE,
+
+ vocÊ pode 
+
+
+ escrever 
+
+
+''''''''''''''''''''''''
+
+ {
+     type: 'ADD_COUNTER',
+     payload: {
+         id,
+         value,
+         name
+     }
+ }
+
+
+ '''''''''''''''''''
+
+
+ OU SEJA,
+
+ VOCÊ PODE 
+
+
+ ESCREVER/DEFINIR UMA PROPRIEDADE DE 'payload' (que é justamente a 'PROPRIEDADE OPCIONAL') e então 
+
+
+
+ DENTRO DELA DEFINIR 
+
+
+ TODAS AS INFORMAÇÕES/DATA DE QUE VOCÊ PRECISA...
+
+
+
+
+
+
+ --> professor aponta que 
+
+
+ A ESCOLHA CABE A VOCÊ, VOCÊ PODE 
+
+
+ OU 
+
+ definir tudo (as propriedades/key-value pairs, valores,
+ 
+ 
+ DENTRO 
+ 
+ DE UM OBJETO 
+ 
+ como 
+ 
+ 
+ 'payload: {}',
+ 
+ )
+
+
+ OU ENTÃO 
+
+ VOCÊ PODE 
+
+
+DEFINIR TUDO 
+
+SEM 
+
+USRA 
+
+UMA 
+
+PROPRIEDADE (como 'payload') QUE 
+
+SEGURE TODAS ESSAS PROPRIEDADES 
+
+
+
+------------------------------
+
+
+NESSE NOSSO EXEMPLO, NO CASO, 
+
+PROFESSOR 
+
+
+DIZ QUE NÃO USARÁ 
+
+
+ESSE APPROACH DO 
+
+'payload: {
+    propriedade, 
+    propriedade,
+    propriedade
+}',
+
+
+POIS 
+
+
+
+ELE 
+
+
+SÓ VAI QUERER/QUERER PASSAR INFORMAÇÕES 
+
+
+ACERCA 
+
+
+
+DE 
+
+___aPENAS 1 ÚNICO __ OUTRO FIELD OF INFORMATION... ( e essa informação é JUSTAMENTE 
+
+
+O __vALOR__ A SER ADICIONADO AO NOSSO 
+
+'STATE' QUANDO O BUTTON DE 'Add' for pressionado.... ) --------> E ESSE 
+
+
+
+
+'FIELD OF INFORMATION' será uma propriedade,
+
+
+uma propriedade com nome de 
+
+'value', que será de valor '10'...
+
+
+
+
+
+
+
+
+--> EX:
+
+
+
+
+ store.dispatch(
+     {
+         type: 'INC_COUNTER'
+     }
+ )
+
+
+
+
+ store.dispatch(
+     {
+         type: 'ADD_COUNTER', 
+         value: 10
+
+     }
+ )
+
+
+
+------------------------
+
+
+PROFESSOR 
+
+
+COLOCA/COLOCOU ESSA INFORMAÇÃO JUSTAMENTE 
+
+PQ 
+
+
+ELE
+
+
+
+VAI QUERER __aUMENTAR O COUNTER__ POR MEDIDAS DE 10...
+
+
+
+
+
+
+
+AGORA, PORTANTO, ESTAMOS FAZENDO DISPATCH DE 2 ACTIONS...:
+
+
+
+ store.dispatch(
+     {
+         type: 'INC_COUNTER'
+     }
+ )
+
+ store.dispatch(
+     {
+         type: 'ADD_COUNTER', 
+         value: 10
+
+     }
+ )
+
+
+
+-------------------------------------
+
+
+
+
+
+MAS O QUE VOCÊ ACHA 
+
+QUE 
+
+ESSES DISPATCHES 
+
+
+
+FAZEM AO NOSSO 
+
+'STORE'?  ------> para ver o 
+
+
+resultado 
+
+
+DESSES DISPATCHES 
+
+
+
+no nosso store,
+
+
+
+professor 
+
+
+faz um console.log 
+
+
+de 
+
+
+
+'store.getState()' 
+
+
+
+LOGO 
+
+DEPOIS DOS 2 DISPATCHES....
+
+
+
+
+
+
+
+ex (código completo):
+
+
+
+
+
+
+
+
+const createStore = redux.createStore;
+
+const rootReducer = (state = initialState, action) => {
+    return state;
+}
+
+const store = createStore(rootReducer);
+
+console.log(store.getState());
+
+
+
+ store.dispatch(
+     {
+         type: 'INC_COUNTER'
+     }
+ )
+
+ store.dispatch(
+     {
+         type: 'ADD_COUNTER', 
+         value: 10
+
+     }
+ )
+
+
+console.log(store.getState()); /////////////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+----------------------------------------------
+
+
+ISSO FEITO,
+
+
+AGORA 
+
+PROFESSOR QUER QUE ADIVINHEMOS:
+
+
+o que diabos acontecerá com nosso 'state' 
+
+nesse 
+
+
+arquivo 
+
+'redux-basics.js'? -----------> nós executamos 
+
+
+o 
+
+
+'node redux-basics.js'
+
+
+e 
+
+observamos que...
+
+
+
+
+--> OBSERVAMOS QUE __________NADA MUDOU NO ___STATE_________.... ---> 
+
+
+O 
+
+STATE AINDA CONTINUA 
+
+
+SENDO 
+
+PRINTADO 
+
+como 
+
+
+'{ counter: 0 }'.... 
+
+
+
+
+
+
+
+(PROVAVELMENTE, PENSO EU, ISSO DEVE TER ACONTECIDO PQ __ESSES 'DISPATCHES' NÃO FORAM 
+
+PASSADOS 
+
+COMO PARÂMETROS/ARGUMENTOS 
+
+AO 
+
+
+NOSSO 
+
+'rootReducer', que possui aquele 
+
+código de 
+
+
+
+'const rootReducer = (state = initialState, action) => {
+    return state;
+}
+'
+
+
+)
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+Certo... isso provavelmente significa que 
+
+___NÓS PRECISAMOS ___aRMAZENAR__ ESSES 'DISPATCHES'
+
+em 
+
+__cONSTANTES___, e então passar esssas constantes COMO 
+
+SEGUNDO PARÂMETRO 
+
+
+DE 
+
+'rootReducer'... (claro que isso é um CHUTE MEU.) ---------> 
+
+
+
+
+MESMO ASSIM,
+
+
+NOSSAS 
+
+'CONSTANTES' que seguram 
+
+
+esses 
+
+'dispatches'/actions NÃO VÃO BASTAR; SUA SIMPLES REFERÊNCIA/PASS COMO SEGUNDO PARÂMETRO 
+
+DE 
+
+'rootReducer' __NÃO SERÁ SUFICIENTE__... 
+(
+    ainda é necessário ESCREVER ALGO DENTRO 
+
+    DE 
+
+    'rootReducer', escrever LÓGICA QUE __ USE __ AS PROPRIEDADES/INFORMAÇÕES QUE 
+
+    DEFINIMOS 
+
+    DENTRO DOS OBJETOS 'action'...
+)
+
+
+
+-----------------------------
+
+Ok, continuando a explicação do professor... -------> 
+
+
+
+vamos 
+
+receber 
+
+DOIS CONSOLE.LOGS....  de '{ counter: 0 }'------> o primeiro console.log 
+
+é 
+relativo
+ 
+
+
+ ao console.log 
+
+
+
+
+
+FEITO LOGO DEPOIS DA __cRIAÇÃO__ DO STORE (por meio do código 'const store = createStore(rootReducer);')....
+
+
+
+
+
+
+
+JÁ 
+
+
+O SEGUNDO 'CONSOLE.LOG'
+
+
+
+é executado 
+
+LOGO 
+
+
+DEPOIS 
+
+DOS 2 
+
+DISPATCHES... (que não fizeram nada, na verdade... ) -------> NÓS AINDA TEMOS UM 
+
+
+COUNTER 
+
+DE 
+
+
+'{ counter: 0 }'...
+
+
+
+
+
+
+
+
+
+
+VOCÊ PODERIA esperar (expect) que 
+
+
+NÓS TERÍAMOS UM 
+
+COUNTER 
+
+DE 
+' { counter: 11}', aqui.... MAS ISSO É COMPLETAMENTE 
+
+ERRADO... é errado 
+
+
+PQ 
+
+
+
+__NÃO HÁ NENHUMA POSSIBILIDADE DE ISSO ACONTECER; as 'actions' POR SI SÓS
+
+
+NÃO 
+
+PODEM REALIZAR MUDANÇAS NO STATE/'CENTRAL STORE' 
+
+
+de nossos aplicativos/arquivos... --------> NÃO,
+
+DE NOVO,
+
+
+___a ÚNICA COISA __ QUE 
+
+
+PODE REALIZAR MUDANÇAS NA 'CENTRAL STORE' de nossos aplicativos 
+
+
+é 
+
+
+__O REDUCER__... ------>E as actions tem que 
+
+SER PASSADAS 
+
+
+AO __rEDUCER__, as actions 
+
+
+SEGURAM 
+
+INFORMAÇÕES 
+
+
+QUE 
+PODEM/SERÃO 
+
+UTILIZADAS 
+
+PELO REDUCER... ---------------> PROFESSOR 
+
+
+EXPLICA QUE 
+
+
+
+
+_________NÓS NÃO ADICIONAMOS NENHUMA LÓGICA __ QUE CRIE UMA REAÇÃO, NO 'CENTRAL STORE',
+
+
+
+A ESSES DISPATCHES 
+
+COM DIFERENTES 
+
+
+PROPRIEDADES 
+
+'types'... -------------> E ESSA LÓGICA TEM DE SER 
+
+
+PASSADA 
+
+
+AO/NO __REDUCER__............ , senão nada acontece...
+
+
+
+
+-----------------------------------------------
+
+
+
+
+E
+ 
+
+ ESSA LÓGICA PRECISA DE SER PASSADA EM ALGUM LUGAR (no reducer)....
+
+
+
+
+
+ 
+
+
+---> E É EXATAMENTE ISSO QUE ADICIONAREMOS AGORA... -----> no nosso 'REDUCER',
+
+
+
+
+NÓS RECEBEMOS A 'ACTION' COMO __UM SEGUNDO PARÂMETRO...
+
+
+ex:
+
+
+const rootReducer = (state = initialState, action) => {
+    return state; 
+}
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+E 
+
+
+É 
+
+
+
+________eXATAMENTE POR CAUSA DISSO QUE ____ PODEMOS __ REAGIR __ A DIFERENTES __TIPOS 
+
+
+
+DE 
+
+'action'... ---------> OK, MAS COMO FAZER ISSO? -----------> 
+
+
+
+
+PROFESSOR 
+
+
+NOS EXPLICA QUE 
+
+PODEMOS 
+
+ADICIONAR UM 
+
+__IF STATEMENT____ DENTRO 
+
+
+DO 
+
+'rootReducer'....
+
+
+
+
+
+
+ESSE IF STATEMENT 
+
+VAI CHECAR 
+
+por 
+
+
+
+'action.type' (pq NÓS TEMOS 100% DE CERTEZA QUE EXISTIRÁ UMA PROPRIEDADE 'type' DENTRO DE CADA 'ACTION', isso é uma certeza absoluta.... ---> e essa propriedade 'type' É QUE VAI FAZER A DIVISÃO DE '''LÓGICAS''' APLICADAS às 'actions'...)
+
+
+
+
+ex:
+
+
+
+
+const rootReducer = (state = initialState, action) => {
+
+        if(action.type === 'INC_COUNTER') { //////////EIS O CÓDIGO EM QUESTÃO.
+            return xxxx;
+        }
+
+
+
+    return state; 
+} 
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+CERTO... PROFESSOR FAZ EXATAMENTE ISSO... ------> 
+
+
+se 
+
+'action.type' for 'INC_COUNTER',
+
+
+VAMOS QUERER 
+
+
+fazer 
+
+'RETURN' 
+
+
+de ALGO DIFERENTE....  ---------------> 
+
+
+OK, 
+
+MAS 
+
+AQUI 
+
+
+O PROFESSOR 
+
+
+NOS 
+
+CONTA ALGO IMPORTANTE ..... -----------> VOCÊ _________NÃO PODE ___ SIMPLESMENTE 
+
+
+SETTAR 
+
+ALGO COMO 
+
+
+
+'state.counter++' dentro desse if statement... E ENTÃO FAZER RETURN de 'state'....
+
+
+
+ex:
+
+
+
+
+const rootReducer = (state = initialState, action) => {
+
+        if(action.type === 'INC_COUNTER') { 
+
+
+                state.counter++; /////////ESSE CÓDIGO ___NÃO FUNCIONARÁ___...
+
+            return state; //////////ESSE CÓDIGO NÃO FUNCIONARÁ 
+        }
+
+
+
+    return state; 
+} 
+
+
+---------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     state.counter++; /////////ESSE CÓDIGO ___NÃO FUNCIONARÁ___...
+
+            return state; //////////ESSE CÓDIGO NÃO FUNCIONARÁ 
+
+
+
+
+
+
+--> ESSE PAR DE CÓDIGO ___NÃO FUNCIONARÁ__ PQ 
+
+
+ESSE 'STATE CHANGE' REALIZADO AÍ É __UM STATE CHANGE__ QUE NÃO 
+
+
+FOI FEITO DE FORMA 'IMMUTABLE'... ----------> isso signfica que 
+
+
+
+
+esse código 
+
+
+'state.counter++' 
+
+
+ESTARÁ/VAI __ALTERAR/MUTAR_ ___ O 
+
+
+STATE ORIGINAL... (o que é péssimo)
+
+
+
+
+
+
+PARA 
+
+EVITAR
+ 
+
+
+ ESSA 
+
+
+
+ MUTAÇÃO DO STATE,
+
+
+ O QUE 
+
+ VOCê FAZ 
+
+ AQUI 
+
+ É 
+
+
+
+ AQUELE APPROACH DO SPREAD OPERATOR,
+
+
+
+ VOCÊ __ FAZ ___ O RETURN 
+
+
+
+ DE 
+
+
+ ________UM NOVO OBJETO JAVASCRIPT___ ( ''''return {} '''') 
+
+
+
+
+ E 
+
+ ENTÃO 
+
+
+ DENTRO 
+
+ DESSE OBJETO VOCê FAZ 
+
+ A CÓPIA 
+
+
+ DO VELHO 
+
+
+ 'state', por meio 
+
+
+
+ do código 
+
+
+
+ 'return {
+     ...state
+ }'
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+ const rootReducer = (state = initialState, action) => {
+
+        if(action.type === 'INC_COUNTER') { 
+
+
+                        return {
+                            ...state, /////////EIS O CÓDIGO EM QUESTÃO....
+
+                        }
+
+              
+        }
+
+
+
+    return state; 
+} 
+
+
+
+
+
+-------------------------------------------------
+
+FEITA ESSA CÓPIA,
+
+
+VOCÊ 
+
+ENTÃO 
+
+FAZ 
+
+
+____OVERWRITE__ DA ÚNICA/ÚNICAS 
+
+PROPRIEDADES __ QUE VOCÊ QUER 
+
+REALMENTE OVERWRITTAR....
+
+(nesse caso, 
+
+'counter'...)
+
+
+
+
+ex:
+
+
+
+
+
+
+ const rootReducer = (state = initialState, action) => {
+
+        if(action.type === 'INC_COUNTER') { 
+
+
+                        return {
+                            ...state,
+                            counter: state.counter++ /////////EIS O CÓDIGO EM QUESTÃO....
+
+                        }
+
+              
+        }
+
+
+
+    return state; 
+} 
+
+
+
+-------------------------------------
+
+
+
+
+
+-------> E SE ESSE 
+
+
+NEGÓCIO AÍ, SE ESSA PROPRIEDADE QUE você quer overwrittar,
+
+
+
+TIVER PROPRIEDADES NO SEU INTERIOR,
+
+VOCÊ 
+
+
+
+____TAMBÉM___ TERÁ DE 
+
+
+AS 
+
+COPIAR DE FORMA 'IMMUTABLE' como você faz/fez com o 
+
+'GENERAL STATE' ('state')... -------> VOCÊ SEMPRE 
+
+
+TEM QUE 
+
+FAZER ISSO, POIS O MUTATE DIRETO DE DADOS SEMPRE DEVE SER EVITADO...
+
+
+
+
+
+
+
+
+
+
+--> AQUI, POR SORTE,
+
+'counter:' segura um número,
+
+
+POR ISSO 
+
+
+nós podemos 
+
+simplesmente 
+
+escrever 
+
+
+
+'counter: state.counter++'   
+
+
+
+
+OU 
+
+
+
+'counter: state.counter + 1'....
+
+
+
+
+----------------------------------
+
+
+
+
+CERTO,
+
+
+AGORA 
+
+
+
+ESSE VALOR 
+
+de 
+
+'state.counter + 1'
+
+
+FICARÁ 
+
+
+ARMAZENADO 
+
+NESSA PROPRIEDADE 
+
+
+'counter'..., propriedade que 
+
+É ADICIONADA 
+
+
+A 
+
+ESSE 
+
+NOVO 
+
+
+OBJETO 
+
+JAVASCRIPT 
+
+RETORNADO 
+
+PELO 
+
+NOSSO 
+
+
+'rootReducer'... -------------> ok, AQUI NÓS TEMOS/TERÍAMOS, PORTANTO,
+
+UM 
+
+
+__NOVO 'STATE' (updatedState/newState)... -----------> O QUE 
+
+QUEREMOS 
+
+
+É 
+
+
+___SUBSTITUIR____ O VELHO 'STATE' EM 
+
+'CENTRAL STORE'
+ 
+ por 
+
+
+ ESSE NOVO STATE....
+
+
+
+
+
+
+
+
+ LEMBRE-SE:
+
+
+ esse 
+
+ 'newState' definido 
+
+ por esse 
+
+IF STATEMENT 
+
+de nosso REDUCER 
+
+
+tem 
+
+TODAS AS PROPRIEDADES 
+
+E 
+VALORES 
+
+
+DO 
+
+VELHO STATE,
+
+pois 
+
+nós 
+
+executamos 
+um código 
+
+de 
+
+
+
+'...state' 
+
+DENTRO 
+
+
+DO OBJETO RETORNADO POR ELE...
+
+
+
+
+
+
+
+
+--> PORTANTO, AGORA O 'REDUCER' 
+
+ESTÁ 
+
+RETORNANDO 
+
+UM 
+
+NOVO STATE,
+
+COM UM COUNTER 
+
+__Atualizado__... -------> e ele sempre retornará 
+
+esse 
+
+
+STATE ATUALIZADO 
+
+
+QUANDO 
+
+CONSTATAR QUE 
+
+ESTÁ 
+
+RECEBENDO UMA 
+
+'action'
+
+
+
+que 
+
+tenha um 
+
+
+__TYPE____ DE valor 
+
+
+'INC_COUNTER'...
+
+
+
+
+
+
+
+---> E O PROFESSOR 
+
+NOS EXPLICA QUE 
+
+É 
+
+
+__EVIDENTE QUE AGORA ___ ELE PODE ___DUPLICAR___ ESSE IF STATEMENT 
+
+
+DE 
+
+'INC_COUNTER',
+
+para 
+
+então 
+
+
+FAZER 
+
+A 
+
+
+MESMA 
+
+COISA 
+
+
+PARA 
+
+
+
+AS HIPÓTESES EM QUE 
+
+ELE 
+
+RECEBER 
+ACTIONS 
+
+
+
+DE 
+
+'type' 
+
+
+
+'ADD_COUNTER'....
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+ const rootReducer = (state = initialState, action) => {
+
+        if(action.type === 'INC_COUNTER') { 
+
+
+                        return {
+                            ...state,
+                            counter: state.counter++ 
+
+                        }
+
+              
+        }
+
+
+        if (action.type === 'ADD_COUNTER') { ///////////EIS O CÓDIGO EM QUESTÃO...
+            return {
+                ...state,
+                counter: state.counter + ... 
+            }
+        }
+
+
+
+    return state; 
+} 
+
+
+
+
+
+--------------------------
+
+
+
+
+
+
+AQUI, EM 'ADD_COUNTER', NO ENTANTO, O
+
+
+
+
+ professor 
+
+ VAI QUERER 
+
+
+ FAZER 
+
+ UMA ALTERAÇÃO 
+
+ diferente 
+
+ no 
+
+ 'counter'... -------> ELE NÃO VAI QUERER 
+
+ ADICIONAR 
+
+
+ '1',
+
+
+ E 
+ SIM 
+
+ VAI QUERER 
+
+ ADICIONAR 
+
+
+ 'action.value',
+
+
+
+ QUE É JUSTAMENTE 
+
+ AQUELA PROPRIEDADE 
+
+
+ 'value'
+
+ DE valor 
+
+ '10'
+
+
+
+ DEFINIDA 
+
+
+
+ NA 'action'
+
+ LÁ EMBAIXO....
+
+
+
+
+
+ ex(código completo, para que entendamos bem):
+
+
+
+
+
+
+
+
+
+
+
+  const rootReducer = (state = initialState, action) => {
+
+        if(action.type === 'INC_COUNTER') { 
+
+
+                        return {
+                            ...state,
+                            counter: state.counter++ 
+
+                        }
+
+              
+        }
+
+
+        if (action.type === 'ADD_COUNTER') {
+            return {
+                ...state,
+                counter: state.counter + action.value  ///////////EIS O CÓDIGO EM QUESTÃO... 
+            }
+        }
+
+
+
+    return state; 
+} 
+
+
+
+
+store.dispatch(
+    {
+        type: 'INC_COUNTER'
+    }
+)
+
+ store.dispatch(
+    {
+        type: 'ADD_COUNTER', 
+        value: 10 /////////////ISSO AQUI FAZ/FEZ TODA A DIFERENÇA...
+
+    }
+)
+
+
+
+----------------------------
+
+
+
+
+
+
+
+
+E ESSE 'value' será de 10, é claro...
+
+
+
+
+
+
+
+COM ISSO, POR FIM,
+
+
+NÓS 
+
+SÓ 
+
+VAMOS 
+
+
+
+RETORNAR 
+
+'state' (
+
+
+    'return state;'
+)
+
+
+____SE NENHUM DAQUELES 
+
+2 IF BLOCKS 
+
+FOR SATISFEITO...
+
+
+
+
+
+
+
+
+
+
+---> AGORA, PORTANTO, SE REEXECUTARMOS 
+
+'node redux-basics.js',
+
+
+
+
+VEREMOS UM OUTPUT DIFERENTE.
+
+
+
+
+
+vamos 
+
+ver 
+
+um output 
+
+
+
+
+de 
+
+
+
+'{ counter: 0}'
+'{counter: 11}' 
+
+
+
+
+
+
+------------------------------
+
+
+
+
+
+OU SEJA,
+
+VAMOS 
+
+
+VER 
+
+O OUTPUT____ ANTES__ DAS ACTIONS (counter definido como '0'; esse console.log foi/É EXECUTADO LOGO DEPOIS DO CÓDIGO QUE INICIALIZA A STORE, e sem as ACTIONS sendo enviadas...)
+
+
+
+E 
+
+__DEPOIS___ DAS ACTIONS (counter definido como '11'; AS DUAS 'ACTIONS' FORAM APLICADAS 
+
+A ELE...) -----> resumindo: aqui o 'counter' foi 
+
+    ('INC_COUNTER')         ('ADD_COUNTER')
+___'iNCREMENTADO'___ E 'ADDADO'
+
+
+
+
+
+
+--------------> ESSA É A FORMULAÇÃO
+
+
+E 
+
+O 'DISPATCH' 
+
+DE ACTIONS 
+
+
+
+'''em ação'''... (kkk).
+
+
+
+
+
+
+
+
+----------> ENTRETANTO, HÁ UM 'PEDAÇO' DO QUEBRA-CABEÇA DO REDUX 
+
+QUE 
+
+AINDA 
+
+ESTÁ FALTANDO... -----> as 
+
+'Subscriptions'...
+
+
+
+
+ex:
+
+
+
+
+1) REDUCER 
+
+
+
+
+2) STORE 
+
+
+
+
+3) ACTIONS 
+
+
+
+4) SUBSCRIPTIONS
+
+
+
+
+-------------------
+
+
+VEREMOS 
+
+
+AS SUBSCRIPTIONS NA ___PRÓXIMA AULA__....

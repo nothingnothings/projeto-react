@@ -1,0 +1,1098 @@
+
+
+
+
+
+
+------------>
+
+
+
+
+Na ÚLTIMA LIÇÃO,
+
+
+APRENDEMOS 
+
+SOBRE 
+
+
+
+OS 
+
+PROPS 
+
+
+de 'route' 
+
+
+
+QUE 
+
+PODEMOS 
+
+OUTPUTTAR NOS NOSSOS COMPONENTS.... (descobrimos 
+
+esses props por meio do console.log de 'this.props' dentro do 'componentDidMount' 
+
+nos nossos 
+
+variados components) ------->>> E APRENDEMOS 
+
+
+
+QUE 
+
+
+
+ESSES props de ROUTE 
+
+contêm 'UTILITY INFORMATION'... (armazenados em 'location' e 'match', essas propriedades aí... )
+
+
+
+
+
+
+
+CONTUDO,
+
+
+TAMBÉM 
+
+APRENDEMOS 
+
+QUE 
+
+ESSES PROPS 
+
+
+PASSADOS 
+
+POR 
+
+
+'Route' 
+
+não APENAS 
+
+NOS 
+
+CONCEDEM 'UTILITY INFORMATION',
+
+
+MAS 
+
+TAMBÉM 
+
+CONTÊM
+
+'UTILITY METHODS' que podemos UTILIZAR PARA 'NAVIGATE AROUND' na nossa página -------> 
+
+e esses 
+
+
+utility methods 
+
+
+ESTÃO __CONTIDOS___ DENTRO 
+
+
+
+DA PROPRIEDADE 
+
+
+'history' 
+
+
+
+DOS PROPS DE 'Route'...
+
+
+-----------------------------
+
+
+
+
+
+CERTO, 
+
+
+MAS AGORA O PROFESSOR IMPÕE UMA PERGUNTA:
+
+
+
+
+
+E se nós quiséssemos 
+
+obter (fazer o GET)
+
+uma dessas informações 
+
+relativas aos paths, currentPath 
+
+
+e 'isExact', 
+
+
+
+além de outras coisas, 
+
+
+
+mas fazer esse GET dessas informações 
+
+
+
+NÃO EM UM DOS NOSSOS CONTAINERS/COMPONENTS, não em um 
+
+desses 
+
+components que 
+
+foi carregado POR MEIO DE UMA 'ROUTE'  (ou seja, essa é uma hipótese em que NÃO VAMOS QUERER QUE AS INFORMAÇÕES SEJAM OBTIDAS POR UM COMPONENT QUE FOI CARREGADO POR UMA 'Route', algo que tenha esse código aqui: '<Route path="/" exact component={NewPost}/>' -------> VAMOS QUERER FAZER O GET DESSAS INFORMAÇÕES NÃO POR MEIO DESSE COMPONENT/CONTAINER 'Posts', por exemplo)
+
+,
+
+
+como 
+
+visto no 
+
+
+container 'Blog.js',
+
+
+
+E SIM 
+
+
+EM UM  COMPONENT QUE É ___RENDERIZADO___ COMO 
+
+
+
+______PARTE____ DE UM CONTAINER QUE O SEGURA.... ------->  
+
+ou seja,
+
+
+vamos querer 
+
+
+pegar informações/props 
+
+
+de um component/container 
+
+como 
+
+
+'Posts', QUE É UM COMPONENT QUE 
+
+
+___FOI CARREGADO___ PELO COMPONENT  'Blog', lá naquela 'Route' que definimos... -------> 
+
+
+
+
+E ESSE 
+
+
+COMPONENT 
+
+
+'Posts',
+ 
+ por sua 
+
+
+ vez, 
+
+
+ APENAS 
+ FAZ O SIMPLES 
+
+
+ RENDER 
+
+ DO COMPONENT 
+
+ 'Post'....
+
+ (
+
+
+     como visto no código
+
+
+
+
+        render() {
+
+            let posts = <p style={{textAlign: 'center'}}>Something went wrong!</p>;
+        if (!this.state.error) {
+            posts = this.state.posts.map(post => { return (<Post 
+                    key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)}/>);
+            });
+        }
+
+
+          return  <section className="Posts">
+            {posts}
+            </section>
+        }
+
+ )
+
+
+
+
+ --------------------------------------------------
+
+
+
+
+
+
+ Certo... e se nós formos até 
+
+ esse component 
+
+ 'Post' 
+
+
+
+ E ENTÃO CONSOLE.LOGGARMOS 
+
+ OS 
+
+ __PROPS___.... (de 'Post', desse component aí....)
+
+
+
+ EX:
+
+
+
+ import React from 'react';
+
+import './Post.css';
+
+const post = (props) => {
+    console.log(props);
+    return (
+
+    <article className="Post" onClick={props.clicked}>
+        <h1>{props.title}</h1>
+        <div className="Info">
+            <div className="Author">{props.author}</div>
+        </div>
+    </article>
+    );
+
+    }
+
+export default post;
+
+
+
+
+
+
+
+
+, 
+
+SE FIZERMOS 
+
+ISSO,
+
+
+
+VAMOS 
+
+PERCEBER 
+
+QUE...
+
+
+
+
+
+
+O PROPS NO/NOS COMPONENT/COMPONENTS 
+
+'Post'
+
+
+
+SERÁ 
+
+
+
+
+____________aPENAS______ 
+
+
+
+COMPOSTO 
+
+PELAS 
+
+PROPRIEDADES 
+
+
+de 
+
+'clicked',
+
+
+'title' 
+
+
+e 
+
+'key'...................... -------> ISSO 
+
+SIGNIFICA 
+
+
+
+QUE 
+
+
+NÃO VAMOS 
+
+
+VER 
+
+
+
+PROPRIEDADES/OBJETOS TÍPICOS 
+
+
+DO 
+
+
+
+
+'Route', como 'match' e 'history', nem 'location'... --------> 
+
+
+
+
+
+OU SEJA,
+
+
+
+
+
+AQUI TEMOS UMA SITUAÇÃO EM QUE:
+
+
+
+
+1) o component 'Posts' tem OS MÉTODOS E PROPRIEDADES típicos do 'Route' do react-router-dom....
+
+
+
+
+2) o component 'Post' 
+
+NÃO TEM ESSES MÉTODOS/propriedades dentro de seu 'props'; a única coisa que ele tem são propriedades padrão, como 'clicked' e 'title' (definido por nós)...
+
+
+
+
+
+----------------------------------
+
+
+
+RESUMINDO: 
+
+
+O QUE O PROFESSOR NOS QUERIA MOSTRAR,
+
+AQUI, 
+
+
+É 
+
+
+QUE ___ OS ___ '''''ROUTING RELATED PROPS''''' _________________________NÃO___________ SÃO_______ 
+
+
+'PASSED DOWN THE COMPONENT TREE'... ---> eles NÃO SÃO PASSADOS 
+
+PARA 
+
+OS COMPONENTS 
+
+FILHOS DAQUELE 
+
+COMPONENT 'parent' QUE FOI 'ROUTEADO'... -------> ISSO SIGNIFICA QUE 
+
+
+NÓS 
+
+
+
+__NÃO PODEMOS ___ ACESSAR ESSAS PROPRIEDADES/MÉTODOS DO ROUTING DE UM COMPONENT 'PARENT' 
+
+NOS 
+
+FILHOS __DESSE COMPONENT 'PARENT'... (ou seja, nos elementos que nós 'EMBEDDAMOS' no 
+
+parent component que foi routeado...) 
+
+
+
+
+
+
+
+em outras palavras, 
+
+não podemos 
+
+
+acessar 
+
+
+
+
+ESSAS PROPRIEDADES 'ROUTING RELATED' (relacionadas a routing...)
+
+
+
+NO CÓDIGO JSX do '''COMPONENT FILHO'''' QUE 
+
+É 
+
+
+RENDERIZADO/EMBEDDADO 
+
+NO CÓDIGO JSX DO COMPONENT/CONTAINER PAI...
+
+
+ex(código de 'Posts'):
+
+
+
+class Posts extends Component {
+
+
+render() {
+
+
+
+        return <Post  ///////////////////-----------> NÓS NÃO VAMOS PODER ACESSAR 'ROUTING RELATED PROPS' (como 'history', 'match' e 'location') DENTRO DESSE COMPONENT, POIS FILHOS NÃO RECEBEM 'PROPS'/PROPRIEDADES DE ROUTING QUE FORAM RECEBIDAS PELOS PAIS... ('no inheritance'...).
+    key={post.id}
+    title={post.title}
+    author={post.author}
+    clicked={() => this.postSelectedHandler(post.id)}
+
+}
+
+}
+
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+
+
+
+----> BEM,
+
+
+
+MAS 
+
+
+SE NÓS ___REALMENTE___ QUISERMOS 
+
+USAR 
+
+
+OS PROPS 
+
+
+DE 
+
+'routing' 
+
+
+QUE 
+
+'''FICARAM NO PAI'''' nesse 
+
+
+
+FILHO/filhos components,
+
+
+
+
+HÁ 
+
+
+2 MANEIRAS DE GANHAR ACESSO a esses 'routing-related props'....
+
+
+
+
+
+
+
+
+
+
+
+1A MANEIRA) ----------->  NÓS PODEMOS _____SIMPLESMENTE ___ PASSAR 
+
+ESSAS PROPRIEDADES ADIANTE, ADIANTE AOS 'FILHOS COMPONENTS' daquele 'parent routeado' pelo 'Route'... 
+
+
+(in other words: 'we can pass these properties on'...) -----------------> OK,
+
+
+MAS COMO FAZER ISSO?
+
+
+
+
+---> professor nos mostra com o 'Posts', com o COMPONENT 'Posts', código de 'Posts'...
+
+
+
+
+
+CÓDIGO DE 'POSTS':
+
+
+
+
+
+
+
+
+
+
+
+
+class Posts extends Component {
+    state = {
+        posts: []
+
+    }
+
+
+    postSelectedHandler = (id) => {
+        this.setState({selectedPostId: id});
+    }
+
+    componentDidMount () {
+        console.log(this.props); 
+        axios.get( '/posts' )
+            .then( response => {
+                const posts = response.data.slice(0, 4);
+                const updatedPosts = posts.map(post => {
+                    return {
+                        ...post,
+                        author: 'Max'
+                    }
+                });
+                this.setState({posts: updatedPosts});
+            
+            } )
+            .catch(error => {
+                console.log(error);
+            
+            });
+    }
+
+    
+    
+    
+        render() {
+
+            let posts = <p style={{textAlign: 'center'}}>Something went wrong!</p>;
+        if (!this.state.error) {
+            posts = this.state.posts.map(post => { return (<Post     //////////////ESTE É O CÓDIGO QUE INTERESSA....
+                    key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)}/>);
+            });
+        }
+
+
+          return  <section className="Posts">
+            {posts}
+            </section>
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+
+}
+
+
+-----------------------------------------
+
+
+
+
+ok, mas 
+
+
+COMO FAZER ISSO?
+
+
+
+Bem, professor vai fazer/escrever isto:
+
+
+
+    
+        render() {
+
+            let posts = <p style={{textAlign: 'center'}}>Something went wrong!</p>;
+        if (!this.state.error) {
+            posts = this.state.posts.map(post => { return (<Post   
+
+                    {...this.props} ////////////EIS O CÓDIGO EM QUESTÃO. 
+                    key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)}/>);
+            });
+        }
+
+
+          return  <section className="Posts">
+            {posts}
+            </section>
+        }
+
+
+--------------------------------------------------
+
+
+
+
+
+SIM, ele vai 
+
+simplesmente 
+
+
+escrever 
+
+'{...this.props}' ------------> 
+
+
+esse uso 
+
+
+do 
+
+SPREAD OPERATOR 
+
+É __GENIAL___, pois 
+
+o que 
+
+o spread operator vai fazer, aqui, é simplesmente 
+
+
+
+
+____ESPALHAR___ TODAS 
+
+
+
+AS PROPRIEDADES 
+
+
+dentro 
+
+
+DO __SEU 'props'
+______ 
+
+DENTRO 
+
+
+DOS 'Props'
+
+
+
+de 
+
+'Post', nesse exemplo aí (_____ OU SEJA, TODOS AS PROPRIEDADES NO 'props' DE 'Posts' serão REPASSADAS PARA o 'props' de 'Post'...).
+
+
+
+
+
+
+
+
+
+
+
+
+---> professor explica que é EVIDENTE QUE PODEMOS/PODERÍAMOS 
+
+
+TARGETTAR PROPS ESPECÍFICOS no props de 'Posts', passar só 
+
+
+alguns para 
+
+
+o 
+
+
+component 'Post'..
+
+
+ex:
+
+
+
+history={this.props.history}
+
+match={this.props.match}
+
+
+
+(NÃO PRECISAMOS 
+
+DO SPREAD OPERATOR, nesses casos...)
+---------------------------------------------------------------
+
+
+
+
+
+
+
+
+CERTO,
+
+ESSA 
+
+
+
+ERA 
+a PRIMEIRA
+ 
+ MANEIRA 
+
+ DE PASSAR 
+
+ ESSES 'PROPS ESPECIAIS' (routing related props)
+
+
+ AOS CHILD COMPONENTS DE UM 'PARENT COMPONENT '
+
+
+ QUE foi ROUTEADO...
+
+
+
+
+
+
+
+
+
+JÁ 
+
+O SEGUNDO APPROACH ENVOLVE USO DE 
+
+UM 
+
+__HIGHER-ORDER COMPONENT__... ---------->  E ESSE 
+
+HOC SERÁ USADO 
+
+
+NO COMPONENT 'Posts'...
+
+
+
+
+
+
+
+
+2) APPROACH DO HOC de nome 'withRouter()'...
+
+
+
+
+
+
+
+----> nesse segundo approach,
+
+vamos 
+
+IMPORTAR 
+
+UM OBJETO ESPECIAL 
+
+NO NOSSO CÓDIGO... ----> esse objeto ESPECIAL 
+
+será 
+
+
+o 
+
+objeto 
+
+
+'{ withRouter } '...
+
+
+
+
+
+-------------------------------------
+
+
+
+ELE É IMPORTADO 
+
+COM 
+
+ A SINTAXE 
+
+
+
+
+import { withRouter } from 'react-router-dom'; (e isso será importado LÁ NO COMPONENT 'Post'...)
+
+
+
+--------------------------------------------------------
+
+
+
+--> certo... esse 'withRouter' 
+
+É UM HIGHER ORDER COMPONENT...
+
+
+
+
+NÓS VAMOS WRAPPAR O COMPONENT que queremos que 
+
+tenha 
+
+PROPS RELATIVOS AO ROUTING (routing related props) 
+
+PASSADOS AO SEU PARENT....
+
+
+
+
+nesse caso, usaremos em 
+
+'Post.js'...
+
+
+
+
+
+
+VocÊ vai até o Post.js e embala o 'export' do component 'Post' com 
+esse HOC...
+
+
+ex:
+
+
+
+import React from 'react';
+
+import './Post.css';
+
+
+import { withRouter } from 'react';
+
+const post = (props) => {
+    console.log(props);
+    return (
+
+    <article className="Post" onClick={props.clicked}>
+        <h1>{props.title}</h1>
+        <div className="Info">
+            <div className="Author">{props.author}</div>
+        </div>
+    </article>
+    );
+
+    }
+
+export default withRouter(post); ///////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+CERTO... COM ISSO AÍ ADICIONADO, SE AGORA SALVARMOS 
+
+
+E RECARREGARMOS 
+
+NOSSO APP, 
+
+
+veremos 
+
+
+
+QUE AQUELE CONSOLE.LOG  de dentro de 'post' 
+
+
+___VAI __, SIM, MOSTRAR 
+
+
+
+AS PROPRIEDADES 
+
+'history', 'location' e 'match',
+
+
+
+props/propriedades 
+
+
+'RELATIVOS AO ROUTING' (ROUTING-RELATED PROPS)... ------------->
+
+
+
+esse approach, portanto, é 
+
+
+MAIS RÁPIDO E SIMPLES DO QUE O OUTRO, APARENTEMENTE...
+
+
+
+
+
+
+--> isso significa que 
+
+
+'withRouter'
+
+
+ADICIONA 
+
+ESSES PROPS/PROPRIEDADES RELATIVOS AO ROUTING 
+
+A OUTROS COMPONENTS QUE NÃO SEJAM 
+
+O COMPONENT 
+
+RENDERIZADO DIRETAMENTE COM '<Route />'
+
+
+
+
+
+
+
+
+------> RESUMO:
+
+
+'withRouter' é UMA MANEIRA EXTREMAMENTE CONVENIENTE DE DEIXAR 
+
+
+UM 
+
+DETERMINADO COMPONENT 'ROUTE AWARE'... -----------> 
+
+
+
+e 
+
+esse 
+
+
+'withRouter', o que ele vai fazer, 
+
+É 
+
+
+_____'GET THE PROPS CONTAINING THE INFORMATION __fOR THE ___NEAREST__ LOADED ____
+ROUTE__' 
+
+(e isso às vezes pode dar merda, como você já pode imaginar... nos casos em que der merda,
+
+devemos usar o outro approach, do SPREAD OPERATOR, que é um pouco mais clunky, mas funciona)...
+
+
+
+
+
+
+---> no caso de 'POST', a ROUTE MAIS PRÓXIMA QUE FOI CARREGADA NO NOSSO CÓDIGO é/
+
+foi a route de 'Posts'... (pq 'post' foi incluído em 'posts'...) ------> isso significa QUE 
+
+VAMOS RECEBER OS MESMOS PROPS QUE RECEBÍAMOS EM 'posts'...
+
+
+------------------------------------------------------
+
+
+
+O professor remove esse wrap aí do nosso código, mas ele admite que é uma maneira 
+
+
+boa DE PEGAR 'ROUTE-RELATED PROPS', props que você talvez precise,
+
+como o método 'push' na propriedade 'history',
+
+
+ou então para pegar informações sobre a LOADED ROUTE, informações variadas...

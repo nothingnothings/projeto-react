@@ -1,0 +1,207 @@
+
+
+
+
+
+
+
+
+---> NESTE MÓDULO,
+
+VIMOS MUITO SOBRE __HOOKS___.... ------> 
+
+E COMO 
+
+HOOKS 
+SÃO 
+
+UMA 
+
+NOVA FEATURE (e ainda inacabada),
+
+ELES 
+
+PODEM 
+
+SER MUITO INTIMIDADORES...  ------>  
+
+
+
+
+
+
+NO FINAL DAS CONTAS,
+
+É UMA MANEIRA BEM DIFERENTE 
+
+DE LIDAR COM/CRIAR 
+ 
+COMPONENTS,
+
+
+criamos 
+
+só 
+
+FUNCTIONAL COMPONNETS,
+
+
+
+E AÍ TEMOS 
+
+ALGUNS MÉTODOS 
+
+
+IMPORTANTES QUE HOOKAM A ALGUNS EVENTOS, 
+
+COMo 
+
+'useEffect()',
+
+
+QUE RE-EXECUTA ALGUNS SIDE-EFFECTS QUANDO ALGUMA COISA MUDA...
+
+
+
+
+
+
+
+--> 'useState()'
+
+
+e 
+
+'useReducer' 
+
+nos ajudam 
+
+A DEFINIR UM 'STATE' DENTRO 
+
+DESSE FUNCTIONAL COMPONNET.... 
+
+
+
+
+
+
+
+
+--> UM PONTO NEGATIVO É QUE 
+
+
+NOSSOS FUNCTIONAL COMPONENTS COMEÇAM A FICAR CADA VEZ MAIS LONGOS E COMPLEXOS.. ----> 
+
+
+MESMO 
+
+
+SE REMOVESSEMOS UM MONTE DO CÓDIGO 'comment'
+
+
+
+DESSE 'TODO' component,
+
+
+AINDA TERÍAMOS MT CÓDIGO... -------> 
+
+
+E 
+
+ESSE 
+
+É 
+UM 
+
+
+'PARADIGM SHIFT',
+
+OU OUTRA 
+
+MANEIRA 
+
+
+DE PENSAR 
+
+SOBRE 
+
+FUNCTIONAL COMPONENTS... --> 
+
+
+é 
+
+ok 
+
+ter components 
+
+mais extensos...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> vocÊ ainda provavelmente terá 
+
+
+um punhado de container components,
+
+e aí 
+
+functional components simples.... ---> 
+
+
+
+
+NEM TODO 
+
+FUNCTIONAL COMPONENT 
+
+QUE VOCÊ ESCREVERÁ 
+
+
+NO FUTURO 
+
+
+USARÁ 
+
+ESSES 'HOOKS'... -------> 
+
+
+AINDA EXISTIRÃO 
+
+
+FUNCTIONAL COMPONENTS,
+
+
+isso 
+
+é óbvio... ------> NEM 
+
+TUDO 
+
+SERÁ 
+
+DIFERENTE,
+
+
+
+MAS A  PARTE IMPORTANTE É QUE 
+AGORA 
+É POSSÍVEL USAR 
+
+
+
+FUNCTIONAL COMPONENTS PARA TUDO... tudo graças aos HOOKS...

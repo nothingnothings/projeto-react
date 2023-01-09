@@ -1,0 +1,200 @@
+
+
+
+
+
+
+
+
+
+
+--> O QUE É O WEBPACK? 
+
+
+
+
+
+--> É UM BUNDLER,
+
+
+ele 
+
+
+junta nossos arquivos,
+
+mas 
+
+também
+
+
+NOS AJUDA
+ 
+
+
+ A OPTIMIZAR NOSSOS ARQUIVOS...
+
+
+
+
+---> ELE TAMBÉM 
+
+
+NOS 
+
+DEIXA
+ 
+
+ HOOKAR 
+
+ DIVERSOS 
+
+ 'PLUGINS',
+
+
+
+E TAMBÉM 
+
+
+AQUILO QUE CHAMAM DE 'LOADERS',
+
+
+
+PARA ENTÃO TRANSFORMAR seus arquivos 
+
+
+e, por exemplo,
+
+
+TRANSPILAR 
+
+
+
+___NEXT GEN JAVASCRIPT__ EM 
+
+'CURRENT GEN JAVASCRIPT' (babel, essencialmente)...
+
+
+
+
+
+
+
+
+
+--> MAS A IDEIA CORE POR TRÁS DO WEBPACK 
+
+É 
+
+
+TER 
+
+DIVERSOS 
+
+
+
+RECURSOS 
+
+JAVASCRIPT, CSS, IMAGENS,
+
+ETC, TUDO,
+
+
+
+ E ENTÃO 
+
+ OS 
+
+ BUNDLAR, juntar 
+
+
+
+ todos eles em bundles unos...
+
+
+
+ ex:
+
+
+
+
+
+ JS JS JS ----> vira 'BUNDLE.JS'
+
+
+
+
+CSS CSS CSS --> vira 'bundle.css' 
+
+
+
+
+JPG PNG --> viram 'Optimized JPG' e 'Optimized PNG'...
+
+
+
+
+
+
+
+
+
+
+--> O WEBPACK 
+
+
+'analyzes connections between components and then BUNDLES/OPTIMIZES EVERYTHING TOGETHEr'...
+
+
+
+
+
+
+
+
+
+------------> webpack 
+
+
+TE DEIXA RODAR 
+
+UMA LÓGICA ADICIONAL PARA 
+TRANSFORMAR 
+
+E FAZER O QUE QUISER COM O SEU CÓDIGO... 
+
+
+
+---------------
+
+
+
+
+WEBPACK --> É O STANDARD
+ 
+ USADO
+  
+
+  NO 
+
+  SET DE PROJETOS,
+
+  HOJE EM DIA...
+
+
+
+USAREMOS 
+
+
+ELE 
+
+NESTE MÓDULO,
+
+
+
+PARA SETTAR 
+
+NOSSO PRÓPRIO (custom )
+
+
+
+REACT BUILD WORKFLOW E PROJECT..

@@ -1,0 +1,1903 @@
+
+
+Professor 
+
+
+
+
+
+quer nos mostrar 
+
+como 
+
+criar 
+
+o 
+
+
+
+hamburger.... ------> 
+
+
+
+
+
+
+
+
+
+PROFESSOR USA 
+
+
+O 
+
+
+
+
+
+CODEPEN 
+para 
+
+ver como 
+seu
+ 
+
+ css 
+
+ está ficando... --> ele nos explica que o codepen é bom para 
+
+ ver exatamente isso,
+
+ para ver projetos css...
+
+
+
+
+
+
+
+
+
+
+
+--> dentro 
+
+
+do codepen,
+professor 
+
+quer 
+
+CRIAR O BURGER... -> 
+
+
+
+ESSE 
+
+BURGER 
+
+
+__NÃO VAI USAR __ JAVASCRIPT,
+
+MAS 
+
+VAI 
+USAR 
+
+CSS 
+
+E HTML PARA SER MONTADO...
+
+
+
+------------------------------------------
+
+
+
+
+
+
+--> EM HTML,
+
+
+o professor não terá tantos elementos...
+
+
+
+
+
+
+--> professor vai criar uma SURROUNDING DIV, que 
+
+será o CONTAINER DO BURGER....
+
+
+
+
+
+
+
+ele faz assim:
+
+
+
+
+<div class="box">
+
+
+</div>
+
+
+
+
+
+----------------------------
+
+
+
+
+DENTRO 
+
+DESSE NEGÓCIO, PROFESSOR VAI QUERER UMA 
+
+
+DIV 
+
+PARA CADA INGREDIENT... 
+
+
+
+
+
+
+--> aí ele vai criando divs com classes próprias...
+
+
+
+
+<div class="box">
+    <div class="bread-top"></div>
+    <div class="salad"></div>
+    <div class="cheese"></div>
+    <div class="meat"></div>
+    <div class="bacon"></div>
+    <div class="bread-bottom"></div>
+</div>
+
+
+
+
+----------------------------------
+
+
+
+
+
+TIPO ASSIM... -----> 
+
+
+
+
+
+
+
+OK, MAS COMO SERÁ NOSSO CÓDIGO 
+
+CSS?
+
+
+
+
+
+
+
+--> professor 
+
+diz que 
+
+
+vai 
+
+criar várias classes, para cada uma delas... 
+
+
+
+
+
+
+
+
+
+
+---> primeiro o professor vai criar 
+
+'.box'... -------> 
+
+
+
+
+
+O BURGER DEVERÁ SER CONSTRUÍDO DE UMA MANEIRA FLEXÍVEL,
+
+DE MANEIRA QUE 
+ELE CRESCA JUNTO COM A BOX... -----> 
+
+para 
+
+isso,
+
+
+professor 
+
+define 
+
+uma 
+
+width 
+
+de 
+
+500px
+,
+
+
+uma margin de auto (PARA CENTRALIZAR O BURGEr),
+
+e uma 
+
+HEIGHT 
+
+DE 
+
+450px...
+
+
+ex:
+
+
+
+
+
+-------------------------
+
+
+
+.box {
+    width: 500px;
+    margin: auto;
+    height: 450px;
+}
+
+
+-----------------------
+
+
+
+
+ISSO FEITO,
+
+DEVEMOS 
+
+TRABALHAR
+ 
+ NO 
+
+
+ 'bread-top'... ------> 
+
+
+
+ O 
+
+ BREADTOP
+
+
+
+ deverá 
+
+
+ ser 
+
+ UMA CAIXA COM __ PONTAS ARREDONDADAS___ 
+
+  NAS 
+
+  PARTES 
+
+  SUPERIOR ESQUERDA E DIREITA...
+
+
+
+
+
+
+
+-------> EM CSS,
+
+
+OBVIAMENTE SEMPRE TRABALHAMOS COM __BOXES__... ---> 
+
+
+E ESSES INGREDIENTS SÃO SIMPLESMENTE 
+BOXES _ COM ROUNDED EDGES____... ------> 
+
+
+
+
+
+
+PARA 
+
+ESTILIZAR 
+
+O 
+
+BREAD-TOP,
+professor 
+
+escreve
+
+
+
+
+'.bread-top {
+    height: 20%;
+}
+'
+
+
+
+
+
+
+
+
+
+COMO JÁ SABEMOS,
+
+NO CSS, quando definimos PORCENTAGENS,
+
+ESSAS PORCENTAGENS SÃO CONSIDERADAS EM RELAÇÃO 
+
+à CAIXA __ QUE 
+__ 'WRAPPA' 
+UM DETERMINADO 
+
+ELEMENTO... --> no caso,
+
+a 
+
+'BOX', que é o negócio que está ''''SEGURANDO''' as nossas divs 
+
+com ingredients...
+
+
+
+
+
+
+---> ok,
+
+
+
+será 
+
+20% de 
+
+'450', que é a height da box...
+
+
+
+
+--> JÁ A WIDTH SERÁ 
+
+DE 80%,
+
+só para testar...
+
+
+
+--> A BACKGROUND-COLOR VAI SER UM LARANJA...  ------>  PROFESSOR 
+
+
+
+
+USA 
+
+'linear-gradient'
+
+PARA 
+
+___ DAR UM 'LOOK TRIDIMENSIONAL' AO BURGER___...
+
+
+
+-----> FARÁ ISSO 
+
+PARA 
+
+QUE 
+
+
+NÃO TENHAMOS 1 SÓ TOM PARA TODO O BURGER...
+
+
+
+
+ex:
+
+
+
+
+
+'.bread-top {
+    height: 20%;
+    width: 80%;
+    background-color: linear-gradient
+}
+'
+
+
+
+
+-------------------------
+
+
+LINEAR-GRADIENT, ENTRETANTO,
+
+NÃO PODE SER DEFINIDO 
+
+
+NA PROPRIEDADE 
+
+DE 
+
+'background-color',
+
+e sim 
+
+
+
+só pode ser 
+definido 
+
+
+na propriedade 
+
+de 
+
+'background'....
+
+
+ex:
+
+
+
+
+
+
+'.bread-top {
+    height: 20%;
+    width: 80%;
+    background: linear-gradient
+}
+'
+
+
+
+----------------------------
+
+
+
+
+LINEAR GRADIENT 
+
+aceita/exige um PARÂMETRO... ---> 
+
+
+
+esse parâmetro é justamente 
+
+
+
+
+'THE DIFFERENT SHAPES YOU WANT TO TRANSITION TO....''' ----> 
+
+
+
+aqui,
+
+no caso,
+
+
+PROFESSOR QUER TRANSICIONAR ENTRE 
+
+2 CORES, UNS TONS DE MARROM (brownish)...
+
+
+
+
+
+o hash para o primeiro é 
+
+#bc581e,
+
+e 
+
+
+a 
+segunda 
+
+é 
+
+
+#e27b36
+
+
+fica tipo assim:
+
+
+
+
+
+'.bread-top {
+    height: 20%;
+    width: 80%;
+    background: linear-gradient(#bc581e, #e27b36)
+}
+'
+
+---------------------
+
+
+PARA CONSEGUIR AS BORDAS ARREDONDADAS,
+
+
+ESCREVEMOS 
+
+'border-radius'
+
+
+ --> MAS QUEREMOS 
+
+ QUE 
+
+ SÓ 
+
+
+ AS 2 PARTES SUPERIORES FIQUEM ARREDONDADAS... para isso,
+
+ vamos 
+
+ ter que 
+
+ fazer 
+
+ aquele 
+ negócio 
+
+ de 
+ 
+ 0 0 0 0 (4 lados, se me recordo bem...)
+
+
+
+
+ talvez 
+
+
+
+ 25px 25px 0 0
+
+
+
+
+
+---> CERTO, MAS O PROFESSOR QUER USAR PORCENTAGENS,
+para que 
+o
+ negócio fique melhor...
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+'.bread-top {
+    height: 20%;
+    width: 80%;
+    background: linear-gradient(#bc581e, #e27b36);
+    border-radius: 50% 50% 0 0;
+}
+'
+
+
+----------------------
+
+
+
+FICOU BOM, 
+MAS O PROFESSOR QUER 
+
+
+UM 
+LOOK MEIO TRIDIMENSIONAL,
+
+POR ISSO 
+
+ELE 
+
+ADICIONA UMA 
+
+BOX SHADOW.......... --> mas 
+
+
+ELE 
+
+NÃO QUER 
+UMA SHADOW 
+QUE 
+
+VÁ PARA FORA DO BURGER,
+
+POR ISSO 
+
+ELE VAI 
+
+DEFINIR 
+UMA 
+
+
+SHADOW DE TIPO 
+
+
+'INSET'  (é uma shadow que cai para DENTRO do elemento, no caso o PÃO.)
+
+
+
+-----
+
+
+
+
+EX:
+
+
+
+
+
+'.bread-top {
+    height: 20%;
+    width: 80%;
+    background: linear-gradient(#bc581e, #e27b36);
+    border-radius: 50% 50% 0 0;
+    box-shadow: inset;
+}
+'
+
+
+
+
+EX:
+
+
+inset
+Se não for especificado, a sombra ganha o efeito de como se a caixa fosse aumentada acima do conteúdo).
+A presença da palavra-chave inset muda a sombra para dentro da moldura (como se o conteúdo estivesse pressionado dentro da caixa). As sombras de inserção são desenhadas dentro da borda (mesmo as transparentes), acima do plano de fundo, mas abaixo do conteúdo.
+<offset-x> <offset-y>
+Existem dois valores <length> (en-US)  para configurar o desvio (offset) da sombra:
+<offset-x> especifica a distância horizontal. Valores negativos colocarão a sombra à esquerda do elemento.
+<offset-y> especifca a distância vertical. Valores negativos colocam a sombra acima do elemento.
+Consulte <length> (en-US) para as unidades disponíveis.
+Se ambos os valores forem 0, a sombra será posicionada atrás do elemento (e poderá gerar um efeito de desfocagem caso <blur-radius> e/ou <spread-radius> estiverem configurados).
+<blur-radius>
+Este é um terceiro valor para <length> (en-US). Quanto maior for este valor, maior o efeito de desfocagem, desta forma a sombra se tornará maior e mais clara. Valores negativos não são permitidos. Se não for especificado, o valor padrão é 0 (os limites da sombra serão retos). A especificação não inclui um algoritmo exato de como o raio de esmaecimento deve ser calculado, no entanto, descreve o seguinte:
+
+
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+--> CERTO... 
+
+
+
+professor 
+
+vai 
+
+definir 
+
+
+
+
+
+um valor 
+
+de 
+
+-15PX,
+
+
+
+
+
+E AÍ 
+
+UM 
+
+
+
+valor 
+
+de 
+
+0 
+
+
+
+e #c15711...
+
+
+
+
+EX:
+
+
+
+
+.bread-top {
+    height: 20%;
+    width: 80%;
+    background: linear-gradient(#bc581e, #e27b36);
+    border-radius: 50% 50% 0 0;
+    box-shadow: inset -15px 0 #c15711;
+}
+
+
+
+-------------------------
+
+
+
+CERTO,
+
+TERMINAMOS O 'BREAD-TOP'...
+
+
+---------------------------
+
+
+
+
+
+
+PRECISAMOS 
+
+DAS 
+
+'SEMENTES',
+mas 
+
+as adicionaremos depois... 
+
+
+
+
+
+
+
+
+
+--> PRÓXIMO PASSO 
+É 
+
+A 
+
+'SALAD'... --> 
+
+
+
+DEVEMOS 
+
+DEFINIR 
+
+A WIDTH 
+
+DELA... --> 
+
+
+
+
+
+A SALAD DEVERÁ SER UM POUCO MAIOR DO QUE O 'BREAD',
+POR ISSO 
+
+
+VAMOS 
+
+DEFINIR 
+
+
+90% como width,
+
+e 
+
+7% de height... 
+
+
+
+
+--> BACKGROUND COLOR 
+
+
+SERÁ __ UM 
+LINEAR GRADIENT,
+
+
+
+de 
+
+#228c1d e #91ce50....
+
+
+
+-------->  ENTRETANTO,
+
+ESSE ELEMENTO 
+__NÃO ESTARÁ POSICIONADO _ CORRETAMENTE___ ---> PARA O POSICIONAR CORRETAMENTE,
+
+
+
+VAMOS 
+
+TER 
+
+
+DE ESCREVER 
+
+'margin: auto',
+
+
+E DEPOIS,
+
+
+
+VAMOS QUERER 
+
+DEFINIR 
+
+MARGIN AUTO TAMBÉM 
+
+NO BURGER.. --> 
+
+
+
+
+isso vai fazer com que os 2 elementos fiquem CENTRALIZADOS,
+
+MAS ESTARÃO COLADOS 1 NO OUTRO... --> 
+para 
+
+resolver 
+
+isso,
+
+
+
+VAMOS PRECISAR 
+
+DE UMA 
+
+MARGIN-TOP .... --> 
+
+
+
+POR ISSO 
+
+O PROFESSOR 
+
+VAI 
+
+ESCREVER 
+
+'margin 2% auto;'
+
+
+(isso tanto no BREAD como na Salad)...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+.bread-top {
+    height: 20%;
+    width: 80%;
+    background: linear-gradient(#bc581e, #e27b36);
+    border-radius: 50% 50% 0 0;
+    box-shadow: inset -15px 0 #c15711;
+}
+
+
+.salad {
+    width: 90%;
+    height: 7%;
+    background: linear-gradient(#228c1d, #91ce50);
+    margin: 2% auto;
+}
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+ENTRETANTO,
+
+AS 
+
+BORDAS 
+
+DA 
+
+SALADA AINDA 
+
+ESTÃO 
+
+MT 
+
+
+RÍGIDAS... --> PRECISAMOS DE BORDER-RADIUS....
+
+
+
+
+
+--------> 
+
+PROFESSOR ESCREVE UM BORDER-RADIUS 
+
+DE 
+20PX,
+
+
+
+
+---> 
+
+
+
+AGORA TEMOS A SALAD.... -> DEVEOMS 
+
+
+
+
+TRABALHAR NO 
+
+'BREAD-bottom'
+
+AGORA....
+
+
+
+
+
+
+
+
+
+----> NESSE BREAD,
+
+PROFESSOR 
+
+TAMBÉM 
+
+VAI ASSIGNAR UMA HEIGHT... --> 
+
+
+height 
+
+de 
+13%,
+
+
+
+width 
+
+
+
+de 
+
+80%.... ---------> 
+
+
+
+BACKGROUND TAMBÉM 
+
+TERÁ UM LINEAR GRADIENT,
+
+
+
+
+MAS 
+
+A 
+
+COR 
+
+SERÁ 
+
+
+de 
+
+#f80e4a, #e27b36...
+
+
+
+
+
+
+
+--> OBS: PROFESSOR PEGOU ESSAS COLORS EM UM 'COLOR PICKER'
+
+ANTES DE COMEÇAR O PROJETO....
+
+
+EX:
+
+https://www.w3schools.com/colors/colors_picker.asp
+
+
+
+
+------------------------------
+
+
+
+
+--> AGORA DEVEMOS ADICIONAR UMA 
+
+MARGIN 
+
+DE 
+
+2% ae auto dnv,
+para ter um SPACING...
+
+
+
+
+
+--> TAMBÉM DEVEMOS TER UM BOX-SHADOW 
+
+
+IGUAL AO DO TOP...
+
+
+--> também coloca um leve border-radius...
+
+ex:
+
+
+
+
+
+
+
+.bread-top {
+    height: 20%;
+    width: 80%;
+    background: linear-gradient(#bc581e, #e27b36);
+    border-radius: 50% 50% 0 0;
+    box-shadow: inset -15px 0 #c15711;
+}
+
+
+.salad {
+    width: 90%;
+    height: 7%;
+    background: linear-gradient(#228c1d, #91ce50);
+    margin: 2% auto;
+}
+
+
+.bread-top {
+    height: 13%;
+    width: 80%;
+    background: linear-gradient(#f80e4a, #e27b36);
+    margin: 2% auto;
+
+    border-radius: 0 0 30px;
+    box-shadow: inset -15px 0 #c15711;
+}
+
+
+
+
+
+------------------------------------------------------------
+
+
+
+
+
+COM ISSO,
+
+
+AGORA JÁ TEMOS UM BURGER.... 
+
+
+
+
+
+
+
+
+--> PRECISAMOS DOS OUTROS INGREDIENTS... --------> 
+
+
+
+
+
+SE DUPLICARMOS 
+
+A SALAD (div da salad),
+
+VAMOS 
+
+VER 
+
+QUE 
+
+O 
+
+NEGÓCIO VAI FICAR BONITO IGUAL... (isso mostra que esse component é REUTILIZÁVEL....).
+
+
+
+
+
+
+
+
+
+
+---> PROFESSOR 
+
+COMEÇA 
+
+PELO 
+
+BACON....
+
+
+
+
+
+
+
+
+
+--> 
+
+terá uma width de 80%...
+
+
+
+height terá 
+
+de 3%,
+
+
+background 
+
+será 
+
+
+'linear-gradient'
+
+
+também....
+
+
+
+
+----------> margin: 2% auto;
+
+
+
+--> o bacon NÃO TERÁ BORDER-RADIUS...
+
+
+
+
+
+
+
+
+
+--> QUANTO AO QUEIJO,
+
+
+
+
+FAREMOS A MESMA COISA... ----> 
+
+
+
+QUEIJO FICARÁ UM POUCO MAIOR...
+
+
+
+
+
+
+
+--> PROFESSOR FAZ A MESMA COISA COM O MEAT...
+
+
+
+
+
+
+--> CERTO, O BURGER ESTÁ QUASE PRONTO... 
+
+
+
+
+--> SÓ FALTA 
+
+
+AS 
+
+SEEDS....
+
+
+
+
+
+
+---> as seeds
+
+
+
+SERÃO __NESTED__ DIVS__ 
+
+da div do 
+
+'bread-top'...
+
+
+
+ex:
+
+
+<div class="bread-top">
+    <div class="seeds"></div>
+    <div class="seeds2"></div>
+</div>
+
+
+----------------------
+
+
+
+e 
+
+O PROFESSOR 
+
+VAI USAR 
+
+UMA FEATURE 
+
+DO 
+
+CSS PARA FICAR 
+
+COM 
+
+
+
+3 SEEDS DO TIPO 1, E 3 SEEDS DO TIPO 2.... (e o valor não passará DE 3, para cada um dos types...)
+
+
+
+
+
+
+
+
+
+
+OK, MAS COMO FAZEMOS ISSO FUNCIONAR? --> 
+
+
+professor
+
+nos diz que 
+
+
+ELE ADICIONARÁ
+ 
+
+
+ uma 
+
+ classe 
+
+de 
+
+
+'.seeds {
+
+
+}
+'
+
+
+
+
+
+
+
+
+
+
+---> O PROFESSOR QUER POSICIONAR ESSA 'SEEDS' 
+
+__DENTRO DO BREAD-TOP,
+
+E DE UM JEITO QUE 
+
+
+CONSIGA UTILIZAR 
+
+ESSAS SEEDS DE UMA MANEIRA DE 'ABSOLUTE VIEWPORT'... ---> PARA ISSO, 
+
+PROFESSOR 
+
+
+VAI 
+
+
+ESCREVER 
+
+'position: absolute' (se refere à OUTER DIV ),
+
+PARA PODER POSICIONAR ESSAS 
+
+__SEEDS __ DO JEITO QUE ELE QUISER... ---> PARA 
+
+QUE 
+
+ISSO FUNCIONE,
+
+
+ELE PRECISA 
+
+DE 
+
+2 CONDIÇÕES:
+
+
+
+
+
+1) AS SEEDS DEVEM TER SUA POSIÇÃO SETTADA COMO 'ABSOLUTE' (para podermos as posicionar livremente dentro do elemento que as circunda)
+
+
+2) O ELEMENTO 'bread-top' DEVE TER SUA POSITION SETTADA COMO 'relative' (pq ele será o _REFERENCIAL__ a que '.seeds' vão se referir, pq possuem 'position: absolute'...)
+
+
+
+
+
+
+
+
+
+
+PROFESSOR 
+
+
+
+ESCREVE 
+
+
+
+width de 10%,
+
+e height de 
+
+15%.... 
+
+
+
+
+
+--> DEPOIS DISSO,
+
+DEFINE 
+
+UM 
+
+TOP 
+
+de
+
+
+50%,
+
+e um left de 
+
+30%... ----->
+
+
+
+
+
+AÍ VAMOS VER UM QUADRADO BRANCO 
+
+APARECENDO DENTRO DO NOSSO 
+
+BREAD-TOP...
+
+
+
+
+
+
+-> COMO A SEED__ PRECISA__ DE 'ROUND CORNERS,'
+
+
+
+
+PRECISAMOS SETTAR UM BORDER RADIUS.... 
+
+
+
+
+
+ex:
+
+
+border-radius: 40%;
+
+
+
+
+-------------------
+
+PRÓXIMA ETAPA É __ROTAR UM POUCO __ ESSA 
+
+
+SEED... ---> para isso,
+
+professor 
+usa 
+
+a 
+
+PROPRIEDADE 
+
+de 
+
+'transform',
+
+
+PARA ENTÃO COLOCAR UM VALOR DE 
+
+
+'rotate(-20deg)'  (ISSO VAI 'DEITAR' A SEMENTE DE UMA MANEIRA OBLÍQUA...) 
+
+
+
+
+
+
+
+
+
+--> depois disso,
+
+
+professor coloca um box-shadow 
+
+
+de 
+
+
+'inset -2px -3px #c9c9c9;' ------> ISSO VAI NOS DAR UMA SHADOW MEIO CINZENTA...
+
+
+
+
+
+--> OK,
+
+
+ESSA 
+
+É NOSSA 
+
+'PRIMEIRA SEED',
+
+
+
+MAS __NÓS QUEREMOS ___ TER 
+
+MAIS 
+
+DE 
+1
+ SEED... --> PARA ISSO,
+
+
+ PROFESSOR 
+
+ VAI USAR 
+
+ UM 
+
+
+ 'PEQUENO TRUQUE'... ---> VAI USAR 
+
+ O 
+
+ TRUQUE 
+
+ DOS 
+
+ __PSEUDOSELECTORS__ PARA ''''MULTIPLICAR'''' 
+
+ O NÚMERO 
+
+ DE SEEDS 
+
+ QUE 
+
+ FICAM 
+
+ EM CADA 
+
+ DIV DE 
+
+ 'seeds'---> 
+
+
+
+
+
+
+
+
+
+
+ PROFESSOR 
+
+ VAI 
+
+ ESCREVER 
+
+
+ '.seeds:after {
+
+ }'
+
+
+
+
+ e 
+
+
+ '.seeds:before {
+
+
+ }
+ '
+
+
+
+
+
+
+ ESSAS PROPRIEDADES 
+
+ NOS DEIXAM RENDERIZAR ELEMENTOS ___ DEPOIS _ E ANTES ___ DO 
+
+ ELEMENTO 
+
+ '.seeds'...
+
+
+
+
+
+
+
+ --> O 'content' SERÁ 
+
+
+ _ UMA 'EMPTY STRING', nada mesmo .... =---> SÓ VAMOS SETTAR 
+
+ ISSO 
+
+ PQ É OBRIGATÓRIO, É UM REQUISITO PARA QUE 
+
+
+ ESSE ':after' e 
+
+
+ ':before' 
+
+ FUNCIONEM...
+
+
+
+
+
+ --> DEPOIS DISSO,
+
+ PROFESSOR SETTA UMA WIDTH de 100% ---------->  
+
+
+
+
+
+ ex:
+
+
+
+
+ .seeds:after {
+     content: "";
+     width: 100%;
+ }
+
+
+ ------------------------
+
+
+ OK, 
+
+ MAS 
+
+
+ PQ 
+
+
+ '100%'? ----> PQ ISSO AÍ NÃO SE REFERE AO 'BURGER-TOP',
+ e SIM 
+
+ SE 
+
+ REFERE 
+
+
+ à CLASSE 
+
+ DE 
+ 'SEEDS'....  (que está settado como '10%' da width do bread-top...) ------> 
+
+
+
+
+
+
+ COMO QUEREMOS QUE ESSE PSEUDOSELECTOR TENHA O MESMO TAMANHO,
+
+ é necessário definir a height e width como 100%....
+
+
+
+
+
+
+ --> DEPOIS DISSO,
+
+
+
+ PRECISAMOS 
+
+ ADICIONAR UM 
+
+ 'POSITION' 
+
+
+ DE ABSOLUTE,
+
+
+ E AÍ 
+
+ UM 
+
+ BACKGROUND-COLOR DE WHITE,
+
+
+
+
+UM 
+
+LEFT POSITION DE '-170%' (para ficar um pouco do lado da outra semente...) -----> 
+
+
+
+E AÍ 
+
+
+UM 'TOP' de '-260%'...
+
+
+
+
+
+
+
+----> POR FIM,
+
+
+COLOCAMOS O MESMO BORDER-RADIUS 
+
+
+
+e um 
+
+rotate um pouco diferente também....
+
+
+ex:
+
+
+
+
+
+
+.seeds:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: white;
+    left: -170%;
+    top: -260%;
+    border-radius: 40%;
+    transform: rotate(60deg);
+    box-shadow: inset -1px 2px #c9c9c9;
+}
+
+
+.seeds:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: white;
+    left: 180%;
+    top: -50%;
+    border-radius: 40%;
+    transform: rotate(60deg);
+    box-shadow: inset -1px -3px #c9c9c9;
+}
+
+
+
+
+-------------------------------
+
+ISSO FEITO,
+
+PROFESSOR 
+PASSA 
+
+
+A TRABALHAR COM 
+
+
+SEEDS2... --> 
+
+terá 
+
+um estilo 
+
+semelhante 
+
+ao 
+
+
+do 
+
+SEEDS 1 e de seus pseudoselectors...
+
+
+
+
+ex:
+
+
+
+
+
+.seeds {
+    ....
+}
+
+
+
+
+
+
+
+.seeds2:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: white;
+    left: 64%;
+    top: 50%;
+    border-radius: 40%;
+    transform: rotate(10deg);
+    box-shadow: inset -3px 0px #c9c9c9;
+}
+
+
+.seeds2:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: white;
+    left: 180%;
+    top: -50%;
+    border-radius: 40%;
+    transform: rotate(60deg);
+    box-shadow: inset -1px -3px #c9c9c9;
+}
+
+
+
+
+--------------------
+
+
+
+
+
+CERTO, ACABAMOS....

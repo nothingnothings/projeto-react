@@ -1,0 +1,499 @@
+
+
+
+
+
+
+
+
+----> Aprendemos um pouco sobre mensagens de erro...
+
+
+
+
+
+
+
+
+
+
+
+
+--> ENTRETANTO, CABE DESTACAR QUE _àS VEZES ACABAMOS ENCONTRANDO ___ ERROS 
+
+DE LÓGICA, 
+
+QUE SÃO __ TIPOS DE ERRO___ AINDA MAIS DIFÍCEIS DE SEREM SPOTTADOS....
+
+
+
+
+
+
+
+
+
+--> com erros de lógica, NÓS ___NÃO RECEBEMOS ERRO ALGUM, O CÓDIGO 'FALHA SILENCIOSAMENTE', O QUE É TERRÍVEL.
+
+
+
+
+
+----------------------
+
+
+VOCÊ NÃO GANHA MENSAGEM DE ERRO, 
+
+MAS O NEGÓCIO NÃO FUNCIONA.
+
+
+
+Como exemplo disso,
+
+
+temos o código 
+
+
+de 
+
+'nameChangedHandler'...
+
+
+
+ex:
+
+
+
+
+
+
+  nameChangedHandler = (event, id) => {  ////substituído por 'deletePersonHandler'....
+    const personIndex = this.state.persons.findIndex(
+      p => {
+        return p.id === id;
+      }
+    );
+
+
+
+    const person = {
+      
+      
+      ...this.state.persons[personIndex]
+    }
+
+
+    person.name = event.target.value;
+
+
+    const persons = [...this.state.persons];
+
+
+
+    persons[personIndex] = person;
+
+
+    this.setState({  
+      persons: persons /*[ 
+        { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]*/
+     
+ 
+    });
+
+    console.log(event.target.value);
+
+  }
+
+
+
+
+
+
+---------------------------------------
+
+
+NESSE CÓDIGO AÍ,
+
+ 
+ DIGAMOS QUE 
+
+ NAQUELE TRECHO, 
+
+ EM QUE 
+
+
+ __ENCONTRAMOS O INDEXADOR (index) DE UMA 
+
+ PESSOA (component 'person') 
+
+ QUE QUEREMOS UPDATAR.....
+
+
+
+
+ ex:
+
+
+ const personIndex = this.state.persons.findIndex( p => {
+     return p.id === id;
+ });
+
+
+
+
+------------------------------------------------
+
+
+
+Nesse código aí, digamos que 
+
+NÓS NOS EMBANANEMOS 
+
+
+COM NOSSAS VARIÁVEIS/PARÂMETROS,
+
+
+e acabemos 
+
+
+COMPARANDO 
+
+
+'userId' (propriedade/VARIÁVEL QUE NÃO EXISTE)
+ 
+
+ com 
+
+
+ 'id'...
+
+
+
+ ex:
+
+
+
+
+
+
+
+ const personIndex = this.state.persons.findIndex( p => {
+     return p.userId === id; ////eis o código em questão.
+ });
+
+ ------------------------------------------------
+
+
+
+
+
+
+ SE FIZÉSSEMOS ISSO, O CÓDIGO NÃO NOS ATIRARIA/ATIRARÁ UMA MENSAGEM 
+
+ DE ERRO, 
+
+ pois não há erro.... mas ainda assim NOSSO CÓDIGO NÃO FUNCIONARÁ (pq não existe propriedade 'userId' dentro de 'p', dentro de uma 'Person'...)
+
+
+
+ --------------------------------------------------
+
+
+
+MAS PQ QUE ISSO AÍ NÃO NOS DÁ MENSAGEM DE ERRO?
+
+
+
+
+BEm, pq o 'userId' está como undefined, é verdade, 
+
+MAS __VOCÊ AINDA PODE __ COMPARAR ALGO 'UNDEFINED' 
+
+
+COM ALGUMA OUTRA COISA, NO JAVASCRIPT...
+
+
+
+
+p.userId
+(undefined) === 0; ------------> ISSO DARIA 'true', pois os DOIS SÃO '''NULOS'''...
+
+
+
+---------------------------------------------
+
+
+
+Aqui, o único efeito do pass desse userId inexistente 
+
+É QUE VOCÊ NÃO ENCONTRARÁ 
+
+A PERSON ADEQUADA...
+
+
+
+
+
+--> se o professor salvar esse código e voltar ao nosso aplicativo,
+ 
+
+ O PROJETO NÃO NOS DARÁ UM ERRO,
+
+ MAS O APLICATIVO NÃO FUNCIONARÁ DIREITO:
+
+
+ não importa o quanto nós escrevamos no input field, 
+
+
+ ELE NÃO VAI SER UPDATADO (pq o TWO WAY BINDING TERÁ SIDO QUEBRADO,
+ QUEBRADO PQ O PROFESSOR NÃO ESTARÁ UPDATANDO O 'NAME' DESSE COMPONENTE 'PERSON'...)
+
+
+
+ ---------------------------------------
+
+
+ OK, 
+
+
+ mas o que podemos fazer em casos de erros lógicos?
+
+
+
+
+ BEM, O QUE PODEMOS FAZER É 
+
+ 'WALK THROUGH OUR CODE STEP BY STEP'... ---> 
+
+
+ usando as DEVTOOLS... 
+
+
+
+
+
+ ---> vamos 
+
+
+ ter 
+
+
+ de usar 
+
+
+ BREAKPOINTS 
+
+
+
+ e 
+
+
+
+
+ A 
+
+
+
+ ABA 
+
+
+
+ 'PERFORMANCE/MEMORY/ETC ETC'....
+
+
+
+ -------------------------------------------
+
+
+ PARA USAR BREAKPOINTS, 
+
+ NÓS DEVEMOS 
+
+ IR ATÉ 
+
+
+ A ABA 
+
+ 'SOURCES'....
+
+
+
+
+
+ NA ABA SOURCES, 
+
+ vocÊ 
+
+
+ vai encontrar 
+
+ sua estrutura de código 
+
+
+ debaixo 
+
+ do localhost... -------> 
+
+
+ AÍ NO FOLDER 'SRC' VOCÊ ENCONTRARÁ 
+
+ O SEU CÓDIGO.--- > e vocÊ 
+
+
+
+ CONSEGUIRÁ LER 
+
+ O SEU CÓDIGO... ---> vocÊ CONSEGUIRÁ 
+
+
+
+
+ LER O SEU CÓDIGO __GRAÇAS AOS 'SOURCE-MAPS'...
+
+
+
+
+
+
+ SOURCE-MAPS ---> são 'translation files' que permitem 
+
+
+ AOS BROWSER DEV TOOLS IR POR DENTRO DO SEU CÓDIGO e
+
+
+ENTÃO TE DEIXAR EDITAR AQUELE CÓDIGO ,
+
+ MESMO que o código que esteja sendo shippado/está sendo shippado AO BROWSER 
+
+ SEJA UM CÓDIGO DIFERENTE, OPTIMIZADO E MODIFICADO 
+
+
+
+
+
+
+
+
+ ------------> isso é mt legal PQ VOCÊ PODE DEBUGGAR O CÓDIGO QUE VOCê ESCREVEU, 
+
+ MESMO QUE ELE NÃO SEJA, DE FATO, O CÓDIGO QUE ESTÁ SENDO EXECUTADO NO BROWSER...
+
+
+
+ ---------------------------------------
+
+
+
+
+
+ certo,
+
+
+ sabemos que alguma coisa do código não está funcionando...
+
+
+
+
+
+ --> NÓS SABEMOS, POR TERMOS ESCRITO O CÓDIGO, QUE 
+
+ É O 'nameChangedHandler' QUE SEMPRE É DISPARADO 
+
+ QUANDO NÓS ESCREVEMOS ALGUMA COISA NAQUELE INPUT FIELD- ---> é por 
+
+ isso que 
+
+ devemos adicionar um BREAKPOINT 
+
+
+ na linha 
+
+
+ 'const personIndex = this.state.persons.findIndex(p => {
+
+ })' ,
+
+
+
+ DENTRO DO 
+
+ nameChangedHandler......
+
+
+
+
+
+
+ ---------------------------------------------------
+
+
+
+
+ QUANDO O CÓDIGO É EXECUTADO COM UM BREAKPOINT POSICIONADO, 
+
+ O BREAKPOINT VAI __PAUSAR___ O NOSSO CÓDIGO QUANDO 
+
+ A EXECUÇÃO CHEGAR NELE... -------> 
+
+
+
+ POR MEIO DAS CHROME DEV TOOLS, 
+
+ NÓS PODEMOS
+
+
+ 'STEP INTO' nas function calls -------> E ISSO 
+
+ NOS DEIXA 
+
+ ENTENDER O __FLOW___ DO NOSSO CÓDIGO____.... ---> E SE NÓS COLOCARMOS 
+
+
+ NOSSO MOUSE 
+
+
+ EM CIMA DOS VALORES/PROPRIEDADES, PODEMOS VER 
+
+ SEUS VALORES... ---> se nós 
+
+ colocarmos 
+
+ o mouse em cima 
+
+
+ de 
+
+ 'p.userId', por exemplo,
+
+
+ VEMOS QUE 
+
+ ELE ESTÁ COMO 'UNDEFINED'...  (e que  DENTRO DE 'p' NÃO EXISTE NENHUM OBJETO/PROPRIEDADE 'userId', e sim QUE APENAS EXISTE UMA PROPRIEDADE 'id'... dentro dele )
+
+ (e que esse 'undefined' está sendo comparado com um id de 'asfa1' por meio de '==='...) ----------->  OU SEJA, 
+
+EXAMINADA ESSA LINHA CUIDADOSAMENTE, 
+
+PERCEBEMOS O ERRO LÓGICO NO NOSSO CÓDIGO.... ------> 
+
+
+
+
+----> CHROME DEBUGGER TOOLS, JUNTO DOS SOURCE MAPS, 
+
+
+É UMA PODEROSA FEATURE PARA 
+
+
+DETECTAR ERROS DE LÓGICA NO SEU CÓDIGO... ---> VOCÊ 
+
+
+PODE ___DEBUGGAR SEU CÓDIGO ___ DA FORMA COMO VOCÊ O ESCREVEU, ainda que 
+
+ESSE CÓDIGO QUE VOCÊ ESTÁ DEBUGGANDO NÃO SEJA EXATAMENTE O CÓDIGO QUE ESTÁ SENDO EXECUTADO/RODADO 
+
+
+NO BROWSER... 

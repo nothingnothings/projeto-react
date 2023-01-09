@@ -1,0 +1,747 @@
+
+
+
+
+
+
+--> certo, adicionamos um backdrop ao sidedrawer, e também 
+
+adicionamos 
+
+
+a lógica para 
+
+SE LIVRAR DO SIDEDRAWER (que ocorre quando O BACKDROP É CLICADO...)
+
+
+
+
+
+
+
+
+
+
+
+
+---> A PRÓXIMA ETAPA É __IMPLEMENTAR___ UM 'TOGGLE BUTTON' para o sidedrawer ---> 
+
+
+OU SEJA,
+
+
+INTRODUZIR 
+
+ALGUM COMPONENT 
+
+
+
+NO NOSSO CÓDIGO  
+
+
+
+QUE 
+
+
+NOS AJUDE, QUE DEIXE A 
+
+GENTE CLICAR 
+
+NELE 
+
+
+E FAÇA 
+
+
+ELE MOSTRAR O SIDEDRAWER COM O BACKDROp.... ----> para isso, 
+
+
+para implementar esse botão, 
+
+
+devemos criar outro 
+
+FUNCTIONAL COMPONENT 
+
+
+no 
+
+folder de 
+
+
+'sideDrawer', 
+
+que chamaremos 
+
+
+de 
+
+'DrawerToggle'....
+
+
+
+
+
+
+-----------------------------------
+
+
+OK, CONSEGUI FAZER TUDO FUNCIONAR POR CONTA PRÓPRIA (não foi fácil)....
+
+
+
+
+---> Entretanto, aquele estilo 
+
+
+
+do 
+
+toggle button ainda está uma MERDA. tenho que consertar.
+
+
+
+
+
+
+
+
+
+--->e AINDA ASSIM,
+
+
+meu código ainda está INCOMPLETO. O jeito que o professor fez para 
+
+
+incorporar esse component de 
+
+'DrawerToggle' 
+
+
+FOI __dIFERENTE DO MEU__... Devo copiar o approach dele, 
+
+que 
+
+deve ter sido/deve 
+
+ser melhor em questão de performance.
+
+
+
+
+----------------------------------------------------
+
+
+
+
+-----------> certo, vamos seguir os 
+
+
+passos do professor...
+
+
+
+
+---> o professor quer que:
+
+
+
+1) ALGO SEJA CLICADO NA 'TOOLBAR' 
+
+
+
+
+
+2) A PARTIR DESSE CLIQUE, rodar 
+
+
+'sideDrawerClosedHandler = () => {
+    this.setState( {showSideDrawer: false})
+}' 
+
+
+
+PARA ___ SETTAR O STATE 
+
+
+DE 'showSideDrawer' PARA __FALSE___.... -----> FAREMOS 
+
+
+ESSA 
+
+
+TROCA 
+
+
+DESSE STATE AÍ PARA 
+
+'false' 
+
+
+pq 
+
+
+O PROP 
+
+'open' 
+
+definido lá em 
+
+'SideDrawer' 
+
+
+(
+
+    '<SideDrawer open={this.state.showSideDrawer}'
+)
+
+
+DEPENDE DISSO...
+
+
+
+-----------------------------------------
+
+
+
+
+
+---> queremos 
+
+assegurar 
+
+
+que 
+
+
+ esse botão de 'menu' 
+
+
+ NA ___TOOLBAr____ PODE/POSSA SER CLICADO... -----> o professor diz 
+
+ que 
+
+ ele decidiu 
+
+
+ outsourcear 
+
+
+ '<div>MENU</div>' 
+
+
+ EM SEU PRÓPRIO COMPONENT PARA QUE 
+
+ SEJA POSSÍVEL _sua melhor estilização__...  (hamburger icon)...
+
+
+
+
+
+
+
+ SideDrawer > DrawerToggle > DrawerToggle.js
+
+
+
+
+ --------------------------------------
+
+
+
+
+
+ --> aí o professor vai importar 
+
+ esse botão de toggle (esse 'menu') 
+
+
+ LÁ 
+
+
+
+ NO COMPONENT 
+
+ 'toolbar'...
+
+
+
+ ex:
+
+
+
+
+
+
+
+const toolbar = (props) => {
+  return (
+    <header className={Toolbar.Toolbar}>
+      <DrawerToggle openDrawer={props.openDrawer}/> 
+      {/* <div>LOGO</div> */}
+
+      {/* <Logo height="80%"/> */}
+      <div className={Toolbar.Logo}>
+      <Logo/>
+      </div>
+      <nav className={Toolbar.DesktopOnly}>
+      <NavigationItems />
+      </nav>
+    </header>
+  );
+};
+
+
+
+
+---------------------------------------------------
+
+
+
+
+---> depois disso,
+
+
+ele 
+
+
+
+vai 
+
+até o 'DrawerToggle.js' 
+
+
+E ADICIONA UM CLICK LISTENER NAQUELA DIV/button tag.... ---> 
+
+
+
+
+
+AÍ ELE VAI LÁ 
+
+
+E VAI 
+
+
+
+ESCREVER 
+
+'onClick={props.clicked}'  (PROPRIEDADE/PROP recebido LÁ DE 'toolbar'...)
+
+
+
+
+ex:
+
+
+
+
+
+const DrawerToggle = (props) => {
+
+
+    return (
+  
+        <button onClick={props.clicked} className={DrawerToggleStyle.DrawerToggle} >
+            <div />
+            <div />
+            <div />
+        </button>
+
+    )
+
+}
+
+
+
+---------------------------------------------------
+
+
+
+
+
+'props.clicked' ---> segurará 
+
+o MÉTODO (handler) QUE DEVERÁ 
+
+
+SER EXECUTADO A PARTIR DE UM CLICK...
+
+
+
+
+
+
+
+-----> LÁ NO COMPONENT 
+
+'TOOLBAR',
+
+
+
+
+VAMOS LÁ 
+
+E DEFINIMOS 
+
+UMA PROPRIEDADE/PROP  
+
+
+
+de 
+
+'clicked' naquela invocação de 'DrawerToggle'... (esse prop 'clicked' foi o nosso prop de 'openDrawer', teoricamente)
+
+
+
+
+--> OK, MAS UM PROBLEMA:
+
+
+NÓS __NÃO TEMOS __ O MÉTODO 
+
+
+
+QUE DARÁ __TOGGLE___ no DRAWER 
+
+
+dentro do toolbar... (não, não temos mesmo... não temos pq ESSE 
+
+NÃO É UM 'STATEFUL COMPONENT'...) -------> ENTRETANTO,
+
+NÓS VAMOS USAR __eSSE TOOLBAR ___ LÁ 
+
+
+EM 
+
+'Layout.js', no layout component, POR ISSO PODEMOS 
+
+USAR 
+
+
+O COMPONENT 
+
+'LAYOUT' PARA 
+
+PASSAR UM PROP COM UM MÉTODO QUE 
+
+FARÁ O NOSSO TRABALHO SUJO....
+
+
+
+---------------------------
+
+
+
+Problema: o estilo da TOOLBAR __QUEBRA__ quando entramos no modo mobile... (erro de estilo,
+
+
+uma borda branca aparece no canto da toolbar....) ------> ok, ajeitei um monte de estilos.
+
+
+
+
+-------------------------------
+
+
+
+
+--> professor vai ir até 
+
+
+'Layout.js'
+ 
+
+
+ e vai criar 
+
+ um novo método.....
+
+
+
+
+ 'sideDrawerToggleHandler'.... -----> PROFESSOR DIZ QUE 
+
+
+
+ ESSE NEGÓCIO VAI FAZER O 'OPEN' E 'CLOSE' 
+
+
+ DO drawer... entretanto, ele aponta que no nosso aplicativo 
+
+
+ NÓS NUNCA VAMOS REALMENTE VER UM''' BOTÃO''' propriamente 
+ dito, um botão  DE 'fechar' o drawer... essa  função de fechar 
+
+  o drawer será desempenhada APENAS PELO CLICK NO BACKDROP... ----> 
+
+
+
+  mas o professor ainda criará 
+
+  esse 
+
+  'toggleHandler' pq SE NÓS 
+
+  FOSSEMOS COLOCAR ESSE BOTÃO EM QUALQUER OUTRO LUGAR DO APP,
+
+  ele ainda vai funcionar como um toggle, o que é bom... ----->
+
+
+
+
+  professor 
+
+  vai escrever 
+
+
+  'sideDrawerToggleHandler = () => {
+    this.setState({
+      showSideDrawer: !this.state.showSideDrawer
+    })
+  }' 
+
+
+
+
+  -----------------------------------
+
+
+
+  ENTRETANTO, O PROFESSOR APONTA QUE ESTE NOSSO APPROACH TEM UMA __FLAW___... 
+
+
+qual é a flaw? --------> 
+
+
+
+
+É ALGO QUE JÁ VIMOS.... ---> LEMBRE-SE:
+
+
+O PROFESSOR DISSE QUE 
+
+
+SE NÓS PLANEJAMOS 
+
+USAR 
+
+O 
+
+'state' por meio de 
+
+'setState', 
+
+
+NÓS DEVEMOS 
+
+SEMPRE FAZER DE UM JEITO DIFERENTE,
+
+não devemos 
+
+fazer tipo assim:
+
+
+'{showSideDrawer: !this.state.showSideDrawer}'...  ----->  PQ NÃO? -----> 
+
+
+
+PQ DEVIDO 
+
+
+___à NATUREZA __ASSÍNCRONA___ DO 
+
+'this.setState()', esse 
+
+código aí, 
+
+essa sintaxe,
+
+
+
+PODE __LEVAR__ A OUTCOMES INESPERADOS... ('unexpected outcomes')... -----> É 
+
+
+POR ISSO 
+
+
+QUE DEVEMOS, EM VEZ DISSO, 
+
+
+USAR 
+
+
+A 'FUNCTION FORM'
+
+
+
+de 'setState'........
+
+
+
+
+
+OU SEJA, O PROFESSOR QUER QUE UTILIZEMOS ESTA SINTAXE:
+
+
+
+
+
+
+sideDrawerToggleHandler = () => {
+    this.setState(
+      (prevState) => {
+        return {showSideDrawer: !this.prevState.showSideDrawer};
+      }
+    )
+  }
+
+
+  ----------------------------
+
+
+
+  prevState ---> é o STATE PRÉVIO COMO INPUT... ------>  você utiliza ele 
+
+
+ no return de 
+
+ 'showSideDrawer: !this.prevState.showSideDrawer'  (ou seja, você utiliza o OLD STATE nessa redefinição do valor da propriedade 'showSideDrawer', do STATE VELHO, para false...)
+
+
+
+----> ESSA É __A MANEIRA _____ ''''CLEAN''''___  DE UPDATAR 
+
+
+
+O STATE __QUANDO O STATE __ NOVO DEPENDE ___ DO STATE VELHO (when the new state depends on the old state)...
+
+
+
+
+
+
+
+
+
+---> CERTO, ISSO QUER DIZER QUE, AGORA, TEMOS UMA MANEIRA 'SECURE' 
+
+
+DE FAZER O __TOGGLE__ DE NOSSO 
+
+
+SIDEDRAWER 
+
+por meio 
+
+do botão de toggle... (botão hamburguer)... -----> E NÓS VAMOS QUERER 
+
+
+PASSAR 
+
+
+ESSE MÉTODO COMO PROPRIEDADE/PROP 
+
+AO toolbar,
+
+
+dentro 
+
+
+do 
+
+
+prop de 
+
+'drawerToggleClicked'....  --> e fazemos o pass desse prop LÁ EM 'LAYOUT', que é onde definimos/criamos o método 'sideDrawerToggleHandler'...
+
+
+
+
+ex:
+
+
+
+    render() {
+
+
+
+        return(
+            <Aux>
+            {/* <div>Toolbar, SideDrawer, Backdrop</div> */}
+            <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler}/>
+            <SideDrawer closed={this.sideDrawerCloseHandler} open={this.state.showSideDrawer} />
+            <main className={LayoutStyle.Content}>
+                {this.props.children}
+            </main>
+            </Aux>
+        
+        );
+    
+    }
+
+
+    ----------------------------
+
+
+
+
+
+Certo, 
+
+nós colocamos esse 'sideDrawerToggleHandler' no prop de 'drawerToggleClicked' 
+
+E ENTÃO 
+
+COMENTAMOS 
+
+
+
+'sideDrawerOpenHandler' (método inventado por mim, código 
+
+não tão bom) para FORA DO CÓDIGO ...
+
+
+
+
+---> agora o app está tomando forma...
+
+
+
+
+----------------------------------------
+
+
+--> NAS PRÓXIMAS LIÇÕES/MÓDULOS, VAMOS ADICIONAR MAIS FUNCIONALIDADES NO 
+
+NOSSO BURGER, COMO 
+
+
+
+
+FAZER __ O SEND __ DE DADOS __ (a 'order data' ) A UM SERVIDOR,
+
+
+
+TAMBÉM O ADD __ DE MÚLTIPLAS PÁGINAS,
+
+e  
+
+também 
+
+
+fazer O HANDLING DO 'STATE' DA APPLICATION DE FORMA DIFERENTE...
+
+
+---------------------------------------------
+
+
+
+
+
+
+----> AGORA, CABE A NÓS INVESTIGAR CADA LINHA DE NOSSO PROJETO, OPTIMIZÁ-LO 
+
+
+
+ANTES DE APRENDER ESSAS OUTRAS COISAS, MENCIONADAS ACIMA.

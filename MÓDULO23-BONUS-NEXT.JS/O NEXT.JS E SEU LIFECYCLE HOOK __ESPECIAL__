@@ -1,0 +1,1908 @@
+
+
+
+
+
+---> antes DE CONCLUIRMOS 
+
+A MATÉRIA 
+
+
+DO 
+
+
+NEXT.JS,
+
+
+
+
+
+DEVEMOS 
+
+
+VER MAIS 
+
+
+UMA 
+
+FEATURE 
+
+
+___SUPER IMPORTANTE__ DO 
+
+NEXT.JS.... ----> 
+
+voltamos 
+ao 
+
+
+folder 
+
+de 
+
+
+'pages' 
+
+E ENTÃO 
+
+DECIDIMOS 
+
+
+
+MUDAR
+ 
+ NOSSOS COMPONENTS,
+
+ OS TRANSFORMAR 
+
+ DE 
+
+
+ 'functional components'
+  
+  PARA 
+
+  'CLASS-BASED'... (e isso, é claro, vai fazer com que 
+  
+  
+  NOSSOS 
+  
+  
+  'router.push()' PAREM DE FUNCIONAR, POIS SÓ FUNCIONAM COM FUNCTIONAL COMPONENTS...)
+
+
+
+
+
+
+
+
+
+ok... nossos index.js 
+
+
+vão 
+
+virar 
+
+
+CLASS-BASED COMPONENTS...
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+OK... --> 
+
+
+
+
+FICOU TIPO ASSIM:
+
+
+class AuthIndexPage extends Component {
+
+  render() {
+
+  
+  return(
+      <div>
+      <h1>The Auth Index Page</h1>
+      <User name="Max" age="29"/>
+      <p>Go to <Link href="/"><a>Main Page</a></Link></p>
+
+    </div>
+  )   
+
+  }
+
+}
+
+export default AuthIndexPage;
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+PROFESSOR FEZ ISSO PQ QUER NOS MOSTRAR 
+
+UM 
+
+LIFECYCLE HOOK ESPECIAL QUE 
+
+PODEMOS 
+
+USAR 
+
+DENTRO 
+DESSES 
+
+COMPONENTS... (no next.js).... -->  PORÉM,
+
+AQUI 
+
+HÁ 
+
+UMA DIFERENÇA... --> ESSE LIFECYCLE HOOK QUE 
+
+O PROFESSOR 
+
+NOS MOSTRARÁ 
+É 
+
+TÃO 
+
+
+FODA
+ QUE 
+ FUNCIONA 
+
+
+
+ EM 
+
+ AMBOS TIPOS DE COMPONENT,
+
+
+ TANTO 
+
+ NOS FUNCTIONAL COMO NOS CLASS-BASED...
+
+
+
+
+(professor nos mostrará COMO USAR 
+
+ESES LIFECYCLE HOOK NOS 'FUNCTIONAL', MAS PRImeiro quer começar 
+
+pelos 
+
+class-based...)
+ -------------------------------------
+
+
+
+
+
+
+
+
+---> O NOME 
+
+
+
+DO 
+
+
+
+HOOK/MÉTODO 
+É 
+
+
+'getInitialProps()'.... ---------------> 
+
+E 
+
+
+
+ESSE 
+
+
+MÉTODO 
+
+RECEBE UM 
+
+ARGUMENTO/PARÂMETRO 
+
+CHAMADO 
+DE 
+
+'context',
+
+QUE 
+
+___dESCREVE___ 
+
+
+O CONTEXTO 
+
+
+DO SEU APLICATIVO...
+
+
+
+--> E, PARA COMEÇAR, PROFESSOR SUGERE QUE 
+
+ESCREVAMOS 
+
+UM 
+
+
+'console.log' 
+
+DENTRO DE SEU BODY..., 
+
+do body desse hook....
+
+
+
+ex:
+
+
+
+
+class IndexPage extends Component {
+
+    getInitialProps(context) {
+                console.log(context);
+    }
+
+
+
+
+    render() {
+
+    }
+
+
+
+}
+
+
+
+
+
+----------------------
+
+
+CERTO... MAS ISSO AÍ __iMEDIATAMENTE NOS DEU UM ERRO NO TERMINAL DE NOSSO IDE... (não recebemos um console.log,
+
+no final das contas...)
+
+
+
+
+
+
+
+
+
+
+---> CERTO... O PROFESSOR NOS DIZ QUE 
+
+PARA FAZÊ-LO FUNCIONAR,
+
+
+
+PRECISAMOS 
+
+
+
+USAR UMA KEYWORD ESPECIAL,
+
+
+A 
+KEYWORD 
+'static',
+
+ANTES DE SUA ESCRITA... (pq ele é um MÉTODO 'STATIC'...) ----->  O FATO DE ELE 
+
+
+SER 
+
+
+'static' 
+
+SIGNIFICA QUE __ ELE NÃO PODE __ SER INSTANCIADO __ SEM 
+
+O COMPONENT 
+
+EM QUE 
+
+ESTÁ 
+ESCRITO
+ 
+ ___ TER SIDO __ INSTANCIADO __ PREVIAMENTE...
+
+
+
+
+
+
+
+--> ALÉM DISSO,
+
+A OUTRA 
+
+KEYWORD 
+
+DE QUE 
+
+PRECISAMOS 
+
+É 
+
+'async',
+
+
+JUSTAMNETE 
+
+PQ 
+
+
+
+ESSE HOOK É assíncrono,
+
+pq 
+
+
+
+__eLE NÃO FAZ 'RESOLVE' DE ALGO __ INSTANTANEAMENTE,
+
+COMO OS OUTROS HOOKS....
+
+
+
+ex:
+
+
+
+
+
+class IndexPage extends Component {
+
+   static async getInitialProps(context) {
+        
+                console.log(context);
+    }
+
+
+
+
+    render() {
+
+    }
+
+
+
+}
+
+
+
+-----------------------------------
+
+
+
+
+OK.... MAS NÓS AINDA RECEBEMOS UM ERRO....
+
+
+
+
+O ERRO É:
+
+
+''''
+
+
+ "IndexPage.getInitialProps()" should resolve to an object. But found "undefined" instead.
+
+ '''''
+
+
+
+
+ --------------------------------------
+
+
+
+
+ é o MESMO ERRO QUE O PROFESSOR RECEBEU,
+  
+  ESSENCIALMENTE...
+
+
+
+
+
+
+
+-----------> DEVEMOS FAZER 'FINETUNE' 
+
+desse 
+
+hook 
+
+aí,
+
+
+e ASSEGURAR QUE 
+
+ELE 
+
+___REALMENTE __ FAÇA O RETURN DE UM 
+
+
+OBJECT,
+
+PARA 
+que 
+
+
+esse erro suma...
+
+
+
+--> RETORNAMOS UM OBJETO QUALQUER, UM OBJETO __vAZIO__....
+
+
+
+ex:
+
+
+
+
+
+class IndexPage extends Component {
+
+   static async getInitialProps(context) {
+        
+                console.log(context);
+                return {};
+    }
+
+
+
+
+    render() {
+
+    }
+
+
+
+}
+
+
+
+
+
+-------------------------------------
+
+
+
+CERTO... ISSO FUNCIONOU. PARAMOS DE RECEBER ERROS....
+
+
+
+
+
+
+
+--> ENTRETANTO,
+
+NÃO VEREMOS NADA __ DE 'console.log()'
+
+OUTPUTTADO 
+
+
+
+NO CONSOLE 
+
+
+DO 
+
+DEVTOOLS DO GOOGLE.... --> não, em vez disso,
+
+
+O QUE 
+
+VEMOS/VEREMOS __ É UM OUTPUT 
+
+GIGANTAO
+__ 
+
+
+LÁ 
+
+
+
+NO NOSSO TERMINAL DO 'ide',
+
+
+tudo colorido....
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+--> OK.. MAS PQ VEMOS ISSO NO TERMINAL DO 
+
+IDE? ---> vemos isso ali 
+
+JUSTAMENTE 
+PQ 
+
+ESSE CÓDIGO AÍ 
+
+É 
+
+
+SEMPRE ___EXECUTADO __ NO SERVIDOR ___ ANTES 
+
+DO 
+
+'BROWSER'... ----->
+
+
+
+
+'RUNS ON THE SERVER FIRST'.... --> esse código de 
+
+
+
+
+'getInitialProps'
+
+
+
+____sÓ SERÁ ___ EXECUTADO___ 
+
+
+NO 'CHILD' SE VOCÊ 
+
+
+NAVEGAR 
+
+
+ATÉ ESSA CHILD POR MEIO DA NAVEGAÇÃO NO INTERIOR DO APP (clicar em UM LINK EM UM SITE, POR EXEMPLO...) ---> 
+
+
+ISSO SIGNIFICA QUE 
+
+SE 
+
+VOCê 
+
+NAVEGOU ATÉ 
+
+AQUELA 
+
+PÁGINA 
+
+
+
+
+POR MEIO DO 'TYPE' da url na barra de endereços,
+
+ou então 
+
+
+
+POR 
+
+TER APERTADO 
+
+'REFRESH'/reload,
+
+
+
+
+ESSE CÓDIGO 
+
+EM 'getInitialProps()' 
+
+
+É 
+
+__EXECUTADO LÁ NO SERVER... ---------------------> 
+
+
+E 
+
+
+ESSA 
+
+´É 
+
+
+A CARACTERÍSTICA DESTAQUE 
+
+DESSE 
+
+
+'LIFECYCLE METHOD' de 'getInitialProps',
+
+
+
+ELE 
+
+
+
+__É EXECUTADO _ NO 
+
+
+
+SERVER DO APLICATIVO __ANTES__ DE SER EXECUTADO __ NO BROWSER 
+
+DO 
+
+USUÁRIO... --> 
+
+e 
+
+isso 
+
+nos permite __JUSTAMENTE__ FAZER/ESCREVER/CONFIGURAR 
+
+O 
+
+'SERVERSIDE RENDERING',
+
+
+QUE 
+
+
+VAI NOS AJUDAR COM DATA CRAWLERS COMO O GOOGLE.... 
+
+
+
+
+
+
+
+
+
+
+
+---> NA VERDADE,
+
+
+o 
+
+
+'getInitialProps()'
+
+É 
+
+EXECUTADO/PODE SER EXECUTADO ___TANTO __ NO SERVER COMO 
+
+NO BROWSER,
+
+E SUA
+
+
+
+'MAIN FEATURE' 
+
+
+É JUSTAMENTE __INICIALIZAR O APLICATIVO __ ANTES MESMO DE ELE CARREGAR... --------> ISSO QUER 
+
+
+DIZER QUE, EM getInitialProps,
+
+LÁ NO SERVIDOR,
+
+
+
+VOCê PODERIA 
+
+
+
+__FETCHEAR__ DADOS de uma database
+ 
+ PARA __eNTÃO 
+
+
+ __PRÉ-POPULAR___ 
+
+
+ OS 
+
+ 'props' QUE 
+
+ ESSA PÁGINA 
+
+ 'IndexPage',
+ por exemplo,
+
+
+ VAI RECEBER...., props DE SUA ESCOLHA... ------>
+
+
+
+
+
+ PROFESSOR 
+
+
+ NOS MOSTRA POR MEIO DE UM EXEMPLO:
+
+
+
+
+
+ ele vai lá 
+
+
+
+ e 
+
+ FAZ O HARDCODE DE UMA 
+
+ PROPRIEDADE 
+
+ 'appName' DENTRO DO OBJETO RETORNADO por 'getInitialProps'...
+
+
+
+
+ ex:
+
+
+
+ class IndexPage extends Component {
+
+   static async getInitialProps(context) {
+        
+                console.log(context);
+                return {appName: 'Super App'}; //////////// EIS O CÓDIGO EM QUESTÃO.
+    }
+
+
+
+
+    render() {
+
+    }
+
+
+
+}
+
+
+
+-----------------------------------
+
+
+
+
+É ÓBVIO QUE AQUI NÃO ESTAMOS FETCHEANDO ESSA STRING HARDCODADA 
+
+
+DE 
+
+'Super App' 
+
+de um 
+
+
+SERVIDOR OU QUALQUER COISA DO GÊNERO,
+
+
+MAS ___ É EVIDENTE _ QUE VOCÊ PODE/PODERIA __ FACILMNETE __ FAZER ALGUMA COISA 
+
+DESSAs.. ----------> 
+
+
+
+OU SEJA,
+
+
+COMOO 
+
+'getInitialProps()'
+
+É UM 
+
+MÉTODO 
+
+ASYNC ('static async'),
+
+
+
+
+
+VOCÊ PODE USAR A KEYWORD 'await' 
+
+__PARA __ ESPERAR __ QUE 
+
+UMA DETERMINADA 
+
+___PROPERTY_ DÊ 'resolve' -------> 
+
+
+
+
+
+E 
+
+SE VOCÊ 
+
+
+___TIPICAMENTE__ QUER FAZER REACH OUT A UM SERVIDOR,
+
+
+
+VOCÊ JÁ VAI TER UMA 'PROMISE', que poderá ser colocada nesse lugar (principalmente se você está usando 'axios')...
+
+
+
+
+
+
+
+--->   certo... E SE VOCÊ NÃO QUER __ USAR ASYNC ____DENTRO 
+
+DE 
+
+
+'getInitialProps',
+
+
+VOCÊ __AINDA PODE __ USAR 
+
+O MÉTODO 
+
+'static'
+
+SEM ADICIONAR 'async'...
+
+
+
+ex:
+
+
+
+
+class IndexPage extends Component {
+    static getInitialProps(context) { ///EIS O CÓDIGO EM QUESTÃO.
+
+    }
+}
+
+
+----------------------------------------------
+
+SE VOCÊ OPTAR/OPTASSE POR ESSE APPROACH AÍ,
+
+O QUE 
+
+VOCÊ FAZ/FARIA  
+
+SERIA 
+
+TIPICAMENTE ___ ESCREVER __ UMA PROMISE (como um 'axios.get()', que RETORNA UMA PROMISE...)
+
+
+
+
+E 
+
+DEPOIS 
+
+
+__USARIA ___ UNS '.then()' BLOCKS 
+
+_PARA FAZER __ RESOLVE __ dessa promise aí... -----------> 
+
+
+
+
+
+VOCÊ PODERIA 
+
+CRIAR ESSA PROMISE DE FORMA 'HOMEM DAS CAVERNAS',
+
+tipo 
+
+
+
+
+'''''''const promise = new Promise((resolve, reject) => {
+    setTimeout(
+        () => {
+                    resolve(
+                        {
+                            appName: 'Super App'
+                        }
+                    )
+        },
+
+        1000
+    );
+}
+
+
+
+
+)
+
+'''''''''''''''
+
+
+
+
+ISSO FEITO,
+
+COM ESSA PROMISE CRIADA,
+
+
+VOCÊ 
+
+SIMPLESMENTE 
+
+EXECUTA/EXECUTARIA/escreveria 
+
+um 
+'.then()'
+
+depois 
+
+
+
+de 
+
+sua REFERÊNCIA,
+
+para 
+
+então 
+
+
+FAZER RETURN DE ALGUM OBJETO (como '{appName: 'Super App'}' , NO EXEMPLO DO PROFESSOR...)....
+
+
+
+
+
+
+
+EX(representação do que o professor escreveu, APPROACH DE ESCREVER 'ASYNC CODE' __sem usar A KEYWORD DE 'async' e o 'await' mais 
+para baixo...):
+
+
+
+
+
+
+class IndexPage extends Component {
+    static getInitialProps(context) { 
+
+                const promise = new Promise((resolve, reject) => {
+                
+                setTimeout(() => {
+                    resolve(
+                        {
+                            appName: 'Super App'
+                        }
+                    )
+                }, 1000);
+                })
+
+                return promise; ////////EIS O CÓDIGO EM QUESTÃO.
+    }
+}
+
+
+
+
+-------------------------------------
+
+
+CERTO.... 
+
+E 
+ISSO REALMENTE FUNCIONA/FUNCIONARIA... 
+
+
+(OBS:::: o 'setTimeout' USADO AQUI SERVE PARA __ FORJAR__ uma utilização de axios.get/axios.post...)
+
+
+
+
+
+
+--> OK, MAS QUAL É A VANTAGEM DISSO? ---> 
+a 
+
+
+vantagem 
+
+É QUE 
+
+PODEMOS 
+
+
+USAR 
+
+ISSO 
+
+__PARA __ PRÉ-POPULAR___  NOSSOS PROPS ____ UMA 
+
+
+VEZ QUE 
+
+
+O 
+
+
+'result' DESSE PROMISE ESTIVER CARREGADO... ------> 
+
+e 
+
+ a 
+
+ page 
+
+ do 
+
+ USUÁRIO__ SÓ __ SERÁ ___ CARREGADA ______ APÓS ___ 
+
+
+ ESSES PROPS JÁ ESTIVEREM 'PRÉ-POPULADOS' pela ação do 'getInitialProps()'....
+
+
+
+
+
+
+
+
+ ---> COMO EFEITO DISSO/PARA MOSTRAR A APLICAÇÃO DESSE HOOK,
+
+
+ professor 
+
+
+ escreve no render de 'index.js':
+
+
+
+
+
+
+
+
+
+ class IndexPage extends Component {
+
+
+  static async getInitialProps(context) {
+    console.log(context);
+    return {};
+  }
+
+
+
+      render(){
+
+
+
+  return(
+      
+      <div>
+      <h1>The Main Page of {this.props.appName}</h1> //////////EIS O CÓDIGO EM QUESTÃO.
+      <p>Go to <Link href="/auth"><a>Auth</a></Link></p>
+    </div>
+  )   
+
+
+      }
+}
+
+export default IndexPage;
+
+
+
+
+
+
+
+
+
+
+--------------------------------------
+
+
+COM ISSO,
+
+
+
+SABEMOS QUE 
+
+
+ESSE 
+
+NEGÓCIO AÍ SERÁ PREENCHIDO 
+
+por aquele valor de 'appName',
+
+
+POIS __ SABEMOS _ QUE 
+
+OS 
+PROPS __ SERÃO 
+
+'PRE-POPULATED' 
+
+pelos 
+
+
+DADOS QUE RECEBEMOS NO SERVER/conseguimos por meio daquele 'setTimeout' forjado ali...
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+OK, OS PROPS SÃO 'PRE-POPULATED'.... ------> 
+
+
+
+
+
+
+
+AGORA NOSSA PÁGINA DEMORA 1S a mais para carregar (por causa do 'setTimeout'),
+
+
+
+MAS 
+
+AGORA 
+
+ELA 
+
+VAI 
+
+FAZER DISPLAY 
+
+DE 
+
+'THE MAIN PAGE OF SUPER APP',
+
+mostrando 
+
+
+que 
+
+nosso 
+
+HOOK 
+
+de 
+
+'getInitialProps()'
+
+
+DEU CERTO,
+
+PRÉ-POPULOU NOSSOS PROPS...
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+---> OK... NOSSOS PROPS FORAM PRÉ-POPULADOS.. --> 
+
+
+
+E O 
+
+
+'getInitialProps()'
+
+
+
+trabalha JUNTO COM PROMISES,
+
+
+ESSA É A MORAL...  (trabalha tanto com PROMISES ESCRITAS POR NÓS, COMO POR 
+
+PROMISES 
+
+RETORNADAS/ESCRITAS POR THIRD PARTY PACKAGEs....) ------>  O NEXT.JS/getInitialProps
+
+
+
+
+VAI 
+
+
+__ESPERAR__ O 'RESOLVE' DESSAS PROMISES,
+
+para 
+
+então 
+
+
+POPULAR 
+
+OS 
+SEUS 
+
+
+PROPS COM ELAS/com seu conteúdo.......
+
+
+
+
+
+-----------------------------------
+
+
+OK, 
+
+
+MAS 
+
+E QUANTO 
+
+AO 
+
+
+CONSOLE.LOG 
+
+de 
+
+'context'?
+
+
+
+
+
+
+
+
+---> professor diz que 
+
+temos 
+
+o output 
+
+
+do 
+
+negócio 
+
+no nosso console... --> mas ele nos diz que 
+
+É BEM 
+
+DIFÍCIL DE LER 
+
+TODAS 
+
+AS COISAS 
+
+
+DO 
+
+
+objeto 'context',
+
+PQ 
+
+
+
+HÁ MUITAS PROPRIEDADES 
+NESTEADAS 
+
+E 
+
+ASSIM POR DIANTE...
+
+
+
+
+
+
+
+
+
+----> EM VEZ DISSO,
+
+DEVEMOS 
+
+DAR UMA 
+
+OLHADA 
+
+NOS 
+
+DOCS OFICIAIS
+ 
+
+
+ DO 
+
+ NEXT.JS... 
+
+
+
+
+
+
+
+ ---> podemos ler sobre 
+
+ 'getInitialProps()'
+
+ NA PARTE 
+
+
+ 'Fetching data and component lifecycle'...
+
+
+
+
+
+
+ EX:
+
+
+
+ getInitialProps enables server-side rendering
+  in a page and allows you to do initial data population,
+   it means sending the page with the data already populated from the server.
+    This is especially useful for SEO.
+
+
+--------------------------------------------------
+
+
+
+
+
+
+
+
+
+LÁ, 
+
+LEMOS 
+
+que 
+
+
+'context' 
+
+
+TEM 
+
+PROPRIEDADES 
+
+
+COMO 
+
+
+
+'pathname',
+
+
+'query',
+
+'asPath',
+
+
+'req',
+
+
+'res',
+
+'jsonPageRes'
+
+
+
+e 
+
+
+'err'....
+
+
+
+-------------------------------------
+
+
+
+
+OK.... 
+
+
+
+'pathname '--> ISSO SIGNIFICA QUE 
+
+O 
+
+
+
+getInitialProps 
+
+ARMAZENA 
+
+O 
+
+VALOR 
+
+
+Do 'path depois do / '...... 
+
+
+
+
+
+
+--> QUERY  --> temos OS QUERY PARAMS QUE USAMOS nessa página...
+
+
+
+
+
+
+
+REQ 
+
+E 
+
+
+RES -->  SÃO PROPRIEDADES ___ EXCLUSIVAS __ DO SERVIDOR__... ---> 
+
+são 
+
+
+objetos/propriedades 
+
+
+existentes lá... 
+
+
+
+
+
+
+ESSAS 
+
+PROPRIEDADES,
+
+'req' e 'res',
+
+
+SÃO 
+
+___ESSENCIALMENTE__ A MESMA COISA __ QUE 
+
+VOCÊ 
+
+OBTEM/OBTERIA 
+
+
+EM 
+UM
+
+
+'EXPRESS.JS' 
+
+environment...
+
+
+
+
+----> O REQ 
+E 
+
+
+O 
+
+RES 
+
+
+
+
+__TE DEIXAM___ CONSEGUIR ___ REALMENTE __ TODAS AS INFORMAÇÕES 
+
+ACERCA
+ 
+
+ DO 
+
+ REQUEST 
+
+
+ QUE 
+
+
+ ATINGIU AQUELA PAGE.... ----> você talvez não precise disso tudo,
+
+
+
+ MAS 
+
+ __HÁ ALGUNS USE-CASES___ EM QUE 
+ ISSO 
+
+
+
+ PODE SER MUITO ÚTIL, POIS 
+
+ TE DEIXA 
+
+ ANALISAR MUITO BEM A COISA QUE 
+ O 
+
+
+ USUÁRIO 'requisitou' (request),
+
+
+ e 
+
+ assim por diante....
+
+
+ ------------
+
+
+
+
+
+
+ ---------------------------
+
+
+
+ RESUMINDO:
+
+
+
+ AQUI,
+
+ em 
+
+
+ 'getInitialProps()',
+
+
+ NÓS ___NÃO ESTAMOS TIRANDO VANTAGEM 
+
+ DO 
+ OBJETO 
+
+
+ 'context', que 
+
+ é um objeto 
+
+ GIGANTE,
+
+
+ MAS REALMENTE 
+
+ PODERÍAMOS 
+
+ FAZER ISSO... --------> 
+
+ AINDA ASSIM,
+
+
+
+ estamos 
+
+ usando 
+
+
+
+ 'getInitialProps()'
+
+
+ PARA 
+
+ __INICIALIZAR __ NOSSOS PROPS, 
+
+ O QUE 
+
+ JÁ 
+
+ É UM CONCEITO __CORE__ DO 
+
+
+ next.js...   (é provavelmente a RAZÃO de esse método se chamar 'getInitialProps'... )
+
+
+
+
+
+
+
+
+
+
+
+
+ --> oK,
+
+
+
+
+ MAS COMO USAMOS 
+
+
+
+ 'getInitialProps()'
+
+ EM UM FUNCTIONAL COMPONENT?
+
+
+
+
+
+
+
+ PROFESSOR DIZ QUE ISSO É POSSÍVEL,
+
+
+
+
+ QUE VOCê DEVE SIMPLESMENTE CRIAR SUA CONSTANTE 
+
+ E ENTÃO 
+
+ __ADICIONAR __
+
+
+
+
+ essa 
+
+ ESCRITA...
+
+ TIPO ASSIM:
+
+
+
+ function Page({ stars }) {
+  return <div>Next stars: {stars}</div>
+}
+
+Page.getInitialProps = async (ctx) => {
+  const res = await fetch('https://api.github.com/repos/vercel/next.js')
+  const json = await res.json()
+  return { stars: json.stargazers_count }
+}
+
+export default Page
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+OU SEJA,
+
+
+NESSE EXEMPLO acima (e em qualquer use-case),
+
+VOCÊ 
+
+
+SIMPLESMENTE ___ CRIA A CONSTANTE DO COMPONENT EM QUE VOCÊ QUER 
+USAR 
+
+ESSE MÉTODO (tipicamente uma PAGE),
+
+
+e aí 
+
+BASTA 
+
+VOCÊ 
+
+DEFINIR 
+
+
+__ ESSE 'getInitialProps'
+
+
+COMO __ UM 
+
+
+METHOD__ DENTRO __ DA CONSTANTE/FUNCTIONAL COMPONENT QUE 
+
+VOCÊ CRIOu...
+
+(
+    ex:
+
+
+    'Page.getInitialProps = async(() => {})....'
+)
+
+-----------------------------------
+
+
+
+
+
+
+
+UMA FUNÇÃO __ TE DEIXA ___ ADICIONAR ALGO DENTRO DELA,
+
+
+COMO ESSE MÉTODO AÍ... isso realmente é possível... (isso é possível PQ 
+
+UMA FUNÇÃO NÃO DEIXA DE SER UM OBJETO JAVASCRIPT, e por isso podemos 
+adicionar coisas dentro dela.... )
+
+
+
+
+
+
+
+
+
+
+POR ISSO 
+
+O PROFESSOR 
+
+
+
+ESCREVE UM EXEMPLO,
+
+
+tipo assim:
+
+
+
+
+
+---------------------------------------
+
+
+
+const AuthIndexPage = (props) => {
+    ...
+}
+
+
+
+AuthIndexPage.getInitialProps = (context) => {
+    const promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve({
+                appName: "Super App"
+            })
+        }, 1000)
+    });
+    return promise;
+}
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+const AuthIndexPage = (props) => {
+    <div>
+        <h1>The Auth Index Page - {props.appName}</h1>
+        <User name="Max" age={28}/>
+    </div>
+}
+
+
+
+AuthIndexPage.getInitialProps = (context) => {
+  const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+          resolve({
+              appName: "Super App"
+          })
+      }, 1000)
+  });
+  return promise;
+}
+
+
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+CERTO, ISSO FUNCIONOU..  
+
+
+
+
+
+
+
+
+OK... 
+
+
+'getInitialProps()',
+
+
+
+
+
+LIFECYCLE __SUPER IMPORTANTE__, que 
+funciona 
+
+TANTO 
+
+EM 
+
+FUNCTIONAL COMO _ EM CLASS-BASED 
+
+COMPONENTS...

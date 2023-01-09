@@ -1,0 +1,651 @@
+
+
+
+
+
+
+
+--> JÁ MELHORAMOS NOSSO PROJETO BASTANTE...
+
+
+
+
+
+
+---> MAS HÁ MAIS 1 DETALHE... ----> 
+
+
+SE 
+
+ESSE 
+
+
+APP 
+
+ACABAR 
+
+'DEPLOYED',
+
+
+
+TODOS SERÃO CAPAZES 
+
+DE EXAMINAR 
+
+
+SEU 
+
+'STORE'
+ 
+ por meio 
+
+
+ do 
+
+ REDUX DEV TOOLS .... ---> 
+
+ e 
+
+ isso 
+
+ não 
+
+ é 
+
+ NECESSARIAMENTE UM PROBLEMA... ----> n é um problema 
+ pq 
+
+ QUALQUER 
+
+ PESSOA 
+
+
+ VAI 
+
+ FUÇAR 
+
+
+ E 
+
+ '''ARROMBAR''' 
+
+ SEU CÓDIGO JAVASCRIPT 
+
+
+
+ se 
+
+ realmente quiser,
+
+ você 
+
+
+ não pode encriptar seu código javascript,
+
+ ele sempre 
+ poderá 
+
+ ser lido...  -----> MAS VOCÊ 
+
+
+ TALVEZ 
+
+
+
+
+ QUEIRA NÃO DEIXAR TAO EXPOSTO SEU CÓDIGO,
+
+ TALVZE 
+
+ VOCE QUEIRA 
+
+ __eSCONDER___ O STATE___ PARA 
+
+ evitar 
+
+ potenciais falhas de segurança.... 
+
+
+
+
+ -------------------------
+
+
+
+ --> PARA ISSO,
+
+ VOCÊ 
+
+ DEVE 
+
+ IR 
+
+ ATÉ 
+
+ O 
+
+ INDEX.js 
+  
+
+
+
+   E ENTÃO 
+
+
+   PODE 
+
+
+   ___AJUSTAR __ UM POUCO O CÓDIGO QUE 'ATIVA ' O REDUX DEV TOOLS.... -> 
+
+
+   você 
+
+
+
+   pode 
+
+
+   COMUNICAR AO 
+
+
+   'REDUX' QUE 
+
+   VOCê 
+
+   __SÓ QUER _ ''''DESBLOQUEAR''' 
+
+
+   O 
+
+   REDUX 
+
+   DEV 
+   TOOLS 
+
+
+   ____SE VOCê ESTIVER__ NO 
+
+   MODO 
+
+   DE 
+
+
+   DEVELOPMENT...  (dev mode)... -----> isso vai 
+
+   IMPEDIR VOCÊ 
+
+
+   DE 
+
+
+   EXAMINAR O STATE DO REDUX 
+
+   COM AS REDUX DEVTOOLS,
+
+   QUANDO 
+   O CÓDIGO 
+
+   FOR 
+
+   DE PRODUCTION/DEPLOYMENT... ---> 
+
+
+
+   para 
+
+   fazer 
+
+   isso,
+
+
+
+
+   NÓS 
+
+
+   DEVEMOS 
+
+
+
+   NOS APROVEITAR
+    
+
+
+
+    DE UMA FEATURE 
+
+    NO JAVASCRIPT 
+
+    QUE É 
+
+    CHAMADA 
+
+    DE 
+
+    'ENVIRONMENT VARIABLES'...
+
+
+
+
+
+
+
+    ---------------->
+
+
+
+
+NO NOSSO PROJETO 
+
+
+'create-react-app' (e essa feature é ESPECÍFICA A PROJETOS, 'project-specific'),
+
+
+
+NÓS 
+
+PODEMOS 
+
+USAR 
+
+'environment variables'....... ---> podemos 
+
+
+
+AS CONFIGURAR/DEFINIR
+ 
+ LÁ 
+
+
+
+ NA PASTA 
+
+
+ 'config'... (e essa pasta NÃO EXISTE NO NOSSO PROJETO...) --------> 
+
+
+
+ dentro 
+
+
+ dessa 
+
+ pasta,
+
+
+
+
+ há 
+
+
+ um arquivo chamado 
+
+ 'env.js' ----------> E DENTRO DESSE ARQUIVO VOCÊ PODE BASICAMETNE ___aDICIONAR __SUAS PRÓPRIAS 'ENVIRONMENT VARIABLES'...
+
+
+
+
+
+
+----> OK, MAS ONDE FICA ESSA PASTA?
+
+
+
+
+
+bem, eu ___ENCONTREI__.... --> fica 
+
+
+
+DENTRO 
+
+DOS 
+
+'node_modules',
+
+lá 
+
+
+na pasta 
+
+'react-scripts'... ----> lá 
+
+dentro 
+
+você 
+
+
+tem 
+
+
+coisas 
+
+como 
+
+
+
+> jest 
+
+
+
+env.js 
+
+
+e outras 
+
+coisas, como 
+
+
+'modules.js',
+
+
+'paths.js' 
+
+
+e 'pnpTs.js'....
+
+
+
+
+
+
+
+TAMBÉM O 'webpack.config.js',
+
+
+e 
+
+
+o 
+
+'webpackDevServer.config.js'...
+
+
+
+
+
+-----------------------
+
+
+
+
+
+
+---->  DENTRO DE 'env.js',
+
+que 
+
+é onde 
+PODEMOS 
+
+DEFINIR 
+
+NOSSAS 
+
+'environment variables',
+
+
+
+temos umas linhas 
+
+importantes,
+
+
+as 
+
+
+linhas 
+
+
+
+'NODE_ENV: process.env.NODE_ENV || 'development', ' 
+
+
+
+
+e 
+
+
+'PUBLIC_URL: publicUrl'
+
+
+
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+PROFESSOR NOS DIZ QUE 
+
+ESSA COISA 
+
+'NODE_ENV' é interessante... ---> ELA É DEFINIDA AUTOMATICAMENTE 
+
+PARA NÓS.... .... ----> 
+
+
+e ela 
+
+aparece 
+
+
+'development' na direita 
+
+__ SE VOCê __ ESTÁ NO MODO DE DEVELOPMENT...
+
+
+
+
+
+
+
+
+---------> PARA TIRAR VANTAGEM 
+
+
+DESSE valor de 'development',
+
+
+devemos 
+
+
+IR 
+
+
+ATÉ 
+
+O ARQUIVO INDEX.JS 
+
+
+
+do 
+
+
+nosso projeto e então 
+
+
+
+
+escrever 
+
+
+UM CÓDIGO __ PARA ACESSAR ESSA VARIÁVEL__, para 
+
+ENTÃO __SÓ ___ ATIVAR/SETTAR 
+
+ESSA 
+
+EXTENSÃO 
+
+DE 
+
+
+'redux devtools'
+
+
+
+__SE __ REALMENTE __eSTIVERMOS EM 'DEVELOPMENT MODE'...
+
+
+
+
+
+
+
+
+
+---> para isso, nós acessamos nossas 'environment variables'... ---> 
+
+e, de novo, 
+
+isso SÓ FUNCIONA DEVIDO  AO 
+
+NOSSO 
+
+'PROJECT SETUP' específico (um aplicativo react, basicamente)...
+
+
+
+
+
+
+--> para fazer isso,
+
+vocÊ 
+
+primeiramente 
+
+deve ir até esta linha:
+
+
+
+
+
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
+-----------------------------------
+
+
+
+
+ISSO FEITO,
+
+vocÊ
+
+
+vai 
+
+escrever 
+
+
+
+um código especial antes do valor dessa constante.. ---> você 
+
+
+vai 
+
+escrever 
+
+
+'process.env.NODE_ENV'       (isso vai acessar essa propriedade que recém vimos, que É UMA PROPRIEDADE USADA PARA 'DIRECIONAR' CÓDIGOS, FAZER COM QUE __eLES _ SÓ FUNCIONEM DURANTE O MODO DE DESENVOLVIMENTO, e não durante a produção...)
+
+
+
+
+
+
+
+
+escrever 
+
+
+'process.env.NODE_ENV === 'development' ?  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
+
+
+
+
+
+
+
+
+
+
+
+VAI FICAR ASSIM:
+
+
+
+
+const composeEnhancers = process.env.NODE_ENV === 'development' ?  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
+
+
+
+
+
+----------------------------
+
+
+OU SEJA,
+
+
+VAMOS 
+
+USAR 
+
+UMA 
+
+TERNARY EXPRESSION 
+
+PARA 
+
+REALIZAR 
+
+O CHECK,
+
+vamos checar 
+
+'''se NODE_ENV for realmente development, QUEREMOS 
+
+QUE 
+
+ESSE CÓDIGO DE composeEnhancers realmente seja esse objeto devTools_extension... caso contrário,
+
+vamos querer um NULL simples... (em caso de PRODUCTION, basicamente)'''
+
+
+
+
+------------------------------
+
+
+
+
+
+ok,
+
+
+
+com isso,
+
+teremos 
+
+ocultado 
+
+com 
+
+sucesso
+ 
+ O 
+ 'redux store' 
+
+
+ nas 
+
+ 'redux dev tools' DURANTE O MODO DE DEPLOYMENT/PRODUCTIOn...

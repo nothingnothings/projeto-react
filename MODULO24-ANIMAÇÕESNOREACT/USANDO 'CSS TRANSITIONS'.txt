@@ -1,0 +1,937 @@
+
+
+
+
+
+
+
+
+
+
+--> OK... NÓS QUEREMOS FAZER 'SHOW/HIDE' de nosso modal, 
+
+SIM,
+
+
+
+MAS ___ COM ANIMAÇÕES QUE FAZEM ISSO....
+
+
+
+
+
+
+
+
+
+
+
+---> em geral,
+
+quando trabalhamos com animações EM 
+
+REACT APPS,
+
+
+NÓS 
+
+TEMOS 
+
+MÚLTIPLAS MANEIRAS DE FAZER ISSO... --> a maneira mais fácil
+
+
+
+e straightforward É UMA ___ MANEIRA QUE __NÃO TEM NADA A VER COM REACT__.... ---> 
+
+
+
+esse approach pede que VOCÊ USE 
+
+'CSS TRANSITIONS' 
+
+
+E 
+
+'CSS ANIMATIONS'...
+
+
+
+
+
+--> o professor quer nos mostrar 
+
+isso 
+
+
+COM O EXEMPLO 
+
+DO 
+'MODAL'...
+
+
+
+
+
+---> DIGAMOS QUE 
+
+
+
+
+QUEREMOS QUE 
+
+ELE 
+VOE LÁ DE CIMA,
+
+PARA BAIXO,
+
+e que 
+
+aí 
+
+ele 
+
+
+gradualmente 
+
+__MUDE SUA OPACIDADE__...
+
+
+(E A MESMA COISA QUANDO 
+
+O 
+
+__fECHARMOS__)
+
+
+
+
+
+
+
+
+
+
+
+PARA FAZER ISSO,
+
+
+
+PERCEBA COMO ESTÃO/FICARÃO NOSSOS ESTILOS:
+
+
+
+
+
+.Modal {
+    position: fixed;
+    z-index: 200;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 2px #ccc;
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    top: 30%;
+    left: 25%;
+    width: 50%;
+}
+
+
+.ModalOpen {
+    display: block;
+}
+
+
+.ModalClosed {
+    display: none;
+}
+
+
+
+-------------------------------
+
+
+
+
+
+PARA CONSEGUIR ESSE EFEITO,
+
+A 
+
+MÁGICA 
+
+ENVOLVE 
+
+MÚLTIPLAS ETAPAS:
+
+
+
+
+1) DEVEMOS SETTAR A 'opacity' do '.ModalOpen' COMO '1' (máximo, o mínimo é 0...).
+        E DEVEMOS SETTAR A OPACITY DO '.ModalClosed' COMO '0'....
+
+
+
+
+
+2) DEPOIS DISSO, PRECISAMOS __ DE OUTRAS PROPRIEDADES CSS...
+
+
+
+
+ex:
+
+
+
+
+
+
+.Modal {
+    position: fixed;
+    z-index: 200;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 2px #ccc;
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    top: 30%;
+    left: 25%;
+    width: 50%;
+}
+
+
+.ModalOpen {
+    display: block;
+    opacity: 1
+}
+
+
+.ModalClosed {
+    display: none;
+    opacity: 0
+}
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+2) ESSAS PROPRIEDADES,
+ 
+ ELAS SERÃO:
+
+
+ a) propriedade 'transform' --> VOCê USA ESSA PROPRIEDADE 
+ PARA __ESPECIFICAR __ UMA '2d translation' (por meio do valor 'translate') DE 
+
+ UM LADO PARA OUTRO 
+
+ DA TELA... ---> e o professor 
+
+ vai 
+
+ DEFINIR,
+
+ lá 
+
+ em 
+
+
+ '.ModalOpen',
+
+ um 
+
+
+ 'translateY' DE '0', pq '0' É JUSTAMENTE A 'POSIÇÃO DEFAULT' de um elemento... (e o ''starting point''' para o '''descend''' desse modal, por meio das ANIMATIONS...)
+
+
+
+E 'translateY(0)' É 
+
+
+
+
+ ex:
+
+
+
+
+ .ModalOpen {
+    display: block;
+    opacity: 1;
+    transform: translateY(0); 
+}
+
+
+---------------------------
+
+
+
+
+-> JÁ 
+
+
+EM 
+'.ModalClosed',
+
+
+definimos
+
+
+
+'transform: translateY(-100%);'  -------> ISSO FARÁ __ COM QUE ___ ESSE MODAL __ 
+
+
+SE MOVA 100% PARA CIMA, 
+
+__PARA ___ FORA __ DE NOSSA TELA....
+
+
+
+
+
+ex:
+
+
+
+
+ .ModalOpen {
+    display: block;
+    opacity: 1;
+    transform: translateY(0); 
+}
+
+
+
+.ModalClosed {
+    display: none;
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
+
+
+---------------------
+
+
+
+CERTO.... SALVAMOS TUDO ISSO.... --> MAS MESMO SE APLICARMOS TUDO ISSO 
+
+E CHECARMOS 
+
+NOSSA PÁGINA,
+
+
+VEREMOS __NENHUMA MUDANÇA__.... ---> o modal ainda vai APARECER ESTATICAMENTE...
+
+
+
+
+
+
+
+
+
+--> ué,
+
+MAS __PQ___ DIABOS___ O MODAL AINDA APARECEU ESTATICAMENTe?
+
+
+
+
+
+
+--> professor diz que 
+DEVEMOS 
+
+ADICIONAR UMA PROPRIEDADE 
+
+
+'transition:' 
+
+
+
+À 
+
+CLASSE/class de 
+
+'.Modal',
+ 
+e elee 
+
+
+
+NOS EXPLICA QUE 
+
+
+ESSA 
+
+É 
+
+UMA 
+
+
+__PROPRIEDADE __ DEFAULT DO CSS __ QUE 
+
+NOS PERMITE 
+
+ESPECIFICAR 
+
+
+
+
+UMAS __PROPRIEDADES__ CSS ___ QUE NÃO DEVERÃO/NÃO DEVEM SER 
+
+APLICADAS 
+
+IMEDIATAMENTE 
+
+AOS NOSSOS ELEMENTOS da página... --> 
+
+
+
+
+TRANSITION BASICAMENTE 
+
+INFORMA QUE 
+
+
+'ESSES ELEMENTOS NÃO DEVEM RECEBER 
+
+ESSES ESTILOS INSTANTANEAMENTE,
+
+E 
+
+SIM 
+
+DEVEM 
+
+SER 'ANIMATED OVER TIME'... (receber os estilos AO LONGO DO TEMPO, PROGRESSIVAMENTE)...'
+
+
+
+
+
+para isso,
+
+
+nossa 
+
+classe vai ficando assim:
+
+
+
+
+.Modal {
+    position: fixed;
+    z-index: 200;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 2px #ccc;
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    top: 30%;
+    left: 25%;
+    width: 50%;
+    transition: //////EIS O CÓDIGO EM QUESTÃO.
+}
+
+
+------------------------------
+
+
+
+
+AQUI,
+
+
+
+O PROFESSOR 
+VAI 
+
+
+ESCREVER OS VALORES 
+
+'all' ---> ou seja, VAI QUERER __ ESCOLHER/SELECIONAR __tODAS AS PROPRIEDADES___, não interessa 
+se é a OPACITY, OU A POSIÇÃO, VAMOS QUERER ANIMAR TODAS AS PROPRIEDADES DOS NOSSOS ELEMENTOS NESSA PÁGINA 
+da forma que vamos especificar no valor dessa propriedade 'transition'...
+
+
+DEPOIS, DEFINIMOS UMA 'LENGTH'....
+
+
+'0.3s'  -------> PROFESSOR DEFINE 0.3 segundos como a LENGTH da animação....
+
+------------------------------------
+
+
+
+
+
+AS INFORMAÇÕES ACERCA DE 'transitions' podem ser encontradas EM UM ARTIGO, NO FIM DESTE MÓDULO....
+
+
+
+
+
+
+----------->  CERTO....
+
+
+0.3s 
+
+
+
+
+
+
+
+
+
+DEPOIS DISSO,
+
+PRECISAMOS 
+
+DEFINIR UMA 
+
+'TIMING FUNCTION', que é a propriedade final... ----> 
+
+essa timing function é BASICAMENTE __COMO __ A ANIMAÇão __ é 
+DISTRIBUÍDA __ AO LONGO DAQUELE TIME-FRAME DE '0.3s'... --> se você quiser que 
+o objeto/elemento SE ANIME DE FORMA 
+'MRU' (constante),
+você 
+
+DEVE 
+
+escrever 
+
+'linear'... ---> O PROFESSOR, POR SUA VEZ, VAI ESCREVER 'ease-out', que 
+
+é 
+
+aquela timing function que FAZ O ___ OBJETO SE MOVER INICIALMENTE RÁPIDO, __para depois 
+
+parar gradualmente...
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+.Modal {
+    position: fixed;
+    z-index: 200;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 2px #ccc;
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    top: 30%;
+    left: 25%;
+    width: 50%;
+    transition: all 0.3s ease-out //////EIS O CÓDIGO EM QUESTÃO.
+}
+
+
+------------------------
+
+
+
+
+CERTO...
+
+
+
+
+RESUMINDO OS PASSOS:
+
+
+
+
+1) DEVEMOS SETTAR A 'opacity' do '.ModalOpen' COMO '1' (máximo, o mínimo é 0...).
+        E DEVEMOS SETTAR A OPACITY DO '.ModalClosed' COMO '0'....
+
+
+2) DEFINIR opacity nos nossos estilos 'open' e 'closed'/'close' 
+
+
+
+3) USAR/DEFINIR A PROPRIEDADE 'translateY()' e 'translateX()' nos ESTILOS 
+OPEN E CLOSE, para conseguir 
+
+MOVER NOSSOS ELEMENTOS de acordo com a aplicação dos estilos 'open' e 'close' neles....
+
+
+
+4) DEFINIR 'transition' --> ISSO É A PROPRIEDADE QUE 
+INFORMA 'os elementos que receberem os estilos de nossa página NÃO DEVERÃO 
+OS APLICAR INSTANTANEAMENTE; DEVEM SER APLICADOS AO LONGO DO TEMPO, PROGRESSIVAMENTE,
+para dar a ilusão de movimento/animação...' (transition: valor valor valor )
+                                                         all  0.5s   ease-out (curva de progressão/distribuição da animação...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MAS SE AGORA VOLTARMOS 
+
+E CLICARMOS 
+
+Em 
+
+'open modal',
+
+
+NOSSA 
+ANIMAÇÃO __ AINDA __ NÃO VAI TOCAr__...
+
+
+
+
+O 
+
+
+RENDER 
+
+DE 'MODAL' CONTINUARÁ estático... ---> falhamos...
+
+
+
+
+
+
+--> A RAZÃO PARA ISSO 
+
+
+
+
+É QUE 
+
+
+
+__NÓS TAMBÉM __ _HAVÍAMOS 
+
+SETTADO __ _PROPRIEDADES __ DE 
+
+
+'display: block' 
+
+e 
+
+'display: none' 
+
+
+
+
+
+NOS ESTILOS 
+
+DE 
+
+'Open' e 
+
+'Closed'...
+
+
+
+
+
+
+
+----------> E ESSA DEFINIÇÃO DE 'display'
+
+___PREVINE__ QUALQUER ANIMAÇÃO ACONTECENDO 
+
+COM 
+
+A AJUDA 
+
+DE 
+
+'CSS TRANSITIONS'/propriedade 'transition'... ------> 
+
+
+ISSO ACONTECE 
+
+PQ 
+
+
+
+__O CSS NÃO CONSEGUE __ ENTENDER QUE 
+
+'''FAZ SENTIDO''' ANIMAR AQUELE ELEMENTO/ESTILOS DAQUELE ELEMENTO... --> pq para o CSS,
+
+
+AQUELE 
+
+ELEMENTO JÁ ESTARÁ 
+
+'HIDDEN' e depois será 'shown',
+
+PQ SERIA NECESSÁRIO ANIMAR ALGO QUE OCORRE INSTANTANEAMENTE?
+
+
+
+
+---------------------------------
+
+ 
+
+ ---> ISSO SIGNIFICA, EM OUTRAS PALAVRAS,
+
+
+ QUE 
+
+ A 
+
+
+ PROPRIEDADE 
+
+ 'display' __ NÃO PODE 
+
+
+ SER USADA/SOFRER 
+
+
+ 'transition'... ------> É POR ISSO QUE 
+
+ DEVEMOS __ REMOVER__ 'display'...
+
+
+
+
+
+
+
+
+ --> se removermos 'DISPLAY',
+
+
+ VAMOS 
+
+ PERCEBER QUE 
+
+ 
+
+ AS ANIMAÇÕES 
+
+ DE 
+
+ 'Modal'
+
+
+ FUNCIONARÃO...
+
+
+
+ ----------------
+
+
+
+ OK,
+
+ AGORA 
+
+ O 
+
+
+ MODAL ESTÁ FAZENDO 'slide in' e 'slide out' 
+
+
+ DE FORMA ADEQUADA....
+
+
+
+
+
+
+
+
+ A RAZÃO PARA ESSE EFEITO __FUNCIONAR__ É QUE AGORA, POR DEFAULT,
+
+
+ o 
+
+
+
+ MODAL TEM AQUELA OPACITY de '0', QUE DEPENDE 
+
+
+ DO PROP DE 'show' passado ao nosso modal....
+
+
+
+
+
+
+
+
+
+
+ --> OK, MAS AQUI HÁ 1 IMPORTANTE TAKEAWAY.... --> 
+
+
+
+
+FAZER ANIMAÇÃO ASSIM É 
+
+__PERFEITAMENTE___ 'FINE',
+
+
+e 
+
+para 
+TIPOS 
+
+DE ANIMAÇÃO ASSIM (show/hide de MODAIS e BUTTONS),
+
+
+
+
+TALVEZ ESSA SEJA __REALMENTE __a MELHOR SOLUÇÃO __ POSSÍVEL____...
+
+
+
+
+
+
+--> PROVAVELMENTE É A MELHOR PQ ___
+
+ESTAMOS 
+USANDO 
+
+
+
+__FEATURES __ NATIVAS ___ DO CSS __ ( que geralmente possuem BOA PERFORMANCE...),
+
+
+
+
+
+
+E 
+
+
+SE VOCÊ REALMENTE 
+
+__NÃO ___ 
+
+PRECISA DE MAIOR CONTROLE 
+
+SOBRE O SEU APP,
+
+VOCÊ 
+
+
+JÁ TEM TUDO DE QUE VOCÊ PRECISA AQUI: você 
+
+tem 
+
+a animação 
+
+de 
+
+'open' e 'close',
+
+
+
+E É ISSO... -----------> 
+
+
+
+
+OU SEJA,
+
+
+CSS TRANSITIONS,
+
+
+
+__SÃO UMA 'FINE WAY' DE ANIMAR ___ UM MONTE DE COISAS NO CSS... 
+
+
+
+
+
+
+PARA VER COMO ISSO É 'FINE',
+
+BASTA 
+
+
+
+VER 
+NOSSO COURSE PROJECT,
+
+
+
+o MODAL DE BURGERBUILDER,
+
+que 
+
+UTILIZA 
+
+CSS TRANSITIONS PARA SER EXIBIDO....
+
+
+
+
+
+
+
+
+
+--> AINDA ASSIM,
+
+O PROFESSOR 
+
+QUER 
+
+
+
+NOS MOSTRAR 
+
+
+OUTRAS 
+
+OPÇÕES,
+
+E ALGUMAS LIMITAÇÕES
+ 
+ DO 
+
+
+ 'CSS TRANSITIONS'...
+
+ 

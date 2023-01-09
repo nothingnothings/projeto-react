@@ -1,0 +1,3149 @@
+
+
+
+
+
+
+
+
+
+
+
+
+---> nós demos uma olhada em 'lazy loading' no nosso projeto 'posts'... ------> 
+
+
+
+e o lazy loading realmente é implementado daquela forma, com o HIGHER-ORDER COMPONENT 
+
+
+'asyncComponent', 
+
+
+
+e com as gambiarras 
+
+
+de import dinâmico vistas em 'Blog.js'... 
+
+
+
+-------------------------------------
+
+
+
+
+
+
+--> ENTRETANTO, SE VOCÊ ESTIVER 
+
+USANDO 
+
+
+REACT VERSÃO 16.6 ou posterior (podemos checar essa informação no arquivo 'package.json'...),
+
+
+
+-----------------------------------
+
+
+--> PROFESSOR 
+
+
+NOS PASSA UM PROJETO-DEMONSTRAÇÃO EXTRA, que ele diz que devemos baixar e utilizar...  (e depois rodar 
+
+'npm install '---> 'npm start', coisa básica.)
+
+
+
+
+
+
+
+
+
+
+--------> ENFIM, O IMPORTANTE É QUE 
+
+
+O 
+
+'react 16.6'
+
+
+POSSUI UMA __NOVA MANEIRA___ DE FAZER IMPORTS DINÂMICOS (lazy loading) 
+
+
+DE PÁGINAS/CONTAINERS/COMPONENTS/ROUTES...
+
+
+
+
+----> isso pq 
+
+
+O 
+
+REACT 
+
+16.6 
+
+
+___cONTÉM UM NOVO __MÉTODO___, 
+
+
+um método 
+
+
+dentro do objeto 
+
+'React',
+
+
+
+
+O MÉTODO 
+
+
+
+CHAMADO DE 
+
+
+'Lazy'.... ----------> E VOCÊ PODE USAR 
+
+
+ESSE MÉTODO 
+
+
+
+___PARA CARREGAR___ 
+
+
+
+SEUS DADOS/COMPONENTS 
+
+
+
+___ DE FORMA __ ASSÍNCRONA___... (ou seja, APENAS QUANDO ELES FOREM NECESSÁRIOS)...
+
+
+------------------------
+
+
+
+
+certo....é o 
+
+'React.lazy'...
+
+
+
+
+
+
+------> O CÓDIGO POR TRÁS DOS COMPONENTS SERÁ CARREGADO ___aPENAS __ QUANDO ELES FOREM NECESSÁRIOS NA NOSSA PÁGINA__...,
+
+
+ou seja, quando eles forem 'requisitados', ou quando estiverem sendo 'RENDERED'...
+
+
+
+
+----> isso é útil, por exemplo,
+
+QUANDO VOCÊ TEM 
+
+
+
+
+
+
+
+___ROUTING____ NO SEU APLICATIVO... --------> pq com o 'React.Lazy',
+
+
+
+SÓ QUANDO UM USUÁRIO REALMENTE VISITAR UMA ROUTE É QUE 
+
+AQUELE 
+
+
+COMPONENT SERÁ REQUISITADO (e baixado)....
+
+
+
+
+
+(this means that you dont load redundant code in advance...)
+
+
+
+
+------------------------------------------------------
+
+
+
+
+
+
+
+MAS O REACT.LAZY ___É ÚTIL PARA OUTROS USE-CASES, NÃO É RESTRITO AOS USE-CASES DE ROUTING.... -----> 
+
+
+
+ex: 
+
+
+use-cases em que 
+
+VOCÊ TEM UM COMPONENT QUE É __cARREGADO__ EM UM MOMENTO POSTERIOR, 
+
+talvez pq um certo IF CHECK PRECISA SER SATISFEITO ___aNTES __ DAQUELE 
+COMPONENT 
+
+PODER 
+
+SER CARREGADO, etc... -------------> EM USE-CASES 
+
+COMO 
+
+ESSES,
+
+
+você pode usar 
+
+o 
+
+
+'React.Lazy'....
+
+
+----------------------------------------
+
+
+
+
+
+PROFESSOR NOS MOSTRARÁ COMO ISSO FUNCIONA...
+
+
+
+
+
+
+
+---> vamos até o arquivo 'App.js'... --> lá o professor 
+
+está usando 
+
+
+'react-router-dom'...
+
+
+
+
+
+
+
+
+CERTO, RESOLVI TUDO...
+
+
+
+agora temos esse novo projeto, mesmo...
+
+
+
+
+
+
+
+---> ELE EXPLICA QUE 
+
+LÁ 
+
+
+EM 
+
+'App.js'
+
+
+
+
+ELE definiu o 'BrowserRouter' 
+
+
+PARA PODER USAR ROUTING...
+
+
+
+
+Ele também 
+
+
+explica que 
+
+está usando 
+
+
+'React.Fragment',
+
+
+
+UMA FEATURE (<React.Fragment />)
+
+
+
+
+QUE É BASICAMENTE 
+
+
+
+
+
+____ A MESMA COISA ___ QUE O NOSSO COMPONENT 
+
+
+'Aux' (mas o component 'Aux' nós criamos MANUALMENTE...). -------> 
+
+
+
+
+
+O REACT.FRAGMENT É BASICAMENTE UM COMPONENT USADO PARA __WRAPPAR ___ OUTROS COMPONENTS_ __ 
+(ele é usado para 'RENDER ADJACENT JSX ELEMENTS', como nosso aux...)
+
+
+
+
+
+
+
+
+
+---> CERTO, E DENTRO DESSE 'FRAGMENT'
+
+
+O PROFESSOR 
+
+
+TEM 
+
+
+
+uma pequena 'dummy navigation',
+
+
+
+
+
+COM 3 
+
+
+____ROUTES__ DEFINIDAS__... (e 2 NAVLINKS... que serão os navlinks que vão para os 'paths' adicionais de nosso app, 'paths' que não são o HOME... )
+
+
+
+
+
+
+
+
+
+
+--> CERTO, E TUDO ESTÁ FUNCIONANDO de forma 'ok'... 
+
+
+
+
+
+
+--> não temos nada FANCY até agora...
+
+
+
+
+
+
+
+
+
+
+---> PROFESSOR EXPLICA QUE PODEMOS USAR 'REACT.LAZY' para
+
+CARREGAR 
+
+
+OS COMPONENTS 
+
+'USER '
+
+
+
+e 
+'POSTS'
+
+
+
+APENAS 
+
+
+
+
+QUANDO PRECISAMOS DELES... (pq agora, por enquanto, 
+
+todos 
+
+os components estão sendo carregados 'in advance'...)
+
+
+
+
+
+
+
+--> mas aquelas routes 
+
+
+'/user' 
+
+
+
+e 
+
+'/posts'
+
+
+
+talvez 
+
+
+NUNCA SEJAM VISITADAS,
+
+por isso 
+
+CARREGAR 
+
+o código 
+
+deles 
+(os components/routes em si) 
+
+
+
+É ALGO INEFICAZ....       ---------> se este fosse um app maior,
+
+com um montao de código por trás 
+
+de cada 
+
+component,
+
+
+
+seria ainda mais necessário o 
+
+
+'React.Lazy'...
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+
+
+OK.... VAMOS QUERER IMPORTAR OS COMPONENTS 
+
+
+
+'Posts'
+ 
+
+ e 
+
+ 'User' APENAS 
+
+
+
+ QUANDO ELES FOREM NECESSÁRIOS....
+
+
+
+
+
+ (eu imagino que tenhamos que começar pelo __COMMENT OUT ___ dos '''imports tradicionais''' 
+ 
+ 
+ 
+ de 
+ 
+ 'User' e 'Posts' nesse component/arquivo 
+ 
+ 
+ 'App.js'....) --------> 
+
+
+
+ E, DE FATO ,É ISSO 
+
+
+
+ QUE O PROFESSOR FARÁ,
+
+ ELE VAI COMENTAR 
+
+
+
+ ESSES 'IMPORTS TRADICIONAIS' PARA FORA (pq se ele deixar os imports tradicionais 
+ 
+ no flow do nosso código, esses 
+ 
+ components/arquivos 'Posts' e 'User' vao ser CARREGADOS 'UPFRONT'/direto na inicialização 
+ 
+ do nosso app, e aí 
+ 
+ 
+ vão pesar mais para o usuário --> usaremos o LAZY LOADING (por meio de 'React.Lazy') PARA ACABAR COM ISSO...)
+
+
+
+ ----------------------------------------------------
+
+
+
+
+
+
+PARA RESOLVER ESSA SITUAÇÃO AÍ, PRECISAMOS USAR 
+UM 
+
+
+
+'''DYNAMIC IMPORT'''' (ou seja, precisamos usar a MESMA COISA QUE 
+
+USAMOS 
+
+com aquele approach do 'asyncComponent', aquele 'hoc', que vimos na última aula...)
+
+
+
+
+
+
+
+--> por 'dynamic import', professor quer 
+
+
+dizer aquela sintaxe/método/código de 
+
+
+'import();'....
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+PARA NOS DEMONSTRAR A UTILIZAÇÃO DE 
+
+
+'React.Lazy',
+
+
+PROFESSOR 
+
+
+vai em frente 
+
+
+e 
+
+
+cria uma NOVA CONSTANTE,
+
+chamada 
+
+
+
+de 
+
+'AsyncPosts' (e comenta o velho import tradicional de 'import Posts' para fora do nosso código)...
+
+
+
+---------------------------------
+
+
+
+NOSSO CÓDIGO de 'App.js' FICARÁ ASSIm:
+
+
+
+
+
+import React, { Component } from 'react';
+
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+
+
+
+
+
+
+const AsyncPosts = ... ////EIS O CÓDIGO EM QUESTÃO...
+
+
+
+import Welcome from './containers/Welcome.js';
+
+
+
+
+
+
+
+
+class App extends Component {
+    render() {
+        return(
+            <BrowserRouter>
+            <React.Fragment>
+                <nav>
+                    <NavLink to="/user">User Page</NavLink> |&nbsp;
+                    <NavLink to="/posts">Posts Page</NavLink>
+                </nav>
+                <Route path="/" component={Welcome} exact />
+                <Route path="/user" component={User} />
+                <Route path="/posts" component={Posts} />
+            </React.Fragment>
+            </BrowserRouter>
+        )
+    }
+}
+
+
+
+
+
+
+
+export default App;
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+Certo... e essa constante 
+
+
+'AsyncPosts' 
+
+
+
+VAI SEGURAR __ UM VALOR ___ QUE 
+
+
+
+SERÁ ____ UM CALL/INVOCAÇÃO 
+
+
+
+
+DE 
+
+
+
+'React.lazy()'...
+
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+
+
+
+
+
+
+const AsyncPosts = React.lazy(); ////EIS O CÓDIGO EM QUESTÃO...
+
+
+
+import Welcome from './containers/Welcome.js';
+
+
+
+
+
+
+
+
+class App extends Component {
+    render() {
+        return(
+            <BrowserRouter>
+            <React.Fragment>
+                <nav>
+                    <NavLink to="/user">User Page</NavLink> |&nbsp;
+                    <NavLink to="/posts">Posts Page</NavLink>
+                </nav>
+                <Route path="/" component={Welcome} exact />
+                <Route path="/user" component={User} />
+                <Route path="/posts" component={Posts} />
+            </React.Fragment>
+            </BrowserRouter>
+        )
+    }
+}
+
+
+
+
+
+
+
+export default App;
+
+
+
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+CERTO... E DENTRO DE 
+
+
+'React.lazy'
+
+NÓS 
+
+
+VAMOS PASSAR UMA FUNÇÃO.... (professor usará uma arrow function, coisa que 
+
+nós também devemos fazer)....
+
+
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+
+
+
+
+
+
+const AsyncPosts = React.lazy(
+
+
+    () => {
+
+    }
+
+
+); 
+
+
+
+import Welcome from './containers/Welcome.js';
+
+
+
+class App extends Component {
+    render() {
+        return(
+            <BrowserRouter>
+            <React.Fragment>
+                <nav>
+                    <NavLink to="/user">User Page</NavLink> |&nbsp;
+                    <NavLink to="/posts">Posts Page</NavLink>
+                </nav>
+                <Route path="/" component={Welcome} exact />
+                <Route path="/user" component={User} />
+                <Route path="/posts" component={Posts} />
+            </React.Fragment>
+            </BrowserRouter>
+        )
+    }
+}
+
+
+
+
+
+
+export default App;
+
+
+
+
+
+----------------------------
+
+
+
+
+
+
+essa função interna/arrow function interna de '.lazy()' 
+
+
+
+___VAI SEMPRE, NO SEU BODY, RETORNAR __ UM
+
+
+
+'IMPORT STATEMENT' (''''import()''''''.....) ----------->
+
+
+
+
+
+
+
+
+import statement === ''''DYNAMIC IMPORT'''' ---> professor explica que 
+
+
+o nome 
+
+é 
+
+'Dynamic import' 
+
+PQ __ELE É EXECUTADO/REALIZA SEU IMPORT __ QUANDO O CÓDIGO DE 
+
+
+
+'React.lazy()' é executado, e nunca antes disso.... (ele depende de 'React.lazy()', portanto...)
+
+
+
+
+
+
+
+
+
+EX:
+
+
+const AsyncPosts = React.lazy(
+
+
+    () => {
+        import();
+    }
+
+
+); 
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+O PROFESSOR EXPLICA QUE 
+
+O REACT 
+
+VAI 
+
+
+
+
+EXECUTAR ESSE IMPORT 
+
+
+QUANDO 
+
+
+__ ESSE CÓDIGO 
+
+
+
+DE 
+
+'AsyncPosts' 
+
+
+__fOR EXECUTADO___... (ou seja, 
+
+o import será executado QUANDO 
+
+NÓS TENTARMOS 
+
+
+EXECUTAR 
+
+ESSE COMPONENT 
+
+
+'AsyncPosts', que está armazenando o 'React.lazy()'...)
+
+
+
+
+
+
+
+
+
+------> certo.... e, de novo, dentro 
+
+
+daquele import statement, como visto em 'asyncComponent', nas aulas passadas,
+
+
+VOCÊ 
+
+
+
+___DEVE__ PASSAR O PATH DO ARQUIVO/COMPONENT QUE 
+
+VOCÊ DESEJA QUE 
+
+SEJA 
+
+CARREGADO DE FORMA DINÂMICA/DE UMA FORMA 'LAZY LOADING'... (nesse caso, 
+
+
+vamos passar 
+
+
+
+o path do component 'Posts')
+
+
+
+
+
+
+ex:
+
+
+
+const AsyncPosts = React.lazy(
+
+
+    () => {
+        import(
+            './containers/Posts'
+        );
+    }
+
+
+); 
+
+
+
+
+-------------------------------
+
+
+
+
+IMPORTANTE!!!!  ---------> PARA 
+
+
+
+
+ESSE 
+
+
+
+'import()', 
+
+
+DEVEMOS 
+
+
+____USAR _______ '''''DEFAULT EXPORTS'''''... ( ou seja: NAMED EXPORTS ___NÃO SÃO SUPORTADOS__...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----> CERTO, COM ESSE CÓDIGO ACIMA, O PROFESSOR ESTARÁ 
+
+
+IMPORTANDO 
+
+
+ESSE COMPONENT 'Posts', sim, 
+
+
+MAS __APENAS __ QUANDO 
+
+ESSA FUNÇÃO INTERNA 
+
+
+DE 
+
+'.lazy()' 
+
+
+FOR EXECUTADA.... -----> o que significa que 
+
+
+
+
+esse component aí 
+
+será 
+
+importado 
+
+
+
+________aPENAS QUANDO O REACT ''''PENSAR'''('thinks that we need to use it') 
+
+
+QUE É NECESSÁRIO SEU USO... 
+
+
+
+
+
+
+
+---> e o react vai 'PENSAR' que precisamos utilizar 
+
+esse component 'Posts'
+
+
+QUANDO ELE DETECTAR QUE 
+
+
+
+_____ELE PRECISA___ RENDERIZAR ESSE COMPONENT ESPECÍFICO...
+
+
+
+
+
+
+
+
+
+
+--> certo, mas só escrever esse código simples de 
+
+
+'React.lazy' com essa função interna __NÃO VAI BASTAR__.... ------> 
+
+
+precisamos 
+
+ir 
+
+
+até 
+
+nosso BLOCO DE ROUTES 
+
+
+
+E ENTÃO FAZER ___UMA PEQUENA MUDANÇA__...
+
+
+
+
+
+
+
+
+
+
+
+--> na route de 
+
+
+
+'AsyncPosts', 
+
+de código 
+
+
+ <Route path="/posts" component={AsyncPosts} />,
+
+
+
+
+
+
+ DEVEMOS 
+
+
+
+
+
+ TIRAR 
+
+ esse 
+
+
+
+ 'component={AsyncPosts}'............ --> devemos 
+
+
+ TIRAR 
+
+
+ ESSE NEGÓCIO E ENTÃO 
+
+ COLOCAR 
+
+
+ O MÉTODO/propriedade 
+
+
+ 'render={}' 
+
+
+ NO SEU LUGAR....
+
+
+
+
+
+
+
+ ex:
+
+
+ <Route path="/posts" render={} />
+
+
+
+
+
+
+ -------------------------------------------------
+
+
+
+
+
+ E DENTRO 
+
+ DA MARCAÇÃO DINÂMICA DESSA PROPRIEDADE 
+
+
+ 'RENDER' 
+
+ vamos 
+
+ colocar uma 
+
+
+ FUNÇÃO ANÔNIMA (arrow function)...
+
+  
+
+  ----> professor explica que 
+
+
+  normalmente nós usaríamos/usamos 
+
+  o slot de 
+
+  parâmetros 
+
+  dessa FUNÇÃO INTERNA 
+
+  DE 'RENDER'
+   
+
+   para 
+
+
+   __RECEBER/PEGAR 
+
+
+   'props',
+
+
+
+
+   MAS AQUI O PROFESSOR NÃO ESCREVERÁ NADA NESSE SLOT (pq ele não vai precisar).... ------> 
+
+
+   a única coisa que o professor vai fazer 
+
+
+
+   é 
+
+   UM __RETURN__ (no function body dessa arrow function ),
+
+
+
+   UM 
+
+
+   ________RETURN ___ DE UM ____cOMPONENT___  (um component que deverá 
+   
+   
+   SER RENDERIZADO...) ------------->
+
+
+
+
+
+   e esse component aí __AINDA NÃO EXISTE NO NOSSO CÓDIGO, NO NOSSO 
+
+
+   'App.js'....... --> para que ele passe a existir,
+
+
+
+   VAMOS PRECISAR IMPORTAR 
+
+
+   UM ____NOVO COMPONENT___ NO nosso 'App.js',
+
+
+   o 
+
+   COMPONENT/OBJETo 
+
+
+   do react chamado de 
+
+
+   'Suspense'....
+
+
+        (
+            { Suspense } 
+        )
+
+
+
+
+ex:
+
+
+
+
+
+import React, { Component, Suspense } from 'react';
+
+
+
+
+
+
+--------------------------------------------------------------
+
+
+
+
+
+
+
+COM ESSE COMPONENT 
+
+'Suspense' importado,
+ 
+ É ELE QUE 
+
+ VOU QUERER 
+
+
+ __RENDERIZAR DENTRO DAQUELE PATH de '/posts'....
+
+
+
+
+ ----------------------------------------
+
+
+
+
+
+ CÓDIGO FICARÁ ASSIM:
+
+
+
+
+
+
+
+ import React, { Component } from 'react';
+
+import { Suspense } from 'react'; /////OBS: O 'suspense', ESSE OBJETO AÍ, É NECESSÁRIO PARA PODERMOS USAR O APPROACH DE 'React.lazy' PARA FAZER LAZY LOADING DE COMPONENTS/CONTAINERS/PÁGINAS NO NOSSO PROJETO...
+
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+
+
+
+
+import Posts from './containers/Posts';
+import User from' ./containers/User';
+import Welcome from './containers/Welcome';
+
+
+
+
+
+
+
+
+class App extends Component {
+    render() {
+        return(
+            <BrowserRouter>
+            <React.Fragment>
+                <nav>
+                    <NavLink to="/user">User Page</NavLink> |&nbsp;
+                    <NavLink to="/posts">Posts Page</NavLink>
+                </nav>
+                <Route path="/" component={Welcome} exact />
+                <Route path="/user" component={User} />
+                <Route path="/posts" render={
+                    () => {
+                        <Suspense></Suspense>
+                    }
+                } />
+            </React.Fragment>
+            </BrowserRouter>
+        )
+    }
+}
+
+
+
+
+
+
+
+export default App;
+
+
+
+
+
+
+--------------------------
+
+
+
+
+E, É CLARO, DENTRO 
+
+
+DESSE 'Suspense',
+
+entre suas 
+
+OPENING E CLOSING TAGS, vou querer 
+
+
+
+ENFIAR/RENDERIZAR __ MEU 
+
+COMPONENT 
+
+
+'AsyncPosts'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+class App extends Component {
+    render() {
+        return(
+            <BrowserRouter>
+            <React.Fragment>
+                <nav>
+                    <NavLink to="/user">User Page</NavLink> |&nbsp;
+                    <NavLink to="/posts">Posts Page</NavLink>
+                </nav>
+                <Route path="/" component={Welcome} exact />
+                <Route path="/user" component={User} />
+                <Route path="/posts" render={
+                    () => {
+                        <Suspense><AsyncPosts/></Suspense> //////EIS O CÓDIGO EM QUESTÃO.
+                    }
+                } />
+            </React.Fragment>
+            </BrowserRouter>
+        )
+    }
+}
+
+
+
+
+
+
+
+export default App;
+
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+(OU SEJA, ESTAREMOS USANDO NOSSA CONSTANTE 
+
+'AsyncPosts' COMO SE FOSSE UM COMPONENT,
+
+dentro 
+
+desse '<Suspense></Suspense>'....)
+
+
+
+
+
+
+
+
+CERTO, ISSO FEITO,
+
+
+
+VAMOS QUERER 
+
+
+ADICIONAR MAIS UMA PEQUENA COISINHA 
+
+
+A 
+ESSE 
+
+COMPONENT/OBJETO 
+
+'Suspense'... ----------> 
+
+
+
+É O PROP 
+
+
+
+DE NOME 
+
+
+'fallback'... ->tipo assim:
+
+
+
+
+class App extends Component {
+    render() {
+        return(
+            <BrowserRouter>
+            <React.Fragment>
+                <nav>
+                    <NavLink to="/user">User Page</NavLink> |&nbsp;
+                    <NavLink to="/posts">Posts Page</NavLink>
+                </nav>
+                <Route path="/" component={Welcome} exact />
+                <Route path="/user" component={User} />
+                <Route path="/posts" render={
+                    () => {
+                        <Suspense 
+                        fallback={
+
+                        }
+                        
+                        ><AsyncPosts/></Suspense> //////EIS O CÓDIGO EM QUESTÃO.
+                    }
+                } />
+            </React.Fragment>
+            </BrowserRouter>
+        )
+    }
+}
+
+
+
+
+
+----------------------------
+
+
+
+
+E ESSE PROP/PROPRIEDADE 
+
+
+'fallback' é ___bIZARRO__, pq supostamente 
+
+nós 
+
+
+devemos 
+
+
+inserir CÓDIGO JSX DENTRO DELE (e ele é um prop, ou seja,
+
+
+a sintaxe vai ficar 
+
+
+'fallback={
+    <div>....</div>
+}' )
+
+
+
+
+
+----------------------------
+
+
+
+CÓDIGO DE 'SUSPENSE':
+
+
+
+
+<Suspense fallback={<div>Loading</div>} />     <Posts/>        </Suspense/>
+
+
+
+------------------------------------------
+
+
+
+
+
+
+OK.... 
+
+
+MAS OQ DIABOS 
+
+É 
+
+
+ESSE 
+
+
+
+'fallback'? 
+
+
+
+e pq 
+
+o 
+
+
+seu 
+
+valor 
+
+
+
+SERÁ 
+
+
+UM 
+
+RETURN DE CÓDIGO JSX? ------> eu chuto que é porque 
+
+
+
+ESSE CÓDIGO INSERIDO 
+
+
+NO SLOT {} 
+
+
+de 'fallback' 
+
+
+
+
+É ___ UM CÓDIGO __ QUE SERÁ EXIBIDO __ ENQUANTO 
+
+AQUELE 
+
+NOSSO 
+
+
+COMPONENT/ROUTE 
+
+
+ASSÍNCRONO 
+
+ESTIVER 
+
+SENDO 
+
+CARREGADO 
+
+PELO USUÁRIO....
+
+
+
+
+
+
+
+
+--> dito e feito, 
+
+
+o professor 
+
+
+escreve 
+
+
+um 
+
+'<div>Loading...</div>' 
+
+
+DENTRO 
+
+
+
+DESSA PROPRIEDADE 
+
+'fallback'...
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+class App extends Component {
+    render() {
+        return(
+            <BrowserRouter>
+            <React.Fragment>
+                <nav>
+                    <NavLink to="/user">User Page</NavLink> |&nbsp;
+                    <NavLink to="/posts">Posts Page</NavLink>
+                </nav>
+                <Route path="/" component={Welcome} exact />
+                <Route path="/user" component={User} />
+                <Route path="/posts" render={
+                    () => {
+                        <Suspense 
+                        fallback={
+            <div>Loading...</div>   //////EIS O CÓDIGO EM QUESTÃO.
+                        }><AsyncPosts/></Suspense> 
+                    }
+                } />
+            </React.Fragment>
+            </BrowserRouter>
+        )
+    }
+}
+
+
+----------------------------------
+
+
+
+
+
+PROFESSOR EXPLICA QUE 
+
+ESSE 
+
+'LOADING' 
+
+
+será mostrado em casos 
+
+em que 
+
+o 
+
+react 
+'POSTPONES THE RENDERING' ( adia o rendering desse component, do nosso 
+
+
+component 'AsyncPosts', nesse caso...). ---> e esse 
+
+
+
+fallback  (que pode ser qualquer coisa, não precisa 
+
+ser uma 
+div 
+
+
+com 'loading', pode ser um spinner, ou qualquer outra coisa... é um placeholder)
+
+
+
+
+VAI FICAR ALI, NO LUGAR DO SEU COMPONENT, ENQUANTO 
+
+O REACT 
+
+CARREGA 
+
+ELE...
+
+
+
+
+
+------------------------
+
+
+
+
+COM ISSO TUDO PRONTO,
+
+
+voltamos 
+
+
+
+a nossa página,
+
+
+
+
+clicamos 
+
+em 
+
+'User Page' 
+
+
+
+e 
+
+depois 
+
+em 
+
+'Posts Page',
+
+
+
+E TUDO ESTARÁ FUNCIONANDO...
+
+
+(menos 1 negócio... --> quando clico em 
+
+
+
+'Posts Page', não 
+
+É POSSÍVEL VER COISA ALGUMA RENDERIZADA 
+
+
+NA NOSSA PÁGINA, SÓ OS LINKS... ----> isso sinaliza algum problema...)
+
+
+
+
+
+
+
+
+
+
+
+PFFFF.... era um return statement faltando, dentro daquelas arrow functions.... (confusão entre sintaxe '''simplificada'' de '() => <códigoJsx/>'  e '() => {return <códigoJsx/>}' ------------> SE VOCê NÃO COLOCAR 'return' dentro de '{}', rEALMENTE NÃO FUNCIONARÁ...) 
+
+
+
+
+
+
+-----------------------------
+
+
+
+
+LEMBRE-SE: 
+
+
+VOCê PODE 
+
+
+TESTAR 
+
+
+INTERNETS HORRÍVEIS 
+
+POR MEIO DO DEVTOOLS DO CHROME.... (teste o fallback, veja se ele funciona.) --> certo, 
+
+
+está funcionando..
+
+
+
+
+--------------------------------
+
+
+OK, MAS 
+
+
+
+qual é a diferença 
+
+
+entre 
+
+
+o approach de 
+
+
+'AsyncComponent' (aquele método do lazy loading TRADICIONAL DO REACT) 
+
+
+e 
+
+ o approach 
+
+ do 
+
+
+ 'React.lazy'?  
+
+
+
+ (nenhuma diferença, é só uma sintaxe alternativa/approach alternativo...)
+
+
+
+ --> você pode observar
+  
+
+
+o lazy loading, ver se ele funcionou, por meio 
+
+
+DA 
+
+
+ABA 
+
+'NETWORK'
+
+
+do chrome devtools... --> se 
+
+
+um chunk for baixado quando você clicar em 'posts page',
+
+
+isso significa que 
+
+
+o 
+
+
+lazy loading funcionou...
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+ENTRETANTO, A GRANDE 
+
+
+VANTAGEM
+
+
+
+DO 
+
+
+'React.lazy' 
+
+
+
+PARA 
+
+
+O 
+
+
+APPROACH DO 
+
+
+'AsyncComponent'
+
+
+
+É QUE 
+
+
+
+_______NÓS PODEMOS UTILIZAR O 
+
+
+
+'REACT.LAZY' 
+
+
+
+EM SITUAÇÕES DIFERENTES,
+
+SITUAÇÕES 
+
+
+
+QUE 
+
+
+NÃO ENVOLVEM O USO DE 
+
+'REACT ROUTER'... (ou seja, cenários em que 
+
+NÃO USAMOS AQUELE 
+
+'BrowserRouter'...)
+
+
+
+
+
+
+
+
+
+
+
+
+PARA DEMONSTRAR UM DESSES USE-CASES,
+
+
+
+professor comenta PARA FORA 
+
+TODO NOSSO CÓDIGO WRAPPADO 
+
+
+
+POR 
+
+BROWSER ROUTER...
+
+
+
+
+
+ex (fica só isso aqui):
+
+
+
+
+
+class App extends Component {
+    render() {
+        return(
+            
+        )
+    }
+}
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+AGORA, EM VEZ DISSO,
+
+
+
+
+
+Professor cria um simples exemplo com um 
+
+
+
+
+___BUTTON____... -> digamos que 
+
+temos um 
+
+
+SIMPLES BUTTOn 
+
+
+no render method 
+
+
+de 
+
+nosso 
+
+'app'....
+
+
+
+
+
+ex:
+
+
+
+
+
+class App extends Component {
+    render() {
+        return(
+                <button>Toggle mode</button>
+        )
+    }
+}
+
+--------------------------------------
+
+
+
+
+
+ISSO FEITO, ADICIONADO ESSE 'DUMMY BUTTON',
+
+
+
+
+
+O PROFESSOR VAI DEFINIR 
+
+
+UM MÉTODO 
+
+
+'modeHandler', específico a esse botão,
+
+
+dentro 
+
+desse 
+
+
+nosso component 
+
+'App'....
+
+
+
+ex:
+
+
+
+
+
+
+
+class App extends Component {
+
+
+    modeHandler = () => {
+
+    }
+
+
+
+
+
+    render() {
+        return(
+                <button>Toggle mode</button>
+        )
+    }
+}
+
+
+
+
+----------------------------------
+
+
+
+ALÉM DISSO,
+
+PROFESSOR 
+
+TAMBÉM ADICIONARÁ 
+
+UM 
+
+__STATE__, EM QUE 
+
+
+
+ele colocará uma pequena propriedade 
+
+de 
+
+'show: false'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+class App extends Component {
+
+        state = {
+            show: false
+        }
+
+
+
+
+
+    modeHandler = () => {
+
+    }
+
+
+
+
+
+    render() {
+        return(
+                <button>Toggle mode</button>
+        )
+    }
+}
+
+
+---------------------------------------
+
+
+
+
+
+Certo, aí dentro 
+
+daquele 
+
+
+método vamos querer 
+
+executar um código que vai fazer 
+
+'this.setState({})' 
+
+e então trocará 
+
+
+A PROPRIEDADE 
+
+
+'show' de 'false' para 
+
+'true'...  (e aí já vamos lá e colocamos um handler de 'onClick' no nosso button, um 'onClick' que executará o método 
+
+'modeHandler()'...)
+
+
+
+
+eX:
+
+
+
+
+
+
+
+
+class App extends Component {
+
+        state = {
+            show: false
+        }
+
+
+
+
+
+    modeHandler = () => {
+
+                this.setState(
+                    {
+                        show: true
+                    }
+                )
+    }
+
+
+
+
+
+    render() {
+        return(
+                <button onClick={() => {this.modeHandler()}}>Toggle mode</button>
+        )
+    }
+}
+
+
+
+-----------------------------------
+
+
+
+
+
+
+Certo....
+
+
+
+mas nós queríamos 
+
+renderizar 
+
+
+esse button aí de uma maneira/jeito
+
+
+'lazy loading', certo?
+
+
+
+
+Como podemos escrever isso/como devemos escrever isso?
+
+
+
+
+
+
+
+
+
+
+Bem, primeiramente, devemos saber que 
+
+NOSSO CÓDIGO DE SETSTATE ESTÁ __UMA MERDA___... -----> 
+
+
+como esse button aí é um 'Toggle Mode', ele fará 
+
+
+um TOGGLE ENTRE UM 'true' e um 'false',
+
+POR ISSO 
+
+NOSSO 
+
+
+CÓDIGO DO 'STATE' deverá/deve 
+
+refletir 
+
+esse toggle... (vamos usar aquele velho código de inversão 
+
+de 'true/false', ensinado pelo professor nas primeiras lições...) ------->
+
+
+
+
+
+E PROFESSOR
+
+
+
+EXPLICA QUE 
+
+ELE VAI USAR 
+
+
+A VERSÃO 
+
+'COMPLETA'/FUNCTION FORM DO 'setState'... 
+
+
+
+
+
+
+''''como assim, "function form" ? ''''' ------->
+
+
+
+
+É aquela
+
+
+versão 
+
+de 
+
+
+setState QUE ___ CONSIDERA/LEVA EM CONSIDERAÇÃO
+
+
+O STATE __ VELHO ___ PARA DEFINIR 
+
+_ o VALOR DO NOVO STATE___....
+
+
+para isso,
+ 
+
+
+ ele escreverá 
+
+
+ o setState dentro 
+
+ de modeHandler 
+
+
+ DESTA FORMA:
+
+
+
+
+ modeHandler = () => {
+     this.setState(prevState => {
+         return {
+             show: !prevState.show
+         }
+     })
+ }
+
+ ------------------------------
+
+
+
+
+
+ CERTO,
+
+
+
+ ESSA É A CORREÇÃO DO NOSSO ERRO/CÓDIGO IMPRÓPRIO/CÓDIGO BOSTA.
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+
+
+ 
+
+class App extends Component {
+
+        state = {
+            show: false
+        }
+
+
+
+
+
+    modeHandler = () => {
+
+                this.setState(prevState => {
+                    return {
+                        show: !prevState.show
+                    }
+                }
+          
+                )
+    }
+
+
+
+
+
+    render() {
+        return(
+                <button onClick={() => {this.modeHandler()}}>Toggle mode</button>
+        )
+    }
+}
+
+-----------------------------
+
+
+
+
+CERTO, ISSO 
+
+FARÁ COM QUE 
+
+NOSSO 
+
+BOTÃO SEJA TOGGLADO (show: true/false).... ----> ok, 
+
+
+
+AGORA 
+
+
+BASTA QUE 
+
+
+ESCREVAMOS ALGUM CÓDIGO QUE 
+
+REALMENTE TOGGLE NOSSO BOTÃO... (agora acabei de pensar... ------> 
+
+
+será que o professor vai querer que 
+
+
+O NOSSO TOGGLE '''on''' seja 
+
+
+feito por meio de 
+
+
+
+CÓDIGO ASSÍNCRONO/LAZY LOADING? isso seria INSANO.)
+
+
+
+
+
+
+
+
+
+
+--> professor explica que 
+
+é CLARO QUE VOCÊ PODERIA/PODE NOMEAR 
+
+
+
+'modeHandler' de forma diferente... ---------> 
+
+
+
+
+O PROFESSOR VAI IR EM FRENTE 
+
+
+E VAI BINDAR
+ 
+ 'onClick'
+
+
+
+
+no nosso button ao 
+
+
+'this.modeHandler'....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> CERTO... E AGORA 
+
+
+O PROFESSOR VAI QUERER 
+
+RENDERIZAR __ OU __ 
+
+
+A PÁGINA 
+
+
+'USER' ou 
+
+
+A PÁGINA 
+
+
+'POSTS',
+
+
+dependendo 
+
+
+DAQUELE 
+
+
+'MODE'... ----> e para deixar isso mais claro, 
+
+
+
+ele vai 
+
+lá e renomeia todas as ocorrências de 
+
+
+'show' (nome da propriedade no STATE de nosso component 'App') 
+
+
+PARA 
+
+
+
+SEREM 
+
+
+
+
+'showPosts', para fazer mais sentido....
+
+
+
+
+
+
+EX:
+
+
+
+
+class App extends Component {
+
+        state = {
+            showPosts: false
+        }
+
+
+
+
+
+    modeHandler = () => {
+
+                this.setState(prevState => {
+                    return {
+                        showPosts: !prevState.showPosts
+                    }
+                }
+          
+                )
+    }
+
+
+
+
+
+    render() {
+        return(
+                <button onClick={() => {this.modeHandler()}}>Toggle mode</button>
+        )
+    }
+}
+
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+CERTO.... ISSO FEITO,
+
+
+professor 
+
+
+vai adicionar UM SIMPLES CÓDIGO CONDICIONAL NO RETURN 
+
+STATEMENT 
+
+do RENDER 
+
+de 
+
+'App.js'... ---------> 
+
+
+
+será uma ternary 
+
+expression 
+
+
+que 
+
+
+vai 
+
+dizer 
+
+
+'se o showPosts for TRUE, 
+
+
+
+QUERO QUE VOCê RENDERIZE O COMPONENT 'Posts'.... ('Posts' afetado/wrappado 
+
+PELO 'Suspense')...
+
+
+
+SE NÃO FOR TRUE, 
+
+VOU QUERER 
+
+
+QUE 
+
+VOCê 
+
+
+
+RENDERIZE 'NULL' ( ou seja, NADA)...
+
+
+
+
+ex:
+
+
+
+
+class App extends Component {
+
+        state = {
+            showPosts: false
+        }
+
+
+
+
+
+    modeHandler = () => {
+
+                this.setState(prevState => {
+                    return {
+                        showPosts: !prevState.showPosts
+                    }
+                }
+          
+                )
+    }
+
+
+
+
+
+    render() {
+        return(
+                <button onClick={() => {this.modeHandler()}}>Toggle mode</button>
+                {this.state.showPosts 
+                
+                
+                ?
+                
+                
+                <Suspense 
+             fallback={
+            <div>Loading...</div>   //////EIS O CÓDIGO EM QUESTÃO.
+                }><AsyncPosts/>
+            </Suspense> 
+                
+
+                : 
+
+
+                null
+        
+                
+                
+                
+                
+                 }
+        )
+    }
+}
+
+
+
+------------------------------------
+
+
+
+
+
+
+CERTO... MAS NÓS ESCREVEMOS O CÓDIGO ERRADO... --> PROFESSOR QUER 
+
+QUE 
+
+O ELSE CASE 
+
+DESSA TERNARY EXPRESSION SEJA 
+
+UM RENDER 
+
+DE NOSSO 
+
+OUTRO COMPONENT,
+
+'User',
+
+e não 
+
+
+um render de 
+'null' (nada)...
+
+
+
+
+ex:
+
+
+
+
+
+
+class App extends Component {
+
+        state = {
+            showPosts: false
+        }
+
+
+
+
+
+    modeHandler = () => {
+
+                this.setState(prevState => {
+                    return {
+                        showPosts: !prevState.showPosts
+                    }
+                }
+          
+                )
+    }
+
+
+
+
+
+    render() {
+        return(
+                <button onClick={() => {this.modeHandler()}}>Toggle mode</button>
+                {this.state.showPosts 
+                
+                
+                ?
+                
+                
+                <Suspense 
+             fallback={
+            <div>Loading...</div>   //////EIS O CÓDIGO EM QUESTÃO.
+                }><AsyncPosts/>
+            </Suspense> 
+                
+
+                : 
+
+
+                <User />
+        
+                
+                
+                
+                
+                 }
+        )
+    }
+}
+
+
+
+
+
+
+
+
+--------------------------
+
+
+
+Certo.... mas como 
+
+TEMOS 
+
+2 COMPONENTS ADJACENTES, AQUI, 
+
+
+(temos tanto o BUTTOn como essa TERNARY EXPRESSION QUE RENDERIZARÁ 
+
+TANTO 'User' como 'Posts'),
+
+
+PROFESSOR 
+
+
+EXPLICA QUE
+
+ELE É OBRIGADO A USAR O AUX COMPONENT/'React.Fragment'
+
+PARA 
+
+
+__WRAPPAR 
+
+
+
+ESSE 'RETURN OF ADJACENT JSX ELEMENTS'...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+class App extends Component {
+
+        state = {
+            showPosts: false
+        }
+
+
+
+
+
+    modeHandler = () => {
+
+                this.setState(prevState => {
+                    return {
+                        showPosts: !prevState.showPosts
+                    }
+                }
+          
+                )
+    }
+
+
+
+
+
+    render() {
+        return(
+
+
+                <React.Fragment>  //////EIS O CÓDIGO EM QUESTÃO.
+                <button onClick={() => {this.modeHandler()}}>Toggle mode</button>
+                {this.state.showPosts 
+                
+                
+                ?
+                
+                
+                (<Suspense 
+             fallback={
+            <div>Loading...</div>  
+                }><AsyncPosts/>
+            </Suspense> 
+                )
+
+                : 
+
+
+                <User />
+        
+                
+                
+                
+                
+                 }
+                </React.Fragment>
+        )
+    }
+}
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+
+COM ISSO, COM ESSA MUDANÇA, 
+
+
+
+SE AGORA 
+
+MUDARMOS 
+
+
+
+O COMPONENT/CONTAINER/PÁGINA 
+
+
+por meio 
+
+DO 
+
+
+botão de 'toggle mode', 
+
+
+
+veremos que 
+
+
+o CÓDIGO DE 'posts' 
+
+
+
+SERÁ CARREGADO DINAMICAMENTE... (e ele será 
+
+carregado apenas 1 vez, pq é lógico que ele vai continuar no browser... -----> se dermos 
+
+
+vários 'toggle' no posts, clicarmos várias vezes no botão, o código de 
+
+'posts' ainda vai permanecer ali...)
+
+
+
+
+
+
+
+
+--> aí, portanto, estaremos tirando vantagem desse 'async rendering'... ------>
+
+
+e isso é MUITO ÚTIL, DEPENDENDO DO CASO...
+
+
+
+
+
+---> veremos mais desse 'async rendering' em futuras versões do react....
+
+
+
+
+
+
+
+
+
+
+--> certo, mas o que devemos saber é que 
+
+
+ESSE 'REACT.LAZY' __fUNCIONA___.... ---> entretanto, 
+
+vocÊ 
+
+
+
+deve saber que 
+
+ELE NÃO FUNCIONA COM UM 'SERVERSIDE RENDERING'... (ou seja,
+
+o React.lazy, essa API aí,
+
+
+__NÃO É SUPORTADA EM SERVIDORES, AINDA...) ---------> 
+
+
+
+mas se você tiver uma 
+
+
+CLIENTSIDE RENDERED APPLICATION  (que não use servidores/banco de dados),
+
+VOCê 
+
+PODE, SIM, USAR O REACT.lazy....
+
+
+
+
+
+
+
+
+E o react.lazy pode ser usado TANTO EM  PROJETOS/APPS 
+
+
+'clientside rendered' 
+
+que 
+
+
+TENHAM ROUTING OU NÃO... (com o react.lazy,
+
+você pode 
+
+CONDICIONALMENTE 
+
+
+
+RENDERIZAR UM COMPONENT... ---> tanto por meio de um if statement/ternary expression como POR UM 
+
+
+'ROUTING SCENARIO'... )  ---------> MAS 
+
+
+O BENEFÍCIO 
+
+
+DE 
+
+SUSPENSE/REACT.LAZY  (ou 'AsyncComponent') 
+
+
+SÓ __EXISTE___ SE SEU APLICATIVO 
+
+
+
+'BROWSERSIDE RENDERED' 
+
+
+TIVER ___COMPONENTS GRANDES__, CHEIOS DE DADOS POR TRÁS DELES... (aí 
+faz sentido 
+
+carregá-los de forma dinâmica.) --------> se não forem components grandes,
+
+
+é possível que seu código acabe ficando ainda mais suboptimizado....

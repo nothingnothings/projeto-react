@@ -1,0 +1,1461 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> ATÉ AGORA, ESCREVEMOS BASTANTE... --> ADICIONAMOS BASTANTE LÓGICA, 
+
+
+E UM MONTE DE COISAS À NOSSA UI.... ------->  
+
+
+
+E AGORA 
+
+
+É HORA DE 
+
+
+
+
+VINCULAR os 
+
+
+'BuildControls' 
+
+
+AOS NOSSOS 
+
+
+
+INGREDIENTS DE VERDADE, aos ingredients em 'state' do 'BurgerBuilder'...
+
+
+(FAREMOS ISSO PARA QUE O USUÁRIO SEJA 
+
+
+CAPAZ 
+
+DE ___
+
+CONSTRUIR O BURGER POR CONTA PRÓPRIA...)....
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------- 
+
+
+
+
+--> PROVAVELMENTE TEREMOS DE USAR 
+
+
+'handlers' (exatamente como vimos com 'nameChangedHandler', etc etc...)
+
+
+
+
+
+
+--> PROVAVELMENTE USAREMOS UM __HANDLER PARA ADIÇÃO, 
+
+E OUTRO PARA _SUBTRAÇÃO__ de 
+
+
+'ingredients'...
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+--> E O PROFESSOR DIZ EXATAMENTE ISSO AÍ:
+
+
+PRECISAMOS 
+
+DE UM PUNHADO DE 
+
+'METHODS' 
+
+
+
+
+NO 
+
+
+'BURGERBUILDER'... -----> esses métodos vao UPDATAR 
+
+os nossos  
+
+'ingredients'...
+
+
+
+
+
+
+
+
+
+
+---> PROFESSOR ADICIONARÁ 2 METHODS, AQUI:
+
+
+
+o 
+
+
+
+'addIngredientHandler'
+
+
+e 
+
+o 
+
+
+'removeIngredientHandler'
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+ESSE 
+
+
+MÉTODO 
+
+
+'addIngredientHandler' 
+
+
+VAI ___RECEBER___ 
+
+
+O 
+
+
+__'TYPE'___  
+
+
+DO INGREDIENT QUE 
+
+VOU QUERER ADICIONAR.... (talvez eu tenha que usar 'context' para conseguir acessar 
+
+o valor desse 'type'...) ---> tentei usar 'context', mas falhei. Não sei como proceder.
+
+
+
+
+
+
+
+---> acho que consegui usar o 'context api' para 
+
+adicionar o 'type' 
+
+
+nesses handlers... mas não tenho certeza.
+
+
+-------------------------------------
+
+
+
+
+
+
+PROFESSOR EXPLICA QUE __PARA __ ADICIONAR UM __INGREDIENT, SEMPRE 
+
+SERÁ __NECESSÁRIO SABER___ COMO __ERA __ 
+
+
+O STATE __ ANTIGO__, QUAL ERA O __NÚMERO DAQUELE 'INGREDIENT' 
+
+ESPECÍFICO __ NO VELHO __ ARRAY ___...
+
+
+
+
+
+
+-----> para isso, ele PROVAVELMENTE VAI USAR 
+
+AQUELE APPROACH 
+
+
+DE 
+
+COPIAR O VELHO OBJETO/ARRAY com o spread operator... ---------> ERREI...
+
+
+
+
+
+O QUE ELE VAI FAZER 
+
+
+
+É 
+
+
+
+CRIAR UMA CONSTANTE 'oldCount' (que representa O VELHO NÚMERO DAQUELE 
+INGREDIENT ESPECÍFICO)... ------> 
+
+
+
+essa constante terá um 
+
+valor 
+
+
+de 'this.state.ingredients[type]' -----> OU SEJA, 
+
+USAMOS 
+
+AQUELE PARÂMETRO 'type' (que provavelmente será passado por meio do uso de 
+
+'props' e de 'context') PARA 
+
+
+
+SELECIONAR ESPECIFICAMENTE AQUELE ELEMENTO, por meio 
+
+do 
+
+'[type]'....
+
+
+
+VAI FICAR ASSIM:
+
+
+
+
+
+
+
+  addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+
+  }
+
+
+
+
+
+
+  --------------------------------------------------
+
+
+
+
+
+
+ISSO FEITO, PROVAVELMENTE O PROFESSOR VAI EXECUTAR 
+
+
+'this.setState()'  -----> ERREI, ELE NÃO VAI USAR ISSO AINDA.
+
+
+
+
+
+
+PARA DEFINIR 
+
+
+'const updatedCount = ++oldCount'...   (oldCount + 1)...
+
+
+
+-------------------------------------------------
+
+
+
+EX:
+
+
+
+
+
+  addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+
+  }
+
+
+
+----------------------------------------
+
+
+
+
+--> PARA __UPDATAR__ ESSES INGREDIENTS/INGREDIENT ESPECÍFICO,
+
+
+O PROFESSOR VAI CRIAR 
+
+
+__UMA NOVA CONSTANTE__, de nome 
+
+
+'updatedIngredients' ---------> E AÍ ELE VAI FAZER AQUELA COISA 
+
+
+DO 'state should be updated in a immutable way'  ( OU SEJA, VAI USAR O SPREAD OPERATOR....).
+
+
+
+
+EX (representação):
+
+
+
+
+
+
+
+
+
+
+  addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+
+  }
+
+
+
+  -------------------------------
+
+
+
+  PARA FAZER ISSO DO 'SPREAD OPERATOR', ELE ESCREVE O CÓDIGO DESTA FORMA:
+
+
+
+
+
+ addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = {
+        ...this.state.ingredients /////CÓDIGO EM QUESTÃO.
+    }
+
+  }
+
+---------------------------------------------
+
+
+
+ISSO FEITO,
+
+
+ele então 
+
+invoca 
+
+o 'updatedIngredients' (objeto STATE COPIADO do original/inicial) 
+
+
+E ENTÃO 
+
+
+usa '[]' 
+
+PARA 
+
+ACESSAR 
+
+A PROPRIEDADE 
+
+de variável/prop 'type'.... -----> E AÍ ELE DEFINE ESSE 'updatedIngredients[type]' COMO TENDO O VALOR 'updatedCount'...
+
+
+ex:
+
+
+
+
+ addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = {
+        ...this.state.ingredients 
+    }
+    updatedIngredients[type] = updatedCount;
+
+  }
+
+
+
+
+-----------------------------
+
+
+
+MAS NÃO ACABAMOS!!! --> só agora podemos 
+
+chamar 
+
+
+'this.setState()' PARA DEFINIR 
+
+
+O STATE COMO SENDO 
+
+
+'updatedIngredients'....
+
+
+ex:
+
+
+
+ addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = {
+        ...this.state.ingredients 
+    }
+    updatedIngredients[type] = updatedCount;
+
+
+    this.setState(updatedIngredients);
+  }
+
+
+--------------------------------------
+
+
+
+
+
+
+----> ok, mas isso NÃO FUNCIONOU. os botões NÃO FUNCIONARAM.
+
+
+
+---> o professor ignora o fato do negócio ainda não funcionar 
+
+e aponta 
+
+que ele 
+
+já 
+
+vai começar 
+
+
+a pensar 
+
+na feature 
+
+de 
+
+'CONTAGEM DO PREÇO' ----> por isso ele adiciona UMA SEGUNDA PROPRIEDADE 
+
+
+NO 
+'state', uma propriedade 
+
+de 
+
+'totalPrice'... ------> O PRICE INICIAL SERÁ DE 4 DÓLARES, NÃO IMPORTA QUAIS INGREDIENTS...
+
+
+
+ex:
+
+
+
+
+
+
+  state = {
+    ingredients: {
+      salad: 0,
+      bacon: 0,
+      cheese: 0,
+      meat: 0
+    },
+    totalPrice: 4
+  };
+
+
+
+
+
+
+
+
+
+ addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = {
+        ...this.state.ingredients 
+    }
+    updatedIngredients[type] = updatedCount;
+
+
+    this.setState(updatedIngredients);
+  }
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+CERTO....
+
+
+MAS 
+
+NO 
+
+
+'addIngredientHandler',
+
+
+o professor diz que 
+
+
+ELE TAMBÉM VAI TER QUE __UPDATAR__ ESSE PRICE AÍ, DE ALGUMA MANEIRA... ------> 
+
+
+PARA ISSO,
+
+ELE PRECISA TER UM 
+
+
+'MAPPING' 
+
+
+DE __''''QUANTO CUSTA CADA INGREDIENT''''...
+
+
+
+
+
+--> PARA ISSO, O PROFESSOR VAI CRIAR __UMA NOVA CONSTANTE __ GLOBAL 
+
+
+em 
+
+
+'BurgerBuilder'... -------> 
+
+
+de nome 
+
+'INGREDIENT_PRICES'  ---------> NÓS GERALMENTE 
+
+
+NOMEAMOS CONSTANTES GLOBAIS __ COM LETRAS __MAIÚSCULAS...
+
+
+
+
+ex:
+
+
+
+
+const INGREDIENT_PRICES = {
+
+}
+
+
+
+
+
+------------------------------
+
+
+
+ISSO SERÁ UM OBJETO JAVASCRIPT 
+
+
+em que 
+
+vamos colocar alguns 
+
+valores... valores/preços dos ingredients...
+
+
+
+
+--> 
+
+salad: 0.5,
+ 
+cheese: 0.4, 
+
+meat: 1.3, 
+
+bacon: 0.7 
+
+
+----------------------------------
+
+
+ex:
+
+
+
+
+
+const INGREDIENT_PRICES = {
+
+
+
+
+salad: 0.5,
+ 
+cheese: 0.4, 
+
+meat: 1.3, 
+
+bacon: 0.7 
+
+
+
+}
+
+
+
+--------------------------------
+
+
+
+CERTO.
+
+ISSO FEITO, 
+
+
+AGORA O PROFESSOR VAI 
+
+QUERER __UPDATAR__ AQUELA 
+
+
+propriedade 
+
+
+'totalPrice' 
+
+LÁ 
+
+no 
+
+'state' (que tem um valor inicial de 4)
+
+
+
+
+DE ACORDO COM OS INGREDIENTS QUE VÃO SENDO ADICIONADOS... ---> 
+
+
+
+OU SEJA,
+
+
+
+ESSE 'VALOR INICIAL' (totalPrice) 
+
+
+DEVERÁ 
+
+
+SOFRER 
+
+UMA 
+
+ADIÇÃO 
+
+DE VALOR 
+
+
+SEMPRE QUE 
+
+ALGUM INGREDIENT É ADICIONADO....  (ingredients variam 
+
+de acordo com O SEU 
+
+
+'TYPE'... )
+
+
+
+
+
+
+
+---> O professor diz que SABE 
+
+
+que 
+
+
+' A ADIÇÃO DE PREÇO' (priceAddition) 
+
+
+É IGUAL
+ 
+
+ A  ('=') 
+
+
+
+
+ ''''INGREDIENT_PRICES[type]'''' ----> isso vai nos dar O VALOR DA PROPRIEDADE DE MESMO NOME ('[type]', negócio variável) QUE ESTÁ EM 'INGREDIENT_PRICES'...
+
+
+
+
+
+
+ EX(REPRESENTAÇÃO):
+
+
+
+
+
+
+
+const INGREDIENT_PRICES = {
+salad: 0.5,
+cheese: 0.4, 
+meat: 1.3, 
+bacon: 0.7 
+}
+
+
+
+class BurgerBuilder extends Component { 
+
+
+
+
+
+  state = {
+    ingredients: {
+      salad: 0,
+      bacon: 0,
+      cheese: 0,
+      meat: 0
+    }, 
+    totalPrice: 4 //valor INICIAL do BUrger... sempre será '4'.
+  };
+
+  
+  addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceAddition = INGREDIENT_PRICES[type]; /////EIS O CÓDIGO EM QUESTÃO.
+
+
+  }
+}
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+Certo... mas é 
+
+
+claro que o professor 
+
+NÃO VAI PARAR POR AÍ... --> certo,
+
+
+ele 
+
+CONSEGUIU O VALOR DA 'ADIÇÃO DE PREÇO' ao 
+
+'totalPrice'... ---> o que 
+
+ele vai ter que 
+
+fazer agora 
+
+
+É CHAMAR 
+
+
+'this.setState()' 
+
+
+
+E ENTÃO 
+
+DEFINIR 
+
+O NOVO STATE COMO 
+
+
+sendo 
+
+
+'{
+ totalPrice + priceAddition
+}' (PROVAVELMENTE...)....
+
+
+
+
+
+
+E ELE FARÁ ISSO PROVAVELMENTE POR MEIO DE UMA CONSTANTE SEGURANDO ESSE VALOR...
+
+
+ex(EU ACHO QUE SERÁ ASSIM):
+
+
+  const priceAddition = INGREDIENT_PRICES[type]; 
+
+  const oldPrice = this.state.totalPrice;
+
+  const newPrice = oldPrice + priceAddition;
+
+
+  this.setState({
+    totalPrice: newPrice
+  })
+
+  -----------------------------------
+
+
+
+
+
+
+  COMO NÓS 
+
+
+  SEMPRE ADICIONAREMOS ___1 ÚNICA UNIDADE___  DE UM DADO INGREDIENTE,
+
+  NÓS NÃO PRECISAMOS ESCREVER CÓDIGO ALGUM COM MULTIPLICADORES...
+
+
+
+  -------------------------------------
+
+
+
+
+  CERTO... AQUELE CÓDIGO QUE EU ESCREVI ALI EM CIMA ESTÁ CERTO,
+
+  MAS ESQUECEMOS 
+
+
+  DE UPDATAR TAMBÉM A PROPRIEDADE 'ingredients',
+
+
+  que agora ficará 
+
+  'ingredients: updatedIngredients'...
+
+
+
+  ex:
+
+
+
+  
+const INGREDIENT_PRICES = {
+salad: 0.5,
+cheese: 0.4, 
+meat: 1.3, 
+bacon: 0.7 
+}
+
+
+
+class BurgerBuilder extends Component { 
+
+
+
+
+
+  state = {
+    ingredients: {
+      salad: 0,
+      bacon: 0,
+      cheese: 0,
+      meat: 0
+    }, 
+    totalPrice: 4 //valor INICIAL do BUrger... sempre será '4'.
+  };
+
+  
+  addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceAddition = INGREDIENT_PRICES[type]; 
+
+    const oldPrice = this.state.totalPrice;
+
+    const newPrice = oldPrice + priceAddition;
+
+
+  this.setState({
+    totalPrice: newPrice, ingredients: updatedIngredients ///////EIS O CÓDIGO EM QUESTÃO.
+  })
+
+
+  }
+}
+
+
+
+
+-----------------------
+
+
+
+
+CERTO...
+
+
+
+ESSE, PORTANTO, É O 'STATE UPDATE' QUE 
+
+
+O PROFESSOR 
+
+QUER 
+
+FAZER __SEMPRE QUE ___ UM NOVO 'INGREDIENT'__ É ADICIONADO... ----> updatar 
+
+
+OS INGREDIENTS___ E UPDATAR O PRICE__...  --> com isso,
+
+
+DEVEMOS 
+
+
+__HOOKAR___ NOSSO 
+
+
+'addIngredientHandler' 
+
+
+AO NOSSO 
+
+BOTÃO/BOTÕES 'More'... --> PARA ISSO,
+
+
+VOU PRECISAR 
+
+PASSAR UM 'PROP/PROPERTY' 
+
+
+
+AO COMPONENT 
+'BuildControls'... ----> PROFESSOR VAI SIMPLESMENTE ADICIONAR UMA PROPRIEDADE 
+
+
+
+de nome 
+
+'ingredientAdded={}'...
+
+
+
+ex:
+
+
+
+
+<BuildControls 
+ingredientAdded={this.addIngredientHandler}
+
+/>
+
+
+
+------------------------
+
+
+
+
+
+
+
+
+
+
+----> PROFESSOR ENTÃO EXPLICA QUE lá em 
+
+'BuildControls.js'
+
+
+EU TENHO 
+
+QUE 
+
+'SPREAD' 
+
+essa propriedade 
+
+'ingredientAdded'
+
+
+DE FORMA CORRETA... ------> LÁ NO 
+
+
+'BUILDCONTROLS',
+
+o professor explica que 
+
+ELE PRECISA 
+
+PASSAR ESSA PROPRIEDADE 
+
+
+AOS 
+
+COMPONENTS INDIVIDUAIS
+
+'BuildControl'...
+
+
+
+------------------------
+
+
+
+---> certo... esse método 'addIngredientHandler', PORTANTO,
+
+FOI passado
+
+COMO PROP 
+
+aos components 
+
+
+individuais 
+
+'BuildControl'... ---> ENTRETANTO, 
+
+
+
+EU ___tAMBÉM___ PRECISO, É CLARO, 'KEEP TRACK OF' (manter em mente/considerar/acompanhar)
+
+
+
+O 
+
+___TYPE____ QUE 
+
+ESSE 'BUILD CONTROL' é.... (qual TYPE __esse 'BUILDCONTROL', esse componente, TEM...) -----> 
+
+
+
+
+
+
+E aí o professor explica que 
+
+nós JUSTAMENTE 
+
+TEMOS A PROPRIEDADE 
+
+
+'type' lá no NOSSO ARRAY 
+
+
+DE 
+
+'controls' (
+
+  'const controls = [
+          { label: 'Salad', type: 'salad' },
+    { label: 'Bacon', type: 'bacon' },
+    { label: 'Cheese', type: 'cheese' },
+    { label: 'Meat', type: 'meat' }
+  ]
+'
+
+
+
+)
+
+
+
+PQ NÓS UTILIZAMOS ESSA PROPRIEDADE __PARA __ CRIAR 
+
+TODOS ESSES COMPONENTS 
+
+'BuildControl' 
+
+(pois eles têm um código de 
+
+''''
+
+
+    <BuildControl key={ctrl.label}
+                      label={ctrl.label} 
+                      
+                      added={props.ingredientAdded}/>
+
+
+
+''''''
+)
+
+
+
+
+
+--> É POR ISSO QUE EU __PROVAVELMENTE (na verdade, 'REALMENTE' ) 
+
+
+VOU TER 
+
+QUE 
+
+
+PASSAR UM PROP DE 'type', com um 
+
+valor 
+
+de 
+
+
+'ctrl.type'....
+
+
+ex:
+
+''''''''''''''''''
+
+    <BuildControl key={ctrl.label}
+                      label={ctrl.label} 
+                      type={ctrl.type}
+                      added={props.ingredientAdded}/>
+''''''''''''''''''''
+
+
+
+
+-----------------------------
+
+
+SIM.... E O PROFESSOR ADMITE QUE ELE ___PODERIA FAZER ISSO__.... -----> MAS 
+
+
+
+ELE DIZ QUE ISSO SERIA __ESSENCIALMENTE ___ UM LOOP EXTRA __dESNECESSÁRIO__... ---> pq se 
+
+ele escrevesse esse código,
+
+
+ELE ESTARIA IMPLEMENTANDO UM 
+'CLICK LISTENER' NO 
+
+
+'BuildControl.js' 
+
+
+QUE APENAS FARIA O RETURN DE TUDO 'BACK UP AGAIN'... -------> 
+
+
+
+É POR ISSO QUE ELE DIZ QUE VAI 
+
+__oMITIR__ ESSA LINHA de 'type={...}' ------> ELE VAI 
+
+
+__OMITIR__ ESSA LINHA...
+
+
+
+ex:
+
+
+
+
+
+
+    <BuildControl key={ctrl.label}
+                      label={ctrl.label} 
+//OMITIU
+                      added={props.ingredientAdded}/>
+
+
+
+-------------------------------------
+
+
+
+ELE VAI APAGAR ESSA LINHA 
+
+E ENTÃO 
+
+
+VAI ESCREVER AQUELA SINTAXE QUE 
+
+ELE NOS MOSTROU HÁ TEMPOS, 
+
+aquela sintaxe ES6/ARROW FUNCTION 
+
+
+que 
+
+executa 
+esse prop/handler....
+
+
+ex:
+
+
+
+
+    <BuildControl key={ctrl.label}
+                      label={ctrl.label} 
+
+                      added={() => {props.ingredientAdded()}}/> ///////EIS O CÓDIGO EM QUESTÃO....
+
+
+
+(e NÓS TEMOS ACESSO AO 'ctrl.type' JUSTAMENTE PQ ESTAMOS 
+
+DENTRO DESSE LOOP DE '.map(ctrl => {
+  <BuildControl 
+  ......
+  />
+})')
+
+
+
+------------------------------------------
+
+
+
+ELE FARÁ ISSO 
+
+
+PARA QUE SIMPLESMENTE 
+
+
+ESSA EXECUÇÃO DESSA FUNÇÃO __SEJA __ CAPAZ DE 
+
+
+'MANDAR DE VOLTA' (send BACK) 
+
+
+
+O PARÂMETRO DE 
+
+
+'ctrl.type' --------> pq 
+
+
+esse parâmetro aí, que é EXATAMENTE O 'type' DO OBJETO/ingredient que queremos,
+
+
+
+VAI SER 
+
+USADO/PASSADO 
+
+
+COMO VALOR/PARÂMETRO 
+
+'type' 
+
+
+NA FUNÇÃO 
+
+
+DE 
+
+'addIngredientHandler = (type) => {
+  ...
+}'
+
+
+
+LÁ 
+
+
+NO 
+
+
+COMPONENT 
+
+'BurgerBuilder'... ------------> E ISSO FARÁ COM QUE 
+
+
+NÃO DEIXE DE SER NECESSÁRIO O 
+
+USO 
+
+DE 
+
+'context' 
+
+PARA REDUZIR O 'PASS-AROUND' intensivo de props no nosso código... (bem impressionante).
+
+
+
+(E é por isso que vamos apagar/desabilitar o 
+
+
+'TypeContext' que havíamos criado...)
+
+
+
+
+
+
+
+
+---------------------------
+
+
+
+CERTO.
+
+
+
+CONSEGUIMOS 
+
+
+FAZER O BOTÃO 
+
+
+'MORE' FUNCIONAR... --> ele REALMENTE ADICIONA MAIS INGREDIENTS AO NOSSO HAMBURGER,
+
+E TUDO CERTINHO... --> adiciona sempre o ingredient em que apertamos no botão.
+
+
+
+
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+CERTO...
+
+NOSSO FLOW DE EXECUÇÃO ESTÁ FUNCIONANDO...
+
+
+CÓDIGO DE 'BuildControl.js':
+
+
+
+----------------------------------------------------
+
+
+
+
+
+import React from 'react';
+
+
+import BuildControlStyle from './BuildControl.module.css';
+
+
+
+
+
+const buildControl = (props) => {
+    
+   return <div className={BuildControlStyle.BuildControl}>
+        <div className={BuildControlStyle.Label}>{props.label}</div>
+        <button className={BuildControlStyle.Less} >Less</button>
+        <button className={BuildControlStyle.More} onClick={() => {props.added()}}>More</button>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+export default buildControl;
+
+
+
+
+--------------------------------------
+
+
+
+
+
+o 'onClick' é VITAL, aqui....
+
+
+
+
+PRÓXIMA ETAPA É HABILITAR A FUNÇÃO DE 'REMOVE INGREDIENTS' 
+
+do nosso aplicativo...

@@ -1,0 +1,2390 @@
+
+
+
+
+
+
+NESSE NOSSO PROJETO,
+
+VAMOS 
+
+
+'FAKAR' 
+
+
+UM 
+
+
+MECANISMO 
+
+DE 
+
+AUTORIZAÇÃO (auth mechanism....) --------> 
+
+
+
+
+O PROFESSOR 
+NÃO VAI 
+
+ADICIONAR AUTHENTICATION 
+
+
+DE VERDADE 
+
+
+NESSE 
+
+NOSSO PROJETO,
+
+
+
+
+DEVEMOS CHECAR 
+
+O MÓDULO SOBRE 'auth'
+
+
+PARA APRNEDER SOBRE ISSO... --> MAS É EVIDENTE QUE 
+
+VOCÊ 
+
+PODE 
+
+REPLICAR/IMPLEMENTAR 
+
+
+O APPROACH MOSTRADO NAQUELE 
+MÓDULO 
+
+
+__COM OS HOOKS ___E EFFECTS __ MOSTRADOS NESTE MÓDULO AQUI...
+
+
+
+
+
+
+
+
+--> AQUI, 
+
+meu 
+
+component 
+
+'Auth'
+ 
+
+ VAI TER UM 
+
+ __SIMPLES 
+
+ 'button'...
+
+
+
+ ex:
+
+
+
+
+import React from 'react';
+
+const auth = (props) => {
+  return (
+      <button>Log in!</button>
+  )
+
+};
+
+export default auth;
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+VOU FAKAR 'LOGIN' POR MEIO DESSE BUTTON... --> 
+
+
+UMA 
+
+COISA QUE 
+EU VOU QUERER 
+
+FAZER AQUI É:
+
+
+SEMPRE QUE 
+
+ESSE 'BUTTON' FOR CLICADO,
+
+eu OBVIAMENTE 
+
+VOU QUERER 
+SETTAR 
+
+
+O 
+
+STATE 
+
+DESSE COMPONENT 
+
+
+
+para ficar 'loggedIn = true',
+
+ou algo assim.... ---->  MAS 
+
+A DIFERENÇA,
+
+AQUI,
+
+É QUE 
+
+VOU QUERER 
+
+SETTAR 
+
+ESSE 
+
+STATE 
+
+AÍ __ POR MEIO __ DA 
+
+'CONTEXT API'... -----------> 
+
+
+
+
+
+
+
+SE VOCÊ NÃO TEM CERTEZA DO QUE É A 
+
+
+
+
+'CONTEXT API'
+
+e como ela funciona,
+
+
+VOCÊ DEVE 
+
+CHECAR 
+
+A SEÇÃO 
+
+
+
+7, 
+
+que fala um pouco sobre ela... ---> TAMBÉM 
+
+
+te mostra 
+
+COMO 
+
+VOCÊ 
+A UTILIZA 
+
+
+
+COM AS DIFERENTES 
+
+VERSÕES
+ 
+
+ DO REACT... ---> a 
+
+
+ 'context API' 
+
+ É 
+
+ UMA 
+
+
+ API 
+
+ BEM NEAT__ QUE TE DEIXA __ PASSAR 
+
+
+ STATE/valores ___ AO LONGO DE SUA COMPONENT TREE 
+
+
+
+ _SEM PRECISAR PASSAR 'props' O TEMPO INTEIRO... ( e sem precisar usar REDUX...)....
+
+
+
+
+
+
+
+ --> E O PROFESSOR QUER USAR 
+
+ ESSA API AQUI... ------> 
+
+
+
+
+
+
+ para isso,
+
+ PROFESSOR 
+
+ VAI CRIAR UM NOVO ARQUIVO,
+ CHAMADO 
+
+ DE 
+ 'auth-context.js',
+
+
+ NO __ROOT__ de 
+
+ nosso 
+
+ folder 
+
+ 'src'...
+
+
+
+
+
+
+ --> dentro 
+
+ desse arquivo,
+ professor 
+
+ vai 
+
+ 'import React from 'react';
+
+
+
+
+
+
+
+
+ --> DEPOIS DISSO,
+
+ PROFESSOR 
+
+ VAI CRIAR UM 'OBJETO' 
+
+ authContext,
+
+ POR MEIO 
+
+ DESSA SINTAXE:
+
+
+
+
+
+
+
+
+ const authContext = React.createContext();
+
+
+
+
+
+
+
+
+
+
+
+ tudo isso NO ARQUIVO DE 
+
+ 'auth-context.js'...
+
+
+ --------------------------
+
+
+ VOCÊ 
+
+ PODE 
+
+ DAR 
+
+
+
+ A 
+
+ ESSE 
+
+ 'context' 
+ UM 
+
+ __VALOR DEFAULT_ (default value),
+
+
+
+
+
+ E AQUI,
+  O PROFESSOR 
+
+
+  VAI MANTER AS COISAS SIMPLES 
+  E VAI 
+
+  DEFINIR 
+
+  ESSE 
+
+  VALOR 
+
+  COMO 
+
+  'false'...
+
+
+
+  ex:
+
+
+
+
+
+import React from 'react';
+
+const authContext = React.createContext(false);
+
+
+---------------------------------------
+
+
+
+
+
+PROFESSOR VAI QUERER PASSAR 
+
+'false'
+
+JUSTAMENTE 
+PQ 
+
+ELE 
+
+VAI QUERER 
+
+QUE 
+
+O USUÁRIO COMECE 
+
+COMO 
+'unauthenticated'.... -----> ENTRETANTO,
+
+professor 
+
+
+nos explica que 
+
+esse parâmetro 
+
+poderia 
+
+
+ser qualquer coisa, 
+
+
+um 
+
+
+
+objeto, um número, 
+
+etc etc... ----> aqui, porém, será um simples boolean de 'false'..
+
+
+
+
+
+
+
+
+
+
+
+
+--> DEPOIS DISSO, PROFESSOR EXPORTA 
+
+ESSE 
+
+'authContext'..
+
+
+
+-------------------------
+
+
+
+
+--> VAMOS IMPORTAR E USAR 
+
+
+
+ESSE 
+
+'authContext'
+
+
+LÁ 
+
+
+EM 
+
+'App.js'... ---> você deve o importar COM UM 
+
+'A' maiúsculo,
+
+PQ 
+
+NÓS VAMOS O UTILIZAR COMO SE ELE FOSSE UM COMPONENT...
+
+
+
+
+ex:
+
+
+
+
+import AuthContext from './auth-context';
+
+
+
+
+-------------------------------------
+
+
+
+ISSO 
+
+FEITO,
+
+
+VAMOS 
+
+
+TER DE USAR 
+
+AQUILO
+
+QUE 
+
+
+SE CHAMA 
+
+DE 
+
+'Provider', EXISTENTE DENTRO DESSE OBJETO 'context'... 
+
+(tipo 
+
+'<AuthContext.Provider />'...)
+
+
+
+
+
+
+
+
+--> VAMOS SIMPLESMENTE WRAPPAR TODO 
+
+NOSSO CÓDIGO JSX COM 
+
+ESSE 
+
+
+PROVIDER...
+
+
+
+
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+DEVE-SE WRAPPAR TODOS 
+
+
+OS CÓDIGOS JSX/components jsx 
+
+QUE 
+VÃO PODER 
+RECEBER 
+
+O 
+
+'context' que desejamos... --> no nosso caso e do professor,
+
+
+é 
+
+o 
+
+HEADER 
+e 
+a 
+PAGE EM SI....
+
+
+eX:
+
+
+
+
+  return (
+    <div className="App">
+         <AuthContext.Provider>
+      <Header onLoadTodo={onLoadTodo} onLoadAuth={onLoadAuth} />
+      <hr></hr>
+      {page}
+      </AuthContext.Provider
+    </div>
+    </Provider>
+  );
+};
+
+
+
+
+
+
+--------------------------------
+
+
+ISSO FEITO,
+
+REALIZADO 
+
+ESSE SETUP,
+
+PODEREMOS 
+
+'TAP INTO THIS CONTEXT'
+
+
+EM QUALQUER 
+
+LUGAR
+ 
+ DENTRO 
+
+ DESSE '''wrap''' 
+ do provider....  --> e 
+
+ se fizermos isso,
+
+ poderemos 
+
+ pegar 
+
+
+ ESSE VALOR 
+
+
+ DE 'auth' 
+
+ original/originário,
+
+ que 
+ é 
+
+ 'false',
+
+ como definido em 
+
+ 'auth-context.js'... (esse valor também pode/poderá ser QUALQUER VALOR QUE DEFINIMOS PARA ELE, NO MEIO TERMO...) ---> ISSO 
+
+
+
+ SIGNIFICA,
+
+
+
+ ESSENCIALMENTE,
+
+ QUE 
+
+
+ NÃO PRECISAMOS 
+
+ FAZER UM 
+
+ PASS 
+
+ REPETITIVO 
+
+ E CHATO 
+
+
+ DO 
+
+ VALOR 
+
+
+
+ DO 'status'
+
+
+ LÁÁÁÁA 
+
+ de 
+
+ 'App.js'
+
+
+PARA 
+
+
+'Header' 
+
+
+e 
+para 
+
+a 
+
+'page' (que pode ser 'Todo' ou 'Auth'),
+
+TUDO 
+
+PQ 
+
+
+ESSE O VALOR 
+
+DESSE  NEGÓCIO VAI SER PASSADO AUTOMATICAMENTE 
+
+por meio desse provider...
+
+
+
+
+--> isso quer dizer, essencialmente,
+que não 
+
+há necessidade 
+
+de 
+
+passar 
+
+o 
+
+status de 'AUTh' ( ou seja qual for o nome da propriedade que vamos criar para determinar 
+o status de autorização do usuário; não importa)
+
+como 
+
+prop 
+
+para 
+
+nossos components 
+
+de 
+
+'<Header >', 
+
+'<Todo />'
+
+e 
+'<Auth />',
+
+JUSTAMENTE PQ 
+
+
+OS 
+
+
+3 VÃO RECEBER 
+
+O VALOR DESSE 
+
+STATE AUTOMATICAMENTE 
+
+por meio de 
+
+'<AuthContext.Provider/>', 
+
+QUE 
+
+
+
+__OS ESTÁ WRAPPANDO__...
+
+
+
+
+-----------------------------
+
+
+
+----> certo... o que podemos fazer, com esse component 'AuthContext',
+
+É UMA GAMBIARRA.... --> 
+
+o professor 
+
+vai 
+
+criar uma 
+
+
+nova constante 
+
+
+DENTRO 
+
+DO COMPONENT 
+
+'App'........ --> 
+
+
+essa constante 
+
+
+SEGURARÁ UMA FUNÇÃO... ---> professor chamará 
+essa const 
+
+de 
+'login'...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+const App = (props) => {
+  const [currentPage, setCurrentPage] = useState('');
+
+  const onLoadAuth = () => {
+    console.log('test');
+    setCurrentPage('auth');
+  };
+
+  const onLoadTodo = () => {
+    console.log('test');
+    setCurrentPage('todo');
+  };
+
+
+    const login = () => { ///EIS O CÓDIGO EM QUESTÃO.
+
+    }
+
+  let page = <div></div>;
+
+  if (currentPage === 'auth') {
+    page = <Auth />;
+  }
+
+  if (currentPage === 'todo') {
+    page = <Todo />;
+  }
+
+  return (
+      <AuthContext.Provider>
+    <div className="App">
+      <Header onLoadTodo={onLoadTodo} onLoadAuth={onLoadAuth} />
+      <hr></hr>
+      {page}
+    </div>
+    </AuthContext.Provider>
+  );
+};
+
+
+-------------------------------------
+
+
+
+
+
+
+--> DENTRO DESSE NEGÓCIO,
+
+
+VAMOS QUERER
+ __MUDAR
+  
+  AQUELE VALOR 
+
+  DO 
+
+  'authStatus' (que está como 'false', justamente por causa de sua 
+  
+  definição 
+  
+  em 
+  
+  'authContext.js'...) ------> PARA ISSO,
+
+
+
+  O PROFESSOR 
+
+  PRIMEIRAMENTE 
+
+  VAI USAR 
+
+
+  o hook de 
+
+'useState'
+ 
+ para 
+
+ CRIAR 
+
+ A PROPRIEDADE/STATE de 
+
+
+
+ 'authStatus'
+
+
+ NO ''''STATE'''' desse functional component...
+
+
+
+ ex:
+
+
+
+
+
+
+ 
+const App = (props) => {
+  const [currentPage, setCurrentPage] = useState('');
+  const [authStatus, setAuthStatus] = useState(false); /////////EIS O CÓDIGO EM QUESTÃO.
+
+  const onLoadAuth = () => {
+    console.log('test');
+    setCurrentPage('auth');
+  };
+
+  const onLoadTodo = () => {
+    console.log('test');
+    setCurrentPage('todo');
+  };
+
+
+    const login = () => { ///EIS O CÓDIGO EM QUESTÃO.
+
+    }
+
+  let page = <div></div>;
+
+  if (currentPage === 'auth') {
+    page = <Auth />;
+  }
+
+  if (currentPage === 'todo') {
+    page = <Todo />;
+  }
+
+  return (
+      <AuthContext.Provider>
+    <div className="App">
+      <Header onLoadTodo={onLoadTodo} onLoadAuth={onLoadAuth} />
+      <hr></hr>
+      {page}
+    </div>
+    </AuthContext.Provider>
+  );
+};
+
+
+----------------------------------------------------
+
+
+
+
+CERTO... --> E É NESSA LINHA 
+
+QUE 
+
+
+
+VAMOS ___FAZER 'MANAGE' DO AUTHENTICATION STATUS.... -----> isso signfica que 
+
+
+AQUI É QUE 'INTERESSA', QUANDO FALAMOS DE 'auth-context.js'... ----> SIM,
+
+lá 
+
+
+em 
+
+'auth-context.js'
+
+O INICIALIZAMOS, DEFINIMOS SEU VALOR INICIAL,
+mas 
+
+__É SEU VALOR NESSE STATE __ DO NOSSO FUNCTIONAL COMPONENT __ 
+
+
+QUE VAI REALMENTE IMPORTAR... --------> PROFESSOR 
+
+
+DIZ QUE 
+
+
+ELE VAI/NÓS DEVEMOS __ FAZER 'MANAGE' DESSE 
+
+STATE 
+
+DE 
+
+
+'authStatus' (que começa como 'false')
+
+
+__JUSTAMENTE PQ ISSO NÃO É UM 'ONE TIME VALUE' QUE VAMOS PASSAR.... (ele não vai ser sempre FALSE, ele vai mudar para TRUE, vai ser eventualmente DINÂMICO... )
+
+------------------
+
+
+
+
+CERTO.... ---> O PROFESSOR VAI FAZER MANAGE DESSE 
+'
+context'     COMO UM 
+
+'STATE'
+
+DENTRO 
+
+DESSE 
+NOSSO 
+
+'ROOT COMPONENT', App.js... (isso é um PADRÃO COMUM PARA 'context'...) ---------> 
+
+
+
+
+
+DEPOIS DISSO,
+
+
+__O PROFESSOR ___ 
+
+
+VAI 
+
+PASSAR 
+
+
+O STATE de  
+
+'authStatus'
+
+COMO UM 
+
+VALOR ___ PARA __ O 
+
+
+'<AuthContext.Provider />'
+
+no App.js... --------> E ISSO 
+
+VAI ___oVERWRITTAR__ 
+O 
+
+DEFAULT VALUE 
+
+de 
+
+'false' de 
+
+'authContext'
+
+QUE HAVÍAMOS DEFINIDO 
+LÁ EM 'auth-context.js',
+por meio 
+
+daquele código de 
+
+
+
+''''
+
+
+import React from 'react';
+
+const authContext = React.createContext(false);
+
+
+
+
+export default authContext;
+
+
+
+'''''''''''
+
+
+
+
+
+
+
+
+
+
+-----> CERTO.... E QUANDO O PROFESSOR __ DE FATO __ FIZER LOGIN,
+
+ELE VAI QUERER 
+
+
+
+CHAMAR 
+
+
+'setAuthStatus()'.... --> POR ISSO VAMOS ESCREVER 
+
+'setAuthStatus()'
+
+DENTRO 
+
+DO 
+
+MÉTODO 
+'login'...
+
+ex:
+
+
+
+
+
+ 
+const App = (props) => {
+  const [currentPage, setCurrentPage] = useState('');
+  const [authStatus, setAuthStatus] = useState(false); /////////EIS O CÓDIGO EM QUESTÃO.
+
+  const onLoadAuth = () => {
+    console.log('test');
+    setCurrentPage('auth');
+  };
+
+  const onLoadTodo = () => {
+    console.log('test');
+    setCurrentPage('todo');
+  };
+
+
+    const login = () => { ///EIS O CÓDIGO EM QUESTÃO.
+
+      setAuthStatus() 
+    }
+
+  let page = <div></div>;
+
+  if (currentPage === 'auth') {
+    page = <Auth />;
+  }
+
+  if (currentPage === 'todo') {
+    page = <Todo />;
+  }
+
+  return (
+      <AuthContext.Provider>
+    <div className="App">
+      <Header onLoadTodo={onLoadTodo} onLoadAuth={onLoadAuth} />
+      <hr></hr>
+      {page}
+    </div>
+    </AuthContext.Provider>
+  );
+};
+
+
+
+------------------------
+
+
+
+
+
+DENTRO 
+
+DESSE NEGÓCIO, VAMOS JUSTAMENTE 
+PASSAR 
+
+'true'
+
+COMO PARÂMETRO,
+PARA QUE 
+
+
+O VALOR DE 
+'authStatus', no STATE desse COMPONNET 'App.js',
+
+FIQUE 
+
+COMO 
+
+'true' em vez de false... (será trocado de 'false' para 'true'..)
+
+
+-------------------------------
+
+
+
+
+
+EX:
+
+
+
+
+
+
+ 
+const App = (props) => {
+  const [currentPage, setCurrentPage] = useState('');
+  const [authStatus, setAuthStatus] = useState(false); /////////EIS O CÓDIGO EM QUESTÃO.
+
+  const onLoadAuth = () => {
+    console.log('test');
+    setCurrentPage('auth');
+  };
+
+  const onLoadTodo = () => {
+    console.log('test');
+    setCurrentPage('todo');
+  };
+
+
+    const login = () => { ///EIS O CÓDIGO EM QUESTÃO.
+
+      setAuthStatus(true); ///////EIS O CÓDIGO EM QUESTÃO.
+    }
+
+  let page = <div></div>;
+
+  if (currentPage === 'auth') {
+    page = <Auth />;
+  }
+
+  if (currentPage === 'todo') {
+    page = <Todo />;
+  }
+
+  return (
+      <AuthContext.Provider>
+    <div className="App">
+      <Header onLoadTodo={onLoadTodo} onLoadAuth={onLoadAuth} />
+      <hr></hr>
+      {page}
+    </div>
+    </AuthContext.Provider>
+  );
+};
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+CERTO... ISSO FEITO,
+
+
+
+AGORA DEVEMOS 
+
+ADICIONAR UM CERTO 
+
+CÓDIGO 
+
+NO 
+
+
+COMPONENT 
+
+de 
+
+'AuthContext.Provider'... --> 
+
+VAMOS 
+ESCREVER 
+
+UM PROP 
+
+DE 
+
+'value' 
+
+NELE,
+
+e o
+
+
+
+
+VALOR DESSE PROP 
+
+VAI __ SER UM OBJETO _ JAVASCRIPT__ ({})  (isso significa que VAMOS DEIXAR DE USAR UM BOOLEAN como valor de nosso 'AUTHCONTEXT')... ----> 
+
+
+
+VAMOS QUERER 
+UM 
+
+
+__OBJECT__ pq ___ ALÉM DE DEFINIRMOS 
+
+UM VALOR 
+
+DE 
+'status' COMO SENDO SIMPLESMENTE O VALOR DE 
+
+'authStatus', AQUELA VARIÁVEL
+ 
+
+ __QUE VEM DO MEU STATE,
+
+
+ NÓS 
+
+ TAMBÉM 
+
+
+
+
+____VAMOS QUERER PASSAR/ESCREVER UM SEGUNDO FIELD,
+
+FIELD 
+que 
+
+será chamado de login (nome de nossa escolha....) --> 
+
+o login, 
+
+POR SUA VEZ,
+
+
+__vaI APONTAR__ A MINHA FUNÇÃO 
+
+DE 
+
+'login', que tenho mais acima...
+
+
+
+ex:
+
+
+
+
+
+
+
+const App = (props) => {
+  const [currentPage, setCurrentPage] = useState('');
+  const [authStatus, setAuthStatus] = useState(false); 
+
+  const onLoadAuth = () => {
+    console.log('test');
+    setCurrentPage('auth');
+  };
+
+  const onLoadTodo = () => {
+    console.log('test');
+    setCurrentPage('todo');
+  };
+
+
+    const login = () => {
+
+      setAuthStatus(true); 
+    }
+
+  let page = <div></div>;
+
+  if (currentPage === 'auth') {
+    page = <Auth />;
+  }
+
+  if (currentPage === 'todo') {
+    page = <Todo />;
+  }
+
+  return (
+      <AuthContext.Provider value={{status: authStatus, login: login}}> ///EIS O CÓDIGO EM QUESTÃO.
+    <div className="App">
+      <Header onLoadTodo={onLoadTodo} onLoadAuth={onLoadAuth} />
+      <hr></hr>
+      {page}
+    </div>
+    </AuthContext.Provider>
+  );
+};
+
+
+
+------------------
+
+
+
+
+RESUMINDO:
+
+'login' --> será um POINTER à FUNÇÃO DE 'const login = () => {setAuthStatus(true)}'
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+--> OK,
+
+
+
+
+
+PROFESSOR REPETE A EXPLICAÇÃO:
+
+
+
+NOSSO 
+
+
+
+'AuthContext' 
+
+AGORA, com essa definição/escrita aí,
+
+É UM 
+
+__OBJETO JAVASCRIPT__ 
+
+
+
+
+
+
+QUE ____ SEGURA___ O 'CURRENT STATUS' de autenticação,
+
+
+E ESSE VALOR É UM ___BOOLEAN__ (pode ser ou TRUE, ou FALSE, dependendo de como está 
+o STATE (authStatus) de nosso component 'App'...) ----------------->
+
+
+ALÉM DISSO,
+
+ALÉM DE SEGURAR ESSE 'CURRENT STATUS' de autenticação,
+
+ESSE 
+
+CONTEXT__ TAMBÉM __ SEGURA __ UM MÉTODO/FUNÇÃO __ QUE SE EXECUTADA/EXECUTADO __ ALTERA___ 
+
+O VALOR DESSE BOOLEAN ('login' é a função...) ------------>
+
+
+ex:
+
+
+
+
+      <AuthContext.Provider value={{status: authStatus, login: login}}> ///EIS O CÓDIGO EM QUESTÃO.
+    <div className="App">
+      <Header onLoadTodo={onLoadTodo} onLoadAuth={onLoadAuth} />
+      <hr></hr>
+      {page}
+    </div>
+    </AuthContext.Provider>
+
+
+
+
+
+
+
+FEITO TODO ESSE SETUP,
+
+AGORA 
+
+DEVEMOS __USAR __ ESSE OBJETO 
+'AuthContext.Provider'... ---------> VAMOS QUERER 
+
+
+
+__USAR__ ESSE 
+
+
+CONTEXT 
+
+LÁ 
+
+
+NO COMPONENT 
+
+de 
+
+'Auth.js',
+
+pois 
+
+É LÁ QUE 
+
+EU VOU QUERER __ FAZER__ ALGUMA COISA___ QUANDO 
+
+O BUTTON 
+
+
+de 
+
+'Log in!' 
+
+FOR CLICADO...
+
+
+
+
+eis o código 
+
+daquele component:
+
+
+
+
+import React from 'react';
+
+const auth = (props) => {
+  <button>Log in!</button>
+};
+
+export default auth;
+
+
+
+
+
+---------------------
+
+
+
+
+
+
+PARA ISSO,
+
+PARA USAR 
+
+O NOSSO 
+
+
+'Provider',
+
+PROVAVELMENTE VAMOS TER DE USAR 
+
+AQUELA 
+
+PACKAGE/OBJETO DE 
+
+'Consumer'....
+
+
+
+tipo WRAPPAR MEU BUTTON 
+
+em 
+
+
+'<AuthContext.Consumer></>',
+
+
+CREIO EU... 
+
+
+
+
+
+
+
+
+--> PQ 
+
+ESSE 
+
+'Consumer'
+
+VAI NOS 
+
+DEIXAR __ CONSUMIR __ AQUELE 
+
+'Context'... 
+
+
+
+
+
+
+
+
+--> bem eu ACHAVA QUE EU ESTAVA CERTO,
+
+MAS ___ NA VERDADE,
+__ EU ESTAVA ERRADO.... --------> 
+
+PROFESSOR 
+
+NOS 
+
+EXPLICA QUE 
+O QUE 
+
+DEVE 
+
+SER USADO
+ 
+
+ É 
+ JUSTAMENTE 
+
+ AQUELE HOOK ESPECIAL/INTERESSANTE,
+
+
+o hook 
+
+de 
+
+'useContext()'....
+
+
+
+
+
+------> o 'useContext()' FAZ o 
+
+QUE 
+
+O NOME 
+
+SUGERE,
+
+ELE __VINCULA__/CONECTA__ 
+
+O COMPONENT 
+
+EM QUE 
+
+VOCÊ O CHAMA 
+
+
+__AO CONTEXT QUE VOCê QUER USAR...
+
+
+
+
+
+
+
+--> no caso desse component 
+
+'auth',
+
+
+
+
+O PROFESSOR 
+
+VAI 
+
+
+CRIAR UMA CONSTANTE 
+
+
+chamada 
+
+de 
+
+'auth',
+
+
+E SEU VALOR 
+SERÁ 
+
+UM ___STORE___ DE 
+
+
+'useContext()'...
+
+
+
+ex:
+
+
+
+
+
+
+import React from 'react';
+
+const auth = (props) => {
+
+  const auth = useContext(); ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+  return (<button>Log in!</button>)
+};
+
+export default auth;
+
+
+
+
+----------------------------------
+
+
+
+É __EVIDENTE__ QUE 
+
+esse 
+
+'useContext()'
+
+NÃO SE CONTENTA 
+
+COM UM SLOT DE PARÂMETRO VAZIO... ---> provavelmente 
+
+temos 
+
+de 
+passar 
+
+ 
+
+ O 
+ CONTEXT 
+
+ A QUE 
+
+ QUEREMOS 
+ VINCULAR ESSE COMPONETN 
+ 'auth'... ------->
+
+
+
+
+
+
+
+ MAS O PROFESSOR ENTÃO NOS EXPLICA ALGO BEM IMPORTANTE:
+
+
+
+ ***É POSSÍVEL/É FREQUENTE__ SITUAÇÕES __ EM QUE 
+
+HÁ MAIS DE 1 CONTEXT, no mesmo projeto/aplicativo... --> PORTANTO,
+
+
+PRECISAMOS DE __UM IDENTIFIER__ PARA 
+
+O 
+
+'context' QUE VAMOS QUERER 'tap into' POR MEIO 
+
+DESSE 
+
+
+'useContext()' 
+
+e essa constante 
+
+de 'auth' (que poderia ter sido nomeada como qualquer outra coisa)...
+
+
+
+
+
+
+
+
+
+----> O IDENTIFIER,
+
+NO CASO,
+
+
+É SIMPLESMENTE 
+
+AQUELE 
+'authContext' 
+
+
+
+EXPORTADO POR MEIO 
+
+
+DA LINHA 
+
+
+'export default authContext',
+
+LÁ 
+
+EM 
+
+'auth-context.js'...
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+CERTO, MAS ANTES DE MAIS NADA, PROFESSOR DIZ QUE 
+
+ELE QUER 
+
+FICAR COM UM 'AUTO-COMPLETION' MELHOR POR PARTE DO IDE... -> para que 
+
+O 
+
+IDE 
+
+__SE LIGUE MAIS QUE ISSO É UM 'CONTEXT OBJECT', 
+
+
+DEVEMOS 
+
+IR 
+
+ATÉ O CÓDIGO DE 'auth-context.js' E ENTÃO EDITAR O CÓDIGO de 
+
+'React.createContext(false);'... --------> 
+
+
+
+
+VAMOS TROCAR ESSE VALOR BOOLEAN POR UM OUTRO VALOR... --> 
+
+
+
+
+PROFESSOR NOS DIZ QUE DEVEMOS 
+
+USAR/PASSAR UM __OBJETO__ que terá 
+
+'status: false'
+
+e 
+
+uma key 
+
+de 
+
+'login' 
+
+QUE SERÁ 
+
+
+__UMA FUNÇÃO VAZIA (arrow)...
+
+
+EX:
+
+
+
+
+import React from 'react';
+
+// const authContext = React.createContext(false);  ////versão _BÁSICA __ de como usar arquivos 'context.js' para SETTAR/INICIALIZAR o valor de seus contexts... (OBS: essa versão aqui NÃO TE DÁ UM AUTO-COMPLETION TÃO BOM COM SEU IDE...)
+
+const authContext = React.createContext({status: false, login: () => {}});  ///MESMA COISA DE CIMA, mas essa 'inicialização' TE __DÁ UM MELHOR 'AUTO-COMPLETE' com o IDE, pq o '''''esqueleto'''' (cujo valor será substituído pelo valor do prop de 'value' lá em '<AuthContext.Provider />')  É MAIS BEM DEFINIDO, AQUI...
+
+
+export default authContext;
+
+
+
+--------------------------------------------------
+
+
+Eu entendo um pco o que ele diz PQ JÁ VI ESSE CÓDIGO ANTES,
+JÁ 
+VI ESSA DEFINIÇÃO/SETUP DESSE 
+
+'ESQUELETO' antes de usar 
+
+o 
+
+objeto 
+
+'<AuthContext />'...
+
+
+
+
+---> E OS VALORES QUE DEFINIMOS NESSE ARQUIVO DE 'auth-context.js' __NÃO INTERESSAM... --> são 
+
+valores iniciais que REALMENTE NÃO INTERESSAM... ---> NÃO INTERESSAM 
+PQ 
+
+SÃO 
+
+
+'OVERWRITED ANYWAYS' pelo código que temos em 'App.js', lá 
+
+por aquele 
+
+'value' 
+
+em 
+
+'<AuthContext.Provider />',
+
+COMO VISTO NESTE CÓDIGO:
+
+
+
+
+
+  return (
+      <AuthContext.Provider value={{status: authStatus, login: login}}>
+    <div className="App">
+      <Header onLoadTodo={onLoadTodo} onLoadAuth={onLoadAuth} />
+      <hr></hr>
+      {page}
+      {/* <Todo />
+          <Auth /> */}
+    </div>
+    </AuthContext.Provider>
+  );
+};
+
+
+
+
+
+
+Só fizemos esse 'ESQUELETO MELHORADO 'lá em 'authContext.js'
+ 
+ PARA 
+
+ TER MELHOR 'AUTO-COMPLETION' por parte do IDE...
+
+
+
+
+
+
+--> CERTO,
+
+DEPOIS 
+
+DISSO,
+
+LÁ 
+
+EM 
+'Auth.js',
+
+NÓS 
+
+ESTAMOS 
+
+RECEBENDO 
+
+
+ACESSO A 'useContext()',
+
+AQUELE HOOK LÁ...
+
+
+
+
+
+--> AGORA SÓ PRECISAMOS 
+
+
+___PASSAR O __ IDENTIFIER (o 'context'), 
+
+O CONTEXT EM SI,
+
+para que 
+
+
+EU 
+
+POSSA 
+
+TER ACESSO A 
+
+
+ELE NESTE 'Auth', onde precisamos...
+
+
+---> PARA ISSO, VAMOS O IMPORTAR COM A SINTAXE PADRÃO DO ES6:
+
+
+
+
+import React from 'react';
+
+
+
+import AuthContext from '../authContext.js'; //////EIS O CÓDIGO EM QUESTÃO.
+
+
+const auth = (props) => {
+
+  const auth = useContext(AuthContext); ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+  return (<button>Log in!</button>)
+};
+
+export default auth;
+
+
+
+
+
+
+
+------------------------------------------------
+
+CERTO,
+
+
+IMPORTAMOS 
+
+E UTILIZMAOS 
+
+
+ESSE 
+
+'context' 
+
+LÁ 
+
+
+
+NA FUNCTION/HOOK DE 
+'useContext()'...
+
+
+
+------------------------
+
+
+
+
+
+FEITO ISSO,
+
+O REACT VAI BASICAMENTE 'TAP INTO THAT CONTEXT' NESSE COMPONENT,
+
+o que quer dizer que 
+
+ELE VAI __CONECTAR___ ESTE COMPONENT 
+
+DE 
+'Auth.js'
+ 
+
+
+AO CONTEXTO
+ 
+ DE 
+
+ 'auth-context', QUE FOI ALTERADO/REDEFINIDO 
+
+ PELO 
+
+ 'Provider'
+
+ LÁ 
+
+ EM 
+
+ 'App.js'...
+
+
+
+ -------------------------
+
+
+
+
+ CERTO.... EU PRESUMO QUE AGORA,
+ POR MEIO
+
+ DESSE 
+
+ context,
+
+ ARMAZENADO 
+
+ em 
+
+ 'auth',
+
+
+ posso 
+
+ fazer coisas/acessar
+
+por escritas como 
+
+
+
+
+ 'auth.status'
+
+
+
+ e 
+
+
+ 'auth.login'...
+
+
+
+
+
+ -------------------------------
+
+
+
+
+
+ --> O QUE EU QUERO FAZER, AQUI,
+
+ É 
+ CHAMAR
+
+ AQUELA
+  
+  FUNÇÃO 
+
+  de 
+
+  'login' quando 
+  EU CLICAR 
+
+
+  NESSE BOTÃO de 'Log in!'...
+
+
+
+
+
+pARA ISSO, provavelmente vou usar 
+
+um listener de 
+
+'onClick',
+
+com um valor de 
+
+'auth.login'...
+
+
+(parece que ACERTEI A SINTAXE...)
+
+
+
+  ex:
+
+
+
+
+
+import React, { useContext } from 'react';
+
+import AuthContext from '../auth-context';
+
+const Auth = (props) => {
+  const auth = useContext(AuthContext);
+
+  <button onClick={auth.login}>Log in!</button>; ///EIS O CÓDIGO EM QUESTÃO.
+};
+
+export default Auth;
+
+
+
+
+-----------------------------------
+
+
+obs: não escreva 'auth.login()', e sim 'auth.login()', POIS __NÃO QUEREMOS QUE ESSA FUNÇAÕ SEJA EXECUTADA QUANDO O COMPONENT FOR RENDERIZADO PELA PRIMEIRA VEZ...
+
+
+
+--> CERTO... 
+
+
+
+
+--> PROVAVELMEMNTE __O PROFESSOR __ QUER 
+
+VINCULAR __ ALGUM 
+
+STYLE 
+
+DE NOSSA 
+PÁGINA/ A PÁGINA 
+
+EM SI 
+
+
+_AO STATE/VALOR 
+
+DO STATE 
+
+DE 
+
+'authStatus'... (dependendo de seu 'true' ou 'false')...
+ 
+
+
+
+
+
+
+
+
+ --> PARA VER SE O 'context' FUNCIONOU,
+
+
+ PROFESSOR 
+
+
+ VAI QUERER OUTPUTTAR, É EVIDENTE, 
+
+ __SEU 
+
+
+ 'current auth Status' EM 
+ ALGUM LUGAR... -----> 
+ PARA 
+
+ ISSO,
+
+ ELE PROVAVELMENTE 
+
+ VAI QUERER USAR 
+
+ UMA 
+
+ TERNARY EXPRESSION... 
+
+
+
+
+----> EM VEZ DISSO,
+
+ELE NOS 
+
+DIZ 
+
+QUE 
+
+
+__VAI QUERER _ QUE 
+ 
+
+ O 
+
+ BOTÃO 
+
+ DE 
+
+ 'Todo' (que leva à 'Todo List'...)
+
+
+ FIQUE 
+
+ ___DISABLED__ ATÉ QUE 
+
+ O USUÁRIO ESTEJA 
+
+ 
+ 'LOGINZADO'....
+
+
+
+
+
+
+
+----> para isso,
+
+
+é claro que vamos até o 
+
+
+código 
+
+de 'Header', que é ONDE TEMOS O BUTTON QUE 
+leva 
+
+
+AO NOSSO COMPONENT/''page'' 
+
+de 
+
+'Todo.js'...
+
+
+ex:
+
+
+
+
+
+import React from 'react';
+
+const header = (props) => {
+ return (<header>
+    <button onClick={props.onLoadTodo}>Todo List</button> |{' '}
+    <button onClick={props.onLoadAuth}>Auth</button>
+  </header>)
+};
+
+export default header;
+
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+Provavelmente, o que faremos 
+
+aqui 
+é escrever:
+
+
+
+
+    <button onClick={props.onLoadTodo} disable={auth.status}>Todo List</button>
+                                        ^^^^^^^^^^^^ --> isso vai DESABILITAR O BUTTOn 
+                                                          caso nosso state de 'auth' ESTEJA COMO FALSE... --> e esse valor do state é acessado JUSTAMENTE POR MEIO DESSE HOOK DE 'useContext()', e seu store naquela const de 'auth'...
+
+-------------------------------
+
+
+
+
+
+BEM,
+ 
+
+ MEU CÓDIGO 
+
+
+ está um pouco diferente daquele do professor,
+
+ só preciso o reorganizar um pouco 
+
+ para ficar igual (confundi os botões que ele queria fazer show/hide, e 
+ 
+ a estrutura do negócio...)
+
+
+
+
+
+
+
+ É quase a mesma lógica do professor; o que interessa é que 
+
+ ENTENDI 
+
+ o hook 
+
+ de 
+
+ 'useContext()'... ------> É UMA MANEIRA MUITO CONVENIENTE DE USAR 
+
+
+ 'context',
+
+
+ E CERTAMENTE UMA MANEIRA BEM MAIS CONVENIENTE 
+
+ E NICE 
+
+ DO QUE 
+
+
+ AS MANEIRAS QUE VIMOS AO LONGO DO CURSO...
+
+
+
+
+É um hook bom de se aprender.

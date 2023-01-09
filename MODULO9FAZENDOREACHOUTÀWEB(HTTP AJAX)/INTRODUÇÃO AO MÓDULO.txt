@@ -1,0 +1,115 @@
+
+
+
+
+
+
+
+
+
+
+--> NESTE MÓDULO,
+ 
+
+ VAMOS DESCOBRIR A ARTE DE FAZER/ENVIAR 
+
+
+ HTTP 
+
+ REQUESTS 
+
+
+ DE NOSSO APLICATIVO ___rEACT__ A UM SERVIDOR (server)...
+
+
+
+
+
+
+
+
+
+ ---> isso pq O REACT É UMA LIBRARY QUE TE AJUDA A __bASICAMENTE ___ CONSTRUIR __ O 
+
+ 'FRONTEND' DO SEU APLICATIVO...  ---> basicamente,
+  
+
+  te ajuda 
+
+
+  a ESCREVER O HTML, O CÓDIGO QUE VAI RODAR NO BROWSER....
+
+
+
+
+  -------------> E SE VOCê ESTIVER CRIANDO UMA 
+
+  'SINGLE-PAGE APPLICATION' (algo bem comum com o REACT), 
+
+
+
+  Aí vocÊ vai ter UMA 
+
+APPLICATION AINDA MAIS 
+
+'DECOUPLED', uma application ainda mais 'DECOUPLED' do seu BACKEND (autônoma em relação ao backend)...
+
+
+
+
+
+
+
+
+---> PORTANTO, 
+
+
+É IMPORTANTE ENTENDER 
+
+
+AS MANEIRAS PELAS QUAIS PODEMOS MANDAR ___ HTTP REQUESTS___ .... na verdade, 
+
+não são propriamente http requests que vamos mandar.... como 
+
+
+nós estamos trabalhando com uma application 'DECOUPLED' (apps react são 
+
+'DECOUPLED'), o que 
+
+
+nós vamos 
+
+
+MANDAR 
+
+__sÃO_____ '''''AJAX REQUESTS'''''.... 
+
+
+
+
+AJAX REQUESTS ---> usado com o 'decoupling'.... -----> AJAX 
+
+
+REQUESTS 
+
+SÃO MANDADOS DO SEU 
+
+
+REACT FRONTEND/código javascript 
+
+
+
+AO ___BACKEND/SERVERSIDE___.... 
+
+
+
+
+
+--> PROFESSOR VAI NOS MOSTRAR COMO ISSO FUNCIONA, E COMO 
+
+IMPLEMENTAR
+ 
+ ISSO 
+
+
+ EM UM APLICATIVO REACT...

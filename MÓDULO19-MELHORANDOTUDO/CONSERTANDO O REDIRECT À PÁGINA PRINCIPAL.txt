@@ -1,0 +1,698 @@
+
+
+
+
+
+
+
+--> certo... nosso app GERALMENTE FUNCIONA Ok... --> mas 
+
+HÁ 
+
+UM 
+
+
+PEQUENO PROBLEMA 
+
+QUANDO 
+
+FAZEMOS 
+
+UMA 
+
+'ORDER'...
+
+
+
+
+
+
+
+
+
+
+--> se você inspecionar seu 
+
+arquivo 
+
+'orderReducer',
+
+vocÊ constatará 
+
+que em 
+
+'purchaseBurgerStart', aquela 
+
+
+ACTION 
+QUE 
+
+
+FAZ ALTERAÇÃO NO STATE DE 'loading' (faz aparecer o SPINNER)...
+
+
+
+
+
+
+
+
+ISSO AÍ É DISPATCHEADO SEMPRE QUANDO CLICAMOS EM 'ORDER', 
+
+
+
+e ocorre quando enviamos nossa order ao servidor...
+
+
+
+
+
+bem, 
+
+o código 
+
+desse negócio 
+
+está 
+
+
+
+
+assim:
+
+
+
+
+
+
+const purchaseBurgerStart = (state, action) => {
+    return updateObject(state, {loading: false});
+}
+
+
+
+
+
+
+
+
+
+
+
+---> isso pq o QUE QUEREMOS AQUI É SETTAR O LOADING COMO 'true', e NÃO COMO 'false'...
+
+
+
+
+
+
+
+
+
+
+--> ok, mas isso já está correto, na nossa versão (essa foi uma cagada do professor, e não nossa...)
+
+
+
+
+
+
+
+
+
+--> OUTRA MELHORIA:
+
+
+
+se estamos 
+
+falando 
+
+em 
+
+BUILD A BURGER, construir um burger....
+
+
+
+
+
+nós loggamos..... e aí SOMOS REDIRECIONADOS À HOME PAGE.... ---> e isso NÃO DEVERIA ACONTECER.... ---> n, o que queremos é que o USUÁRIO SEJA REDIRECIONADO À PÁGINA 
+
+DE 
+
+'CHECKOUT' diretamente... 
+
+
+(nós havíamos consertado isso no passado, mas agora parece que cagou de novo....)
+
+
+
+ 
+
+ (E, de fato, isso está acontecendo...) --_> devemos tentar consertar....
+
+
+
+
+
+
+ -----------------------------
+
+
+
+
+ A RAZÃO PARA ESSE PROBLEMA DO REDIRECT, É CLARO,
+
+ ESTÁ 
+
+
+
+ NO 
+
+ CONTAINER 
+
+ 'App.js',
+
+ que 
+ segura 
+
+ TODO NOSSO APLICATIVO,
+
+ especificamente 
+
+ naquelas 
+
+ ROUTES, 
+
+ que 
+
+
+ estão com este código:
+
+
+
+
+
+ render() {
+
+
+      let routes = (
+        
+        <Switch>
+        <Route path="/auth" component={Auth} />
+          <Route path="/" exact component={BurgerBuilder} />
+          <Redirect to="/" />
+        </Switch>
+      )
+
+
+
+
+
+      if (this.props.token) {
+        routes = (
+          <Switch>
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/" exact component={BurgerBuilder}/>
+          <Redirect to="/" />
+          </Switch>
+        )
+      }
+
+
+
+
+
+
+    return (
+      <BrowserRouter>
+        <div>
+          <Layout>
+            {routes}
+          </Layout>
+        </div>
+      </BrowserRouter>
+
+    );
+  }
+}
+
+
+
+----------------------------------------
+
+
+
+
+
+
+É A RELAÇÃO ENTRE ESSE CÓDIGO E O CÓDIGO EM 
+
+'Auth.js',
+
+
+
+que 
+
+
+
+tem aquele CÓDIGO QUE NOS REDIRECIONA, VISTO EM 
+
+
+
+  let redirect = null;
+
+
+  if (this.props.token) {
+      redirect = (<Redirect to={this.props.authRedirectPath} />)
+  }
+
+
+
+
+
+
+---> ALI, NÓS USAMOS 
+
+
+
+O 
+
+
+
+'authRedirectPath', esse STATE NO REDUX,
+
+PARA __REDIRECIONAR NOSSO USUÁRIO__, 
+
+nos casos apropriados.... ------> bem, o problema é que 
+
+ISSO ESTÁ ACONTECENDO NO CONTAINER 
+
+DE 
+
+
+'Auth.js'... -------------> 
+
+
+
+
+
+
+
+
+E, COMPLEMENTANDO, 
+
+LÁ 
+
+
+EM 
+
+'App.js',
+
+EM QUE 
+
+
+RENDERIZAMOS __dIFERENTES__ ROUTES_ _PARA __ DIFERENTES 
+
+ESTADOS 
+
+DE 
+'token' (this.props.token),
+
+
+
+
+ALI,
+
+
+QUANDO 
+
+NÓS 
+
+
+ESTAMOS 'AUTENTICADOS' (temos o token),
+
+
+NÓS 
+
+__NÃO ESTAMOS MAIS __RENDERIZANDO A ROUTE DE 
+
+'auth'...
+
+
+
+ex:
+
+
+
+
+
+      if (this.props.token) {
+        routes = (
+          <Switch>
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/logout" component={Logout} />
+          /////////   <Route path="/auth" component={Auth} /> /////////ESTA ROUTE SUMIU daqui...
+          <Route path="/" exact component={BurgerBuilder}/>
+          <Redirect to="/" />
+          </Switch>
+        )
+      }
+
+
+--------------------
+
+
+
+E É JUSTAMENTE 
+
+EM 
+
+'Auth', nesse component aí, 
+
+QUE 
+
+___TEMOS __ NOSSO CÓDIGO QUE FAZ __ O REDIRECT __ A PARTIR DA PRESENÇA DE UMA TOKEN no nosso browser,
+
+ao visitar 
+
+o component 'Auth'....
+
+
+
+
+
+
+
+---> O FIX __MAIS SIMPLES ___ PARA O PROBLEMA É REINTRODUZIR __ A 
+
+ROUTE 
+
+DE 
+
+'auth'
+
+
+NESSE 
+
+
+
+RENDER DAS ROUTES COM A PRESENÇA DE 'token'....
+
+
+
+ex:
+
+
+
+      if (this.props.token) {
+        routes = (
+          <Switch>
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/auth" component={Auth} /> /////////ROUTE READICIONADA __PARA QUE __ O CÓDIGO DE REDIRECT FUNCIONE...
+          <Route path="/" exact component={BurgerBuilder}/>
+          <Redirect to="/" />
+          </Switch>
+        )
+      }
+
+
+-------------------------------------
+
+
+
+
+
+A DESVANTAGEM COM ESSE APPROACH, É CLARO, 
+
+É QUE 
+
+AGORA __USUÁRIOS__ AUTENTICADOS__ PODERÃO VISITAR ___ A PÁGINA DE 
+
+'AUTH' MAIS UMA VEZ... (mesmo autenticados).... ------> 
+
+
+ENTRETANTO,
+ISSO 
+
+NÃO TRAZ NENHUM PERIGO, USUÁRIOS NÃO PODEM CAGAR NADA NO SEU CÓDIGO por meio do simples 'login' mais uma vez....
+
+
+
+
+
+
+
+---> É CLARO QUE VOCÊ PODERIA 
+
+
+IMPLEMENTAR OUTRAS SOLUÇÕES PARA REDIRECIONAR O USUÁRIO À PÁGINA DE CHECKOUT DEPOIS 
+
+DE FAZER 'signin' com 
+
+um burger 
+já 
+criado,
+
+MAS 
+
+
+ESSA É UMA SOLUÇÃO FÁCIL E SEM PERIGO...
+
+
+--------------------
+
+
+
+OUTRO PROBLEMA, DESSA VEZ UM PROBLEMA 
+
+DE __STYLING___.... ---> se nós 
+
+construírmos um 
+
+burger 
+
+e então 
+
+
+SEGUIRMOS ATÉ 
+
+A 
+PÁGINA 
+
+DE 
+
+'CHECKOUT',
+
+VAMOS 
+PERCEBER QUE 
+O 
+
+BURGER NÃO FICA POSICIONADO CORRETAMENTE 
+
+EM TODOS OS DISPLAYS... ---> em algumas telas menores, ele fica torto...
+
+
+
+
+
+
+
+
+--> A RAZÃO DO PROBLEMA É QUE 
+
+O 
+
+BURGER TEM UMA WIDTH ESPECÍFICA __QUE É AJUSTADA __ AO VIEWPORT,
+
+
+MAS ELE ESTÁ POSICIONADO __DENTRO DE UMA DIV __ QUE TEM UMA WIDTH DE '100%',
+ 
+
+ o que quer dizer que 
+ essa div 
+
+
+TOMA SEMPRE 100% DA WIDTH 
+
+DO SEU WRAPPING ELEMENT... --> e o wrapping element MAIORZAO, que wrappa ESSA DIV, QUE 
+WRAPPA O BURGER,
+
+está com UMA WIDTH DE __500px__ (devido a media queries), E É ISSO QUE 
+
+ESTÁ 
+
+CAUSANDO 
+
+ESSE DESALINHAMENTO... ------> o wrapping element, no CASO, É O 'CheckoutSummary' ---> devemos alterar sua width para ser 100%....
+
+
+
+
+
+PARA CONSERTAR O PROBLEMA,
+
+professor 
+VAI ATÉ 
+
+
+
+'CheckoutSummary'
+
+
+e 
+aí 
+
+ALTERA NOSSA MEDIA QUERY,
+
+ELE A REMOVE POR INTEIRO, 
+
+tudo para que 
+
+o estilo SEMPRE FIQUE 
+
+AQUELE 
+
+
+
+de 
+
+
+
+
+  .CheckoutSummary {
+    text-align: center;
+    width: 80%; 
+    margin: auto;
+  }
+
+
+
+  -----------------
+
+
+  MAS HÁ OUTRO PROBLEMA VISUAL:
+
+
+
+  nosso 
+
+  'burger icon' NÃO ESTÁ MAIS APARECENDO NO SIDEDRAWER... --> 
+
+
+
+isso eu vou ter que consertar, pois na versão do professor não existe esse problema...
+
+
+
+
+
+
+
+
+
+  --------------
+
+
+
+  CERTO, MAS NA VERSÃO DO PROFESSOR HÁ O PROBLEMA 
+
+
+  DE QUE 
+
+  O SIDEDRAWER __NÃO FECHA__ DEPOIS __ DE SELECIONAR ALGUMA OPÇÃO 
+
+  DOS 
+  'navItems' no sideDrawer ---> mas eu JÁ RESOLVI ESSE PROBLEMA,
+
+  por isso 
+
+  não preciso assistir...
+
+
+  -----------------
+
+
+  certo, consertar o BURGER ICON....
+
+
+
+
+Acho que consertei... --> não é grandes coisas,
+
+mas 
+
+está ali (entretanto, gostaria que fosse um pouco menor....)
+
+
+(vou tentar fazer com que fique um pouco menor...)
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+--> para isso, professor 
+
+
+simplesmente 
+
+escreveu 
+
+um 
+
+
+'onClick={props.closed}' NESTE 
+
+TRECHO AQUI:
+
+
+
+
+
+
+    let sideDrawer = (
+        <Aux>
+        <Backdrop show={props.open} clicked={props.closed} />
+
+        <div className={attachedClasses.join(' ')}>
+          {/* <Logo height="11%"/> */}
+          <div className={SideDrawerStyle.Logo}>
+            <Logo />
+          </div>
+          <nav>
+            <NavigationItems closed={props.closed} logout={props.token}/> //////ESSA FOI NOSSA VERSÃO DO CÓDIGO, QUE FUNCIONOU DO MESMO JEITO....
+          </nav>
+        </div>
+      </Aux>
+    )
+
+
+
+
+
+    -----------
+
+
+    CERTO, CONSEGUI ARRUMAR O STYLING UM POUCO,
+     
+     com uso 
+
+     de MEDIA QUERIES em 
+
+
+     'SideDrawer.module.css'...
+
+------------------
+
+

@@ -1,0 +1,1956 @@
+
+
+.  (vocÊ deve se lembrar que esse approach dos tokens só é usado COM RESTFUL API, com STATELESS SERVERS...)
+
+
+O OBJETIVO AGORA É CONSEGUIR UMA 'TOKEN'
+
+LÁ 
+
+
+
+
+
+DO BACKEND (do firebase, no caso...) -------> NÓS USAREMOS 
+
+
+
+
+FIREBASE PARA ESTE EXEMPLO, MAS VOCÊ 
+
+
+
+DEVE 
+
+
+SE LIGAR QUE __ISSO AQUI __ FUNCIONA COM QUALQUER __ BACKEND,
+
+
+DESDE QUE 
+O 
+
+BACKEND 
+TENHA 
+
+'APPROPRIATE API ENDPOINTS TO CONNECT TO'... ------> SE VOCê está procurando 
+
+
+Por instruções 
+
+
+SOBRE COMO __VALIDAR __ UM 'EMAIL ADDRESS' lá no SERVIDOR,
+
+
+
+OU ENTÃO COMO __cRIAR___ UM TOKEN DESSES,
+
+
+
+
+este curso do professor é O CURSO ERRADO PARA VOCê .... --------->
+
+
+
+
+
+
+A 
+
+
+1) CRIAÇÃO DE TOKENS 
+
+
+2) VERIFICAÇÃO DA VALIDADE DE UM EMAIL ADDRESS EM UM SERVER (Backend)
+
+
+
+
+SÃO 
+
+
+COISAS 
+
+QUE 
+
+NÃO TEM NADA A VER COM O REACT, e por isso 
+
+NÃO SÃO COBERTAS 
+
+POR 
+
+ESTE MÓDULO...
+
+
+
+
+------------> professor diz que o mais apropriado 
+
+seria 
+
+UM 'GENERAL API BUILDING COURSE FOR YOUR SERVERSIDE LANGUAGE OF CHOICE', 
+
+
+pq 
+
+coisas 
+
+como 
+
+esses 
+
+2 
+
+TÓPICOS __ SÃO __ ENSINADAS ___ DURANTE CURSOS COMO ESSES...
+
+
+
+
+
+
+---> outra alternativa é procurar um curso 'FULL STACK REACT COURSE'....
+
+
+
+
+
+
+
+
+
+
+
+
+---> o professor só vai nos mostrar o 'REACT SIDE'... --> e FIREBASE,
+
+
+o backend 
+
+__FÁCIL DE USAR QUE __ ESTAMOS 
+
+
+UTILIZANDO,
+
+
+NOS 
+
+DÁ 
+
+'AUTHENTICATIOn'  
+
+
+
+'OUT OF THE BOX'... ------------> 
+
+
+
+SE CLICARMOS 
+
+
+
+na aba 
+
+'Authentication',
+
+
+
+
+
+
+
+NÓS VEREMOS QUE O NEGÓCIO PEDE 
+
+QUE NÓS 
+
+'Set up Sign in Method'... ----------> 
+
+
+
+
+
+
+DEntro dessa opção,
+
+PROFESSOR 
+
+pode 
+
+ESCOLHER 
+
+
+ENTRE 
+
+
+1) email/password 
+
+
+2) Phone 
+
+
+3) Google 
+
+4) Facebook 
+
+5) Twitter 
+
+6) Github
+
+7) Anonymous.
+
+
+------------------------------------
+
+
+
+
+
+SE VOCÊ OPTAR PELO 'Email/Password',
+
+ISSO 
+
+VAI 
+
+
+__ARMAZENAR ___ OS EMAILS E PASSWORDS__ DENTRO DO NOSSO PRÓPRIO 
+
+PROJETO 
+
+firebase... -------> é só clicar em 'enable' 
+
+
+
+e salvar tudo isso...
+
+
+
+
+---------> com isso,
+ 
+ agora 
+
+ podemos 
+
+
+ ALCANÇAR (reach) 
+
+
+ CERTOS 
+
+
+
+ 'REST API ENDPOINTS' para então 'sign users',
+
+ e então conseguir UMA 
+ TOKEN (1 token para cada usuário...)
+
+
+
+
+
+
+
+ --> PARA DESCOBRIR 
+
+
+ ___ A QUAL ENDEREÇO __ DEVEMOS 
+
+ ENVIAR 
+
+
+ OS REQUESTS/TOKENS,
+
+
+
+
+VOCê DEVE SE LIGAR.... -------> 
+
+
+
+
+você tem que entender que 
+
+O 
+
+ENDEREÇO 
+
+PARA O QUAL VOCÊ ENVIA OS REQUESTS/TOKENS 
+
+
+_NÃO É O MESMO__ QUE VOCê USA PARA __ENVIAR AS 'ORDERS'/que você usa 
+
+para enviar os DADOS GERAIS DE SEU APP (no caso do burgerbuilder, as 'orders' e os 'ingredients iniciais'...)
+
+
+
+
+
+
+--------------> PARA DESCOBRIR 
+
+
+
+
+O LUGAR A QUE 
+
+SÃO ENVIADOS OS REQUESTS/TOKENS 
+
+
+DE NOSSO 
+
+APLICATIVO,
+
+nós 
+
+devemos 
+
+procurar 
+
+
+
+'firebase rest auth' 
+
+
+no google... -----> 
+
+
+
+
+
+
+
+Se vocÊ fizer isso, você 
+
+
+verá, no segundo resultado,
+
+
+
+
+'Firebase Auth REST API'.... -------> dentro dessa documentação, de link 
+
+
+'''https://firebase.google.com/docs/reference/rest/auth/?hl=hr-HR&skip_cache=true'''',
+
+
+
+VOCÊ 
+
+
+PODE 
+
+
+
+
+DESCOBRIR A QUAIS ___ENDPOINTS__ VOCÊ PODE ENVIAR 
+
+SUA 
+
+
+'authentication data',
+ 
+ para então 
+
+ 'SIGN AN USER UP', ou 
+
+
+ 'SIGN AN USER IN'...
+
+
+
+
+ -----------------------------------
+
+
+
+
+
+---> você verá a seguinte parte da página:
+
+
+
+
+
+
+Sign up with email / password
+You can create a new email and password user by issuing an HTTP POST request to the Auth signupNewUser endpoint.
+
+Method: POST
+
+Content-Type: application/json
+
+Endpoint
+
+https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]
+Request Body Payload
+Property Name	Type	Description
+email	string	The email for the user to create.
+password	string	The password for the user to create.
+returnSecureToken	boolean	Whether or not to return an ID and refresh token. Should always be true.
+Response Payload
+Property Name	Type	Description
+idToken	string	A Firebase Auth ID token for the newly created user.
+email	string	The email for the newly created user.
+refreshToken	string	A Firebase Auth refresh token for the newly created user.
+expiresIn	string	The number of seconds in which the ID token expires.
+localId	string	The uid of the newly created user.
+
+
+
+
+
+------------------------------------------
+
+
+
+
+O 
+
+endpoint 
+
+
+
+é 
+
+
+justamente 
+
+
+essa url de 
+
+
+'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]'
+
+
+
+
+
+
+
+
+
+--> NÓS DEVEMOS __ENVIAR UM REQUEST DE TIPO 'POST' A ESSE ENDPOINT AÍ...
+
+
+
+
+
+---> professor vai COPIAR esse endpoint,
+
+e 
+
+
+então vai querer 
+
+ENVIAR UM REQUEST A ELE.... (por meio do AXIOS, provavelmente....)
+
+
+
+
+
+
+
+
+
+--> PARA ISSO, PROFESSOR NOS DIZ __qUE PODERÍAMOS CRIAR UMA OUTRA 'INSTANCE' 
+
+
+de axios,
+
+
+
+
+QUE 
+
+
+
+NÓS __NÃO PODEMOS __ USAR AQUELA INSTANCE DE 
+
+'axios-orders.js',
+
+pq 
+
+
+em 
+
+'axios-orders.js' nós 
+
+JÁ TEMOS UMA 
+
+
+'baseURL' 
+
+de 
+
+'https://reactburgerbuilderdashjihsadus.com/'.... (e isso não seria o endpoint correto, como explicado anteriormente...)
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+E É EXATAMENTE POR ISSO QUE 
+O 
+
+PROFESSOR 
+
+VAI 
+
+USAR 
+
+O OBJETO 
+
+'axios' 
+
+DEFAULT... ------->  isso pq ele só PRETENDE 
+
+mandar 
+
+
+2 REQUESTS, 2 tipos de request,
+
+um 
+
+
+de 
+
+'signup' e um 
+
+de 
+'signin',
+
+
+E JUSTAMENTE 
+
+POR ISSO 
+
+ELE 
+
+NÃO PRECISA 
+
+DE UMA INSTÂNCIA DEDICADA DO AXIOS... (e nem do 'baseURL'...)
+
+
+
+
+
+
+
+
+
+
+
+--> para usar o axios, professor o importa dentro do arquivo 
+
+de action creators 'auth.js'...
+
+
+
+
+
+
+
+ex:
+
+
+import axios from 'axios';
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+--> ISSO FEITO,
+
+ELE 
+
+NOS DIZ QUE 
+FINALMENTE 
+
+PODEMOS 
+
+COMEÇAR 
+
+
+A 
+ESCREVER/ENVIAR REQUESTS... (por meio do axios, dentro do ACTION CREATOR de 'authAttempt'...)
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+--> tipo assim:
+
+
+
+export const authAttempt = (email, password) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        axios.post();
+    }
+}
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+--> E AÍ O PROFESSOR COLA A URL QUE ELE COPIOU ANTES....
+
+
+
+ex:
+
+
+
+
+export const authAttempt = (email, password) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]');
+    }
+}
+
+
+
+
+---------------------------------------------------
+
+
+
+CERTO... MAS 
+
+dentro 
+
+
+dessa URL 
+
+temos 
+
+essa coisa estrnaha 
+
+de 
+
+
+
+
+'[API_KEY]'... -------->  
+
+
+
+
+
+E NÓS DEVEMOS SUBSTITUIR 
+
+ESSA VARIÁVEL/REPRESENTAÇÃO AÍ __PELA 
+
+
+NOSSA __ API_KEY__ DO NOSSO PROJETO FIREBASE....
+
+
+
+
+
+
+
+---------> Você pode encontrar essa 'API_KEY' se vocÊ clicar em 
+
+'Authentication' (no firebase) 
+
+
+E ENTÃO 
+
+CLICAR 
+
+EM 
+
+'Web Setup'... --> certo... mas um problema é que ESSA OPÇÃO NÃO EXISTE MAIS...
+
+
+
+
+
+
+
+
+
+--> ok... o lugar em que isso está escrito é COMPLETAMENTE DIFERENTE.... ---> devemos clicar na ENGRENAGEM, lá em cima na esquerda, e então em 'Configurações do projeto'... --.>>>
+
+
+isso feito,
+
+
+veremos 
+
+
+
+umas informações...
+
+ex:
+
+
+Nome do projeto
+burgerbuilder201051
+
+Código do projeto
+burgerbuilder201051
+
+Número do projeto
+728189203893
+
+Local padrão dos recursos do GCP
+nam5 (us-central)
+
+Chave de API da Web
+AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+o que nos interessa é aquilo ali,
+
+o 
+
+
+'chave de API da web'... ----> COPIE ESSA KEY 
+
+E 
+
+COLOQUE 
+
+
+NAQUELA STRING DA URL... (substitua '[API_KEY]' por sua key inteira...)
+
+
+
+
+ex:
+
+
+
+export const authAttempt = (email, password) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'); ///DEU, É ISTO AQUI...
+    }
+}
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+
+OK... agora isso fará com que 
+
+
+NOSSO REQUEST DE TIPO 'post' 
+
+REALMENTE 
+
+seja 
+
+ENVIADO 
+
+
+a 
+
+
+ESSE ENDPOINT Aí... ---> ESSA API_KEY É MUITO IMPORTANTE,
+
+
+pq 
+
+isso 
+
+IDENTIFICA SEU APLICATIVO COM O 
+
+'FIREBASE',
+
+faz 
+
+com que 
+
+o firebase RECONHEÇA QUE 
+
+ESSE 
+
+É REALMENTE O SEU APP.... (que o app codado PELO DESENVOLVEDOR/USUÁRIO DO 
+FIREBASE 
+
+realmente é esse aí que você está usando...)
+
+
+
+
+
+
+----> certo... --->  OK , 
+
+
+
+MAS 
+
+E O QUE DIABOS 
+
+VAMOS 
+
+
+ENVIAR 
+
+POR MEIO 
+
+DESSE 
+
+
+REQUEST 
+
+DE TIPO 
+
+'POST'? ------> qual é a 'data' que vamos enviar? --------> 
+
+
+
+
+A 
+
+data 
+QUE 
+
+NÓS PRECISAMOS 'post'  
+
+está 
+
+descrita 
+
+naquela página de antes... -------> 
+
+
+
+
+NÓS PRECISAMOS __ PASSAR UM ___ OBJETO __ JAVASCRIPT__.... ---> 
+
+
+
+esse 
+
+objeto javascript vai SER AUTOMATICAMENTE ___ CONVERTIDO __ EM '.JSON' 
+
+
+POR MEIO DO AXIOS... -----> ESSE OBJETO 
+
+
+JAVASCRIPT 
+
+
+vai 
+
+ter:
+
+
+
+1) um email
+
+
+
+2) um password
+
+
+3) uma propriedade 'returnSecureToken'...
+
+
+
+
+
+
+
+------------------------
+
+
+
+
+ESSE 'returnSecureToken' É __ UM BOOLEAN___, e INDICA 
+
+SE NÓS QUEREMOS RECEBER UMA 'TOKEN' OU NÃO.........- ---> por DEFAULT,
+
+
+ESSE 'returnSecureToken' DEVE SEMPRE ESTAR DEFINIDO COMO 'true', para que 
+
+funcione 
+
+
+o seu fluxo backend-frontend...
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+OK, VOLTAMOS AO NOSSO APP.... ---> você 
+
+deve 
+
+se lembrar 
+
+que 
+
+O SEGUNDO PARÂMETRO INTERNO 
+
+DE 
+
+'.post()'
+
+É 
+
+
+JUSTAMENTE ___ A 'DATA' QUE QUEREMOS 
+
+
+ENVIAR 
+
+
+
+AO 
+
+
+SERVIDOR/BACKEND.... ------> nesse caso,
+ 
+ provavelmente 
+
+ o professor 
+
+ vai querer 
+
+ escrever algo como 
+
+
+
+ 'axios.post(url, {email: email, 
+                        password: password})'
+
+
+
+
+
+
+
+----------------------
+
+
+DE FATO, 
+
+É ISSO QUE
+
+
+ELE VAI QUERER FAZER,
+
+mas 
+
+ele 
+
+vai fazer de uma forma mais bonita,
+
+com uma
+
+CONSTANTE SEGURANDO UM OBJETO COM ESSAS PROPRIEDADES...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+export const authAttempt = (email, password) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password 
+        }
+        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4', authData );
+    }
+}
+
+
+
+------------
+
+
+
+
+
+CERTO.... MAS UMA COISA QUE FALTOU É 
+
+o 
+
+'returnSecureToken: true'...
+
+
+ex:
+
+
+
+''''''''''''''''''''
+
+export const authAttempt = (email, password) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        }
+        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4', authData );
+    }
+}
+
+
+''''''''''''''''''''''''''''
+
+
+
+
+
+OBS:: NÃO SE ESQUEÇA DE ANEXAR O 'authData' como SEGUNDO PARÂMETRO DE 'axios.post'...
+
+
+
+
+
+ex:
+
+
+
+
+export const authAttempt = (email, password) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        }
+        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4', authData )
+        
+    }
+}
+
+
+
+
+-----------------------------------------------
+
+
+CERTO...
+
+
+
+
+É EVIDENTE 
+
+QUE 
+
+O 
+
+'AXIOS' vai então nos dar/retornar 
+
+uma 
+
+PROMISE,
+
+por isso 
+vamos 
+
+usar 
+
+
+um
+
+
+'.then()' block 
+
+
+logo 
+
+depois desse 
+
+'.post()'...
+
+
+
+
+
+
+-------> 
+
+
+TAMBÉM VAMOS USAR UM 
+
+'.catch()'...
+
+
+
+------------------
+
+
+
+ex:
+
+
+
+
+
+
+
+export const authAttempt = (email, password) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        }
+        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4', authData )
+        .then()
+        .catch(
+        )
+    }
+}
+
+
+
+--------------------------
+
+
+
+
+NO CATCH CASE,
+
+É CLARO,
+
+VAMOS QUERER 
+
+CONSOLE.LOGGAR AQUELE 
+
+ERRO 
+
+no post 
+
+
+E ENTÃO 
+
+
+fazer DISPATCH 
+
+DE 
+
+
+
+'authFail()'... ---------> e então passar 'error' a esse dispatch/action...
+
+
+
+ex:
+
+
+
+
+
+
+
+export const authAttempt = (email, password) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        }
+        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4', authData )
+        .then()
+        .catch(
+            error => {
+                console.log(error);
+                dispatch(authFail(error));
+            }
+        )
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+NO CASO DE 'SUCCESS', professor vai querer CONSOLE.LOGGAR A RESPONSe...
+
+---> e também vai QUERER DISPATCHAR  'authSuccess', passando 
+
+a 
+
+ele 
+
+'response.data' ------> VAI PASSAR OS DADOS DA 'response'
+
+
+
+AO 
+
+
+'authSuccess'....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+export const authAttempt = (email, password) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true
+        }
+        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4', authData )
+        .then(
+            console.log(response);
+            dispatch(authSuccess(response.data)); ///EIS O CÓDIGO EM QUESTÃO.
+        )
+        .catch(
+            error => {
+                console.log(error);
+                dispatch(authFail(error));
+            }
+        )
+    }
+}
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+SALVAMOS TUDO ISSO E TESTAMOS 
+
+SE 
+
+NOSSO 
+
+ACTION DISPATCHING 
+
+
+e 
+
+
+o envio desse request de tipo 'post' 
+
+realmente funcionam....
+
+
+
+
+
+
+-------------> QUANDO CLICARMOS 'SUBMIT', 
+
+vamos 
+
+perceber,
+
+
+no redux dev tools,
+
+
+
+
+as ACTIONS/dispatches de action 
+
+
+
+'AUTH_sTART' 
+
+
+e 
+
+'AUTH_FAIL'...
+
+
+--------
+
+
+(professor nos diz que, no caso dele, foi 'AUTH_START' e 'AUTH_SUCCESS'...) --> muito estranho....
+
+
+
+
+
+O ERRO É:
+
+
+Error: Request failed with status code 400
+    at createError (http://localhost:3000/static/js/vend…}
+
+
+------------------------
+
+
+
+
+NÃO, ESPERE... ---> PARECE QUE 
+O 
+
+
+NOSSO __PRIMEIRO REQUEST/SEND/DISPATCH DE 
+
+'AUTH_START' 
+
+
+
+____rESULTA__ EM UM 
+'AUTH_SUCCESS'.... --> mas 
+
+todos 
+
+
+os 
+
+
+
+requests subsequentes, na mesma 'vida' da página, 
+
+RESULTAM 
+
+EM 
+
+
+'AUTH_FAIL'....
+
+
+
+
+
+
+
+
+--> não sei a razão disso....
+
+
+
+-------------------------
+
+
+
+e SE EXAMINARMOS O CONSOLE,
+
+VEREMOS 
+
+
+EXATAMENTE O QUE RECEBEMOS (response) 
+
+A PARTIR 
+
+
+DE UM 
+
+REQUEST QUE RESULTA EM UM 'AUTH_SUCCESS'....
+
+
+
+
+----> dentro de 
+
+
+'data', objeto que fica no INTERIOR DESSE OBJETO 'response',
+
+PODEMOS 
+
+
+
+OBSERVAR PROPRIEDADES 
+
+COMO 
+
+'expiresIn',
+
+
+QUE É UMA __PROPRIEDADE QUE 
+
+NOS 
+
+MOSTRA POR QUANTO TEMPO AQUELA 
+
+'token' RECEBIDA POR NÓS __ É VÁLIDA... -----> no caso,
+
+
+ELA 
+
+SERÁ 
+
+VÁLIDA 
+
+POR 
+
+1 HORA, pois o 
+
+
+'expiresIn' está como 
+
+'3600'...
+
+
+
+
+
+
+'expiresIn: 3600'...
+
+
+
+
+
+----------------
+
+
+
+
+
+--> DEPOIS DISSO,
+
+TEMOS 
+
+
+A 
+
+'idToken' em SI,
+
+
+
+A TOKEN EM QUESTÃO,
+
+QUE 
+
+É UMA LONGUÍSSIMA 
+
+STRING, de muitos caracteres,
+
+
+
+que PODE SER DECRIPTADA EM UM __OBJETO JAVASCRIPT_, SE QUISERMOS...
+
+
+
+
+
+
+--> lá embaixo, temos 
+
+
+uma 
+
+'refreshToken', que 
+
+
+
+É __USADA __ PARA CONSEGUIR UM NOVO 'idToken'... ---> novos 'idToken' são conseguidos 
+
+
+__JUSTAMENTE PQ ELES __EXPIRAM APÓS DETERMINADOS PERÍODOS DE TEMPO (OU QUANDO o usuário fecha o browser),
+
+
+como 
+
+visto por meio daquela propriedade 
+
+'expiresIn: 3600'...
+
+
+
+
+
+
+
+
+
+NA VERDADE, O CORPO INTEIRO 
+
+DESSA PROPRIEDADE 'data',
+
+
+de dentro 
+
+da response, é 
+ESTE:
+
+
+
+
+
+
+data:
+
+email: "asihasishaaish@asihaishasi.com"
+expiresIn: "3600"
+idToken: "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc3MTBiMDE3ZmQ5YjcxMWUwMDljNmMzNmIwNzNiOGE2N2NiNjgyMTEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYnVyZ2VyYnVpbGRlcjIwMTA1MSIsImF1ZCI6ImJ1cmdlcmJ1aWxkZXIyMDEwNTEiLCJhdXRoX3RpbWUiOjE2MjYxNTIzNzksInVzZXJfaWQiOiJNZmhTQjF0bTd4WXdYQzNkN3lSZmI2QnpTSFgyIiwic3ViIjoiTWZoU0IxdG03eFl3WEMzZDd5UmZiNkJ6U0hYMiIsImlhdCI6MTYyNjE1MjM3OSwiZXhwIjoxNjI2MTU1OTc5LCJlbWFpbCI6ImFzaWhhc2lzaGFhaXNoQGFzaWhhaXNoYXNpLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJhc2loYXNpc2hhYWlzaEBhc2loYWlzaGFzaS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.Zo6P0Bs5coHSygfgojd0bFoi93lz7WbdINUp2Srow-0hf4-6-XjRO--s_Nl4CUH8wLRFT1MCviy0dbyBbTH19rOw8zsemkv-isWvW3Yk8shPIhRrJ6pZ5akngDUdcVksNqsj4REhR5RXEE31H9s9TR-ZE_9P76gu6anyM72JXcv8rOZ92nQX3r_fQsZHMled0o8NWPub47FutTZnbc3kyFfIv13QNpWFqYSUSg53_atf9ONgdUMF-0iEq-HniOE7UogAqK_CIanZE4BlHvoAC4VsFZS5quQbVQ4DGsOFCd73rXuZXf9IzoCC87GGUwFh9zi3wSK8QoXsU_SIYRLtfg"
+kind: "identitytoolkit#SignupNewUserResponse"
+localId: "MfhSB1tm7xYwXC3d7yRfb6BzSHX2"
+refreshToken: "AGEhc0BwG0SLSsGNEzXS2Plgt8OzpZldTjy15Keo5yPst-5nV1D5ev3OrE1huzl95TvngYavo2DkQldRCvdoHFpG_K36lg-mGowX9KekoM5PuFgIz
+
+
+
+------------------------------------------------------------
+
+
+
+
+OK.. isso significa que esse TOKEN EXPIRA EM 1 HORA, devido a RAZÕES DE SEGURANÇA... mas você pode gerar UM NOVO TOKEN,
+
+
+por meio 
+
+do 
+
+'refreshToken'... ------> ENTRETANTO, EVIDENTEMENTE, APENAS __ VOCÊ__ NO SEU PRÓPRIO APLICATIVO__ PODE 
+
+FAZER O REFRESH DESSA token 'idToken'... (eu acho que a 'idToken' é substituída pela 'refreshToken', quando o usuário REFRESHA sua sessão/signin...)
+
+
+ 
+
+ --> professor diz que 
+
+ a 
+
+ 'refreshToken' É __USADA __ PARA CONSEGUIR UMA __NOVA IDTOKEN...__ (E não que uma é substituída pela outra...).
+
+
+
+
+
+
+
+
+ CERTO,
+
+
+ essas são nossas 'options'... -----> NÓS TAMBÉM PODEMOS VER 
+
+
+ 'email:',
+
+EM QUE 
+
+
+
+HÁ 
+
+O EMAIL CRIADO POR NOSSO USUÁRIO...
+
+
+
+
+
+
+
+
+--->  e se nós então navegarmos até o firebase,
+
+e então 
+
+
+ENTRARMOS NA PÁGINA DE 'authentication',
+
+
+
+na 'users page',
+
+PODEREMOS 
+
+
+VER __ QUE __ ESSE USER AÍ, 
+
+nosso 
+
+DUMMY USER,
+
+foi
+
+
+REGISTRADO 
+
+NA LISTA DE USERS 
+
+
+DO NOSSO PROJETO...
+
+
+
+
+
+(REALMENTE, ISSO FUNCIONOU...)
+
+
+
+
+
+----------------
+
+
+NÓs vemos:
+
+
+'identifier' ---> é o EMAIL do usuário, no nosso caso....
+
+
+
+'user UID' ---> É O __ID DO USUÁRIO, CRIADO AUTOMATICAMENTE PELO FIREBASE...
+
+
+
+
+
+
+
+--> É ASSIM, PORTANTO, QUE NÓS 'SIGN USERS UP' (é o cadastro de usuários, basicamente...).
+
+
+
+
+
+
+
+----> PROFESSOR DIZ QUE 
+
+
+__NÃO ADICIONOU 'VALIDATION' 
+
+
+
+ao nosso 
+
+aplicativo react,
+ 
+ aos input fields,
+
+ POR ISSO 
+
+ ELE PODE 
+
+
+ INSERIR ALGO ___INVÁLIDO___ 
+
+ no 'password field',
+
+ Para então 
+
+
+ ver o que 
+
+ é enviado como 'response' 
+
+
+ por nosso servidor....
+
+
+
+
+
+
+
+ EU VI ISTO:
+
+
+
+
+
+ {
+    "message": "Request failed with status code 400",
+    "name": "Error",
+    "stack": "Error: Request failed with status code 400\n    at createError (http://localhost:3000/static/js/vendors~main.chunk.js:1023:15)\n    at settle (http://localhost:3000/static/js/vendors~main.chunk.js:1257:12)\n    at XMLHttpRequest.handleLoad (http://localhost:3000/static/js/vendors~main.chunk.js:497:7)",
+    "config": {
+        "url": "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4",
+        "method": "post",
+        "data": "{\"email\":\"asasassa@asasjasi.com\",\"password\":\"asas\",\"returnSecureToken\":true}",
+        "headers": {
+            "Accept": "application/json, text/plain, */*",
+            "Content-Type": "application/json;charset=utf-8"
+        },
+        "transformRequest": [
+            null
+        ],
+        "transformResponse": [
+            null
+        ],
+        "timeout": 0,
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN",
+        "maxContentLength": -1,
+        "maxBodyLength": -1
+    }
+}
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+REQUEST FAILED WITH CODE 400... -------> 
+
+
+dentro 
+
+do 
+
+error 
+
+em si, 
+
+
+
+
+se examinarmos o 'AUTH_FAIL', a action em si, esse objeto action,
+
+
+TEREMOS
+ 
+
+
+
+ data > error > 
+
+ errors > 
+
+ message: 'Password is not long enough'... (por causa de NOSSA RULE, MAS ACIMA DE TUDO, __POR CAUSA DO FUNCIONAMENTO __ DO FIREBASE, QUE NÃO PERMITE SENHAS MENORES DO Q 6 CARACTERES...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ------> por alguma razão, a versão do professor do código DIZ A ELE, em uma propriedade 'message' dentro de 'error',
+
+
+ que 
+
+ A RAZÃO DO ERRO é que 
+
+ 'o password é muito curto'... ---> ENTRETANTO, NOSSA VERSÃO DO CÓDIGO SÓ DIZ QUE 
+
+ FOI UM REQUEST de status code 400, e mais nada...
+
+
+ ---------------------------
+
+
+
+
+
+
+ --> mas o fato de que 
+ O BOTÃO AINDA PODE SER PRESSIONADO QUANDO 
+
+ TEMOS 
+
+
+ CARACTERES INSUFICIENTES É RUIM.... --> temos que implementar alguma coisa (talvez browserside... mas pode ser SERVERSIDE, TAMBÉM... só é mais difícil de settar... )
+
+
+
+
+
+
+
+
+ --> OBS:: VOCÊ PODE VER A RAZÃO DE ESSE REQUEST TER FALHADO TBM POR MEIO DA ABA 'NETWORK' no 
+ google dev tools ... --> 
+
+
+ ali 
+
+ vai 
+ mostrar 
+
+ um arquivo/REQUEST 
+
+
+
+ 'signupNewUser?key=zlslasasasihjaahs'  -- POST - 400 ... -----> se você inspecionar,
+
+ vai 
+
+ ver que 
+
+ esse negócio 
+
+
+
+ tem uma propriedade 
+
+
+ 'message: 'WEAK_PASSWORD'
+
+
+
+
+ ex
+
+
+
+ {message: "WEAK_PASSWORD : Password should be at least 6 characters", domain: "global",…}
+
+
+
+
+
+
+ (REALMENTE, EU CONSEGUI VER ISSO...)
+
+
+
+
+
+
+
+
+
+
+
+
+ -----------------------------------------------
+
+
+
+
+
+
+ -----> OK, JÁ PODEMOS VER __O QUE NÓS 'GET BACK' de 
+
+
+ signup requests, o que nós RECEBEMOS DISSO...
+
+
+
+
+
+
+
+ ---> IMPORTANTE: AGORA NÓS JÁ TEMOS 
+
+
+ 1) A TOKEN 
+
+
+ 2) A REFRESH TOKEN 
+
+ 3) 'expiresIn', o TEMPO DE VALIDADE DA TOKEN...
+
+
+
+
+
+
+
+
+ ----> DEVEMOS USAR A INFORMAÇÃO 'refreshToken' para 
+
+ NOS AUTENTICAR 
+
+ EM 
+
+ __rEQUESTS__ FUTUROS....  ------> PORÉM, ANTES DISSO,
+
+
+ DEVEMOS 
+
+ NOS 
+
+
+ ASSEGURAR QUE NÓS/O USUÁRIO 
+
+ CONSIGA
+
+
+ FAZER 'LOG IN'...

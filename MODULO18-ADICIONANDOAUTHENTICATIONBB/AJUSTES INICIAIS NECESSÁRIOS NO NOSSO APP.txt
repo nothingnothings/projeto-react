@@ -1,0 +1,331 @@
+AJUSTES NECESSÁRIOS NO NOSSO APP...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> nós precisamos adicionar uma nova 'VISTA'... (como assim, 'vista')....
+
+
+
+
+
+
+---> precisamos de um novo 'VIEW',
+
+
+
+uma 
+
+
+nova página/elemento 
+que 
+
+
+SERÁ 
+
+
+__VISUALIZADO __ PELO USUÁRIO.... ---------> 
+
+
+
+
+esses elementos 
+
+
+vão 
+
+ser 
+
+
+
+os 
+
+'views' 
+
+
+
+de 
+
+'SIGNUP' E 'SIGNIN' 
+
+
+
+
+
+
+(Signup & signin Views...)
+
+
+
+
+
+
+
+
+
+--> CERTO... MAS ESSAS 2 FEATURES/PÁGINAS vão ser 
+
+COMBINADAS 
+
+
+
+EM 
+
+1 ÚNICA PÁGINA,
+
+
+
+a 
+
+'signup AND signin view'... --> é aquela 
+
+página 
+
+
+de 
+
+
+'login/cadastro'...
+
+
+
+
+
+
+-------
+
+
+POR MEIO 
+
+DESSA PÁGINA,
+
+VAMOS 
+
+PODER 
+
+
+
+___cRIAR __ UM USUÁRIO, OU ENTÃO __LOGGAR UM USUÁRIO__ QUE JÁ EXISTE no nosso backend,
+
+ao nosso aplicativo...
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+CERTO.... ALÉM DISSO,
+ 
+
+ VAMOS 
+
+ __QUERER___ PROTEGER___ ALGUMAS 
+
+
+
+ ROUTES ___ NO 
+
+
+ 'BACKEND'... --------> 'GUARD' essas 
+
+ routes... ------> precisamos 
+
+ disso 
+
+ para que, por exemplo,
+
+
+
+
+
+A ROUTE DE 
+
+'Orders' (onde são mostrados todos os BURGERS) 
+
+
+
+_NÃO POSSA SER ACESSADA __ SE NÃO ESTIVERMOS 
+
+
+'AUTHENTICATED'...
+
+
+
+------------------------------------
+
+
+
+POR FIM,
+
+
+O 
+
+PROFESSOR 
+
+VAI QUERER 
+
+QUE 
+
+
+
+A TOKEN ___ que nós vamos receber (enviada pelo BACKEND) 
+
+
+
+CONSIGA 
+
+
+SER TAMBÉM 
+
+__ENVIADA ___ AO BACKEND, PARA QUE SEJA VERIFICADA... -----> TODOS 
+
+
+OS 
+
+REQUESTS 
+
+
+
+
+a 
+
+
+'RESOURCES PROTEGIDOS' 
+
+
+deverão 
+
+
+
+ser VERIFICADOS PELO SERVIDOR, QUE VAI VERIFICAR 
+
+SE 
+
+
+A 
+'token' 
+
+QUE 
+FOI ENVIADA JUNTA DE TAL REQUEST ___REALMENTE __ '''bate/coincide''' 
+
+com 
+
+
+ a token que 
+
+ tem armazenada em si/que cria 
+
+ no seu servidor... ------> VAMOS QUERER 
+
+ QUE 
+
+
+ REQUESTS 
+
+
+
+ NÃO AUTORIZADOS __NÃO FUNCIONEM__... (retornar uma página de erro, ou então um alert....)
+
+
+
+
+
+
+
+ ---> CERTO,
+
+
+ ESSES 
+
+ SÃO 
+
+ ALGUNS DOS AJUSTES QUE 
+
+ TEREMOS 
+
+ DE 
+
+ APLICAR NO NOSSO APLICATIVO... -----> 
+
+
+
+
+
+
+ A PRIMEIRA COISA QUE FAREMOS É __ CRIAR _ A PÁGINA DE 'SIGNUP/SIGNIN'....
+
+
+
+
+
+
+
+
+
+ --> isso pq SE NÓS NÃO TIVERMOS 'USERS' (o ponto de partida), será difícil CODAR AS OUTRAS PARTES DO NOSSO 
+
+ APP...
+
+
+
+
+
+
+
+
+
+
+
+ OK... resumindo, 
+
+ VOCÊ DEVE FAZER 3 COISAS PARA ADICIONAR 'AUTHENTICATION FUNCIONALITY' (usuários e cadastro, autenticação no servidor...) no seu app 
+
+
+
+
+
+
+ 1) PÁGINAS/VIEWS de 'signup' e 'signin'...
+
+
+
+
+
+ 2) GUARDS (proteções a usuários NÃO AUTORIZADOS, serão GUARDS NAS NOSSAS 'ROUTES'...)
+
+
+
+
+
+
+
+ 3) CRIAÇÃO/PASS DE TOKENS ENTRE SERVER/BACKEND 
+ e CLIENT...
+ 
+
+
+ ('http://backend.com/protected')

@@ -1,0 +1,1263 @@
+
+
+
+
+
+
+--> na última lição, ajustamos 
+
+nosso logo, fizemos ele ficar menos bosta 
+
+
+no sidedrawer... (e também na toolbar)....
+
+
+
+
+
+
+
+---> agora DEVEMOS 
+
+AJUSTAR 
+
+
+
+
+OS NAVIGATIONITEMS 
+
+
+
+no 
+
+'SideDrawer'... 
+
+
+
+
+
+
+
+---> por enquanto, os 
+
+
+'NavigationItem' só estão 
+
+
+com estilos 
+
+bons 
+
+
+
+NA ___VERSÃO DE DESKTOP___.... 
+
+
+
+ex(código de estilo dos navitem):
+
+
+
+
+.NavigationItem {
+
+
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    align-items: center;
+
+}
+
+
+
+
+.NavigationItem a {
+    color: white;
+    text-decoration: none;
+    height: 100%;
+    padding: 16px 10px;
+    border-bottom: 4px solid transparent;
+    box-sizing: border-box;
+    display: block;
+
+}
+
+
+
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.NavigationItem a.active {
+    background-color: #8F5C2C;
+    border-bottom: 4px solid #40A4C8;
+    color: white;
+}
+
+
+
+
+----------------------------------
+
+
+
+E isso é um ___PROBLEMA__... ------> 
+
+
+
+na versão 
+
+
+
+
+__MOBILE_, NÓS AINDA TEMOS AQUELE 
+
+LOOK DE 'DESKTOP'... ------> 
+
+
+PROFESSOR PROVAVELMENTE VAI DIZER 
+
+
+PARA ADICIONARMOS UMA MEDIA QUERY 
+
+
+
+NO 
+
+
+
+'NavigationItem.module.css', 
+
+
+e para 
+
+então 
+
+
+escrever algo que funcione em mobile devices...
+
+
+
+
+
+TALVEZ ISTO:
+
+
+''''''
+@media (max-width) {
+    
+}
+''''''
+
+
+
+
+
+?
+
+
+
+
+-------------------------
+
+
+
+
+
+PROFESSOR EXPLICA QUE DENTRO DO SIDEDRAWER 
+
+ELE VAI QUERER 
+
+
+ITEMS 
+
+QUE FIQUEM 
+
+1 EM CIMA DO OUTRO (flex-direction: column),
+
+
+
+
+E QUE 
+
+
+NÃO TENHAM ESSA BORDA AZUL e etc..... -------> 
+
+
+
+
+
+E, DE FATO, 
+
+ELE VAI ADICIONAR UMA MEDIA QUERY/QUERIES 
+
+
+
+NO ARQUIVO 
+
+
+NavigationItem.module.css....
+
+
+
+
+
+
+
+
+
+----> ELE VAI LÁ 
+
+
+
+
+E DECIDE ___ESCREVER____ O CÓDIGO DESSE NEGÓCIO DE UMA FORMA 
+
+'MOBILE-FIRST'.... ---> por isso 
+
+
+
+ele vai 
+
+
+mover 
+
+todas as 
+
+'base classes' que temos agora 
+
+
+__PARA DENTRO___ DE UMA MEDIA QUERY 
+
+
+
+DE 
+
+
+'(max-width: 500)' 
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+----> CRIAMOS UMA MEDIA QUERY DE 
+
+
+'min-width: 500'...
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+@media (min-width: 500px) { /*versão de desktop*/
+    .NavigationItem {
+
+
+        margin: 0;
+        box-sizing: border-box;
+        display: flex;
+        height: 100%;
+        align-items: center;
+    
+    }
+    
+    
+    
+    
+    .NavigationItem a {
+        color: white;
+        text-decoration: none;
+        height: 100%;
+        padding: 16px 10px;
+        border-bottom: 4px solid transparent;
+        box-sizing: border-box;
+        display: block;
+    
+    }
+    
+    
+    
+    
+    .NavigationItem a:hover,
+    .NavigationItem a:active,
+    .NavigationItem a.active {
+        background-color: #8F5C2C;
+        border-bottom: 4px solid #40A4C8;
+        color: white;
+    }
+    
+}
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+CERTO... 
+
+
+E AGORA 
+
+
+VAMOS ESCREVER 
+
+A VERSÃO 
+
+PARA CELULAR... ------> 
+
+
+COPIAMOS E COLAMOS 
+
+o código da versão de desktop, e aí vamos ajustando...
+
+
+
+
+
+PRIMEIRA MUDANÇA:
+
+
+
+
+'.NavigationItem' 
+
+
+deverá 
+
+ter uma 
+
+
+margin de 
+
+
+
+'10px 0 '  (10px cima e baixo, e 0 de left-right) -----> VAI FAZER ISSO PARA QUE EXISTA UM SPACING ENTRE OS ITEMS...
+
+
+
+
+----> 
+
+
+já o width ficará '100%', mas o height NÃO.
+
+
+
+
+
+
+--> professor explica que O DISPLAY NÃO PRECISA SER 'FLEX'... --> esse display nosso poderá 
+
+ser 'block'...
+
+
+
+
+---> ELE TAMBÉM TIRA O 'ALIGN-ITEMS', POIS NÃO USAREMOS FLEX...
+
+
+
+
+
+
+
+
+
+
+
+
+
+JÁ PARA 
+
+
+'.NavigationItem a' (os links)
+
+
+
+A COR 
+
+
+
+DELES NÃO DEVERÁ SER 'WHITE',
+
+
+E SIM DEVERÁ 
+
+
+SER UMA COR MARROM.... (#8F5C2C)...
+
+
+a width ficará 100%, e a height não...
+
+
+
+--> professor remove o padding e o 'border-bottom', pois eles não 
+
+serão necessários....
+
+
+
+
+
+---> border-box fica, 
+
+
+e o display continua como 'block'....
+
+
+
+
+----------------------
+
+
+
+QUANTO 
+
+
+AOS 'ACTIVE ITEMS' (
+
+
+
+    .NavigationItem a:hover, 
+
+
+    :active 
+
+
+    e 
+
+    'a.active'....
+)' 
+
+
+
+
+----> PROFESSOR 
+
+VAI TIRAR 
+
+
+
+O COLOR  DE 
+
+
+'white',
+
+
+
+ele vai deixar uma cor azul-claro,
+
+
+
+de 
+
+
+#40A4C8'....  
+
+
+ELE VAI TAMBÉM __tIRAR __ O BACKGROUND COLOR E VAI TIRAR 
+
+
+O 
+
+
+'BORDER-BOTTOM'...
+
+
+
+
+--------------------------------
+
+
+
+
+
+CERTO.... 
+
+ESSES FORAM OS ESTILOS MOBILE... ----> Agora 
+
+
+devemos 
+
+
+'throw-out' quaisquer 
+
+
+ESTILOS __DUPLICADOS___ entre 
+
+
+
+as versões desktop e mobile .... ------> 
+
+
+podemos jogar fora 
+
+
+a media-query 
+
+
+de 
+
+'border-box', por exemplo.... ---> isso pq, explica o professor,
+
+
+media queries FAZEM __MERGE__ DOS ESTILOS NELAS DEFINIDOS... --> isso
+ 
+
+ significa que o estilo '''GERAL''' (fora do MEDIA QUERY, ou seja o estilo 
+ 
+ MOBILE FIRST) tem suas 
+
+ classes e propriedades ___MANTIDAS EM UM GERAL__, mantidas 
+
+ e passadas à versão do media query,
+  
+
+  se nele não especificarmos nenhuma mudança... 
+
+
+
+  (E É POR ISSO QUE NÃO PRECISAMOS DE 2 'box-sizing: border-box'...)
+
+
+
+
+
+  -------------------------------------
+
+
+
+
+
+  CERTO; 
+
+  POR FIM, 
+
+  o professor vai 
+
+  deixar aquele 
+
+
+  media query de 'desktop' com os mesmos valores, 
+
+
+  mas 
+
+
+  ele vai fazer uma pequena alteração: vai 
+
+  deixar 
+
+  o 
+
+  'width' como 
+
+  'AUTO' -------> ELE APENAS FARÁ ISSO PARA __ QUE 
+
+
+  ___ A WIDTH DE '100%' definida no ESTILO BASE( mobile first) 
+
+  NÃO 
+
+
+  SEJA PASSADA E UTILIZADA NA 
+
+  VERSÃO DE DESKTOp...
+
+
+
+  ---> professor também 
+
+
+  tira 
+
+  'text-decoration: none' 
+
+  da versão de desktop, pois já temos na MOBILE FIRST. 
+
+
+
+  ELE TAMBÉM TIRA 'box-sizing: border-box' 
+
+
+
+  e 'display: block', pelo mesmo motivo....
+
+
+
+
+  -------------------------------------
+
+
+
+
+  SALVAMOS TUDO E RECARREGAMOS.
+
+
+
+
+
+
+  ---> agora eles parecem um pouco melhores, os links de 'NavItems',
+
+
+  MAS ELES 
+
+  __aINDA ESTÃO 1 AO LADO DO OUTRO....
+
+
+  -----------------------------
+
+
+
+  A RAZÃO PARA ISSO É SIMPLES:
+
+
+  NOSSO 
+
+
+  'NAVIGATIONITEMS', que SEGURA 
+
+  esses 'navigationItem',
+
+
+  NÃO TEM UM DISPLAY 
+
+  DE 
+  
+
+
+  'FLEX' ativado no seu arquivo de estilo...
+
+
+
+
+
+
+
+
+
+
+  ---------------------------------------
+
+
+
+
+  flex-flow
+This is a shorthand for the 
+flex-direction and flex-wrap properties, 
+which together define the flex container’s main and cross axes.
+ The default value is row nowrap.
+
+
+
+ --------------------------------------
+
+
+
+
+ NÓS VAMOS 
+
+
+ ATÉ 
+
+ O 
+
+ 'NAVIGATIONITEMS.MODULE.CSS'
+  
+
+
+e então consertamos o estilo por meio do código:
+
+
+
+
+
+.NavigationItems {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
+}
+
+
+
+@media(min-width: 500px) {
+      .NavigationItems {
+        flex-direction: row; /*pode ser 'flex-flow', também*/
+      }
+}
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+
+
+ISSO 
+
+
+VAI FUNCIONAR MT BEM.... 
+
+
+
+
+
+----> ENTRETANTO, NÓS TAMBÉM 
+
+
+TEMOS ALGUMAS 'ISSUES' 
+
+
+COM ESSE SIDEDRAWER.... (e com a TOOLBAR)...
+
+
+
+
+
+
+
+---> PROBLEMA: OS NAVIGATION ITEMS TAMBÉM ESTÃO VISÍVEIS 
+
+NA 
+
+
+VERSÃO 
+
+'MOBILE'... ---> temos que ESCONDÊ-LOS, DE ALGUMA FORMA...
+
+
+
+
+
+
+
+
+------------------------------------------------------------
+
+
+
+
+
+(QUASE) CONSERTEI O PROBLEMA POR MEIO DESTE 
+
+CÓDIGO 
+
+
+DE CSS:
+
+
+
+
+
+
+
+
+
+
+
+.NavigationItems {
+  list-style: none;
+  flex-direction: column;
+  display: none;
+}
+
+
+
+
+@media(min-width: 500px) {
+      .NavigationItems {
+        flex-direction: row;
+        margin: 0;
+        padding: 0;
+     
+        display: flex;
+        align-items: center;
+        height: 1005;
+
+      }
+}
+
+
+
+------------------------------------
+
+
+
+
+
+É A MAGIA 
+
+
+
+DO 
+
+
+'DISPLAY: NONE'... -----> mas o problema 
+
+
+É QUE 
+
+
+ESSE 
+
+
+'DISPLAY: NONE' 
+
+
+
+__tAMBÉM__ SUMIU COM 
+
+MEUS 
+
+
+NAVITEMS 
+
+DENTRO DO SIDEDRAWER... --> tenho que seguir o APPROACH DO PROFESSOR... 
+
+
+
+----------------------------------------
+
+
+
+APPROACH DO PROFESSOR:
+
+
+
+
+PAra consertar esse problema, 
+
+devo voltar 
+
+
+ao meu 
+
+'SideDrawer.js'... --->
+ 
+
+
+ lá naquele código de render,
+
+ no local 
+
+
+ em que 
+
+
+ eu renderizo meu LOGO 
+
+ E MEU 'NAVITEMS'...:
+
+
+
+EX:
+
+
+
+
+
+const sideDrawer = (props) => {
+
+    return (
+
+        <div className={SideDrawerStyle.SideDrawer}>
+            {/* <Logo height="11%"/> */}
+            <div className={SideDrawerStyle.Logo}>
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+
+        
+    )
+
+
+}
+
+
+----------------------------------------------
+
+
+
+
+
+---> o professor 
+
+
+
+aponta que 
+
+PRIMEIRAMENTE __ ELE VAI ADICIONAR UM POUCO DE 'MARGIN' AO BOTTOM ___ do 
+
+
+'logo',
+
+
+PARA QUE 
+
+
+TENHAMOS ALGUM SPACING 
+
+EMBAIXO DELE... 
+
+---> ele coloca uma 
+
+'margin-bottom' 
+
+
+de 
+
+32px...
+
+
+
+
+ex:
+
+
+.Logo {
+    height: 11%;
+    margin-bottom: 32px;
+}
+
+
+--------------------------
+
+
+
+
+PARA __REMOVER OS __NAVITEMS__ NA TOOLBAR 
+
+NA VERSÃO 
+
+MOBILE,
+
+
+
+
+
+DEVEMOS ADICIONAR __ UMA NOVA 'HELPER CSS CLASS',
+
+
+
+a qual, diz o professor, ADICIONAREMOS 
+
+
+ÀQUELE 
+
+
+<NAV> QUE 
+
+FOI USADO 
+
+PARA __WRAPPAR_____ NOSSO 
+
+
+COMPONENT 
+
+de 
+
+
+'NavigationItems'...:
+
+
+
+
+
+
+
+const sideDrawer = (props) => {
+
+    return (
+
+        <div className={SideDrawerStyle.SideDrawer}>
+            {/* <Logo height="11%"/> */}
+            <div className={SideDrawerStyle.Logo}>
+            <Logo />
+            </div>
+            <nav> ////////EIS O NAV EM QUESTÃO.
+            <NavigationItems /> 
+            </nav>
+            
+
+
+
+        </div>
+
+
+        
+    )
+
+
+}
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+--> O PROFESSOR VAI ADICIONAR ESSA 'HELPER CSS CLASS' 
+
+___DENTRO DE UMA ___ MEDIA QUERY___.... (lá no 'Toolbar.module.css' -------> OBS:
+
+
+O 'Toolbar.module.css' é um arquivo estruturado 
+
+COM UMA MENTALIDADE 'DESKTOP FIRST', POIS A TOOLBAR 
+
+DE NOSSO PROJETO FOI __PENSADA ___ PARA 
+
+DESKTOPS EM PRIMEIRO LUGAR.... PQ ELA NÃO É UTILIZADA 
+
+NA VERSÃO MOBILE...)... -------------> 
+
+
+
+
+
+
+e essa 'helper css class' 
+
+
+
+
+ficará assim:
+
+
+
+'@media (max-width: 499px) {
+
+}'  ---------> OU SEJA,
+
+MAIS DE 499PX DE LARGURA, 
+
+
+NOSSO ESTILO APLICADO PASSA A SER 
+
+O 
+
+
+DO TOOLBAR EXISTENTE NA PÁGINA (versão de desktop)...
+
+
+
+
+
+aÍ, DENTRO 
+
+DESSE MEDIA QUERY,
+
+
+O PROFESSOR VAI ADICIONAR 
+
+UMA 
+
+CLASSE 
+
+
+DE 
+
+'.DesktopOnly'...
+
+
+
+
+
+'.DesktopOnly {
+
+
+}' ------> 
+
+
+ E DENTRO DESSE NEGÓCIO ELE VAI SETTAR 
+
+ 'display: none'... --------------> 
+
+
+
+ E PROVAVELMENTE 
+
+ ELE VAI VINCULAR 
+
+
+ ESSA CLASSE 
+
+ '.DesktopOnly' 
+
+
+ ÀQUELA 
+
+ '<NAV>' em que 
+
+ WRAPPAMOS NOSSO COMPONENT 
+
+
+ 'NavigationItems'... ---------> E ISSO FARÁ NOSSO 
+
+
+ TOOLBAR SUMIR QUANDO 
+
+ A VERSÃO 
+
+MOBILE DO NOSSO SITE FOR ENGATADA...
+
+
+
+
+
+
+
+
+EX(CÓDIGO):
+
+
+
+
+
+const toolbar = (props) => {
+  return (
+    <header className={Toolbar.Toolbar}>
+      <div>MENU</div>
+      {/* <div>LOGO</div> */}
+
+      {/* <Logo height="80%"/> */}
+      <div className={Toolbar.Logo}>
+      <Logo/>
+      </div>
+      <nav className={Toolbar.DesktopOnly}>
+      <NavigationItems />
+      </nav>
+    </header>
+  );
+};
+
+
+
+
+
+
+
+
+EX(CÓDIGO CSS):
+
+
+
+
+
+
+
+.Toolbar {
+  height: 56px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #703b09;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 90;
+}
+
+.Logo {
+  height: 80%;
+}
+
+.Toolbar nav {
+  height: 100%;
+}
+
+
+
+@media(max-width: 499px) {
+  .DesktopOnly {
+    display: none;
+  }
+}
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+---> CERTO, 
+
+AGORA ESTÁ TUDO FUNCIONANDO... -----> MAS AINDA FALTA UM __bACKDROP__ PARA 
+
+ESSE SIDEDRAWER... (e talvez reduzir um pouco seu tamanho, pq está bem feio,
+
+desnecessariamente grande...) 
+
+
+
+
+
+
+
+
+
+
+
+---> ADICIONAR UM BACKROP A ESSE 
+
+'SIDEDRAWER', 
+
+AQUELE MESMO BACKDROP LÁ, reutilizar aquele backdrop,
+
+e fazer com que ele também
+
+
+_fECHE COM __CLICKS NELE MESMO___... --> SÃO AS ETAPAS EM QUE TRABALHAREMOS NA PRÓXIMA LIÇÃO.

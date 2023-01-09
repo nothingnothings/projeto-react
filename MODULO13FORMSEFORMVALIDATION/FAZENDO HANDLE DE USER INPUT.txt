@@ -1,0 +1,1757 @@
+
+
+
+--> AGORA QUE TEMOS ESSE SETUP 
+
+
+'BÁSICO' de forms,
+
+
+
+com nosso próprio component 
+
+'Input' (que é responsável por todos os tipos de 'INPUT FIELDS' na nossa página...),
+
+
+
+
+
+
+
+
+
+
+
+
+PROFESSOR NOS DIZ QUE 
+
+
+
+
+devemos ajustar nosso component 
+
+'Input' 
+
+PARA 
+
+QUE 
+
+ELE 
+
+TAMBÉM 
+
+SE TORNE 
+
+CAPAZ 
+DE RECEBER 
+
+'USER INPUT' 
+
+
+e 
+
+
+seleções em seu 'dropdown'/select...
+
+
+
+
+
+
+
+
+
+---> para isso, lá no component 
+
+'Input',
+
+
+em 
+
+'Input.js',
+
+
+
+PROFESSOR 
+
+
+VAI ADICIONAR 
+
+
+UM 
+
+
+
+LISTENER 
+
+'onChange' 
+
+
+EM CADA 
+
+UM 
+
+DOS ELEMENTOS 
+
+'<input />'
+
+
+DENTRO 
+
+DOS CASES...
+
+
+
+
+NOVA FUNÇÃO do IDE... :
+
+
+
+
+ALT + clicar --> seleciona MÚLTIPLOS ESPAÇOS NO IDE, para que você possa escrever em múltiplas linhas...
+
+
+
+
+---> vocÊ pode escrever a mesma coisa em múltiplas linhas, ao mesmo tempo...
+
+
+
+--> vou em frente e experimento com 'onChange', que deve ser escrito em todos aqueles 
+
+'switch cases'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+
+const input = (props) => {
+  let inputElement = null;
+
+  switch (
+    props.elementType
+  ) {
+    case 'input':
+      inputElement = (
+        <input onChange={}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+      break;
+    case 'textarea':
+      inputElement = (
+        <textarea onChange={}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+      break;
+    case 'select':
+      inputElement = (
+        <select onChange={}
+          className={InputStyle.InputElement}
+          value={props.value}
+        >
+          {props.elementConfig.options.map((option) => {
+            return (
+              <option onChange={}
+                
+                key={option.value}
+                value={option.value}
+              >
+                {option.displayValue} 
+              </option>
+            );
+          })}
+        </select>
+      );
+      break;
+    default:
+      inputElement = (
+        <input onChange={}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+  }
+
+  return (
+    <div className={InputStyle.Input}>
+      <label>{props.label}</label>
+      {inputElement}
+    </div>
+  );
+};
+
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+ É EVIDENTE QUE O PROFESSOR 
+
+
+ NÃO VAI ESCREVER INLINE O CÓDIGO, nesse 'onChange={}'... -----> não, ele vai usar 
+
+ um 
+
+ MÉTODO 
+
+
+ NO COMPONENT 
+
+
+
+ 'ContactData' 
+
+ para 
+
+
+ fazer 
+ isso...
+
+
+
+
+
+
+
+
+
+ --> por isso o professor vai escrever 
+
+ 'onChange={props.changed}' ---------> 
+
+
+
+ esse prop de 
+
+ 'changed' nós vamos criar no component 
+
+
+ 'ContactData', 
+
+ e 
+
+
+ele segurará 
+
+um MÉTODO ESPECIAL QUE 
+
+VAI UPDATAR O NOSSO STATE 
+
+DE 
+
+
+ACORDO 
+
+
+COM 
+
+O INPUT DO USUÁRIO... 
+
+(aquele código manjado de 
+
+
+'event => event.target.value' -------> )
+
+
+
+
+
+
+
+
+
+
+
+------> É POR ISSO QUE LÁ EM 'ContactData' vamos ter que implementar um método 
+
+
+que 
+
+vai fazer 
+
+esse handle do input do usuário...
+
+
+
+
+
+
+EX:
+
+
+
+
+          return (
+                          <Input 
+                          changed={this.} ////////ISTO AQUI...
+                          key={formElement.id}
+                          elementType={formElement.config.elementType} 
+                          value={formElement.value} 
+                          elementConfig={formElement.config.elementConfig} />
+                        )
+
+
+------------------------------------
+
+
+
+
+O NOVO MÉTODO, EM CONTACTDATA,
+
+será chamado 
+
+de 
+
+
+'inputChangedHandler'...
+
+
+
+
+
+
+Tentei seguir a lógica do professor e criar um método 'inputChangedHandler' que encaixasse 
+
+no flow do código dele, mas ficou uma merda....
+
+vou seguir a sua aula...
+
+
+
+
+
+no inputChangedHandler
+
+
+o professor 
+vai querer 
+
+console.loggar
+
+
+
+
+
+'console.log(event.target.value)' -------> ELE FAZ ISSO PARA VER 
+
+
+
+SE OS 
+
+
+'GENERAL INPUTS',
+
+VER 
+
+
+
+
+se está funcionando, em um geral, 
+
+o input 
+
+de 
+
+
+dados 
+nos nossos input fields...
+
+
+
+
+
+
+
+----> vemos as coisas digitadas printadas no console, sinal de que 
+
+isso funciona... -----> MAS AGORA 
+
+QUEREMOS 
+
+
+
+QUE 
+
+
+
+OS INPUTS FIQUEM NOS INPUT FIELDS, E QUE ISSO TAMBÉM ATUALIZE O STATE 
+
+de 
+
+'ContactData'.... --------> 
+
+
+
+PROFESSOR 
+
+
+NOS APONTA QUE 
+
+PARA ISSO ACONTECER,
+
+ESTÁ 
+
+FALTANDO 
+
+A 
+
+
+____sEGUNDA PARTe___ DE UM 'two way binding',
+
+QUE É 
+
+
+
+
+
+O USO DESSA 'DATA' INPUTTADA PELO USUÁRIO __ PARA ENTÃO _ UPDATAR __ O VALOR 
+
+DOS NOSSOS ELEMENTOS (por meio do uso/update de nosso STATE...) -------> 
+
+
+
+Para fazer 
+
+isso, 
+
+esse update DO VALOR DE NOSSOS ELEMENTOS,
+ 
+ PROFESSOR 
+
+
+ DIZ QUE 
+
+ JUSTAMENTE 
+
+ TEMOS 
+
+ AQUELa propriedade 
+
+
+ 'value' ( de valor inicial EMPTY STRING) 
+
+
+ em cada 
+
+ um 
+
+ dos 'objetos' 
+
+ de input (no state de 'ContactData')....
+
+
+
+
+
+ ex:
+
+
+
+
+ email: {
+        elementType: 'input',
+        elementConfig: {
+            type: 'email',
+            placeholder: 'Your email'
+        },
+
+        value: '' ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+ }
+
+
+ ----------------------------------------
+
+
+
+
+
+OU SEJA,
+
+
+'value' (esse value aí )
+
+
+É __aTUALMENTE__ A KEY__ QUE GOVERNA _______ O VALOR__ QUE É MOSTRADO NA NOSSA TELA, QUANDO O USUÁRIO DIGITA ALGUMA COISA...
+
+
+
+--> isso significa que nÓS PRECISAMOS UPDATAR O 'value' para 
+
+UM DETERMINADO INPUT (do usuário), a partir de MUDANÇAS FEITAS PELO USUÁRIO... ------> 
+
+
+
+
+e para isso, 
+
+em 
+
+'inputChangedHandler()',
+
+
+VAMOS PRECISAR 
+
+DE 
+
+BEM MAIS INFORMAÇÕES DO QUE 
+
+
+APENAS 
+
+'event'... (pq ''''event''' em si regula __tODAS AS MUDANÇAS nos nossos elementos input, 
+
+e não uma mudança em um value 
+
+
+
+DE UM __INPUT ESPECÍFICO__...) -------------> É EVIDENTE QUE VAMOS PRECISAR DE UM SEGUNDO PARÂMETRO, ALÉM DE 'event'; esse 
+
+
+
+segundo parÂmetro será 
+
+
+__UM 'inputIdentifier' (esse será o nome do parâmetro/argumento esperado)....
+
+
+
+ex:
+
+
+
+
+inputChangedHandler = (event, inputIdentifier) => {
+  console.log(event.target.value);
+}
+
+
+---> precisamos desse 'inputIdentifier' PARA QUE 
+
+SEJA 
+
+POSSÍVEL O 'REACH OUT' ao state PARA PEGAR 
+
+
+O OBJETO/ELEMENTO CORRETO, para então mudar o valor da propriedade 
+
+'value' 
+
+desse objeto...
+
+
+para conseguir fazer isso, professor vai escrever 
+
+em 
+
+'changed', lá no 'ContactData':
+
+
+''''''                                                  ''''''''''''
+changed={(event) => {this.inputChangedHandler(event, formElement.id)}}
+
+
+
+
+--------------------------
+
+
+
+E NÓS, DE FATO, 
+
+JÁ FIZEMOS ISSO (previmos essa sintaxe do professor)...
+
+
+
+Ok, mas pq 'id'? ------> é pq 
+
+
+ID 
+
+
+
+
+VAI SER 
+aquele 
+
+negócio 
+
+
+que temos 
+
+dentro do render, aquela propriedade dentro 
+
+daquele objeto QUE PUSHAMOS AO ARRAY DE 
+
+'formElementsArray'...
+
+
+
+
+ex:
+
+
+
+formElementsArray.push(
+  {
+    id: key,
+    config: this.state.orderForm[key] 
+  }
+)
+
+
+
+
+
+
+
+
+---------------------
+
+
+
+
+Agora, é claro, podemos 
+
+usar 
+
+essa informação do 'inputIdentifier' 
+
+PARA ALTERAR 
+
+
+O 
+
+'value'
+
+
+dentro 
+
+desse 
+
+
+
+'inputIdentifier'... ----------> MAS HÁ UM PROBLEMA... -------> 
+
+
+
+eu não posso simplesmente 
+
+
+
+acessar 
+
+'this.state.orderForm.value' e então ALTERAR ____eSSE VALOR___......; não, essa não é a forma correta 
+
+
+
+DE MUTAR (mutate) O 'STATE' de nosso component... -------> em vez disso, professor 
+
+
+
+aponta que 
+
+
+DEVEMOS 
+
+
+__JUSTAMENTE___ O 'MUTAR DE FORMA IMUTÁVEL' ( ou seja, com spread operator, e com a criação de uma CÓPIA 
+
+desse objeto 
+
+'state'....) ---------->
+
+
+
+
+
+
+PROFESSOR 
+
+DIZ QUE A PRIMEIRA COISA QUE ELE VAI FAZER 
+
+É 
+
+
+___cRIAR UMA CÓPIA ___ DE 
+
+'orderForm',
+
+
+a qual 
+
+ELE ARMAZENARÁ
+ 
+ EM UMA 
+
+ C
+ ONSTANTE 
+
+
+
+ CHAMADA 
+
+ DE 
+
+
+ 'updatedOrderForm'...
+
+
+
+
+ ex:
+
+
+
+
+
+
+ inputChangedHandler = (event, inputIdentifier) {
+   const updatedOrderForm = {
+     ...this.state.orderForm
+   }
+ }
+
+
+ ----------------------------
+
+
+
+
+ CERTO.... MAS, DETALHE:::: ESSE 
+
+
+ spread operator aí __NÃO VAI CRIAR __ UM 'DEEP CLONE' 
+
+
+
+ de 
+
+ 'orderForm'... 
+
+
+
+
+
+
+ --> isso significa que, por exemplo,
+
+ 'name':
+
+
+
+
+
+ state = {
+
+   orderForm: {
+     name: {
+       elementType: 'input',
+       elementConfig: {
+         type: 'text', /////////ISTO AQUI NÃO SERIA COPIADO (shallow copy) -----> isso significa que ESSAS PROPRIEDADES __aINDA VAO CONTINUAR COMO 'POINTERS AO OBJETO ORIGINAL 'state.orderForm.name.elementConfig.xxxx', por exemplo...
+         placeholder: 'Your Name' //////////ISTO AQUI NÃO SERIA COPIADO (shallow copy) ---------> 
+       },
+       value: ''
+     }
+   }
+ }
+
+
+
+ ---------------------------
+
+
+
+ESSE FATO DE 
+
+
+ESSAS PROPRIEDADES AÍ NÃO SEREM COPIADAS COM SUCESSO (por ser uma SHALLOW COPY)
+
+
+resulta 
+
+
+NO FATO DE QUE NÓS, COM ESSA SINTAXE AÍ DO SPREAD OPERATOR, 
+
+____NÃO VAMOS __ CONSEGUIR 
+
+MUDAR 'IMUTAVELMENTE' NOSSO state se alterarmos essas propriedades 'type' e 'placeholder' (pq elas CONTINUARÃO SENDO 
+
+POINTERS AO OBJETO ORIGINAL 'this.state'...) 
+
+
+
+
+
+
+---> E O PROFESSOR 
+
+
+NOS GRITA QUE __NÓS PRECISAMOS__ SER CAPAZES DE __ CLONAR ESSE 
+
+
+ELEMENTO 'orderForm' DE __fORMA 'DEEP', DEEPLY__... -----------> 
+
+
+
+
+OK, MAS COMO FAZER ISSO? ---------------------> 
+
+
+PROFESSOR 
+
+
+NOS RESPONDE QUE, NO FINAL DAS CONTAS,
+
+A ÚNICA COISA QUE ME IMPORTA, AQUI, É AQUELA PROPRIEDADE 
+
+'value'... -------> E ISSO SIGNIFICA, POR SUA VEZ,
+
+QUE 
+
+
+O PROFESSOR __APENAS___ TEM QUE 
+
+GARANTIR QUE ESSE OBJETO ESPECÍFICO AÍ SEJA 
+
+CLONADO (e não o resto, e não 
+
+o restante do objeto 'OrderForm'... ----> o restante desse objeto 
+
+NÃO NOS INTERESSA. )
+
+
+
+
+
+
+
+
+
+
+---->ok, mas como podemos 
+
+escrever 
+
+'updatedOrderForm' de um jeito que 
+
+ele também 
+
+consiga 
+
+esse objeto 'value' (que agora fica DO LADO DE FORA de 'orderForm'...)?
+
+
+
+
+--> bem, professor explica que 
+
+ele 
+
+simplesmente 
+
+
+VAI 
+
+USAR 
+
+
+A CÓPIA 
+
+
+do 
+
+'orderForm', 
+
+essa constante 
+
+'updatedOrderForm',
+
+e então 
+
+VAI 
+
+
+USAR 
+
+UM INDEXADOR em cima dele, para poder 
+
+SELECIONAR 
+
+
+O ELEMENTO 'inputIdentifier' (que é uma CHAVE DINÂMICA, PODE SER QUALQUER UM 
+
+DOS OBJETOS 'name', 'street', 'zipCode', etc, dentro dessa CÓPIA de OrderForm...)
+
+
+
+
+
+
+
+
+--> a escrita disso ficará assim:
+
+
+
+ inputChangedHandler = (event, inputIdentifier) {
+   const updatedOrderForm = {
+     ...this.state.orderForm
+   }
+
+
+    updatedOrderForm[inputIdentifier] ///////EIS O CÓDIGO EM QUESTÃO.
+ }
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+O PROFESSOR VAI FAZER ESSE 'select' DO OBJETO representado por 'inputIdentifier' 
+
+PQ ELE VAI QUERER ______CLONAR____ A PROPRIEDADE/OBJETO 'value' (que não foi clonado por meio 
+
+daquele 
+
+simples 
+''''
+   const updatedOrderForm = {
+     ...this.state.orderForm
+   }
+
+'''',
+
+
+JUSTAMENTE 
+
+PELA RAZÃO DESSE CÓDIGO AÍ SÓ FAZER UMA SIMPLES 
+
+'SHALLOW COPY', que não incluiu essa propriedade 'value'...
+
+) -----------> 
+
+
+
+
+E ELE VAI QUERER CLONAR 
+
+
+ESSA PROPRIEDADE OBJETO e ARMAZENAR DENTRO 
+
+DE UMA CONSTANTE, 
+
+uma constante 
+
+chamada 
+
+de 
+
+
+
+
+ex:
+
+
+
+
+const updatedFormElement = {
+  ...updatedOrderForm[inputIdentifier];
+}
+
+
+
+
+---------------------
+
+
+E SIM, ESSE 'HACKY APPROACH' realmente 
+
+vai dar certo...
+
+
+(o spread operator vai espalhar a propriedade 'value: '' ' PARA 
+DENTRO 
+
+DESSE NOVO OBJETO, armazenado em 'updatedFormElement'...)
+
+
+
+
+
+
+
+
+
+
+CÓDIGO FICARÁ ASSIM:
+
+
+
+
+
+
+  inputChangedHandler = (event, inputIdentifier) => {
+
+    const updatedOrderForm = {
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+
+  console.log(this.state);
+  }
+
+
+
+
+
+
+
+--------------------------------------
+
+
+COM ISSO, 
+
+COM ESSA 
+
+constante
+
+'updatedFormElement', 
+
+O PROFESSOR 
+
+
+
+PODE 
+
+
+UPDATAR O SEU STATE DE 'ContactData' __ COM SEGURANÇA __ (e isso vai alterar o valor depositado dentro de nosso determinado 
+
+elemento input....) ---> vai poder 
+
+updatar com segurança 
+
+
+PQ 
+
+
+ESSE 'value' updatado SERÁ __ UM CLONE___... 
+
+
+
+
+
+
+--> a única coisa que fica cagada, aqui, que fica errada, é o 
+
+
+objeto 'options'  dentro de 
+
+'deliveryMethod'; isso é pq ESSE OBJETO OPTIONS TAMBÉM NÃO SERÁ CLONADO COM SUCESSO (shallow copy feita por '{...this.state.orderForm'}),
+
+MAS 
+
+PROFESSOR EXPLICA QUE 
+
+
+NÃO HÁ PROBLEMA EM TER 
+
+ESSA IMPROPRIEDADE AQUI, 
+
+pois 
+
+nós 
+não estamos 
+
+mexendo 
+
+
+com 
+
+esse dropdown,
+ 
+ nessa função 
+
+de 'inputChangedHandler'...   (
+
+
+  e se vocÊ quiser fazer HANDLE DO INPUT DESSE 
+
+
+  'dropdown' AQUI
+
+
+  NO 'INPUTCHANGEDHANDLER',
+
+  VOCê __TAMBÉM__ TEM 
+
+  QUE 
+
+  O COPIAR
+   
+   POR MEIO DESSE APPROACH DO PROFESSOR, pq 
+   aquela simples cópia 
+
+   SHALLOW 
+
+   feita 
+
+   por meio de 
+
+   'updatedOrderForm = {
+     ...this.state.orderForm
+   }'
+
+
+   NÃO SERÁ SUFICIENTE...
+)
+
+
+
+-----------------------------
+
+
+OK, MAS COMO FICA, AFINAL DE CONTAS,
+
+esse 
+
+método 
+
+'inputChangedHandler'...? ------------> 
+
+
+
+PROFESSOR 
+
+NOS EXPLICA QUE 
+
+FALTOU UMA LINHA, 
+
+faltou 
+
+
+digitar 
+
+
+
+
+'updatedFormElement.value = event.target.value' ------------> 
+
+
+
+E DEPOIS 
+
+DESSA LINHA, ELE PROVAVELMENTE 
+
+VAI QUERER 
+
+digitar 
+
+this.setState(
+    updatedFormElement
+)
+
+
+
+--------------------
+
+
+ISSO 
+
+PQ 
+
+ESSE 
+
+
+'updatedFormElement' SERÁ ___JUSTAMENTE__ UM OBJETO 'this.state.orderForm.nomedoIdentifier.value', um 'value' que terá O VALOR QUE O USUÁRIO INPUTTAR ('event.target.value', em outras palavras)....
+
+
+
+ex(código completo):
+
+
+
+
+
+
+
+  inputChangedHandler = (event, inputIdentifier) => {
+
+    const updatedOrderForm = {
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+  updatedFormElement.value = event.target.value;
+
+
+  this.setState( ///ISSO ESTÁ ERRADO.
+      updatedFormElement
+  )
+
+
+
+
+
+  console.log(this.state);
+  }
+
+
+
+
+
+  ---------------------------------
+
+
+  CERTO... MAS 
+
+  EU 
+  ERREI UM POUCO O CÓDIGO, PELO VISTO... ------> 
+
+
+  professor não escreveu esse 'this.setState()'...
+
+
+
+
+
+
+
+
+
+
+  --> o que ele vai querer fazer, na verdade,
+
+
+  é 
+  chamar 
+
+
+  'updatedOrderForm'  ( que é ' ''''' {
+    ...this.state.orderForm
+  } '''')
+
+
+
+
+
+
+
+VAI CHAMAR 
+
+esse 
+
+
+'updatedOrderForm' 
+
+
+e então 
+
+ACESSAR 
+
+
+o 
+
+'inputIdentifier' 
+
+
+DENTRO 
+
+
+desse 
+
+'updatedOrderForm'...
+
+
+
+
+ex:
+
+
+
+  inputChangedHandler = (event, inputIdentifier) => {
+
+    const updatedOrderForm = {
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+  updatedFormElement.value = event.target.value;
+
+  updatedOrderForm[inputIdentifier] /////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+  }
+
+
+
+
+
+
+  -----------------------------
+
+
+  ISSO FEITO,
+
+  ele vai 
+
+  definir 
+
+
+  '''''  updatedOrderForm[inputIdentifier]  = updatedFormElement;''''''''
+
+
+
+
+  ex:
+
+
+
+inputChangedHandler = (event, inputIdentifier) => {
+
+    const updatedOrderForm = {
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+  updatedFormElement.value = event.target.value;
+
+  updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+
+
+
+
+  }
+
+
+
+
+
+
+Ok.... isso faz sentido. É bastante gambiarrento,
+
+mas faz sentido...
+
+
+
+
+
+
+--> ESCRITAS TODAS ESSAS LINHAS, FINALMENTE O PROFESSOR 
+
+
+CHAMARÁ 
+
+
+'this.setState()' 
+
+
+E ENTÃO 
+
+PASSARÁ 
+
+
+{
+  orderForm: updatedOrderForm
+}
+
+
+COMO SEU PARÂMETRO...
+
+
+
+ex:
+
+
+
+
+
+inputChangedHandler = (event, inputIdentifier) => {
+
+    const updatedOrderForm = {
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+  updatedFormElement.value = event.target.value;
+
+  updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+
+this.setState(
+   {
+     orderForm: updatedOrderForm
+   }
+)
+
+
+
+  }
+
+
+
+
+
+
+  -------------------------------------
+
+
+
+
+  OK.... ISSO FINALMENTE ESTÁ FUNCIONANDO... -----> 
+
+
+  OS INPUT FIELDS ESTÃO FUNCIONANDO, E O PROFESSOR NOS RELATA 
+  QUE 
+
+  O 
+
+  'TWO WAY BINDING' ESTÁ FUNCIONANDO com esses input fields...
+
+
+
+
+
+
+  ---> e a boa notícia é que todos esses input fields estão sendo settados 
+
+  DE UMA MANEIRA MUITO GENÉRICA, o que é ótimo... (bem flexível)...
+
+
+
+
+
+
+
+
+  -------> MAS NOSSO DROPDOWN/elemento 'select' AINDA ESTÁ FODIDO...
+
+
+
+
+
+
+
+
+  --> e professor nos diz que devemos ver um pouco sobre 
+
+  'form submission'... (mas nossa form já está sendo enviada ao servidor...)
+
+
+
+
+
+
+
+
+
+
+  (ANTES DE VER A 'FORM SUBMISSION', quero ver se consigo consertar 
+  
+  o HANDLE DE USER INPUT no 
+  
+  meu 
+  
+  'dropdown'...)
+
+
+
+
+
+
+
+
+
+
+
+  CONSEGUI CONSERTAR, CÓDIGO FICOU ASSIM (coloquei um if case de 'inputIdentifier === select', e também um 'value' inicial de 'deliveryMethod', no state de 'ContactData', como sendo 'fastest'....):
+
+
+
+
+
+
+
+
+
+
+    inputChangedHandler = (event, inputIdentifier) => { 
+
+
+    if (inputIdentifier === 'select') { //////////EIS O CÓDIGO EM QUESTÃO.
+      const updatedOrderForm = {
+        ...this.state.orderForm
+      }
+
+
+      const updatedFormElement = {
+        ...updatedOrderForm[inputIdentifier]
+      }
+
+      updatedFormElement.value = event.target.currentValue;
+
+      updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+      this.setState(
+        {
+          orderForm: updatedOrderForm
+        }
+      )
+
+      console.log(this.state);
+
+    }
+
+
+
+
+
+
+
+    const updatedOrderForm = { ////VER AULA 'FAZENDO HANDLE DE USER INPUT'. --> aqui professor usa UMA GRANDE GAMBIARRA para poder UPDATAR O STATE DE 'ContactData' de forma IMUTÁVEL.... (ele faz isso PQ SEMPRE QUE NÓS QUEREMOS UPDATAR UM STATE E VAMOS QUERER USAR OS DADOS DO STATE ANTERIOR, É MUITO MELHOR UPDATAR NOSSO STATE DE FORMA IMUTÁVEL, COM A AJUDA DOS SPREAD OPERATORS...) -----> entretanto, aqui surgiu um problema, pois OS SPREAD OPERATORS CRIAM CÓPIAS 'shallow' ( e não 'deep', que tem todas as propriedades e seus valores representados na cópia) --> isso significa que a ''''NOVA CÓPIA'''' não vai ser uma cópia total, algumas propriedades bem internas (como 'placeholder' e  'type' ) VÃO CONTINUAR SENDO 'pointers' ao OBJETO 'state' original, o que é péssimo... ------> para evitar isso aí, professor escreve as linhas abaixo de 'updatedOrderForm'.... (ele CLONA VERDADEIRAMENTE a propriedade 'value' dentro de nossos 'inputIdentifier' (que são os elementos 'name', 'street', 'email', 'country', no nosso state....))
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+    updatedFormElement.value = event.target.value;
+
+
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    this.setState(
+      {
+        orderForm: updatedOrderForm
+      }
+    )
+
+
+  console.log(this.state);
+  }
+
+
+
+
+
+
+  --------------------------------------------
+
+
+
+  E isso aí realmente funcionou... (mas nosso send de orderForm ainda não está funcionando, pq esse código do professor está um pouco diferente do nosso....)
+
+
+
+
+
+
+
+  --> bem, agora consegui fazer funcionar. Não sei o que o professor me ensinará, porque 
+
+  o 
+
+  formData já está sendo enviado com sucesso, a partir do método 'orderHandler', que 
+
+  é disparado quando o botão de 'Order' é pressionado...
+
+
+
+
+
+
+  --> talvez seja bom 
+
+  fazer display de um 'alert' 
+
+
+  (E um return vazio) 
+
+  para os casos em que 
+
+  os input fields 
+
+  estiverem vazios.... (
+
+
+    colocar um if statement grande dizendo 
+
+    'se os input fields estiverem vazios, mostre um alerta ao usuário 
+
+    e retorne vazio...'
+  )
+  
+
+  O CÓDIGO FICOU MEIO HACKY,
+
+  MAS FICOU ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  orderHandler = (event) => {
+    event.preventDefault(); ///VAI PREVENIR O RELOAD DA PÁGINA.(e sim, precisamos do parâmetro 'event' para acessar esse método especial, método que PREVINE O COMPORTAMENTO DEFAULT DO BROWSER DE __RECARREGAR___ PÁGINAS QUANDO UM 'SUBMIT' OCORRE DENTRO DE UMA FORM...)
+    console.log(this.props.ingredients);
+
+
+      if(this.props.ingredients.bacon === 0 &&      /////////EIS O CÓDIGO EM QUESTÃO.
+       this.props.ingredients.cheese === 0 &&
+        this.props.ingredients.meat === 0 &&
+         this.props.ingredients.salad === 0) {
+        alert ('Please build a burger before making an order!');
+        console.log
+      }
+
+
+      if(!this.state.orderForm.name.value || //////////EIS O CÓDIGO EM QUESTÃO.
+         !this.state.orderForm.street.value || 
+         !this.state.orderForm.zipCode.value ||
+         !this.state.orderForm.email.value ||
+         !this.state.orderForm.country.value ) {
+
+          alert('Please enter your contact information!');
+          return;
+         }
+
+
+
+
+    this.setState({
+      loading: true,
+    });
+
+    const orderData = {
+      ingredients: this.props.ingredients,
+      price: this.props.price,
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+    };
+
+    axiosOrder
+      .post('/orders.json', orderData)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          loading: false,
+        });
+      });
+  };
+
+
+
+
+
+  -----------------------
+
+
+
+
+  Acho que também vou colocar um 
+
+
+  ALERT e um RETURN 
+
+  lá 
+
+
+  na página 
+  
+
+
+  'Burger Builder', que vai EVITAR QUE 
+
+  O USUÁRIO CONSIGA  
+
+
+  CRIAR UM BURGER VAZIO (sem ingredients)...
+
+
+
+
+
+
+
+
+
+  Ok... ficou bom.... (talvez pudéssemos usar aquele modal de erro/modal normal para mostrar essa mensagem, mas posso ver isso amanhã...)

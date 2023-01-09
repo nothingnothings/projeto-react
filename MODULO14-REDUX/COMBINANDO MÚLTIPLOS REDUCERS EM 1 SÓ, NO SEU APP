@@ -1,0 +1,2023 @@
+
+
+
+
+NA ÚLTIMA LIÇÃO FIZEMOS AQUELA MANHA DE FAZER O OUTSOURCE DOS ACTION TYPES....
+(arquivo 'actions.js', dentro de 'store'...)
+
+
+
+
+
+
+
+
+
+
+
+-----------------------
+
+
+
+MAS TAMBÉM HÁ OUTRA COISA QUE VAMOS FAZER MUITO, À MEDIDA QUE NOSSO APP VAI AUMENTANDO.... ----> 
+
+
+ESSA COISA É 
+
+
+___a ADIÇÃO ___ DE MÚLTIPLOS __REDUCERS... 
+
+
+
+
+
+
+
+
+
+--> como assim, múltiplos reducers? professor disse que era apenas 1 por app...
+
+
+
+
+
+
+---> BEM, ISSO É VERDADE... -------> só temos 1 reducer com redux,
+
+
+
+TODAS AS ACTIONS ACABAM 'FUNNELED' POR 1 ÚNICO REDUCER...
+
+
+
+
+
+
+
+
+--> MAS O 'REDUX' NOS DÁ UMA UTILITY PACKAGE LEGAL,
+
+UTILIZADA __PARA ___cOMBINAR___ 
+
+
+MÚLTIPLOS REDUCERS EM 1 
+
+ÚNICO REDUCER... (fazemos isso para que
+
+AINDA SEJA POSSÍVEL SEGUIR AQUELE PADRÃO 
+
+
+DE 
+
+TER 
+
+1 ÚNICO REDUCEr ___POR TRÁS DAS CENAS__, ao mesmo 
+
+
+tempo em que 
+
+
+conseguimos 
+
+
+ESTRUTURAR 
+
+MELHOR NOSSO CÓDIGO 
+
+
+COM 
+
+MÚLTIPLOS REDUCERS....) ------------> PARA NÓS, COMO 
+
+DESENVOLVEDORES, SPLITTAR
+ 
+ O CÓDIGO LOGICAMENTE É MUITO MELHOR... ------> 
+
+
+ nós acabamos 
+ sem
+
+
+ 1 
+
+ reducer gigante,
+
+ e sim 
+
+ vários 
+
+ 'pedaços do reducer',
+
+  o que 
+
+  facilita muito nossas vidas...
+
+
+  ------------------------------------
+
+
+
+
+
+
+IMAGINE O TAMANHO DE NOSSO  __ único __ REDUCER (em 'reducer.js') SE EXPANDÍSSEMOS 
+
+O TAMANHO 
+
+DO NOSSO app... --------> IMAGINE 500 ACTIONS NESSE REDUCER... --> seria uma bosta...
+
+
+
+
+
+
+
+
+--> É POR ISSO QUE O IDEAL É ___SPLITAR NOSSO REDUCER__ EM VÁRIOS REDUCERS,
+
+
+SPLITTÁ-LO 
+
+
+POR 
+
+
+'feature' (feature by feature)...
+
+
+
+
+-----------------------------
+
+
+
+
+--> NO NOSSO PEQUENO APP de demo,
+
+
+
+faz sentido 
+
+
+
+TER 
+
+UM 
+
+REDUCER 
+
+PARA ADMINISTRAR 
+
+O 'COUNTER',
+
+
+
+
+e outro reducer para 
+
+ADMINISTRAR (handle) 
+
+o 
+
+
+
+'Results'... -------> AINDA QUE 
+
+ELES 
+
+SEJAM 
+
+
+
++ OU - RELACIONADOS (o counter e o 'results'),
+
+
+
+
+
+ELES TECNICAMENTE __SÃO DIFERENTES__, GERENCIAM 
+
+DIFERENTES 
+
+PARTES DO NOSSO APP.... ------> é por isso 
+
+
+que 
+
+
+'split it up'
+
+FAZ SENTIDO... 
+
+-----------------------------
+
+
+
+
+
+
+--> É ISSO QUE VAMOS FAZER... ----> vamos splittar nosso reducer em 2,
+
+UM PARA 
+
+O COUNTER (REDUCER USADO 
+
+APENAS PARA OS 'cases' do reducer relativos 
+
+AO 
+
+'COUNTER')
+
+ E OUTRO PARA O 
+
+'results'... (cases do switch-statement relativos 
+
+AO _cOUNTER_, como 
+
+'STORE_RESULT' e 'DELETE_RESULT')...
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+--> PARA ISSO, PROFESSOR VAI SIMPLESMENTE ADICIONAR, NO FOLDER DE 
+
+'store',
+
+
+___UM NOVO FOLDER CHAMADO DE 'reducers'... -----> E DENTRO 
+
+DESSE FOLDER 
+
+ELE VAI ADICIONAR UM ARQUIVO CHAMADO DE 
+
+
+'counter.js'... (será usado para o MANAGE DOS CASES/ACTIONS DO 
+
+__cOUNTER__....)
+
+
+
+
+
+---> o outro arquivo, por sua vez, será chamado de 
+
+'results.js'...
+
+
+
+
+
+
+
+
+
+
+--> ISSO FEITO, PROFESSOR COPIARÁ 
+
+TODO 
+
+
+O NOSSO CÓDIGO DO ARQUIVO 'reducer.js'
+
+
+E ENTÃO O COLARÁ 
+
+
+
+DENTRO DE 
+
+'counter.js'
+
+
+
+
+-------------------------------
+
+
+
+DENTRO DESSE ARQUIVO-REDUCER ESPECÍFICO 
+
+
+'counter.js',
+
+
+
+O PROFESSOR 
+
+VAI QUERER 
+
+DAR UMA ALTERADA NO NOSSO STATE, VAI QUERER 
+
+TIRAR 
+
+AQUELA 
+
+PARTE 
+
+'results', pq ESSE REDUCER DE 'counter.js'
+
+__NÃO SERÁ RESPONSÁVEL__ PELA ALTERAÇÃO 
+
+DO STATE 
+
+
+da propriedade/array 'results'... (ele vai se importar SÓ COM O 'counter'...)
+
+
+
+ex:
+
+
+
+const initialState = {
+    counter: 0
+}
+
+
+
+--------------------------------
+
+
+
+
+
+QUANTO AOS 'CASES' no reducer em si,
+
+O PROFESSOR, NESSE ARQUIVO ESPECÍFICO,
+
+VAI DEIXAR
+ 
+
+ SÓ OS RELATIVOS AO COUNTER, e deletará o 'STORE_RESULT' E O 'DELETE_RESULT'...
+
+
+
+
+
+
+
+
+ --> ISSO VAI DEIXAR NOSSO CÓDIGO MAIS FINO... (leaner)...
+
+
+
+
+ ----------------------------------------> feitas essas alterações,
+
+
+
+ esse reducer aÍ 
+
+
+
+
+
+ ____JÁ ____ É O NOSSO REDUCER DE 'counter.js'
+
+
+
+
+ ___ACABADO___>.. (completo).
+
+
+
+
+
+
+
+
+
+
+ ---> professor explica, contudo, que podemos renomear 
+
+
+ a constante, que ainda está como 
+
+
+
+
+ 'const reducer = (state = initialState, action) => {
+
+ }'
+
+
+
+
+.... --> PODEMOS CHAMÁ-LO DE 
+
+'counterReducer'...
+
+
+
+ex:
+
+
+ 'const counterReducer = (state = initialState, action) => {
+
+ }'
+
+
+
+
+
+
+ --------------------
+
+
+
+
+ Ok, agora fazemos a mesma coisa que fizemos 
+
+
+ com 
+
+ 'counterReducer',
+
+ mas 
+
+
+ no arquivo 
+
+
+
+ 'result.js',
+
+ em que 
+
+
+ escreveremos 
+
+
+ o reducer 
+
+
+ 'resultReducer = () => {
+
+ }
+ '
+
+
+
+
+ -------------------------------------
+
+ (e no reducer 'resultReducer', EU VOU TIRAR 
+ 
+ A PROPRIEDADE 
+ 
+ 'counter' do state, PQ ELA NÃO É ADMINISTRADA POR ELE../ não é alterada por ele...)
+
+
+ OK, AGORA TEMOS ESSES 2 REDUCERS.... 
+
+
+
+
+------------------------------------------------
+
+
+
+OBS::: VOCÊ DEVE PERCEBER QUE 
+
+O PROFESSOR 
+
+
+AINDA FAZ UM ACESSO DE 
+
+'.concat({id: new Date(), value: state.counter});' ,
+
+
+
+OU SEJA,
+
+
+
+DE 
+
+'state.counter',
+
+
+___NESSE ___ REDUCER____ DE 'result.js'... --------------->
+
+MAS PROFESSOR EXPLICA QUE NÃO HÁ PROBLEMA EM ELE 
+
+
+ACESSAR/QUERER MANIPULAR 
+
+
+ESSE 
+
+'state.counter', PQ a propriedade 
+
+
+counter 
+
+que 
+
+esse 
+
+
+'splitted reducer' VAI 
+
+ALTERAR É 
+
+
+A PROPRIEDADE 
+
+'counter' no OBJETO 'state' GLOBAL, lá no 'global store' do redux....
+
+
+
+
+
+
+
+
+--> ISSO OCORRE PQ, NO FINAL DAS CONTAS,
+
+
+OS 2 REDUCERS 
+
+
+
+__VÃO ___ ACABAR ''''''MERGED TOGETHER'''' 
+
+EM 
+
+1 GRANDE REDUCER/STATE, 
+
+e é exatamente 
+
+por isso 
+
+que 
+
+
+a propriedade 'counter', do state,
+
+__AINDA VAI EXISTIR 
+
+NESSE ___ ARQUIVO/REDUCER DE 'resultReducer', AINDA QUE 
+
+
+NÃO
+
+
+TENHAMOS 'counter' escrito no seu state...
+
+(
+
+    ex:
+
+
+    'const initialState = {
+        results: []
+    }'
+)
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+OK........... --> QUAL É O PRÓXIMO PASSO? 
+
+
+
+
+
+
+
+
+
+---> bem, com isso, professor diz que PODEMOS NOS LIVRAR DO ARQUIVO 'reducer.js',
+
+LÁ NO 
+
+FOLDER 
+
+
+
+'store'... 
+
+(nós só vamos comentar todo seu código para fora, não vamos o remover totalmente/jogar na lixeira...).
+
+
+
+------------------------------------------
+
+
+
+
+MAS O ÚNICO PROBLEMA DISSO É 
+
+QUE 
+
+
+O 
+
+
+IMPORT
+DE 
+
+'import reducer from' ./store/reducer;' 
+
+
+
+EM 
+
+'index.js'
+
+
+
+
+
+
+
+
+SE 
+
+
+
+___TORNOU DEFASADO___...
+
+
+-----------------------------
+
+
+
+COMO AGORA TENHO 2 REDUCERS,
+
+DEVO OS IMPORTAR NESSE
+ARQUIVO 
+
+
+'index.js'...
+
+
+ex:
+
+
+import counterReducer from './store/reducers/counter';
+import resultReducer from './store/reducers/result';
+
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+CERTO, 
+
+MAS COM ISSO, NOSSO PROBLEMA 
+
+
+
+SE TORNOU/SE TORNA 
+
+
+'const store = createStore(reducer)',
+
+
+
+
+
+QUE __PRECISA/EXIGE 1 ÚNICO PARÂMETRO, QUE É O REDUCER ( e agora nós temos 2 reducers.. incompatibilidade).
+
+
+
+
+
+--> PARA RESOLVER ESSE PROBLEMA, PROFESSOR NOS DIZ QUE 
+
+DEVEMOS 
+
+
+___iMPORTAR __ UMA PACKAGE/OBJETO EXTRA DO 
+
+'react-redux',
+
+
+
+
+QUE É UMA ___HELPERFUNCTION____... -------> O NOME 
+
+
+DESSA 
+
+
+helper function é 
+
+
+
+'combineReducers'...
+
+
+
+ex:
+
+
+
+import { createStore, combineReducers } from 'redux';
+
+
+
+
+-----------------------------------------------------
+
+
+
+COMO O NOME SUGERE,
+
+ESSA HELPER FUNCTION NOS DEIXA 
+
+COMBINAR 
+
+MÚLTIPLOS REDUCERS,
+
+DE FEATURES DIFERENTES DE NOSSO PROJETO,
+
+em 
+
+
+1 único reducer... (que é então utilizado 
+
+pelo 
+
+
+'createStore()'...)
+
+
+-----------------------------------------
+
+
+
+
+
+
+--> 'combineReducers' É UMA __fUNÇÃO __ QUE ACEITA/EXIGE __UM OBJETO 
+
+JAVASCRIPT___, 
+
+
+E QUE ENTÃO 
+
+
+__MAPPEIA___ NOSSOS REDUCERS A DIFERENTES 'SLICES' de nosso state....
+
+
+
+
+------------------------------
+
+
+
+para 
+
+
+conseguir 
+
+
+esse 
+
+'combined reducer',
+
+
+PROFESSOR 
+
+
+
+AFIRMA QUE DEVEMOS CRIAR UMA 
+
+NOVA CONSTANTE,
+
+
+
+
+de nome 
+
+'rootReducer',
+
+
+
+
+QUE SEGURARÁ UM VALOR 
+
+
+que será 
+
+a 
+
+EXECUÇÃO DE 
+
+
+'combineReducers()' ---------> 
+
+
+
+E 
+
+ESSA FUNÇÃO AÍ __EXIGE/ACEITA___ UM OBJETO JAVASCRIPT___ 
+
+
+
+__COMO INPUT__....
+
+ex:
+
+
+
+
+const rootReducer = combineReducers(
+    {
+
+    }
+)
+
+
+-------------------------------------
+
+
+
+
+
+CERTO.... AGORA, DENTRO DESSE OBJETO-PARÂMETRO,
+
+
+podemos 
+
+simplesmente 
+
+CRIAR 
+
+SEÇÕES (sections) 
+
+DE NOSSO ___APLICATIVO__.... (
+
+
+    e podemos 
+
+    escolher os NOMES QUE DESEJARMOS 
+
+    para 
+
+    cada uma dessas 'seções'...
+)
+
+
+
+
+--> professor diz que podemos 
+
+escrever 'counter' ou 'ctr'... --------> ISSO FEITO,
+
+NÓS 
+
+ENTÃO 
+
+SIMPLESMENTE __MAPPEAMOS___ OS REDUCERS ADEQUADOS A CADA 
+
+'__sLICE___' 
+
+de nosso 
+
+state/app....
+
+
+ex:
+
+
+
+
+
+ex:
+
+
+'
+
+
+const rootReducer = combineReducers(
+    {
+        counter: counterReducer,
+        results: resultReducer
+    }
+)
+
+'
+
+
+
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+const rootReducer = combineReducers(
+    {
+        counter: counterReducer,
+        results: resultReducer
+    }
+)
+
+
+
+
+
+const store = createStore();
+
+
+
+
+---------------------------------------
+
+
+COM ISSO NÓS 
+
+BASICAMENTE 
+
+
+ESTAREMOS DIZENDO AO REDUX 
+
+
+'hey, eu tennho essas 2 ÁREAS NO MEU APP, uma 
+
+de 
+
+'counterReducer' E A OUTRA DE 'resultReducer'... POR FAVOR,
+
+USE ESSES REDUCERS (counterReducer e resultReducer) 
+
+
+PARA __cADA UMA DELAS__,
+
+
+
+E ENTÃO 
+
+__FUNDA TUDO EM 1 ÚNICO GRANDE REDUCER/STATE__...'
+
+
+------------------------------
+
+
+
+--> E SE AGORA 
+
+NÓS 
+
+
+PASSARMOS 
+
+
+'rootReducer', essa constante aí,
+
+
+AO 
+
+
+'createStore',
+
+
+
+
+TEREMOS ALGO INESPERADO NO APLICATIVO... ----------> 
+
+
+nosso aplicativo 
+
+dirá 
+
+
+
+'TypeError: cannot read property 'map' of undefined'.... 
+
+
+
+
+
+
+
+
+
+
+
+--> basicamente, o problema descrito acima é JUSTAMENTE QUE 
+
+
+
+'{this.props.storedResults.map(result => {})}' 
+
+
+
+
+___ ESSE 'storedResults.map()',
+
+
+EM QUE 
+
+NÓS 
+
+
+
+VAMOS POR DENTRO DE TODOS 
+
+
+os 
+
+'storedResults',
+
+
+
+
+__NÃO ___ VAI FUNCIONAR___... -> isso acontece 
+
+
+
+JUSTMANETE
+ 
+
+
+ __PQ __ 
+
+ 'this.props.results'
+
+ AGORA 
+
+ SE 
+
+ REFERE  
+
+
+A 'undefined', E  mais A UM ARRAY DE RESULTS,
+
+como antes.... --------------------->
+
+
+
+
+
+
+E ISSO TAMBÉM ACONTECEU __PQ ___ NÓS COMBINAMOS __ REDUCERS___...
+
+
+
+
+
+
+
+
+
+---------> PQ ISSO ACONTECEU? -------> aconteceu pq 
+
+__NÓS DE FATO TEMOS UM STATE, no final das contas,
+
+
+MAS PARA EVITAR CONFLITOS DE NAMING,
+
+
+
+
+
+__o REDUX ADICIONA/EXIGE__ UM NÍVEL ADICIONAL 
+
+
+
+DE 
+
+'nesting'; 
+
+
+
+como assim, nesting? ------> bem, isso significa que 
+
+O 
+
+REDUX 
+_vAI TER 1 OBJEOTO 'state', mas será/é um objeto 
+
+
+
+COM
+
+ESSAS KEYS 'counter' e 'results' aí,,
+
+
+COMBINADAS EM 1 SÓ por meio de 'combineReducers',
+
+como PROPRIEDADES,
+
+
+
+
+O QUE, POR SUA VEZ,
+NOS 
+
+DÁ 
+
+ACESSO 
+ÀS 'SUB-AREAS' (essa 'fusão  aí')..
+
+
+
+
+EX:
+
+
+
+
+
+const rootReducer = combineReducers(
+    {
+        counter: counterReducer,
+        results: resultReducer
+    }
+)
+
+------------------------------------
+
+
+
+
+
+
+
+
+---> isso vai dizer 'use ESSES REDUCERS PARA CADA 'AREA' DO APP, mas ao mesmo 
+
+TEMPO MANTENHA 
+
+OS 2 VINCULADOS AO MESMO 'store'/reducer/state...
+
+
+
+
+
+ISSO FEITO,
+
+
+VAMOS 
+
+PASSAR 
+
+
+'rootReducer'
+
+ao nosso 
+
+'createStore'..
+
+
+
+ex:
+
+
+
+
+const store = createStore(rootReducer);
+
+
+------------------------------------
+
+
+SALVAMOS 
+
+
+
+TUDO,
+
+
+
+e não ganhamos um erro no NPM....  --> MAS 
+
+VAMOS 
+
+
+GANHAR  
+
+
+UM ERRO __NA APPLICATIOn ---> 
+
+
+
+
+
+
+esse erro será 
+
+
+'TypeError: cannot read property 'map' of undefined'... --------> 
+
+
+
+O PROBLEMA AQUI É QUE 
+
+'results/storedResults', 
+
+
+lá 
+
+no 
+
+'this.props.storedResults.map()',
+
+
+
+NÃO 
+
+__FUNCIONARÁ__... ----------> isso acontece/acontecerá 
+
+pq 
+
+
+
+'this.props.storedResults (ou 'this.props.results', na nossa versão),
+
+
+
+__ VAI SE REFERIR ___ A 'UNDEFINED', e não mais a um/o array de 
+
+'results' -------> E ISSO ACONTECEU/ACONTECE 
+
+
+
+__JUSTAMENTE POR NÓS TERMOS ___COMBINADO___ REDUCERs (2 reducers ''''distintos'''').
+
+
+
+
+
+
+
+----> PROFESSOR EXPLICA QUE NÓS VAMOS TER 1 ÚNICO STATE, NO FINAL DAS CONTAS,
+
+
+MAS __PARA __ EVITAR _____ CONFLITOS DE NOMES__ ('naming conflicts'),
+ 
+
+ O 
+
+
+ __REDUX___ ADICIONA UM NÍVEL DE NESTING, em que 
+
+
+
+
+ ELE (esse state) 
+
+ TEM  
+
+ ESSAS 
+
+ 2 KEYS aí que temos em 'combineReducers()', 
+
+
+ COMO ________PROPERTIES____, PROPERTIES QUE __NOS DÃO ACESSO ___ AOS 
+
+
+ 'SUB-STATES' DE NOSSO STATE.... (e isso é insanamente conveniente...)
+
+
+
+
+
+
+ isso quer dizer, essencialmente, que nosso STATE GLOBAL, lá em 
+
+ 'index.js' (onde está o 'LOCAL STORE'),
+
+
+ TERÁ  
+
+ ALGO TIPO ISTO:
+
+
+ state = {
+     subStateResponsávelPeloCounter: {},
+     subStateResponsávelPeloResults: {}
+ }
+
+
+-----------------------------------------------------
+
+
+
+
+ISSO VAI QUERER DIZER, ESSENCIALMENTE,
+
+
+QUE 
+
+LÁ 
+
+
+EM 
+
+
+
+'Counter.js' (container),
+
+
+SE 
+
+NÓS QUISERMOS 
+
+
+ACESSAR 
+
+
+O
+
+
+
+
+___COUNTER____ (
+
+    como visto 
+
+
+    naquele código de 
+
+
+    'const mapStateToProps = state => {
+        return {
+            counter: state.counter,
+            storedResults: state.results
+        }
+    }
+    '
+),
+
+
+
+
+NÓS ___PRECISAMOS __ ACESSAR ....:
+
+
+                            'state'              +                                 '.counter/ctr'                        +                  .counter; 
+                    (O GLOBAL STATE, EM QUESTÃO)            (isso é o SUBSTATE/slice do globalstate DEFINIDO LÁ EM 'combineReducers'...)
+
+
+
+
+OU SEJA,
+
+FICARÁ ASSIM:
+
+
+    'const mapStateToProps = state => {
+        return {
+            counter: state.counter.counter,  //////////EIS O CÓDIGO EM QUESTÃO.
+            storedResults: state.results.results  /////////EIS O CÓDIGO EM QUESTÃO.
+        }
+    }
+    '
+
+-----------------
+
+
+
+
+E 
+
+ISSO ___REALMENTE ___ FUNCIONARÁ__... (Agora estamos nos referindo corretamente ao 
+
+
+1) STATE GLOBAL 
+
+2) SUBSTATE do state global 
+
+
+3) PROPRIEDADE NESSE SUBSTATE do STATE GLOBAL...)
+
+
+
+
+
+
+
+Lembre-se: isso existe para __EVITAR 'NAMING CONFLICTS'___ com suas propriedades...
+
+
+
+
+------------------------------
+
+
+SALVAMOS 
+
+TUDO ISSO E RECARREGAMOS 
+
+NOSSO APP -------> AGORA 
+
+
+
+NOSSO 
+
+
+APP FUNCIONA COMO ANTES, mas com esse recurso dos 'múltiplos reducers'...
+
+
+
+
+
+
+
+ENTRETANTO, HOUVE UMA PARTE QUE FICOU QUEBRADA/ERRADA... ------> a parte 
+
+do
+
+
+'store results'... ----> ISSO ESTÁ ARMAZENANDO 
+
+
+VALORES EM BRANCO EM NOSSAS <LI>
+
+
+
+(na verdade, eu estou recebendo OUTRO ERRO, um erro de 'cannot read property 'concat()' of UNDEFINED, lá em 'counterReducer'... (provavelmente pq não ajustei o código para USAR o 'SUBSTATE' de meu GLOBAL STATE... (que, nesse caso, é 'results'...))
+
+)
+
+
+
+
+
+CERTO, AGORA CONSERTEI... -----> o verdadeiro problema, agora,
+
+
+É QUE 
+
+
+MINHAS 
+
+<LI> ESTÃO FICANDO EM BRANCo... (não estão sendo 'displayed' de verdade, aqui....)
+
+
+
+
+
+
+----------------------
+
+
+
+
+
+A RAZÃO PARA ISSO, DIZ O PROFESSOR, É QUE 
+
+
+____ 
+
+
+A PROPRIEDADE 
+
+
+
+'storedResults',
+
+
+lá em 
+
+
+
+'mapStateToProps', 
+
+
+
+de co´digo
+
+
+
+
+
+
+'''''
+
+const mapStateToProps = state => {
+    return {
+        ctr: state.ctr.counter,
+        storedResults: state.results.results
+    }
+}
+
+
+'''''''',
+
+
+
+
+__rEALMENTE 
+
+
+ESTÁ 
+
+
+COMO 
+
+'UNDEFINED'... ----> isso aconteceu justamente 
+
+PQ 
+LÁ 
+
+
+
+EM 
+
+'result.js' (r educer de 'results') 
+
+
+
+NÓS ESTABELECEMOS 
+
+
+UM FORMATO 
+
+
+DE 
+
+'objeto' result que era 
+
+
+assim 
+
+
+
+'.concat(
+    {
+        id: newDate(),
+        value: state.counter
+    }
+)'
+
+
+
+OU SEJA,
+
+
+
+O VALOR DE 
+
+'value'
+
+era/é 
+
+
+'state.counter', E ISSO ___AGORA___, NO CASO, ESTÁ __ SE REFERINDO 
+
+A UM VALOR ____ QUE REALMENTE 
+
+É 
+
+'UNDEFINED'... -------> para consertar esse problema,
+
+
+
+devemos 
+
+
+substituir 
+
+
+essa sintaxe de 
+
+
+'state.counter' para 
+
+
+'state.counter.counter',
+
+
+PQ __AÍ VAMOS ESTAR NOS __rEFERINDO __ AO 
+
+
+SUBSTATE 
+
+de 
+
+'counter', que agora é o NEGÓCIO QUE REALMENTE ESTÁ SEGURANDO 
+
+ESSA PROPRIEDADE 
+
+'counter: xxxx'....
+
+
+
+
+
+
+----> OPS, NA VERDADE, ISSO NÃO VAI DAR CERTO... --> vai dar 
+
+um erro de 'counter is undefined'.... não vai dar 
+
+CERTO PQ 
+
+____ESSA FUNÇÃO 'reducer' de 'result.js'
+
+___NÃO POSSUI ACESSO 
+
+ALGUM 
+
+
+AO 
+
+
+STATE GLOBAL.......... E SIM SÓ POSSUI ACESSO 
+
+AO STATE 
+
+CONFERIDO 
+
+
+
+A SEU ARQUIVO (no caso, 
+
+
+a propriedade 
+
+
+'results: []'...)
+
+
+
+
+
+
+
+
+
+--> e isso não acontece no nosso COMPONENT/CONTAINER 
+
+'Counter.js',
+
+POIS 
+
+LÁ 
+
+
+__NÓS REALMENTE__ CONECTAMOS NOSSO CONTAINER 
+
+
+AO STATE GLOBAL DO REDUX... (
+    por meio do código 
+
+
+
+    'const mapStateToProps = state => {
+        return {
+            ctr: state.ctr.counter,
+            storedResults: state.results.results
+        }
+    }
+    '
+),
+
+
+
+
+LÁ NÓS __REALMENTE __ PODEMOS __ACESSAR __ AS DIFERENTES 'PIECES' __ DESSE 
+
+
+STATE GLOBAL...., 
+
+
+por meio 
+
+das 
+
+
+'SLICES' desse state QUE FORAM DEFINIDAS POR NÓS LÁ 
+
+
+
+NO 
+
+'index.js'... -------------> MAS 
+
+
+JUSTAMENTE ISSO AÍ ___NÃO FUNCIONA ___ DENTRO DE NOSSO 
+
+'reducer' 
+
+de 
+
+'counter.js'... 
+
+
+
+
+
+
+
+
+--> OK, MAS COMO PODEMOS SOLUCIONAR ESSE PROBLEMA? Bem, se NÓS ESTIVERMOS 
+
+DENTRO DE UM REDUCER __ E NÓS REALMENTE __ PRECISARMOS ___ CONSEGUIR 
+
+__OBTER UM VALOR ___ VINDO 
+
+
+DO ___gLOBAL STATE__, 
+
+
+NÓS 
+
+
+__DEVEMOS/VAMOS TER DE ___SIMPLESMENTE USAR UMA GAMBIARRA,
+
+
+
+FAZER O SEU 'GET' nesse 'reducer específico' 
+
+
+
+POR __MEIO DE UM PAYLOAD__ EM UMA ACTION QUALQUER.... (
+    no caso de nosso código,
+
+
+    NO __PAYLOAD __ DA ACTION 
+
+
+    de type 
+
+
+    'RESULT_STORE'...
+)
+
+
+
+
+--> e essa gambiarra/pass do STATE por meio de 'PAYLOAD' em actions 
+
+
+É __JUSTAMENTE __ A FORMA/APPROACH GERALMENTE __ UTILIZADO 
+
+
+COM OS REDUCERS, DE QUALQUER FORMA...
+
+
+
+
+--> a 'fórmula' de uso dos reducers 
+
+geralmente 
+
+é 
+
+
+'oldState' ->  'action' + 'actionData(opcional)',
+
+PARA 
+
+__ENTÃO RETORNAR UM ___ 'NEWSTATE'___...
+
+
+
+
+
+--------------------------------
+
+
+
+
+--> PARA CONSEGUIR essa informação do 'GLOBAL STATE' do redux 
+
+nesse '.concat', o PROFESSOR 
+
+VAI SIMPLESMENTE 
+
+
+
+
+Escreer 
+
+
+'.concat(
+    {
+        id: new Date(), value: action.result
+    }
+)
+' 
+
+
+
+-------> ISSO QUER DIZER QUE ELE VAI SER ESPERTO: VAI DEFINIR/PASSAR 
+
+UMA PROPRIEDADE 
+
+'result' DENTRO 
+
+DA 
+
+ACTION 
+
+que tem o type de 
+
+'RESULT_STORE',
+
+e 
+
+essa 
+
+ACTION VAI ENTÃO PASSAR ESSA INFORMAÇÃO ESPECÍFICA (E crucial)
+ 
+ A 
+
+ ESSE MÉTODO 
+
+ '.concat()',
+
+
+ nesse reducer....
+
+
+
+
+ --> e é exatamente ASSIM QUE __ VALORES ___ INACESSÍVEIS __ DO 
+
+
+ 'GLOBAL STATE' DO REDUX são passados AOS NOSSOS REDUCERS ESPECÍFICOS...
+
+
+
+ ex:
+
+
+
+
+ case actionTypes.RESULT_STORE: 
+        return {
+            ...state, 
+            results: state.results.concat({
+
+
+              value: action.result,  /////////EIS O CÓDIGO EM QUESTÃO.
+            resultId: new Date() * Math.random() 
+            }
+            )      
+            
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+
+
+
+COM ISSO, SE EU SALVAR O SEGUINTE CÓDIGO DE 
+
+
+'Counter.js',
+
+
+AS COISAS VÃO FUNCIONAR COMO ANTES, MAS AGORA COM MÚLTIPLOS REDUCERS...:
+
+
+
+
+ render() {
+    return (
+      <div>
+        <CounterOutput value={this.props.ctr} /> 
+ 
+                                  {/* vvvvvvv ------> SINTAXE DE USO DAS 'ACTIONS' do redux.... ---------> aqui, estamos usando A PROPRIEDADE/MÉTODO 'onIncrementCounter', definida LÁ NAQUELE 'mapDispatchToProps', naquele return daquele objeto javascript, return interno... */}
+            <CounterControl 
+          label="Increment"
+          clicked={this.props.onIncrementCounter}
+        />
+        {/*                 ^^^^^^^--------> SIM, É EXATAMENTE ESTA A SINTAXE A SER UTILIZADA.... devemos chamar 'this.nomeDaPropriedadeNoReturnDeMapDispatchToProps'... ----> e devemos chamar SEM EXECUTAR, ou seja, sem escrever assim: 'this.onIncrementCounter()'... ------> ISSO ESTÁ ERRADO. -------> forma correta: 'this.onIncrementCounter'.... */}
+        <CounterControl
+          label="Decrement"
+          clicked={this.props.onDecrementCounter}
+        />
+        <CounterControl
+          label="Add 10"
+          clicked={this.props.onAddCounter}
+        />
+        <CounterControl
+          label="Subtract 10"
+          clicked={this.props.onSubtractCounter}
+        />
+        <hr></hr>
+        <button onClick={() => {this.props.onResultStored(this.props.ctr)}}>Store Result</button> //////////EIS O CÓDIGO EM QUESTÃO.
+        <ul style={
+          {
+            listStyle: 'none'
+          }
+        }>
+          {this.props.storedResults.map((result) => {
+                 return (
+                   <li id={result.resultId} key={result.resultId} onClick={() => {this.props.onDeleteResult(result.resultId)}}>{result.value}</li>)
+            }
+          )}
+        </ul>
+      </div>
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch => { 
+  return {
+      onIncrementCounter: () => {
+        
+        dispatch(
+        {
+            type: actionTypes.INC_COUNTER
+        }
+      )
+      },
+      onDecrementCounter: () => {
+        dispatch({
+          type: actionTypes.DEC_COUNTER
+        })
+      },
+      onAddCounter: () => {
+        dispatch({
+          type: actionTypes.ADD_COUNTER,
+          value: 10
+        })
+      },
+      onSubtractCounter: () => {
+        dispatch({
+          type: actionTypes.SUB_COUNTER,
+          value: 10
+        })
+      },
+      onResultStored: (result) => {
+        dispatch(
+          {
+            type: actionTypes.RESULT_STORE,
+            result: result /////////////EIS O CÓDIGO EM QUESTÃO.
+
+          }
+        )
+      },
+      onDeleteResult: (id) => {
+        dispatch(
+          {
+            type: actionTypes.DELETE_RESULT,
+            resultId: id
+          }
+        )
+      }
+  }
+}
+
+
+
+
+const mapStateToProps = state => { ///////obs:::: é sempre 'const mapStateToProps', e nunca 'mapStateToProps = () => {}' (PQ ISSO AÍ NÃO É UM MÉTODO, E SIM UMA '''''CONSTANTE __ QUE SEGURA __ UMA FUNÇÃO QUE RETORNA UM OBJETO com 'prop names'... '''')
+        return {
+            ctr: state.counter.counter,
+            storedResults: state.results.results           //  'state'              +                                 '.counter/ctr'                                                +                  .counter;  ------> isso vira exatamente 'ctr: state.counter.counter', como visto nessa linha....
+                                                          //  (O GLOBAL STATE, EM QUESTÃO)            (isso é o SUBSTATE/slice do globalstate DEFINIDO LÁ EM 'combineReducers'...)
+          
+        }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+
+
+-------------------------------------
+
+
+
+
+
+
+
+AGORA SABEMOS COMO SPLITTAR NOSSOS REDUCERS EM MÚLTIPLAS 'SLICES', e também 
+
+
+COMO ___CONSEGUIR PEGAR A 'DATA' de que precisamos, em cada 
+
+uma dessas slices (por meio dos PAYLOADS nas ACTIONS...)

@@ -1,0 +1,2647 @@
+
+
+
+
+
+
+
+
+
+DA MESMA FORMA QUE NÓS TEMOS 
+
+UM LIFECYCLE 
+
+PARA 
+
+
+
+
+A CRIAÇÃO DE COMPONENTS,
+
+
+NÓS TAMBÉM 
+
+TEMOS UM LIFECYCLE 
+
+
+
+_____PARA O ____UPDATE___ DE COMPONENTS... ---------> ISSO SIGNIFICA QUE 
+
+
+
+SEMPRE 
+
+
+QUE 
+
+'props' 
+
+OU 
+
+
+'state'
+ 
+
+
+ MUDAM/SÃO ALTERADOS (são os TRIGGERS do react... são eles que fazem o REACT 
+ __Re-renderizar___ um determinado component), 
+
+
+
+ QUE SÃO OS TRIGGERS   QUE VOCÊ TEM PARA 
+
+ UM COMPONENT SER 'REAVALIADO' pelo react... ---------> 
+
+
+
+
+
+
+
+ Quando isso acontece, quando um prop/state é 
+
+
+ ALTERADO,
+
+
+ NÓS TEMOS 
+
+
+
+ ___UM OUTRO LIFECYCLE___, DISTINTO DO DE 'CREATION'...
+
+
+
+
+ -------------------------------------------------
+
+
+
+
+
+
+ CERTO... MAS QUAL É O PRIMEIRO PASSO/ETAPA/MÉTODO desse 'component lifecycle - update'? (lifecycle dos UPDATES de components...)
+
+
+
+
+
+
+ É 
+
+
+
+ 1) getDerivedStateFromProps(props, state); --------> ESSE É O PRIMEIRO MÉTODO/ETAPA, 
+
+É A PARTIR 
+
+DO CALL 
+
+
+DE 
+
+
+'getDerivedStateFromProps(props, state)'  ---------------------------> ESSE É UM 
+
+LIFECYCLE METHOD que nós 
+NÃO USAREMOS COM TANTA FREQUÊNCIA... -----------> VOCÊ SUPOSTAMENTE O UTILIZA 
+
+PARA 
+
+__iNICIALIZAR O STATE __ DE UM COMPONENT__ QUE UPDATA/UPDATARÁ A PARTIR 
+
+DE _PROPS__ QUE SERÃO RECEBIDOS___ (como 'appTitle'...)... ou seja, 
+
+a partir de 'UPDATED PROPS' que você estará recebendo, mais provavelmente.
+
+
+
+
+
+
+
+OK, EXISTE ALGUM EXEMPLO CONCRETO DISSO?
+
+
+
+
+--> bem, você poderia usar isso com ALGUMA ESPÉCIE DE 'FORM CONTROL', uma espécie de form 
+
+CONTROL QUE RECEBE __PROPRIEDADES EXTERNAS__ (external properties) E QUE VOCÊ 
+
+ENTÃO QUER/VAI QUERER __ FAZER HANDLE DO 'userInput' _INTERNAMENTE____ ao mesmo tempo 
+
+EM QUE 
+
+__INICIALIZA/DEFINE SEU STATE COM BASE EM __MUDANÇAS EXTERNAS____.... -----> e esse é um exemplo bem nicho...
+
+
+
+
+
+
+
+
+
+----> é por isso que o HOOK de 'getDerivedStateFromProps(props, state)' É __RARAMENTE UTILIZADO,
+
+E TAMBÉM 
+
+SERÁ RARAMENTE UTILIZADO DURANTE O NOSSO CURSO. -----> isso ocorre pq 
+
+MTAS VEZES 
+
+
+
+HÁ/EXISTE UMA MANEIRA MAIS ELEGANTE DE __UPDATAR__ O SEU STATE, ou de GERENCIAR/MANAGE SEUS 
+
+COMPONENTS A PARTIR DE PROPRIEDADES EXTERNAS....
+ 
+
+
+
+--------------------------------------------------
+
+
+
+AINDA ASSIM,
+ 
+ esse hook __EXISTE__, e é a primeira etapa/método 
+
+ do LIFECYCLE DOS UPDATES dos 'components'... 
+
+
+
+
+ DO (faça): SYNC STATE TO PROPS (SINCRONIZAR O STATE DO SEU COMPONENT A PROPS, RECEBIDOS POR FORA (EXTERNOS) )
+
+ DON'T (NÃO FAÇA): NUNCA CAUSE SIDE-EFFECTS nesse método 'getDerivedStateFromProps'.... (regra-geral).
+                    (não mande http requests)....
+
+
+
+ -------------------------------------------------------------------------------------------------
+
+
+
+
+
+ 2) SEGUNDA ETAPA/MÉTODO -----> 'shouldComponentUpdate(nextProps, nextState)' ------------> E ESSE 
+
+
+
+ É UM HOOK/MÉTODO ___MUITO INTERESSANTE___, O QUAL O PROFESSOR NOS MOSTRARÁ NAS PRÓXIMAS LIÇÕES... ------>
+
+
+
+ ESSE MÉTODO (E o professor ressalta que ele usa os termos 
+  'lifecycle hooks' e 'lifecycle methods', ambos se referem a mesma coisa.) É 
+
+
+  INTERESSANTE 
+
+
+
+  PQ ___________ ELE TE PERMITE _____ CANCELAR___ O PROCESSO DE ___UPDATE ___ DE UM 
+
+  DETERMINADO COMPONENT... 
+
+  (
+
+      'MAY CANCEL UPDATING PROCCESS!'
+  )
+
+  -------------------------------------------
+
+
+
+
+  ISSO SIGNIFICA, EM OUTRAS PALAVRAS, QUE ESSE 'shouldComponentUpdate(nextProps, nextState)' 
+
+
+  É 
+  
+
+  ___UM GRANDE BOTÃO DE 'PAUSA'/'ABORT' dE UM COMPONENT, ele 
+
+
+  TE DEIXA MANDAR NO REACT, DIZER SE ELE DEVE CONTINUAR 'EVALUATING' E RE-RENDERIZANDO 
+  AQUELE COMPONENT, 
+  ou SE ELE DEVE DEIXAR FAZÊ-LO... -------> UÉ, MAS 
+
+  PQ DIABOS VOCÊ 
+
+
+  CANCELARIA O PROCESSO DE UPDATE DE UM COMPONENT? -------> POR RAZÕES __DE PERFORMANCE___. OPTIMIZAÇÕES DE PERFORMANCE.
+
+
+
+
+
+
+VAMOS APRENDER MAIS SOBRE ELE NAS PRÓXIMAS LIÇÕES.
+
+
+
+
+
+
+
+
+O 'shouldComponentUpdate' ____DEVE SER __ USADO _ COM CUIDADO... ------> 
+
+PQ SE VOCÊ USAR ERRADO, VOCê PODE ACABAR ___QUEBRANDO ___ SEUS COMPONENTS... --> 
+é muito 
+
+fácil cagar tudo, quebrar seus components, a partir de um BLOCK de update de um determinado 
+component... ('you can break your components if you incorrectly block an update from happening...'  ) ----->
+
+---------> MAS AINDA ASSIM, 
+
+ESSE MÉTODO/HOOK É MUITO FORTE,
+
+
+POIS TE PERMITE 
+
+_____prevenir_____ 
+
+
+CICLOS DE UPDATE ____dESNECESSÁRIOS____...
+
+
+
+------------------------------------
+
+
+
+
+
+3) 3a ETAPA/MÉTODO/HOOK do 'Lifecycle dos updates' de components...:
+
+
+
+
+É O MÉTODO 'RENDER()'....
+
+
+
+-------------------------------------------------------
+
+
+
+
+OU SEJA, 
+
+ATÉ 
+
+
+AGORA VIMOS 
+
+
+
+
+3 ETAPAS/MÉTODOS/HOOKS:
+
+
+
+---------------------------------------------
+
+1) getDerivedStateFromProps(props, state);
+
+
+
+
+
+2) shouldComponentUpdate(nextProps, nextState);
+
+
+
+
+
+
+3) render();
+
+
+
+--------------------------------------------
+
+
+
+
+CERTO....
+
+
+
+'render()'... -----------> 
+
+
+
+O MÉTODO RENDER É CHAMADO... QUANDO ELE É CHAMADO,
+ 
+
+ O REACT VAI POR DENTRO DE TODO O CÓDIGO JSX, FAZ 'EVALUATE' DELE E ENTÃO 
+
+
+ BASICAMENTE 
+
+ __CONSTRÓI_____ O SEU 'DOM VIRTUAL' (será explicado pelo professor) PARA NÓS, E A PARTIR 
+
+
+ DESSE DOM VIRTUAL ELE CONFERE SE PRECISA ou não UPDATAR O DOM DE VERDADE....
+
+
+
+
+
+
+
+
+
+
+--------> render() ---> 'IN IT YOU PREPARE & STRUCTURE YOUR JSX CODE'...
+
+
+
+
+
+
+
+
+-----------> CERTO... AÍ O REACT PASSA PRA QUARTA ETAPA:
+
+
+
+
+4) QUARTA ETAPA ----> 'UPDATE CHILD COMPONENT PROPS'.....
+
+
+
+
+
+--> NESSA ETAPA, O REACT VAI BASICAMENTE ___UPDATAR__ OS 
+
+PROPS __DOS CHILD COMPONENTS___ DO NOSSO COMPONENT____....
+
+
+
+----------------------------------------------------
+
+
+
+
+RESUMINDO:
+
+
+
+1) getDerivedStateFromProps(props, state);
+
+
+
+
+
+2) shouldComponentUpdate(nextProps, nextState);
+
+
+
+
+
+
+3) render();
+
+
+
+
+4) Update Child Component Props
+
+
+
+---------------------------------------------------
+
+
+
+
+
+4) Update Child Component Props ---------> O REACT 
+
+
+
+VAI UPDATAR OS PROPS DE TODOS ESSES CHILD COMPONENTS... ESSES CHILD COMPONENTS, POR SUA VEZ, 
+
+____TAMBÉM ___ VÃO PASSAR POR SEU PRÓPRIO 'UPDATE LIFECYCLE' SE RECEBEREM 
+
+NOVOS 'PROPS'/NOVO 'STATE'....
+
+
+
+
+
+
+
+DEPOIS DISSO ACONTECER (Acontece MUITO rápido), PASSA-SE à QUINTA ETAPA/MÉTODO/HOOK:
+
+
+
+
+
+5) getSnapshotBeforeUpdate(prevProps, prevState); ----->  ESSE É UM 
+
+
+___ LIFECYCLE HOOK __ QUE 
+
+
+___PEGA __ OS 'PROPS PRÉVIOS' E OS 'STATE PRÉVIO' COMO 
+
+
+____INPUT/PARÂMETROS_______ E QUE 
+
+ENTÃO 
+
+
+_______rETORNA ___ _________UM OBJETO 'SNAPSHOT' (desses props 
+e state antigos...) ___ que você PODE ENTÃO 
+
+
+___CONFIGURAR COMPLETAMENTE___... ('which you can, then, fully configure')...
+
+
+
+***** É UM LIFECYCLE HOOK ___NICHO__, QUE NÃO SERÁ USADO 
+
+TÃO FREQUENTEMENTE... ------------------->
+
+
+-------------> ELE É USADO PARA ___'''OPERAÇÕES DE ÚLTIMO MINUTO NO DOM''''...
+
+
+('you use it for '''LAST-MINUTE''' DOM operations')....
+
+
+
+
+
+
+Mas por 'last-minute DOM operations', 
+
+o professor 
+
+não quer dizer propriamente 
+
+MUDANÇAS NO DOM, E SIM 
+
+
+QUER DIZER COISAS 
+
+
+COMO 
+
+
+'get the current scrolling position of the user'... --------> imagine que 
+
+
+O 'UPCOMING UPDATE' de seu component VAI __RE-RENDERIZAR O DOM__  E ENTÃO 
+
+ADICIONAR NOVOS ELEMENTOS NO DOM, mas que você quer _______RESTAURAR___ A 'SCROLLING POSITION' __ 
+DO USUÁRIO __ ASSIM QUE O UPDATE TIVER ACABADO... --------> se você quiser fazer isso, esse use-case,
+AÍ O 'getSnapshotBeforeUpdate' É O SEU MELHOR AMIGO, POIS ELE PODE 
+TE DAR 
+
+O SNAPSHOT  do 'userState'/scrolling position do user __ POUCO ANTES__ DAQUELE UPDATE TER ACONTECIDO... ----> 
+depois que o update ocorre, o 'scrolling position' do user VOLTA PARA A POSIÇÃO ORIGINÁRIA POR conta 
+
+DO CONSUMO DA SNAPSHOT produzida por 'getSnapshotBeforeUpdate(prevProps, prevState)'....
+
+
+
+
+
+
+
+DO (faça): 'Last-minute DOM ops'...
+
+
+DON'T (não faça): NUNCA CAUSE SIDE-EFFECTS
+
+
+------------------------------------------------
+
+
+
+
+
+
+--------> DEPOIS DE TODAS ESSAS ETAPAS/MÉTODOS, 
+
+Passa-se 
+
+AO MÉTODO/HOOK FINAL, 
+
+
+
+de número 6....
+
+
+
+
+
+6) componentDidUpdate() ------------> É UM LIFECYCLE HOOK 
+
+__QUE SINALIZA__ QUE 
+
+VOCÊ 
+
+__ACABOU COM O 'UPDATING'_____ (que o updating acabou), 
+
+QUE 
+
+
+O MÉTODO 
+
+'RENDER()' JÁ FOI EXECUTADO/FOI EXECUTADO.... ---------->  E AQUI, NESSE 
+
+'COMPONENTDIDUPDATE', 
+
+
+VOCê PODE, FINALMENTE/ENFIM, 
+
+CAUSAR 
+
+__SIDE-EFFECTS__... (coisas como MANDAR HTTP REQUESTS, setTimeout e etc)....
+
+
+
+
+
+(ou seja, esse 'componentDidUpdate' é SIMILAR AO 'componentDidMount' do 'creation lifecycle', pois AMBOS PERMITEM QUE 
+VOCÊ DEFINA 
+
+SIDE-EFFECTS NO SEU INTERIOR...
+
+)
+ 
+
+--------------------------------------
+
+
+
+RESUMINDO AS ETAPAS:
+
+
+
+
+
+
+
+1) getDerivedStateFromProps(props, state);
+
+
+
+
+
+2) shouldComponentUpdate(nextProps, nextState);
+
+
+
+
+
+
+3) render();
+
+
+
+
+4) Update Child Component Props
+
+
+
+
+
+
+5) getSnapshotBeforeUpdate(prevProps, prevState);
+
+
+
+
+
+6) componentDidUpdate() 
+
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+ISSO SIGNIFICA 
+QUE 
+
+
+EM 
+
+'componentDidUpdate()' 
+
+
+VOCÊ 
+
+____PODE ___ ENVIAR HTTP REQUESTS (ao contrário dos outros hooks/etapas), 
+apesar 
+
+
+de que __VOCÊ ___ SEMPRE DEVE TER CUIDADO ___ PARA NÃO ENFIAR/ENTER __ UM 'INFINITE LOOP'
+
+
+nesse hook/método/etapa do código.... ----------> ex: se vocÊ fizer/ENVIAR  um HTTP REQUEST 
+E ENTÃO 
+
+GANHAR DE VOLTA UMA RESPONSE e então updatar seu component, mas esse ciclo se repetindo até o infinito...
+
+
+
+(E ISSO É ALGO QUE VEREMOS MAIS TARDE.... COMO EVITAR 
+
+ESCREVER LOOPS 
+
+NESSE 
+
+'componentDidUpdate'....) 
+
+
+
+
+
+DO (faça): CAUSE SIDE-EFFECTS 
+
+DON'T (não faça): NÃO UPDATE O STATE do seu COMPONENT (pq isso vai triggar o RE-RENDER).
+
+
+-------------------------
+
+
+
+
+--------> (E ISSO É ALGO QUE VEREMOS MAIS TARDE.... COMO EVITAR 
+
+ESCREVER LOOPS 
+
+NESSE 
+
+'componentDidUpdate'....)  -------> VEREMOS ISSO 
+
+MAIS TARDE 
+
+QUANDO ESTUDARMOS 
+
+
+COMO ESCREVER HTTP REQUESTS NESSA FASE, POIS ESSE É UM PROBLEMA 
+
+COMUM ENFRENTADO 
+
+quando escrevemos http requests... (typical problem).
+
+
+
+
+
+
+
+---> MAS UMA COISA QUE VOCÊ NÃO DEVE FAZER AQUI, em 'componentDidUpdate',
+
+
+QUE VOCÊ NÃO DEVE FAZER __FORA DO, digamos, '.THEN()' block DE UMA 
+
+__PROMISe___ DE UM HTTP REQUEST nele, É 
+
+__UPDATAR_ ___ O STATE 
+
+DO SEU COMPONENT IMEDIATAMENTE (diretamente, sem código assíncrono vínculado a esse update, a esse 'this.setState()'...)
+
+
+
+
+
+
+--> OU seja, é legal/ok fazer esse 'this.setState()' como 
+
+RESULTADO 
+
+DE ALGUMA TAREFA 
+
+ASSÍNCRONA que você executa em 'componentDidUpdate', 
+
+
+MAS VOCÊ NUNCA DEVE CHAMAR ESSE MÉTODO/updatar o state 
+
+DIRETAMENTE/SINCRONAMENTE neste lugar/hook/etapa,
+
+POIS 
+
+ISSO 
+
+VAI LEVAR 
+
+A UM 
+
+
+RE-RENDER CYCLE SIMPLESMENTE DESNECESSÁRIO.
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+---> AGORA NÓS DEVEMOS VER TODOS ESSES LIFECYCLES de 'update' de um component 
+
+__NA PRÁTICA__...
+
+
+
+--------------------------------------
+
+
+
+
+
+--> VAMOS USAR COMO EXEMPLO O UPDATE/change DOS 'props' DE UM DETERMINADO COMPONENT... 
+
+
+
+
+
+
+
+
+
+
+------------------------------
+
+
+
+
+
+--> PARA VER ESSE UPDATE LIFECYCLE EM AÇÃO,
+
+
+o professor 
+
+
+VAI CONVERTER 
+
+
+
+NOSSOS COMPONENTS 
+
+
+'Person' 
+
+
+e 
+
+'Persons'
+
+
+
+EM __CLASS-BASED COMPONENTS__ (pq agora eles são FUNCTIONAL components). ----> ele vai fazer isso 
+
+PARA QUE 
+
+NÓS CONSIGAMOS VER UNS 
+
+'update lifecycle hooks'
+
+
+DENTRO DELES, TAMBÉM...
+
+
+
+
+---> começamos 
+
+pelo 
+
+component 
+
+
+'Person'... --------> PROFESSOR 
+
+
+
+EXPLICA QUE CONVERTER 
+
+
+UM FUNCTIONAL COMPONENT PARA UM FORMATO CLASS-BASED É BEM FACIL...
+
+
+
+
+
+ELE COMEÇA PELA ALTERAÇÃO DO IMPORT,
+
+
+que ele 
+
+escreve 
+
+
+
+'import React, { Component } from 'react';
+
+
+
+
+-------------------------
+
+
+
+
+
+
+---> TODOS OS LUGARES EM QUE TÍNHAMOS, nesse functional component, 
+
+
+'props.xxxx',
+
+devem
+ 
+
+
+ AGORA FICAR 
+
+
+ '''this.props.xxx''''
+
+
+ --------------------------------
+
+
+
+
+
+ DEPOIS 
+
+ DISSO,
+
+
+ FAÇO 
+
+
+
+ A MESMA 
+
+
+ COISA 
+
+
+ EM 
+
+ 'Persons', no componente 'Persons'... --> (ou seja, altero todo o código, 
+ 
+ 
+ de acordo com o professor explicou agora.)
+
+
+
+
+ CÓDIGO DE PERSONS FICA:
+
+
+
+
+
+
+import React, { Component } from 'react';
+import Person from './Person/Person';
+
+
+
+
+
+ class Persons extends Component {
+
+  render() {
+    console.log('[Persons.js] rendering...');
+    return (
+      this.props.persons.map( (person, index) => {
+            
+        <Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}/>  
+          
+    }
+  
+      )
+    )
+    }
+
+  }
+
+  
+ 
+
+
+
+
+
+
+export default Persons;
+
+
+-----------------------------
+
+
+(TALVEZ ESSE CÓDIGO AINDA NÃO FUNCIONE DIREITO)
+
+
+
+
+
+
+
+CÓDIGO DE 'PERSON' fica:
+
+
+
+
+import React, { Component } from 'react';
+
+
+import Pessoa from './Person.module.css';
+
+
+class Person extends Component {
+  render() {
+
+    console.log('[Person.js] rendering...');
+    return (
+      <div className={Pessoa.Person}>
+         <p onClick={this.props.click}>Hi, I'm {this.props.name} and I am {this.props.age} years old!</p>
+         <p>{this.props.children}</p>
+         <input type="text" onChange={this.props.changed} value={this.props.name}/>
+         </div>
+      
+    );
+  }
+}
+
+
+
+
+
+
+
+
+export default Person;
+
+
+
+
+---------------------------------------
+
+
+
+
+
+Certo... eu executo e testo meu código com 
+
+'npm start'...
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+
+this.props.xxxx ------> certo...
+
+
+
+----------------------------------
+
+
+
+OS __EXPORT__ também foram alterados...
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+CERTO, NOSSO CÓDIGO SEGUE FUNCIONANDO... ----> agora temos 
+
+
+'Person' e 'Persons' convertidos em 'class-based components'...
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+---> Contudo, agora 
+
+um WARNING 
+
+surge no nosso console... -----> 
+
+
+'Unsafe legacy lifecycles will not be called for components using new 
+component APIs. 
+
+App uses getDerivedStateFromProps() but also contains the following 
+legacy lifecycles: 
+componentWillMount 
+
+
+The above lifecycles should be removed. Learn more about this warning here:
+__Link___'
+
+
+
+
+
+----> ESSE É UM AVISO
+
+
+SOBRE O 
+
+
+'getDerivedStateFromProps'.... ----> se usamos 'getDerivedStateFromProps', o 
+
+react sempre vai nos alertar 
+
+SOBRE __MÉTODOS MAIS ANTIGOS_ QUE ANTES ERAM USADOS NO SEU LUGAR,
+ 
+ como 
+
+ 'componentWillMount', o qual havíamos aprendido sobre mais cedo....
+
+
+
+
+
+
+----> MAS ESSE AVISO AÍ NÃO IMPORTA, EXPLICA O PROFESSOr...
+
+
+--------------------------------
+
+
+
+
+
+
+DEVEMOS VER OS 'UPDATE LIFECYCLE HOOKS'
+
+
+em ação... ----> PROFESSOR 
+
+
+COMEÇA NO COMPONENT 
+
+
+'Persons.js'... ------------>
+
+
+
+
+
+LEMBRE-SE DAS 
+
+___eTAPAS___ DO 'update lifecycle' DE UM COMPONENT:
+
+
+
+
+
+
+
+
+1) getDerivedStateFromProps(props, state);
+
+
+
+
+
+2) shouldComponentUpdate(nextProps, nextState);
+
+
+
+
+
+
+3) render();
+
+
+
+
+4) Update Child Component Props
+
+
+
+
+
+
+5) getSnapshotBeforeUpdate(prevProps, prevState);
+
+
+
+
+
+6) componentDidUpdate() 
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+Portanto, 
+
+o professor 
+
+
+começa 
+
+
+pelo 
+
+
+'static getDerivedStateFromProps(props, state)'.... -------> 
+
+
+
+ELE ENFIA 
+
+
+ESSE MÉTODO, primeira das etapas/métodos do update lifecycle/hooks, 
+
+DENTRO 
+
+DO COMPONENT 
+
+'persons' (e fora do método 'render()'....)
+
+
+
+
+
+
+
+ex:
+
+
+
+
+class Person extends Component {
+
+  static getDerivedStateFromProps(props, state) {
+
+  }
+
+
+
+  render() {
+
+    console.log('[Person.js] rendering...');
+    return (
+      <div className={Pessoa.Person}>
+         <p onClick={this.props.click}>Hi, I'm {this.props.name} and I am {this.props.age} years old!</p>
+         <p>{this.props.children}</p>
+         <input type="text" onChange={this.props.changed} value={this.props.name}/>
+         </div>
+      
+    );
+  }
+}
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+
+
+O professor escreve isso e então escreve 
+
+
+um 
+
+RETURN 
+
+
+
+DE 'state'.... -----> ISSO VAI RETORNAR ____ O STATE____ 'INALTERADO'.... ------> 
+
+
+
+E como nós 
+
+
+
+____NEM MESMO TEMOS UM STATE___ DENTRO 
+
+
+DESSE 'class-based component' (de 'Persons.js'), 
+
+
+
+ESSE RETURN __vAI NOS RETORNAR UM SIMPLES OBJETO __vAZIO__...
+
+
+
+---> além disso, o professor vai querer console.loggar 
+
+
+'[persons.js] getDerivedStateFromProps' ..........
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+
+class Person extends Component {
+
+  static getDerivedStateFromProps(props, state) { ///////1a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component).
+    console.log('[Persons.js] getDerivedStateFromProps'); ///////EIS O CÓDIGO EM QUESTÃO.
+    return state;
+  }
+
+
+
+  render() {
+
+    console.log('[Person.js] rendering...');
+    return (
+      <div className={Pessoa.Person}>
+         <p onClick={this.props.click}>Hi, I'm {this.props.name} and I am {this.props.age} years old!</p>
+         <p>{this.props.children}</p>
+         <input type="text" onChange={this.props.changed} value={this.props.name}/>
+         </div>
+      
+    );
+  }
+}
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+Certo... depois disso, 
+
+o professor 
+
+
+
+digita 
+
+
+O PRÓXIMO PASSO/método 
+
+
+do 'update lifecycle',
+
+
+
+o 
+
+
+
+'shouldComponentUpdate(nextProps, nextState);'  ---------> 
+
+
+
+PROFESSOR EXPLICA 
+
+
+que 
+
+
+'nextProps', os 'UPCOMING PROPS', vão TER UM EFEITO 
+
+__LOGO DEPOIS DO _UPDATE___ QUE ESTÁ PRESTES A ACONTECER... ---> 
+
+ele também 
+
+explica que 
+
+esse método/lifecycle hook 
+
+recebe 
+
+
+'nextState', que é o 'UPCOMING STATE'... -------->
+ 
+
+
+
+ DENTRO DESSE MÉTODO, O PROFESSOR DIZ QUE 
+
+ ___NÓS DEVEMOS___, OBRIGATORIAMENTE__, 
+
+
+ RETORNAR 
+
+ 'true' ou 'false' (deixar isso aqui em branco 
+ 
+ NÃO É UMA OPÇÃO...) ---------> 
+
+
+
+
+ SE deixamos 
+
+ 'true', O NOSSO COMPONENT SERÁ ATUALIZADO NORMALMENTE... se deixamos 
+
+ 'False', esse método 
+
+
+ ___VAI CANCELAR____ O UPDATE DESSE COMPONENT ESPECÍFICO (e, por consequência, todos 
+ OS CHILD COMPONENTS DELE TAMBÉM SERÃO CANCELADOS/NÃO SERÃO RENDERIZADOS E NÃO ATUALIZARÃO)...
+
+
+
+
+
+
+ Ex:
+
+
+
+
+
+
+
+
+ 
+class Person extends Component {
+
+  static getDerivedStateFromProps(props, state) { ///////1a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component).
+    console.log('[Persons.js] getDerivedStateFromProps'); ///////EIS O CÓDIGO EM QUESTÃO.
+    return state;
+  }
+
+
+
+  shouldComponentUpdate(nextProps, nextState) { ////////2a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component).
+    return true;  /////SEMPRE DEVEMOS PASSAR ESSE RETURN, NÃO INTERESSA SE COLOCAMOS TRUE OU FALSE, SEMPRE DEVEMOS RETORNAR UM VALOR; SE NÃO FIZERMOS ISSO, ESSE MÉTODO ESTARÁ INVÁLIDO.
+  }
+
+
+
+
+
+
+
+  render() {
+
+    console.log('[Person.js] rendering...');
+    return (
+      <div className={Pessoa.Person}>
+         <p onClick={this.props.click}>Hi, I'm {this.props.name} and I am {this.props.age} years old!</p>
+         <p>{this.props.children}</p>
+         <input type="text" onChange={this.props.changed} value={this.props.name}/>
+         </div>
+      
+    );
+  }
+}
+
+
+
+---------------------------------------
+
+
+
+
+PROFESSOR 
+
+
+
+EXPLICA QUE 
+
+
+ESSE 
+
+
+'return' neste lugar 
+
+
+TIPICAMENTE _____NÃO É HARDCODADO__ DENTRO 
+
+desse método 'shouldComponentUpdate', e 
+
+sim você geralmente 
+
+ESTABELECE ALGUMA ___condição___, UMA CONDIÇÃO 
+
+
+EM QUE 
+
+VOCÊ COMPARA os 
+
+
+'current props' COM OS 'next props', ou seja, 
+
+
+
+O __PRESENTE__ com o ___FUTURO___ (os 'upcoming props')...
+
+
+
+(você geralmente vai querer CHECAR SE OS SEUS UPCOMING PROPS ('nextProps') SÃO DISTINTOS 
+
+DOS PROPS DO PRESENTE (this.props), vocÊ vai dizer ao código: 'se vocÊ descobrir que 
+os props do futuro MUDARAM, SÃO DIFERENTES, ESSE NOSSO COMPONENT DEVERÁ SER __ATUALIZADO/UPDATED__ (aí você 
+faz o return do valor 'true'...) )
+
+
+
+
+
+
+
+
+
+
+
+Isso geralmente será escrito, explica o professor, dessa forma:
+
+
+
+
+  shouldComponentUpdate(nextProps, nextState) { ////////2a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component).
+    
+      if (this.props !== nextProps) {
+        return true;
+      }
+  }
+
+
+
+------------------------------------------------------
+
+
+
+
+MAS COMO NÓS 
+
+NÃO TEMOS O UPDATE DE PROPS NESSE NOSSO EXEMPLO (professor nos mostrará isso mais tarde),
+
+
+O PROFESSOR VAI SIMPLESMENTE 
+
+RETORNAR 
+
+'true'
+
+
+e ENTÃO 
+
+DIGITAR UM CONSOLE.LOG 
+
+
+de 
+
+
+
+'[Persons.js] shouldComponentUpdate'...
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+ 
+class Person extends Component {
+
+  static getDerivedStateFromProps(props, state) { ///////1a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component).
+    console.log('[Persons.js] getDerivedStateFromProps'); ///////EIS O CÓDIGO EM QUESTÃO.
+    return state;
+  }
+
+
+
+  shouldComponentUpdate(nextProps, nextState) { ////////2a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component). TRUE --> CONTINUA O UPDATE NORMAL DESSE NOSSO COMPONENT 'Persons'... .  FALSE ----> CANCELA O UPDATE DESSE NOSSO COMPONENT, E O UPDATE DE TODOS OS __CHILD COMPONENTS___ DELE...
+    console.log('[Persons.js] shouldComponentUpdate');
+    return true;  /////SEMPRE DEVEMOS PASSAR ESSE RETURN, NÃO INTERESSA SE COLOCAMOS TRUE OU FALSE, SEMPRE DEVEMOS RETORNAR UM VALOR; SE NÃO FIZERMOS ISSO, ESSE MÉTODO ESTARÁ INVÁLIDO. 
+  } //'return true' ---->  vai fazer com que nosso component CONTINUE ATUALIZANDO/seja atualizado.
+
+
+
+
+
+
+
+  render() {
+
+    console.log('[Person.js] rendering...');
+    return (
+      <div className={Pessoa.Person}>
+         <p onClick={this.props.click}>Hi, I'm {this.props.name} and I am {this.props.age} years old!</p>
+         <p>{this.props.children}</p>
+         <input type="text" onChange={this.props.changed} value={this.props.name}/>
+         </div>
+      
+    );
+  }
+}
+
+
+
+
+---------------------------------
+
+
+
+
+CERTO.
+
+
+
+DEPOIS DISSO,
+
+
+TEREMOS 
+
+
+
+A 3a etapa/MÉTODO  do update lifecycle de um component,
+
+
+TEMOS 
+
+o 
+
+'getSnapshotBeforeUpdate'----------->
+
+
+
+'getSnapshotBeforeUpdate(prevProps, prevState)'    (VAMOS CONSEGUIR NOSSO STATE E PROPS ANTIGOS COMO PARÂMETROS, nesse método)....
+
+
+
+
+NESSE NEGÓCIO ELE FARÁ OUTRO CONSOLE.LOG...
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+DEPOIS DESSE MÉTODO,
+ 
+
+
+
+O 
+
+
+
+'render()' 
+
+
+VAI EXECUTAR, 
+
+
+
+
+
+e no 'render' NÓS JÁ TEMOS 
+
+UM CONSOLE.LOG,
+ 
+
+
+ já temos 
+
+ aquele 
+
+
+ 'console.log('[Persons.js] rendering...');'
+
+
+
+
+
+----------------------------
+
+
+
+
+
+ESSE 
+
+
+'render()'
+
+
+VAI DAR INÍCIO AO UPDATE LIFECYCLE DE TODOS 
+
+AQUELES CHILD COMPONENTS (como 'Person') QUE 
+
+RESIDEM DENTRO 
+
+
+
+DE 
+
+'Persons'.... (e todos os child components 'Person' vao seguir o mesmo percurso 
+do 
+
+'Persons, vão começar 
+
+
+por 
+
+
+'getDerivedStateFromProps' e seguir pelas etapas subsequentes...) 
+
+
+
+
+
+
+E, FINALMENTE, DEPOIS DISSO,
+
+
+TEREMOS 
+
+
+
+
+
+
+A ETAPA/MÉTODO/update lifecycle hook DO 
+
+
+
+______'componentDidUpdate()'....
+
+
+
+
+
+
+EX:
+
+
+
+
+componentDidUpdate() {
+
+}
+
+
+
+-----------------------------
+
+
+
+
+ESSE 
+
+MÉTODO É A 5a/6a etapa,
+
+
+E ELA 
+
+___SEMPRE SERÁ EXECUTADA ___ DEPOIS 
+
+
+DOS CHILD COMPONENTS SEREM RENDERIZADOS 
+
+
+
+POR 'render()'...(que é o QUARTO método/etapa)
+
+
+
+
+
+Ex:
+
+
+
+componentDidUpdate() {
+  console.log('[Persons.js] componentDidUpdate');
+}
+
+
+
+
+
+--------------------------------------
+
+
+EIS O CÓDIGO 
+
+
+DE NOSSO 
+
+
+
+'Persons.js':
+
+
+
+
+
+
+
+
+class Persons extends Component {
+
+
+  static getDerivedStateFromProps(props, state) { /////1a etapa/MÉTODO no 'update lifecycle' DE UM component (class-based component)... //1//// E VOCÊ DEVE SEMPRE ADICIONAR 'static' ao início desse método, senão ele não funciona.
+    console.log('[Persons.js] getDerivedStateFromProps');
+    return state; ///////////RETORNA UM OBJETO __VAZIO__, pois aqui nesse CLASS-BASED component NÓS __AINDA ___ NÃO TEMOS NENHUM STATE...
+  }
+
+
+
+  shouldComponentUpdate(nextProps, nextState) { ////////2a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component). TRUE --> CONTINUA O UPDATE NORMAL DESSE NOSSO COMPONENT 'Persons'... .  FALSE ----> CANCELA O UPDATE DESSE NOSSO COMPONENT, E O UPDATE DE TODOS OS __CHILD COMPONENTS___ DELE...
+    console.log('[Persons.js] shouldComponentUpdate');
+    return true;  /////SEMPRE DEVEMOS PASSAR ESSE RETURN, NÃO INTERESSA SE COLOCAMOS TRUE OU FALSE, SEMPRE DEVEMOS RETORNAR UM VALOR; SE NÃO FIZERMOS ISSO, ESSE MÉTODO ESTARÁ INVÁLIDO. 
+  } //'return true' ---->  vai fazer com que nosso component CONTINUE ATUALIZANDO/seja atualizado.
+
+
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {////////3a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component). 
+      console.log('[Persons.js] getSnapshotBeforeUpdate');  ///////GETSNAPSHOTBEFOREUPDATE É USADO PARA 'last-minute DOM oprations', como o GET da SCROLLING POSITION DO USUÁRIO anteriormente a um UPDATE dos nossos components...
+    }
+
+
+
+
+
+
+
+  render() { ////////4a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component). 
+    console.log('[Persons.js] rendering...');
+    return (
+      this.props.persons.map((person, index) => {
+            
+       return <Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}/>  
+          
+    }
+  
+      )
+    )
+    }
+
+
+
+
+    
+
+componentDidUpdate() {  ////////5a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component). É EXECUTADO DEPOIS DO MÉTODO 'RENDER()', e DEPOIS DO RENDER DE TODOS OS CHILD COMPONENTS RENDERIZADOS POR ELE... (e que terão seu PRÓPRIO UPDATE LIFECYCLE, iniciando em sua própria etapa/método 'getDerivedStateFromProps()')
+  console.log('[Persons.js] componentDidUpdate');
+} /////componentDidUpdate --> é A ÚLTIMA ETAPA/MÉTODO NO CICLO DE UPDATE DE UM COMPONENT....
+
+
+
+
+
+  }
+
+  
+ 
+
+
+
+
+
+
+export default Persons;
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+O PROFESSOR EXPLICA QUE ELE RETIRARÁ 
+
+
+o 'componentWillMount()' lá 
+
+
+de 'App.js',
+
+
+tudo para 
+
+REMOVER AQUELE WARNING CHATO DE NOSSO CONSOLE...  --> pq, afinal de contas, apenas versões VELHAS do react vão suportar o 'componentWillMount()'...
+
+
+
+
+
+Ex:
+
+
+
+
+
+   componentWillMount() {
+     console.log('[App.js] componentWillMount');
+   }
+
+
+---------------------------------------
+
+
+
+
+
+Certo... salvamos e recarregamos o nosso código...
+
+
+
+O que veremos no console, agora, 
+
+será 
+
+
+
+um output 
+
+
+de 
+
+
+
+
+
+[App.js] constructor
+01:05:23.079 App.js:55 [App.js] getDerivedStateFromProps Object
+01:05:23.079 App.js:172 [App.js] render
+01:06:04.241 App.js:55 [App.js] getDerivedStateFromProps {appTitle: "Person Manager"}
+01:06:04.241 App.js:172 [App.js] render
+01:06:04.248 index.js:1 Warning: `Persons` uses `getDerivedStateFromProps` but its initial state is undefined. This is not recommended. Instead, define the initial state by assigning an object to `this.state` in the constructor of `Persons`. This ensures that `getDerivedStateFromProps` arguments have a consistent shape.
+    at Persons (http://localhost:3000/static/js/main.chunk.js:622:1)
+    at div
+    at App (http://localhost:3000/static/js/main.chunk.js:791:5)
+
+01:06:04.248 Persons.js:41 [Persons.js] getDerivedStateFromProps
+01:06:04.248 Persons.js:65 [Persons.js] rendering...
+01:06:04.248 Person.js:44 [Person.js] rendering...
+01:06:04.250 Person.js:44 [Person.js] rendering...
+01:06:04.251 Person.js:44 [Person.js] rendering...
+
+
+
+------------------------------------------------
+
+
+
+Ou seja, 
+
+nós veremos 
+
+
+
+o 'lifecycle normal' de CREATION desse component 
+
+
+
+começando 
+
+desde 
+
+
+o 'constructor',
+
+
+passando por 
+
+
+'getDerivedStateFromProps'{appTitle: 'Person Manager'}' 
+
+
+
+e 
+
+
+render() 
+
+
+
+
+e 
+ACABANDO EM 
+
+
+'componentDidMount()'... (responsável pelos side effects)....
+
+
+
+
+
+-------------------------------
+
+
+
+AÍ, QUANDO CLICAMOS 
+
+NO 'TOGGLE PERSONS', 
+
+
+será engatado o UPDATE LIFECYCLE desse component (e dos seus child components...) ----->  quando isso acontece,
+
+
+imediatamente 
+
+
+O
+
+
+'getDerivedStateFromProps' de 'App.js'  É ___eXECUTADO____ DE NOVO (mas dessa vez para o UPDATE),
+
+
+
+depois segue-se com a execução de 
+
+
+RENDER() (2a etapa do update lifecycle)... (e essa é a execução do render posicionado em 'APP.JS'...)...
+
+
+
+
+EXECUTADO O 'RENDER()' de 'APP.JS', 
+
+
+PASSA-SE À EXECUÇÃO DO
+
+'getDerivedStateFromProps' QUE ESTÁ NO COMPONENT 'Person.js'... (lembre-se: 'getDerivedStateFromProps' É O PRIMEIRO MÉTODO 
+NO UPDATE LIFECYCLE DE UM COMPONENT.... --> isso sinaliza que ESSE COMPONENT 'Persons' está sendo atualizado)....
+
+
+
+
+--> finalmente, depois de tudo isso, 
+
+vemos 
+
+um output 
+
+de console.log de '[Person.js] rendering...', que sinaliza 
+QUE 
+
+
+OS COMPONENTS RETORNADOS/RENDERIZADOS __DENTRO DO 'PERSONS'____ TAMBÉM 
+
+ESTÃO EXECUTANDO OS SEUS PRÓPRIOS MÉTODOS 'render()'...
+
+
+
+----------------------------------------
+
+
+
+
+OK, mas e aquele 'warning' de 'Person uses getDerivedStateFromProps'? --->  
+
+
+Professor explica que esse warning ocorreu pq aqui nós ESTAMOS FAZENDO O RETURN 
+
+de um STATE/do state 
+
+nesse método no Persons...:
+
+
+
+
+  static getDerivedStateFromProps(props, state) { 
+    console.log('[Persons.js] getDerivedStateFromProps');
+    return state;  //////EIS O CÓDIGO EM QUESTÃO.
+  }
+
+
+
+CERTO, 
+
+nós estamos fazendo o RETURN DESSE STATE, mas 
+
+como 
+
+NÓS __TEMOS 
+
+
+___ UM 'UNITIALIZED STATE' nesse component (nós não críamos nenhum 'state = {}'),
+
+
+
+
+O CONSOLE ESTÁ NOS DIZENDO QUE NÃO É RECOMENDADO USAR ESSE TIPO DE LIFECYCLE HOOk.... (não é recomendado usar getDerivedStateFromProps sem definir um STATE no seu component...)
+
+
+
+----------------------------
+
+
+
+------> professor diz que você GERALMENTE VAI SEMPRE QUERER SE LIVRAR 
+
+
+DE 'static getDerivedStateFromProps' para se LIVRAR DESSE WARNING.... -----> isso não é um erro, 
+
+MAS NÃO FAZ SENTIDO 
+
+
+
+TER 'getDerivedStateFromProps' NO NOSSO CÓDIGO SE NÓS NÃO FORMOS FAZER NADA COM ELE, 
+
+E SE NÓS NEM MESMO TIVERMOS UM INITIAL STATE PARA MEXER...
+(mas ele executou, é claro, e isso é algo que pudemos ver.)
+
+
+
+------------------------
+
+
+
+
+--------------> certo,
+
+e aí vimos os 
+
+RENDERING CYCLES PARA OS DIFERENTES COMPONENTS de nosso projeto...
+
+
+
+
+
+
+---> CERTO, MAS E 'componentDidUpdate', ONDE ESTÁ ELE NOS NOSSOS OUTPUTS? (pq nós não encontramos ele nos outputs do console... -> isso 
+significa que ele... não foi executado? ) 
+
+
+
+
+
+--------> PROFESSOR EXPLICA QUE ELE NÃO FOI OUTPUTTADO/NÃO APARECEU PQ 
+
+___NO MOMENTO __ NÓS __ NÃO ESTÁVAMOS NO 'UPDATE CYCLE' de nosso 'PERSONS' component... -------> veja só:
+
+
+'getDerivedStateFromProps' SÓ FOI EXECUTADO PQ ELE ___tAMBÉM___ FAZ PARTE DO 'CREATION LIFECYCLE' DO COMPONENT/DE UM COMPONENT... ------> de resto,
+NENHUM MÉTODO PROPRIAMENTE DO 'UPDATE LIFECYCLE' fora executado...
+
+
+
+
+
+
+----> ISSo quer dizer que o 'update lifecycle' DO COMPONENT 'persons' VAI TER INÍCIO/SER EXECUTADO ASSIM QUE 
+
+EU 
+
+__dIGITAR___ ALGUMA Coisa em uma das 'person'... -------> pq aí, quando isso acontecer, NÓS VAMOS REALMENTE 
+
+TRIGGAR 
+
+
+aquele handler 
+
+
+de 'onChange' em 'Person.js'....
+
+
+
+------------------------------------------
+
+
+
+
+ex(código de 'Person.js'):
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+      <div className={Pessoa.Person}>
+        <p onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </div>
+    );
+  }
+}
+
+--------------------------------------------
+
+
+
+
+PARTE IMPORTANTE:
+
+
+
+onChange={this.props.changed} -------------> QUANDO NÓS INPUTTAMOS ALGO NO COMPONENT 'PERSON', esse 
+
+HANDLER 
+
+DE 'onChange' SERÁ TRIGGADO, o que, POR SUA VEZ, 
+
+vai TRIGGAR esse 'this.props.changed'... ----------> 
+
+
+
+ESSe 'this.props.changed',
+
+
+por sua vez,
+
+
+
+lá no 'Persons.js'
+
+
+VAI SER ___fORWARDADO____ ao 
+
+PROP
+
+
+'CHANGED' do componente 
+
+
+
+
+'PERSONS', prop QUE é então
+
+
+FORWARDADO A SEU ARQUIVO 'APP.JS', em 
+
+que 
+ 
+'changed={this.nameChangedHandler}'    (changed, no final das contas, É UMA CALL DE 'this.nameChangedHandler')...
+
+
+
+
+
+
+
+
+E 'this.nameChangedHandler' VAI UPDATAR NOSSA 'this.state.persons', nosso array de persons que 
+
+É ENTÃO 
+
+
+PASSADO 
+
+
+como prop 'persons={this.state.persons}' 
+
+AO 
+
+
+COMPONENT DE 'Persons'... --------------> E ISSO SIGNIFICA, EM OUTRAS PALAVRAS, 
+
+
+QUE 
+
+FINALMENTE, NO COMPONENT 'Persons', o 
+
+
+
+
+''''UPDATING LIFECYCLE'''' VAI COMEÇAR.... (vai começar pq nós FORWARDAMOS aquele 'event' (
+
+
+'changed={event => this.props.changed(event, person.id)}'
+
+
+) 
+
+
+NÓS FORWARDAMOS AQUELE 'event' ali de UMA CHILD a UM PARENT COMPONENT (ao component 'App')  ------> por fim, 
+
+nesse component 
+
+
+'APP' NÓS UPDATAMOS O 'STATE', e por consequência desse update do STATE do 'App', 
+NÓS
+
+CONSEGUIMOS ___NOVOS DADOS___ COMO 'prop'
+
+
+NAQUELE COMPONENT 
+
+'Persons'... ---------------> e é por isso, portanto, que 
+
+O UPDATE LIFECYCLE DO 'PERSONS' é 
+
+TRIGGADO 
+
+NO MESMO MOMENTO EM QUE DIGITAMOS ALGO NAQUELE INPUT FIELD...
+
+)
+
+
+
+
+
+
+
+
+RESUMINDO: NÓS FORWARDAMOS UM EVENTO ('onChange' ) LÁÁÁÁ DE UM CHILD COMPONENT __aTÉ O ___ PARENT-PARENT COMPONENT (o App component, que segura 
+persons, que segura person....).... ------>  esse evento FAZ COM QUE O 'STATE' do parent (app) SEJA/FOI ALTERADO... ---> por fim, 
+
+essa alteração do STATE do APP __FAZ COM QUE O COMPONNENT 'PERSONS' RECEBA __NOVOS DADOS___ como 
+
+
+____PROPS____ (aquele prop do ID do componente 'person'... ) --------> e é por isso que 
+
+o 
+
+UPDATE LIFECYCLE do component PERSONS 
+
+se inicia quando começamos a digitar nos input fields...
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+PROFESSOR DIGITA ALGO, 
+
+
+E VE O SEGUINTE OUTPUT 
+
+NO CONSOLE:
+
+
+------------------------------------
+
+App.js  getDerivedStateFromProps
+
+App.js  Render 
+
+Persons.js  shouldComponentUpdate
+
+Person.js   rendering...
+
+Person.js rendering... (3) 
+
+
+Persons.js  getSnapshotBeforeUpdate 
+
+
+Persons.js componentDidUpdate
+
+
+----------------------------------------------
+
+
+
+
+
+OU SEJA, AGORA VEMOS/PERCEBEMOS 
+
+
+_____o UPDATE CYCLE ___ DE VERDADE___ DE UM COMPONENT REACT...
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+O CONSOLE TAMBÉM NOS DÁ UM WARNING:
+
+
+'Persons.getSnapshotBeforeUpdate(): A snapshot value (or null) must be returned.
+You have returned undefined.' ------------------------->      PROFESSOR RETORNA UM 
+
+VALOR 
+
+
+DE 'null' nesse método... (isso remove o warning).
+
+
+
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+E AGORA NÓS REALMENTE TEMOS 
+
+'componentDidUpdate'....
+
+
+
+
+----> E SE VOCê ESTIVER SE PERGUNTANDO SOBRE AQUELE 'SNAPSHOT', a snapshot 
+
+
+É APENAS UMA DATA PACKAGE, ASSIM POR SE DIZER, A QUAL VOCê 
+
+
+ENTÃO RECEBE 
+
+
+EM 
+
+'componentDidUpdate()'... -----> essa 'snapshot' existe para que VOCÊ POSSA __sALVAR___ UM STATE_ POUCO 
+
+ANTES ___ 
+ DE 
+
+UM UPDATE (como a scrolling position que o professor havia mencionado)... -------> SALVADO ESSE STATE, 
+
+
+VOCÊ PODE ENTÃO USÁ-LO em 
+
+'componentDidUpdate()' PARA FAZER COISAS 
+
+COMO __UPDATAR__ O DOM DE NOVO (pouco aconselhável), ou updatar o 
+
+scrolling do usuário, FAZER ESSAS COISAS DEPOIS __QUE O DOM __ JÁ FOI RE-RENDERIZADO... 
+
+
+
+---------------------------------------------------
+
+
+PARA DEMONSTRAR A 'USAGE' desse getSnapshotBeforeUpdate', 
+
+
+
+
+o professor vai retornar um 
+
+OBJETO com uma 'message' 
+
+
+de 
+
+
+'Snapshot!'   (mas no mundo real, você provavelmente inputtaria aqui algumas coordenadas para o scrolling, algo assim... )
+
+
+
+
+
+
+
+VOCÊ PRECISA PASSAR 'snapshot' COMO TERCEIRO PARÂMETRO DE 'componentDidUpdate'...
+
+
+
+Você escreveria esses 2 métodos assim:
+
+
+
+getSnapshotBeforeUpdate(prevProps, prevState) {
+  console.log('[Persons.js] getSnapshotBeforeUpdate');
+  return { message: 'Snapshot!'}; //////EIS O CÓDIGO EM QUESTÃO
+}
+
+
+componentDidUpdate(prevProps, prevState, snapshot) {
+  console.log('[Persons.js] componentDidUpdate');
+
+  console.log(snapshot); /////////EIS O CÓDIGO EM QUESTÃO.
+}
+
+
+
+------------------------
+
+
+
+
+ESSE CONSOLE.LOG REALMENTE VAI FUNCIONAR, 
+
+ELE VAI CONSOLE.LOGGAR 
+
+O ÚLTIMO VALOR ____RETORNADO (return) 
+
+PELO 
+
+MÉTODO 
+
+'getSnapshotBeforeUpdate'...
+
+
+
+
+Professor 
+
+
+RECARREGA NOSSO CÓDIGO E DIGITA ALGO NO INPUT FIELD....
+
+
+
+
+
+
+
+---> isso dá certo,
+
+o console.log da snapshot 
+
+É MOSTRADO NO NOSSO CONSOLE .......... -------> PORTANTO,
+ 
+
+ É ASSIM QUE VOCÊ USA 
+
+ O 'getSnapshotBeforeUpdate' ------> VOCÊ O UTILIZA PARA SALVAR __ALGUNS DADOS__ ANTES 
+
+ DO UPDATE E PARA ENTÃO 
+
+ UTILIZAR ESSES DADOS __DEPOIS DO UPDATE___... 
+
+
+
+
+
+-----------------------
+
+
+
+
+
+PORTANTO, ESSE É O 
+
+FLOW DO 
+ 
+__UPDATE LIFECYCLE EM GERAL____... --------> ENTRETANTO, 
+
+
+COMO PROFESSOR 
+
+MENCIONOU, HÁ ALGUNS UPDATE LIFECYCLE HOOKS QUE EXISTIAM 
+
+NO PASSADO 
+
+
+E QUE NÃO SÃO MAIS SUPORTADOS BEM HOJE EM DIA, 
+
+
+
+ como 
+
+ 'componentWillMount'... -------> ISSO ESTÁ DEPRECADO, OBSOLETO.... ------------> 
+
+
+ HOJE 
+
+
+ EM DIA NÃO USAMOS
+
+
+'componentWillMount'... ---> ERA USADO NO PASSADO
+
+
+
+
+
+também há 2 UPDATE HOOKS/UPDATE LIFECYCLE HOOKS 
+
+
+QUE 
+
+_NÃO MAIS UTILIZAMOS:
+
+
+
+
+
+
+'componentWillReceiveProps()'  e  'componentWillUpdate()'   --------> NÃO USAMOS MAIS PQ É MUITO FÁCIL USAR ELES DE FORMA ERRADA, E CAUSAR ERROS NO NOSSO CÓDIGO. SÃO QUASE INÚTEIS.
+
+
+
+
+
+
+
+  'componentWillReceiveProps()'  -----> NELE, VOCÊ VAI SEMPRE 
+
+ GANHAR 
+
+ OS 'PROPS' QUE VOCÊ GANHARIA COM AQUELE UPDATE/ganhará com esse update...
+
+
+
+
+
+ escrita:
+
+
+
+ componentWillReceiveProps(props) {
+   console.log('[Persons.js] componentWillReceiveProps');
+ }
+
+
+
+
+
+
+OUTRO HOOK QUE NÃO É MAIS UTILIZADO:
+
+
+'componentWillUpdate()' 

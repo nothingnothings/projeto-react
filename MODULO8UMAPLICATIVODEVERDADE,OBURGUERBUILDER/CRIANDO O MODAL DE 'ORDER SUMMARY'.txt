@@ -1,0 +1,1613 @@
+
+
+
+
+NA ÚLTIMA AULA,
+
+
+
+SETTAMOS 
+
+AQUELE 
+
+BOTÃO 
+
+DE 
+
+
+'ORDER NOW'
+
+que fica lá embaixo na nossa página, no component 'BuildControls'...
+
+
+
+---------------------------------
+
+
+
+---> AGORA ___VAMOS QUERER__ QUE QUANDO ESSE BOTÃO FOR APERTADO, 
+
+SEJA 
+
+ABERTO UM MODAL COM UM COMPONENT NO MEIO,
+
+COMPONENT QUE 
+
+
+SERÁ 
+
+O  
+
+'order Summary'.... ------> PARA ISSO,
+
+NÓS 
+
+OBVIAMENTE PRECISAMOS DE:
+
+
+
+1) UM MODAL 
+
+
+
+
+2) UM BACKDROP 
+
+
+
+3) UM ELEMENTO 'ORDER SUMMARY' que será inserido no MODAL....
+
+
+
+----------------------------------
+
+
+
+A IDEIA DO 'MODAL' É QUE ELE SEJA UM 'WRAPPING ELEMENT' QUE PROVIDENCIE 
+
+UM CERTO STYLING QUE ENTÃO 
+
+
+VAI SE WRAPPAR EM QUALQUER CONTEÚDO QUE VAMOS QUERER 
+
+
+MOSTRAR NAQUELE MODAL... -------> 
+
+
+
+O PROFESSOR VAI CRIAR UM COMPONENT 'Modal'... -----> 
+
+
+ELE VAI CRIAR UMA 
+
+PASTA PARA ABRIGAR ESSE 'DUMB' COMPONENT... ---> será uma pasta 
+
+
+de nome 
+
+
+'UI'.... (user interface)... ------> AÍ FICARÃO 'GENERAL UI ELEMENTS', 
+
+COMO ESSE NOSSO MODAL...
+
+
+
+
+
+---> PROFESSOR VAI CRIAR UM FOLDER Modal e então um arquivo de nome 'Modal.js'...
+
+
+
+
+
+--> PROFESSOR TAMBÉM VAI CRIAR UM FOLDER E COMPONENT 'Backdrop' 
+
+DENTRO 
+DO FOLDER
+
+
+'UI'...
+
+
+
+
+
+
+--> PROFESSOR EXPLICA QUE 
+
+ELE _NÃO ADICIONOU/INTEGROU_ O BACKDROP 
+
+
+
+AO 'MODAL' 
+
+
+PQ __ELE ACHA__ QUE NÓS VAMOS __REUTILIZAR ESSE BACKDROP MAIS TARDE_.... (em outros lugares, como no SIDEDRAWER, no negócio de NAVEGAÇÃO que vamos acessar mais tarde... )
+
+
+
+
+
+
+
+
+--> CERTO... 
+
+
+
+
+
+ELE COLOCA O CÓDIGO BASE DE FUNCTIONAL COMPONENTS... --------->
+
+
+
+
+OK, 
+
+MAS COMO 
+
+DIABOS
+
+SERÁ ESTRUTURADO 
+
+ESSE COMPONENT 
+
+'Modal'...?
+
+
+
+
+
+-----> PROFESSOR DIZ QUE 
+
+ELE SERÁ STATELESS,
+
+
+código padrão... ->importaremos react e exportaremos 'default modal'.... 
+
+
+
+
+
+
+
+
+
+
+
+--> CERTO, MAS COMO 
+
+DEVERÁ 
+
+
+SER O CÓDIGO JSX? ---> Professor 
+
+EXPLICA 
+
+
+QUE O SEU CÓDIGO 
+
+JSX (o código de 'modal') 
+
+
+DEVERÁ 
+
+
+__sER SIMPLESMENTE UMA __DIV__, UMA __DIV___ QUE 
+
+
+'WILL WRAP ITSELF' EM 
+
+VOLTA DE 
+
+OUTROS COMPONENTS...  --------> para 
+
+
+QUE 
+
+ELE REALMENTE
+
+
+CONSIGA 
+
+
+FAZER 
+
+'WRAP AROUND' 
+
+por volta 
+
+de outros components,
+
+provavelmente 
+
+o professor vai 
+
+escrever 
+
+''''''''''''''''
+
+<div> 
+{props.children}
+</div>
+
+''''''''''''''''''
+
+
+
+--> 'PROPS.CHILDREN' ---> isso será 
+
+TODOS OS ELEMENTOS __ QUE COLOCAMOS NO MEIO DAS OPENING E CLOSING TAGS ___ 
+
+
+DESSE COMPONENT 'modal'...
+
+
+----------------------------
+
+
+
+FEITO ISSO, O PROFESSOR PROVAVELMENTE VAI QUERER ___eSTILIZAR____ ESSE 
+
+
+COMPONENT 
+
+'modal'...
+
+
+-----------------------
+
+
+
+--> podemos USAR ESSE MODAL PARA WRAPPAR_ QUALQUER COISA__....
+
+
+
+
+
+
+
+--> OS ESTILOS DE 'MODAL':
+
+
+
+
+Modal.module.css
+
+
+------------------------------
+
+
+FICARÁ ASSIM:
+
+
+import React from 'react';
+
+
+import ModalStyle from './Modal.module.css';
+
+
+
+
+const modal = (props) => {
+
+    <div className={ModalStyle.Modal}>
+        {props.children}
+    </div>
+
+
+
+    
+}
+
+
+export default modal;
+
+
+
+--------------------------
+
+
+
+
+
+CERTO... AGORA PRECISAMOS 
+
+
+___WRAPPAR___ ESSE MODAL EM ALGUM ELEMENTO... (provavelmente no 'ORDER SUMMARY'...)
+
+
+
+
+
+
+
+
+--> MAS ONDE/EM QUAL LUGAR DO NOSSO APLICATIVO DEVEMOS APLICAR/USAR ESSE MODAL?
+
+
+
+
+
+
+
+
+
+---> PROFESSOR PROPÕE QUE 
+
+NÓS 
+
+
+FAÇAMOS ELE EXISTIR/SER CHAMADO __NO LUGAR__ EM QUE VAMOS QUERER QUE ELE SEJA CHAMADO (where 
+
+we will want to SHOW IT...) ------> então 
+
+provavelmente vamos adicionar esse modal NO COMPONENT QUE 
+
+
+TEM UM __STATE__ E QUE TEM/PODERÁ TER 'METHODS' QUE 
+
+CONTROLARÃO O SEU DISPLAY... ---> é por isso que vamos chamar
+
+
+em 
+
+
+'BurgerBuilder'...
+
+
+
+
+
+--------------------------------
+
+
+
+NÓS VAMOS IMPORTAR 
+
+O NOSSO MODAL LÁ NO 
+
+'BURGERBUILDER'...
+
+
+
+
+
+CERTO... O IMPORTAMOS... ---> agora devemos adicionar o 'modal' AO
+
+JSX 
+
+
+DO 'BurgerBuilder' ---> nós vamos adicionar esse modal lá embaixo....
+
+nós 
+
+
+vamos 
+
+só 
+colocar 
+
+
+o Modal ali, sem wrappar os outros elementos.... 
+
+
+
+
+EX:
+
+
+
+
+
+
+    return (
+      <Aux>
+      <Modal /> ////////EIS O CÓDIGO EM QUESTÃO.
+        <Burger ingredients={this.state.ingredients}/>
+        <BuildControls 
+        disabled={disabledInfo} 
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}/>
+        
+      </Aux>
+    );
+  }
+}
+
+
+
+
+
+
+-------------------------
+
+
+
+
+--> isso mostrará uma CAIXA BRANCA (o modal em si) 
+
+LOGO ABAIXO 
+
+DO NOSSO BURGER...
+
+
+
+O PROBLEMA É QUE __ESSE 'MODAL'____ FICARÁ 
+
+
+VISÍVEL 
+
+'ALL THE TIME', FICARÁ sempre sendo mostrado... ---> é claro que 
+
+
+O PROFESSOR LOGO VAI AJUSTAR ISSO, VAI ESCREVER UMA LÓGICA 
+
+PARA QUE 
+
+
+__ELE APENAS __ SEJA MOSTRADO __ QUANDO O BOTÃO DE 
+
+'CHECKOUT' 
+
+for clicado...
+
+
+
+
+
+
+---> ok, mas como escrever essa lógica?  ----> talvez adicionar UM MÉTODO em 'BurgerbUILDER?
+
+
+
+-------------------------------
+
+
+
+
+
+OBS: o modal está VAZIO pq ainda NÃO WRAPPAMOS NADA COM ELE..../dentro dele...
+
+----------------------------------
+
+
+
+
+
+O NOSSO OBJETIVO, AQUI, É MOSTRAR O 
+
+'ORDER SUMMARY' 
+
+
+
+POR MEIO DO MODAL... --------> professor 
+
+
+
+
+
+explica que 
+
+
+
+esse arquivo 
+
+
+
+
+'BurgerBuilder' já está ficando enorme... -----> é por isso que ELE NÃO VAI QUERER 
+
+
+
+ESCREVER UMA LÓGICA NO BURGERBUILDER PARA 
+
+
+TRANSFORMAR 
+
+AQUELE 
+
+
+
+ARRAY 
+
+
+De 
+
+
+'state = {
+    ingredients: {
+        salad: 0, 
+        bacon: 0, 
+        cheese: 0,
+        meat: 0
+    }
+}'
+
+
+
+
+EM UM SUMMARY....   -----------> é POR ISSO QUE ELE VAI QUERER __OUTSOURCEAR__ ESSA 
+
+LÓGICA, POIS ESSA É UMA 'GOOD PRACTICE'... (Granular focused components)...
+
+
+
+
+---> O COMPONENT QUE ELE VAI QUERER CRIAR É UM COMPONENT 
+
+
+'ORDER SUMMARY' -->  ele vai criar 
+
+
+esse component 
+
+
+DENTRO DOS COMPONENTS, DENTRO DO BURGER... (do folder de 'Burger'...)....
+
+
+
+
+
+
+
+
+---> professor cria um functional component padrão, ele explica que 
+
+
+vai ter que PEGAR OS INGREDIENTS (do state de 'BurgerBuilder') E OS CONVERTER 
+
+
+EM CÓDIGO JSX ( de novo )...
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+CERTO, E COMO DEVERÁ SER A APARÊNCIA DE 
+
+'orderSummary'? --------> NO FINAL DAS CONTAS,
+
+
+
+vou querer ter UM 'TITLE' que diz 'your order:' 
+
+
+
+
+AÍ UMA PEQUENA LIST (ul) de todos os ITEMS na 'order' do usuário...
+
+
+
+
+E ENTÃO 
+
+
+O 'PRICE'...
+
+
+
+e aí talvez uma 
+
+
+pergunta,
+
+
+'CONTINUE TO CHECKOUT?'  ---> e aí alguns botões....
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+CERTO... O CÓDIGO DE 
+
+
+'orderSummary' está assim:
+
+
+
+
+import React from 'react';
+
+
+
+
+
+
+
+
+
+const orderSummary = (props) => {
+    return ()
+}
+
+
+
+
+
+
+
+export default orderSummary
+
+
+
+-----------------------
+
+
+
+
+
+
+---> O PROFESSOR DIZ QUE 
+
+NÃO PRECISA 
+
+DE UM WRAPPING ELEMENT PROPRIAMENTE DITO, NESSE 'orderSummary', 
+
+
+mas ELE ADMITE QUE 
+
+VAI PRECISAR 
+
+
+DE UM 
+
+
+HOC (auxiliary)
+
+
+NESSE ARQUIVO (pq ele vai renderizar vários elementos 
+
+JSX adjacentes), POR ISSO ELE O IMPORTA....
+
+
+
+
+Ex:
+
+
+import Aux from '../../../hoc/Auxiliary';
+
+
+---------------------------------------------
+
+
+
+
+CERTO.... 
+
+
+
+
+
+AGORA NÓS FAZEMOS RETURN DESSE AUX Aí 
+
+no return statement...
+
+
+
+AGORA NOSSO CÓDIGO ESTARÁ WRAPPADO NESSE 'AUX'....
+
+
+
+------------------------------------------
+
+
+
+
+
+
+E professor admite que também vamos adicionar lógica (condicionais, constantes) nesse component,
+
+não será um simples return 
+
+
+de código jsx... 
+
+
+
+
+
+
+---------> DENTRO DO 'AUX',
+
+
+o professor adiciona uma
+
+
+tag 
+
+
+
+<h3> dizendo 'your order'...
+
+
+
+ex:
+
+
+
+import React from 'react';
+
+
+import Aux from '../../../hoc/Auxiliary';
+
+
+
+
+
+
+
+const orderSummary = (props) => {
+    return (
+        <Aux>
+        <h3>Your Order</h3>
+        </Aux>
+
+
+
+    )
+}
+
+
+export default orderSummary
+
+
+
+-------------------------------------
+
+
+
+DEBAIXO DISSO, ELE ADICIONA UM PARAGRAPH EM QUE 
+
+ELE DIZ 
+
+
+'A delicious burger with the following ingredients:'
+
+
+
+
+EX:
+
+
+
+
+import React from 'react';
+
+
+import Aux from '../../../hoc/Auxiliary';
+
+
+
+
+
+
+
+const orderSummary = (props) => {
+    return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        </Aux>
+
+
+
+    )
+}
+
+
+export default orderSummary
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+ISSO FEITO, ELE VAI CRIAR UMA UL (unordered list) QUE 
+
+
+VAI CONTER 
+
+
+LIST ITEMS QUE SERÃO EXTRAÍDOS DO 'STATE/INGREDIENTS' 
+
+
+lá do BurgerBuilder...
+
+
+
+
+ex:
+
+
+
+
+
+
+import React from 'react';
+
+
+import Aux from '../../../hoc/Auxiliary';
+
+
+
+
+
+
+
+const orderSummary = (props) => {
+    return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        <ul>
+
+        </ul>
+        </Aux>
+
+
+
+    )
+}
+
+
+export default orderSummary
+
+
+
+----------------------------------------------
+
+
+
+
+EU IMAGINO QUE ESSA UL FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+import Aux from '../../../hoc/Auxiliary';
+
+
+
+
+
+
+
+const orderSummary = (props) => {
+    return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        </Aux>
+
+
+
+    )
+}
+
+
+export default orderSummary
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+ESCREVI ALGO ASSIM, LÁ EM 'BurgerBuilder':
+
+
+
+
+
+
+
+    return (
+      <Aux>
+        <Modal disabled={}>
+        <OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice}></OrderSummary> ///talvez isso esteja correto.
+        </Modal>
+        <Burger ingredients={this.state.ingredients}/>
+        <BuildControls 
+        disabled={disabledInfo} 
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}/>
+        
+      </Aux>
+    );
+  }
+
+
+
+
+
+------------------------------------------
+
+
+
+
+CERTO, CONSEGUI POR __CONTA PRÓPRIA___...
+
+
+
+MEU CÓDIGO DE 
+
+
+'ORDERSUMMARY':
+
+
+
+
+
+
+const orderSummary = (props) => {
+
+
+
+
+
+
+    return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        <ul>
+            <li>Salad: {props.ingredients.salad}</li>
+            <li>Bacon: {props.ingredients.bacon}</li>
+            <li>Cheese: {props.ingredients.cheese}</li>
+            <li>Meat: {props.ingredients.meat}</li>
+        </ul>
+        </Aux>
+
+
+
+    )
+}
+
+
+
+--------------------------------
+
+
+
+
+
+MEU CÓDIGO DE 
+
+
+
+'BurgerBuilder':
+
+
+
+
+
+    return (
+      <Aux>
+        <Modal >
+        <OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice}></OrderSummary>
+        </Modal>
+        {/* <div>Burger</div> */}
+        <Burger ingredients={this.state.ingredients}/>
+        {/* <div>Build Controls</div> */}
+        <BuildControls 
+        disabled={disabledInfo} //'disabledInfo' será uma constante que terá aquele objeto com a 'CÓPIA DO STATE DE INGREDIENTS', mas aquela cópia tem uma alteração no INGREDIENT que será/não será removido, que estará tipo assim: 'cheese: false', ou 'bacon: true', etc.....
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}/>
+        
+      </Aux>
+    );
+
+--------------------------------------------------
+
+
+
+
+
+Certo.... agora falta O __PRICE__...
+
+
+
+
+
+
+
+
+ASSIM:
+
+
+
+
+
+
+
+
+
+
+    return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        <ul>
+            <li>Salad: {props.ingredients.salad}</li>
+            <li>Bacon: {props.ingredients.bacon}</li>
+            <li>Cheese: {props.ingredients.cheese}</li>
+            <li>Meat: {props.ingredients.meat}</li>
+        </ul>
+        <h2>Price: $ {props.price.toFixed(2)}</h2>
+      
+
+        </Aux>
+
+
+
+    )
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+VERSÃO DO PROFESSOR FOI/É DIFERENTE.... -----> 
+
+
+
+ele disse que poderíamos HARDCODAR OS VALORES, COMO NÓS FIZEMOS, AQUI... --> 
+
+
+
+mas ele afirma que 
+
+ele vai FAZER ESSE OUTPUT DESSES NEGÓCIOS DE __FORMA DINÂMICA__, pq no 
+
+REACT NÓS SEMPRE SOMOS DINÂMICOS.... --------->
+
+
+
+
+É POR ISSO QUE 
+
+
+ELE VAI CRIAR UMA 
+
+
+
+NOVA CONSTANTE, dentro de 'orderSummary', chamada de 
+
+
+
+'ingredientSummary',
+
+
+QUE VAI 
+
+
+PEGAR 'props.ingredients'...
+
+
+
+ex:
+
+
+
+
+    const orderSummary = (props) => {
+
+            const ingredientSummary = props.ingredients....
+
+
+
+
+
+
+
+
+                return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        <ul>
+            <li>Salad: {props.ingredients.salad}</li>
+            <li>Bacon: {props.ingredients.bacon}</li>
+            <li>Cheese: {props.ingredients.cheese}</li>
+            <li>Meat: {props.ingredients.meat}</li>
+        </ul>
+        <h2>Price: $ {props.price.toFixed(2)}</h2>
+      
+
+        </Aux>
+
+
+
+    )
+
+    }
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+ISSO FEITO,
+
+ELE VAI QUERER PEGAR 
+
+
+ESSE 'props.ingredients' 
+
+
+e mapear 
+
+CADA OBJETO 
+
+
+'ingredient'
+ 
+
+ EM UM __LIST ITEM__ CORRESPONDENTE...
+
+
+
+
+
+
+
+ ----> professor então brinca 
+
+
+ QUE AQUI TEMOS 
+
+ AQUELE VELHO PROBLEMA, VELHO PROBLEMA DE TENTAR 
+
+
+ USAR '.map()' 
+
+
+ EM UM __oBJECT___ (isso pq '.MAp()' SÓ FUNCIONA COM ARRAYS....)
+
+
+
+
+
+
+ --> para resolver isso, PODERÍAMOS USAR 
+
+
+ UM MÉTODO TIPO 'Object.entries()'.... (transforma um objeto com vários 
+ 
+ key-value pairs em :
+ 
+ 
+ '[ ['key', 2], ['key', 3] ]', etc....
+ 
+ )
+
+
+
+
+
+ ex:
+
+
+
+
+    const orderSummary = (props) => {
+
+            const ingredientSummary = Object.entries(props.ingredients);
+
+
+
+
+
+
+
+
+                return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        <ul>
+            <li>Salad: {props.ingredients.salad}</li>
+            <li>Bacon: {props.ingredients.bacon}</li>
+            <li>Cheese: {props.ingredients.cheese}</li>
+            <li>Meat: {props.ingredients.meat}</li>
+        </ul>
+        <h2>Price: $ {props.price.toFixed(2)}</h2>
+      
+
+        </Aux>
+
+
+
+    )
+
+    }
+
+
+
+----------------------------------
+
+
+
+
+
+Certo... com isso, teremos algo como 
+
+
+um grande array de keys e value pairs, agrupados em seus próprios arrays...
+
+
+
+--> quando isso acontece, podemos usar 
+
+'.forEach()' para EXTRAIR CADA UM DESSES VALORES...
+
+
+
+ex:
+
+
+
+
+      const ingredientSummary = Object.entries(props.ingredients);
+      ingredientSummary.forEach([key, value]) => {
+        
+
+      }
+
+
+
+
+    -------------------------------------
+
+
+
+
+
+    ESCREVI BASTANTE IDAS E VOLTAS,
+
+
+    MAS O MEU CÓDIGO FICOU ASSIM (e funcionando):
+
+
+
+
+
+
+
+
+
+
+
+
+
+const orderSummary = (props) => {
+
+    
+    const capitalizeFirstLetter = string =>  { ///USEI PARA TRANSFORMAR AS STRINGS DAQUELE ARRAY, A PRIMEIRA LETRA DE CADA UMA, EM UPPERCASe...
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+
+
+
+    const ingredientSummary = Object.entries(props.ingredients); ////////ISSO AQUI É A COISA QUE UTILIZEI
+    console.log(ingredientSummary);
+
+
+
+    return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        <ul>
+            <li>{capitalizeFirstLetter(ingredientSummary[0][0])}: {props.ingredients.salad}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[1][0])}: {props.ingredients.bacon}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[2][0])}: {props.ingredients.cheese}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[3][0])}: {props.ingredients.meat}</li>
+        </ul>
+        <h2>Price: $ {props.price.toFixed(2)}</h2>
+      
+
+        </Aux>
+
+
+
+    )
+}
+
+
+
+export default orderSummary
+
+
+
+
+--------------------------------
+
+
+
+
+OU SEJA, 
+
+CONVERTEMOS 
+
+O 
+
+OBJECT EM UM ARRAY... -------> o professor 
+
+
+
+usou um approach 
+
+similar,
+
+
+ele usou 
+
+
+um approach com 
+
+
+'Object.keys'... ------> aí ele PEGOU AS KEYS.... ---> depois disso, ele usou 
+
+'.map()'....
+
+
+
+
+ex:
+
+
+
+
+const orderSummary = (props) => {
+
+    const ingredientSummary = Object.keys(props.ingredients)
+    .map( 
+
+        (igKey) => {
+            return <li>{igKey}: {props.ingredients[igKey]}</li>
+        }
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+--------------------------------------
+
+
+
+
+OBS:::: O PROFESSOR, PARA FAZER COM QUE A PRIMEIRA LETRA DO NEGÓCIO FICASSE 
+
+
+EM 'CAPITAL' (capital letters), 
+
+USOU UM 
+
+__APPROACH___ DIFERENTE.... ---> ele usou 
+
+
+'<span></span>' WRAPPANDO a '{igKey}'   ------> E AÍ, NESSE '<span>' ELE DEFINE UM 
+
+ESTILO 
+
+
+INLINE de '{textTransform: 'capitalize'}'   (SIM, ISSO FUNCIONA)...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const orderSummary = (props) => {
+
+    const ingredientSummary = Object.keys(props.ingredients)
+    .map( 
+
+        (igKey) => {
+            return <li><span style={textTransform: 'capitalize'}>{igKey}</span>: {props.ingredients[igKey]}</li>
+        }
+    )
+
+
+
+}
+
+
+
+-------------------------------------------------
+
+
+E AÍ ELE COLOCA, no return de 'orderSummary', este código:
+
+
+
+
+
+
+
+
+
+    return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        <ul>
+           {ingredientSummary}
+        </ul>
+        <h2>Price: $ {props.price.toFixed(2)}</h2>
+      
+
+        </Aux>
+
+
+
+    )
+
+
+
+
+
+
+
+
+
+
+
+CERTO.... 
+
+
+ESSE MÉTODO DO PROFESSOR __TAMBÉM __FUNCIONA___. ELE ATÉ É MAIS DINÂMICO, 
+
+
+SUPOSTAMENTE...
+
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+--> CERTO, PROFESSOR terminou isso. Esqueci de mencionar, mas ele 
+
+importou o 
+
+'OrderSummary' lá no BurgerBuilder, fazendo ele ser wrappado pelo 
+
+
+'Modal'... ( e aí ele faz o pass dos props (ingredients e price), também, ao 'OrderSummary'...)
+
+
+
+
+
+
+
+---> professor conserta o problema da 'key', por meio da adição da keyword 'key' 
+
+
+em cada list item, e então 
+
+a definição de um valor 
+
+de 
+
+'igKey'...
+
+
+
+ex:
+
+
+<li key={igKey}'>
+    <...>
+</li>
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+CERTO.... A PRÓXIMA ETAPA 
+
+
+É 
+
+__fAZER COM QUE O MODAL __ NÃO APAREÇA 'ALL THE TIME',
+ 
+ e sim que 
+
+ ele apareça 
+ SÓ QUANDO 
+
+
+CLICAMOS EM 
+
+'ORDER NOW'....

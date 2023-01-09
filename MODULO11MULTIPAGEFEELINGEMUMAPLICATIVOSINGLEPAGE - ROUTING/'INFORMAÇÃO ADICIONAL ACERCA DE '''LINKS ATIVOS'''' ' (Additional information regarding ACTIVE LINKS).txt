@@ -1,0 +1,550 @@
+
+
+
+
+
+
+
+
+
+
+
+
+---> o professor quer parar de falar um pouco sobre 
+
+
+'Route Parameters' (dynamic route parameters...)
+
+
+
+
+
+
+
+
+
+---> antes de parar, no entanto, 
+
+ele tem que 
+
+esclarecer uma pequena coisinha.... -----------> 
+
+
+
+ELE 
+
+
+ESCLARECE 
+
+QUE 
+
+
+
+
+
+______NÓS TEMOS__, NO NOSSO PROJETO__,
+
+
+aquele 
+
+
+'<Link> '
+
+
+
+
+de 
+
+
+'Home'... ---------> E O PROBLEMA EM QUESTÃO 
+
+
+É QUE 
+
+
+
+
+_________ELE NÃO APARECE COMO 'ACTIVE' _______ QUANDO 
+
+ESTAMOS/ESTIVERMOS 
+
+
+
+EM 
+
+
+1 'single post' (ou seja, QUANDO 
+
+
+
+___ O COMPONENT 'FULLPOST', que é um SINGLE POST, na verdade, É 
+
+___RENDERIZADO NA NOSSA TELA...) ------------>
+
+
+
+
+
+e isso, 
+
+
+essa questão 
+
+aí, esse problema,
+
+
+
+___fAZ SENTIDO... ------> faz sentido pq 
+
+
+ESTE É 
+
+
+O CÓDIGO 
+
+
+DE NOSSOS 
+
+'LINKS':
+
+
+
+
+
+
+<NavLink to="/" exact 
+activeClassName="active" //redundante, é o DEFAULT, é o class/className ativa/active __DEFAULT___ adicionado ao link criado com 'NewLink' -----> só deixamos isto aqui para DEMONSTRAR QUE __VOCÊ PODE ___ ALTERAR ESSE NOME DA CLASSE ATIVA no 'NavLink'; você pode definir aqui a string que você quiser, como 'my-active', ou whatever... --> isso serve para DIFERENCIAR OS ESTILOS dos links criados com 'NavLink'----> serve para vocÊ ter vários NavLink, cada um com estilo 'active' diferente, se você quiser...
+
+                                activeStyle={
+                                    {
+                                        color: "#fa923f",
+                                        textDecoration: 'underline'
+                                    }
+                        }
+                           
+                           
+                           
+                           >
+                              Home</NavLink></li>
+                            <li style={{
+                                    display: "inline-block",
+                                    margin: "20px"
+                            }}><NavLink exact
+
+                             
+                            
+                                    to={
+
+                                {
+                                    pathname:'/new-post',
+                                    hash: '#submit',
+                                    search: '?quick-submit=true'
+                                }
+
+
+
+                            } >New Post</NavLink></li>
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+Como você pode ver,
+
+
+o 
+
+
+'NavLink' de 
+
+'Home'
+
+
+
+
+tem um 
+
+'to' de 
+
+'/',
+
+
+
+
+E NÃO 
+
+
+DE 
+
+
+'/1', ou '/2'........
+
+
+--------------------------
+
+
+
+
+
+
+
+
+
+-----> certo... mas e se o nome de nosso 'home' não fosse 'home', 
+
+e sim 
+
+
+
+'Posts'... --> o professor quer que nós troquemos o nome 
+
+
+de 
+
+'Home' para 
+
+
+'Posts'... -----> e agora, vamos querer 
+
+
+que 
+
+
+o 
+
+'Link' (NavLink) 
+
+
+de 
+
+'Posts' 
+
+
+
+_______tAMBÉM ______ FIQUE ILUMINADO ________ QUANDO 
+
+
+selecionemos 
+
+
+
+ALGUM _DAQUELES POSTS (single posts, aqueles 'Post' dentro de 'Posts') 
+
+
+
+PARA 
+
+
+APARECER NA PÁGINA/container
+
+
+'FullPost'... (pq seria estranho o dizer 'posts' não estar iluminado 
+
+quando 
+
+
+decidimos RENDERIZAR UM DAQUELES 'POST' em 'Posts' COMO 
+__UM 'FULLPOST'___...) --------> 
+
+
+
+
+
+NÓS CERTAMENTE GOSTARÍAMOS/vamos querer 
+
+exatamente isso, que 
+
+o 
+
+
+'NavLink' 
+
+
+de 
+
+'Posts' (>Posts<) fique 
+
+iluminado 
+
+
+quando 
+
+um 
+
+SINGLE POST É RENDERIZADO POR MEIO DE 'FullPost'... ---------> 
+
+
+
+
+
+ a razão para isso acontecer, explica o professor, é 
+
+
+ JUSTAMENTE 
+
+
+ AQUELA
+
+
+ 'BOOLEAN PROPERTY' colocada 
+
+
+ no 
+
+
+ NavLink de Posts/Home...
+
+
+
+ ex:
+
+
+
+
+
+
+ <li><NavLink to="/" exact  /////////EIS AQUI O PROBLEMA...
+                    activeStyle={
+                                    {
+                                        color: "#fa923f",
+                                        textDecoration: 'underline'
+                                    }
+                    }>Posts</NavLink>
+
+
+
+----------------------------------------
+
+
+
+
+
+SE 
+
+
+'exact' 
+
+É SETTADO NO NOSSO NAVLINK,
+
+
+
+esse link aí (de '/') SÓ 
+
+
+
+____SERÁ TRATADO ___COMO 'ACTIVE' (ativo) 
+
+
+
+SE NÓS 
+
+
+___REALMENTE ESTIVERMOS EM 'localhost:3000/'.... (sem mais nada do lado... e teríamos coisas do lado com '/:postId', por exemplo... pq essa coisa dinâmica mudaria para '/1', '/2', '/3', etc) --> apenas 
+
+
+se 
+tivermos 
+
+
+
+___eXATAMENTE___ essa url...
+
+
+
+
+
+-------------------> MAS SE REMOVERMOS O 'EXACT' CRÍAMOS 
+
+
+___OUTRO PROBLEMA___: Se fizermos isso, 
+
+
+
+o active vai ficar ativo para 
+
+a url 
+
+com 
+
+o 'single post',
+
+
+MAS ___AO MESMO TEMPO __ VAMOS FODER TUDO, PQ NOSSOS LINKS 
+
+FICARÃO
+ 
+
+TODOS 
+
+ATIVOS 
+
+QUANDO 
+
+TROCARMOS A PÁGINA PARA 
+
+'New Post' (ou seja, quando clicarmos em 'New Post' e a URL ficar 'localhost:3000/new-post'....)
+
+
+
+-----------------------------------
+
+
+
+
+
+
+BEM... ISSO, ESSE PROBLEMA AÍ, É 'KIND OF TRICKY'... --------> 
+
+
+E ____sÓ É __ 'THIS TRICKY'___ para 
+
+esse 
+
+
+USE-CASE, EXATAMENTE ESTE USE-CASE ESPECÍFICO... (o use-case 
+
+em que 
+
+
+
+estamos falando DA ___rOOT URL___, caso em que 
+
+QUEREMOS 
+
+
+QUE 
+
+
+A __ROOT URL___ FIQUE ILUMINADA quando estivermos no 'home', e também quando clicarmos 
+
+em algum 
+
+elemento/component desse 'home'...) --------> esse 
+
+
+
+
+problema/quirk aí 
+
+só existe 
+
+nesse use-case,
+
+
+
+pq 
+
+
+se NÓS 
+
+
+DEFINISSEMOS 
+
+
+um 
+
+'to' 
+
+
+
+de 
+
+'/posts' em vez de '/', 
+
+
+
+não teríamos nenhum problema com isso... --------> OU SEJA,
+
+
+
+ESSE PROBLEMA 
+
+
+
+
+
+
+___________SÓ OCORRE___, SOMENTE OCORRE___ COM 
+
+
+ESSE 'ROOT URL', com esse 'root path'; ---> os active styles sempre dão 
+
+problema com o 'ROOT PATH'... ('/', pq o '/' VAI SEMPRE FAZER PARTE DE QUALQUER PÁGINA NO SEU APP....)
+
+
+
+
+
+
+
+
+
+
+---------> OU SEJA,
+
+
+ESSE É UM 'EDGE-CASE'... --------> PARA RESOLVER 
+
+ISSO,
+
+
+
+PROFESSOR DIZ QUE DEVEMOS:
+
+
+
+
+
+1) ADICIONAR 
+
+'exact' ao NavLInk do home, mais uma vez...
+
+
+
+e então 
+
+
+DESISTIR...
+ 
+
+ NÃO HÁ COMO SOLUCIONAR ESSE PROBLEMA...
+
+
+
+ A ÚNICA 
+
+ SOLUÇÃO 
+
+
+ É USAR 
+
+ OUTRAS 
+
+ ROUTES,
+
+
+ como 
+
+
+ '/posts' em vez de 
+
+ '/' (pq esse home aí SEMPRE VAI DAR PROBLEMA COM ACTIVESTYLES...)
+
+
+
+
+
+
+
+
+
+ ---> mas isso, esse problema aí, 
+
+
+ QUASE NUNCA SERÁ ENFRENTADO POR VOCÊ. É MUITO RARO.

@@ -1,0 +1,2518 @@
+
+
+
+
+
+
+
+
+----> AGORA QUE IMPLEMENTAMOS 
+
+'AUTO-LOGOUT'
+
+
+
+
+NO MOMENTO EM QUE 
+
+
+NOSSO 
+
+
+TOKEN EXPIRA ('expiresIn')  (E VEREMOS COMO UPDATAR NOSSO LAYOUT A PARTIR 
+
+
+DO STATUS DE AUTENTICAÇÃO MAIS TARDE, TAMBÉM; ),
+
+
+
+
+
+AGORA 
+
+QUE 
+
+
+TEMOS 
+
+O 
+
+AUTOLOGOUT INCORPORADO,
+
+
+
+
+devemos 
+
+
+
+estudar
+ 
+
+
+
+
+COMO __PODEMOS __ USAR 
+
+
+NOSSO TOKEN __ PARA ACESSAR 
+
+
+RESOURCES PROTEGIDOS NO NOSSO APLICATIVO/DATABASE... ------------> 
+
+
+
+
+E 
+
+ESSE É UM USE-CASE 
+
+EXTREMAMENTE TÍPICO:
+
+
+
+
+você 
+
+
+
+tem um BACKEND COM ALGUNS API ENDPOINTS (urls, basicamente)
+
+
+QUE 
+
+SÃO 
+
+
+PROTEGIDOS.... -----> SÃO PROTEGIDOS,
+
+SÓ PODEM SER USADOS  
+
+POR 
+
+USUÁRIOS AUTENTICADOS... (ex: fóruns...) ----> SÓ 
+
+OS USUÁRIOS
+ 
+
+
+ COM TOKENS
+
+ VÁLIDOS 
+
+
+ PODERÃO 
+
+ ACESSAR 
+
+ ESSES CONTEÚDOS/RESOURCES PROTEGIDOS...
+
+
+
+
+
+
+
+
+-----------> mas esse não é o caso, atualmente,
+
+COM 
+
+
+A NOSSA 
+
+
+__DATABASE__... ------> 
+
+
+
+
+se entrarmos 
+
+
+no 
+
+firebase,
+
+veremos 
+
+
+que 
+
+
+
+NOSSO 
+
+'realtime database',
+
+
+
+
+que 
+
+é 
+
+o 
+
+local 
+
+que 
+
+
+nos 
+
+DÁ 
+
+NOSSOS 
+
+'API ENDPOINTS',
+
+no final das contas (é aquele link de 'react-burger2001020.com/', essencialmente...) ,
+
+
+
+
+ESTÃO 
+
+
+DISPONÍVEIS A TODO MUNDO... --> QUALQUER UM PODE ENTRAR E EDITAR NOSSO DATABASE,
+
+NO MOMENTO... --------> 
+
+
+
+é 
+
+
+exatamente por isso que é possível 
+
+ler este aviso, no firebase:
+
+Suas regras de segurança estão definidas como públicas. 
+Com essa configuração, qualquer pessoa pode roubar, 
+modificar ou excluir informações do seu banco de dados....
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+---> ISSO ESTÁ ACONTECENDO, AGORA, 
+
+
+justamente 
+
+PQ 
+
+
+__MAIS CEDO __ NO CURSO,
+
+NÓS 
+
+MUDAMOS 
+
+
+NOSSAS 
+
+RULES,
+
+
+lá 
+
+na DATABASE,
+
+
+
+
+
+para 
+
+
+'read: true' 
+
+
+e 
+
+'write: true'...
+
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+
+
+
+ESTÁ ASSIM, BASICAMENTE:
+
+
+
+
+
+{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+ISSO DÁ BASICAMENTE ACESSO 
+
+
+'READ' E 'WRITE' A QUALQUER PESSOA....
+
+
+
+--------------------------------------
+
+
+
+--> NÓS FIZEMOS 
+
+ESSA ALTERAÇÃO,
+
+ESSE 'true' nos dois,
+
+
+PARA 
+QUE 
+FOSSE 
+possível 
+
+USAR 
+
+
+__NOSSA DATABASE___ SEM TER QUALQUER TIPO DE AUTENTICAÇÃO... (projetos nos estados de INFÂNCIA geralmente deixam públicos seus databases, justamente para testar e verificar bugs no funcionamento do app...)
+
+
+
+
+
+
+
+
+--> BEM, AGORA NÓS ___rEALMENTE___ TEMOS AUTENTICAÇÃO__ colocada no nosso aplicativo,
+
+e por 
+
+isso 
+
+
+PODEMOS 
+
+ALTERAR 
+
+ESSAS CONFIGURAÇÕES,
+
+AS COLOCAR COMO 
+
+'false',
+
+como 
+
+estavam antigamente... ---------------> 
+
+
+
+
+
+
+
+
+E ESSE OBJETO 
+
+'
+
+
+{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+
+
+
+'   
+
+
+
+
+EXISTE ____ESPECIFICAMENTE NO __ FIREBASE.... ____ ---> 
+
+
+
+
+SE 
+
+
+VOCÊ ESCREVER SEU PRÓPRIO BACKEND,
+
+
+
+em que você ESCREVE SEU  
+
+
+__PRÓPRIO__ 'API CODE',
+
+
+
+
+
+VOCÊ PROVAVELMENTE 
+
+TERÁ 
+
+ESCRITO 
+
+
+ALGUM 
+
+CÓDIGO, ALGUM IF CHECK 
+
+QUE 
+
+__CHECARÁ ___ SE O REQUEST 
+
+
+
+TEM 
+
+UM 
+
+
+__ 'token' ___ VÁLIDO ANEXADO A SI... ----------> 
+
+
+
+
+
+
+E 
+
+SE 
+
+O TOKEN NÃO É VÁLIDO,
+
+
+
+VOCê SIMPLESMENTE 
+
+RETORNA 
+
+UM 
+
+
+'403 answer'....
+
+
+
+-------------------------------
+
+
+
+
+
+
+---> no caso do FIREBASE,
+
+nós 
+
+temos 
+
+
+essas regrinhas aí.... ---------> 
+
+
+
+E 
+
+O 
+
+TIPO 
+
+
+
+DE 
+
+''''PROTEÇÃO'''' MAIS SIMPLES QUE 
+
+VOCê 
+
+PODE 
+
+ESCREVER 
+
+É 
+
+simplesmente 
+
+definir isto:
+
+
+
+
+''''''''''''''''''''
+
+rules: {
+    ".read": "auth != null",
+    ".write": "true"
+}
+
+
+'''''''''''''''''''''
+
+
+
+------------------------------
+
+
+
+OU SEJA,
+
+isso significa:
+
+
+
+'se AUTH __NÃO ESTIVER IGUAL A NULL/INVÁLIDO, fique true nessa parte da direita'... ---> 
+
+
+E 
+
+SE FICAR TRUE 
+
+ESSA PARTE DA DIREITA,
+
+ O 
+
+
+ 'read' access do 
+
+
+ USUÁRIO ESTARÁ COMO 'TRUE'... (read access will be granted).
+
+
+
+ ----------------------------------
+
+
+ --> SE VOCÊ NÃO ESTIVER AUTENTICADO,
+
+ 'auth != null' VAI RETORNAR FALSE,
+  e 
+
+READ ACCESS NÃO SERÁ GARANTIDO... -------> 
+
+
+E 
+
+ o
+ 
+
+ MESMO PODE SER FEITO COM 
+
+ 'write'...
+
+
+
+ FICARÁ ASSIM:
+
+
+
+
+
+ {
+  "rules": {
+    ".read": 'auth != null',
+    ".write": 'auth != null'
+  }
+}
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+
+
+E SE NÓS ESCREVERMOS ESSE NEGÓCIO DESSA FORMA AÍ,
+
+ESSA 
+
+CONFIGURAÇÃO 
+
+
+
+___VAI ___ SER APLICADA ___a TODA 
+
+A NOSSA DATABASE...
+
+
+
+
+
+
+--------------------------
+
+
+
+
+
+
+OK, MAS AQUI 
+
+COMETEMOS UM ERRO... ------> 
+
+
+
+nós 
+
+
+vamos querer 
+
+
+
+__CONCEDER __ ACESSO __ A 'INGREDIENTS' 
+
+
+
+(ou seja,
+
+ao 
+
+objeto/propriedade 'ingredients')
+
+
+
+
+A QUALQUER 
+
+UM 
+
+
+
+QUE USE NOSSO APLICATIVO,
+
+E 
+
+SÓ 
+
+VAMOS QUERER 
+
+___QUE __ 'orders' 
+
+FIQUE 
+
+RESTRITO/SUBMETIDO À AUTENTICAÇÃO/tokens...
+
+
+
+
+
+
+
+
+
+--> para isso,
+
+
+VAMOS 
+
+
+__PRECISAR___ FAZER 'FINETUNE' DE NOSSAS REGRAS,
+
+
+NO FIREBASE... ---> vamos adicionar NESTED RULES Às rules do firebase,
+
+
+PARA QUE 
+
+
+
+
+UMA PARTE DE NOSSO CÓDIGO FIQUE COM REGRAS DIFERENTES...
+
+
+
+
+---------> para adicionar 
+
+regras a partes ESPECÍFICAS DO SEU DATABASE (como 'orders'),
+
+
+VOCê 
+
+DEVE 
+
+ESPECIFICAR 
+
+___ O OBJETO/PROPRIEDADE__ a que você vai querer aplicar 
+
+as REGRAS...
+
+(no caso, os 'ingredients'...)
+
+
+
+
+
+
+
+O PROFESSOR, NO CASO DO NOSSO APLICATIVO,
+
+
+
+
+VAI DIZER ISTO:
+
+
+
+
+''' A ÚNICA PARTE DO APLICATIVO QUE __NÃO VOU QUERER__ QUE FIQUE 
+
+DISPONIBILIZADA AO PÚBLICO/QUALQUER UM É ___ AQUELA PARTE 
+
+DE 
+
+'orders'      '''''''' ----------> 
+
+
+por 
+
+isso ,
+
+
+
+o que ele vai 
+
+fazer 
+
+é 
+
+
+___dEFINIR __ O ACESSO __ GERAL/COMUM __ DE 
+
+TODAS 
+
+
+AS 
+
+PARTES 
+
+DO PROJETO/DATABASE DO PROJETO COMO 
+
+
+
+SENDO 
+
+'true' (tanto para 'read', como para 'write'), 
+
+
+PORÉM
+ 
+
+ __ESPECIFICAMENTE QUANDO FALAMOS DE 'orders',
+
+ ELE VAI 
+
+ DEFINIR 
+
+
+
+ O 
+
+ 'WRITE' E O 'READ' COMO ___SUJEITOS 
+
+ A EXISTÊNCIA 
+
+ DE 
+ 'auth' ( ou seja, sujeitos a EXISTÊNCIA DE UMA TOKEN 
+ 
+ NO REQUEST ENVIADO PELO USUÁRIO, UMA TOKEN QUE 
+ 
+ EVIDENCIE QUE AQUELE USUÁRIO ESTÁ AUTORIZADO/AUTENTICADO A 
+ 
+ 
+EXAMINAR/EDITAR SUAS ORDERS...).
+
+
+
+
+
+
+
+---> para isso, 
+
+o código vai ficar assim:
+
+
+
+
+
+
+
+
+
+ {
+  "rules": {
+    ".read": true,
+    ".write": true,
+        "orders": { ///////EIS O CÓDIGO EM QUESTÃO.
+                ".read": "auth != null",
+                ".write": "auth != null"
+        }
+  }
+}
+
+
+
+
+---------------
+
+
+
+OK, AGORA AS ORDERS NÃO ESTARÃO DISPONIBILIZADAS A TODAS AS PESSOAS,
+
+E SIM 
+
+APENAS 
+
+AOS 
+
+
+'USERS' COM TOKENS/AUTENTICADOS... --------> 
+
+
+
+
+
+ok, mas isso NÃO FUNCIONOU... --> NOSSO 
+
+
+APP 
+
+
+__CONTINUA___ CONFERINDO ACESSO A TODAS AS PESSOAS QUE CLICAM 
+
+EM 
+
+
+'Orders', e não os barra 
+
+de forma alguma... ------------>
+ 
+
+
+
+ professor 
+
+
+ tece algumas considerações:
+
+
+  
+
+
+
+
+
+  SE NÓS ESCREVERMOS 
+
+  NOSSAS 
+
+  REGRAS DO GOOGLE FIREBASE ASSIM:
+
+
+
+
+
+   {
+  "rules": {
+    ".read": true,
+    ".write": true,
+        "orders": { ///////EIS O CÓDIGO EM QUESTÃO.
+                ".read": "auth != null",
+                ".write": "auth != null"
+        }
+  }
+}
+
+
+
+
+
+
+
+ISSO NÃO VAI DAR CERTO,
+
+PQ 
+
+NOSSAS 
+
+
+'TOPMOST' RULES,
+
+mais gerais e MAIS EM CIMA,
+
+
+vão 
+
+
+____ FAZER OVERWRITE  __ DE QUAISQUER 'NESTED NODES' 
+
+
+
+dentro 
+
+
+desse bloco de regras...  ---> para que 
+
+
+
+consigamos 
+
+
+SUBDIVIDIR
+ 
+
+
+ as partes do nosso database,
+
+ fazer com que 
+
+
+ APENAS 
+
+
+ UMA PARTE ESPECÍFICA 
+
+
+ TENHA 
+
+ 'read' e 'write' como TRUE,
+
+
+ o professor 
+
+
+ vai 
+
+ 
+
+
+
+ colocar um ''''BLOCO'''' para ingredients( que terão 'read' e 'write' como true, pq os usuários AINDA PRECISARÃO FAZER SEUS BURGERS, não podem ter esse acesso específico barrado a eles...)
+
+
+
+ --> já o BLOCO 
+
+ DE 
+
+ 'orders' vai 
+
+ ter aquele 
+
+ '.read': 'auth != null',
+
+ e 
+
+
+
+ '.write': 'auth != null'...
+
+
+
+
+--------------------------
+
+
+
+
+O CÓDIGO LÁ NA NOSSA DATABASE FICOU ASSIM:
+
+
+
+
+// {
+//   "rules": {
+//     ".read": true,
+//     ".write": true
+//   }
+// }
+
+
+// {
+//    "rules": { //VERSÃO MAIS BÁSICA POSSÍVEL DE 'proteção de recursos em uma database'... --> se o usuário não tiver 'auth(o token) diferente de null', O WRITE E READ ACCESS SERÁ SETTADO COMO 'false' (não será conferido acesso 'write/read' ao usuário...)
+//      ".read": "auth != null",
+//      ".write":"auth != null"
+//    }
+//  }
+
+
+
+
+// {
+//    "rules": { //ESTA VERSÃO TAMBÉM NÃO FUNCIONA... (para o nosso app...) ---> não funciona pq ESSAS REGRAS MAIS 'gerais' de read e write, colocadas no ROOT de 'rules', VÃO FAZER OVERWRITE DAS RULES RELATIVAS AO NODE de 'orders', que fica mais abaixo...
+//      ".read": true,
+//      ".write": true,
+//        "orders": { ///////EIS O CÓDIGO EM QUESTÃO. --> ISSO FARÁ COM QUE ESSAS REGRAS DE 'read' e 'write' específicas, submetidas a existência de um 'auth', SEJAM APLICADAS APENAS AO 'trecho' 'orders' de nossa database...
+//          ".write": "auth != null",
+//            ".read": "auth != null"
+//        }
+//    }
+//  }
+
+
+
+{
+   "rules": { //ESTA VERSÃO FUNCIONA... ---> subdividimos os 'acessos' dos nodes do nosso aplicativo/database... --> os ingredients vao sempre ficar ABERTOS AO PÚBLICO EM GERAL, ENQUANTO QUE o node de 'orders' vai ter aqueles acessos específicos, condicionados A EXISTÊNCIA/VALIDADE DE 'auth' (que será o token anexado ao request enviado pelo usuário, em outras palavras).
+     
+     "ingredients": {
+       ".read": true
+     ".write": true,
+     }
+       "orders": { ///////EIS O CÓDIGO EM QUESTÃO. --> ISSO FARÁ COM QUE ESSAS REGRAS DE 'read' e 'write' específicas, submetidas a existência de um 'auth', SEJAM APLICADAS APENAS AO 'trecho' 'orders' de nossa database...
+         ".write": "auth != null",
+           ".read": "auth != null"
+       }
+   }
+ }
+
+
+ -----------------------------
+
+
+
+
+COM ISSO, 
+
+PODEMOS 
+
+
+TESTAR
+NOSSO 
+
+APP 
+COM 
+
+ESSE ACESSO LIMITADO AÍ..
+
+
+
+
+
+--> DE FATO,
+
+
+SE 
+
+TENTARMOS 
+
+ENTRAR 
+
+
+EM 
+
+
+'Orders' 
+
+
+
+
+AGORA,
+
+
+SEM 
+TER UMA 
+
+TOKEN,
+
+
+VAMOS 
+
+
+RECEBER AQUELE 
+
+NOSSO MODAL
+ 
+
+ DE ERRO,
+
+ DE 
+
+ 'withErrorHandler',
+
+ que 
+
+
+ NOS 
+
+ DIRÁ 
+
+
+
+ 'Request failed with status code 401'...
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+--> ENTRETANTO, MESMO QUE ESSA PARTE NÃO FUNCIONE (que é o que desejamos),
+
+NOSSA 
+
+PARTE 
+
+DO 
+
+
+'BURGER BUILDER'
+
+ainda 
+
+FUNCIONA... 
+
+
+
+
+
+
+
+
+
+E isso é bom, 
+
+
+é exatamente o que 
+
+o professor queria... ---> 
+
+
+
+entretanto,
+
+
+
+SERIA
+ 
+
+ BOM 
+
+
+
+
+ MOSTRAR ALGUMA 
+
+ MENSAGEM 
+
+ EM 
+
+
+ 'ORDERS',
+
+
+
+ alguma coisa no background, 
+ algo que informe o usuário 
+
+ que 
+
+
+ ELE NÃO CONSEGUE 
+
+ VER NENHUMA ORDER AQUI em 'orders' 
+
+ JUSTAMENTE 
+
+
+
+ PQ __ELE NÃO ___ ESTÁ ___ 'LOGGADO' 
+
+
+
+ NO APLICATIVO....
+
+
+
+ -----------------------
+
+
+
+
+
+
+ ENTRETANTO, ANTES DISSO,
+
+
+ DEVEMOS 
+
+
+
+FAZER COM QUE NOSSA PÁGINA 'ORDERS' realmente 
+
+MOSTRE
+ 
+
+ AS 'orders' 
+
+ DO USUÁRIO QUANDO ELE ESTIVER AUTENTICADO (quando tiver uma TOKEN válida....)
+
+
+
+
+
+
+
+
+ --> PARA FAZER ISSO, 
+
+
+ O PROFESSOR 
+
+
+ PRECISA 
+
+ IR 
+
+ ATÉ 
+
+
+ O LUGAR 
+
+ EM QUE 
+
+ DE FATO ENVIAMOS 
+
+ ESSE 
+
+
+ REQUEST 
+
+ DE 
+
+ 'Orders'... --------> 
+
+
+
+ e isso foi numa ACTION, se bem me lembro...
+
+
+ --> é em 
+
+
+ 'orders.js'...
+
+
+ ------------------------
+
+
+
+
+ LÁ 
+
+
+ 
+
+ TEMOS AQUELES 
+
+ ACTION 
+
+ CREATORS 
+
+ DE 
+
+
+ 'asyncFetchOrdersStart',
+
+
+ 'fetchOrdersStart',
+
+ etc etc...
+
+
+
+
+
+
+ O CÓDIGO DE 
+
+
+
+
+ 'asyncFetchOrdersStart' 
+
+ é:
+
+
+
+
+
+
+
+
+  export const asyncFetchOrdersStart = () => {
+        return dispatch => {
+                dispatch(fetchOrdersStart());
+            axiosOrder.get('/orders.json')
+            .then(
+               res => {
+                   const fetchedOrders = [];
+                   for (let key in res.data) {
+                       fetchedOrders.push(
+                           {
+                               ...res.data[key],
+                               id: key
+                           }
+                       )
+                   }
+                   dispatch(fetchOrdersSuccess(fetchedOrders)); ///AQUI É DISPATCHADA A ACTION DE 'fetchOrdersSuccess', com um pass de 'fetchedOrders' como payload (propriedade 'orders')...
+               }
+            )
+            .catch(error => {
+                    dispatch(fetchOrdersFail(error));
+            })
+        }
+    }
+
+
+
+-------------------------------
+
+
+
+
+BEM,
+
+ALI 
+
+
+NÓS 
+
+
+TEMOS 
+
+
+AQUELE 
+
+
+
+
+CALL 
+
+DE 
+
+'axios.get('/orders.json').... ---------> BEM, É EXATAMENTE 
+
+NESSE 
+
+
+
+
+'axios.get' AÍ __ QUE 
+
+DEVEMOS 
+
+
+___ESSENCIALMENTE__ ADICIONAR NOSSO TOKEN...  --------> 
+
+
+
+
+
+E ESSE TOKEN __ SERÁ O TOKEN___ RECEBIDO __ POR MEIO DA 'RESPONSE' DO FIREBASE,
+
+QUANDO 
+
+
+
+
+
+CLICAMOS EM 'SIGNIN' na página de 'Authentication'... (ou seja, quando 
+
+executamos todos aqueles action creators, que nos 
+
+deram uma TOKEN e um 'localId'...) ------> 
+
+
+
+
+
+
+
+NÓS 
+
+DEVEMOS 
+
+___ANEXAR___ eSSA TOKEN ___ RECEBIDA LÁ DO 'FIREBASE' 
+
+nesse 
+request aí...
+
+
+
+
+
+
+
+--> eu me lembro vagamente que o SEGUNDO PARÂMETRO DE 
+
+'axios' é 
+
+O LUGAR EM QUE 
+
+COLOCAMOS 'HEADERS', data em geral,
+
+E 
+
+___TALVEZ__ TOKENS...
+
+
+
+
+
+
+--> na internet, encontrei este código:
+
+
+const token = '..your token..'
+
+axios.post(url, {
+  //...data
+}, {
+  headers: {
+    'Authorization': `Basic ${token}` 
+  }
+})
+
+
+-----------------------
+
+
+
+
+
+ 
+
+ --> professor 
+
+
+ nos 
+
+ diz que 
+
+
+ A AUTENTICAÇÃO/send 
+
+
+ da 
+
+ AUTENTICAÇÃO/token 
+
+
+ por meio 
+
+
+ de um 
+
+ axios GET request 
+
+
+
+
+ é BEM SIMPLES.... ---> 
+
+
+
+ devemos 
+
+ adicionar um
+
+ QUERYPARAM logo depois do '/orders.json'....
+
+
+
+
+
+
+
+
+ --> ficará tipo 
+
+
+
+ '/orders.json?' ------------> 
+
+
+
+
+ DEPOIS 
+
+ DISSO,
+
+ COLOCAMOS UMA 'key', que terá um valor específico..
+
+
+
+ ex:
+
+
+
+ 'axios.get('/orders.json?auth=)' 
+
+
+ -----------------------------
+
+
+
+ --> ISSO FEITO,
+
+ VAMOS 
+
+ ESCREVER 
+
+
+ '+'  e então 
+
+
+
+ VAMOS 
+
+
+ TER QUE PASSAR A TOKEN... -------> e a TOKEN, aqui, NO CASO,
+
+ é 
+
+ a 
+
+ 'COISA ESPECIAL'... ------> a token é sempre 
+
+ ARMAZENADA 
+
+ NO NOSSO 
+
+ 'REDUX STORE'... --> e vamos ter que a pegar DE LÁ...
+
+
+
+
+
+
+
+ ---> vamos ter que 
+
+ PEGAR 
+
+
+ ESSA TOKEN AÍ, CONSEGUIR 
+
+ PASSÁ-LA 
+
+
+ PARA _DENTRO DESSE ACTION CREATOR 
+
+
+ de 
+
+ 'asyncFetchOrdersStart'...
+
+
+
+ --------------------------------
+
+
+
+
+
+
+
+--> professor nos diz que 
+
+
+___PODERÍAMOS___ USAR 'getState()'... ---> nós aprendemos sobre isso 
+
+antes;
+ 
+ é uma MANEIRA
+  
+  DE CONSEGUIR 
+
+  ACESSO 
+
+
+ao state 
+
+em momentos aleatórios 
+
+da execução de uma action...
+
+
+
+
+
+se você quisesse seguir esse caminho, você teria que escrever isto:
+
+
+
+
+export const asyncFetchOrdersStart = () => {
+    return (dispatch, getState) => {
+        ....
+
+        getState()
+    }
+}
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+MAS O PROFESSOR 
+
+NOS DISSE, NAQUELAS AULAS,
+
+
+QUE 
+
+
+__NÃO É BOM USAR ESSE MÉTODO/APPROACH__.... ---> 
+
+
+e ele nos diz que 
+REALMENTE 
+
+NÃO É BOM USAR ISSO AQUI (apesar de ser um approach válido.) --> é um approach válido pq VAI TE DAR ACESSO A UM VALOR QUE REALMENTE NÃO TE INTERESSA AO SEU 'view', dentro desse action creator...
+
+
+
+---------------------------------------------------
+
+
+
+
+--> AINDA ASSIM,
+
+
+professor diz que prefere
+ 
+ CONSEGUIR 
+
+ ESSA 
+
+ __TOKEN___ NO LOCAL __ EM QUE ___ 
+
+ 'asyncFetchOrdersStart' É 
+
+ DISPATCHADO,
+
+
+ para então 
+
+ conseguir passar 
+
+ isso 
+
+
+ ao 
+
+ local 
+
+
+
+ 'axios.get('/orders.json?auth=' + ...);'.
+
+
+
+
+
+ --------------------------------
+
+
+
+
+
+
+
+
+
+
+ OK, MAS QUE LUGAR É ESSE?
+
+
+
+
+
+ acho que é 
+
+ em 
+
+ 'Orders.js' (container),
+
+
+ EM 
+
+ QUE 
+
+escrevi
+
+ ESTE CÓDIGO:
+
+
+
+
+
+
+
+ const mapDispatchToProps = dispatch => {
+    return {
+        onFetchOrders: (token) => {
+            dispatch(actionTypes.asyncFetchOrdersStart(token));
+        }
+    }
+    
+}
+
+
+const mapStateToProps = (state) => {
+   return {
+       orders: state.order.orders,
+       loading: state.order.loading,
+       token: state.auth.token  ////eis o código em questão.
+}
+}
+
+
+
+------------------------------
+
+
+
+
+
+e 
+
+
+
+em 
+
+'order.js',
+
+
+temos 
+isto:
+
+
+
+
+
+
+ export const asyncFetchOrdersStart = (token) => { //coloquei isso agora.
+        return dispatch => {
+                dispatch(fetchOrdersStart());
+            axiosOrder.get('/orders.json?auth=' + token)
+            .then(
+               res => {
+                   const fetchedOrders = [];
+                   for (let key in res.data) {
+                       fetchedOrders.push(
+                           {
+                               ...res.data[key],
+                               id: key
+                           }
+                       )
+                   }
+                   dispatch(fetchOrdersSuccess(fetchedOrders)); 
+               }
+            )
+            .catch(error => {
+                    dispatch(fetchOrdersFail(error));
+            })
+        }
+    }
+
+
+
+-----------------------------------
+
+
+
+Ok.... ----> mas 
+
+
+
+agora 
+
+estou com 2 problemas no meu app.... ---> quando 
+
+
+
+NÓS CRIAMOS UM BURGER E ENTÃO 
+
+COLOCAMOS 
+
+
+AS 
+
+INFORMAÇÕES 
+
+
+
+DE 
+
+CONTATO E TALS, COLOCAMOS 'continue',
+
+nós 
+
+
+__NÃO SOMOS __ REDIRECIONADOS__ A PÁGINA ALGUMA,
+
+
+CONTINUAMOS NA MESMA.... --> seria legal se fossemos 
+
+REDIRECIONADOS À PÁGINA 
+
+'Orders', onde veríamos nosso Burger Imediatamente...
+
+
+
+
+
+---> agora entendi... ---> nosso 
+
+
+
+app está dando 'PURCHASE_BURGER_FAIL',
+
+essa action aí está sendo dispatcheada... ---> isso significa que 
+
+
+NOSSA 
+
+ORDER 
+
+NÃO 
+
+ESTÁ 
+
+
+SENDO ARMAZENADA... (eu acho).
+
+
+----------------------
+
+Ok, pelo menos agora nosso código REDIRECIONA PARA A PÁGINA DO BURGER BUILDER,
+
+QUANDO OCORRE AQUELE ERRO DA ACTION 
+
+DE 
+
+'PURCHASE_BURGER_FAIL'...
+
+
+
+
+--------------------------
+
+
+
+
+--> O ERRO QUE SEMPRE ESTAMOS RECEBENDO É :
+
+
+
+''''
+
+An error has occurred: Cannot read property 'data' 
+of undefined. Redirecting to Burger Builder..
+
+
+'''''
+
+
+
+---------------------------
+
+
+
+
+---------> mas esse código aí está __BEM__ estranho.... --> 
+
+às vezes ele aparece, Às vezes não....
+
+
+
+
+
+
+
+
+
+O PROFESSOR ENFATIZA QUE 
+
+O NOSSO APPROACH DE PASS DA TOKEN, POR MEIO DESTE CÓDIGO AQUI:
+
+
+
+''''''''''''''''''''''''''
+        componentDidMount() {
+
+
+           
+                this.props.onFetchOrders(this.props.token);
+
+        }
+
+        ''''''''''''''
+
+
+
+
+
+POR MEIO DESSA ACTION AÍ,
+
+
+É 
+
+
+__APENAS 1 DAS FORMAS DE FAZER ISSO__...
+
+
+
+
+
+
+
+--> A ALTERNATIVA SERIA USAR 
+
+'getState()'
+
+
+
+NO 
+
+ACTION 
+
+CREATOR 
+
+de 
+
+'asyncFetchOrdersStart'...
+
+
+
+---------------------
+
+OK, 
+
+MAS 
+
+ O 
+
+ QUE 
+
+
+ IMPORTA É QUE 
+
+ AGORA 
+
+ NÓS 
+
+ ESTAREMOS 
+
+
+ FAZENDO 
+
+
+ PASS 
+
+ DA TOKEN NAQUELE LUGAR ALI...
+
+
+
+
+
+
+
+
+
+
+ --> OBS: quando o app é RECARREGADO,
+
+ todas as TOKENS SÃO __PERDIDAS___...
+
+
+
+
+
+
+
+
+
+ --> OPs, o aplicativo do professor JÁ CONSEGUE MOSTRAR A ORDER 
+
+ DO USUÁRIO QUE LOGGA 
+
+ NO APLICATIVO... (eu ainda não estou conseguindo...).
+
+
+
+
+ O PROBLEMA É ESTE MALDITO ERRO:
+
+
+
+ An error has occurred: Cannot read property 'data' of undefined. Redirecting to Burger Builder...
+
+
+
+
+
+ -----------------------------------------
+
+
+
+
+ Não, espere... acho que entendi... o código de LOGIN __REALMENTE __ ESTÁ FUNCIONANDO...
+
+
+
+ --> pense assim: quando conseguimos FAZER LOGIN,
+
+ conseguimos ver 
+
+ TODAS AS ORDERS,
+
+
+ ATÉ MESMO AQUELAS de 'outros usuários'.... -----> (é a mesma coisa que acontece com o professor, mas como ele só criou 1 order ao longo de várias aulas, só vemos 1 order ali na página... é a única diferença do código dele para o nosso)...
+
+
+
+
+ OK,
+
+ MAS 
+
+  E QUANTO AO ERRO DE 
+
+
+  'property 'data' of undefined'?
+
+
+
+
+  (e nosso código está dando 'PURCHASE_BURGER_FAIL'...)
+
+
+
+
+
+
+
+  --> mas o código do professor está funcionando, e o nosso NÃO.
+
+
+
+
+
+
+  -----
+
+  PARECE QUE O PROBLEMA É __JUSTAMENTE__ QUE 
+
+
+  A 
+
+
+  RESPONSE RECEBIDA 
+  PELO SERVIDOR ESTÁ COMO 'undefined'....
+
+
+
+
+
+
+
+  -----------
+
+
+  CONSEGUI, FIZ FUNCIONAR.... ----> era um problema de vinculação do state do redux 
+
+  a PROPRIEDADE 
+
+  'token' no slice 
+
+  de 
+
+  'auth''.... (eu havia esquecido de vincular.)
+
+
+
+
+  ------------------------
+
+
+
+
+  --> ok, agora nós carregamos com success as orders... ---> isso acontece pq NOSSO 
+
+
+  REQUEST 
+  ESTÁ 
+
+  SENDO ENVIADO COM 
+
+   O OBJETO 'token' anexado a ele...
+
+
+
+
+
+
+   --> na aba 'network',
+
+
+
+   podemos 
+
+   ver 
+
+   a url 
+   COM 
+
+   O TOKEN:
+
+
+   é uma 
+
+   url com um query param __gIGANTE___.... --> esse query param 
+
+
+   É 
+
+   JUSTAMENTE A 
+
+
+TOKEN... (no nosso caso, estamos 
+
+PASSANDO A TOKEN __COMO PARTE DA URL___ QUE É ENVIADA 
+
+AO 
+
+
+SERVIDOR FIREBASE, por meio do axios....)  ---> E ESSA É __UMA DAS MANEIRAS__ 
+
+DE 
+
+ENVIAR 
+
+NOSSA
+
+TOKEN ___ AO BACKEND__, ONDE É ANALISADA...
+
+
+
+
+ex:
+
+
+
+
+
+
+https://burgerbuilder201051-default-rtdb.firebaseio.com/orders.json?auth=
+eyJhbGciOiJSUzI1NiIsImtpZCI6Ijc3MTBiMDE3ZmQ5YjcxMWUwMDljNmMz
+NmIwNzNiOGE2N2NiNjgyMTEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHR
+wczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYnVyZ2VyYnVpbGRlcjIwMTA1MSI
+sImF1ZCI6ImJ1cmdlcmJ1aWxkZXIyMDEwNTEiLCJhdXRoX3RpbWUiOjE2MjYzMTY5ODAsInVzZX
+JfaWQiOiJHR1BZc1hPV3d3aGZ0NFhFUWhQb0x4MVJ6STkzIiwic3ViIjoiR0dQWXNYT1d3d2hmdDR
+YRVFoUG9MeDFSekk5MyIsImlhdCI6MTYyNjMxNjk4MCwiZXhwIjoxNjI2MzIwNTgwLCJlbWFpbCI6I
+m1hZEBtYWQuY29tIi
+wiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJp
+ZGVudGl0aWVzIjp7ImVtYWlsIjpbIm1hZEBtYWQuY29tIl19LCJzaWduX2luX3By
+b3ZpZGVyIjoicGFzc3dvcmQifX0.dreny4MCnAdERJ4MbM1Sqcz5iCm0sbdJJFT-t9IL
+kHd8dnPfpu1HFl43HsVju-9zmxSzTwgSvk-enqtGxHo8a-pwyAsZtHSsCbANtGcK0pxInlUusoX5JN3
+vvLETKu8gFsEFnzBdfhMvzQu3UG5l1PtG5f4DYcoUaMcv2KZu8X7Z6xfXoNrhW5Lc-zliO-WccxgTA
+QPDFTO6Twm9eT2BDYbVTObc4sD6UhzSmmNti_el6pt-j8blOamQHX2k02F8GWQfs-yxixEmXz
+-lC7ko5RoHa73Et0i_aT2nBGRSNxhFTq9tuQZ5CkRbd4d3pOcuiQD7Qs8QAYRXuUtMlLIVvQ
+
+
+
+
+
+-----------------------
+
+(SIM, ESSE É UM 'REQUEST' enviado ao nosso SERVIDOR FIREBASE,
+
+
+com 
+
+uma TOKEN __anexada__ como 'queryparam'...)
+
+
+
+
+
+--> E É ASSIM COMO 
+
+
+PODEMOS 
+
+ACESSAR 
+
+'PROTECTED RESOURCES'
+ 
+
+
+ por meio de umaa ___token____... --> 
+
+ E 
+ O 
+
+ MESMO 
+
+ SE APLICA QUANDO 
+
+
+
+
+ __NÓS FAZEMOS UMA ORDER (ou seja, um POST REQUEST, um 'purchase' de um burger, nesse nosso projeto...) 
+
+
+
+
+
+ --> quando nós 
+
+ FAZEMOS UM __POST REQUEST__, o princípio É ___EXATAMENTE O MESMO___,
+  um token
+
+  TAMBÉM 
+
+  É ANEXADO AO REQUEST DE TIPO POST que 
+
+  é enviado 
+
+
+  ao backend (firebase...)
+
+
+
+
+
+  ----------> e é exatamente por isso que 
+
+
+  em 
+
+
+  'purchaseBurgerAttempt'
+
+
+  NÓS 
+
+  TAMBÉM 
+
+
+  RECEBEMOS UM 
+  'token'
+
+  COMO PARÂMETRO, COMO O SEGUNDO PARÂMETRO DESSE ACTION CREATOR...
+
+
+  eX:
+
+
+
+
+
+
+export const purchaseBurgerAttempt = (orderData, token) => { ////EIS O CÓDIGO EM QUESTÃO.
+        return (dispatch) => {
+                        dispatch(purchaseBurgerLoading());
+                        axiosOrder.post(
+                                '/orders.json?auth=' + token, orderData  ////EIS O CÓDIGO EM QUESTÃO, REPASSADO COMO 'QUERYPARAM' da url/api endpoint a que ENVIAMOS O REQUEST...
+                        )
+                        .then(
+                                response => {
+                                        console.log(response);
+                                        dispatch(purchaseBurgerSuccess(response.data.name, orderData));
+                                }
+                        )
+                        .catch(
+                                error => {
+                                        dispatch(purchaseBurgerFail(error.message));
+                                }
+                        )
+        }
+}
+
+
+------------------------------------
+
+
+
+
+
+é claro que você deve ajustar o FLOW de dados 
+
+de 
+
+'purchaseBurgerAttempt',
+
+lá em 
+
+'COntactData',
+
+também...
+
+(visto lá em 
+
+
+'''
+
+
+
+
+
+
+const mapStateToProps = (state) => {
+  return {
+    ingr: state.burger.burger.ingredients,
+    price: state.burger.burger.totalPrice,
+    loading: state.order.loading,
+    token: state.auth.token, ////eis o código em questão.
+    redirectToHome: state.order.redirectToHome,
+    redirectToOrders: state.order.redirectToOrders,
+    error: state.order.error
+  };
+};
+
+
+
+
+
+
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onOrderAttempt: (orderData, token) => {
+      dispatch(actions.purchaseBurgerAttempt(orderData, token));
+    },
+    onPurchaseLoading: () => {
+      dispatch(actions.purchaseBurgerLoading());
+    },
+  };
+};
+
+
+
+''''
+
+
+)
+
+
+
+
+
+
+
+-------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+COM ISSO, 
+
+
+ASSEGURAMOS QUE 
+
+NOSSO TOKEN ESTÁ SENDO ANEXADO E ENVIADO junto do nosso request (anexado ao nosso request.....).
+
+
+
+-----------------------
+
+
+
+
+
+
+na aba network, quando fazemos o PURCHASE DE UM BURGER,
+
+
+vemos 
+
+
+
+
+ingredients.json --> GET 
+
+
+orders.json?auth=eyaishiashgi   --> OPTIONS (esse objeto/arquivo é SEMPRE ENVIADO PELO CHROME, É UM OBJETO DE CONFIG AUTOMÁTICO... DEVEMOS DESCONSIDERAR...)
+
+orders.json?auth=ehuhauhaushy --> POST ----> É O POST REQUEST criado quando FAZEMOS UMA ORDER/PURCHASE....
+
+
+^^^^ este post request com o token É O ___ REQUEST RELEVANTE__, com o token 
+
+que batalhamos para criar... --> isso vai realmente criar um burger no servidor.... 
+
+
+
+
+
+------------------------------
+
+
+
+
+
+--> certo,
+
+
+agora 
+
+até MESMO NOSSO CÓDIGO DE REDIRECT ESTÁ FUNCIONANDO (o que é ótimo...).
+
+
+
+
+--> AGORA ESTAMOS USANDO TOKENS PARA 
+
+
+
+OBTER ACESSO A RECURSOS PROTEGIDOS... (o que é bem nice.)
+
+
+
+
+
+
+
+
+
+
+--> se vocÊ não tiver um token, 
+
+a página 
+
+de 
+
+ORDERS 
+
+__NÃO FUNCIONA__... -----> 
+
+
+
+
+
+
+ENTRETANTO,
+
+NÃO É UMA BOA USER EXPERIENCE
+
+
+entrar em uma página e IMEDIATAMENTE OBTER UM __ERRO___... ------> 
+
+
+
+
+
+
+
+O ideal é sempre __DESABILITAR__ AS PÁGINAS QUE NÃO DEVEM 
+
+
+SER ACESSADAS PELO USUÁRIO SEM OS TOKENS NECESSÁRIOS...
+
+
+
+
+
+----> a situação fica ainda melhor se você TIVER UM INDICADOR VISUAL, NA SUA UI, 
+
+INDICANDO SE O USUÁRIO ESTÁ OU NÃO AUTENTICADO....
+
+
+
+
+--------> MAS O ___MELHOR__ SERIA SE NÓS ___ CONSEGUISSEMOS IMPLEMENTAR 
+
+A 
+
+FEATURE DE 
+
+
+
+'AINDA LOGGAR O USUÁRIO NO APP, SE AINDA TECNICAMENTE EXISTIR 
+
+UMA TOKEN VÁLIDA, TUDO para que 
+
+NÃO 
+
+PERCAMOS 
+
+NOSSA TOKEN/authentication state
+QUANDO/sempre que  NOSSO APP FOR RECARREGADO....' 
+
+
+
+
+
+
+
+---> vamos ver tudo isso nas próximas lições...

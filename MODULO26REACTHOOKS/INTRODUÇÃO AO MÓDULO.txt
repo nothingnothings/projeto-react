@@ -1,0 +1,192 @@
+HOOKS ----> A
+
+
+
+NOVA MANEIRA DE CRIAR COMPONENTS...
+
+ 
+
+
+
+
+
+
+ --> NESTE MÓDULO,
+
+ VEREMOS 
+
+ REACTHOOKS... (ou só 'hooks')
+
+
+
+
+
+
+
+
+
+ --> REACT HOOKS --> É UMA FEATURE 
+
+
+ BEM NOVA,
+
+
+ ADICIONADA COM 
+
+ A VERSÃO 
+
+
+
+
+
+16.8
+ 
+ DO REACT....
+
+
+
+
+
+
+
+
+
+
+--> A SINTAXE DOS HOOKS PERMITE __APENAS __ FUNCTIONAL COMPONENTS....
+
+
+
+
+
+
+
+
+
+
+--> ENTRETANTO,
+AINDA PODEMOS USAR 
+
+CLASS-BASED COMPONENTS em projetos variados, nunca esqueça disso....
+
+
+
+
+
+
+
+
+
+--> TUDO QUE VOCÊ APRENDEU 
+
+NESTE CURSO 
+É 
+
+100% CORRETO E UTILIZA´VEL,
+
+
+
+
+mas 
+
+o 
+
+REACTOHOOKS 
+
+TE 
+
+DÁ UMA 
+
+OUTRA 
+
+MANEIRA
+
+
+
+DE 
+
+ESCREVER
+
+
+SEUS 
+COMPONENTS,
+
+
+
+
+E COM 
+
+
+
+O REACTHOOKS,
+
+
+VOCÊ PODE FAZER MANAGE DE STATE E ASSIM POR DIANTE _ DENTRO __dESSES FUNCTIONAL COMPONENTS..
+
+
+
+
+
+
+
+
+--> SABEMOS JÁ QUE 
+
+
+
+EXISTE  
+
+
+'useState()'
+
+
+e 
+
+
+'useEffect()',
+
+
+
+MAS 
+
+DEVEMOS __REVER ESSAS AULAS, __ POIS 
+
+FAZ BASTANTE 
+
+TEMPO...
+
+
+
+--------------------------
+
+
+
+
+UMA IMPORTANTE 
+
+NOTA SOBRE O REACTHOOKS ---> é uma feature 
+
+BEM NOVA,
+
+
+E NÓS NÃO SABEMOS SE ESSA FEATURE 
+SERÁ 
+
+ADOTADA 
+PELA
+ 
+ INDÚSTRIA,
+
+
+
+
+
+
+ E ESSE MÓDULO EXTRA É _APENAS _PARA SABER ___ 
+
+
+ UM POUCO SOBRE O REACTHOOKS... ---> talvez se tornará o 
+
+
+ novo padrão da industria... nunca se sabe.
+
+ 

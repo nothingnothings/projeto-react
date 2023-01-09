@@ -1,0 +1,1042 @@
+
+
+
+
+
+---> nas últimas aulas vimos O APPROACH PARA CRIAR LISTAS MAIS UTILIZADOS (com 'map()'...
+
+
+o 'map()' que faz POSSÍVEL O 'MAP DE UM ARRAY'  'INTO AN ARRAY OF JSX ELEMENTS' (que são então renderizados como HTML pelo React...)...
+
+)
+
+
+
+
+---> ESSE É O PADRÃO MAIS COMUM DE CRIAR LISTAS DE ELEMENTOS NO REACT.... É O MAIS COMUM 
+
+PQ VOCê __AINDA UTILIZA JAVASCRIPT____ (no final das contas, você sempre usará javascript, essa é a moral.)
+
+
+
+
+
+--------------------------------
+
+
+BEM, MAS NÓS AINDA TEMOS ALGUMAS COISAS A MELHORAR... ---> PODEMOS 
+
+TENTAR 
+
+
+CONSERTAR AQUELE 'WARNING' NO CONSOLE, AQUELE WARNING IRRITANTE DE 
+
+
+
+'Each child in an array or iterator should have a unique "key" prop'...
+
+
+
+----------------------------------
+
+
+
+PROFESSOR LOGO NOS ENSINARÁ SOBRE COMO CONSERTAR ISSO...
+
+
+
+
+
+
+
+Antes disso, no entanto, ele vai NOS ENSINAR SOBRE COMO __ PODEMOS __ 'ACTUALLY' MANIPULAR 
+
+
+__ESSE ARRAY___ DE OBJETOS... ----> 
+
+
+para isso,
+
+
+
+ELE VAI CRIAR UM NOVO 'CLICK LISTENER'  dentro 
+
+
+
+do nosso componente 
+
+
+
+'Person'...
+
+
+
+
+LEMBRE-SE DO CÓDIGO DE 'Person':
+
+
+
+
+
+
+const person = (props) => { 
+  
+  return (
+    
+  
+  <div className="Person">
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+-------------------------------------------
+
+
+
+
+Dentro desse component, nós na verdade 
+
+JÁ 
+
+TÍNHAMOS/TEMOS UM 'CLICK LISTENER',
+
+é aquele 
+
+código de 
+
+
+
+'<p onClick={props.click}' ..... /> 
+
+
+
+
+POR MEIO DESSE CÓDIGO ALI, 
+
+NÓS EXECUTAMOS 
+
+o HANDLER ('switchNameHandler')
+
+REPRESENTADO POR 
+
+'props.click' (representado por esse 'prop' de nome 'click' definido dentro dos props que recebemos 
+
+nesse componente 'person'...)
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+certo....
+
+
+
+'switchNameHandler'.... ---> o PROFESSOR VAI ___REMOVER ESSE MÉTODO__.... ---> 
+
+
+ele não vai mais chamá-lo EM LUGAR ALGUM DE NOSSO APLICATIVO... (por isso o comentamos para fora do código...)
+
+
+
+
+Também teremos de remover todas as referências e ele no nosso códigoo....
+
+
+-------------------------------------------
+
+
+
+O professor vai agora criar um novo método, 
+
+chamado de 
+
+
+'deletePersonHandler()'.... ---> ISSO deletará 1 única 'PERSON' 
+
+
+de nosso array de persons...
+
+
+
+
+---------------------------------------
+
+
+
+
+ex:
+
+
+
+
+deletePersonHandler = () => {
+
+}
+
+
+
+
+--------------------------------
+
+
+
+
+ADEMAIS, o professor vai querer que ESSA FUNÇÃO SEJA EXECUTADA 
+
+E FAÇA ALGO (delete uma PERSON) sempre que 
+
+NÓS CLICAMOS 
+
+
+UM '<p>' EM ALGUM DOS ELEMENTOS 
+
+'PERSON'...  ---> quando algum desses elementos '<P>' for clicado, 
+
+
+
+vamos querer QUE UM 'PROP' de tipo 'onClick'
+
+
+SEJA ATIVADO...
+
+
+----------------------------------------------
+
+
+
+
+
+É por isso que o professor vai até 
+
+
+aquele código da DIV CONDICIONAL (o código dentro do IF STATEMENT)
+
+
+e então 
+
+
+INSERE UM 
+
+
+'PROP' 
+
+de click....
+
+
+
+
+ex (sim, é aqui mesmo):
+
+
+
+
+
+
+
+if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( person => {
+        return <Person name={person.name} 
+        age={person.age}
+        click={} /> ////////EIS O CÓDIGO EM QUESTÃO.
+      })}
+    </div>
+  )
+
+
+
+  -----------------------------------
+
+
+
+
+  dentro desse 'prop' 
+
+
+  de 
+
+  'click', o professor 
+
+
+  vai querer PASSAR/REFERENCIAR AQUELA NOVA FUNÇÃO, 
+
+  A FUNÇÃO 
+
+
+
+  '
+  deletePersonHandler'... --> e ele fará isso COM O 'this' no início, e sem o '()' no final...
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( person => {
+        return <Person name={person.name} 
+        age={person.age}
+        click={this.deletePersonHandler} /> ////////EIS O CÓDIGO EM QUESTÃO.
+      })}
+    </div>
+  )
+
+
+
+--------------------------------------------
+
+
+Com isso, com essa pequena mudança,
+
+
+NÓS SUBSTITUÍMOS 
+
+
+O MÉTODO 
+
+'handler' QUE 
+
+ESTAVA SENDO EXECUTADO NO NOSSO CÓDIGO (que era o 'switchNameHandler') 
+
+PELO 
+
+'deletePersonHandler', que AGORA SERÁ PASSADO como 'prop' ao argumento 
+
+
+'props' do COMPONENT 'Person' por meio do 
+
+
+código de 'click={this.deletePersonHandler}' no 
+
+call do component 'person'...
+
+
+
+---------------------------------
+
+
+
+certo....
+
+
+eu vou querer que o método 
+
+
+'deletePersonHandler' 
+
+seja EXECUTADO
+
+
+SEMPRE ___ QUE A PERSON/O '<p>' DA PERSON
+ 
+ FOR __CLICADO__... -----------------------> e eu vou querer 
+
+ QUE ESSA ___PERSON ESPECÍFICA__ SEJA DELETADA.... (a person em que clicamos) ---> 
+
+
+ para que isso aconteça,
+
+
+ precisamos saber/o código precisa sabeR EM QUE PESSOA NÓS CLICAMOS DE VERDADE....
+
+
+
+
+
+---> como nós outputtamos/fizemos o output de UMA LISTA DINÂMICA AQUI (por meio de 'map()'), 
+
+NÓS/o código AINDA 
+
+
+___NÃO SABEMOS___ QUAL ITEM EXATAMENTE 
+
+
+SERÁ DELETADO.... ------------>
+
+
+------>
+
+
+-------> A __BOA NOTÍCIA____ É QUE 
+
+ESSE 
+
+MÉTODO 
+
+'map()' TAMBÉM 
+
+
+
+__EXPÕE____ UM ___SEGUNDO ARGUMENTO... (em outras palavras: o método 'map()' exige/aceita DOIS PARÂMETROS...) ----> 
+
+ou seja, 
+
+além de aceitar/exigir 
+
+
+um objeto 'PERSON' (que é OS OBJETOS DO ARRAY os quais serão perfurados pelo método map...),
+
+O MAP 
+
+__EXIGE UM OUTRO PARÂMETRo__...
+
+
+
+
+
+
+Código de 'map()' ANTES:
+
+
+
+'.map((person) => {
+    ....
+})
+'
+
+
+
+
+
+CÓDIGO DE MAP AGORA:
+
+
+
+
+'.map((person, segundoParâmetro) => {
+    ....
+})
+'
+
+
+
+-----------------------------------------
+
+
+
+
+Ok, mas QUAL É ESSE SEGUNDO PARÂMETRO? 
+
+
+--> RESPOSTA: É O PARÂMETRO 'index'... ---> é o INDEX DAQUELE ELEMENTO ESPECÍFICO (objeto 'Person' )
+
+DENTRO 
+
+
+DAQUELE ARRAY QUE VOCÊ PASSOu (que, nesse caso, é 'this.state.persons'...)
+
+
+
+
+
+
+REPRESENTAÇÃO:
+
+
+'.map((person, index) => {
+    ....
+})
+'
+
+
+--------------------------------------------------
+
+
+
+
+
+SIDENOTE: 
+
+
+se você 
+
+
+USAR MAIS DE 1 ÚNICO ARGUMENTO DENTRO 
+
+
+DE UMA 
+
+
+'ES6 ARROW FUNCTION',
+
+você deve wrappar os argumentos em PARÊNTESES....
+
+
+
+
+
+
+
+--> certo, 
+
+NÓS RECEBEMOS ESSE SEGUNDO PARÂMETRO DE 
+
+
+'map()' DE GRAÇA, AUTOMATICAMENTE... 
+
+
+
+
+
+----> agora, 
+
+
+O PROFESSOR VAI QUERER 
+
+
+___PASSAR____ ESSE ARGUMENTO 
+
+
+'index' 
+
+
+AO MÉTODO 
+
+
+'deletePersonHandler()'...
+
+
+
+-------------------------------------
+
+
+
+
+REPRESENTAÇÃO DO CÓDIGO:
+
+
+
+
+
+
+
+
+if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => { ////////EIS O CÓDIGO EM QUESTÃO.
+        return <Person name={person.name} 
+        age={person.age}
+        click={this.deletePersonHandler} /> ////QUEREMOS PASSAR O 'INDEX' a esse método...
+      })}
+    </div>
+  )
+
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+Bem, para passar o 'index' a esse método 
+
+
+'deletePersonHandler', 
+
+
+
+o professor vai 
+
+
+QUEBRAR UMA REGRA QUE ELE MESMO ESTABELECEU;
+
+
+ele vai 
+
+
+
+colocar 'this.deletePersonHandler(index)' 
+
+
+
+
+
+NA VERDADE, ELE NÃO VAI QUEBRAR NADA... ----> ELE EXPLICA QUE 
+
+ELE USARÁ,
+
+ACTUALLY,
+
+
+AQUELA SINTAXE 
+
+DAS ARROW FUNCTIONS,
+
+
+aquela sintaxe que 
+
+fica assim:
+
+
+
+'click={() => this.deletePersonHandler(index)}'
+
+
+
+
+
+SE ELE FIZER ISSO (e ele fará), 
+
+
+ELE CONSEGUE/CONSEGUIRÁ 
+
+PASSAR O PARÂMETRO 
+
+
+DO 'index' do elemento 'Person' que queremos 
+
+
+deletar 
+
+__AO ___ MÉTODO 'deletePersonHandler' 
+
+___SEM QUE ___ O MÉTODO 
+
+'deletePersonHandler' 
+
+SEJA EXECUTADO 
+
+IMEDIATAMENTE NESTE LOCAL (o que fará com que ELEE ___ESPERE___ POR UM EVENTO 'click', que É O QUE QUEREMOS....)
+
+
+
+
+Ele também explica que a ALTERNATIVA A ISSO, A SINTAXE ALTERNATIVA, 
+
+SERIA:
+
+'this.deletePersonHandler.bind(this, index);'    (e sem a arrow function)...
+
+
+
+--------------------------------------
+
+
+
+
+
+Certo, com isso, agora 
+
+ESTAREMOS RECEBENDO 
+
+
+'index' (o index do/dos elementos 'Person' que queremos deletar)
+
+
+
+
+EM ___ 'deletePersonHandler', como parâmetro...
+
+
+
+
+
+----------------------------------
+
+
+
+Lá, em 'deletePersonHandler', o professor prepara a função para 
+
+
+que receba 
+
+
+'personIndex'...
+
+
+
+ex
+
+
+
+deletePersonHandler = (personIndex) => {
+
+}
+
+
+
+--------------------------
+
+
+
+DENTRO DESSE NEGÓCIO, ELE FARÁ 
+
+
+O __UPDATE__ DE NOSSO STATE____ 'ACCORDINGLY'...
+
+
+(por meio de 'this.setState()', presumo...)
+
+
+
+---------------------------------
+
+
+
+
+A PRIMEIRA COISA QUE ELE FARÁ 
+
+É ___O 'FETCH' ___ DE TODAS 
+
+
+AS 'persons'...
+
+
+
+Isso quer dizer que ele vai alcançar 
+
+'this.state.persons' 
+
+
+e enfiar 
+
+esse 
+
+objeto/array 
+
+
+
+DENTRO 
+
+DE UMA CONSTANTE DE NOME 'persons'...
+
+
+
+ex:
+
+
+
+
+
+
+deletePersonHandler = (personIndex) => {
+    const persons = this.state.persons;
+}
+
+
+------------------------------------------
+
+
+
+DEPOIS DISSO, 
+
+ELE VAI QUERER 
+
+___cRIAR UMA ___ NOVA VERSÃO 
+
+DAQUELE 
+
+
+ARRAY DE 
+
+'persons'........
+
+
+
+Ou seja, 
+
+
+ele vai querer 
+
+
+chamar 
+
+
+
+'persons.splice()'..... 
+
+
+
+
+
+---> 'splice()' --> É MÉTODO QUE __REMOVE___ UM ELEMENTO/VÁRIOS ELEMENTOS DE UM ARRAY, DEPENDENDO DOS PARÂMETROS QUE VOCÊ PASSA... 
+                        --> você deve passar o INDEXADOR do elemento que você quer remover (número/variável) E ENTÃO __ O NÚMERO DE ELEMENTOS QUE VOCÊ QUER QUE SEJAM REMOVIDOS__...
+
+
+------------------------------
+
+
+
+
+É por isso que o professor vai escrever:
+
+
+
+
+
+deletePersonHandler = (personIndex) => {
+    const persons = this.state.persons;
+    persons.splice(personIndex, 1);
+}
+
+
+
+---------------------------------------
+
+
+
+ISSO VAI SIMPLESMENTE 
+
+____REMOVER UM ELEMENTO DO NOSSO ARRAY DE 'persons'...____
+
+
+
+
+Certo... mas isso ainda NÃO PRODUZIRÁ NENHUM EFEITO NO NOSSO CÓDIGO... ele ainda não DELETA NADA quando os elementos/person components são clicados...
+
+
+
+
+
+Mas pq isso?
+
+
+
+
+Bem simples,
+
+
+
+PQ NÓS AINDA NÃO CHAMAMOS 
+
+
+'this.setState()' 
+
+
+
+DENTRO 
+
+
+DO 
+
+'deletePersonHandler()'...
+
+
+
+
+ex:
+
+
+
+
+
+
+deletePersonHandler = (personIndex) => {
+    const persons = this.state.persons;
+    persons.splice(personIndex, 1);  
+}
+
+
+----------------------------------------
+
+
+
+
+
+Certo, mas o que diabos passaremos a esse 
+
+'setState'...?    (talvez uma constante com o valor de 'persons.splice(xxx)'?)
+
+
+
+
+
+
+---> MAIS OU MENOS ISSO:
+
+
+O professor passa como parâmetro 
+
+de 
+
+'setState()' (método MUITO IMPORTANTE) 
+
+
+
+
+o valor 
+
+
+de '{persons: persons}' ----------> ou seja,
+ 
+
+
+ ele vai definir 
+
+ o state 
+
+
+ de nosso 
+
+ App 
+
+
+ como 
+
+
+ TENDO UMA PROPRIEDADE 'persons' (que o state original já tinha; esse state original, que 
+ 
+ já tem/tinha um array de 'persons', será overwrittado por essa propriedade/array de 'persons' novo...)
+
+
+
+ DE VALOR 
+
+
+ 'persons'.... -------------> ''''ué, mas o valor de persons não será ___O MESMO __ VALOR DE ANTES???'''' --> claro que não, idiota, porque você ALTEROU O OBJETO/ARRAY/PROPRIEDADE de persons POR MEIO DE '.splice()'...
+
+
+
+
+
+--------------------------------
+
+
+CÓDIGO FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+
+deletePersonHandler = (personIndex) => {
+    const persons = this.state.persons;
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons});
+}
+
+
+
+
+---------------------------------
+
+
+
+
+
+CERTO, COM ISSO, AGORA NOSSO CÓDIGO ESTÁ FUNCIONANDO.... ---> SEMPRE QUE 
+
+
+O '<p>' DE ALGUM 
+
+DOS ELEMENTOS/COMPONENT
+
+
+É __CLICADO___, AQUELE COMPONENT
+
+
+
+
+ACABA SENDO REMOVIDO DO NOSSO DOM...
+
+
+
+
+
+---> professor explica 'pq nós podemos adicionar uma constante 
+
+
+
+de nome 'persons', se já temos uma propriedade 
+de nome 'persons'?  ---> pq ARRAYS E OBJETOS SÃO 
+
+'REFERENCE TYPES', por isso 
+
+quando o professor 
+
+
+escreveu 
+
+'const persons = this.state.persons', 
+
+
+
+o 'this.state.persons' 
+
+NÃO É A MESMA COISA QUE O 'const persons', PQ O 
+
+
+'CONST PERSONS' é apenas uma CONSTANTE 
+
+QUE 
+
+__sEGURA ____ UM __POINTER___ 
+
+
+AO ARRAY DE 'persons,' enquanto que o array de PERSONS é o ARRAY DE PERSONS, 
+
+presente em um local específico da memória...
+
+
+
+-----
+
+
+
+
+
+ESSE APPROACH QUE O PROFESSOR NOS ENSINOU TEM 
+
+__UM PROBLEMA, UMA 'FLAW',
+
+
+que ele logo nos mostrará...
+
+
+
+
+
+Ainda assim, 
+
+
+esse negócio funciona, por enquanto....
+
+
+
+
+(contudo, ainda ganhamos aqueles mesmos warnings de antes...) 
+
+
+
+
+
+
+----> MAS ESTE APPROACH TEM UMA __fLAW___...

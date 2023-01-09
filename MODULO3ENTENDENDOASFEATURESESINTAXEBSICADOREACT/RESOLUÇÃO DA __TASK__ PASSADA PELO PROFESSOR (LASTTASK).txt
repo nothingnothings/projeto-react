@@ -1,0 +1,1671 @@
+---> 
+
+
+esse é um exercício prático inventado pelo professor para fechar o módulo...
+
+
+
+ele coloca 
+
+uma LISTA DE TAREFAS que devemos realizar...
+
+
+
+
+
+
+
+
+
+<li>Create TWO new components: UserInput and UserOutput</li>
+          <li>UserInput should hold an input element, UserOutput two paragraphs</li>
+          <li>Output multiple UserOutput components in the App component (any paragraph texts of your choice)</li>
+          <li>Pass a username (of your choice) to UserOutput via props and display it there</li>
+          <li>Add state to the App component (=> the username) and pass the username to the UserOutput component</li>
+          <li>Add a method to manipulate the state (=> an event-handler method)</li>
+          <li>Pass the event-handler method reference to the UserInput component and bind it to the input-change event</li>
+          <li>Ensure that the new input entered by the user overwrites the old username passed to UserOutput</li>
+          <li>Add two-way-binding to your input (in UserInput) to also display the starting username</li>
+          <li>Add styling of your choice to your components/ elements in the components - both with inline styles and stylesheets</li>
+
+
+
+
+
+
+
+
+
+
+1) <li>Create TWO new components: UserInput and UserOutput</li>
+
+
+
+
+Para isso, 
+
+devemos começar 
+
+PELA CRIAÇÃO DE 
+
+2 FOLDERs... ---> 
+
+
+1 para cada elemento...
+
+
+
+'UserInput' 
+
+e 
+
+
+'UserOutput'....
+
+
+
+Dentro desses folders, 
+
+devemos ter 
+
+
+um arquivo .js de 'UserInput' 
+
+
+e um arquivo .js 
+
+de 
+
+'UserOutput'...
+
+
+------------------------------------
+
+
+Também é importante 
+
+
+
+se certificar que 
+
+nosso MODELO 
+
+'index.js' (o framework da parada) 
+
+
+
+ESTÁ 
+
+
+regularizado...
+
+
+
+Bem...
+
+
+lá nós 
+
+
+temos 
+
+
+'import React from 'react';'   (isso sempre deve aparecer)...
+
+
+
+'import ReactDOM from 'react-dom'; (isso também SEMPRE DEVE APARECER)...
+
+
+
+
+'import './index.css';  ////ISSO TAMBÉM É IMPORTANTE, é o STYLING BÁSICO da nossa página... deve existir/aparecer aqui, também...
+
+
+
+'import App from './App'; ///////O IMPORT DE NOSSO 'APP' PRINCIPAL, DE NOSSO principal REACT COMPONENT que vai segurar os outros components...
+
+
+'import registerServiceWorker from './registerServiceWorker'; ////// -----> usado para OFFLINE EXPERIENCES... --> gerenciam coisas como 'push notifications' e 'background sync'...
+
+
+
+'ReactDom.render(<App />, document.getElementById('root'));' //////////--> ISSO É MUITO IMPORTANTE. É ISSO QUE VAI RENDERIZAR O Componente/elemento react 'App' naquele lugar/div que tem o id de 'root'... --> visto em 'index.html' no folder 'public'...
+
+
+
+-----------------
+
+
+
+Certo, 
+
+o index.js está correto...
+
+
+
+-----------------------
+
+
+
+
+
+AGORA PRECISAMOS 
+
+CRIAR/DESENHAR O NOSSO APLICATIVO EM 
+
+
+'App.js'... 
+
+
+
+
+
+-->como nós 
+
+
+__vAMOS___ usar 
+
+
+
+CLASS BASED COMPONENTS, 
+
+
+nós devemos 
+
+
+começar pelo 
+IMPORT 
+
+DE 
+
+'React' (objeto 'React')  e 
+
+
+de 
+'{Component}' --> objeto component...
+
+ambos 
+
+são tirados de 
+
+'react'... (em 'node_modules'... --> default).
+
+
+
+
+
+É POR ISSO 
+
+QUE VAMOS 
+
+
+ESCREVER 
+
+'import React, { Component } from 'react';
+
+-------------------------------------------------
+
+
+
+Certo... depois disso, 
+
+
+vamos usar 
+
+alguns ESTILOS 
+
+nesses 
+
+components 'userInput' 
+
+e 
+
+'userOutput'...
+
+Mas 
+
+
+antes disso, precisamos 
+
+DE UM ESTILO GERAL 
+
+PARA ESSA PÁGINA ---> é por isso que vamos criar 
+
+E IMPORTAR 
+
+UM ARQUIVO 
+
+
+'.css' 
+CHAMADO DE 
+
+'App.css'....
+
+
+
+
+
+
+---> esse arquivo .css 
+
+terá um estilo de 
+
+'margin: 16px'...
+
+
+--------------------------
+
+
+
+Certo...
+
+
+Para CRIAR 
+
+NOSSO COMPONENTE 
+
+DE 
+
+'App', 
+
+
+
+devemos 
+
+
+
+
+escrever 
+
+
+
+
+'class App extends Component {
+
+
+}'.....
+
+
+
+
+
+ISSO VAI 
+
+O CRIAR, realmente...
+
+
+
+----------------------------------------
+
+
+
+
+
+
+dentro de class-based components, 
+
+
+sempre 
+
+teremos 
+
+
+UM MÉTODO 
+
+
+'render() {}
+'
+
+
+--------------------------
+
+
+
+Ex:
+
+
+
+
+class App extends Component {
+
+    render() {
+
+    }
+}
+
+-------------------------------
+
+
+
+ESSE MÉTODO, POR SUA VEZ, 
+
+
+SEMPRE RETORNARÁ (return)
+
+
+
+__CÓDIGO JSX__, o CÓDIGO DOS 
+
+COMPONENTS 
+
+
+QUE SERÃO EFETIVAMENTE RENDERIZADOS NA NOSSA PÁGINA/APLICATIVO...
+
+
+
+
+MAS LEMBRE-SE: o código que passamos SEMPRE DEVE 
+
+
+__SER __ WRAPPADO_ ___ EM 1 ÚNICO ELEMENTO, UMA 
+
+
+DIV (ou outra espécie de elemento) 
+QUE 
+
+WRAPPA tudo... --> 
+
+portanto, aqui vamos 
+
+criar uma div 
+
+
+
+com um 'className' de 'App'....
+
+
+
+
+ex:
+
+
+
+
+
+
+class App extends Component {
+
+    render() {
+        <div className="App">
+
+
+
+
+
+
+
+
+
+        </div>
+    }
+}
+
+
+
+-------------------------------------
+
+
+
+Dentro dessa div NÓS ENFIAREMOS OS NOSSOS COMPONENTS 
+
+de 
+
+'UserInput' 
+
+
+e 
+
+'UserOutput'...
+
+
+
+
+--> falando nesses COMPONENTS, 
+
+
+NÓS __TAMBÉM ___ PRECISAMOS 
+
+OS ADICIONAR 
+
+
+__ AO NOSSO ARQUIVO DE __ 'App.js'
+
+
+POR MEIO 
+
+DA SINTAXE DE IMPORTS ES6/ES7...
+
+
+
+ex:
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+
+import UserInput from './UserInput/UserInput';  //////EIS O CÓDIGO EM QUESTÃO.
+import UserOutput from './UserOutput/UserOutput'; /////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+class App extends Component {
+
+    render() {
+        <div className="App">
+
+
+
+
+
+
+
+
+
+        </div>
+    }
+}
+
+
+
+----------------------------------
+
+
+Certo... 
+
+agora precisamos 
+
+CHAMAR/INVOCAR 
+
+ESSES COMPONENTS 
+
+dentro do código JSX...
+
+
+Nós fazemos isso com o código:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+
+import UserInput from './UserInput/UserInput';  //////EIS O CÓDIGO EM QUESTÃO.
+import UserOutput from './UserOutput/UserOutput'; /////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+class App extends Component {
+
+    render() {
+        <div className="App">
+        <UserInput />
+        <UserOutput />
+
+
+
+
+
+
+
+
+        </div>
+    }
+}
+
+
+---------------------------
+
+
+
+
+2o PEDIDO DO PROFESSOR ---> ESSES 
+
+
+ELEMENTOS/COMPONENTS
+
+'UserInput' 
+
+
+e 'UserOutput' 
+
+
+DEVERÃO 
+
+
+CONTER COISAS...
+
+
+
+userinput --> deverá conter 
+
+
+1 ÚNICO ELEMENTO 'INPUT',
+
+
+enquanto 
+
+que 
+
+
+'userOutput' 
+
+DEVERÁ 
+
+__CONTER 
+
+2 '<p>' (PARÁGRAFOS)...
+
+
+
+--> ANTES 
+
+
+DE MAIS NADA, 
+
+DEVEMOS IMPORTAR 
+
+'React' (o objeto, extraído de 'react' ) PARA DENTRO DAQUELES 2 COMPONENTS LÁ...
+
+
+
+
+FAZEMOS ISSO POR MEIO DA SINTAXE 
+
+'import React from 'react'; 
+
+
+
+------------------------------------
+
+
+
+Certo...
+
+
+Agora nós 
+
+VAMOS USAR AQUELA SINTAXE DOS 'props', 
+
+DAQUELE NEGÓCIO 
+
+DOS 'FUNCTIONAL COMPONENTS' (dumb components)...
+
+
+
+
+FEITO ISSO, PRECISAMOS ADICIONAR 1 'RETURN STATEMENT' 
+
+a cada um desses components... --> depois disso, podemos escrever CÓDIGO JSX 
+
+NO SEU INTERIOR....
+
+
+----------------------------------
+
+
+
+CERTO... FAZEMOS O QUE O PROFESSOR PEDIU, 
+
+
+
+DEFINIMOS 
+
+'userOutput'
+
+COMO SENDO UM ELEMENTO/COMPONENT QUE OUTPUTTA
+ 
+
+ 2 PARÁGRAFOS por elemento, e então INVOCAMOS ELE MÚLTIPLAS VEZES 
+
+
+ EM 'App.js', dentro do CLASS-BASED COMPONENT 'App'....
+
+
+
+ Também 
+
+ definimos o 
+
+ component 'userInput' como sendo um 
+
+ INPUT de TYPE='text'...
+
+
+
+--------------------
+
+
+
+
+DEPOIS, O PROFESSOR PEDE:
+
+
+
+' <li>Pass a username (of your choice) to UserOutput via props and display it there</li>'
+
+
+
+---------------------
+
+
+
+ESSA PARTE É BEM MAIS DIFÍCIL....
+
+
+temos que repetir a lógica 
+
+
+que o professor nos mostrou nas lições anteriores...
+
+
+
+Começamos 
+
+pelo 
+
+
+arquivo 
+
+'App.js', 
+
+no componente 
+
+'App'...
+
+
+
+
+dentro desse componente, 
+
+nós vamos 
+
+chamar 
+
+
+o componente 
+
+'UserInput' 
+
+por meio da sintaxe 
+
+
+'<UserInput />'
+
+
+
+
+Até aí, tudo bem....
+
+
+
+Mas o professor 
+
+
+vai querer 
+
+
+passar um 
+
+
+ATRIBUTO/PROP/PROPRIEDADE 
+
+
+de 'changed'...
+
+
+
+ex:
+
+
+
+<UserInput changed={}>
+
+
+
+----------------------------
+
+
+
+Dentro 
+
+desse 
+
+'changed={}',
+
+
+o professor vai querer 
+
+INSERIR O MÉTODO QUE VAMOS QUERER PASSAR 
+
+
+AOS 'props' 
+
+
+
+
+DO COMPONENT
+
+
+
+'UserInput', lá 
+
+no arquivo 
+
+'UserInput.js'...
+
+
+-------------------------------
+
+
+a função/método que ele vai passar 
+
+é um
+
+
+MÉTODO CHAMADO DE 'usernameChangedHandler'...
+
+
+
+Para passá-lo, ele vai invocar 'this.usernameChangedHandler' naquele 
+
+slot do 'changed'...
+
+
+ex:
+
+
+
+
+
+<UserInput changed={this.usernameChangedHandler}>
+
+
+
+----------------------------------
+
+
+
+
+
+ELE VAI DEFINIR 
+
+
+ESSE MÉTODO 
+
+'usernameChangedHandler'
+
+
+COM A SINTAXE 
+
+
+
+
+
+'usernameChangedHandler = (event) => {
+
+    ...
+}'
+
+
+
+
+OK, MAS QUAL CÓDIGO ELE VAI INSERIR 
+
+DENTRO DESSE NEGÓCIO?
+
+
+
+Bem, eu imagino que ele vá 
+
+
+usar 
+
+
+'event.target.value' PARA 
+
+___EXTRAIR/PEGAR O VALOR/STRING/NÚMERO 
+
+DIGITADO 
+
+PELO USUÁRIO... ----> e aí ele vai provavelmente armazenar esse valor em uma constante..
+
+
+
+BÉÉÉ
+
+
+
+ERRADO. 
+
+
+
+
+ELE VAI USAR/FAZER COISAS COM ___sTATE____....
+
+
+
+
+
+---> falando em 'state', nós ainda NÃO DEFINIMOS 
+
+
+STATE 
+
+nesse 
+
+
+'CLASS-BASED COMPONENT' 
+
+
+de 'App'... --> é isso que vamos fazer, agora.
+
+
+
+
+
+DEFINIMOS 
+
+
+STATE 
+
+
+
+com 
+
+
+
+'state = {}'
+
+
+dentro de 'App'....
+
+
+
+-------------------------
+
+
+
+
+
+até agora, nosso código está assim:
+
+
+
+
+
+
+
+
+
+
+
+import React, {Component} from 'react';
+import './App.css';
+
+import UserInput from './UserInput/UserInput';
+ import UserOutput from './UserOutput/UserOutput';
+
+
+
+
+ class App extends Component {
+
+  state = {
+
+  }
+
+
+  usernameChangedHandler = (event) => {
+    event.target.value ////código errado.
+  }
+
+
+
+
+
+    render() {
+      return (
+        <div className="App">
+          <UserInput changed={this.usernameChangedHandler}></UserInput>
+          <UserOutput></UserOutput>
+          <UserOutput></UserOutput>
+          <UserOutput></UserOutput>
+          <UserOutput></UserOutput>
+
+
+
+
+
+
+
+
+
+
+        </div>
+      )
+    }
+ }
+
+
+
+
+
+----------------
+
+
+
+
+Bem... pense um pouco:
+
+
+
+o que será 
+
+outputtado 
+
+no elemento/elementos/components
+
+'UserOutput'?
+
+
+
+---> será outputtada A COISA QUE NÓS DIGITAMOS NO 'UserInput' ---> essa coisa deverá 
+
+
+PERCORRER UM CAMINHO antes de chegar em 
+
+
+'UserOutput'...
+
+
+
+
+Nosso userOutput até agora 
+
+está definido (código original nosso)
+
+
+assim:
+
+
+
+
+const UserOutput = (props) => {
+
+
+    return (
+
+        <div className="textOutput">
+        <p>{props.textInput}</p>
+        <p>{props.textInput}</p>
+        </div>
+    )
+}
+
+
+----------------------------------------------------------
+
+
+
+Devemos pegar esse 'textInput' de algum lugar...
+
+
+
+
+
+--> tudo começa, na verdade,
+
+
+
+EM ___sTATE___.... --> é o FLOW 
+
+
+entre 
+
+
+'state' 
+
+
+e 
+
+'setState' (usado em 'usernameChangedHandler') QUE NOS INTERESSA...
+
+
+
+-------------------------------------
+
+
+
+
+--> professor vai lá e cria 
+
+
+uma propriedade de 
+
+
+'username' 
+
+no 
+
+
+state....
+
+ele define seu valor como sendo 'supermax'....
+
+
+
+
+------------------------
+
+
+Professor nos mostra uma call 
+
+
+de 'this.setState()' 
+
+
+em 'usernameChangedHandler'... ---> nós vamos lá e a replicamos...
+
+
+
+
+
+--> 'this.setState()' aceita 
+
+
+TANTO UMA __STRING__ como também 
+
+
+ACEITA UM OBJETO COM COISAS DENTRO (que é o que vamos usar, 
+pois estamos lidando com valores dinâmicos...)
+
+
+
+
+
+A __COISA QUE ESTAVA FALTANDO___, A PEÇA-CHAVE 
+
+DO QUEBRA-CABEÇA (no momento) 
+
+
+
+É 
+
+O QUE 
+
+TÍNHAMOS DE PASSAR 
+
+A ESSE 
+
+MÉTODO 
+
+de 
+
+'setState'...---> 
+
+
+
+
+tínhamos de passar o argumento
+ 
+
+ '{username: event.target.value}' 
+
+
+ a esse negócio...
+
+
+
+
+
+
+ DEVEMOS FAZER ISSO PARA QUE 
+
+
+ ESSES 2 OBJETOS EXISTAM NO NOSSO 'COMPONENT' de 'APP'...
+
+
+
+ ex:
+
+
+
+
+ class App extends Component {
+
+     state = {
+         username: 'supermax'
+     }
+
+
+    usernameChangedHandler = (event) => {
+        this.setState(
+            {
+                username: event.target.value
+            }
+        )
+    }
+
+
+ }
+
+
+
+ ----------------------------
+
+
+
+
+ Certo... salvamos 
+
+ tudo no nosso código, mas as mudanças (o typing) ainda 
+
+ não é refletido na nossa página, não é outputtado 
+
+ no lugar 
+
+
+ da string inicial de 'SOME RANDOM TEXT'...
+
+
+
+
+ ---------------------------
+
+
+
+ Ainda há coisas ERRADAS...
+
+
+
+ Vou lá e importo os estilos corretamente...
+
+
+
+
+ --> certo, agora pelo menos nossa página tem ESTILOs... --> estilos em UserInput e UserOutput...
+
+
+
+
+ ------------------------
+
+
+
+ EU TENTO USAR ESSA SINTAXE AQUI:
+
+
+
+
+ const UserOutput = (props) => {
+
+
+    return (
+
+        <div className="UserOutput"
+       >
+        <p>{props.username}</p>
+        <p>{props.username}</p>
+        </div>
+    )
+}
+
+
+----------------------------
+
+
+mas isso resulta 
+
+EM __UM FRACASSO__, pois 
+
+não 
+
+
+estou passando
+
+
+ 'username' 
+
+
+ em lugar algum, ainda...
+
+
+
+
+
+
+
+ --> o problema está 
+
+
+ em 'App.js' ---> meu aplicativo está todo bagunçado nesse lugar, nada está certo...
+
+
+
+ -----------------------
+
+
+
+ em 'App.js', 
+
+
+
+ as calls do 
+
+
+ component 
+
+
+ 'UserOutput'
+  
+
+  estão sem 
+
+
+  atributo, nenhum atributo foi passado..
+
+
+
+
+  o professor escreveu (colocou um atributo de 'username={...}'...):
+
+
+  
+
+
+  <UserOutput username={this.state.username} />
+  <UserOutput userName="Max" />
+
+
+
+
+-----------------------------
+
+
+
+Certo...
+
+
+nós digitamos 
+
+isso aqui, 
+
+portanto:
+
+
+
+
+    render() {
+      return (
+        <div className="App">
+          <UserInput changed={this.usernameChangedHandler}></UserInput>
+          <UserOutput username={this.state.username}></UserOutput>
+          <UserOutput username={this.state.username}></UserOutput>
+          <UserOutput username='Max'></UserOutput>
+          <UserOutput></UserOutput>
+
+
+
+
+
+
+
+
+
+
+        </div>
+      )
+    }
+ }
+
+
+
+----------------------------------
+
+
+
+com isso, 
+
+agora 
+
+o texto 
+
+
+'supermax 
+supermax' 
+
+apareceu 
+
+em CADA COMPONENT 
+
+de 'userOutput' 
+
+
+de nossa página...
+
+
+----------------------------
+
+
+
+certo, mas isso ainda 
+
+
+NÃO ESTÁ COMPLETO --> nós ainda queremos que a COISA QUE NÓS DIGITAMOS 
+
+NO INPUT FIELD
+ 
+
+ seja escrita/sobreescreva 
+
+
+ o valor de 'supermax' 
+
+
+ nos components 'UserOutput'...
+
+
+
+
+
+ para isso, vamos ter que usar 'onChange',
+
+
+
+ 'value' 
+
+ e 'currentValue' (eu acho)...
+
+
+
+
+
+ ---------------------
+
+
+ Certo... 
+
+
+ NA VERDADE, eu já consegui fazer esse negócio funcionar ( com a ajuda do código do professor)....
+
+
+
+
+
+
+
+ ---> certo, acho que entendi o flow do código... tudo faz + ou - sentido, agora.
+
+
+
+
+
+
+
+
+ --------------------------------------------
+
+
+
+
+
+ AS ÚNICAS COISAS QUE FALTA DISCUTIR/FAZER, AGORA, 
+
+ SÃO:
+
+
+
+ <li>Add two-way-binding to your input (in UserInput) to also display the starting username</li>
+ <li>Add styling of your choice to your components/ elements in the components - both with inline styles and stylesheets</li>
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+---> certo... ---> isso pressupõe QUE VAMOS QUERER QUE UM 'USER INICIAL' já apareça no input...
+
+
+para tal, precisamos 
+
+
+editar nosso component 
+
+
+de 
+
+'UserInput',
+
+
+colocar um 
+
+'value='max' nele.... (vamos até o elemento e editamos seu código 'jsx'...)
+
+
+
+
+---> certo. Isso feito, 
+
+precisamos dar um jeito de UPDATAR esse 'value' 
+
+
+
+por meio do javascript/react...
+
+
+
+---------------------------
+
+
+
+CERTO...
+
+ACHO QUE CONSEGUI ESSA TAREFA.
+
+
+O CÓDIGO FICOu:
+
+
+
+
+import React, {Component} from 'react';
+import './App.css';
+
+import UserInput from './UserInput/UserInput';
+ import UserOutput from './UserOutput/UserOutput';
+
+
+
+
+ class App extends Component {
+
+  state = {
+    username: 'supermax',
+    name: 'max'
+  }
+
+
+  usernameChangedHandler = (event) => {
+    this.setState({
+      username: event.target.value,
+      
+    })
+  }
+
+
+
+
+
+    render() {
+      return (
+        <div className="App">
+          <UserInput name={this.state.username} changed={this.usernameChangedHandler}></UserInput>
+          <UserOutput username={this.state.username}></UserOutput>
+          <UserOutput username={this.state.username}></UserOutput>
+          <UserOutput username='Max'></UserOutput>
+          <UserOutput username={this.state.username}></UserOutput>
+
+
+
+
+
+
+
+
+
+
+        </div>
+      )
+    }
+ }
+
+
+
+export default App;
+
+
+
+
+
+------------------------------------------
+
+
+
+E EM USERINPUT:
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+const UserInput = (props) => {
+
+    const inputStyle = 
+    {
+        border: '2px solid red'
+    }
+
+
+    return (
+        
+        <input 
+        type="text" 
+        value={props.name}
+        style={inputStyle}
+        onChange={props.changed}
+
+
+        
+        
+        />
+        
+    )
+}
+
+
+
+export default UserInput;
+
+
+
+-----------------------------------
+
+
+
+
+
+
+e em 
+
+
+'USEROUTPUT':
+
+
+
+
+
+import React from 'react';
+
+
+
+import './UserOutput.css';
+
+const UserOutput = (props) => {
+
+
+    return (
+
+        <div className="UserOutput"
+       >
+        <p>{props.username}</p>
+        <p>{props.username}</p>
+        </div>
+    )
+}
+
+
+
+export default UserOutput;
+
+
+
+---------------------------------
+
+
+
+
+
+Certo... 
+
+
+agora só falta entender os ESTILOS....
+
+
+
+
+
+--> em 'UserOutput.js' 
+
+
+
+FOI USADA UMA ___sTYLESHEET___ NO COMPONENT 'UserOutput'...
+
+
+
+
+-->JÁ EM USERINPUT 
+
+
+__FOI USADO __ UM INLINE STYLE___ sobre o componente 
+
+
+'userINput'...
+
+
+-------------------------
+
+
+certo, 
+
+
+era isso....

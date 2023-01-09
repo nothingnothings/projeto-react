@@ -1,0 +1,2328 @@
+
+
+
+
+
+
+----> AGORA QUE SABEMOS O QUE É O 'REACT', devemos 
+
+sujar nossas mãos...
+
+
+
+
+vamos usar 
+
+
+o 
+
+
+'codepen.io'... --> ele nos deixa construir apps bem simples de html, css e js... --> é mais 
+
+UM PLAYGROUND --> pq nós não vamos o utilizar para construir apps de verdade... para isso já 
+
+temos o visual studio code.... 
+
+
+
+
+--------------------------------
+
+
+
+MAS É BOM PARA COMEÇAR COM REACT, O CODEPEN....
+
+
+
+
+NÓS SÓ USAREMOS 
+
+O CODEPEN 
+
+NESSE PRIMEIRO EXEMPLO...
+
+
+TEMOS 3 
+
+
+AREAS NO CODEPEN:
+
+
+HTML, CSS E JAVASCRIPT...
+
+
+
+
+DEVEMOS ESCREVER UM DEMO BEM SIMPLES...
+
+------------------------------------
+
+
+NESSE DEMO,
+
+vamos mostrar como escreveríamos 
+
+
+UM CÓDIGO COM O JAVASCRIPT NORMAL... 
+
+
+
+depois, vamos ver 
+
+
+COMO ESCREVERÍAMOS O MESMO CÓDIGO COM O USO DE REACT.... ---> isso vai nos mostrar como o react deixa o write de javascript mais fácil 
+
+
+
+--------------------------------------
+
+
+
+
+
+---> no html, o professor cria um novo div...
+
+
+
+basta digitar 'div' e então apertar TAB --> isso vai expandir automaticamente essa div, efetivamente criando-a.
+
+
+
+
+
+
+DENTRO DESSA DIV,
+
+
+O PROFESSOR VAI CRIAR UMA 
+
+
+TAG 
+
+'<h1></h1>'
+
+
+
+DENTRO DESSA TAG ELE VAI COLOCAR MAX ('Max')...
+
+
+
+Debaixo disso ele vai colocar um <p> 
+
+que dirá 
+
+'Your age'...
+
+
+
+
+--------------------------------------
+
+
+
+CERTO...
+
+
+
+O CODEPEN VAI SALVAR E UPDATAR NOSSO RESULT AUTOMATICAMENTE...
+
+
+
+
+
+
+--> agora vamos dar uns estilos rápidos....
+
+
+
+daremos essa div uma classe de 'person'...
+
+
+Aí nós 
+
+
+
+vamos no css 
+
+e definimos 
+
+
+estilos 
+
+para a classe '.person'...
+
+
+
+ex:
+
+
+
+
+<div class="person">
+  <h1>Max</h1>
+  <p>Your Age: 28</p>
+</div>
+
+
+
+
+
+.person {}
+
+
+
+------------------------------------
+
+
+
+PROFESSOR COLOCA O SEGUINTE ESTILO:
+
+
+.person {
+  border: 1px solid #eee;
+  box-shadow: 0 2px 2px #ccc;
+  width: 200px;
+  padding: 20px;
+}
+
+
+
+
+ISSO FAZ 
+
+
+ESSE ITEM FICAR COM UM VISUAL DE 'CARD'...
+
+
+
+
+
+OU SEJA, 
+
+AGORA TEMOS 
+
+
+UM 'PERSON CARD', um card 
+
+segurando informações sobre uma pessoa....
+
+
+
+
+
+
+TAMBÉM PODEMOS SETTAR, NOS ESTILOS DO CSS, 
+
+o display desse 
+
+item 
+
+como 
+
+'inline-block'....
+
+
+
+
+Também definimos 
+
+
+a margin como 10px...
+
+
+
+
+
+ex:
+
+
+
+
+
+.person {
+    display: inline-block;
+    margin: 10px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 2px #ccc;
+  width: 200px;
+  padding: 20px;
+}
+
+
+
+
+
+
+PROFESSOR FARÁ ISSO PARA QUE ELE POSSA __REPLICAR ESSE CÓDIGO__ MÚLTIPLAS VEZES,
+
+
+
+copiar e colar ele várias vezes no HTML...
+
+
+se ele fizer isso, 
+
+
+ele terá que 
+
+
+alterar os dados de cada 'person card' 
+
+PARA REFLETIR QUE SÃO DIV ITEMS DISTINTOS...
+
+
+(porque ele vai querer vários 'person card' items....)
+
+
+
+
+
+
+----------------------------------------
+
+
+EX:
+
+
+
+<div class="person">
+  <h1>Max</h1>
+  <p>Your Age: 28</p>
+</div>
+
+<div class="person">
+  <h1>Manu</h1>
+  <p>Your Age: 30</p>
+</div>
+
+
+
+
+
+.person {
+  display: inline-block;
+  margin: 10px
+  border: 1px solid #eee;
+  box-shadow: 0 2px 2px #ccc;
+  width: 200px;
+  padding: 20px;
+}
+
+
+------
+
+
+CERTO....
+
+
+AGORA TEMOS 
+
+ESSES 2 
+
+'PERSON CARDS'... ---> E VOCÊ PODERIA FACILMENNTE 
+
+PENSAR 
+
+NISSO, nesse exemplo, 
+
+
+COMO UMA SIMPLES WEB APPLICATION, uma 
+
+application em que 
+
+você inputta 
+
+
+sua informação, etc etc...
+
+
+
+
+
+----------
+
+
+
+
+---> ATÉ AGORA, SÓ ESTAMOS USANDO/SÓ USAMOS 
+
+
+CSS E HTML... --> aqui nós 
+
+
+JÁ PERCEBEMOS uma 
+
+
+___LIMITAÇÃO____  do html.... --> aqui nós 
+
+estamos 
+
+
+SEMPRE REUTILIZANDO O MESMO CÓDIGO HTML....
+
+
+( o código-base de 
+
+'
+<div class="person">
+  <h1>Max</h1>
+  <p>Your Age: 28</p>
+</div>
+'
+)
+
+
+
+
+ISSO SERIA MAIS PROBLEMÁTICO, essa repetição de código,
+se FIZÉSSEMOS ALGUMA COISA 
+
+COM ESSES CARDS, USANDO O JAVASCRIPT... -----> MAS 
+
+MESMO 
+
+
+____SEM USARMOS___ JAVASCRIPT NESSES CARTÕES, 
+
+
+nós podemos pensar em cada
+
+
+um desses 'snippets' COMO 
+
+__COMPONENTS____.... 
+
+
+
+---> a div 'person', por exemplo, 
+
+
+É UM ___COMPONENT___.....
+
+
+É UM COMPONENT PQ É __SEMPRE ESTRUTURADA ___ DA MESMA FORMA.... ---> só 
+
+o DATA dentro desse component sempre varia (antes era max, agora é manu, etc etc)...  --> 
+
+
+É AQUI QUE O REACT ENTRA EM JOGO... (apesar de o react BRILHAR MAIS QUANDO O CONECTAMOS 
+TAM´BEM À LÓGICA JAVASCRIPT...)  --------->  MAS AINDA ASSIM, JÁ 
+
+PODEMOS/podemos usar o react DIRETO, sem outra lógica javascript, 
+
+PARA __CRIAR___ COMPONENTES REUTILIZÁVEIS... 
+
+
+
+
+
+---> para CRIAR COMPONENTES REUTILIZÁVEIS COM O REACT, 
+
+
+DEVEMOS ADICIONAR O REACT NO NOSSO CÓDIGO...
+
+
+
+---> dentro do campo 'javascript' 
+
+
+
+do codepen, 
+
+
+O PROFESSOR VAI IMPORTAR O REACT... 
+
+
+
+--> basta clicar 
+
+
+na engrenagem
+
+
+no campo 'JS' 
+
+ e então 
+
+
+ BAIXAR/IMPORTAR ALGUMAS 
+
+
+ LIBRARIES EXTERNAS...
+
+
+
+ ---> REACT É UMA DESSAS LIBRARIES EXTERNAS... ---> 
+
+ é uma library tão popular que 
+
+ ali embaixo 
+
+ ela está 
+
+ nas opções 
+
+
+
+ do 'quick-add'...
+
+
+
+
+ ----> SE VOCÊ CLICAR EM 'SAVE E CLOSE', 
+
+
+ o react estará adicionado 
+ nesse negócio do codepen... -------> 
+
+
+
+
+
+ O REACT JÁ ESTÁ NA VERSÃO 17 (no presente)... no tempo da criação do 
+
+ vídeo do professor, ele estava na 16...
+
+
+
+
+ -----------------------------------
+
+
+
+ O LOCAL SETUP DO NOSSO CURSO VAI USAR O 'LATEST REACT', a versão mais recente...
+
+
+
+
+
+ --------------------------------------------
+
+
+
+ TAMBÉM 
+
+ PRECISAMOS ADICIONAR/QUICK-add
+
+
+ o 
+
+ 'REACT-DOM'... ---> ESSA É OUTRA PACKAGE DA 
+
+
+ 'EQUIPE DO REACT'... -->  pq 
+
+
+ o 'react' 
+
+
+ EM SI É 'KINDOF' a LÓGICA EM SI, a lógica de que PRECISAMOS 
+
+ PARA CRIAR OS CHAMADOS 
+
+ 'REACT COMPONENTS' (pq o react é 'all about components'...)
+
+
+
+
+
+
+ REACT-DOM ---> é 'all about' O RENDERING DESSES COMPONENTES 
+DO REACT ___NO DOM DE VERDADE____... ('rendering these components to the real DOM')
+
+
+
+
+
+
+
+COM ESSAS 2 PACKAGES, estamos QUASE PRONTOS COM O REACT... ---> no entanto, 
+
+
+O __rEACT___ USA UMA SINTAXE JAVASCRIPT ESPECIAL... ---> é uma sintaxe que 
+
+te deixa USAR UM MONTE DE FEATURES NEXT-GEN DO JAVASCRIPT... ----> mais tarde 
+
+veremos mais informações sobre essas features next-gen que o react usa....
+
+
+
+
+---> PARA DESBLOQUEAR A 'USAGE' DESSAS FEATURES E DESSA SINTAXE ESPECIAL, 
+
+
+no dropdown do 'javascript processor', 
+
+DEVEMOS 
+
+ESCOLHER ___bABEL___ (já vimos BABEL antes, é algo para ADAPTAR O NOSSO CÓDIGO 
+A BROWSERS MAIS ANTIGOS E COM SUPORTE PIOR..) ---> 
+
+
+BABEL É UMA FERRAMENTA QUE COMPILA O CÓDIGO JAVASCRIPT NEXT-GEN que você está 
+
+escrevendo aqui em CÓDIGO QUE RODA BEM NO BROWSER (essa é outra função que ele desempenha, além 
+de adaptar 
+
+código moderno em código que roda em browsers mais antigos....) ---> PQ É ISSO 
+
+QUE QUEREMOS FAZER, QUEREMOS SEMPRE ___ESCREVER__ NOSSO CÓDIGO COM AS FEATURES QUE DESEJAMOS, 
+
+MAS ENTÃO SHIPPAR CÓDIGO QUE FUNCIONA EFETIVAMENTE NOS BROWSERS (por meio do babel)...
+
+
+
+---------------------------------------------------
+
+
+
+
+----> COM ISSO, AGORA PODEMOS ESCREVER NOSSO APLICATIVO 'REACT' NA 
+
+SEÇÃO 'JS' do codepen...
+
+
+
+
+
+--> DEVEMOS CRIAR __UM 'REACT COMPONENT' --> criar um CUSTOM HTML  ELEMENT REUTILIZÁVEL que podemos 
+
+usar em vez de repetir aquele código html na esquerda... 
+
+
+
+
+
+
+---> NA SUA FORMA MAIS BÁSICA (e você aprenderá sobre a forma 
+alternativa do react, nesse curso  ), 
+
+UM REACT COMPONENT É UMA 
+
+
+___SIMPLES FUNÇÃO___... --------->
+
+
+
+
+-----------> É por isso que podemos 
+
+
+CRIAR UMA NOVA FUNÇÃO (com a keyname 'function'), 
+
+CHAMADA 
+
+DE 
+
+'Person'... (Sim, deve-se usar uma MAIÚSCULA 
+NO NOME DO COMPONENT... ---> isso é necessário para que 
+
+O REACT FUNCIONE CORRETAMENTE.)
+
+
+
+
+----> esse componente 'Person' É UMA FUNÇÃO NORMAL...
+
+
+veja:
+
+
+
+
+function Person() {
+
+}
+
+
+
+----------------------------------
+
+
+
+Entretanto, um detalhe/característica dos 
+
+REACT COMPONENTS é que eles sempre VÃO RETORNAR ___ O 
+CÓDIGO QUE VOCÊ QUER EFETIVAMENTE QUE SEJA RENDERIZADO NO DOM...____ ----> 
+
+
+ex:
+
+
+
+function Person() {
+  return ();
+}
+
+
+
+---------------------------------
+
+
+
+
+E, aqui, o REACT USA UMA SINTAXE 
+
+
+___ESPECIAL___  chamada 
+
+
+de '.jsx'... ---------> 
+
+
+
+professor explica que 
+
+
+ELE ESCREVEU 'return ();' 
+
+
+PQ ELE VAI ESCREVER CÓDIGO MULTI LINHA, 
+
+e um 
+
+
+return 
+
+
+com (); 
+
+faz exatamente isso, nos deixa 
+
+ESCREVER CÓDIGO MULTI LINHA....
+
+
+
+ex:
+
+
+
+function Person() {
+  return (
+
+  );
+}
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+CERTO... AGORA O NEGÓCIO FICA BIZARRO:
+
+
+
+Dentro daquele parentêses do return, 
+
+O PROFESSOR VAI COPIAR E COLAR 
+
+
+AQUELE CÓDIGO HTML 
+
+
+da div 'person'...
+
+
+
+ex:
+
+
+
+
+
+
+function Person() {
+  return (
+      <div class="person">
+      <h1>Max</h1>
+      <p>Your Age: 28</p>
+      </div>
+  );
+}
+
+
+
+--------------------------------
+
+
+
+
+ou seja, 
+
+O PROFESSOR 
+
+VAI COPIAR E COLAR 
+
+ESSE CÓDIGO DENTRO DESSE RETURN STATEMENT.... ---> Isso certamente 
+
+vai parecer estranho para você... ---> se parece 
+
+com CÓDIGO HTML... código html EM JAVASCRIPT...  ----> e essa sintaxe 
+
+CERTAMENTE NÃO FUNCIONA 'direto da caixa...' --> se não tivéssemos 
+
+O BABEL IMPLEMENTADO NESSE PROJETO/NO CODEPEN, 
+
+essa SINTAXE __NÃO SERIA RECONHECIDA___...
+
+
+
+BABEL = É UM 'PREPROCESSOR' ---> Babel, quando 
+
+configurado corretamente, NOS DEIXA USAR ESSA SINTAXE 
+ESPECIAL QUE 
+
+SE PARECE COM HTML, 
+
+MAS QUE NÃO é... ---> professor nos mostrará mais sobre essa sintaxe no próximo módulo...
+
+
+
+---> é a sintaxe do JSX ---> é 'synthatical sugar' --> por trás das cenas, o JSX É CONVERTIDO EM CÓDIGO JS NORMAL...
+
+
+--> mas o JSX TEM UMA VANTAGEM: ele nos facilita o trabalho de COMUNICAR AQUILO QUE QUEREMOS QUE SEJA RENDERIZADO....
+
+
+
+--------------------------------------------
+
+
+
+
+
+--> certo... agora temos essa função 'Person', essa função que o professor 
+
+disse que é um REACT COMPONENT... -------> ENTRETANTO, 
+
+É UM 
+
+___rEACT COMPONENT __ INCOMPLETO___ ---> até agora,
+
+esse negócio NÃO PASSA DE UMA FUNÇÃO --> 
+
+
+
+para transformar esse negócio em um REACT COMPONENT, 
+
+
+
+NÓS ACTUALLY precisamos 
+
+____USAR __ O REACT__ PARA 
+
+O RENDERIZAR NA TELA.... ----------->
+
+
+
+-------> É POR ISSO QUE O PROFESSOR VAI SE LIVRAR 
+
+do código da 'PERSON' no html....
+
+
+
+
+(ou seja ele vai se livrar de 
+
+'<div class="person">
+  <h1>Max</h1>
+  <p>Your Age: 28</p>
+</div>'
+
+
+no campo do HTML...
+)
+
+
+---------------------------------
+
+
+---> ELE VAI SE LIVRAR DESSE CÓDIGO E ENTÃO 
+
+DEIXAR UMA SIMPLES 
+
+
+___DIV VAZIA___ no lugar em que esse código estava...
+
+
+
+ex:
+
+
+<div></div> /////////////////EIS O CÓDIGO EM QUESTÃO
+
+<div class="person">
+  <h1>Manu</h1>
+  <p>Your Age: 29</p>
+</div>
+
+
+----------------------------------------------
+
+
+
+
+CERTO...
+
+
+E o professor vai colocar um 'id' nessa div de 
+
+
+'p1'... ---> mas você pode usar QUALQUER ID QUE QUISERMOS...
+
+
+
+EX:
+
+
+<div id="p1"></div> /////////////////EIS O CÓDIGO EM QUESTÃO
+
+<div class="person">
+  <h1>Manu</h1>
+  <p>Your Age: 29</p>
+</div>
+
+
+
+
+-------------------------------------------
+
+
+BELEZA... A REACT PACKAGE QUE NÓS IMPORTAMOS NO CODEPEN é 
+
+
+
+RESPONSÁVEL POR PARSEAR CORRETAMENTE ESSE CÓDIGO 
+
+'jsx' 
+
+DENTRO DAQUELE RETURN STATEMENT 'gordo'...
+
+
+
+---------------------------------------
+
+
+A OUTRA PACKAGE QUE NÓS IMPORTAMOS, o 'react-dom', 
+
+É RESPONSÁVEL 
+
+
+____POR ___ EFETIVAMENTE  RENDERIZAR OS REACT COMPONENTS EM 
+ELEMENTOS DO DOM...
+
+
+
+
+'react-dom' ACTUALLY expõe um ___OBJETO___ no nosso código...
+
+
+é um objeto chamado de 
+
+'ReactDOM'...
+
+
+
+
+ex:
+
+
+
+
+function Person() {
+  return (
+      <div class="person">
+      <h1>Max</h1>
+      <p>Your Age: 28</p>
+      </div>
+  );
+}
+
+
+
+ReactDOM; ///chamado do objeto exposto pelo 'react-dom'...
+
+
+
+
+
+------------------------------------
+
+
+
+-------> ESSE OBJETO GLOBAL 
+
+
+TEM UM MÉTODO CHAMADO DE '.render()'....
+
+
+
+ex:
+
+
+
+
+function Person() {
+  return (
+      <div class="person">
+      <h1>Max</h1>
+      <p>Your Age: 28</p>
+      </div>
+  );
+}
+
+
+
+ReactDOM.render();
+
+
+-------------------------------------------
+
+
+
+ESSE MÉTODO 'RENDER()" nos permite RENDERIZAR UMA 
+
+'FUNÇÃO JAVASCRIPT' (um react component) como um 
+
+____COMPONENT____ NO DOM DE VERDADE...  ---> 
+
+
+
+e essa parte 'TRATADA COMO UM COMPONENT'  É EXATAMENTE 
+
+A COISA  QUE O REACT GERENCIA...
+
+
+
+Podemos renderizar essa função, sim, mas 
+
+não por meio 
+
+de 
+
+'ReactDOM.render(Person);' , por meio dessa referência fedida,  
+
+E 
+
+SIM POR MEIO 
+
+
+DA 
+
+
+"""TRANSFORMAÇÃO""" DESSA FUNÇÃO 
+
+
+EM UM ELEMENTO HTML... (wtf???) 
+
+
+("not by referencing it like this, but by
+ACTUALLY TURNING IT INTO AN HTML ELEMENT..." )
+
+
+
+---> de novo, por trás da cenas, POR MEIO DAQUELA 
+
+SINTAXE JSX QUE É COMPREENDIDA PELO REACT...
+
+
+
+
+---> é por isso que 
+
+o professor tem/vai ter que 
+
+escrever 
+
+a função dentro 
+
+
+DO PARÂMETRO DE 'render()" 
+
+COMO 
+
+SE ELA FOSSE UM 
+
+ELEMENTO HTML...
+
+
+
+
+ex:
+
+
+
+
+
+function Person() {
+  return (
+      <div class="person">
+      <h1>Max</h1>
+      <p>Your Age: 28</p>
+      </div>
+  );
+}
+
+
+
+ReactDOM.render(<Person />);
+
+
+
+-----------------------------------------
+
+
+
+
+
+certo....
+
+então, resumindo:
+
+
+1o PARÂMETRO DE 'render' -------> É A FUNÇÃO/REACT COMPONENT QUE VOCÊ QUER QUE SEJA RENDERIZADO EM ALGUM LUGAR DA PÁGINA.... (nesse caso, a função/react component de 'Person'...) --> você deve ESCREVÊ-LO COM A SINTAXE DO HTML, na forma de 'tags'...
+
+
+
+---------------------------------------------
+
+
+
+CERTO...
+ 
+
+ MAS AINDA HÁ O SEGUNDO PARÂMETRO, 
+
+ DEVEMOS SEMPRE PASSAR UM SEGUNDO PARÂMETRO 
+
+ à '.render()'....
+
+
+ O SEGUNDO PARÂMETRO É ___O LOCAL___ DA PÁGINA EM QUE 
+
+ AQUELE ELEMENTO DEVERÁ SER RENDERIZADO....
+
+
+
+ O professor (e nós ) DEVEMOS USAR 
+
+ SELETORES JAVASCRIPT NORMAIS NESSE CAMPO...
+
+ Nesse exemplo, o professor 
+
+ usa 
+
+ o seletor 
+
+ de 
+
+ 'document.querySelector('#p1');'
+
+
+
+PARA SELECIONAR O LOCAL DA PÁGINA (a div dentro da página) QUE 
+
+TEM AQUELE ID DE 'p1'...
+
+
+
+EX:
+
+
+
+
+
+function Person() {
+  return (
+      <div class="person">
+      <h1>Max</h1>
+      <p>Your Age: 28</p>
+      </div>
+  );
+}
+
+
+
+ReactDOM.render(<Person />,
+document.querySelector('#p1')); //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+---------------------------------------------
+
+
+
+OU SEJA, USAMOS UM QUERYSELECTOR COMUM...
+
+
+
+
+
+COM ISSO, EU ESTOU DIZENDO AO REACT QUE EU QUERO RENDERIZAR O COMPONENT 
+
+'Person' 
+
+LÁ NO LOCAL 
+
+
+
+EM QUE HÁ UMA 'div' (um elemento) COM ID DE 
+
+'p1'... ---> E ISSO EFETIVAMENTE OCORRE, 
+
+esse elemento 
+
+DE FATO É RENDERIZADO NAQUELE LOCAL/naquele elemento DA PÁGINA, 
+
+
+MAS O STYLING (os estilos css) SÃO 
+
+PERDIDOS... ( o negócio surge sem borda, sem nenhum estilo...)
+
+
+
+(MAS O NEGÓCIO AINDA ESTÁ COM OS ESTILOS, NO NOSSO EXEMPLO... )
+
+
+
+(entretanto, o professor diz que os estilos 
+
+NÃO FORAM APLICADOS no exemplo dele PQ 'class' É, NA VERDADE,
+
+UMA KEYWORD 
+
+EM JAVASCRIPT, 
+
+E POR ISSO devemos usar 
+
+'className'... ) ------> E ESSA É A MAIOR PROVA 
+
+
+DE QUE ESSA SINTAXE ___SE PARECE COM HTML__, mas __NÃO É HTML___... --> não é html, 
+
+é só uma sintaxe 99% igual ao HTML... (MAS POR TRÁS DAS CENAS, 
+
+ESSA SINTAXE É TRANSFORMADA EM JAVASCRIPT POR MEIO DA AÇÃO DO PACOTE DO REACT...)
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+AGORA PERCEBEMOS QUE TEMOS  NOSSA CLASSE 'PERSON' DE NOVO, tratada 
+
+COMO UM CUSTOM COMPONENT...  podemos verificar que ele 
+
+
+é um custom component TAMBÉM PELO FATO DE QUE 
+
+NOSSO 
+
+ESTILO 
+
+DE 
+
+'inline-block' no css 
+
+É '''__KINDOF IGNORED___''' -----> esse styling 
+
+
+de 'inline-block' é ignorado 
+
+PQ NÓS ESTAMOS 
+
+
+WRAPPANDO 
+
+ESSa função 'Person'  EM UM 'CUSTOM ELEMENT', UM 
+
+
+
+CUSTOM ELEMENT (o '<Person />' ) ____ QUE É TRATADO ____ COMO UM  '''BLOCK STATEMENT'''.... ---> nós veremos mais sobre 
+styling e a relação com react neste curso...
+
+
+
+
+
+POR ENQUANTO, DEVEMOS FICAR CONTENTES COM O FATO DE QUE 
+
+
+NÓS TEMOS NOSSO COMPONENT  __RENDERIZADO__ na nossa página...
+
+
+
+
+
+ENTRETANTO, ESSE COMPONENT NÃO É EXATAMENTE __rEUTILIZÁVEL__, AINDA... ----> 
+
+
+
+SE EU TIVESSE OUTRO 
+
+'hook' no meu campo html 
+
+(ou seja, outra 
+
+'div' 
+
+com um id de 'p2', por exemplo... )
+
+
+EX:
+
+
+
+<div id="p1"></div>
+
+
+
+<div id="p2"></div>
+
+
+
+--------------------------------
+
+
+SE EU TIVESSE OUTRO HOOK, UM HOOK DE 'p2', 
+
+E EU ENTÃO 
+
+QUISESSE RENDERIZAR 
+
+
+
+UM COMPONENTE ___DIFERENTE___, UMA ___OUTRA PERSON__ (e não a person de 'Max', representada pela function/react component de 'Person' ),
+
+
+
+Eu teria que HARDCODAR OS NOVOS VALORES EM 
+
+UMA OUTRA FUNCTION E ACTUALLY CRIAR UM NOVO COMPONENT... ---> mas a coisa 
+
+boa sobre o react, e a razão dos components serem tão foda e salvarem tanto tempo, 
+
+É QUE PODEMOS 
+
+
+CONFIGURAR OS COMPONENTS DINAMICAMENTE, DE ACORDO COM O QUE PRECISAMOS DELES... ('as we need them'...)
+
+
+
+---> aqui, o que o professor vai fazer é
+
+ 
+ADICIONAR UM ___ARGUMENTO____ a 
+
+essa função/react component de 'Person'...
+
+
+
+Ele coloca o nome desse argumento/parâmetro como 
+
+'props'... -------> VOCÊ PODE 
+
+USAR QUALQUER NOME QUE VOCÊ QUER ,
+
+mas o ''CONCEITO'' DESSE NEGÓCIO, DESSE PARÂMETRO 
+
+QUE OS 
+
+REACT COMPONENTS TÊM, é 
+
+''props''.... ------------> react 
+
+
+AUTOMATICAMENTE ME DÁ  
+
+um 
+
+___ARGUMENTO___ nessa 
+
+função/ a essa função  
+
+
+QUE EU CONVERTI EM UM COMPONENTE por meio 
+
+
+
+daquela 
+
+sintaxe que escrevi mais abaixo, 
+
+
+
+aquela sintaxe de 
+
+
+'<Person />'  dentro do '.render()'... (ou seja, por meio da SINTAXE .JSX...)
+
+
+
+------------------------------
+
+EX(representação do código):
+
+
+
+
+function Person(props) { ////AQUI CONSEGUIMOS VER O PARÂMETRO 'PROPS'...
+  return (
+      <div class="person">
+      <h1>Max</h1>
+      <p>Your Age: 28</p>
+      </div>
+  );
+}
+
+
+
+ReactDOM.render(<Person />,
+document.querySelector('#p1')); 
+
+
+
+
+
+-------------------------------------------
+
+
+
+CERTO... 
+
+
+
+O que é importante 
+
+entender 
+
+
+
+é que 
+
+'props' CONTÉM 
+
+TODOS  
+
+
+__oS ATRIBUTOS___ que eu adiciono AO MEU 
+
+PRÓPRIO COMPONENT... (naquele component que eu 
+
+CRIEI COM A SINTAXE 'JSX'...)....
+
+
+
+Como exemplo disso, o professor 
+
+passa os atributos de 
+
+'name="Max" ' 
+
+
+e 
+
+"age=28" 
+
+
+AO REACT COMPONENT QUE RENDERIZAMOS POR MEIO DE '.render()'....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+function Person(props) { 
+  return (
+      <div className="person">
+      <h1>Max</h1>
+      <p>Your Age: 28</p>
+      </div>
+  );
+}
+
+
+
+ReactDOM.render(<Person name="Max" age="28" />,  ////////EIS AQUI OS __aTRIBUTOS__, os negócios que o 'PROPS' vai representar...
+document.querySelector('#p1')); 
+
+
+
+
+
+
+
+
+
+ISSO FEITO, AGORA PODEMOS 
+
+
+___OUTPUTTAR___ ESSES 
+
+
+ATRIBUTOS NO NOSSO 
+
+'PERSON COMPONENT' (nosso componente 'person'...)....
+
+
+MAS PARA ISSO, explica o professor, 
+
+PRECISAMOS ___ACESSAR__ DINAMICAMENTE 
+
+ESSE ELEMENTO/argumento 'PROPS'...
+
+
+----------------------------------- 
+
+
+Mas como fazemos isso?
+
+
+
+
+---> BEM, o professor explica que 
+
+NO REACT  nós 
+
+FAZEMOS OUTPUT DE __CONTEÚDO DINÂMICO (como '${}') 
+
+
+POR MEIO 
+
+DE SIMPLES CURLY BRACES... ('{}')....
+
+
+--> o professor vai demonstrar isso com o PROPS, e com 
+
+a h1 tag daquele componente (que antes era o código hardcodado de 'Max'...)
+
+
+
+
+
+
+ex(exemplo do props):
+
+
+
+
+
+
+
+
+function Person(props) { 
+  return (
+      <div className="person">
+      <h1>{}</h1>  /////////EIS O CÓDIGO EM QUESTÃO; no meio desses curly braces é que algum CONTEÚDO DINÂMICO PODERÁ SER INSERIDO POR MEIO DO REACT...
+      <p>Your Age: 28</p>
+      </div>
+  );
+}
+
+
+
+ReactDOM.render(<Person name="Max" age="28" />,
+document.querySelector('#p1')); 
+
+
+----------------------------------------------
+
+
+
+
+Certo... mas só escrever '{}' não vai bastar....
+
+
+
+nós também 
+
+PRECISAMOS 
+
+'reach out' 
+
+
+
+AOS 'PROPS'....... nós 
+
+
+vamos fazer reach out aos PROPS 
+
+
+e então 
+
+usar a DOT NOTATION ('.') 
+
+
+PARA ACESSAR O ATRIBUTO DE 'NAME' (que é "Max", naquele 
+
+CALL DO RENDER QUE TEMOS MAIS ABAIXO... aquele 'ReactDOM.render()'..)
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+function Person(props) { ///representa TODOS OS ATRIBUTOS de um determinado call de '.render()' de um elemento/reacet component.
+  return (
+      <div className="person">
+      <h1>{props.name}</h1>  /////////EIS O CÓDIGO EM QUESTÃO; no meio desses curly braces é que algum CONTEÚDO DINÂMICO PODERÁ SER INSERIDO POR MEIO DO REACT...
+      <p>Your Age: 28</p>
+      </div>
+  );
+}
+
+
+
+ReactDOM.render(<Person name="Max" age="28" />,
+document.querySelector('#p1')); 
+
+
+
+
+-------------------------------------------------
+
+
+
+
+Certo... 
+
+
+esse espaço '{props.name}' posicionado na tag H1 
+
+vai CONSEGUIR ESSE VALOR 'Max' do atributo que passei ao 'ReactDOM.render()'...
+
+
+
+
+Já '{props.age}' 
+
+
+será usado 
+
+no LUGAR DA '<P>', naquela tag de parágrafo que tem o número da idade da pessoa...
+
+
+ficará 
+
+
+'Your age: {}'
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+function Person(props) { ///representa TODOS OS ATRIBUTOS de um determinado call de '.render()' de um elemento/reacet component.
+  return (
+      <div className="person">
+      <h1>{props.name}</h1>  /////////EIS O CÓDIGO EM QUESTÃO; no meio desses curly braces é que algum CONTEÚDO DINÂMICO PODERÁ SER INSERIDO POR MEIO DO REACT...
+      <p>Your Age: {props.age}</p> ////EIS O OUTRO CÓDIGO EM QUESTÃO, o valor dinâmico DAQUELA AGE QUE PASSAMOS CADA VEZ QUE CHAMAMOS o RENDER do elemento '<Person />'...
+      </div>
+  );
+}
+
+
+
+ReactDOM.render(<Person name="Max" age="28" />,
+document.querySelector('#p1')); 
+
+
+
+----------------------------------------------------
+
+
+
+
+----> AGORA, PORTANTO, ESTAMOS USANDO 
+
+AS PROPRIEDADES/ATRIBUTOS QUE 
+
+PASSAMOS AOS NOSSOS PRÓPRIOS  COMPONENTS... (EM 'ReactDOM.render()'...) ----> 
+
+
+
+----> E ISSO É BEM LEGAL, PQ 
+
+
+AGORA SE REPETIRMOS AQUELE CÓDIGO, aquele call de '.render()', 
+
+só temos que trocar alguns pequenos dados PARA 
+
+CONSEGUIRMOS REUTILIZAR PERFEITAMENTE AQUELE ITEM..
+
+
+
+
+EX:
+
+
+
+
+
+
+function Person(props) { ///representa TODOS OS ATRIBUTOS de um determinado call de '.render()' de um elemento/reacet component.
+  return (
+      <div className="person">
+      <h1>{props.name}</h1>  /////////EIS O CÓDIGO EM QUESTÃO; no meio desses curly braces é que algum CONTEÚDO DINÂMICO PODERÁ SER INSERIDO POR MEIO DO REACT...
+      <p>Your Age: {props.age}</p>
+      </div>
+  );
+}
+
+
+
+ReactDOM.render(<Person name="Max" age="28" />,
+document.querySelector('#p1')); 
+
+
+
+ReactDOM.render(<Person name="Manu" age="29" />,  ///////CÓDIGO REUTILIZADO. REUTILIZAMOS O 'PERSON CARD' DE 'MAX' para criar esse person card de 'Manu'... --> essa é uma das vantagens do react, ele te deixa reutilizar REACT COMPONENTS/ELEMENTOS de forma muito tranquila...
+document.querySelector('#p2'));
+
+
+
+
+--------------------------------------------------------- 
+
+
+
+
+----------------------------------------------------------
+
+
+
+CERTO... OS 2 COMPONENTS USAM A MESMA __BASE__, como você pode observar... --> 
+
+
+ELES USAM A MESMA ___FUNÇÃO__ (com sintaxe jsx) QUE 
+
+É __TRANSFORMADA__ EM UM COMPONENT COM A AJUDA DO REACT...
+
+
+
+
+---> mas a real vantagem aqui, a real prova de 
+
+QUE O REACT NOS AJUDA A ECONOMIZAR TEMPO, 
+
+É O FATO DE QUE 
+
+___NÓS APENAS TIVEMOS QUE ESCREVER O CÓDIGO HTML UMA ÚNICA VEZ__....
+
+
+O resto das vezes APENAS TEMOS DE TROCAR OS MINI ARGUMENTOS, os dados de cada 
+
+call de 'ReactDOM.render()', 
+
+
+PARA TERMOS ITEMS PARECIDOS/com a mesma base, criados em um piscar de olhos. (é parecido com o comportamento de uma CLASSe em javascript, mas com a criação DIRETA DE ELEMENTOS HTML...)
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+EM APLICATIVOS MUITO GRANDES, VOCÊ 
+
+PODE COMPOR 
+
+
+OS APLICATIVOS INTEIROS 
+
+COM PARTES REUTILIZÁVEIS...
+
+
+
+
+
+---> E ESSE COMPONENTE QUE ESTAMOS USANDO, esse componente 'Person', 
+
+NEM ESTÁ USANDO 
+
+QUALQUER TIPO DE LÓGICA... ----> isso quer dizer 
+
+
+QUE ELE NÃO FAZ 'LISTEN TO' a cliques, ou qualquer coisa do gênero...
+
+
+
+
+
+
+----> EM APLICATIVOS COMO AQUELE QUE CONSTRUÍREMOS ao longo 
+
+do nosso curso, 
+
+É evidente QUE VAMOS FAZER EXATAMENTE ISSO; VAMOS FAZER 
+
+APPEND DE NOSSA PRÓPRIA LÓGICA AOS NOSSOS COMPONENTS... --> nos nossos projetos, 
+
+vamos sempre 
+
+TER PEQUENOS PEDAÇOS REUTILIZÁVEIS, MAINTAINABLE e FÁCEIS DE USAR, com  sua PRÓPRIA 
+
+LÓGICA CONTIDA EM SEU INTERIOR, lógica que podemos 
+
+USAR  EM QUALQUER LUGAR DO NOSSO CÓDIGO PARA __CRIAR 
+
+INCRÍVEIS APLICATIVOS___... --> é essa 
+
+a ideia 
+
+
+por trás 
+
+do react, e a 
+
+
+razão da ideia dos components ser tão genial... 
+
+
+
+
+--------------------------------------
+
+
+
+ENTRETANTO, PROFESSOR VAI FAZER UMA ÚLTIMA COISA, AQUI...
+
+
+
+
+--> Até agora, o professor nos mostrou 
+
+os calls de react...
+
+
+ele chamou 
+
+'ReactDOM.render()' 
+
+
+__DUAS VEZES___...
+
+
+
+
+
+ELE RESSALTA QUE NÃO HÁ NADA DE ERRADO COM ISSO... --> MAS, NA VERDADE, EXPLICA ELE,
+ 
+
+ PODERÍAMOS 
+
+ TER FEITO/TER ESCRITO 
+
+ NOSSO CÓDIGO 
+
+ INTEIRO 
+
+
+
+ DE MANEIRA DIFERENTE...
+
+
+
+
+
+
+---> ele explica que na coluna do html (no código HTML) nós 
+
+poderíamos ter apenas 1 ÚNICA DIV....
+
+
+
+
+ex:
+
+
+<div></div> 
+
+
+
+-------------------------------------------
+
+
+
+
+essa div, explica ele, 
+
+TERIA UM ID 
+
+DE 
+
+'app'...  'app' ou 'root'... (não importa qual você escolher)...
+
+
+
+ex:
+
+
+<div id="app"></div>
+
+
+
+
+
+----------------------------------
+
+
+
+
+CERTO... FEITA ESSA MUDANÇA,
+ 
+
+ o professor 
+
+
+ vai no nosso código 
+
+
+
+ js/jsx 
+
+
+ E __SE LIVRA ___ DO SEGUNDO 
+
+
+ call de 'ReactDOM.render()'...
+
+
+
+ -------------------------------
+
+
+
+ VAI FICAR ASSIM:
+
+
+
+
+
+ 
+<div id="app"></div>
+
+
+
+
+
+E
+
+
+
+
+
+
+function Person(props) { ///representa TODOS OS ATRIBUTOS de um determinado call de '.render()' de um elemento/reacet component.
+  return (
+      <div className="person">
+      <h1>{props.name}</h1>  /////////EIS O CÓDIGO EM QUESTÃO; no meio desses curly braces é que algum CONTEÚDO DINÂMICO PODERÁ SER INSERIDO POR MEIO DO REACT...
+      <p>Your Age: {props.age}</p>
+      </div>
+  );
+}
+
+
+
+ReactDOM.render(<Person name="Max" age="28" />,
+document.querySelector('#p1')); 
+
+
+------------------------------------------------
+
+
+
+
+
+
+FEITO ISSO, 
+
+ELE VAI QUERER ADICIONAR 
+
+
+___UMA VARIÁVEL__ (com 'var' )nesse campo do javascript.... no contexto global....
+
+
+
+Ele também vai chamar 
+
+essa variável DE 
+
+
+'app'...
+
+
+
+
+
+--> MAS O PROFESSOR NOS EXPLICA QUE ESSA VARIÁVEL 
+
+'app' 
+
+TAMBÉM VAI SEGURAR UM CERTO CÓDIGO JSX...  
+
+
+
+
+EX:
+
+
+
+
+
+
+function Person(props) { ///representa TODOS OS ATRIBUTOS de um determinado call de '.render()' de um elemento/reacet component.
+  return (
+      <div className="person">
+      <h1>{props.name}</h1>  /////////EIS O CÓDIGO EM QUESTÃO; no meio desses curly braces é que algum CONTEÚDO DINÂMICO PODERÁ SER INSERIDO POR MEIO DO REACT...
+      <p>Your Age: {props.age}</p>
+      </div>
+  );
+}
+
+
+
+var app = (
+
+);
+
+
+ReactDOM.render(<Person name="Max" age="28" />,
+document.querySelector('#p1')); 
+
+
+
+
+------------------------
+
+
+OBS:::: 
+
+
+PROFESSOR 
+
+
+DIZ QUE 
+
+
+USOU '(
+
+)',
+
+(OU SEJA, PARÊNTESES) ,
+
+
+PQ 
+
+
+ELE VAI QUERER ESCREVER O SEU CÓDIGO EM MÚLTIPLAS LINHAS...
+
+
+
+
+---------------------------------
+
+
+
+ELE EXPLICA QUE O QUE ELE PODE FAZER AGORA 
+
+É 
+
+
+
+
+___OUTPUTTAR__ MEU COMPONENTE 'Person', como ele havia 
+feito antes ( ou seja, '<Person name="Max" age="28" />'), 
+
+
+__DENTRO DA FUNÇÃO/REACT COMPONENT 'app'....
+
+
+
+
+
+-->
+
+
+EX:
+
+
+
+
+
+
+function Person(props) { ///representa TODOS OS ATRIBUTOS de um determinado call de '.render()' de um elemento/reacet component.
+  return (
+      <div className="person">
+      <h1>{props.name}</h1>  /////////EIS O CÓDIGO EM QUESTÃO; no meio desses curly braces é que algum CONTEÚDO DINÂMICO PODERÁ SER INSERIDO POR MEIO DO REACT...
+      <p>Your Age: {props.age}</p>
+      </div>
+  );
+}
+
+
+
+var app = (
+  <Person name="Max" age="28" /> ///////EIS O CÓDIGO EM QUESTÃO.
+);
+
+
+ReactDOM.render(<Person name="Max" age="28" />,
+document.querySelector('#p1')); 
+
+
+
+-----------------------------------------------
+
+
+
+
+ENTRETANTO, PROFESSOR EXPLICA QUE NÓS __dEVEMOS ___ WRAPPAR ___ 
+ESSE REACT COMPONENT EM UMA DIV...
+
+
+
+ex:
+
+
+
+var app = (
+  <div> 
+    <Person name="Max" age="28" />
+  </div>
+
+);
+
+
+
+---------------------------------
+
+
+MAS PQ ISSO?
+
+
+Bem, o professor explica que é PORQUE O JSX __TEM UM REQUISITO__ (requirement) 
+
+
+DE SER APENAS PERMITIDO 1 ÚNICO 'root element'... (ou seja: MÚLTIPLOS ELEMENTOS 
+
+'HTML', um atrás do outro, __NÃO SÃO PERMITIDOS__.... apenas são permitidos 
+
+ELEMENTOS DENTRO DE ELEMENTOS (preferencialmente tags variadas 
+
+__DENTRO DE UMA DIV__....tags/elementos WRAPPADOS POR UMA DIV...) )
+
+
+
+
+
+
+
+
+--> O PROFESSOR FALARÁ SOBRE ESSA RESTRIÇÃO/DETALHE MAIS TARDE.... ---> professor já 
+
+menciona a nós QUE 
+
+HÁ ___CAMINHOS__ POR VOLTA DESSA LIMITAÇÃO ('there is ways around that limitation'...)..
+
+
+
+
+-------> certo....
+
+
+O PROFESSOR VAI LÁ 
+
+
+E COPIA 
+
+
+aquele 'react Component' de 'Person'....
+
+Ele copia e faz alguns ajustes para que ELE SEJA OUTRA 'PERSON', para que ele seja 
+
+'MANU'....
+
+
+
+ex:
+
+
+
+
+
+
+
+var app = (
+  <div> 
+    <Person name="Max" age="28" />
+    <Person name="Manu" age=29" />
+  </div>
+
+);
+ 
+
+
+ ---------------------------------
+
+
+
+
+ CERTO... resumindo:
+
+
+ O PROFESSOR ADICIONOU 2 'PERSON USAGES' À variável 'app' que temos 
+
+ no nosso código javascript/react....
+
+
+ -----------------------------------------------
+
+
+
+
+
+
+FEITO ISSO, AGORA 
+
+O PROFESSOR SIMPLESMENTE Faz 
+
+
+'MOUNT' da variável 
+
+___APP___ (que está "englobando"/engloba aqueles 2 'person cards', de 'max' 
+e 'manu') 
+
+
+EM 'ReactDOM.render()'....
+
+
+
+ELE VAI USAR COMO LUGAR DE INSERÇÃO DO 'react component' 
+
+
+A DIV DE ID 'app' ('document.querySelector('#app')')
+
+
+
+ex:
+
+
+
+
+
+function Person(props) {
+  return (
+      <div className="person">
+      <h1>{props.name}</h1>  
+      <p>Your Age: {props.age}</p>
+      </div>
+  );
+}
+
+
+
+var app = ( 
+  <Person name="Max" age="28" />
+    <Person name="Manu" age="29" /> 
+
+);
+
+
+ReactDOM.render(app, /////EIS O ELEMENTO/REACT COMPONENT/FUNÇÃO QUE SERÁ INSERIDO... ESSA FUNÇÃO/react component 'app' ENGLOBA TANTO A 'person card' DE 'MAX' como de 'manu', também.
+document.querySelector('#app'));  /////////// EIS O CÓDIGO DE LOCALIZAÇÃO/LUGAR DE INSERÇÃO, EM QUESTÃO.
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+AGORA VOCÊ VÊ QUE EU TENHO OS 2 ELEMENTOS PRÓXIMOS 1 AO OUTRO.... eles estão 
+
+próximos 1 do outro PQ AGORA ELES ESTÃO SENDO RENDERIZADOS NO MESMO 
+
+'HOOK', no mesmo 'element'/div....   -------> E ESSE APPROACH 
+
+DE ___tER APENAS UM ÚNICO 'HOOK'__, de ter APENAS 
+
+1 ÚNICO call de 'reactDOM.render()', 1 único call e então 
+
+
+
+TER UM APP ___cRIADO____ DENTRO DO 
+
+
+OBJETO QUE É INSERIDO PELO RENDER CALL, um APP CRIADO 
+
+COM 'NESTED REACT COMPONENTS', 
+
+
+
+____ É O APPROACH __ MAIS POPULAR ___ DE TODOS, QUANDO FALAMOS 
+
+EM REACT... --> forma mais popular de criar aplicativos REACT...
+
+
+
+
+---> esse é o approach QUE SEGUIREMOS ao longo deste curso...
+
+
+
+
+---> professor vai nos mostrar a alternativa, o approach que usa 
+
+MÚLTIPLOS 'ReactDOM.render()' calls, 
+
+MAS ELE JÁ VAI 
+
+
+AVISANDO QUE A VERSÃO QUE USA APENAS 1 .render() é 
+
+MELHOR... ---> com esta approach, você 
+
+CRIA AQUILO 
+
+
+QUE CHAMAMOS DE 
+
+
+'SINGLE PAGE APPLICATIONS'...

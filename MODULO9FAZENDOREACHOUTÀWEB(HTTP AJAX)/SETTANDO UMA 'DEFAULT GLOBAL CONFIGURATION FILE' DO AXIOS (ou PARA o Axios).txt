@@ -1,0 +1,608 @@
+
+
+
+
+
+
+
+
+
+
+
+--> NA ÚLTIMA LIÇÃO VIMOS COMO __aDICIONAR INTERCEPTORS___....
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> CERTO, 
+
+
+
+MAS 
+
+
+EXISTIRÃO CASOS EM QUE VOCÊ __NÃO VAI QUERER ____ INTERCEPTAR __ OS REQUESTS 
+
+QUE VOCÊ ENVIA, 
+
+
+e sim 
+
+
+vai APENAS 
+
+
+QUERER 
+
+
+
+
+___sETTAR ALGUMAS CONFIGURAÇÕES __ GLOBAIS (configurações aplicadas 
+
+A TODOS OS HTTP REQUESTS FEITOS PELO 'AXIOS' NO SEU APLICATIVO...)
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+PARA EXEMPLIFICAR, DIGAMOS QUE 
+
+
+
+A URL 
+___ A QUE ___ VOCÊ ENVIA 
+
+
+SEUS REQUESTS, NO SEU APP, 
+
+
+É SEMPRE ____A MESMA__......
+
+
+
+
+NO nosso aplicativo de 'posts', por exemplo,
+
+a parte 
+
+inicial 
+
+
+
+'https://jsonplaceholder.typicode.com/'  É __SEMPRE A MESMA___... 
+
+
+
+
+A ÚNICA 
+
+
+COISA QUE 
+
+
+MUDA 
+
+É O FINAL,
+
+
+QUE ALTERNA 
+
+
+ENTRE 
+
+'/posts' 
+
+
+e 
+
+'/posts/1', '/posts/2', 
+
+
+etc etc...
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+--> SERIA NICE SE PUDÉSSEMOS 
+
+
+__'CORTAR'''___ 
+
+A PARTE INICIAL 
+
+
+
+
+DESSA URL, 
+pq 
+
+ela é sempre a mesma, como mencionamos agora...  ------> 
+
+
+
+ou seja, queremos 
+
+escrever algo como 
+
+
+'axios.get('/posts')'  
+
+
+ E ENTÃO 
+
+ FAZER 
+
+ COM QUE 
+
+ ESSE NEGÓCIO 
+
+
+
+ SEJA 
+
+ AUTOMATICAMENTE 
+
+ 'APPENDED' (apenso )
+
+
+
+
+
+
+ A UMA 'STARTING URL'.... (fixa)....
+
+
+
+
+
+ ------------------------------------------------
+
+
+
+
+
+
+ E, DE FATO, PODEMOS FAZER EXATAMENTE ISSO... ---------> 
+
+
+ lá em 
+
+ 'index.js' ---> INDEX.JS É UM BOM LUGAR 
+
+ PARA DEFINIR 
+
+
+ ESSES 
+
+ 'DEFAULTS GLOBAIS'
+  
+
+
+  pq 
+
+
+  ___ É O NEGÓCIO QUE ABRIGA TODO O NOSSO CÓDIGO, QUE ABRIGA TODAS 
+
+  AS PARTES/COMPONENTS DO NOSSO PROJETO... -----------> 
+
+
+
+
+
+  LÁ PODEMOS 
+
+  simplesmente 
+
+  escrever 
+
+
+
+  'axios.defaults'.... ----------> 
+
+
+
+
+
+
+  esse '.defaults' SIGNIFICA QUE ___TODOS OS REQUESTS__ QUE 
+
+  ESTÃO SENDO ENVIADOS SERÃO AFETADOS 
+
+
+  por ele... -----> 
+
+
+
+
+depois de escrever 
+
+
+'axios.defaults',
+
+
+
+
+devemos 
+
+escrever 
+
+'.baseUrl' ------------> ISSO VAI TE DEIXAR DEFINIR UMA __URL BASE ___ PARA TODOS OS 
+
+
+
+
+HTTP REQUESTS ___ QUE SEU APLICATIVO FORMULARÁ... 
+
+
+
+
+
+
+
+---> aí você vai escrever 
+
+
+
+'axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com' --------> 
+
+
+
+
+AGORA, ISSO FEITO,
+
+
+ESSA MUDANÇA FARÁ COM QUE TODOS 
+
+OS HTTP REQUESTS FEITOS COM 'AXIOS' 
+
+COMPARTILHEM/USEM 
+
+
+ESSA URL AÍ COMO 'BASE'...
+
+
+todos 
+
+os 
+
+http requests 
+
+serão 
+
+
+'urlbase' + 'stringDoPathQueVocêQuerEspecificamenteNaqueleRequest'....
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> esse '.baseURL', btw DEVE TER O 'URL' EM MAIÚSCULO...
+
+
+
+
+
+
+
+
+
+
+
+ISSO FEITO,
+
+PODEMOS SIMPLESMENTE 
+
+REFORMULAR
+ 
+
+ NOSSO 
+
+ 'axios.get' 
+
+ lá em 
+
+ 'Blog.js'
+
+
+
+ PARA 
+
+ A FORMA 
+
+
+
+ 'axios.get('/posts'),
+
+
+
+ e assim POR DIANTE... (podemos fazer isso pq 
+ 
+ 
+ TODOS OS HTTP REQUESTS FORMULADOS POR NOSSO BROWSER 
+ 
+ POSSUEM 
+ 
+ 
+ ESSA 'BASEURL' em comum...)
+
+
+
+ ------------------------------------
+
+
+
+ ALTERAMOS NOSSO CÓDIGO PARA USAR ESSA FEATURE... --> e tudo funciona como antes, 
+
+
+ mas agora com essa feature... 
+
+
+
+
+
+
+
+
+
+ ----> PROFESSOR APONTA QUE 
+
+ NÓS NÃO ESTAMOS LIMITADOS 
+
+ A APENAS 
+
+ DEFINIR UMA BASEURL 
+
+ no nosso projeto, 
+
+ por meio 
+
+ do 
+
+
+ 'axios.defaults'... ----> não,
+
+
+ vocÊ 
+
+ também 
+ pode escrever 
+
+ 'axios.defaults.headers' -----------> 
+
+
+ ISSO TE DEIXA 
+
+
+
+
+ DEFINIR ALGUNS MÉTODOS... --> UM MÉTODO MUITO UTILIZADO É 
+
+
+
+ 'headers.common[]'... -----------> ISSO 
+
+
+
+ TE DEIXA DEFINIR UM 
+
+
+ ____ COMMON HEADER__ ENTRE TODOS OS 
+
+ HTTP REQUESTS 
+
+
+
+ DE SEU BROWSERSIDE...
+
+
+
+
+
+
+ 'common headers '---> SÃO HEADERS QUE SÃO ADICIONADOS A TODOS OS TIPOS DE REQUEST DO SEU BROWSERSIDE...
+
+
+
+
+
+
+
+ aqui, por exemplo,
+
+ professor 
+
+ escreve 
+
+
+
+
+
+ axios.defaults.headers.common['Authorization'] = 
+
+
+
+
+
+
+ ISSO VAI DEFINIR 
+
+ UM 
+
+
+ COMMON HEADER 
+
+ DE 
+
+ 'Authorization' 
+
+ EQUIVALENTE A AQUELE VALOR DEFINIDO DEPOIS DO '='...
+
+
+
+
+
+SE VOCÊ 
+
+
+TIVESSE/TIVER UMA 
+
+'AUTH TOKEN',
+
+OU QUALQUER OUTRA COISA,
+
+VOCê 
+
+PODE 
+
+DEFINI-LA nesse lugar...
+
+
+ex:
+
+
+
+
+ axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN';
+
+
+
+
+ ------------------------------------
+
+
+
+
+ALÉM DISSO, 
+
+
+VOCê NÃO PRECISA 
+
+OBRIGATORIAMENTE 
+
+DEFINIR 
+
+
+'COMMON HEADERS'... -------> você pode 
+
+
+DEFINIR UM HEADER __ PARA 1 __ TIPO ESPECÍFICO 
+
+DE HTTP REQUEST -------> 
+
+
+COMO 
+
+'get'/'post'/'put'/'patch'....
+
+
+
+
+A SINTAXE É ESTA:
+
+
+
+
+
+axios.defaults.headers.post[].....
+
+
+
+
+
+
+
+
+UM EXEMPLO DISSO 
+
+SERIA 
+
+
+
+'axios.defaults.headers.post['Content-Type'] = 'application/json' ------------> POR MEIO DESTE CÓDIGO, ESTARÍAMOS DEFININDO UM HEADER EM POST QUE DEFINE O 'Content-Type' do request como sendo 'application/json' (QUE JÁ É O USADO POR DEFAULT, POR ISSO NEM PRECISAMOS ESCREVER ESSA DECLARAÇÃO).
+
+
+
+
+
+
+
+
+
+--> se CHECARMOS 
+
+O CONSOLE,
+
+VEREMOS 
+
+
+
+NOSSO 
+
+
+
+REQUEST PRINTADO ALI,
+
+E ALI PODEMOS 
+
+VER 
+
+UM 
+
+
+HEADER DE 'AUTHORIZATION: AUTH TOKEN' 
+
+
+em todos os nossos requests (tanto de get como de post)...  ----> isso mostra 
+
+
+a flexbilidade e potencial de 
+
+axios, 
+
+que pode nos 
+
+ajudar 
+
+
+a 
+
+customizar os headers de nossos 
+
+requests...
+
+
+
+
+---------------------------------------------------

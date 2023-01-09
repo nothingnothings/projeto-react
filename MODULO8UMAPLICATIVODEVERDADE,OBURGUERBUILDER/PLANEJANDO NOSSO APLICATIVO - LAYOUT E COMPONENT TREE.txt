@@ -1,0 +1,1131 @@
+
+
+
+--> É AGORA QUE DEVEMOS COMEÇAR A PLANEJAR NOSSA 
+
+'COMPONENT TREE'...
+
+
+
+
+
+
+
+
+--->  PARA ISSO, PRECISAMOS DEFINIR ___o QUE NOSSO APLICATIVO REALMENTE É__... e o que 
+
+ele deverá
+ 
+
+ ser capaz de fazer...
+
+
+
+
+
+
+
+
+
+
+ --> nós, nesse nosso projeto, 
+
+ estamos construindo 
+
+
+
+ O BURGUER BUILDER ---------> 
+
+
+
+
+
+ O OBJETIVO É QUE 
+
+
+ USUÁRIOS SEJAM CAPAZES DE 
+
+
+
+ ADICIONAR INGREDIENTES E CONSTRUIR UM HAMBURGUER A PARTIR DELES...
+
+
+
+
+
+ --------------------------------
+
+
+
+ PODEMOS COMEÇAR PENSANDO NA UI... ------> O look da UI é algo que nós geralmente recebemos do NOSSO DESIGNER.... ou talvez você já tenha criado....
+
+
+
+
+ ------------------------- 
+
+
+ OK...
+
+ mas na nossa ui 
+
+
+ NÓS PROVAVELMENTE 
+
+
+ TEREMOS 
+
+
+ UM 
+
+
+
+
+ __
+
+
+ HEADER
+
+
+
+ ___
+
+
+ NO topo...
+
+
+ (ver arquivo PAINT para ver como será nosso app...) ------> 
+
+
+ vamos ter:
+
+
+
+ LOGO       BUILDER     ORDERS  -----> tudo isso no HEADER.
+
+
+
+ --------------------------------------
+
+
+
+
+AS CORES NÓS NÃO VAMOS ADICIONAR AGORA, 
+
+
+
+VAMOS ADICIONAR AO LONGO DO PROGRAMMING DO NOSSO APLICATIVo...
+
+
+
+
+
+--> CERTO,
+ 
+ MAS O QUE VAI NA NOSSA 'STARTING PAGE'...? ---> digamos 
+
+
+
+ QUE 
+
+
+ ENTRAMOS NA PARTE DO 
+
+ 'BUILDER'___... ----> NESSE 
+
+
+ 'BUILDER',
+
+
+ NÓS TEREMOS, ABAIXO DO HEADER,
+
+
+ A ÁREA EM QUE 
+
+ REALMENTE TEREMOS O NOSSO 'BURGER'... ----> a área em que o 
+
+ BURGUER
+
+ 
+
+ É construído... -----> burger com os diferentes ingredientes 
+
+ QUE VÃO SENDO ADICIONADOS DINAMICAMENTE... ADICIONADOS DINAMICAMENTE ENQUANTO VAMOS 
+
+
+ OS ADICIONANDO... -----> para isso, precisamos de ALGUNS ___cONTROLES____ 
+
+
+ NESSA PÁGINA... --> esses controles podem ficar em UMA _CAIXA__/box 
+
+ __EMBAIXO DO BURGUER____ ... -------> 
+
+
+ VAmos ter 'meat', 'cheese', 'bacon', etc etc...
+
+
+
+ 
+------> E AÍ VAMOS TER UM BOTÃO AO LADO DESSES INGREDIENTES (+ e -),
+
+
+ESSES BOTÕES VAO DETERMINAR COMO NÓS VAMOS CONSTRUIR NOSSO BURGUER...
+
+
+
+EMBAIXO DE TUDO DISSO,
+
+AO FINAL,
+
+PROVAVELMENTE DEVEREMOS TER UM 
+
+
+BOTÃO DE 'CHECKOUT'.........
+
+
+
+
+
+
+---> certo,
+
+
+parece SIMPLES, mas não é... ---------------->
+
+
+
+
+
+
+
+
+
+
+---> por fim, também vamos querer ver UM __CONTADOR ___DE PREÇO DEBAIXO DO HAMBURGUER, ou algo do gênero... ---> esse preço vai variar de acordo com os ingredientes que o cliente coloca...
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+ESSE É O LAYOUT BÁSICO.  --> é um layout simples, mas que usa 
+
+um monte de conceitos e react components diferentes....
+
+
+
+
+
+
+---> POR EXEMPLO,
+
+
+O QUE 
+
+
+__PROVAVELMENTE__ TEREMOS, POR TRÁS DE TUDO, 
+
+É UM 
+
+
+
+'ROOT LAYOUT.'... --------> 
+
+
+
+
+
+
+NO 'ROOT LAYOUT',
+
+
+NÓS 
+
+
+
+VAMOS 
+
+
+TER OS COMPONENTS...
+
+
+-----------------
+
+
+
+
+nossa tree VAI TER, inicialmente,
+
+
+
+UM ___component 'APP'-____ --> que será class-based, supostamente... -> nesse 'app', 
+
+
+
+nós desenhamos/DEFINIMOS UM 
+
+
+'layout base/fundação' 
+
+PARA 
+
+ESSE APLICATIVO... ------> 
+
+
+
+esse 
+
+
+aplicativo será composto basicamente 
+
+
+
+POR 
+
+
+
+1) O HEADER 
+
+
+
+2) A PARTE __EMBAIXO DO HEADER___...
+
+
+----------------------
+
+
+
+
+
+
+
+----> nesses nossos components,
+
+
+nós vamos 
+
+
+ter um 
+
+
+component 'APP' 
+
+
+e aí 
+
+
+
+um 
+
+
+component 'layout'... --> estarão CONECTADOS...
+
+
+
+
+
+
+
+--> professor também ADMITE QUE __PODERÍAMOS ___ DEFINIR ESSE LAYOUT NO COMPONENT 'APP',
+
+e não em um component à parte...  ----> mas 
+
+
+ele prefere 
+
+
+fazer um 
+
+component À parte; ---->  nesse 
+
+
+
+component 
+
+'layout' 
+
+PROVAVELMENTE VAMOS NESTEAR OUTROS FUNCTIONAL COMPONENTS...
+
+
+
+
+
+-----> NÓS PROVAVELMENTE TEREMOS UM COMPONENT  RESPONSÁVEL 
+
+
+PELA 'NAVIGATION',
+ 
+ E OUTRO 
+
+
+ PELO 'CONTENT'...
+
+
+
+
+
+---> NAVIGATION ---> POR SUA VEZ, VAI SER DIVIDIDA EM UMA 'TOOLBAR' E UMA 'SIDEBAR' (TAMBÉM CHAMADO 'SIDEDRAWER')... --> pq 
+
+
+NÓS VAMOS QUERER CRIAR UM APLICATIVO __rESPONSIVE__, por isso vamos querer 
+
+objetivar TANTO 
+
+DISPOSITIVOS MÓVEIS COMO 
+
+TAMBÉM DESKTOP... ---------->  
+
+
+
+
+
+---> TOOLBAR ---> SERÁ ___SEMPRE___ MOSTRADA (displayed), e OS ITEMS 
+
+QUE VAMOS MOSTRAR NELA VÃO __vARIAR__ EM TAMANHO E LOCALIZAÇÃO __ DEPENDENDO DO TAMANHO DO VIEWPORT (ou seja, do aparelho e a resolução do aparelho que está vendo nossa página...)
+
+
+
+--> sidedrawer --> será o SIDE-MENU QUE PODEREMOS
+ 
+
+ABRIR QUANDO ESTAMOS EM UM MOBILE DEVICE....  ----> para esse 'sideDrawer', provavelmente VAMOS PRECISAR DE UM BACKDROP, TAMBÉM... --> esse BACKDROP será provavelmente SOBRE ___ o ROOT LEVEL DO NOSSO APLICATIVO, e vamos ter que provavelmente CRIAR UM MODAL QUE VAI FICAR SOBRE ESSE BACKDROP...
+
+
+
+
+
+-> DEPOIS DISSO, VAMOS QUERER ALGUMA COISA QUE PODEREMOS '''DYNAMICALLY WRAP'''' -----> ou seja,
+
+um 'WRAP' que fará nossa página CARREGAR COM OS COMPONENTS QUE QUEREMOS MOSTRAR, SEMPRE 
+
+QUE UM OUTRO 'PATH'/página é escolhido nO NOSSO APP... ---->  vamos fazer isso 
+
+por meio do 
+
+ROUTING__... --------> teremos a página 'burger builder', e a página 'checkout', que serão distintas... ----> MAS A QUESTÃO ___É QUE ___ TODAS ESSAS PÁGINAS VÃO COMPARTILHAR O MESMO __lAYOUT__...
+-----> isso significa que vamos PROVAVELMENTE USAR '{props.children}' como um 'COMPONENT' NA NOSSA 'COMPONENT TREE' ---> pq esse component que vai fazer display de 'props.children' VAI SER O NOSSO WRAPPER,
+
+VAI SER A COISA QUE VAI NOS DEIXAR PASSAR DINAMICAMENTE OS COMPONNETS, DE ACORDO COM A PÁGINA QUE O USUÁRIO 
+
+VAI QUERER ENTRAR...
+
+
+
+
+
+Ou seja, temos:
+
+
+
+APP -
+
+^
+
+LAYOUT -
+
+^             ^                ^                   ^
+
+Toolbar  ||  SideDrawer  ||   Backdrop  ||  {props.children}
+
+
+
+
+
+
+
+
+
+
+{props.children} -------> É/SERÁ UM ___COMPONENT___ DINâMICO___ QUE VAMOS 
+
+NESTEAR DENTRO DO NOSSO 'layout' component...
+
+
+
+
+
+
+
+
+
+OU SEJA,
+
+TEREMOS 
+
+
+ESSES 
+
+
+4 COMPONENTS, Toolbar  ||  SideDrawer  ||   Backdrop  ||  {props.children}, 
+
+
+
+DENTRO DO COMPONENT 'LAYOUT'...
+
+
+
+---------------------------------------------
+
+
+
+
+
+CERTO... 
+
+
+
+NOSSO APLICATIVO ESTÁ TOMANDO FORMA... ---> mas o que 
+
+
+devemos 
+
+
+ter 
+
+
+EMBAIXO DO 
+
+
+'Toolbar'?   --------> NO 'TOOLBAR', 
+
+nós 
+
+__PROVAVELMENTE___VAMOS 
+
+
+QUERER 
+
+
+'WRITE THE CODE, ALREADY'... ----> vamos querer 
+
+ESCREVER 
+
+
+
+O CÓDIGO DE QUE REALMENTE VAMOS PRECISAR  -----> ESCREVEREMOS 
+
+
+
+O CÓDIGO 
+
+HTML
+ 
+QUE REALMENTE 
+
+
+VAMOS USAR 
+
+NA NOSSA TOOLBAR... ---------> MAS 
+
+
+
+A TOOLBAR 
+
+
+___TAMBÉM___ PODE/PODERÁ CONTER __ ALGUNS 
+
+COMPONENTS __ QUE 
+
+VAMOS ADICIONAR___... ------> por exemplo,
+
+
+
+nós provavelmente VAMOS QUERER UM BOTÃO 
+
+na 'ToolBar' 
+
+QUE 
+
+FAÇA 
+
+__tOGGLE___ DAQUELE SIDEDRAWER... ------> mas vamos 
+
+criar 
+
+
+
+essa '
+
+TOOLBAR'
+ 
+
+ '''ON THE FLY''', conforme vamos codando,
+
+
+ e eventualmente 
+
+
+ veremos 
+
+
+ como SERÁ SPLITTADO 
+
+ O NOSSO CÓDIGO 
+
+
+ E ESSA TOOLBAR... -----> mas 
+
+
+ as coisas que 
+
+ devemos ter em mente, quanto À ela, 
+
+
+
+
+são
+
+
+
+ 1) _BOTÃO__ DE TOGGLE DO SIDE-DRAWER 
+
+
+ 2) LOGO QUE VAMOS QUERER FAZER DISPLAY 
+
+
+
+
+ 3) NOSSO 'NAVIGATION ITEMS'........ --------> NA TOOLBAR VAMOS PRECISAR DISSO. E os efeitos dos 'NAVIGATION items' VÃO SE APLICAR A TODO O NOSSO CÓDIGO, E NÃO SÓ À 'toolbar'... 
+
+
+
+
+
+
+
+
+
+
+ --> SE FORMOS CAPAZES DE 
+
+ __OUTSOURCEAR___ NAVIGATION ITEMS__ EM SEU 
+
+ PRÓPRIO COMPONENT, nós seremos CAPAZES 
+
+ __DE COMPARTILHAR ___ ESSES 'NAVIGATION ITEMS' ___ ao longo 
+
+ de outras partes de nosso código. (across the toolbar AND the SIDEBAR/DRAWER...) --->  ISSO PQ NÓS VAMOS PRECISAR DOS MESMOS 'NAVIGATION ITEMS' nesses 2 lugares, nós SÓ VAMOS TER QUE FAZER DISPLAY DELES DE FORMA DIFERENTE, de acordo com o dispositivo/resolução do usuário (mobile e desktop). ----> viewports.
+
+
+
+
+ ---------------------------------------------
+
+
+
+
+
+ NO 'SIDEDRAWER',
+
+
+
+
+
+NÓS PROVAVELMENTE VAMOS TAMBÉM QUERER USAR __/FAZER DISPLAY DE 
+
+UM 
+
+___lOGO____  (do nosso logo)... ---> pq, de novo,
+
+
+
+O 'LOGO' É ALGO QUE VOCÊ VAI QUERER 
+
+MOSTRAR TANTO NO CELULAR QUANTO NO DESKTOP....
+
+
+
+
+
+
+OBS:: O TOOLBAR E O SIDE DRAWER VAO PRECISAR 
+
+DESSAS 
+
+3 COISAS/VAO SE CONECTAR A ESSAS 
+
+3 COISAS,
+ 
+
+ AO 
+
+ 'Drawer Toggle',
+
+
+ ao 'Logo',
+
+
+ e 
+
+
+ aos 'navigation items'...
+
+
+
+
+ -----------------------------------------------
+
+
+
+
+OK, MAS E O 'BACKDROP' 
+
+e o 
+
+
+
+'Props.children'?
+
+
+
+
+
+
+
+
+-------> 'BACKDROP' -----> vai BASICAMENTE SEGURAR ALGUM CÓDIGO HTML.... e _NÃO TERÁ__ NESTED CHILDREN__...
+
+
+
+
+
+
+
+
+
+---> ISSO FAZ COM QUE APENAS SOBRE O 
+
+'props.children' ------> e isso é, É CLARO, ___MUITO IMPORTANTE____...
+
+
+
+
+--> dentro 
+
+
+desse ''''component''''
+
+
+
+'props.children' 
+
+
+NÓS 
+
+
+VAMOS TER:
+
+
+
+
+1) DIFFERENT PAGES  (mas por enquanto vamos criar/escrever apenas a página 'burger builder'.)
+
+
+
+
+
+
+X) BURGUER BUILDER ---> OK, MAS 
+
+
+COMO 
+
+ESSA PÁGINA 
+
+'BURGER 
+
+
+BUILDER '
+
+
+DEVERÁ 
+
+SER? --------------> O BURGUER BUILDER TEM QUE 
+
+SEGUIR 
+
+
+
+NOSSO LAYOUT/ESQUEMA INICIAL ---> deverá 
+
+
+ter BOTÕES 
+
+
+
+PELOS QUAIS ADICIONAREMOS 
+
+'Meat' 'Salad' e 'Cheese'...
+
+ 
+
+
+
+
+ --------------> TAMBÉM TERÁ O 
+
+ 'CHECKOUT BUTTON',
+
+ e O __PREVIEW___ DO BURGER_ (importante)....
+
+
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+
+
+A PÁGINA 
+
+
+'BURGER BUILDER '
+
+
+__vAI PRECISAR ___dE UM PUNHADO __ 
+
+DE COMPONENTS...
+
+
+
+
+
+
+
+
+----> VAMOS PRECISAR NOSSOS 'BUILD CONTROLS' (com todos os ingredient buttons)
+
+
+
+----> vamos precisar do __BURGER COMPONENT__, QUE NOS DARÁ __UM __ PREVIEW__ DO NOSSO BURGER__... 
+
+
+
+
+--> vamos precisar 
+
+
+de UM __MODAL___ COMPONENT,
+
+que nos 
+
+
+DARÁ ___ UM 'CHECKOUT PREVIEW', um MODAL que vai nos dar o SUMÁRIO DO hamburguer 
+
+e um BOTÃO 
+
+que diz 'procceed to checkout', ou algo assim....
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+ESSES SÃO OS COMPONENTS GERAIS.... ------> DE NOVO, 
+
+
+NÓS TALVEZ ENCONTREMOS 
+
+
+UM 'FINER SPLIT'/ ALGUNS SUBCOMPONENTS QUE 
+
+
+CRIAREMOS 
+
+QUANDO 
+
+REALMENTE 
+
+
+
+COMEÇARMOS A DIGITAR 
+
+
+NOSSO CÓDIGO....
+
+
+
+------------------------------
+
+
+
+
+
+
+-> CERTO, 
+
+MAS 
+
+
+OS 
+
+'BUILD CONTROLS',
+
+
+
+como deve ESSE COMPONENT SER ESTRUTURADO? -----> PROFESSOR 
+
+EXPLICA 
+
+QUE 
+
+
+ESSE COMPONENT 
+
+
+SERÁ __PROVAVELMENTE ___UMA LISTA __ DE 
+
+
+'BUILD-CONTROL' COMPONENTS, COMPONENTS __INDIVIDUAIS__...
+
+
+(E, NO FINAL DESSES 'BUILD CONTROLS', PROVAVELMENTE TEREMOS UM BOTÃO DE 'ORDER BUTTON', botão para dar CHECKOUT.)
+
+
+EX:
+
+
+build controls: ---------
+                        |
+|                       |
+ -build control         |
+                        |
+                        |
+| - build control       |
+
+                        |
+| - build control.      |
+                        |
+                        |
+Order BUtton....   < -- 
+
+
+
+
+
+(UMA LISTA DE 'BUILD CONTROL' ,cada um com UMA FUNÇÃO DIFERENTE)....
+
+
+
+
+
+CERTO... 
+
+
+
+
+------------------------------------------
+
+
+
+
+ORDER BUTTON E 'BUILD CONTROL' COMPONENTS --> VÃO 
+
+
+
+PROVAVELMENTE CONTER ALGUM HTML (e por isso, o professor quer dizer 
+
+CÓDIGO JSX..)
+
+
+
+-------------------------------------
+
+
+
+
+
+CERTO,
+
+
+E COMO O 
+
+
+'BURGUER PREVIEW' 
+
+
+deverá ser estruturado? -----> basicamente
+
+
+ELE DEVERÁ 
+
+
+___sEGURAR__ UM PUNHADO/LISTA 
+
+
+
+DE 
+
+COMPONENTS 
+
+'Ingredient' ---> UMA LISTA __DE INGREDIENTS__ QUE DEVEMOS/DEVEREMOS 
+
+
+'MANAGEAR' DINAMICAMENTE __ COM OS 'BUILD CONTROLS'___.... -----> E CADA 
+
+
+INGREDIENTE SERÁ 
+
+BASICAMENTE 
+
+UMA __DIV__, UMA 
+
+
+__DIV EM QUE MOSTRAMOS UMA IMAGEM DE UM INGREDIENTE, OU EM QUE MOSTRAMOS UMA __REPRESENTAÇÃO GRÁFICA 
+
+_ DO INGREDIENTE___... (com o CSS...)
+
+
+-------------------------------------
+
+
+
+
+E O MODAL, 
+
+FINALMENTe,
+
+
+
+
+ELE PROVAVELMENTE 
+
+SERÁ 
+
+SÓ UM WRAPPER COMPONENT 
+
+QUE 
+
+RECEBERÁ 
+
+'props.children'
+
+
+__PARA ___ 'WRAP ITSELF' EM VOLTA DE QUALQUER 
+
+
+CONTEÚDO QUE SEJA RENDERIZADO EM UM MODAL ---> por meio desse código, 
+
+
+teremos um MODAL QUE PODE/PODERIa SER USADO 
+
+
+
+__PARA 'ALL KINDS OF STUFF' ---> para 
+
+o display DE UMA MENSAGEM DE ERRO, CONFIRMAÇÃO, OU UM 
+
+
+ERROR SUMMARY...
+
+
+
+
+
+
+---> ESSES PROVAVELMENTE NÃO SÃO 
+
+
+TODOS OS COMPONENTS que vamos adicionar,
+
+MAS ESSE É UM BOM ___OVERVIEW___  DA NOSSA 
+
+
+COMPONENT 
+
+TREE... ---> PODE-SE PERCEBER QUE 
+
+__TUDO COMEÇA __ COM 1 ÚNICO COMPONENT 
+
+
+'App', 
+
+lá no topo.... --> e aí 
+
+NÓS 
+
+SPLITTAMOS 
+
+ESSE COMPONENT 'PARENT',
+
+
+tendo 
+
+
+UM COMPONENT 'LAYOUT' (que PODERÁ SER PARTE DAQUELE COMPONENTE 'ROOT' de nome 'App')....
+
+
+
+
+
+
+----> E AÍ, NESSE 'LAYOUT', TEMOS TODOS OS DIFERENTES 'BRANCHES'...
+
+
+
+
+
+
+----->BEM, AQUI,
+
+
+nesse lugar 
+
+
+em que 
+
+temos 
+
+o 
+
+'burger builder' (embaixo de 'props.children'),
+
+
+ESSE LUGAR AÍ 
+
+SERÁ ONDE __TEREMOS__ 'KIND OF A PAGE'... ------> ISSO SIGNIFICA 
+
+
+QUE 
+
+
+
+
+___ELE É UM 'NORMAL COMPONENT', 
+
+claro,
+
+
+MAS ISSO SIGNIFICA QUE NÓS 
+
+
+___PROVAVELMENTE VAMOS ADICIONAR ___ OUTRAS 'PÁGINAS-COMPONENTS' __ AO LONGO DESTE CURSO... ---> vamos 
+
+
+ver isso quando começarmos A ESCREVER A PÁGINA 
+
+
+
+EM QUE 
+
+VEMOS TODAS AS 'PAST ORDERS' 
+
+e coisas como isso... -------> 
+
+
+
+NA PRÓXIMA ETAPA,
+
+DEVEMOS 
+
+
+VERIFICAR/CONSTATAR ___ O 'STATE' DO NOSSO APLICATIVO...

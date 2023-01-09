@@ -1,0 +1,2045 @@
+
+
+
+
+
+
+
+
+
+PARA OUTPUTTAR __FEEDBACK___ ao usuário, a partir 
+
+DO 
+
+RESULTADO 
+
+DE NOSSA 
+
+'VALIDATION' 
+
+
+
+
+em 
+
+
+
+'checkValidity',
+
+de código
+
+
+
+''''''''''''''''''
+
+
+checkValidity(value, rules) {
+
+  let isValid = true; 
+
+
+if (rules.required) { 
+isValid = value.trim() !== '' && isValid;
+}
+
+if (rules.minLength) {
+  isValid = value.length >= rules.minLength && isValid;
+}
+
+if (rules.maxLength) { 
+  isValid = value.length <= rules.maxLength && isValid;
+}
+
+
+
+return isValid;
+}
+
+
+'''''''''''''''''''
+
+
+,
+
+
+
+
+PROFESSOR 
+
+
+NOS 
+
+EXPLICA QUE 
+
+
+
+DEVEMOS 
+
+
+IR 
+
+
+ATÉ 
+
+
+
+O 
+
+COMPONENT 
+
+'INPUT'... (o 'Input.js')...
+
+
+
+
+
+
+
+
+CÓDIGO DE 'Input.js':
+
+
+
+
+
+
+
+
+
+const input = (props) => {
+  let inputElement = null;
+
+  switch (
+    props.elementType 
+  ) {
+    case 'input':
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+      break;
+    case 'textarea':
+      inputElement = (
+        <textarea onChange={props.changed}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+      break;
+    case 'select':
+      inputElement = (
+        <select onChange={props.changed}
+          className={InputStyle.InputElement}
+          value={props.value}
+        >
+          {props.elementConfig.options.map((option) => {
+            return (
+              <option onChange={props.changed}
+                key={option.value}
+                value={option.value}
+              >
+                {option.displayValue} 
+              </option>
+            );
+          })}
+        </select>
+      );
+      break;
+    default:
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+  }
+
+  return (
+    <div className={InputStyle.Input}>
+      <label>{props.label}</label>
+      {inputElement}
+    </div>
+  );
+};
+
+export default input;
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+
+AÍ, NESSE 
+
+INPUT COMPONENT,
+
+para 
+
+
+
+CADA 
+
+
+'INPUT ELEMENT'
+
+
+(
+como 
+
+
+'inputElement = <textarea />'....
+
+
+
+
+
+),
+
+
+O 
+
+
+
+PROFESSOR 
+
+
+EXPLICA QUE 
+
+
+ELE 
+
+VAI QUERER 
+
+
+__aDICIONAR UMA CLASSE ESPECIAL___ 
+
+ÀQUELE ELEMENTO/ELEMENTOS,
+
+
+caso 
+
+
+ELE 
+
+SEJA 
+
+
+_______INVÁLIDO____... (estilo dinâmico)....
+
+
+
+
+
+
+certo... e o código de um determinado component 'Input' retornado por 
+
+
+esse 'const input' 
+
+é 
+
+tipo isto:
+
+
+
+
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+
+
+
+
+
+------------------------------------
+
+
+
+
+E É EXATAMENTE ISSO AÍ,
+
+
+essa propriedade 
+
+
+
+
+'className={InputStyle.InputElement}',
+
+
+QUE 
+
+____DEVERÁ __ SE TORNAR MAIS DINÂMICA__... ---> para isso ,
+
+
+PROFESSOR 
+
+
+NOS 
+
+
+EXPLICA QUE 
+
+ELE 
+
+
+VAI CRIAR UMA 
+
+
+__NOVA CONSTANTE__ EM 
+
+'input',
+
+
+
+chamada de 
+
+
+
+
+'inputClasses'.... ----> essa constante vai segurar UM ____ARRAY___...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+const input = (props) => {
+  let inputElement = null;
+
+
+  const inputClasses = []; ///////////EIS O CÓDIGO EM QUESTÃO.
+
+  switch (
+    props.elementType 
+  ) {
+    case 'input':
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+      break;
+    case 'textarea':
+      inputElement = (
+        <textarea onChange={props.changed}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+      break;
+    case 'select':
+      inputElement = (
+        <select onChange={props.changed}
+          className={InputStyle.InputElement}
+          value={props.value}
+        >
+          {props.elementConfig.options.map((option) => {
+            return (
+              <option onChange={props.changed}
+                key={option.value}
+                value={option.value}
+              >
+                {option.displayValue} 
+              </option>
+            );
+          })}
+        </select>
+      );
+      break;
+    default:
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+  }
+
+  return (
+    <div className={InputStyle.Input}>
+      <label>{props.label}</label>
+      {inputElement}
+    </div>
+  );
+};
+
+export default input;
+
+
+
+
+
+
+
+
+-------------------------
+
+
+Certo....
+
+
+será 
+
+esse array aí... ---------> 
+
+
+
+
+
+E 
+
+
+
+A PRIMEIRA 
+
+CLASSE/elemento
+
+
+DESSE 
+
+ARRAY 
+
+SERÁ 
+
+JUSTAMENTE 
+
+
+
+'InputStyle.InputElement'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+const input = (props) => {
+  let inputElement = null;
+
+
+  const inputClasses = [InputStyle.InputElement]; ///////////EIS O CÓDIGO EM QUESTÃO.
+
+  switch (
+    props.elementType 
+  ) {
+    case 'input':
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+      break;
+    case 'textarea':
+      inputElement = (
+        <textarea onChange={props.changed}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+      break;
+    case 'select':
+      inputElement = (
+        <select onChange={props.changed}
+          className={InputStyle.InputElement}
+          value={props.value}
+        >
+          {props.elementConfig.options.map((option) => {
+            return (
+              <option onChange={props.changed}
+                key={option.value}
+                value={option.value}
+              >
+                {option.displayValue} 
+              </option>
+            );
+          })}
+        </select>
+      );
+      break;
+    default:
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+          className={InputStyle.InputElement}
+          value={props.value}
+        />
+      );
+  }
+
+  return (
+    <div className={InputStyle.Input}>
+      <label>{props.label}</label>
+      {inputElement}
+    </div>
+  );
+};
+
+export default input;
+
+
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+
+Professor SEMPRE VAI QUERER ANEXAR 
+
+ESSE 
+
+ESTILO 
+
+
+AÍ, o estilo 'InputElement', 
+
+AOS NOSSOS ELEMENTOS INPUT,
+
+POIS 
+
+ELE 
+
+É 
+
+O ESTILO 
+
+'''BASE''' DELES... ------------> 
+
+CERTO..... ---------> 
+
+
+
+MAS 
+
+JÁ 
+
+
+NOS 
+
+ELEMENTOS/OBJETOS INDIVIDUAIS dentro do SWITCH CASE(
+
+
+    como 
+
+
+
+    'input', 'textarea', etc etc....
+),
+
+
+
+
+O PROFESSOR VAI SUBSTITUIR 
+
+
+'InputStyle.InputElement'
+
+
+
+
+___POR AQUELE __ NOSSO RECÉM CRIADO ARRAY DE 
+
+nome 
+'inputClasses'
+
+
+EX:
+
+
+
+const input = (props) => {
+  let inputElement = null;
+
+
+  const inputClasses = [InputStyle.InputElement]; ///////////EIS O CÓDIGO EM QUESTÃO.
+
+  switch (
+    props.elementType 
+  ) {
+    case 'input':
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+          className={InputClasses} ////////EIS O CÓDIGO EM QUESTÃO
+          value={props.value}
+        />
+      );
+      break;
+    case 'textarea':
+      inputElement = (
+        <textarea onChange={props.changed}
+          {...props.elementConfig}
+          className={InputClasses} ////////EIS O CÓDIGO EM QUESTÃO
+          value={props.value}
+        />
+      );
+      break;
+    case 'select':
+      inputElement = (
+        <select onChange={props.changed}
+          className={InputClasses} ////////EIS O CÓDIGO EM QUESTÃO
+          value={props.value}
+        >
+          {props.elementConfig.options.map((option) => {
+            return (
+              <option onChange={props.changed}
+                key={option.value}
+                value={option.value}
+              >
+                {option.displayValue} 
+              </option>
+            );
+          })}
+        </select>
+      );
+      break;
+    default:
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+          className={InputClasses} ////////EIS O CÓDIGO EM QUESTÃO
+          value={props.value}
+        />
+      );
+  }
+
+  return (
+    <div className={InputStyle.Input}>
+      <label>{props.label}</label>
+      {inputElement}
+    </div>
+  );
+};
+
+export default input;
+
+---------------------------------------------------------
+
+
+
+
+
+
+
+
+Certo... feito essa escrita da REFERÊNCIA 
+
+daquele 
+
+array, 
+
+O PROFESSOR 
+
+ENTÃO 
+
+
+VAI CHAMAR 
+
+'.join()' 
+
+
+SOBRE ESSA REFERÊNCIA... ------> 
+
+
+vai usar 
+
+
+'.join()' 
+
+e então 
+
+
+PASSAR 
+
+UM 
+
+
+PARÂMETRO DE 'WHITE SPACE' (  ' ' ) A 
+
+
+ESSE MÉTODO 
+
+'.join()'....
+
+
+
+
+
+ex:
+
+
+
+
+
+className={InputClasses.join(' ')}
+
+
+
+
+
+
+---------------------------
+
+
+
+
+
+
+
+
+
+É EVIDENTE QUE ESSA SINTAXE/CÓDIGO AÍ SERÁ USADA __ PARA UNIR O ESTILO 
+
+
+'BASE' ao estilo 'AFETADO/FALSY/INVÁLIDO', o estilo que 
+
+aparece quando o usuário digitou algo errado/digitou caracteres insuficientes... -------> 
+
+
+
+
+isso pq 
+
+'join(' ')' 
+
+
+VAI ___cONCATENAR___ 
+
+
+TODAS 
+
+AS STRINGS/ELEMENTOS DENTRO DO ARRAY/STRING CLASSES DENTRO DO ARRAY __em uma string__ 
+
+em que 
+
+todos os valores/strings 
+
+
+ESTARÃO SEPARADOS por um WHITE SPACE, mas concatenados...
+
+
+
+
+
+
+
+
+--> certo, mas ainda falta passar/definir 
+
+a propriedade 
+
+'INVALID' 
+
+a esse 
+
+array 
+de 
+
+'inputClasses'; 
+
+ou seja,
+
+
+QUEREMOS A STRING __ QUE SERÁ __ USADA quando 
+
+o INPUT DO USUÁRIO FOR ___INVÁLIDO__... (e para isso provavelmente vamos precisar de mais uma classe Css em 
+'Input.module.css', 
+
+
+e mais 
+
+agluns 
+
+IF CHECKS EM INPUT, para checar se o INPUT REALMENTE FOI INVÁLIDO....)
+
+
+
+
+
+--------------------------------
+
+
+
+
+PROFESSOR COMEÇA, É CLARO, POR UM __IF CHECK__ DENTRO 
+
+
+DE 
+
+'Input.js'...  ---------> (e esse 'IF CHECK', é claro, ___SERÁ COMPLETAMENTE ___ INDEPENDENTE___ DO 
+
+
+TIPO DE 'Input field' QUE SERÁ  CRIADO A PARTIR DAQUELE 'switch statement' mais abaixo...) --------> 
+
+ISSO SIGNIFICA QUE 
+
+
+O PROFESSOR 
+
+SÓ VAI TER QUE 
+
+EXECUTAR/ESCREVER 
+
+ESSE IF CHECK 
+1 ÚNICA VEZ,
+
+
+bem ao início, antes do switch statement criador dos input fields.... ----------> 
+
+
+NESSE 
+
+IF CHECK,
+
+ele vai 
+
+checar 
+
+
+'POR ACASO PROPS.INVALID ESTÁ PRESENTE/É TRUTHY?' -----> SE SIM,
+
+
+
+vamos querer 
+
+rodar um código específico....
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+const input = (props) => {
+  let inputElement = null;
+
+
+  const inputClasses = [InputStyle.InputElement];
+
+
+
+    if (props.invalid) {
+        ... ////////EIS O CÓDIGO EM QUESTÃO.
+    }
+
+
+
+
+
+
+  switch (
+    props.elementType 
+  ) {
+    case 'input':
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+           className={inputClasses.join(' ')}
+          value={props.value}
+        />
+      );
+      break;
+    case 'textarea':
+      inputElement = (
+        <textarea onChange={props.changed}
+          {...props.elementConfig}
+           className={inputClasses.join(' ')}
+          value={props.value}
+        />
+      );
+      break;
+    case 'select':
+      inputElement = (
+        <select onChange={props.changed}
+           className={inputClasses.join(' ')}
+          value={props.value}
+        >
+          {props.elementConfig.options.map((option) => {
+            return (
+              <option onChange={props.changed}
+                key={option.value}
+                value={option.value}
+              >
+                {option.displayValue} 
+              </option>
+            );
+          })}
+        </select>
+      );
+      break;
+    default:
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+           className={inputClasses.join(' ')}
+          value={props.value}
+        />
+      );
+  }
+
+  return (
+    <div className={InputStyle.Input}>
+      <label>{props.label}</label>
+      {inputElement}
+    </div>
+  );
+};
+
+export default input;
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+--> se 'props.invalid' for true,
+
+O PROFESSOR VAI QUERER 
+
+QUE 
+
+___UMA NOVA CLASS__ SEJA PUSHADA (empurrada) 
+
+
+AO 
+
+ARRAY 
+
+de 
+
+'inputClasses'...
+
+
+
+
+--> A CLASSE QUE SERÁ EMPURRADA 
+
+SERÁ 
+
+A CLASSE 
+
+'InputStyle.Invalid'...
+
+
+
+ex:
+
+
+
+if (props.invalid) {
+    inputClasses.push('InputStyle.Invalid');
+}
+
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+const input = (props) => {
+  let inputElement = null;
+
+
+  const inputClasses = [InputStyle.InputElement];
+
+
+
+    if (props.invalid) {
+        inputClasses.push('InputStyle.Invalid'); ////////EIS O CÓDIGO EM QUESTÃO.
+    }
+
+
+
+
+
+
+  switch (
+    props.elementType 
+  ) {
+    case 'input':
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+           className={inputClasses.join(' ')}
+          value={props.value}
+        />
+      );
+      break;
+    case 'textarea':
+      inputElement = (
+        <textarea onChange={props.changed}
+          {...props.elementConfig}
+           className={inputClasses.join(' ')}
+          value={props.value}
+        />
+      );
+      break;
+    case 'select':
+      inputElement = (
+        <select onChange={props.changed}
+           className={inputClasses.join(' ')}
+          value={props.value}
+        >
+          {props.elementConfig.options.map((option) => {
+            return (
+              <option onChange={props.changed}
+                key={option.value}
+                value={option.value}
+              >
+                {option.displayValue} 
+              </option>
+            );
+          })}
+        </select>
+      );
+      break;
+    default:
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+           className={inputClasses.join(' ')}
+          value={props.value}
+        />
+      );
+  }
+
+  return (
+    <div className={InputStyle.Input}>
+      <label>{props.label}</label>
+      {inputElement}
+    </div>
+  );
+};
+
+export default input;
+
+
+
+----------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+Mas é evidente que essa class PRECISA __SER DEFINIDA __ NO NOSSO ARQUIVO 
+
+
+CSS,
+
+naquele arquivo 
+
+'Input.module.css'...
+
+
+
+
+
+-------> E NÓS TAMBÉM PRECISAMOS DE UM 
+
+PROP chamado de 
+
+'invalid', que deverá SER PASSADO A ESSE ELEMENTO/COMPONENT 'Input' (passado por meio de seu call....) --> 
+
+
+é 
+
+
+o true/false 
+
+desse 
+
+
+prop, do prop 'invalid',
+
+
+que 
+
+determinará
+ 
+
+ SE 
+
+ O ESTILO 
+
+
+ DE 
+
+
+ 'InputStyle.Invalid' acaba sendo aplicado nos nossos components input fields...
+
+
+
+
+ -----------------------
+
+
+ A primeira coisa que o professor 
+
+ faz 
+ é ir 
+
+
+ até o arquivo 
+
+ css 
+
+ e então 
+
+ DEFINIR 
+
+
+
+
+
+
+ UM estilo/classe 
+
+
+
+'.Invalid'... ------->
+
+
+
+vai 
+
+escrever 
+
+
+
+.Invalid {
+    border: 1px solid red;
+    background-color: #FDA49A
+}
+
+
+
+
+
+
+
+-------------------
+
+
+ESSE SERÁ NOSSO STYLE DINÂMICO, O Style de 
+
+'Invalid' para os input elements... 
+
+
+-------------
+
+
+
+
+OBS: SE VOCÊ DÁ HIGHLIGHT EM UM HEX CODE 
+
+DE UMA 
+
+COR 
+
+
+EM 
+
+CÓDIGO 
+
+css,
+
+
+Se você apertar 'ALT', você PODE FAZER AQUILO QUE O PROFESSOR SEMPRE FAZ,
+
+AQUELE NEGÓCIO DE PODER __eSCOLHER __ UMA COR EM UMA PALETA DE CORES, E ENTÃO 
+
+
+TER O HEX CODE DAQUELA COR 
+
+
+TRANSCRITO no lugar que você deu highlight...
+
+
+
+
+----------------------------------
+
+
+Certo, mas para ver 
+
+
+esse estilo aplicado no nosso código, professor 
+
+explica que 
+
+devemos VOLTAR AO CONTAINER 
+
+
+DE 
+
+'ContactData' 
+e então 
+
+DEVEMOS 
+
+
+
+PASSAR AQUELA PROPRIEDADE 
+
+'invalid' 
+
+AO 
+
+
+
+COMPONENT 
+
+'Input',
+
+
+que 
+
+
+tem um código de:
+
+
+
+     return (
+                          <Input 
+                          changed={(event) => {this.inputChangedHandler(event, formElement.id)}}
+                          key={formElement.id}
+                          elementType={formElement.config.elementType} 
+                          value={formElement.value} 
+                          elementConfig={formElement.config.elementConfig} />
+     )
+
+
+
+---------------------------
+
+
+
+Certo, 
+
+e nós precisamos passar 
+
+ALGUMA DATA a 
+
+esse 
+prop de 
+
+
+'invalid' ------------>
+
+
+
+
+
+
+ex:
+
+
+
+
+   return (
+                          <Input 
+                          changed={(event) => {this.inputChangedHandler(event, formElement.id)}}
+                          key={formElement.id}
+                          elementType={formElement.config.elementType} 
+                          value={formElement.value} 
+                          invalid={} ///////eis o código em questão.
+                          elementConfig={formElement.config.elementConfig} />
+     )
+
+
+
+
+---------------------------------
+
+
+
+O CÓDIGO/REFERENCIA QUE ELE VAI PASSAR 
+
+É BEM CONFUSO... ------->
+
+
+ele vai 
+
+escrever 
+
+
+'invalid={!formElement.config.valid}' --------------> 
+
+
+
+
+
+
+
+
+LEMBRANDO: O STATUS/VALOR INICIAL DE 
+
+'valid', em todos nossos objetos/components 'input', 
+
+é 
+
+de 
+
+FALSE...  --------> e se você escrever '!formElement.config.valid', isso vai RETORNAR __TRUE__/TRUTHY__... -----> 
+
+
+mas, de fato, é isso que queremos,
+
+pois 
+
+
+'invalid={true}' 
+
+VAI RESULTAR NAQUELE 
+
+IF CHECK 
+
+de 
+
+
+
+
+''''''''''''''''''
+ if (props.invalid) {
+        inputClasses.push('InputStyle.Invalid'); 
+ }
+
+''''''''''''''''
+
+SENDO SATISFEITO,
+
+E FAZENDO COM QUE O ESTILO 
+
+'InputStyle.Invalid'
+
+REALMENTE SEJA EMPURRADO 
+
+ÀQUELE ARRAY QUE VAI DEFINIR O ESTILO DOS NOSSOS ELEMENTOS 'INPUT'... (ufa). 
+
+
+
+
+
+
+
+------> Certo.... salvamos tudo isso, e voltamos ao APP... ---------> agora vamos 
+
+
+perceber 
+
+QUE 
+
+TODOS 
+
+OS INPUT FIELDS ESTARÃO ___VERMELHOS___ (mostrando que estão '''inválidos'''.... )
+
+
+
+Eles só ficarão 'Válidos' 
+
+
+SE escrevermos 
+
+
+COISAS DENTRO 
+
+
+DOS INPUT FIELDS.... (e o input field do ZIPCODE só vai ficar CERTINHO/não 'inválido' SE NÓS 
+
+DIGITARMOS EXATAMENTE 5 NÚMEROS, nem mais nem menos do que isso, devido 
+
+a 
+
+'rule' que definimos de 'minLength' e 'maxLength'..) ------> ISSO NOS MOSTRA QUE 
+
+
+
+
+
+
+
+__aGORA ESTAMOS RETORNANDO INFORMAÇÕES CORRETAS __ ACERCA DA 'VALIDITY' __ 
+
+do 
+
+input field do usuário... ------------>
+
+
+
+
+
+
+
+
+
+
+ENTRETANTO, É ÓBVIO QUE COMEÇAR COM UMA FORM INTEIRAMENTE VERMELHA __ É ALGO PÉSSIMO__,
+ 
+
+ ALGO NADA USER FRIENDLY... -----> outro problema é que 
+
+
+ NOSSO 
+
+ DROPDOWN, ali embaixo,
+
+
+
+ ESTÁ SEMPRE 
+
+
+
+ __VERMELHO__, mesmo que 
+
+
+ o seu input não seja 
+
+
+ tecnicamente inválido (pq aquele input ali sempre vai ficar 'fastest', no começo, o que 
+ 
+ tecnicamente já é um input válido....)
+
+
+
+
+ --------------------------------------
+
+
+
+ PRECISAMOS, PORTANTO, DE UM __FINE-TUNING___....
+
+
+
+
+ precisamos:
+
+
+
+
+ 1) fazer com que nossos input fields comecem SEM ESSA COR VERMELHA HORRÍVEL, talvez outra cor, 
+ ou a cor branca (com algum aviso)
+
+
+
+ 2) os inputs não estão ficando 
+
+ brancos quando nós 
+
+
+ficamos 'válidos'... (ou seja, a propriedade 'valid' lá no STATE 'orderForm', dentro de cada objeto 'input', continua FALSE..... --> precisa ficar 'true'...)
+
+
+
+
+--> ok, consegui consertar, era um problema de nomes...
+
+
+estava 
+
+'.validity' em uma parte do código, mas era para 
+
+estar 
+
+'.valid' (para redefinir o valor da propriedade 'valid' no nosso state...)
+
+
+ ---------------------------------
+
+
+
+
+
+
+
+ ---> certo, mas o problema é que 
+
+
+o input field inicial ainda fica vermelho...
+
+
+
+
+---> o input field inicial de 'select'/dropdown 
+
+também 
+
+
+continua vermelho...
+
+---------------------------------
+
+
+
+
+
+
+
+CONSEGUI CONSERTAR 
+
+O INPUT FIELD 
+
+
+DE 
+
+'Fastest/cheapest' ficando vermelho... ---> agora ele SEMPRE FICARÁ 
+
+BRANCO,
+
+no início e depois... tudo graças a este código:
+
+
+
+------------------------------------------
+
+
+
+
+checkValidity(value, rules) {
+
+
+    if(!rules.required) { ////////////ESTE CÓDIGO AQUI CONSERTOU O PROBLEMA.
+      return true;
+    }
+
+
+  let isValid = true; 
+
+
+if (rules.required) { 
+isValid = value.trim() !== '' && isValid;
+}
+
+if (rules.minLength) {
+  isValid = value.length >= rules.minLength && isValid;
+}
+
+if (rules.maxLength) { 
+  isValid = value.length <= rules.maxLength && isValid;
+}
+
+return isValid;
+}
+
+
+
+
+--------------------------------
+
+
+
+
+----> certo, mas esse código ( eu acho) QUE INTRODUZIU UM NOVO PROBLEMA... ----> 
+
+
+agora 
+
+
+nossos input fields ficam valid 
+
+
+__sEMPRE___ (por alguma razão).
+
+
+
+
+
+---> na verdade, eu pensei errado... --> esse código funcionou como devia,
+
+
+ele faz o que promete, 
+
+
+
+
+essa coisa de 
+
+os 
+
+
+input fields ficarem válidos ''''sempre''' é o 
+comportamento 
+
+que definimos no seu ruleset,
+
+aquele comportamento de DEIXAR 
+
+
+NOSSOS ELEMENTOS 'INPUT' vermelhos 
+
+só quando 
+
+NÃO EXISTIR NADA DENTRO DELES (Quando usuário não tiver preenchido coisa alguma, tiver deixado vazio o campo.)
+
+
+
+
+
+-----------------------------------
+
+
+
+Ok, mas temos que consertar esse estilo inicial feio de 'TUDO VERMELHO'...
+
+
+
+-----------------------------------
+
+
+OK, AGORA 
+
+PARA 
+
+A 
+
+VERSÃO DO ___PROFESSOR__ DO FINE-TUNING 
+
+
+DO DROPDOWN...  (ele vai nos mostrar outra maneira 
+
+de 
+
+REMOVER 
+
+o 
+
+'styling' de 'INVALID' do dropdown, que está sempre como 'invalid' mesmo isso não fazendo o menor sentido.)
+
+
+
+
+
+--> ele vai fazer esse fine-tuning 
+
+lá no 
+
+component 
+
+
+'Input.js',
+
+
+
+que 
+
+está com um código de:
+
+
+
+import React from 'react';
+
+import InputStyle from './Input.module.css';
+
+const input = (props) => {
+  let inputElement = null;
+
+  const inputClasses = [InputStyle.InputElement];
+
+  if (props.invalid) {
+    inputClasses.push(InputStyle.Invalid);
+  }
+
+  switch (
+    props.elementType 
+  ) {
+    case 'input':
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+          className={inputClasses.join(' ')}
+          value={props.value}
+        />
+      );
+      break;
+    case 'textarea':
+      inputElement = (
+        <textarea onChange={props.changed}
+          {...props.elementConfig}
+          className={inputClasses.join(' ')}
+          value={props.value}
+        />
+      );
+      break;
+    case 'select':
+      inputElement = (
+        <select onChange={props.changed}
+        className={inputClasses.join(' ')}
+          value={props.value}
+        >
+          {props.elementConfig.options.map((option) => {
+            return (
+              <option onChange={props.changed}
+                key={option.value}
+                value={option.value}
+              >
+                {option.displayValue} 
+              </option>
+            );
+          })}
+        </select>
+      );
+      break;
+    default:
+      inputElement = (
+        <input onChange={props.changed}
+          {...props.elementConfig}
+          className={inputClasses.join(' ')}
+          value={props.value}
+        />
+      );
+  }
+
+  return (
+    <div className={InputStyle.Input}>
+      <label>{props.label}</label>
+      {inputElement}
+    </div>
+  );
+};
+
+export default input;
+
+
+
+-------------------------------
+
+
+
+
+
+Certo... professor diz que vai querer regular esse negócio 
+
+por meio 
+
+
+
+de uma ADIÇÃO ÀQUELE 
+
+
+IF CHECK 
+
+DE 
+
+'if (props.invalid)'... -----> 
+
+
+ele 
+
+vai 
+
+
+escrever 
+
+
+
+
+' 
+
+
+
+if (props.invalid && props.shouldValidate)''' ----------> OU SEJA, 
+
+
+
+
+ELE VAI 
+
+CRIAR UM NOVO PROP em '<Input />',  UM 
+
+PROP 
+
+CHAMADO DE 
+
+'shouldValidate' ................ -------->
+ 
+
+e esse 
+
+
+prop de 
+
+'shouldValidate'
+
+
+SÓ 
+
+
+SERÁ 
+
+__'''TRUE'''___ SE O OBJETO ('name', 'street', 'email', etc...)
+
+
+
+QUE 
+
+FOR MEU INPUT (naquele caso específico) __REALMENTE __ TIVER 
+
+UM 
+
+OBJETO 
+
+'validation'.... 
+(
+
+
+  pq 
+
+  'validation' é 
+  o 
+
+  objeto que 
+
+  segura 
+
+  a 
+
+  propriedade 
+
+
+  '
+  required: xxx',
+
+
+  QUE 
+
+
+  O 
+
+
+  OBJETO 'deliveryMethod' (nosso DROPDOWN) 
+
+  JUSTAMENTE _____NÃO TEM_______.... (
+
+
+
+
+
+
+    ex:
+
+
+      validation: {
+        required: true
+      }
+
+
+
+
+
+  )
+) -------> e é por isso que 
+
+
+o prop 'shouldValidate' 
+
+terá 
+
+um valor 
+
+de 
+
+'formElement.config.validation' ------> pq isso aí vai retornar 'true' ou 'false', dependendo DE QUAL ELEMENTO 'input' ESTIVERMOS FALANDO/ESTIVER SENDO RENDERIZADO POR MEIO DESSE '<Input />' .... ----> se for 'select'/dropdown, esse valor RETORNARÁ __FALSE__, pois ele _NÃO POSSUI ESSE VALOR AÍ___....(não possui a propriedade 'validation')
+
+
+
+--------------------------
+
+
+
+
+
+Ou seja,
+
+esse 
+
+é um método alternativo
+
+
+
+que vai usar os códigos:
+
+
+
+
+
+
+
+(em 'ContactData'):
+
+
+
+
+          return (
+                          <Input 
+                          changed={(event) => {this.inputChangedHandler(event, formElement.id)}}
+                          key={formElement.id}
+                          invalid={!formElement.config.valid}
+                          elementType={formElement.config.elementType} 
+                          shouldValidate={formElement.config.validation} ///////EIS O CÓDIGO EM QUESTÃO.
+                          value={formElement.value} 
+                          elementConfig={formElement.config.elementConfig} />
+                        )
+
+
+
+
+
+(em 'Input'):
+
+
+
+
+
+ if (props.invalid && props.shouldValidate) {
+    inputClasses.push(InputStyle.Invalid);
+  }
+
+
+
+  ----------------------------------------------
+
+
+---> esse código funciona, e é mais elegante/funcional do que o nosso...
+
+
+
+--> certo, essa versão do código do professor TAMBÉM FUNCIONA. ----> houve um pequeno problema 
+
+com 
+
+
+
+o 
+
+
+
+ELEMENTO 'dropdown' (de novo), mas eu já o consertei...
+
+(
+  com um if check de 'if (!rules) {
+    return;
+  }'
+
+
+  lá 
+
+  em 
+
+
+  'checkValidity()'...
+)
+
+
+
+
+
+---------------
+
+
+
+
+
+OK, AGORA A ÚNICA COISA QUE PRECISAMOS SOLUCIONAR É O FATO DE QUE 
+
+
+__tODOS OS INPUT FIELDS COMEÇAM COMO 'INVALID' 
+
+direto 
+
+do início, já no load da página... (
+
+  e não queremos isso, 
+
+
+  queremos 
+
+  que 
+
+  eles comecem brancos,
+  aí quando 
+
+  o usuário clicar  E __DIGITAR __ neles, fiquem vermelhos...
+) -----> faremos isso 
+
+
+na próxima aula....

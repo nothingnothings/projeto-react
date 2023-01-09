@@ -1,0 +1,1687 @@
+
+
+
+
+
+
+
+--> OK, ADICIONAMOS BABEL NA ÚLTIMA AULA...
+
+
+
+--> AGORA DEVEMOS ADICIONAR 
+
+SUPORTE 
+
+À 
+
+
+ARQUIVOS CSS 
+E 
+IMAGES...
+
+
+
+
+--> para isso,
+
+
+
+
+PROFESSOR ADICIONARÁ UM NOVO OBJETO 
+
+'rule' LÁ 
+
+
+
+NO 
+
+
+
+NODE/propriedade 
+
+'rules' 
+
+
+
+NO 
+
+WEBPACK.CONFIG.JS... ---------> 
+
+
+
+
+DENTRO 
+DISSO,
+
+
+PROFESSOR 
+
+
+
+VAI ESCREVER 
+
+OUTRO 
+
+'test:',
+
+
+MAS 
+
+DESSA VEZ COM UM CÓDIGO 
+
+de 
+
+
+
+'test: /\.css$/' ....
+
+
+
+
+
+
+EX:
+
+
+
+
+
+const path = require('path');
+
+
+ module.exports = {
+    entry: './src/index.js',
+    devtool: 'cheap-module-eval-source-map',
+    output: {
+        publicPath: '',
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'] /////serve para ___FAZER COM QUE O WEBPACK FUNCIONE COM SINTAXE DE IMPORTS ASSIM: 'import BuildControls from './BuildControls', QUE ENTÃO SÃO LIDAS COMO 'Import BuildControls from './BuildCOntrols.js' (OU SEJA, É ADICIONADO O '.js' e '.jsx' AO FINAL DO ARQUIVO AUTOMATICAMENTE, QUANDO NÃO SÃO ENCONTRADAS EXTENSÕES (.js, .jsx) em SUA SINTAXE DE IMPORT...)
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/
+            }
+        ]
+    }
+}
+
+
+----------------------------------------
+
+
+
+
+
+DE NOVO,
+
+PROFESSOR VAI QUERER 
+
+'exclude' o NODE_MODULES...
+
+
+
+
+
+E AÍ VAI QUERER COLOCAR, COMO LOADER,
+
+'css-loader'...
+
+
+
+ex:
+
+
+
+
+
+
+const path = require('path');
+
+
+ module.exports = {
+    entry: './src/index.js',
+    devtool: 'cheap-module-eval-source-map',
+    output: {
+        publicPath: '',
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'] /////serve para ___FAZER COM QUE O WEBPACK FUNCIONE COM SINTAXE DE IMPORTS ASSIM: 'import BuildControls from './BuildControls', QUE ENTÃO SÃO LIDAS COMO 'Import BuildControls from './BuildCOntrols.js' (OU SEJA, É ADICIONADO O '.js' e '.jsx' AO FINAL DO ARQUIVO AUTOMATICAMENTE, QUANDO NÃO SÃO ENCONTRADAS EXTENSÕES (.js, .jsx) em SUA SINTAXE DE IMPORT...)
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                loader: 'css-loader'
+            }
+        ]
+    }
+}
+
+-------------------------------------------------------
+
+
+
+
+(EU ACHO QUE É ISSO)... -----------> MAS PROFESSOR NOS 
+
+EXPLICA QUE,
+ 
+ PARA 
+
+ O 
+
+ CSS,
+
+
+ NÓS 
+
+ NA VERDADE 
+
+
+ PRECISAMOS 
+
+
+ DE 
+
+ 'UM SETUP MAIS COMPLEXO'...
+
+
+
+
+(PARA O JS e JSX, NÓS TAMBÉM PRECISAMOS DE UM SETUP COMPLEXO,
+MAS TODO ESSE PROCESSO É HANDLADO PELO BABEL, e pelo arquivo config do babel,
+lá em '.babelrc'...
+ )
+
+----------------------------------------
+
+
+
+
+
+
+
+MAS 
+
+PARA 
+
+O 
+
+
+CONFIG 
+
+DO 
+
+
+HANDLE DE CÓDIGO CSS NO NOSSO BUILD WORKFLOW DO WEBPACK,
+
+precisamos 
+
+CONFIGURAR 
+
+
+ISSO __ AQUI __ NESSE ARQUIVO __ 
+
+'webpack.config' msm...
+
+
+
+
+
+-----------> EM VEZ DE ESCREVER 
+
+
+'loader',
+
+
+
+
+PROFESSOR NOS EXPLICA QUE 
+
+DEVEMOS 
+
+
+
+USAR 
+
+
+'use: ...'  ( ELE NOS DIZ QUE 
+
+
+'loader' É A 'SHORT FORM' de 'use:',
+
+
+
+
+E QUE 
+
+O 
+
+'use: ' É USADO 
+
+QUANDO 
+
+QUEREMOS 
+
+
+DEFINIR 
+
+
+
+MÚLTIPLOS LOADERS, ou um 
+
+
+LOADER COM UMA CONFIG, EM 
+
+
+1 ÚNICA RULE...
+
+
+
+
+)
+
+
+
+
+
+
+--> 
+
+a propriedade 
+
+'use'
+
+
+EXIGE, COMO VALOR,
+
+
+UM 
+
+
+
+ARRAY
+
+
+
+
+DOS 
+
+LOADERS
+ QUE 
+
+ QUEREMOS 
+
+ APLICAR 
+
+
+ NO FORMATO DE ARQUIVOS DEFINIDO EM 
+
+ 'test:'......... -----> 
+
+
+
+
+
+ E AQUI, 
+
+ O PROFESSOR 
+ VAI QUERER 
+
+ INSTALAR 
+
+
+ 2 LOADERS.... --------> 
+
+
+
+
+ ELE VAI QUERER 
+
+
+
+ 1) o 'css-loader'.. ---> npm install --save-dev css-loader... --------> BASICAMENTE INFORMA O WEBPACK DAS COISAS QUE ELE DEVE FAZER COM ESSES IMPORTS DE '.css'...
+
+
+
+
+
+ 2) o 'style-loader'.... --> ESSE É UM LOADER QUE VAI ENTÃO __eXTRAIR___  O CÓDIGO CSS DOS ARQUIVOS CSS E ENTÃO __ O INJETAR___ NO ___TOPO ___ DE NOSSO ARQUIVO HTML, o que faz com que SEJA __ REDUZIDO __ O NÚMERO DE 'FILE DOWNLOADS' O USUÁRIO TEM QUE REALIZAR durante a inicialização do app...
+
+
+
+
+
+
+
+
+
+
+ ---> professor instala AMBOS.
+
+
+
+
+
+
+
+
+ -----------> ISSO FEITO,
+
+
+ ELE DIZ QUE DEVEMOS ADICIONÁ-LOS AO WEBPACK BUILD WORKFLOW... ---> 
+
+
+ para 
+
+ isso,
+
+
+
+ ele 
+
+
+ escreve 
+
+
+
+ UNS OBJETOS JAVASCRIPT 
+
+ DENTRO 
+
+ DO 
+
+ ARRAY 
+
+ DE 'use'...
+
+
+
+
+ ex:
+
+
+
+
+ use: [
+     {loader: 'style-loader'}
+ ]
+
+
+
+
+ ---------------------
+
+
+
+
+
+ ELE DEFINE O __sTYLE __ LOADER __________ PRIMEIRO____________... ---> 
+
+
+ E ENTÃO 
+
+ NOS EXPLICA QUE 
+
+
+ _____a ORDEM___ DA ESCRITA __ DESSES LOADERS em 'use' __ IMPORTA __ BASTANTE__.... ---> 
+
+ VOCÊ 
+
+
+ DEVE 
+
+
+
+ESCRVER 
+
+
+
+O 
+
+'style-loader'
+
+
+
+__aNTES__ DO 'CSS-LOADEr'....
+
+
+
+
+
+
+
+ex:
+
+
+
+ use: [
+     {loader: 'style-loader'},
+     {loader: 'css-loader'}
+ ]
+
+
+
+ ---------------------------------------------------------------
+
+
+
+
+
+
+ IMPORTANTE!!!! (ISSO É FÁCIL DE ERRAR) --------> 
+
+
+
+ O 
+
+
+ WEBPACK PARSEIA/ANALISA LOADERS 
+
+
+ NESSE 
+
+
+ ARRAY, NO WEBPACK.config.js,
+
+
+ _____ DA DIREITA PARA A ESQUERDA____ (ou seja, DE CIMA PARA BAIXO... ) --->
+
+
+
+
+
+
+ EM OUTRAS PALAVRAS: A ORDEM IMPORTA,
+
+ E ELA 
+ É ___ LIDA __ AO __CONTRÁRIO____ (coisas embaixo são executadas/LIDAS __ANTES___ pelo webpack, nesse 
+ array 
+ 
+ de objetos em 'use'....) -----------------> ISSO SIGNIFICA QUE 
+
+
+ O 
+
+
+ 'CSS-LOADER'
+
+ É 
+
+
+ LIDO E EXECUTADO __ ANTES_ __ DE 'style-loader',
+
+
+
+ INDEPENDENTEMENTE DO FATO DE ELE ESTAR ABAIXO DO OUTRO no nosso arquivo.... 
+
+
+
+
+
+
+ (e realmente é necessário que 
+ o 
+ 
+ 'css-loader' SEJA EXECUTADO ANTES 
+ 
+ DO 
+ 
+ 'style-loader',
+ PQ 
+ 
+ S´O
+ 
+ ASSIM O WEBPACK 
+ 
+ VAI SER 
+ CAPAZ 
+ 
+ 
+ DE 
+ LER 
+ 
+ OS 
+ 
+ 
+ IMPORTS DE CSS E NÃO ___ DAR THROW __ DE ERROS....) --------> 
+
+
+
+ ELA ´SO DEPOIS 
+
+
+ É 
+
+ APLICADO O 'STYLE-LOADER',
+
+
+
+
+APLICADO SOBRE O CÓDIGO CSS QUE JÁ FOI IMPORTADO/EXTRAÍDO...... ---> E É 
+
+
+ESSA A ORDEM DE QUE 
+PRECISAMOS AQUI,
+
+
+mesmo...
+
+
+-------------------------------------------
+
+
+
+
+
+--> PROFESSOR TAMBÉM DIZ QUE 
+
+PODEMOS 
+
+DAR 
+
+AO 
+
+
+'CSS-LOADER' (responsável pelo parsing E HANDLING DO CSS)
+
+
+
+OUTRA PROPRIEDADE, 
+
+CHAMADA 
+DE 
+
+
+
+'options:' ...  -----> O VALOR 
+
+
+DE
+
+
+
+
+'options'
+
+É 
+
+SEMPRE UM OBJETO JAVASCRIPT, 
+
+OBJETO EM QUE 
+
+PODEMOS 
+
+
+___CONFIGURAR___ 
+
+ESSE 
+
+LOADER DE 
+
+'css-loader'...
+
+
+
+ex:
+
+
+
+{
+    loader: 'css-loader', 
+    options: {
+        
+    }
+}
+
+
+
+--------------------------------
+
+
+
+
+
+DENTRO 
+
+DESSAS OPTIONS,
+
+professor vai querer 
+
+SETTAR 
+
+'modules:'
+
+
+
+
+
+
+E VAI QUERER SETTAR SEU VALOR 
+
+COMO 'true',
+
+tudo 
+
+para que 
+
+
+
+
+O
+
+
+
+___CSS MODULES __ (recurso CORE e EXTREMAMENTE ÚTIL) 
+
+
+
+SEJA ___ ATIVADO___.... ------------> 
+
+
+
+
+
+
+
+ALÉM DISSO,
+
+PROFESSOR
+
+VAI DEFINIR 
+UMA 
+
+
+PROPRIEDADE 
+
+de 
+
+'localIdentName:',
+
+
+
+
+
+CUJO VALOR SERÁ __ O FORMATO __ QUE OS ARQUIVOS CSS MANIPULADOS
+ 
+
+E 'ENTENDIDOS' COMO 
+
+CSS 
+
+MODULES 
+
+
+
+FICARÃO, DEPOIS 
+
+DE SEREM PARSEADOS/CONVERTIDOS.. --> 
+
+
+
+no caso,
+
+
+professor 
+
+vai 
+
+escrever 
+
+
+
+'localIdentName: '[name]__[local]__[hash:base64:5]' 
+
+
+
+
+
+(esse é o DEFAULT do 'create-react-app', BTW...)
+----------------------------------------------
+
+
+
+
+
+
+
+
+ficou assim:
+
+
+
+
+
+
+
+const path = require('path');
+
+
+ module.exports = {
+    entry: './src/index.js',
+    devtool: 'cheap-module-eval-source-map',
+    output: {
+        publicPath: '',
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'] /////serve para ___FAZER COM QUE O WEBPACK FUNCIONE COM SINTAXE DE IMPORTS ASSIM: 'import BuildControls from './BuildControls', QUE ENTÃO SÃO LIDAS COMO 'Import BuildControls from './BuildCOntrols.js' (OU SEJA, É ADICIONADO O '.js' e '.jsx' AO FINAL DO ARQUIVO AUTOMATICAMENTE, QUANDO NÃO SÃO ENCONTRADAS EXTENSÕES (.js, .jsx) em SUA SINTAXE DE IMPORT...)
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                // loader: 'css-loader' /// ESSA SINTAXE É MUITO SIMPLES PARA FAZER COM QUE O IMPORT DE CSS FUNCIONE COM O WEBPACK... -> devemos usar essa sintaxe mais abaixo, de 'use'...
+                use: [
+                    { loader: 'style-loader'},  ///este código é PARSEADO E ANALISADO __ DE BAIXO __ PARA CIMA___...( orientação inversa....) --> e, SIM, A ORDEM IMPORTA, NESSE 'use'...
+                    { loader: 'css-loader', 
+                            options: {
+                                modules: true,
+                                localIdentName: '[name]__[local]__[hash:base64:5]'
+                            }
+                    }
+               
+                ]
+            }
+        ]
+    }
+}
+
+
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+
+CERTO... MAS AINDA NÃO ACABAMOS COM O CSS...
+
+
+
+
+
+
+
+
+--> O PROFESSOR TAMBÉM QUER 
+
+
+
+___aDICIONAR __ AUTO-PREFIXING___... --> para isso,
+
+
+o professor
+
+
+
+
+INSTALA OUTRA PACKAGE,
+
+
+
+
+
+
+com 
+
+
+
+'npm install --save-dev postcss-loader'...
+
+
+
+
+------------------------------------
+
+
+O NOME 
+
+DESSE NEGÓCIO PARECE 
+
+
+DAR A IDEIA 
+
+DE QUE 
+
+FAZEMOS __ ALGO COM O CSS___ DEPOIS DE ELE SER PARSEADO,
+
+
+MAS O QUE 
+
+ACONTECE, ACTUALLY,
+
+
+
+É QUE 
+
+ELE 
+
+
+É __RODADO_ _ ANTES __ DO 'css-loader',
+
+
+
+
+MERGULHA NOS ARQUIVOS CSS E 
+
+
+__AJUSTA___ NOSSO CÓDIGO
+
+
+
+ANTES 
+
+mesmo 
+
+de 
+
+
+'css-loader' 
+
+pegar esses arquivos e ajustar 
+
+os 
+
+css class names e etc...
+
+
+
+-------------------------------
+
+
+
+
+O POST CSS LOADER É SIMPLESMENTE 
+
+
+UM LOADER 
+QUE 
+
+NOS 
+
+PERMITE ____ TRANSFORMAR ___ 
+ O 
+
+ CSS___  --> por exemplo,
+
+ poderíamos 
+
+ usar (e podemos)
+
+O 
+
+POST CSS LOADER PARA FAZER HANDLE 
+
+DE 
+SASS 
+
+E 
+ASSIM POR DIANTE...   aqui, no entanto,
+
+
+O PROFESSOR 
+
+SÓ 
+
+VAI ADICIONÁ-LO 
+ 
+ COMO 
+
+
+ __MAIS UM LOADER__,
+
+
+ e na TERCEIRA POSIÇÃO_,
+
+
+
+ JUSTAMENTE PQ __ ELE É EXECUTADO (precisa ser executado) 
+
+
+ __ANTES___ DO RESTO DOS LOADERS....
+
+
+
+
+
+
+
+
+
+ é por isso que ficará assim:
+
+
+
+
+
+
+
+
+
+
+     module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: [
+                    { loader: 'style-loader'},  
+                    { loader: 'css-loader', 
+                            options: {
+                                modules: true,
+                                localIdentName: '[name]__[local]__[hash:base64:5]'
+                            }
+                    
+                    { loader: 'postcss-loader' }  ///EIS O CÓDIGO EM QUESTÃO.
+               
+                ]
+            }
+        ]
+    }
+
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+
+
+
+CERTO,
+ 
+ MAS 
+
+
+ VAMOS 
+
+ PRECISAR 
+
+ DE 
+
+ ALGUMAS 
+
+ 'options' (propriedade OPTIONS, que segurará um objeto) nesse loader....
+
+
+
+ 
+
+
+
+
+O PROFESSOR 
+
+
+
+
+VAI QUERER 
+
+DEFINIR 
+
+UMA PROPRIEDADE,
+
+em 
+
+'options',
+
+
+
+
+DE 
+
+'ident:' 
+
+
+
+
+E SEU VALOR 
+
+SERÁ 
+
+DE 
+
+'postcss'.... 
+
+
+
+
+--> MAS MAIS IMPORTANTE DO QUE ISSO 
+
+É A PROPRIEDADE 
+
+'plugins',
+
+que 
+
+VAI RECEBER, COMO VALOR, UMA  FUNÇÃO __MUITO ESTRANHA, UMA FUNÇÃO EM 
+FORMATO DE __aRROW__, MAS QUE __ RETORNA UM __ARRAY__ (em vez de um function body...)
+
+
+
+
+ex:
+
+
+
+
+     { loader: 'postcss-loader',
+     options: {
+         ident: 'postcss',
+         plugins: () => [] /////////EIS O CÓDIGO EM QUESTÃO.
+     }
+     
+      }  
+            
+
+
+--------------------
+
+
+
+
+CERTO.... 
+
+
+
+E 
+
+
+DENTRO 
+
+DESSE ARRAY FICARÃO 
+
+AS 
+
+'STEPS' QUE VAMOS QUERER APLICAR 
+
+
+
+__PARA TRANSFORMAR___ TODO NOSSO CÓDIGO CSS... ---> 
+
+
+
+e 
+
+ a coisa que 
+
+ o professor 
+
+ vai querer 
+
+ executar/informar,
+
+
+
+ dentro 
+
+ desse array,
+
+ é 
+
+ o 
+
+ 'AUTO PREFIXER'... --------------> CERTO... ----> 
+
+
+
+
+
+MAS O __AUTO-PREFIXER__ PRECISA 
+
+SER INSTALADO ANTES... (pq ele é uma FERRAMENTA SEPARADA...)
+
+
+
+
+
+
+
+
+
+
+--> para conseguir o auto-prefixer,
+
+
+DEVO 
+
+
+RODAR 
+
+
+
+
+'npm install  --save-dev autoprefixer'  ---------> 
+
+
+
+ESSA 
+
+É UMA 
+
+THIRD PARTY LIBRARY
+ 
+ QUE 
+ é
+  
+
+
+
+  CAPAZ 
+
+
+  D
+  E 
+
+  AUTOPREFIXAR 
+
+  NOSSAS PROPRIEDADES 
+
+
+  CSS.... (como 'moz-webkit-background....', etc...)
+
+
+
+
+
+
+
+
+  --> PARA CONSEGUIR 
+
+  IMPLEMENTAR
+   
+   O 
+
+
+
+   'AUTOPREFIXER' no nosso build workflow 
+
+   do 
+
+   webpack,
+
+
+
+
+   TEMOS QUE 
+   USAR 
+
+   A 
+   SINTAXE 
+
+   DE IMPORTS 
+
+   NODE.JS 
+
+
+   PARA 
+
+   IMPORTAR 
+
+
+   E ARMAZENAR
+    
+
+    ESSE MÓDULO EM UMA CONSTANTE...
+
+
+
+
+
+
+
+ex:
+
+
+
+
+const autoprefixer = require('autoprefixer');
+
+
+
+
+
+
+---------------------------------
+
+
+AGORA, COM ESSE NEGÓCIO INSTALADO,
+
+
+
+
+NÓS PODEMOS ADICIONAR 
+
+ESSA CONSTANTE/MÓDULO 
+
+
+AO 
+
+
+ARRAY
+ 
+
+ DE 
+
+ 'plugins'
+
+
+
+ NAQUELA 
+
+ 'RULE' 
+
+ de 
+
+ 'postcss-loader'...
+
+
+
+
+ --------------------------
+
+ EX:
+
+
+
+                options: {
+                    ident: 'postcss',
+                    plugins: () => [
+                        autoprefixer
+                    ]
+                }}
+                ]
+            }
+        ]
+    }
+}
+
+
+
+
+------------------------------------
+
+
+
+
+CERTO,
+
+
+
+MAS 
+
+AÍ 
+
+SURGE OUTRO PROBLEMA... ---> 
+
+
+
+'autoprefixer'
+
+DEVERÁ 
+
+SER EXECUTADO COMO UMA FUNÇÃO, SENÃO ELE NÃO FUNCIONA...
+
+
+
+ex:
+
+
+
+
+                options: {
+                    ident: 'postcss',
+                    plugins: () => [
+                        autoprefixer()
+                    ]
+                }}
+                ]
+            }
+        ]
+    }
+}
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+MAS NÃO ACABAMOS POR AÍ... PARA CONFIGURAR O AUTOPREFIXER,
+
+DEVEMOS 
+
+PASSAR 
+
+UM OBJETO 
+
+
+JAVASCRIPT COMO PARÂMETRO... ---> ali,
+
+
+dentro 
+
+desse objeto,
+
+
+
+NOVAMENTE 
+
+PASSAMOS 
+
+UMA 
+
+'LISTA DE BROWSERS'/lista de características de browsers...
+
+
+
+
+
+
+
+
+---> de novo vamos colocar aqueles dados 
+de 
+
+"> 1%",
+"last 2 versions"   (que colocamos em '.babelrc', nas aulas anteriores....)
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+
+FICA TIPO ASSIM:
+
+
+
+                options: {
+                    ident: 'postcss',
+                    plugins: () => [
+                        autoprefixer(
+                            {
+                                browsers: [
+                                    "> 1%",
+                                    "last 2 versions"
+                                ]
+                            }
+                        )
+
+                    ]
+                }}
+                ]
+            }
+        ]
+    }
+}
+
+
+-------------------------------------
+
+OK ,
+
+
+
+ISSO SIGNIFICARÁ/SIGNIFICA 
+
+QUE 
+
+VAMOS 
+
+PREFIXAR 
+
+
+CSS PARA __ ESSES __ BROWSERS QUE SUPORTAMOS,
+
+PARA BROWSERS COM MARKET SHARE 
+
+SUPERIOR A 1%,
+
+e que 
+
+
+SEJAM
+ 
+ DAS 
+
+ 2 ÚLTIMAS VERSÕES...
+
+------------------------------------
+
+
+
+
+
+--> E O BABEL VAI DESCOBRIR AUTOMATICAMENTE QUAIS 
+
+
+BROWSERS SÃO ESSES, PARA NÓS..
+
+
+
+
+
+
+
+--> ESSE É O 'BARE MINIMUM SETUP' que 
+
+o professor queria usar...
+
+
+
+
+
+
+
+------------------>  OBS:::: COMO 
+
+NÓS RODAMOS 
+
+
+
+1 LOADER ADICIONAL ___aNTES__ DE 
+
+'css-loader' (que PENSA QUE É O PRIMEIRO, POR ALGUMA RAZÃO),
+
+
+
+DEVEMOS INFORMAR O CSS-LOADER DISSO,
+
+DEVEMOS 
+
+
+ESCREVER ALGO QUE 
+
+CONTE A ELE QUE 
+
+
+EXISTE ALGO (o 'postcss-loader') QUE 
+
+É 
+
+
+__EXECUTADO __ ANTES DELE__... --------> 
+
+
+E 
+
+ESSE DETALHE É ALGO TÍPICO 
+
+DO CSS-LOADER,
+
+é específico a ele,
+nenhum 
+
+outro loader tem essa manha aí.... ------> 
+
+
+
+PARA QUE 
+
+ELE __eNTENDA__ QUE 
+
+EXISTE 1 
+LOADER QUE 
+
+É EXECUTADO ANTES DELE,
+
+
+
+DEVEMOS 
+
+
+ESCREVER,
+
+dentro de 'options',
+
+
+uma propriedade 
+
+chamada de 
+
+'importLoaders', QUE 
+
+TERÁ 
+
+O VALOR DE 
+'1' (pq temos só o 'postcss-loader' agindo antes dele)....
+
+
+
+
+
+ex:
+
+
+
+  module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                // loader: 'css-loader' /// ESSA SINTAXE É MUITO SIMPLES PARA FAZER COM QUE O IMPORT DE CSS FUNCIONE COM O WEBPACK... -> devemos usar essa sintaxe mais abaixo, de 'use'...
+                use: [
+                    { loader: 'style-loader'},
+                    { loader: 'css-loader',  ///este código é PARSEADO E ANALISADO __ DE BAIXO __ PARA CIMA___...( orientação inversa....) --> e, SIM, A ORDEM IMPORTA, NESSE 'use'...
+                       options: {
+                           importLoaders: 1, ///idiossincrasia do 'CSS-LOADER'... --> só ele precisa dessa propriedade. Essa propriedade informa A ELE QUANTOS LOADERS VAO SER EXECUTADOS ANTES DELE, DURANTE O RUNTIME... --> no caso, digitamos '1', pq apenas o 'postcss-loader' VAI SER EXECUTADO ANTES DELE...
+                           modules: true,
+                           localIdentName: '[name]_[local]_[hash:base64:5]'
+                       }  },
+                    { loader: 'postcss-loader',
+                options: {
+                    ident: 'postcss',
+                    plugins: () => [
+                        autoprefixer({
+                            browsers: [
+                                "> 1%",
+                                "last 2 versions"
+                            ]
+                        })
+                    ]
+                }}
+                ]
+            }
+        ]
+    }
+}
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+E ESSE DEVERÁ SER NOSSO SETUP CSS... 
+
+
+
+ok,
+
+
+
+
+vamos ver se tudo isso funciona...
+
+
+
+devemos 
+
+
+continuar,
+
+
+e  assegurar que 
+
+IMAGES TAMBÉM CONSIGAM SER HANDLADAS,
+
+PQ 
+
+ELAS TAMBÉM SÃO USADAS NO NOSSO CÓDIGO...

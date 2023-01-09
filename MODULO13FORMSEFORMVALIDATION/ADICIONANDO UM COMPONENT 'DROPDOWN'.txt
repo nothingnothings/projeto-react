@@ -1,0 +1,900 @@
+
+
+
+
+
+
+
+
+
+
+
+
+-------> PRECISAMOS SER CAPAZES DE CRIAR ELEMENTOS 'SELECT' 
+
+dentro 
+
+do nosso 
+
+
+component 
+
+'Input',
+ por meio daquele 
+
+
+ SWITCH STATEMENT 
+
+ em 
+ '
+ Input.js'...
+
+
+
+
+
+
+
+
+ ------->  DENTRO DO SWITCH STATEMENT,
+ ADICIONAMOS 
+
+ UM NOVO CASE,
+
+
+
+
+ que 
+
+
+ será 
+
+
+
+ 'case('select') '...
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+ case('select'): 
+        inputElement = (
+
+
+
+
+            <select>
+
+
+
+            </select>
+        )
+
+
+    ---------------------------------
+
+
+
+
+    DENTRO 
+
+    DESSE
+
+
+    '<select>'
+
+
+    NÓS VAMOS ENFIAR NOSSAS OPTIONS, QUE SERÃO EXTRAÍDAS DO STATE 
+
+
+    DE 
+
+    'ContactData' (que é o CONTAINER que segura Input, no final das contas...)
+
+
+
+
+
+ex:
+
+
+
+
+
+
+ case('select'): 
+        inputElement = (
+
+
+
+
+            <select 
+            className={classes.InputElement}
+            {...props.elementConfig}
+            value={props.value}
+            
+            >
+            <option />
+            <option />
+
+
+            </select>
+        )
+
+
+
+
+-------------------------------
+
+
+
+
+
+CERTO... MAS UMA COISA QUE O PROFESSOR __NÃO VAI QUERER__ PASSAR A ESSE OBJETO É 
+
+aquele objeto 
+
+
+'elementConfig'... -------> O PROFESSOR DIZ QUE NÃO VAMOS QUERER PASSAR 
+
+ISSO AÍ 
+
+
+pq 
+
+__NO NOSSO SETUP NÓS SÓ VAMOS, AQUI, ESPERAR ('expect")
+
+
+
+RECEBER 'options' dentro desse 'select'... -----------> 
+
+
+
+
+ENTRETANTO, ELE ADMITE QUE 
+
+VOCê __PODERIA___ TER UNS ATTRIBUTES ESPECIAIS, ESPECÍFICOS 
+
+
+A 
+ESSE 
+
+
+'<select />'... ------> se você quiser/tiver esses attributes a serem definidos,
+
+vocÊ 
+
+simplesmente 
+
+
+teria 
+
+que criar 
+
+UMA NOVA PROPRIEDADE 
+
+em 
+
+'contactData', no STATE, uma nested property , como 
+
+'''''config: {}'''''', 
+
+
+em que 
+
+vocÊ enfiaria os attributes de 
+'select'...
+
+
+
+
+
+ex:
+
+
+
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ],
+                                config: {} ////////VOCÊ FARIA ASSIM...
+                        },
+                        value: ''
+
+
+-----------------------------------------------
+
+
+
+
+ENTRETANTO, AQUI (nesse elemento '<select />' ) O PROFESSOR 
+
+SÓ VAI QUERER 
+
+
+RECEBER 
+
+AS 
+
+'options' 
+
+
+COMO  SEU 'elementConfig', e mais NADA daquele 'elementConfig' do nosso state... (ou seja,
+ 
+ 
+ ele NÃO QUER/NÃO VAI QUERER DISTRIBUIR OS OBJETOS DENTRO DE 'elementConfig' como ATTRIBUTES 
+ 
+ no seu elemento '<select />'...) 
+
+
+
+
+
+
+
+
+
+
+ --> em vez disso, ele só vai definir umas simples opções a partir 
+
+ do nosso state de 'ContactData'...
+
+
+
+
+
+ ex:
+
+
+
+ 
+
+ case('select'): 
+        inputElement = (
+
+
+
+
+            <select 
+            className={classes.InputElement}
+            {...props.elementConfig}
+            value={props.value}
+            
+            >
+            <option  />
+            <option />
+
+
+            </select>
+        )
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+
+OBSSSSSS::::::: TER AQUELE VALOR 'value={....}' NO 
+
+
+
+ELEMENTO 'SELECT' É ___IMPORTANTE__ (é crucial), 
+
+
+
+É IMPORTANTE PQ É __eLE QUE FAZ O 'TWO WAY BINDING' FUNCIONAR CORRETAMENTE 
+
+NO NOSSO PROJETO...
+
+
+
+
+
+-------> E CADA 
+
+'<option />
+'
+
+
+DEVERÁ 
+
+TER 
+
+2 PEDAÇOS DE INFORMAÇÃO 
+
+
+no seu interior....
+
+
+
+
+--> e, obviamente, explica o professor, 
+
+nós vamos querer 
+
+CRIAR 
+
+ESSES 
+
+ELEMENTOS 'option' 
+
+___DINAMICAMENTE___.... ---> vamos querer os criar 
+
+
+A PARTIR 
+
+DAQUELE 
+
+ARRAY 
+
+de 
+
+
+'
+
+options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+',
+
+
+
+LÁ no state de 
+
+'ContactData'...
+
+
+
+
+
+
+--> E NÓS VAMOS __PUXAR__ ESSES elementos/objetos 
+
+__JUSTAMENTE__ PELA REFERÊNCIA AO OBJETO 'config' RECEBIDO DE 'ContactData' em 
+
+'Input'....
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+ case('select'): 
+        inputElement = (
+
+
+
+
+            <select 
+            className={classes.InputElement}
+            {...props.elementConfig}
+            value={props.value}
+            
+            >
+            <option />
+            <option />
+
+
+            </select>
+        )
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+Certo... mas aí o professor vai nos confundir um pouco... -------> 
+
+
+ELE NÃO VAI QUERER 
+
+
+__HARDCODAr___ as 
+
+
+'option'
+ 
+
+ ALI DENTRO..., dentro da tag/elemento de 
+
+ 'select'... ---------> NÃO, 
+
+ EM VEZ 
+
+ DISSO 
+
+ ELE VAI QUERER 
+
+
+ __RENDERIZAR___ ESSAS 'OPTION' __________DINAMICAMENTE__ DENTRO DE ___ 
+
+
+ 'select'...
+
+ (
+     ou seja,
+
+     com 
+
+
+
+     '{}'
+
+
+ )
+
+
+
+
+
+
+
+ PARA ISSO, ELE NOS EXPLICA QUE ELE VAI QUERER PEGAR 
+
+
+ o 
+
+ 'props.elementConfig.options'  (que é AQUELE ARRAY DE __OBJETOS__ QUE SERÃO__ AS OPTIONS NO DROPDOWN/select)....
+
+
+ 
+
+
+
+
+ ELE VAI PEGAR ISSO AÍ, esse array,
+
+
+ e aí 
+
+ vai
+
+
+
+ MAPPEAR ('.map()')
+
+
+
+ ESSE ARRAY, OS ELEMENTOS DESSE ARRAY,
+
+
+ EM 
+
+
+ COMPONENTS/elementos 
+
+
+
+ '<option />'...
+
+
+
+
+
+ ex:
+
+
+
+
+ 
+ case('select'): 
+        inputElement = (
+
+
+
+
+            <select 
+            className={classes.InputElement}
+            {...props.elementConfig}
+            value={props.value}
+            >{
+                props.elementConfig.options.map(); ///////EIS O CÓDIGO EM QUESTÃO....
+            }
+            </select>
+        )
+
+
+
+
+
+
+
+ESSE MAP VAI FICAR:
+
+
+
+
+
+
+
+
+props.elementConfig.options.map(
+
+
+
+    (option) => {
+
+    }
+)
+
+
+
+-----------------------------------
+
+
+É EVIDENTE QUE O PROFESSOR VAI QUERER RETORNAR 
+
+__CÓDIGO JSX__ A PARTIR DE CADA ELEMENTO 
+
+'option' (elemento que será UM DAQUELES OBJETOS com 'value' e 'displayValue' dentro do array 
+'options'...)
+
+
+
+
+
+
+
+O CÓDIGO JSX QUE O PROFESSOR VAI QUERER RETORNAR SERÁ 
+
+
+'<option value={option.value}       ></option>' 
+
+
+
+
+
+
+
+
+
+
+
+
+value={option.value} ----> isso fará com que o VALUE dessa 'option' fique 
+
+'fastest'/'cheapest', 
+
+aquela string lá....
+
+
+
+
+
+
+displayValue ---> É A COISA QUE QUEREMOS QUE SEJA MOSTRADA AO USUÁRIO.... (A opção em si).
+
+
+
+
+
+
+---------> mas o 'displayValue' é especial, no JSX..... : ele deve ser inserido 
+
+DENTRO 
+DAS 
+
+OPENING E CLOSING TAGS de nosso jsx de 'option'... (
+
+    pq ele é o que será efetivamente renderizado...
+) ------> isso significa que ele será escrito como '{option.displayValue}'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+props.elementConfig.options.map(
+
+
+
+    (option) => {
+        <option value={option.value}>
+            {option.displayValue}
+        </option>
+    }
+)
+
+
+
+
+
+
+
+
+-------------------
+
+
+FICOU ASSIM:
+
+
+const input = (props) => {
+
+    let inputElement = null;
+
+
+        switch (props.elementType) { /
+            case('input'): 
+            inputElement = (<input {...props.elementConfig} 
+                className={InputStyle.InputElement}
+                value={props.value}
+                
+                
+                />)
+            break;
+            case('textarea'):
+            inputElement = (<textarea {...props.elementConfig} 
+                className={InputStyle.InputElement}
+                value={props.value}/>)
+            break;
+            case('dropdown'):
+            inputElement = (
+            
+            <select 
+                className={InputStyle.InputElement}
+                value={props.value}
+        >               
+        {
+            props.elementConfig.options.map(
+                <option value={option.value}>
+                        {option.displayValue}
+                </option>
+            )
+        }
+            </select> )
+            break;
+            default:
+                inputElement = (<input {...props.elementConfig} 
+                    className={InputStyle.InputElement}
+                    value={props.value}/>)
+        }
+
+
+
+    return (
+        <div className={InputStyle.Input}>
+            <label>{props.label}</label>
+            {inputElement}
+        </div>
+    )
+
+
+
+}
+
+
+
+--------------------------------
+
+
+Com isso, um dropdown SERÁ EFETIVAMENTE CRIADO na nossa página...
+
+
+
+
+-> devemos checar se isso funciona... -----> Certo, isso está funcionando...
+
+
+
+
+
+
+
+
+------------------------------------------------------
+
+
+
+
+
+-> veremos um dropdown com as 2 'options' que settamos... --------> contudo, um problema/o problema 
+
+é que 
+
+ELES NÃO ESTÃO VINCULADOS A NENHUM 
+'EVENT HANDLER'... ( a nenhum 'onChange' handler, para ser mais específico...)
+
+
+
+ 
+
+
+
+
+
+
+ --> e esse 
+
+
+ ONCHANGE HANDLER __dEVERÁ __ SER ADICIONADO AO OBJETo/OBJETOS 
+
+
+ 'option'... esses objetos/components/elementos deverão ter, cada um deles, 
+
+ 1 handler 'onChange' _PQ__ ELES ESTÃO SENDO CRIADOS PELO MÉTODO '.map()'...
+
+
+
+
+
+
+---> cada um dessas 'option' também DEVERÁ __tER UMA KEY__ (para evitar erros de update 
+de virtual DOM)... --> essa key pode SIMPLESMENTE SER 
+
+'option.value', pode simplesmente ser o valor da propriedade 'value'... (pq isso aí, esse valor, já É UM VALOR ÚNICO, NO FINAL DAS CONTAS...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> COM ISSO, PORTANTO, 
+
+FINALMENTE 
+
+TEMOS 
+
+UM 
+
+ELEMENTO 
+
+
+'<input />'
+
+
+ajustado para 
+
+TAMBÉM FAZER RENDER 
+
+DE 
+'
+dropdowns'.... ------> e é evidente que 
+
+nesse 
+
+
+component 
+
+'Input' (Que é um GRANDE WRAPPER) 
+
+você pode 
+
+
+colocar 
+
+
+OUTROS SWITCH CASES,
+
+switch cases para 
+
+coisas 
+
+como 
+
+'CHECKBOXES' (mas você sempre deve pensar em uma coisa: SEMPRE DEVE PENSAR 
+
+EM COMO CONFIGURAR CADA TIPO DE ELEMENTO/TAG HTML, E PENSAR TAMBÉM EM COMO 
+
+FAZER 
+
+
+O 'INSERT' DAS INFORMAÇÕES do objeto 'config' definido no state do container/component (como 'ContactData', nesse nosso exemplo)
+
+
+DENTRO DESSA TAG/ELEMENTO específico... )
+
+
+
+
+
+
+
+
+
+
+--> mas o professor quer usar esse setup que estamos usando agora....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> COM TUDO ISSO AGORA SETTADO,
+
+
+PROFESSOR QUER 
+
+ADICIONAR OS EVENTHANDLERS, OS 'onChange' handlers, 
+
+PARA 
+
+
+
+ASSEGURAR QUE 
+
+AS COISAS QUE O USUÁRIO INPUTTA/SELECIONA __ são realmente adicionados __ AO STATE,
+
+para que 
+
+então possam realmente ser enviados ao nosso backend/server...
+
+
+
+
+
+
+
+
+
+
+---> Certo... acho que entendi o flow do código... ele realmente é útil/altamente reutilizável, 
+
+
+mas pode ser meio confuso... muito pass de props, e métodos que reorganizam o código...
+
+
+
+
+
+
+
+
+
+
+

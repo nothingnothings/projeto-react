@@ -1,0 +1,714 @@
+
+
+
+PARA DEMONSTRAR O ROUTING, O PROFESSOR VAI USAR 
+
+
+AQUELE PROJETO
+
+
+
+DOS 
+
+'Posts', antigao... (o app do BLOG).
+
+
+
+
+
+--------------------------------
+
+
+
+É AQUELE APP EM QUE PODEMOS RETRIEVAR OS DADOS DE 1 POST, 
+
+
+CRIAR UM NOVO POST E O POSTAR EM UM SERVIDOR, 
+
+
+
+
+E também remover um post do servidor....
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+----> CERTO, E TODAS ESSAS FEATURES,
+
+TODAS 
+
+ESSAS PARTES 
+
+
+
+QUE 
+
+LIDAM COM 
+
+
+
+Posts
+
+
+
+
+ESTAO 
+
+EXISTINDO 
+
+
+
+NA 
+
+
+MESMA 
+
+PAGINA, 
+
+
+
+NO MESMO LUGAR... -------> E ISSO, 
+
+É 
+
+CLARO,
+
+ 
+
+NAO É A USER EXPERIENCE 
+
+QUE QUEREMOS PROVIDENCIAR.... --> PROVAVELMENTE VAMOS QUERER 
+
+
+
+PROVIDENCIAR ALGUNS LINKS NO TOPO DA PAGINA, 
+
+
+LINKS
+
+
+EM QUE 
+
+
+O USUÁRIO CLICARÁ 
+
+
+PARA 
+
+
+
+
+
+ENTAO 
+
+
+
+VER A PARTE 
+
+DO SITE QUE 
+
+DESEJA
+ 
+
+ EXIBIDA DIANTE DOS SEUS OLHOS... --> E FAREMOS ISSO POR MEIO DO ROUTING....
+
+
+
+-------------------------------------------
+
+
+
+ESSA 'TOOLBAR' ou links em cima  (paths)...
+
+da pagina 
+
+vao permitir ao usuário 
+
+renderizar 
+
+diferentes paginas...
+
+-----------------
+
+DEVEMOS COMECAR PELO ADD DESSES 
+
+
+DIFERENTES LINKS, 
+
+ANTES 
+
+
+DE PASSARMOS 
+
+AO ROUTING 
+
+
+E A 
+
+CODIFICACAO 
+
+DO SUPORTE 
+
+DESSES DIFERENTES LINKS (paths)...
+
+
+
+-----------------------------
+
+
+
+OS LINKS PODEM 
+
+SIMPLESMENTE 
+
+
+
+SER 
+
+
+ADICIONADOS NO 
+
+
+
+CONTAINER 
+
+'Blog.js'... ---------> E PROFESSOR EXPLICA QUE 
+
+
+
+É 
+
+
+CLARO QUE 
+VOCE PODERIA 
+
+
+OUTSOURCEAR 
+ESSES LINKS, CADA UM DELES,
+ 
+
+ NO SEU PROPRIO COMPONENT, 
+
+ MAS QUE 
+
+ AQUI 
+
+ ELE NAO FARA ISSO... --------> PROFESSOR 
+
+
+ QUER 
+
+ FOCAR 
+
+
+
+ NA FUNCIONALIDADE DO ROUTING, 
+
+
+ e 
+
+
+
+nao nesses pequenos detalhes (detalhes que voce 
+
+ADICIONARÁ EM UM APLICATIVO DE VERDADE).
+
+
+
+
+
+
+
+
+
+---> no proximo modulo, 
+
+adicionaremos ROUTING ao nosso projeto do hamburger...
+
+
+
+
+
+
+------------------------------------------
+
+
+CERTO, NO METODO 'RENDER', DE CODIGO
+
+
+
+
+    render () {
+        let posts = <p style={{textAlign: 'center'}}>Something went wrong!</p>;
+        if (!this.state.error) {
+            posts = this.state.posts.map(post => {
+                return <Post 
+                    key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)} />;
+            });
+        }
+
+        return (
+            <div>
+                <section className="Posts">
+                    {posts}
+                </section>
+                <section>
+                    <FullPost id={this.state.selectedPostId} />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        );
+    }
+
+-----------------------------------------
+
+
+
+
+O PROFESSOR 
+
+
+VAI QUERER 
+
+
+
+MAIS DO QUE 
+
+O SIMPLES 
+
+RENDER 
+
+DE POSTS... ----> mas em cima dos posts '<section className="Post" />'....., 
+
+
+O PROFESSOR 
+
+VAI QUERER 
+
+
+TER UM 
+
+
+___HEADER___.... -------> NESSE HEADER 
+
+SERÃO MOSTRADOS ALGUNS LINKS... -------->  os links serão mostrados dentro de um HTML tag de 'ul', dentro de um html tag de 'nav'...
+
+
+ex:
+
+return (
+            <div>
+                <header>
+                    <nav>
+                        <ul>
+                            <li> </li>
+                        <ul/>
+                        </nav>
+
+
+
+
+
+
+)
+
+------------------------------------------------
+
+
+
+
+
+
+DENTRO DOS 'li' 
+
+o professor vai colocar 
+
+
+'<a href=  />'.....
+
+
+
+
+
+
+
+
+
+
+
+
+TIPO ASSIM (link 'home')
+
+
+
+
+
+
+
+
+
+
+
+
+    <header>
+                    <nav>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                        </ul>
+                    </nav>
+                </header>
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+HOME --> SERA A STARTING PAGE, QUE NOS MOSTRA 
+
+TODOS OS POSTS QUE TEMOS....
+
+
+
+
+
+
+
+--> DEPOIS DISSO TEREMOS UM LINK PARA 1 'SINGLE POST' --> e 
+
+esse link sera criado DINAMICAMENTE, OU SEJA, ELE 
+
+SERA 
+
+__cRIADO __ PARA OS POSTS QUE ESCREVEMOS___...
+
+
+
+
+
+
+--> por fim, nessa tag de 'navigation', vamos 
+
+ter um 
+link de 'New Post'...  --> isso poderá/vai levar 
+
+
+a um path de '/new-post'....
+
+
+
+ex 
+
+
+
+  <header>
+                    <nav>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/new-post">New Post</a></li>
+                        </ul>
+                    </nav>
+                </header>
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+
+PORTANTO, ISSO E COMO NOS SETTAREMOS NOSSOS LINKS...  --> 
+
+
+
+agora o professor vai adicionar algum styling a eles, 
+
+só para que 
+
+eles nao fiquem super feios.... 
+
+
+-->  Ele vai no ARQUIVO 
+
+
+'Blog.module.css' 
+
+
+
+E ESTILIZA 
+
+
+
+
+
+A 
+'ul',
+
+
+
+
+faz com que 
+
+ela nao tenha nenhum list style, 
+
+
+
+e aí deixa 
+
+a margin e a padding como 0....
+
+
+
+
+
+
+
+EX:
+
+
+
+.Posts {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+}
+
+
+
+
+.Posts ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.Posts li {
+    display: inline-block;
+    margin: 20px;
+}
+
+
+.Posts a {
+    text-decoration: none;
+    color: black;
+}
+
+
+
+
+
+.Posts
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+
+------------> certo, estilo nao ficou tao bonito, mas nao e isso que conta...  --> os items nao estao centralizados, mas foda-se
+
+
+
+
+
+
+
+
+
+
+--> professor bota mais alguns estilos, mas
+
+
+
+nao o copiamos...
+
+
+
+--> ESSES LINKS JA FAZEM ALGUMA COISA NO NOSSO APP, 
+
+quando clicamos 
+
+
+neles nossa barra de url 
+é 
+
+afetada, 
+
+
+
+novos paths/urls 
+
+sao carregadas (o link vai ali e o browser dá 'enter'), 
+
+mas 
+
+
+isso 
+
+nao resulta em nada. --> nao resulta em nada 
+
+
+
+PQ 
+
+
+NAO CODAMOS NADA PARA REAGIR 
+
+A ISSO, AINDA... ----------> 
+
+
+
+
+CERTO,
+
+MAS COMO NAO CODAMOS NADA, 
+
+A PAGINA NAO DEVERIA ESTAR EM BRANCO (pq o path de 'new-post', por exemplo, ainda inexiste...)
+
+
+--> professor explica que 
+
+
+SÓ NÃO DAMOS DE CARA COM UMA PAGINA EM BRANCO POR 
+
+
+CAUSA 
+
+DO COMPORTAMENTO 
+
+
+DO NOSSO DEV SERVER, QUE NOS RETORNA AO HOME AUTOMATICAMENTE 
+
+
+TODA VEZ QUE VAMOS A UMA PAGINA 'EM BRANCO' (path sem nada configurado)...
+
+
+
+
+
+---> E NO NOSSO PRODUCTION SERVER ESSE COMPORTAMENTO __sERÁ O MESMO___ --> 
+
+
+SUA PAGINA 
+
+VAI 
+
+
+
+SEMPRE  CARREGAR A MESMA PAGINA A PARTIR DA TROCA DE UMA URL 
+
+DE SEU SITE,
+
+
+ELA VAI SEMPRE CARREGAR A 
+
+PAGINA 
+
+'index.html', pq para 
+
+O NOSSO SERVIDOR 
+
+
+HÁ APENAS 1 ROTA, NAO EXISTEM ROTAS DIFERENTES,
+ 
+ PQ ELE 
+
+ SEMPRE
+
+
+
+ VAI CARREGAR ESSE ARQUIVO HTML, QUE SEMPRE SERA O MESMO... --> 
+
+
+ e o server tem que o retornar TODA HORA...
+
+
+
+
+
+
+
+
+---> como a pagina SERVIDA/retornada pelo usuário e sempre 
+
+A
+ 
+ MESMA,
+  
+
+  CABE AO CLIENT (browserside) PARSEAR 
+
+  E INTERPRETAR 
+
+
+  A URL QUE FOI INSERIDA NA CAIXA DE URLs,
+
+
+  parsear a url e entao requisitar 
+
+  do servidor components especificos 
+
+
+  relacionados àquele path...
+
+
+
+
+
+
+
+-------> é isso que VEREMOS NA PROXIMA AULA, 
+
+
+EM QUE 
+
+
+VEREMOS 
+
+
+
+COMO FAZER O INSTALL DE 'routing',
+
+
+
+E SOBRE 
+
+
+COMO 
+
+
+
+SETTAR DIFERENTES ROUTES...

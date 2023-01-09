@@ -1,0 +1,735 @@
+---> no último vídeo, 
+
+
+
+vimos classes, propriedades e métodos...
+
+
+
+
+
+
+
+---> MAS O ES6 OFERECE UMA OUTRA 
+
+
+SINTAXE 
+
+
+DE INICIALIZAR PROPRIEDADES E MÉTODOS.... ---> e é essa sintaxe 
+
+
+moderna que o professor usará durante 
+
+
+esse curso...
+
+
+
+
+
+
+--> você já aprendeu que PROPRIEDADES """SÃO COMO VARIÁVEIS ANEXADAS A CLASSES/OBJETOS..."""
+
+
+
+--> você já aprendeu que MÉTODOS """SÃO COMO FUNÇÕES ANEXADAS A CLASSES E OBJETOS'
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+NÓS TAMBÉM 
+
+
+APRENDEMOS 
+
+SOBRE 
+
+AQUELA SINTAXE DE 
+
+
+
+'constructor () {
+    this.myProperty = 'value';
+}' 
+
+
+
+QUE FAZ COM QUE UMA PROPRIEDADE SEJA ADICIONADA NO OBJETO CRIADO
+ A PARTIR DO INSTANCIAMENTO DE UMA CLASSE...
+
+
+
+
+
+
+
+ MAS EXISTE UMA SINTAXE MAIS MODERNA DE JAVASCRIPT 
+
+ __QUE DISPENSA ___ O USO DESSA 
+ ___ CONSTRUCTOR FUNCTION ___ PARA 
+
+ ADICIONAR PROPRIEDADES... 
+
+
+
+
+ ---> NO ES7 (ES SETE, E NÃO SEIS, ES6, COMO USAMOS DURANTE O CURSO ANTERIOR DO PROFESSOR)....
+
+
+ ----------------------------------
+
+
+
+
+
+ NO 
+
+
+
+ ___ES7____,
+
+
+ NÓS PODEMOS 
+
+
+ ADICIONAR/CRIAR UMA PROPRIEDADE 
+
+
+
+ E DEFINIR UM VALOR PARA ELA 
+
+ por meio 
+
+
+ da sintaxe 
+
+ de 
+
+
+ "myProperty = 'value' "
+
+-------------------------------
+
+
+(OU SEJA, DISPENSAMOS COMPLETAMENTE O USO DA CONSTRUCTOR FUNCTION...) ---> vocÊ 
+
+
+ASSIGNA UMA PROPRIEDADE __DIRETAMENTE__ NA SUA CLASSE
+ 
+
+ POR MEIO DA 
+
+ SINTAXE 
+
+
+ myProperty = 'value' .....
+
+
+
+ VOCÊ 
+
+ ''SKIPPA O CALL DA CONSTRUCTOR FUNCTION''.... --> por trás 
+
+ das cenas, 
+
+
+ a constructor function da classe AINDA É CHAMADA... ---> ou seja, 
+
+ essa sintaxe 
+
+
+ SÓ EXISTE PARA NOS AJUDAR, deixar a escrita mais fácil...
+
+
+ ----------------------------------------------
+
+
+
+
+ PARA MÉTODOS, APLICA-SE O MESMO PRINCÍPIO...
+
+
+
+
+ Sintaxe do ES6 ----> é assim:
+
+
+
+ myMethod () {
+     ...
+ }  -------------------------> ESSA É A SINTAXE 
+
+ ES6 QUE USAMOS 
+
+ DURANTE O CURSO ANTERIOR DO PROFESSOR...
+
+
+
+
+
+ JÁ A SINTAXE E7 --> A 
+
+
+ SINTAXE E7 É USAR ___A SINTAXE ___  DAS PROPRIEDADES (em que você escreve "myProperty = 'value'"), OU SEJA, 
+
+ SIMPLESMENTE 
+
+ PENSAR EM UM MÉTODO COMO ___UM TIPO DE ___  PROPRIEDADE___ QUE __ ARMAZENA __ UMA 
+
+ ___FUNÇÃO___ COMO PROPRIEDADE....
+
+
+
+
+ EX de método com a sintaxe ES7:
+
+
+
+
+myMethod = () => {
+    ...
+}
+
+
+
+------------------------------------
+
+
+OU SEJA, 
+
+
+É TIPO UMA ARROW FUNCTION, MAS SEM O 'const ....' no início...
+
+
+
+---------------------------------
+
+
+
+
+A GRANDE VANTAGEM 
+
+DESSAS FORMAS SINTÁTICAS 
+
+
+É QUE 
+
+
+como nós ___ USAMOS __ UMA ARROW FUNCTION ___ COMO UM 
+
+'PROPERTY VALUE' (um valor de propriedade),
+
+
+
+NÓS ACABAMOS NOS LIVRANDO DE TODOS OS PROBLEMAS COM 
+
+A KEYWORD 'THIS'...
+
+
+
+E É JUSTAMENTE POR ISSO QUE 
+
+VAMOS USAR ESSA SINTAXE 
+
+(
+myProperty = 'value' 
+
+
+e 
+
+
+
+myMethod = () => {
+    ...
+}
+
+
+
+
+
+
+
+)
+
+
+
+
+
+DURANTE O CURSO DE REACT... ela é muito melhor 
+
+
+
+
+----------------------------------
+
+
+
+
+O PROFESSOR QUER MOSTRAR ESSAS SINTAXES A NÓS.....
+
+
+
+
+
+
+DE VOLTA AO 'JSBIN',
+
+no projeto em que estávamos trabalhando ,
+
+
+
+com as classes 
+
+'Human' 
+
+
+e 
+
+'Person', 
+
+
+
+
+TEMOS O CÓDIGO:
+
+
+
+
+ 
+
+
+
+  class Human {
+    constructor() {
+        this.gender = 'male';
+    }
+    printGender() {
+        console.log(this.gender);
+    }
+}
+
+
+
+ class Person extends Human {
+     constructor() {
+         super(); 
+         this.name = 'Max';
+         this.gender = 'female';  
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName();
+
+
+person.printGender();
+
+
+---------------------------------------------------------
+
+
+
+
+NESSE CÓDIGO, PODEMOS NOS LIVRAR DO CONSTRUCTOR EM 'human' e em 'person'...
+
+
+
+
+COMEÇAMOS PELO 'HUMAN'... --> 
+
+
+Nós vamos 
+
+lá 
+
+
+E RETIRAMOS O CONSTRUCTOR, JUNTO DA PRIMEIRA OCORRÊNCIA
+
+de 'this' no código...
+
+
+já 'printGender(){}' 
+
+
+PODE TER SUA 
+
+SINTAXE 
+
+ALTERADA 
+
+PARA 
+
+
+
+'
+printGender = () => {
+    console.log(gender);
+}
+'
+
+
+(TRANSFORMAMOS ELE EM UMA ARROW FUNCTION...)
+
+
+
+
+
+ex:
+
+
+
+
+
+  class Human {
+    
+        gender = 'male';
+
+    printGender = () => {
+        console.log(this.gender); /////ESSE 'THIS' NÓS NÃO PODEMOS TIRAR... ELE DEVE FICAR ASSIM, MESMO.
+    }
+}
+
+
+
+ class Person extends Human {
+     constructor() {
+         super(); 
+         this.name = 'Max';
+         this.gender = 'female';  
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName();
+
+
+person.printGender();
+
+
+---------------------------------
+
+
+
+
+
+
+*****_____-----> IMPORTANTE!!!!!! --> 
+
+
+podemos tirar o 'this' que USAMOS 
+
+NA __DEFINIÇÃO__ DA PROPRIEDADE.... ENTRETANTO, QUANDO 
+
+VAMOS QUERER __CHAMAR___ ESSA PROPRIEDADE __DENTRO DA CLASSE__, em algum método ou 
+
+algo do gênero, 
+
+__dEVEMOS __ CHAMAR 'this' (como visto em 'this.gender'...)
+
+
+
+
+Ex:
+
+
+
+
+
+  class Human {
+    
+        gender = 'male';
+
+    printGender = () => {
+        console.log(this.gender); /////ESSE 'THIS' NÓS NÃO PODEMOS TIRAR... ELE DEVE FICAR ASSIM, MESMO.
+    }
+}
+
+
+
+ class Person extends Human {
+     constructor() {
+         super(); 
+         this.name = 'Max';
+         this.gender = 'female';  
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName();
+
+
+person.printGender();
+
+
+----------------------------------
+
+
+
+
+
+
+
+Ok... agora 'Human' está certo...
+
+
+
+
+-------------------------------------
+
+
+
+
+FAZEMOS A MESMA COISA EM 
+
+
+'Person'... --> removemos 
+
+
+o constructor, 
+
+
+e também 
+
+REMOVEMOS 
+
+
+O SUPER(), pois agora o CONSTRUCTOR NÃO EXISTE MAIS....
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+  class Human {
+    
+        gender = 'male';
+
+    printGender = () => {
+        console.log(this.gender);
+    }
+}
+
+
+
+ class Person extends Human {
+   
+         
+         this.name = 'Max';
+         this.gender = 'female';  
+    
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName();
+
+
+person.printGender();
+
+
+
+-------------------------------------------
+
+
+
+
+
+Certo... 
+
+as propriedades também devem ser mudadas, 
+
+
+deve ser removido o 'this' EM CADA UMA DELAS....   (sim, até mesmo o 'this' de 'gender', que é uma propriedade legada pelo 'Human'...)
+
+
+
+ex:
+
+
+
+
+
+  class Human {
+    
+        gender = 'male';
+
+    printGender = () => {
+        console.log(this.gender); 
+    }
+}
+
+
+
+ class Person extends Human {
+   
+         
+         name = 'Max';
+         gender = 'female';  
+    
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName();
+
+
+person.printGender();
+
+
+
+--------------------------------------------------
+
+
+
+
+NÓS TAMBÉM DEVEMOS TRANSFORMAR 
+
+O MÉTODO 
+
+'printMyName' em uma arrow function/arrow method....
+
+
+
+
+---------------------------------------
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+  class Human {
+    
+        gender = 'male';
+
+    printGender = () => {
+        console.log(this.gender); 
+    }
+}
+
+
+
+ class Person extends Human {
+   
+         
+         name = 'Max';
+         gender = 'female';  
+    
+
+
+
+     printMyName = () => {
+         console.log(this.name); ///e deixamos o 'this' nesse trecho, aqui, também.
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName();
+
+
+person.printGender();
+
+
+
+--------------------------------------------------------------------
+
+
+
+
+
+Certo.... agora o código está de acordo com o ES7...
+
+
+Mas se tentarmos rodar esse código no ES7, 
+
+VAMOS RECEBER um __ERRO__...
+
+
+recebemos um erro 
+
+
+pq temos que usar o dropdown desse site, o dropdown 
+
+que muda a linguagem 
+
+
+de javascript para 
+
+'ES6/ BABEL' (que é o que vamos escrever nesse curso, basicamente.)
+
+
+
+
+OBS::: hoje em dia, o site nem nos dá mais um erro, ele funciona mesmo assim --> o que indica que essas features, essas sintaxes, ESTÃO CADA VEZ MAIS POPULARES... 
+
+
+
+
+--------------------------------
+
+
+
+ESSA SINTAXE É NEXT-GEN JAVASCRIPT QUE USAREMOS NESTE CURSO...

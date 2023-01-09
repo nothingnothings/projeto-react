@@ -1,0 +1,971 @@
+
+
+--> NA ÚLTIMA LIÇÃO,
+
+
+ADICIONAMOS 
+
+CSS TRANSITIONS...
+
+
+
+
+
+
+
+
+
+--> uma coisa SEPARADA 
+de 
+
+'css transitions' (conjunto de 'transition:', 'opacity' e 
+
+'translateX/translateY' ) que 
+
+
+PODEMOS UTILIZAR 
+
+
+
+É 
+
+
+
+JUSTAMENTE 
+O 
+
+
+
+'CSS ANIMATIONS'... ----------> 
+
+
+
+
+
+
+
+
+CSS ANIMATIONS... --> isso NÃO TEM NADA A VER COMO REACT, 
+
+assim como o 'css transition'... ---------> 
+
+
+
+
+CSS ANIMATIONS SIMPLESMENTE 
+
+TE 
+
+DEIXAM 
+
+DEFINIR 
+
+
+__UMA ANIMAÇÃO MAIS COMPLEXA E CONTROLADA 
+
+DO QUE 
+
+
+AQUELA 
+
+QUE 
+VOCÊ 
+
+
+CONSEGUE 
+
+COM A PROPRIEDADE 
+
+
+
+'transition'... ------> 
+
+
+
+
+ISSO 
+
+PQ 
+
+O 
+
+TRANSITION É SIMPLES, A ÚNICA COISA QUE ELE DIZ É 
+
+'
+'''EI, SEMPRE QUE QUALQUER PROPRIEDADE/ESTILO MUDAR, __ANIME__ AQUELA 
+MUDANÇA, E ENTENDA COMO __ ANIMAR AQUELA __ MUDANÇA __ POR CONTA PRÓPRIA'''' ___ (é isso que essa propriedade diz À ENGINE DO CSS...)
+
+
+
+
+
+
+
+
+
+
+-----> JÁ UMA CSS ANIMATION É UM 
+
+
+
+SET DE STEPS DETALHADOS QUE 
+
+VOCÊ 
+
+QUER 
+
+QUE 
+
+
+SEJA 
+
+EXECUTADO...
+
+
+
+
+--> é a animação 'step by step',
+
+
+keyframe por keyframe...
+
+
+
+
+
+
+
+
+
+---> VOCÊ DEVE CRIAR 
+
+
+__KEYFRAMES__ com 
+
+a sintaxe 
+
+
+'@keyframes'... ---> 
+
+
+
+
+
+
+ISSO FEITO,
+
+VOCÊ 
+
+
+DÁ 
+
+A 
+ESSE 
+
+'keyframes'/keyframe 
+
+
+__QUALQUER NOME 
+
+DE SUA 
+
+ESCOLHA..
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+@keyframes openModal {
+
+}
+
+
+----------------------------
+
+
+AÍ,
+
+DENTRO 
+
+DESSE OBJETO '@keyframe',
+
+
+
+
+
+
+VOCê _DEFINE _ AS 
+
+'STEPS',
+
+VOCÊ 
+
+
+DEFINE 
+
+AS 
+
+
+'STEPS' DENTRO __ DAQUELA ANIMAÇÃO ESPECÍFICA__, 
+
+E TUDO 
+
+EM 
+
+___PORCENTAGENS__....  ------> 
+
+
+
+
+
+E, SE VOCÊ 
+
+
+TEM 
+
+APENAS 
+
+2 
+
+'LOCAIS' de 'início' e 'fim' na animação,
+
+VOCÊ 
+
+PODE 
+
+
+SE CONTENTAR 
+
+
+USANDO 
+
+
+
+'from' e 'to',
+
+as keywords...
+
+
+
+
+
+
+
+--> MAS SE VOCÊ QUER SER __ REALMENTE___ ESPECÍFICO,
+
+ESPECIFICAR CADA 'STEP' da sua animação,
+
+
+você 
+
+deve 
+
+usar 
+
+AS 
+
+PORCENTAGENS...
+
+
+
+ex:
+
+
+
+
+
+
+
+@keyframes openModal {
+
+    0% {
+
+    }
+
+
+    50% {
+
+    }
+
+
+    100% {
+
+    }
+}
+
+
+
+
+
+
+
+
+OK, AGORA TEMOS 3 'STATES' DA ANIMAÇÃO, NESSE EXEMPLO AÍ... ---> 
+
+
+
+DENTRO 
+DA ANIMAÇÃO,
+
+dos states 
+
+de animação,
+
+
+
+
+VOCÊ __ USA PROPRIEDADES __ NORMAIS 
+
+CSS 
+
+
+___PARA __ DESCREVER __ COMO AQUELE OBJETO DEVERÁ 
+
+SE 
+PARECER
+ 
+
+  
+NAQUELE MOMENTO específico...
+
+
+
+
+
+
+
+
+
+COMO AQUI ESTAMOS 
+
+TRATANDO 
+
+DE 
+
+'openModal',
+
+
+VAMOS QUERER 
+
+
+
+__cOMEÇAR COM UMA opacity de '0',
+
+E UM
+
+TRANSFORM 
+
+
+
+
+QUE MOVERÁ 
+
+NOSSO ELEMENTO 
+
+
+PARA __CIMA__ ( ou seja, 'translateY(-100%)')....
+
+
+
+Ex:
+
+
+
+
+
+
+
+
+@keyframes openModal {
+
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+
+    50% {
+
+    }
+
+
+    100% {
+
+    }
+}
+
+
+--------------------------------
+
+
+
+
+
+
+NA COISA 50%,
+
+
+nós vamos querer que fique TOTALMENTE VISÍVEL O MODAL ('opacity: 1'),
+
+
+MAS 
+DIGAMOS QUE
+
+VAMOS QUERER 
+
+QUE 
+
+O NEGÓCIO SE MEXA 
+
+
+FIQUE ATÉ 
+
+NO MAX UNS '20%' abaixo da posição final (20%)....
+
+
+
+ex:
+
+
+
+
+
+
+@keyframes openModal {
+
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+
+    50% {
+            opacity: 1;
+            transform: translateY(20%);
+    }
+
+
+    100% {
+
+    }
+}
+
+
+
+
+-------------------------
+
+
+
+
+
+CERTO... E APENAS QUANDO CHEGAR A 100% (fim da animação)
+
+
+
+VMAOS QUERER 
+
+
+OPACITY 1 
+
+e 
+
+transform 
+
+
+como 
+
+'translateY(0)'.... (posição originária desse elemento)...
+
+
+
+
+EX:
+
+
+
+
+
+
+@keyframes openModal {
+
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+
+    50% {
+            opacity: 1;
+            transform: translateY(20%);
+    }
+
+
+    100% {
+                opacity: 1;
+                transform: translateY(0);
+    }
+}
+
+
+------------------------------
+
+
+
+
+
+ISSO FEITO,
+
+
+PODEMOS 
+
+USAR 
+
+
+ESSA ANIMAÇÃO 
+
+
+DE 
+
+'openModal' (armazenado nesse '@keyframes')
+
+LÁ 
+
+
+
+NA NOSSA 
+
+CLASSE 
+
+DE 
+
+
+'.ModalOpen',
+
+
+
+
+POR MEIO 
+
+DA 
+
+
+
+
+
+
+PROPRIEDADE 
+
+'animation'... ---> essa propriedade 
+
+nos 
+
+deixa 
+
+
+DEFINIR UM 'SET OF KEYFRAMES' que 
+
+DEVERÁ 
+
+
+__SER EXECUTADA__ SEMPRE QUE 
+
+ESSA CLASSE 
+
+
+DE 
+
+'.ModalOpen' 
+
+
+ESTIVER PRESENTE EM UM ELEMENTo (e é claro que isso INCLUI, TAMBÉM,
+
+AS HIPÓTESES EM QUE __ ESSE ESTILO É __ ADICIONADO A UM ELEMENTO....)
+
+----------------------
+
+
+
+
+
+-----> PROFESSOR VAI ESCREVER 
+
+
+'animation: openModal'... --> 
+
+
+
+
+MAS 
+
+É 
+
+CLARO QUE 
+
+ESSA PROPRIEDADE EXIGE MAIS ALGUNS VALORES/PROPRIEDADES.... --> ELA TAMBÉM 
+
+EXIGE UM 
+
+'TIMING/TIMING FUNCTION' (como '0.3s').. . --> 
+
+O 
+
+PROFESSOR 
+
+VAI 
+
+DEFINIR 
+
+'0.3s'...
+
+
+
+
+
+
+
+
+
+
+--> PROFESSOR TAMBÉM DEFINE UMA 'TIMING FUNCTION', aquelas 
+
+FUNÇÕES/VALORES 
+
+QUE 
+
+INDICAM 
+
+
+A __DISTRIBUIÇÃO_ da animação 
+d
+entro 
+
+daquele timeframe.... ---> ele vai 
+
+
+escrever 
+
+'ease-out'...
+
+
+
+
+
+----------------------------------
+
+OK... 
+
+
+ADICIONAMOS 
+
+ESSE 
+
+
+ESTILO NO NOSSO PROJETO... --> 
+
+
+
+
+
+MAS 
+
+NÓS TAMBÉM 
+
+_PRECISAMOS __ DEFINIR __ MAIS UMA COISA NESSA PROPRIEDADE 
+
+'animation' ... --> precisamos DEFINIR 
+
+SE O CÓDIGO TERÁ __ DE rEPETIR__ ESSA ANIMAÇÃO__,
+
+OU 
+
+
+SE 
+
+
+
+ELE PODERÁ APENAS 
+
+EXECUTAR ESSA ANIMAÇÃO 1 ÚNICA VEZ PARA CADA VEZ QUE O ESTILO É APLICADO...
+
+
+
+
+
+
+---------------------> E SE VOCÊ NÃO DEFINE NADA, O CSS ANIMATIONS VAI __TOCAR __ A ANIMAÇÃO__ E 
+
+ENTÃO RETORNAR ___ AO 'SPOT INICIAL' do seu elemento, o spot que 
+
+
+ele 
+
+estava 
+ANTES 
+
+DE SER ANIMADO/se animar...
+
+
+
+
+
+
+--> E SE VOCÊ QUER QUE 
+
+SUA ANIMAÇÃO/OBJETO AFETADO PELA ANIMAÇÃO ___ 
+
+
+FIQUE/PERMANEÇA __ NO 'FINAL STATE' (100%) 
+
+DE SUA 
+
+ANIMAÇÃO/KEYFRAME object,
+
+
+VOCÊ 
+
+DEVE 
+
+ESCREVER 
+
+UM 
+
+VALOR 
+DE 
+
+'forwards' 
+
+
+
+DEPOIS 
+
+
+DA 
+
+'TIME FUNCTION'...
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+COM ISSO, PROFESSOR SALVA O ARQUIVO E CLICA EM 
+
+'Open Modal'... 
+
+
+
+
+NO MEU, NADA ACONTECE...
+
+
+
+
+
+NÃO SEI PORQUE ISSO DEU ERRADO....
+
+
+
+
+
+
+
+
+
+-----> OK, na verdade deu 'certo'.... --> eu digo 
+
+'
+certo'... PQ __ NÃO ESTÁ CERTO NEM UM POUCO... ---> 
+
+
+
+
+nossa animação está funcionando,
+
+
+
+ENTRETANTO O _____ELEMENTO 
+
+'MODAL' 
+
+__ESTÁ __ EXISTINDO __NA NOSSA PÁGINA (de forma INVISÍVEL) 
+
+
+quando carregamos ela pela primeira vez... (ou seja,
+
+está EXISTINDO NO DOM, na frente de outros botões/elementos,
+
+
+MAS DE FORMA INVISÍVEL....) -----> UMA SOLUÇÃO PARA 
+
+ISSO 
+
+É 
+
+ADICIONAR 
+
+
+'display: none' 
+
+ao 
+
+ESTILO 
+
+DE 
+
+
+'.ModalClosed',
+
+
+MAS 
+
+
+ISSO 
+
+
+__AÍ __ DESABILITA __ 
+
+
+
+
+A ANIMAÇÃO 
+
+DE 
+
+'animations' 
+
+QUANDO 
+
+FECHAMOS 
+
+
+ESSE MODAL...
+
+
+
+(OK, MAS O SINAL DE QUE 
+
+___ O 'CSS ANIMATIONS' FUNCIONOU, EM SI,
+é mostrado 
+
+PELO 
+
+FATO 
+
+DE QUE 
+
+
+o 
+
+
+nosso modal DÁ UM PEQUENO 'bounce' ANTES DE 'pousar' no seu local 
+
+de 
+
+'translate(0)' ....)
+
+
+
+
+
+ESSE BOUNCE OCORRE JUSTAMENTE POR CAUSA DESTA ANIMAÇÃO/KEYFRAMES:
+
+
+-100 -> +50 -> 0....
+
+
+
+
+---------------------------
+
+
+OK... 
+
+
+ESTAMOS 
+
+USANDO 
+
+CSS ANIMATIONS..
+
+
+
+----------------------
+
+
+
+
+
+ACHO QUE 
+
+A 
+
+___SOLUÇÃO PARA O CLOSE,
+
+
+
+SEM SER AQUELE 
+FIX __BRUTO__ DE 
+
+'display: none',
+
+É __dEFINIR UM 
+
+
+SET 
+DE
+
+
+KEYFRAMES 
+
+
+chamado 
+
+'ModalClose', JUSTAMENTE PARA O MOVIMENTO INVERSO....
+
+
+
+
+
+
+
+---> ok, 
+eu codei o que o professor pediu,
+
+mas estou com um problema... --> 
+
+
+
+MEU MODAL SEMPRE ESTÁ SENDO __rENDERIZADO __ NO STARTUP DE MINHA PÁGINA...
+
+
+(O PROFESSOR DEPOIS MENCIONA ___EXATAMENTE__ ESTE PROBLEMA, NA PRÓXIMA AULA...)
+
+
+
+
+
+
+
+
+
+
+
+--> CSS ANIMATIONS --> NOS DÁ MAIS CONTROLE,
+
+NOS DEIXA SETTAR NOSSO PRÓPRIO CONJUNTO DE 
+
+'KEYFRAMES'.... (é usado em casos em que vocÊ necessita de animações mais complexas...)

@@ -1,0 +1,898 @@
+
+
+
+
+
+
+
+
+
+
+--> DEVEMOS COMEÇAR A IMPLEMENTAR O COMPONENT 
+
+'BURGER BUILDER'...  -------> professor aponta que, conforme 
+
+
+
+CONSTATAMOS DURANTE NOSSA 'DESIGN PHASE',
+
+
+ESSE 
+
+
+
+COMPONENT __dEVERÁ SER_,NA VERDADE, __ UM __CONTAINER___ ---> isso 
+
+
+pq 
+
+
+__DENTRO DA PÁGINA 'BURGER BUILDER' ___ A NOSSA PÁGINA/COMPONENT 
+
+
+VAI TER 
+
+
+QUE ACOMPANHAR AS MUDANÇAS FEITAS, 
+
+OS INGREDIENTS 
+
+ADICIONADOS PELO USUÁRIO AO 
+
+
+HAMBURGUER... ----> NÓS PLANEJAMOS 
+
+
+FAZER MANAGE DO 'STATE' DO BURGER QUE 
+
+ESTAMOS PRESTES A CONSTRUIR... --------> 
+
+
+É POR ISSO QUE O PROFESSOR 
+
+VAI ATÉ 
+
+O FOLDER 
+
+DE 
+
+'containers' E VAI 
+
+CRIAR UM NOVO FOLDER 
+
+
+
+CHAMADO DE 
+
+
+'BurgerBuilder'... -------> E ESSE SERÁ O COMPONENT NAME desse component...
+
+
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+ISSO FEITO,
+
+AGORA 
+
+
+VAMOS 
+
+
+ESCREVER 
+
+O CONTAINER DE 
+
+
+'BurgerBuilder'....
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+class BurgerBuilder extends Component {
+
+                state = {};
+
+
+            render() {
+                return (
+                    <div></div>
+                )
+            }
+
+
+
+}
+
+
+
+export default BurgerBuilder;
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------
+
+
+OU SEJA,
+
+
+AGORA O PROFESSOR 
+
+TEM 
+
+
+
+UM 'MODELO BASE' 
+
+
+desse 
+
+CLASS-BASED COMPONENT que TEM UM __sTATE__... (é um STATEFUL component, um CONTAINER)....
+
+
+
+
+------------------------------------------------------
+
+
+
+
+Certo... --> dentro do return vamos TER QUE RETORNAR ALGUM CÓDIGO JSX... ------> 
+
+
+A QUESTÃO 
+
+
+É : 
+
+
+
+QUE CÓDIGO JSX DEVEMOS RETORNAR? ---> professor 
+
+admite que 
+
+
+NOSSO CÓDIGO PROVAVELMENTE VAI CRESCER 
+
+AO LONGO DO DESENVOLVIMENTO DO NOSSO APP... --> por exemplo,
+
+
+
+NÓS TALVEZ 
+
+
+FAÇAMOS O __rETURN___ DE UM  __MODAL___ AQUI, condicionalmente, 
+
+CASO SEJA TEMPO DE O MOSTRAR... ------> MAS, POR ENQUANTO, 
+
+
+
+O QUE O PROFESSOR QUER 
+
+RENDERIZAR AQUI 
+
+
+
+__sÃO __ DUAS COISAS DIFERENTES... -----> 
+
+
+E ELE DIZ 
+
+QUE 
+
+
+VAI USAR 
+
+NOSSO 
+
+COMPONENT 'AUX'
+ 
+ para wrappar essas 2 coisas...
+
+
+
+
+
+
+ ---------------------------
+
+
+
+
+ NOSSO CÓDIGO ATÉ AGORA:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ import React, { Component } from 'react';
+
+
+import Aux from '../../hoc/Auxiliary';
+
+
+
+class BurgerBuilder extends Component {
+
+
+    state = {};
+
+
+
+
+
+    render() {
+        return(
+            <Aux>
+                <div></div>
+
+                <div></div>
+
+
+
+            </Aux>
+        )
+    }
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+export default BurgerBuilder;
+
+
+
+
+-----------------------------------
+
+
+
+PROFESSOR USA 
+
+
+'AUX' 
+
+pq constata 
+
+QUE 
+
+NÃO PRECISA DE 
+
+uma WRAPPING DIV, ACTUALLY,
+
+nesse caso aí.... (o AUX já satisfaz nossas necessidades)....
+
+
+
+
+
+--> PROFESSOR VAI QUERER FAZER O RETURN DE 2 COISAS DIFERENTES 
+
+NESSE NOSSO RENDER DO COMPONENT 
+'BurgerBuilder'... -----> 
+
+ELE VAI USAR 
+
+2 DIVS 
+
+
+COMO PLACEHOLDERS.... ---------> 
+
+
+
+ELE VAI QUERER RETORNAR, PRIMEIRAMENTE, O 
+
+
+'BURGER' QUE ELE 
+
+
+__CONSTRUIU__ (ou seja, UMA __REPRESENTAÇÃO GRÁFICA 
+
+DO HAMBURGER, com 
+
+TODOS OS INGREDIENTS...) ------->  
+
+
+E ELE 
+
+TAMBÉM VAI QUERER, EMBAIXO DISSO,
+ 
+
+OS 'BUILD CONTROLS', OU SEJA, 
+
+
+UMA ___ÁREA__ EM QUE PODEMOS ___aDICIONAR/REMOVER ___ INGREDIENTS__...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+ import React, { Component } from 'react';
+
+
+import Aux from '../../hoc/Auxiliary';
+
+
+
+class BurgerBuilder extends Component {
+
+
+    state = {};
+
+
+
+
+
+    render() {
+        return(
+            <Aux>
+                <div>Burger Visual</div>
+
+                <div>Build Controls</div>
+
+
+
+            </Aux>
+        )
+    }
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+export default BurgerBuilder;
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+É ESSE O SETUP QUE O PROFESSOR QUER USAR... --> nós talvez adicionemos mais 
+
+coisas 
+
+ao longo do desenvolvimento, 
+
+
+mas esse é o esboço inicial...
+
+
+
+------------------------------------------
+
+
+ISSO FEITO,
+
+
+AGORA 
+
+DEVEMOS 
+
+
+__IMPORTAR__ O BURGER BUILDER__ LÁ NO ARQUIVO 
+
+
+'APP.JS'... -------> E AÍ NÓS VAMOS SUBSTITUIR 
+
+
+
+O 
+
+
+'<p>Test</p>' 
+
+
+
+(aquele <P> de test)
+
+
+
+QUE 
+
+ESTAVA WRAPPADO COM O COMPONENT 'Layout',
+
+
+POR ESSE 
+
+COMPONENT 
+
+
+'BurgerBuilder'...
+
+
+
+
+EX:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+import AppStyle from '../src/App.module.css';
+
+
+
+import BurgerBuilder from '../src/containers/BurgerBuilder/BurgerBuilder';
+
+
+
+import Layout from '../src/components/Layout/Layout';
+
+
+
+
+class App extends Component {
+  render() {
+
+
+
+    return(
+        <div>
+       <Layout>
+         <BurgerBuilder /> ///////EIS O CÓDIGO EM QUESTÃO.
+       </Layout>
+       </div>
+    )
+  }
+
+}
+
+export default App;
+
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+O BURGERBUILDER INVOCATION __sERÁ__ UM SELF-CLOSING COMPONENT ( < />), 
+
+
+
+PQ 
+
+___O PROFESSOR NÃO PRECISA WRAPPAR QUALQUER 
+
+CONTEÚDO com os SELECTORS__....
+
+
+
+
+
+
+
+
+--> ASSIM QUE FIZERMOS ISSO,
+
+
+VEREMOS 
+
+
+
+
+NA NOSSA PÁGINA 
+
+
+O OUTPUT 
+
+
+de 
+
+--------------------------
+
+'Toolbar, SideDrawer, Backdrop 
+Burger 
+Build Controls' 
+
+--------------------
+
+
+ISSO SINALIZA QUE 
+
+
+NOSSO OUTPUT __FUNCIONOU__ ---> sinaliza que 
+
+
+o __LAYOUT__ está inserido dentro de _APP__... --> 
+
+e sinaliza 
+
+que o ___LAYOUT__ 
+
+
+ESTÁ FAZENDO OUTPUT do seu 'props.children', que 
+
+
+é o component '<BurgerBuilder />' ENFIADO 
+
+NO MEIO DE SUAS OPENING E CLOSING TAGS...
+
+
+
+----------------------------------------------
+
+
+
+
+
+--> MAS TUDO ISSO AINDA PODE SER MELHORADO... -----> em todos aspectos...
+
+
+
+
+
+
+
+
+
+--> PODEMOS MELHORAR __ O ESTILO___ DESSAS 
+
+
+3 LINHAS 
+
+
+AÍ... --------> A PRIMEIRA 
+
+
+COISA QUE 
+
+PODEMOS FAZER 
+
+
+
+É GARANTIR QUE 
+
+
+TEREMOS UMA __MARGIN__ ENTRE A NOSSA 
+
+
+TOOLBAR (ainda que seja só um placeholder, por enquanto)
+
+
+E NOSSA OUTRA PARTE,
+ 
+
+
+ A PARTE 'main' --------> 
+
+
+
+ E O PROFESSOR 
+
+
+ EXPLICA QUE 
+
+ ELE fará 
+
+
+ ESSE 
+
+
+STYLING 
+
+
+
+__LÁ NO __COMPONENT 'LAYOUT'... --> PQ É NESSE COMPONENT 
+
+QUE TEMOS 
+
+
+A ÁREA PARA O TOOLBAR, E É NESSE COMPONENT QUE 
+
+TEMOS A ÁREA PARA A PARTE 'MAIN' de 
+
+nosso aplicativo.... -----> O PROFESSOR DIZ QUE 
+
+
+ELE SIMPLESMENTE 
+
+QUER ADICIONAR UMA 
+
+
+CLASSE CSS 
+
+AO ELEMENTO 
+
+
+'main' 
+
+
+
+DENTRO DO COMPONENT 'LAYOUT'....
+
+
+
+ex:
+
+
+
+
+const layout = (props) => {
+
+
+
+    return(
+        <Aux>
+        <div>Toolbar, SideDrawer, Backdrop</div>
+        <main>
+            {props.children}
+        </main>
+        </Aux>
+    
+    );
+
+
+
+
+
+}
+
+-----------------------------------
+
+
+
+PARA ISSO,
+
+
+O PROFESSOR VAI ADICIONAR UM 
+
+___NOVO __ ARQUIVO CSS, DE NOME 
+
+
+'Layout.module.css'... ....
+
+
+
+
+
+ESCREVEMOS ALGO TIPO ISSO AQUI,
+
+
+CONFORME O PROFESSOR NOS ENSINOU:
+
+
+----------------------------------------------
+
+
+
+import React from 'react';
+
+
+import Aux from '../../hoc/Auxiliary';
+
+
+import LayoutStyle from './Layout.module.css';
+
+
+
+const layout = (props) => {
+
+
+
+    return(
+        <Aux>
+        <div>Toolbar, SideDrawer, Backdrop</div>
+        <main style={LayoutStyle.main}>
+            {props.children}
+        </main>
+        </Aux>
+    
+    );
+
+
+
+
+
+}
+
+
+
+
+export default layout;
+
+
+--------------------------------------------
+
+
+
+Certo... esse 'LayoutStyle.main'
+
+
+É 
+
+DERIVADO 
+
+DO ESTILO 
+
+
+'main'
+
+
+DEFINIDO NO ARQUIVO .CSS 
+
+de 
+
+'Layout.module.css',
+
+que está assim:
+
+
+
+main {
+
+
+    margin: 2rem;
+}
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+MAS O PROFESSOR CRIA UMA CLASSE de nome diferente,
+
+
+e um estilo diferente... ---> 
+
+
+
+'.Content {
+
+    margin-top: 16px;
+}
+
+--------------------------------------
+
+
+
+
+FICOU ASSIM:
+
+-----------------------------------
+
+
+import React from 'react';
+
+
+import Aux from '../../hoc/Auxiliary';
+
+
+import LayoutStyle from './Layout.module.css';
+
+
+
+const layout = (props) => {
+
+
+
+    return(
+        <Aux>
+        <div>Toolbar, SideDrawer, Backdrop</div>
+        <main className={LayoutStyle.Content}>
+            {props.children}
+        </main>
+        </Aux>
+    
+    );
+
+
+
+
+
+}
+
+
+
+
+
+export default layout;
+
+
+
+----------------------------------------
+
+
+
+CERTO... ISSO ADICIONOU UM POUCO DE MARGIN... --------> COMO 
+PRÓXIMA 
+
+ETAPA,
+
+
+
+DEVEMOS ADICIONAR UM 
+
+
+
+
+COMPONENT 'BURGER',
+
+e  
+
+components 'INGREDIENTS', QUE DEVERÃO 
+
+
+SER RENDERIZADOS DENTRO DO COMPONENT 
+
+'burger'...s
+
+

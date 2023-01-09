@@ -1,0 +1,475 @@
+
+
+
+TRABALHANDO COM 
+
+'INLINE STYLES'  -->
+
+
+VIMOS ANTERIORMENTE 
+
+QUE 
+
+
+EXISTEM 
+
+
+DIFERENTES MANEIRAS DE ESTILIZAR UM
+ 
+
+ APLICATIVo....
+
+
+
+ --> devemos estilizar NOSSO ELEMENTO 'button' 
+
+ COM UM APPROACH DIFERENTE 
+ do que 
+
+ utilizamos 
+
+
+ nos components 'Person'...
+
+
+
+ --------------------------
+
+
+
+
+
+--> no arquivo 
+
+
+'App.js',
+
+
+QUE É O LUGAR EM QUE TEMOS AQUELE 'button', 
+
+
+O PROFESSOR VAI QUERER 
+ESTILIZAR 
+
+
+ESSE ELEMENTO  com aquilo 
+
+
+que chamamos de 
+
+
+'INLINE STYLES'.... -----------> 
+
+
+
+
+PROFESSOR EXPLICA QUE __NÃO HÁ NADA DE ERRADO __ EM USAR 
+
+
+ARQUIVOS CSS E CLASSES CSS..... ----> e essa até PODE SER O APPROACH/MANEIRA 
+
+PREFERIDA PELOS DESENVOLVEDORES....
+
+
+
+
+
+--> ENTRETANTO, DEVEMOS CONHECER O OUTRO APPROACH PARA ADICIONAR 
+
+
+ESTILOS EM REACT APPS ---> 
+
+
+
+
+esse approach está relacionado com um fenômeno COMUM em aplicativos react...
+
+
+
+---> em aplicativos reacts, é COMUM VER DESENVOLVEDORES __ QUE FAZEM O DESIGN DOS ESTILOS 
+
+__ NO PRÓPRIO ___ JAVASCRIPT____ ('desenhar' a página POR MEIO DO JAVASCRIPT MESMO...) ----> 
+
+
+OK, MAS 
+
+
+COMO ISSO FUNCIONA?
+
+
+
+
+
+
+
+Bem, devemos ir até 
+
+
+
+a função 
+
+
+
+'render() {
+
+}' 
+
+
+
+
+no 'App.js'
+
+
+
+E ENTÃO 
+
+
+
+DEVEMOS 
+
+CRIAR UMA NOVA CONSTANTE...
+
+
+
+VAMOS CHAMAR 
+
+
+ESSA CONSTANTE 
+
+
+de 
+
+
+'style'...
+
+------------------------
+
+
+
+ESSA CONSTANTE 
+
+É ___UM OBJETO JAVASCRIPT__, e, 
+
+
+
+como você já deve saber, 
+
+
+
+
+
+ESSES 'ESTILOS CSS' que colocamos 
+
+nos nossos elementos,
+
+
+todos esses estilos css 
+
+
+
+__POSSUEM REPRESENTAÇÕES JAVASCRIPT___.... 
+
+
+(é aquela coisa que vimos há bastante tempo, 
+
+
+aquele negócio de 'backgroundColor' do javascript ser igual à 'background-color' dos arquivos css...)...
+
+
+
+
+
+
+O QUE DEVEMOS FAZER É SEMPRE USAR 'camelCase'   
+
+
+PARA AS VERSÕES/REPRESENTAÇÕES JAVASCRIPT 
+dos estilos 
+
+css...
+
+
+
+
+representação disso em 'render(){}':
+
+
+
+
+
+
+
+render() {
+    const style = {
+        backgroundColor ////devemos usar 'backgroundColor', e não 'background-color'..
+    }
+}
+
+
+
+-----------------------------
+
+
+se quisermos usar 'background-color', essa sintaxe aí, 
+
+devemos WRAPPÁ-LA 
+
+em QUOTATION MARKS...  (como "backgroud-color")....
+
+
+
+
+ISSO FEITO, 
+
+
+vou DEFINIR 
+
+
+O backgroundColor COMO 
+
+'white'...
+
+
+
+ex:
+
+
+
+
+render() {
+    const style = {
+        backgroundColor: 'white', ////devemos usar 'backgroundColor', e não 'background-color'..
+    }
+}
+
+
+
+-----------------------
+
+
+
+NÓS TAMBÉM 
+
+PODEMOS/DEVEMOS 
+
+
+DEFINIR 
+
+A FONT como 'inherit', para que seja usada 
+
+A FONTE DEFAULT/fonte default seja herdada...
+
+
+NÓS TAMBÉM PODEMOS/DEVEMOS 
+
+
+DEFINIR 
+
+UMA 
+
+'border'
+
+
+de 
+
+'1px  solid blue'....
+
+
+e também 
+
+
+'padding: '8px'...
+
+
+
+
+-------------------
+
+
+
+ex:
+
+
+
+render() {
+    const style = {
+        backgroundColor: 'white', 
+        font: 'inherit',
+        border: '1px solid blue',
+        padding: '8px'
+    }
+    ....
+}
+
+--------------------------------
+
+
+
+
+LEMBRE-SE: VOCÊ 
+
+
+DEVE SEMPRE WRAPPAR
+ 
+
+ os valores dessas propriedades
+
+
+
+ ___eM QUOTATION MARKS___...  ('')... ---> DEVEMOS 
+
+ WRAPPAR 
+
+ EM '' PQ 
+
+ NÓS ESTAMOS ESCREVENDO 
+
+ CÓDIGO JAVASCRIPT AQUI, e por isso 
+
+ esses negócios 
+
+ TÊM DE SER STRINGS...
+
+----------------------------
+
+
+FEITO ISSO, 
+
+
+DEVO IR ATÉ 
+
+O CÓDIGO 
+
+
+de 'button 
+
+onClick={...}'
+
+
+
+
+
+NESSE BUTTON EU VOU ENTÃO 
+
+ADICIONAR 
+
+UMA PROPRIEDADE/ATRIBUTO 
+
+
+CHAMADA 
+
+
+DE 
+
+'style'.... --> professor explica que 
+
+
+ESSE É, NA VERDADE, O 'NORMAL STYLE ATTRIBUTE', QUE 
+É DISPONIBILIZADO/'MADE AVAILABLE' pelo 
+
+
+JSX....
+
+
+
+
+ex:
+
+
+
+
+
+render() {
+    const style = {
+        backgroundColor: 'white', 
+        font: 'inherit',
+        border: '1px solid blue',
+        padding: '8px'
+    }
+    
+    return(
+        <div className="App">
+        <...>
+        <button 
+        style={} ///////////// EIS O CO´DIGO EM QUESTÃO...
+        onClick={...}
+        </button>
+    )
+}
+
+
+-----------------------------------------------
+
+
+
+
+'STYLE', como você já deve ter percebido,
+
+DEVERÁ 
+
+RECEBER UM VALOR DINÂMICO aqui...
+
+
+nós vamos simplesmente passar 
+
+'style' aqui (sem os quotes)... ('style' = REFERÊNCIA à CONSTANTE 'style' DEFINIDA NESSE MESMO MÉTODO 'render(){}'...)
+
+(nós não precisamos usar 'this.style' aqui PQ NÓS ESTAMOS NO MESMO 
+
+MÉTODO em que esse 'style' foi/fora definido...)
+
+
+Ex:
+
+
+
+
+
+
+
+render() {
+    const style = {
+        backgroundColor: 'white', 
+        font: 'inherit',
+        border: '1px solid blue',
+        padding: '8px'
+    }
+    
+    return(
+        <div className="App">
+        <...>
+        <button 
+        style={style} ///////////// EIS O CO´DIGO EM QUESTÃO...
+        onClick={...}
+        </button>
+    )
+}
+
+
+
+
+---------------
+
+
+
+Certo...
+
+salvamos esse código...
+
+
+
+---> NÓS VEMOS UM EFEITO IMEDIATO NO NOSSO CÓDIGO... ----> nosso botão AGORA TEM UMA BORDER AZUL...
+
+
+
+PODEMOS VER UM EFEITO 
+
+AINDA MELHOR... ---> vamos definir 
+
+um estilo de 'pointer: cursor', que 
+
+FARÁ COM QUE 
+
+O CURSOR SEJA TRANSFORMADO EM UMA __MAOZINHA___ quando colocarmos 
+
+o mouse em cima do botão...

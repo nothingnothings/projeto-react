@@ -1,0 +1,657 @@
+
+
+
+
+
+
+
+
+
+
+
+
+ ---> AGORA QUE 
+
+
+ JÁ TEMOS A FUNCIONALIDADE __CORE___ DO BURGERBUILDER (por enquanto),
+
+
+
+
+
+
+NÓS 
+
+
+DEVEMOS PASSAR A PARTE DE CRIAR 
+
+
+_UM TOOLBAR___ E UM SIDEDRAWER... --> 
+
+
+E ISSO 
+
+É CRUCIAL...   -----------> É CRUCIAL PQ,
+ 
+
+ QUANDO 
+
+ NÓS 
+
+ CONSEGUIRMOS EFETIVAMENTE CRIAR MÚLTIPLAS PÁGINAS,
+
+ PRECISAMOS 
+
+ DE 
+
+ ALGUM 
+
+ INSTRUMENTO QUE 
+
+ NOS AJUDE 
+
+ A NAVEGAR, 
+
+
+ A ALCANÇAR ESSAS OUTRAS PÁGINAS....
+
+
+
+
+
+---> TODO APP DEVE TER UMA TOOLBAR, 
+
+
+ELES FICAM MAIS BONITOS...
+
+
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+DEVEMOS ADICIONAR UM NOVO FOLDER NO 
+
+FOLDER 
+
+DE 
+
+'COMPONENTS'---> vamos chamar 
+
+
+
+esse 'component/coisa' 
+
+
+de 
+
+'Navigation' ---> vamos querer armazenar 
+
+TUDO RELACIONADO 
+
+
+A 'NAVIGATION'/NAVEGAÇÃO 
+
+NESSE folder aí...
+
+
+
+
+
+--> DENTRO DE NAVIGATION NÓS VAMOS CRIAR A NOSSA 
+
+TOOLBAR/COMPONENT 'TOOLBAR'.. ---> 
+
+
+
+
+
+no arquivo Toolbar.js,
+
+
+
+
+VAMOS ESCREVÊ-LO COMO  UM FUNCTIONAL COMPONENT...
+
+
+coisa padrão.
+
+
+
+
+
+
+
+
+
+
+---> CERTO. AGORA, COMO DEVE SE PARECER 
+
+
+
+ESSA TOOLBAR, DE UMA PERSPECTIVA 'JSX'? -------> professor 
+
+
+
+explica que 
+
+
+essa toolbar 
+DEVERÁ 
+
+
+SER UM ELEMENTO
+
+
+'HEADER' (isso pq TOOLBARS SÃO __SEMPRE___ 'HEADERS' de aplicativos/páginas 
+
+da web...)
+
+
+----------------------------
+
+
+
+
+---> DENTRO DO HEADER, O PROFESSOR VAI QUERER TER UM PUNHADO 
+
+DE ELEMENTOS, NO FINAL DAS CONTAS:
+
+
+
+1) UM BOTÃO PARA __ABRIR O SIDE DRAWER ___ --> esse botão TERÁ UMA MARCAÇÃO DE 'Menu'....
+
+
+
+
+2) UMA DIV COM O MEU __LOGO___... (que será adicionado mais tarde).
+
+
+
+
+3) UM __NAV__ITEM___ QUE CONTERÁ MEUS 'NAVIGATION LINKS' (isso significa que isso vai conter UMA __UL___ com meus LIST ITEMS de LINKS.. )
+
+
+
+
+
+
+
+
+
+
+
+REPRESENTAÇÃO NO COMPONENT:
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+
+
+
+const toolbar = (props) => {
+
+        <header>
+            <div>MENU</div>
+            <div>LOGO</div>
+            <nav>
+                ...
+            </nav>
+        </header>
+}   
+
+
+
+
+export default toolbar;
+
+
+
+
+
+-------------------------------------
+
+
+
+
+CERTO,
+
+
+ESSE É O CÓDIGO...
+
+
+
+
+
+
+
+
+
+---> OBS: todos aqueles elementos dentro do 'header' 
+
+
+__sÃO PLACEHOLDERs___... --> vamos os substituir por COMPONENTS PRÓPRIOS
+
+
+
+
+LOGO, LOGO...
+
+
+
+
+
+
+--------------------------
+
+
+
+---> TEREMOS UM COMPONENT MENU, UM COMPONENT 'LOGO' E UM 
+
+
+COMPONENT 'NAVIGATION ITEMS'... -------> e esse component 
+
+
+'NAVIGATION ITEMS' 
+
+SERÁ __REUTILIZADO___ NO SIDE DRAWER (que é 
+
+o elemento da nossa página que é utilizado por MOBILE DEVICES)....
+
+
+
+-----------------------------------------
+
+
+
+
+CERTO... MAS ANTES DE CRIAR ESSES 'SUBCOMPONENTS', DEVEMOS CRIAR 
+
+
+A NOSSA TOOLBAR...
+
+
+
+
+
+--> PARA ISSO, É CLARO, 
+
+NOSSA TOOLBAR __VAI PRECISAR DE ALGUM STYLING___ (provavelmente FLEXBOX)....
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+.Toolbar {
+
+
+
+    height: 56px;
+    width: 100%;
+    position: fixed; /////ISSO FARÁ COM QUE A TOOLBAR FIQUE SEMPRE NO TOPO, se digitarmos 'left: 0', 'top: 0'....
+    top: 0;
+    left: 0;
+    background-color: #703B09;
+    display: flex; ///////FLEXBOX.... --> todo os items ficarão alinhados NO PADRÃO DE 'ROW'...
+    justify-contents: space-between;        ///////PROPRIEDADE DO FLEXBOX....
+    align-items: center; //////FLEXBOX
+    padding: 0 20px;
+    box-sizing: border-box;  ////ISSO VAI ASSEGURAR QUE A TOOLBAR SEJA DIMENSIONADA CORRETAMENTE, MESMO COM A PADDING...
+    z-index: 90; //////// 90 ---> IMPORTANTE: ESSE NÚMERO AQUI É 90 PQ __ELE TEM QUE SER MENOR DO QUE O NÚMERO QUE DEFINIMOS PARA O __bACKDROP__... --> isso pq O BACKDROP DEVERÁ __FICAR POR CIMA DA TOOLBAR, QUANDO ELE APARECER...__....
+
+
+}
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+CERTO... O OBJETIVO, AQUI, É DESENVOLVER NOSSO APP COM UMA MENTALIDADE 
+
+
+'MOBILE-FIRST'... ---> é por isso 
+
+que o professor 
+
+
+VAI __SETTAR__ OS SETTINGS PARA O 'MOBILE' 
+
+
+__ANTES ___ DO DESKTOP (a versão/versões de 'desktop' será 
+
+criada por meio de MEDIA QUERIES)...
+
+
+
+
+
+
+
+-----> entretanto, as toolbars tem um benefício: 
+
+
+A MAIOR PARTE DAS CONFIGURAÇÕES DE ESTILOS DELAS 
+
+__FUNCIONA BEM __ TANTO COM DESKTOP QUANTO MOBILE...
+
+
+
+
+
+------> 
+
+
+
+
+
+OK.... 
+
+
+
+ENTRETANTO,
+
+O PROFESSOR QUER ADICIONAR MAIS UMA REGRINHA 
+
+
+NO ARQUIVO CSs:
+
+
+
+
+
+ELE VAI QUERER 
+
+
+ESCREVER 
+
+
+
+.Toolbar nav {
+
+
+
+
+
+
+}
+
+
+
+
+-------------------------
+
+OU SEJA,
+
+ELE VAI QUERER ESTILIZAR ESSE ELEMENTO NAV 
+
+
+__DENTRO___ DO TOOLBAR... --------->
+
+
+ex:
+
+
+
+
+
+.Toolbar nav {
+
+height: 100%; ///////ISSO FARÁ COM QUE OS NAVIGATION ITEMS OCUPEM O HEIGHT COMPLETO DA TOOLBAR (que é algo que desejamos).
+
+
+
+
+}
+
+
+
+-------------------------------
+
+
+
+
+COM ISSO, 
+
+
+DEVEMOS 
+
+TER UMA TOOLBAR QUE FUNCIONA BASICAMENTE... ----> OK, 
+
+
+MAS ONDE DEVEMOS ADICIONAR ESSA TOOLBAR??? --> talvez em 'App', não? (ou no layout) ----> 
+
+
+
+
+PROFESSOR APONTA QUE 
+
+
+PODERÍAMOS QUERER COLOCAR NO 
+
+'BURGERBUILDER'...   -----> MAS NO FINAL DAS CONTAS, QUEREMOS 
+
+TER ESSE TOOLBAR EM __tODOS OS LUGARES DO NOSSO APP... (e não só no burgerbuilder) ---> 
+
+
+professor argumenta que um lugar possível
+
+
+seria 
+
+
+o component App.... --> MAS 
+
+
+QUE, NA VERDADE, O MELHOR LUGAR possível
+
+É O NOSSO 
+
+
+COMPONENT 
+
+'LAYOUT'...  ----> pq é 
+
+
+O __LAYOUT__ que 
+
+
+é 'all about our page layout'... -------> 
+
+
+
+
+E É __NO LAYOUT __ EM QUE 
+
+JÁ TEMOS 
+
+
+
+UNS 
+PLACEHOLDERS POSICIONADOS...
+
+
+
+(lembre-se:
+
+'<div>Toolbar, SideDrawer, Backdrop</div>
+<main className={classes.Content}>
+    {props.children}
+</main>'
+'
+
+
+)
+
+
+
+
+É POR ISSO QUE DEVEMOS IMPORTAR
+ 
+
+ A TOOLBAR LÁ NO COMPONENT 
+
+ 'LAYOUT'...
+
+
+
+
+ E FICARÁ ASSIM O SEU CÓDIGO:
+
+
+
+
+
+
+ 
+    return(
+        <Aux>
+ 
+        <Toolbar /> ////////EIS O CÓDIGO EM QUESTÃO.
+
+        <main className={LayoutStyle.Content}>
+            {props.children}
+        </main>
+        </Aux>
+    
+    );
+
+
+
+
+---------------------------------------------------
+
+
+
+RECARREGAMOS NOSSA PÁGINA, E LOGO PERCEBEMOS 
+
+A TOOLBAR LÁ NO TOPO DA NOSSA PÁGINA... (não está muito bonita). ---> 
+
+
+MAS VAMOS SUBSTITUIR 
+
+TODOS ESSES ELEMENTOS DA TOOLBAR 
+
+
+MAIS TARDE, DE QUALQUER FORMA... --> mas 
+
+uma coisa que 
+
+já podemos 
+
+perceber 
+é que 
+
+
+NOSSA MAIN PAGE ESTÁA 
+
+'OVERLAPPED' 
+
+pela 
+
+TOOLBAR.... ----> ISSO SIGNIFICA QUE DEVEMOS TER 
+
+
+UMA 
+
+'MARGIN-TOP' do elemento 
+
+
+'Main', LÁ NO LAYOUT,
+
+
+ESTÁ UM POUCO ERRADO. -------- >
+
+
+(o margin-top está como '16px') -----> professor explica que 
+
+
+OS 
+
+
+'56px' DA HEIGHT 
+
+
+DA 
+
+
+'TOOLBAR' 
+
+DEVEM SER ADICIONADOS 
+
+NESSE 
+
+'MARGIN-TOP'
+ 
+
+
+ de 
+ 'content' (isso para que tudo fique ajustado, certinho)... ------> CERTO.
+
+
+
+ PROFESSOR 
+
+ AJUSTA 
+
+ ESSE ESTILO ASSIM:
+
+
+
+
+
+
+ .Content {
+
+
+    margin-top: 72px;
+}
+
+
+
+
+
+-----------------
+
+
+72px = 56 (height da TOOLBAR) + 16 (margin que eu tinha antes) .... ---> ISSO VAI AJUSTAR NOSSO POSICIONAMENTO DO BURGER NA PÁGINA... (e resolverá o problema da toolbar fazendo overlap sobre o burger )
+
+
+
+
+
+
+
+
+---> A PRÓXIMA ETAPA __É ADICIONAR UM LOGO BONITO _ NO NOSSO APP...

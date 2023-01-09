@@ -1,0 +1,1145 @@
+
+
+
+
+
+
+NA ÚLTIMA LIÇÃO, APENDEMOS SOBRE COMO SETTAR ESTILOS DINAMICAMENTE -----> APRENDEMOS 
+
+
+QUE NÓS 
+
+
+SIMPLESMENTE 
+
+USAMOS 
+
+JAVASCRIPT 
+
+
+PARA MANIPULAR 
+
+
+QUALQUER COISA/ESTILO, 
+
+
+COISA/ESTILO QUE VOCÊ 
+
+ENTÃO '''___BINDA___''' 
+
+
+À PROPRIEDADE 
+
+
+'style'...
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+'className' __TAMBÉM ___ PODE SER SETTADO DINAMICAMENTE... -----> 
+
+
+
+Professor cita o código de 
+
+'App':
+
+
+
+
+
+
+return (
+    <div className="App">//////////////////////
+    <h1>Hi, I'm a React App</h1>
+    ....
+    </div>
+)
+
+
+
+------------------------------------------
+
+
+
+
+
+MAS O PROFESSOR DIZ 
+
+
+QUE DEVEMOS 
+
+ADICIONAR UMA NOVA CLASSE
+
+AO 
+
+
+NOSSO CÓDIGO, UMA NOVA CLASSE DE ESTILOS no arquivo css 'App.css',
+
+PARA TER ALGO COM O QUE BRINCAR...
+
+
+
+
+--------> NÓS PODERÍAMOS, POR EXEMPLO, 
+
+DIZER QUE 
+
+NÓS QUEREMOS 
+
+MUDAR ALGO NO NOSSO CÓDIGO, 
+
+
+como aquele <p> de 'This is really working!'.... -------> QUEREMOS 
+
+
+QUE ESSE NEGÓCIO MUDE 
+
+
+
+___dE ACORDO ___ COM A NOSSA ___LIST OF PERSONS_____...
+
+
+
+
+
+
+
+---> SE NOSSA LIST OF PERSONS TIVER  3 OBJETOS, como ela 
+
+tem no início, ou menos, 
+
+
+VAMOS QUERER QUE 
+
+ESSE 
+
+
+TEXTO 
+
+'this is really working' 
+
+
+FIQUE COLORIDO DE VERMELHO....
+
+
+
+
+
+---> para isso,
+ 
+ o professor 
+
+ vai adicionar uma nova css class... ---> ELE 
+
+
+
+ VAI 
+
+
+ DEFINIR A COR 
+
+ DESSE NEGÓCIO 
+
+ como 
+
+ 'red',
+  
+
+  e isso 
+  vai 
+
+
+  afetar 
+
+  A COR DO TEXTO...
+
+
+  ele escreve 
+
+
+
+
+  .red {
+      color: red;
+  }
+
+
+
+
+.bold {
+    font-weight: bold;
+}
+
+
+
+------------------------------
+
+
+
+
+o ''RED'' SERÁ APLICADO QUANDO 
+
+EXISTIREM 3 OU MENOS 'PERSONS',
+
+
+
+E O 
+
+
+'BOLD' será aplicado 
+
+QUANDO SOBRAR APENAS 1 'PERSON'...
+
+
+
+--------------------------------
+
+
+
+CERTO,
+
+
+COM ISSO TEREMOS 
+
+
+2 NOVAS CLASSES CSS, 2 NOVAS CLASSES IMPORTADAS PELO ARQUIVO CSS,
+
+E QUE 
+
+FICARÃO DISPONÍVEIS 
+
+
+__GLOBALMENTE___... ---> ficarão disponíveis globalmente, 
+
+
+MAS O PROFESSOR 
+
+TEM DE AS 
+
+USAR EM ALGUM LUGAR DO CÓDIGO .JS 
+
+
+PARA QUE SURTAM EFEITOS NO NOSSO PROJETO...
+
+
+
+
+
+
+
+
+----> AGORA O PROFESSOR __VAI QUERER___ SETTAR 
+
+
+A 'className' 
+
+
+
+DAQUELA 
+
+DIV 
+
+de className 
+
+'App' 
+
+__DINAMICAMENTE__, segundo A QUANTIDADE (length)
+
+
+DE PESSOAS NO NOSSO ARRAY 
+
+
+DE 'PERSONS'....
+
+
+
+(vou tentar brevemente escrever esse código, sozinho)...
+
+
+
+
+
+Certo, não consegui...
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+-------------------> PARA FAZER ISSO,
+
+
+
+PROFESSOR 
+
+
+DIZ QUE DEVEMOS/ELE DEVE 
+
+
+
+
+__AJUSTAR __ A CLASSE __ QUE 
+
+NÓS 
+
+
+ATRIBUÍMOS 
+
+
+
+
+___AO ELEMENTO '<p>' 
+
+
+
+
+
+__DINAMICAMENTE___...
+
+
+
+-----------------------
+
+
+PARA ISSO,
+ 
+
+ ele vai criar 
+
+ uma NOVA VARIÁVEL 
+
+
+
+
+ dentro do 
+
+
+ 'render()',
+
+
+ logo acima do 
+
+ RETURN STATEMENT...
+
+
+
+
+ ele chamará 
+
+ essa 
+
+
+ variável 
+
+ de 
+
+ 'classes'...
+
+
+
+
+
+ DENTRO DESSA VARIÁVEL,
+
+
+ ELE VAI ARMAZENAR 
+
+
+
+ ___UM ____ ARRAY___ DE STRINGS....
+
+
+
+
+ EX (representação do código):
+
+
+
+
+
+let classes = [''];
+
+
+ 
+
+return (
+
+  <div className="App">
+    <h1>Hi, I'm a React App</h1>
+    <p>This is really working!</p>
+    <button 
+    style={style}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    {persons}
+
+
+  </div>
+);
+
+
+
+--------------------------------------
+
+
+
+
+PROFESSOR DIZ QUE 
+
+ESSA É _UMA DAS MANEIRAS__ DE 
+
+
+AJUSTAR A CLASSE DE UM 
+
+ELEMENTO DINAMICAMENTE por meio do react.... ----> 
+
+
+ele vai lá 
+
+
+
+e escreve 
+
+
+
+'let classes = ['red', 'bold'];'
+
+
+(AS CLASSES QUE DEFINIMOS NO ARQUIVO .css)...
+
+
+-----------------------------------
+
+
+
+
+
+DEPOIS DISSO,
+
+
+O PROFESSOR 
+
+
+VAI CHAMAR 
+
+
+'.join()' 
+
+
+
+EM CIMA DESSE ARRAY, 
+
+
+E VAI PASSAR UM ARGUMENTO DE ' ' (ou seja, ele vai COLOCAR UM 'ESPAÇO' como argumento..)
+
+
+
+EX:
+
+
+
+
+
+
+let classes = ['red', 'bold'].join(' ');
+
+
+ 
+
+return (
+
+  <div className="App">
+    <h1>Hi, I'm a React App</h1>
+    <p>This is really working!</p>
+    <button 
+    style={style}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    {persons}
+
+
+  </div>
+);
+
+
+----------------------------------------------
+
+
+
+
+Esse método '.join(' ')' 
+
+vai 
+
+ACABAR TRANSFORMANDO ESSE 
+
+
+ARRAY EM 1 ÚNICA STRING 
+
+com UM ESPAÇO ENTRE O 'red' e o 'bold'...
+
+
+ex:
+
+
+
+'red bold'...
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+
+'red bold' ----------> isso é UMA _____ 'CSS CLASSLIST' VÁLIDA QUE 
+
+PODEMOS ASSIGNAR Ao 
+
+'className'...... (sim, é REALMENTE UMA LISTA DE CLASSES....)
+
+
+
+
+O professor explica 
+
+
+que é 
+
+CLARO QUE ELE PODERIA 
+
+TER CRIADO 
+
+
+ISSO DIRETO, ESCRITO ISSO DIRETAMENTE... 
+
+
+tipo assim:
+
+
+'let classes = ['red bold']; '  ----------> ISSO SERIA O MESMO RESULTADO de 'let classes = ['red', 'bold'].join(' '); '
+
+
+
+
+
+
+---> ENTRETANTO, O PROFESSOR LOGO NOS EXPLICA QUE A RAZÃO DE ELE NÃO TER FEITO 
+ISSO, ESCRITO DESSA FORMA 'DIRETA', É QUE __ELE 
+
+VAI QUERER ___ADICIONAR ESSAS CLASSES AOS NOSSOS ELEMENTOS ___DINAMICAMENTE___, 
+
+
+e se queremos as adicionar dinamicamente, submetidas a condições, 
+
+
+NÃO PODEMOS USAR ESSA SINTAXE MAIS SIMPLES... (é por isso que ele usou a solução genérica de '.join(' ')'....
+
+
+
+
+
+
+
+
+
+
+
+ISSO FEITO,
+
+AGORA 
+
+
+ELE VAI ATÉ 
+
+
+o elemento 'p'
+
+E ADICIONA 'classes' 
+
+
+COMO 
+
+
+'className' desse elemento....
+
+
+
+ex:
+
+
+
+
+
+let classes = ['red', 'bold'].join(' ');
+
+return (
+
+
+
+  <div className={"App"}>
+    <h1>Hi, I'm a React App</h1>
+    <p className={classes}>This is really working!</p>
+    <button 
+    style={style}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    {persons}
+
+   
+
+  </div>
+);
+
+
+
+
+---------------------------------------------
+
+
+
+
+CERTO....
+
+
+
+
+AGORA TEMOS 
+
+
+ESSE 'className' 
+
+
+QUE TEM ESSAS 2 CLASSES ('bold' e 'red')...
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+SE AGORA 
+
+EU SALVAR 
+
+ISSO 
+
+E VOLTAR ATÉ O APLICATIVO, 
+
+
+
+
+VEREI DE CARA 
+
+
+QUE O NOSSO 
+
+
+ELEMENTO 
+
+'<p>'
+
+
+ESTARÁ 
+
+
+COM 
+
+OS ESTILOS 
+
+
+'RED' E 'BOLD' APLICADOS sobre si...
+
+
+(entretanto, ainda não fizemos 
+
+
+AQUELA FEATURE 
+
+DO ___ ESTILO APLICADO MUDAR __ COM 
+
+BASE NA QUANTIDADE/LENGTH 
+
+DE 'PERSONS' no array 
+
+
+
+de 
+
+'this.state.persons'...)
+
+
+
+
+-------------------------------
+
+
+
+
+O negócio está VERMELHO E BOLD pq 
+
+as classes de 'red' e 'bold' ESTÃO SEMPRE SENDO APLICADAS... -------> 
+
+
+
+AGORA NÓS PODEMOS 
+
+
+
+__ADICIONAR/CODAR ___ UMA 
+
+'NATUREZA DINÂMICA' a esses estilos...
+
+
+
+
+
+-------> queremos QUE 
+
+
+
+APENAS FIQUE 'BOLD' SE TIVERMOS 1 PERSON, e red se tivermos MENOS DE 3 persons, e mais de 1...
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+Para conseguir 
+
+esse efeito desejado, 
+
+
+O PROFESSOR 
+
+
+
+
+
+REDEFINE O CÓDIGO DE 
+
+'classes', o definindo 
+
+
+COMO UM SIMPLES ARRAY VAZIO....
+
+
+
+ex:
+
+
+
+
+let classes = [];
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+DEPOIS DISSO, O PROFESSOR VAI SIMPLESMENTE ADICIONAR 
+
+UM 
+
+
+___iF STATEMENT___ abaixo desse array....
+
+
+(ELE EXPLICA QUE PODEMOS USAR 'const classes' pq NÓS NUNCA REDEFINIREMOS O ARRAY QUE ESTÁ ARMAZENADO 
+NESSA CONST; o máximo que FAREMOS É REDEFINIR OS VALORES CONTIDOS DENTRO DELE... --> ou seja, faremos PUSH de nomes de classe DENTRO DELE....)
+
+
+ELE 
+
+ENTÃO 
+
+
+ESCREVE:
+
+
+
+
+const classes = [];
+
+
+
+if(this.state.persons.length <= 2) {
+
+  
+}
+
+
+
+
+----------------------------------------
+
+
+
+DEPOIS DISSO, 
+
+
+
+O PROFESSOR USARÁ 
+
+O MÉTODO 
+
+
+'.push()' 
+
+
+
+DENTRO 
+
+
+DO BODY DAQUELE IF STATEMENT 
+
+
+PARA ENTÃO 
+
+FAZER 
+PUSH 
+
+DO ESTILO 
+
+'RED'
+para dentro daquele array de 'classes'...
+
+
+
+ex:
+
+
+
+
+
+
+
+const classes = [];
+
+
+
+if(this.state.persons.length <= 2) {
+    classes.push('red');
+}
+
+
+-----------------------------------
+
+
+
+
+
+CERTO.
+
+ISSO FUNCIONARÁ.
+
+
+
+
+DEPOIS DISSO,
+
+
+O PROFESSOR ADICIONA 
+
+__OUTRO IF CHECK__, 
+
+AGORA 
+
+PARA 
+
+O 'bold'..... (o código ficará meio feio... eu acho, pelo menos. Muitos if checks).
+
+
+
+
+
+
+PERCEBA: aqui o PROFESSOR __NÃO ADICIONOU UM 'ELSE CASE', aqui 
+
+
+REALMENTE SE TRATA APENAS DE OUTRO 'IF STATEMENT'/if check... ---> ele coloca 
+
+2 pq ele REALMENTE VAI QUERER CHECAR OS 2...
+
+
+
+
+ISSO, POR SUA VEZ, 
+
+
+FARÁ 
+
+COM QUE O CÓDIGO FIQUE 
+
+'RED' E 'BOLD' quando aquela hipótese (array <= 1) se apresentar.
+
+
+
+--------------------------------------------------
+
+
+
+SE RECARREGARMOS NOSSO CÓDIGO, 
+
+
+PERCEBEREMOS 
+
+QUE 
+
+
+
+____A CONDIÇÃO DO 'BOLD' __ NÃO ESTÁ SENDO RESPEITADA/LIDA... --> 
+
+não acontece COISA ALGUMA 
+
+
+NO NOSSO CÓDIGO QUANDO O NÚMERO/LENGTH 
+
+do array chega a '1'....
+
+
+
+
+-------------------> professor explica que a razão 
+
+de isso ESTÁ 
+
+
+
+NO PASS DE 
+
+
+'classes' 
+
+
+como constante/variável 
+
+
+ao 
+
+'<p className={classes}' </p>' .. ---------> 
+
+
+
+ISSO NÃO VAI MAIS FUNCIONAR PQ AGORA 
+
+__________ O 'classes' ____ É UM ARRAY, 
+
+NÓS PRECISAMOS __PASSAR UMA STRING___ aqui, a string de 
+
+'.bold', para que 
+
+
+O ARRAY DE 'classes' FIQUE ATUALIZADO E PARA QUE, CONSEQUENTEMENTE, 
+
+SEU ESTILO SEJA ATUALIZADO COM O 'bold'...
+
+
+
+(Mas isso não está fazendo sentido, para mim....)
+
+
+
+
+Acho que agora entendi...
+
+
+
+
+
+--> quando clicamos em um elemento pela primeira e segunda vezes,
+
+
+
+o REACT VAI TER EMPURRADO 
+
+AQUELES 
+
+2 'estilos/strings' 
+
+
+por meio do método 
+
+'.push()'
+
+PARA DENTRO 
+
+DO ARRAY DE 
+
+
+'CLASSES'.... ---> 
+
+
+isso significa que 
+
+o array de classes ficará assim:
+
+['red', 'bold'];
+
+
+
+BEM, 
+
+O PROBLEMA É QUE ELE CONTINUARÁ APLICANDO APENAS 1 DOS ESTILOS,
+
+O 'red', primeiro na fila.... 
+
+
+É necessário que O PROFESSOR CHAME 
+
+'className={classes.join(' ')}' (OU SEJA, CHAME '.join(' ')' EM CIMA 
+
+DAQUELE ARRAY) PARA 
+
+
+QUE 
+ESSES 
+
+2 ELEMENTOS 
+
+FIQUEM ASSIM:
+
+
+'['red bold']' 
+
+E PARA QUE FINALMENTE SEJAM 
+
+AMBOS 
+
+APLICADOS 
+
+AO ELEMENTO '<P>'...
+
+
+
+
+----------------------
+
+
+CERTO.
+
+ISSO FUNCIONA.
+
+
+REPRESENTAÇÃO:
+
+
+
+
+
+const classes = [];
+
+
+
+if(this.state.persons.length <= 2) {
+    classes.push('red');
+}
+
+
+
+if(this.state.persons.length <= 1) {
+    classes.push('bold');
+}
+
+
+return (
+    <div className="App">
+    <p className={classes.join(' ')}>This is really working!</p>
+)
+
+
+
+---------------------------------------------------------------------
+
+
+COM ISSO, 
+
+
+AGORA O PROFESSOR ESTÁ SIMPLESMENTE 
+
+ASSIGNANDO UMA STRING 
+
+QUE É 
+
+
+O ARRAY UNIDO DOS NOMES DOS NOSSOS ESTILOS COMO O ESTILO DESSE ELEMENTO 'P' --------> 
+
+E isso funciona
+
+
+---------------------------------
+
+
+ISSO NOS MOSTRA COMO PODEMOS ASSIGNAR/EDITAR CLASSES DINAMICAMENTE  --------> TUDO É SIMPLESMENTE JAVASCRIPT..... é um array normal de javascript, usamos javascript normal, tudo javascript normal.
+
+
+
+
+
+------------------------------------------------------------
+
+
+
+
+---> É CLARO QUE VOCÊ PODE TER QUALQUER LÓGICA QUE VOCÊ PRECISA, 
+
+qualquer lógica para pegar um ARRAY 
+
+DE CLASSES, 
+
+
+OU PARA PEGAR UMA STRING DE CLASSES CSS POR OUTROS MÉTODOS, SEM FAZER .JOIn de um array,
+ 
+ talvez PEGAR O INPUT DE UM USUÁRIO (que é uma STRING POR DEFAULT) 
+
+
+ PARA ASSIGNAR STYLES....  -------> 
+
+ VOCÊ PODE ASSIGNAR QUALQUER COISA (QUALQUER COISA QUE SEJA UMA STRING VÁLIDA) 
+
+ AO CLASSNAME, que ele 
+
+ vai HANDLAR ESSAS COISAS COMO UMA LISTA DE CLASSES 
+
+ CSS... (uma lista de classes que CORRESPONDERÁ 
+ 
+ àS CLASSES QUE VOCê DEFINIU NO SEU ARQUIVO .CSS importado, se você fez tudo 
+ direitinho.)
+
+
+
+
+ --> COM ISSO, APRENDEMOS SOBRE COMO 
+
+ ASSIGNAR E EDITAR DINAMICAMENTE ESTILOS, 
+
+ e sobre 
+
+ como 
+
+ ASSIGNAR 
+
+ E EDITAR DINAMICAMENTE CLASSES...

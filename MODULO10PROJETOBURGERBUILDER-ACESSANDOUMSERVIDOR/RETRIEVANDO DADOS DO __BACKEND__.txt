@@ -1,0 +1,2792 @@
+
+
+
+
+
+
+--->  NA ÚLTIMA LIÇÃO, FIZEMOS COM QUE 
+
+NOSSO APP CONSEGUISSE 
+
+HANDLAR ERROS.... ------> E, COM ISSO, 
+
+TEMOS 
+
+
+AGORA 
+
+
+UM ROBUSTO APLICATIVO QUE 
+
+NOS DEIXA POSTAR 
+
+
+NOSSAS 
+
+
+ORDERS 
+
+
+NO NOSSO BACKEND... -----> ENTRETANTO,
+
+
+há mais uma coisa que 
+
+
+o professor quer fazer, 
+
+
+e essa 
+
+coisa 
+
+
+
+é 
+
+
+
+a POSSIBILIDADE 
+
+
+DE 
+
+PEGAR/FAZER 'FETCH' DE DADOS 
+
+
+DE NOSSA 
+
+BACKEND... ---------> 
+
+
+OU SEJA, 
+
+ELE VAI QUERER 
+
+
+PEGAR, POR EXEMPLO, 
+
+
+NOSSOS INGREDIENTS 
+
+
+ARMAZENADOS 
+
+LÁ 
+
+NO BACKEND.... ----> ele vai querer 
+
+
+
+PEGAR 
+
+
+OS 'INGREDIENTS' 
+
+DINAMICAMENTE 
+
+
+
+DE NOSSO 
+
+backend... -----> PARA ISSO, 
+
+ELE EXPLICA QUE 
+
+
+
+
+
+DEVEMOS PRIMEIRAMENTE IR 
+
+ATÉ O 
+
+
+
+FIREBASE...  ---> LÁ DEVEMOS 
+
+FECHAR O NODE DE 'orders' 
+
+ E ENTÃO ADICIONAR UM NOVO NODE... ---> vamos chamar 
+
+
+ esse node 
+
+
+ de 
+
+ 'ingredients'... (será diferente do node de 'orders')... ------->
+
+
+
+
+
+ DEPOIS DISSO,
+  
+
+  vamos usar 
+
+o "+" na direita 
+
+PARA __aDICIONAR UM 'NESTED ELEMENT' 
+
+
+a esse node de ingredients... -----> E AÍ O PROFESSOR 
+
+
+EXPLICA QUE O 'ingredients', os children dele 
+
+DEVERÃO 
+
+SER NOSSOS 
+
+'KEY-VALUE PAIRS'... (como 
+
+'salad', 'cheese', etc...) 
+
+
+
+
+
+
+
+----> colocamos todos os key-value pairs, 
+
+ 
+e definimos 
+
+seus valores como 0.... (todos eles)....
+
+
+
+
+ESCREVEMOS UMA CÓPIA DO NOSSO STATE INICIAL DO BURGERBUILDER,
+
+ESSENCIALMENTE... -----> 
+
+
+certo....
+
+
+
+
+
+
+
+AGORA QUE TEMOS ESSE NODE DE 'ingredients',
+
+
+
+acabamos 
+
+
+criando uma 
+
+URL 
+
+A ESSE 
+
+
+'node'... --> será a url de 'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients'
+
+
+
+
+
+
+------> O PROFESSOR informa, contudo, que 
+
+precisamos 
+
+adicionar '.json' 
+
+AO FINAL DESSA URL PARA ACESSÁ-LA, assim como fizemos com '/orders', que ficou '/orders.json'....
+
+
+
+
+-------------------------------
+
+
+
+
+--> O OBJETIVO, AGORA, É 
+
+
+
+
+____INICIALIZAR ___ OS INGREDIENTS DE NOSSO 
+
+
+STATE (
+
+
+  state =   {
+      ingredients: {
+      salad: 0,
+      bacon: 0,
+      cheese: 0,
+      meat: 0
+    }
+
+
+
+    }
+)
+
+
+
+
+
+
+
+COM 
+
+OS INGREDIENTS 
+
+QUE 
+
+TEMOS ARMAZENADOS 
+
+LÁ NO FIREBASE...
+
+
+
+----------------------------
+
+
+
+CERTO... MAS O PROFESSOR QUER QUE TODAS AS FEATURES 
+
+ATUAIS 
+
+DO 
+
+BURGERBUILDER CONTINUEM AS MESMAS, VAMOS QUERER 
+
+QUE 
+
+SEU STATE AINDA POSSA SER UPDATADO DINAMICAMENTE... -------> 
+
+
+
+
+
+
+
+
+
+
+
+CERTO...... UM LUGAR BOM PARA FAZER 'APPEND' DE DATA RECEBIDA DE UM 
+
+SERVIDOR, COMO APRENDEMOS ANTES,
+
+É 
+
+'componentDidMount()'.... --------> E É EXATAMENTE POR ISSO 
+
+
+QUE VAMOS QUERER 
+
+USAR 
+
+
+
+ESSE MÉTODO 
+
+dentro de 
+
+'BurgerBuilder', pois ele é, no final das contas, 
+
+UM 
+
+
+____CLASS-BASED COMPONENT___...
+
+
+
+
+
+
+
+
+
+professor adiciona esse método... ----> depois disso, 
+
+
+ele chama a nossa INSTÂNCIA DE AXIOS 
+
+DENTRO DESSE MÉTODO... ---> essa 
+
+instância vai fazer 
+
+
+
+'reach out' 
+
+ao 
+
+
+
+LINK DO FIREBASE QUE 
+
+ACABAMOS DE DEFINIR COMO PRÓPRIO DOS 'ingredients'...... ---> vamos colocar esse link 
+
+
+
+
+
+COM '.JSON' adicionado ao final dele...
+
+
+
+( eu acho que não preciso colocar o início da url, pois 
+
+esse início já está definido lá no arquivo
+ 
+ 'axios-orders.js', que é a instância axios 
+ que acaba sendo importada nesse 'BurgerBuilder'...)
+
+
+ex(tipo assim, talvez?):
+
+
+
+
+class BurgerBuilder extends Component {
+
+
+
+  componentDidMount() {
+    axios.get(
+      '/ingredients.json'
+    ).then(
+      (response) => {
+          console.log(response);
+      }
+    )
+  }
+}
+
+
+
+--------------------------------
+
+
+
+
+
+CERTO, 
+
+MAS 
+
+__NÃO ACABAMOS RECEBENDO COISA ALGUMA ___ POR MEIO DESSE REQUEST AÍ.... (nós 
+nem mesmo 
+
+sabemos 
+
+se ele realmente foi enviado... ------> será que a 'baseURL' lá no 
+
+'axios-orders' deu errado?) ------> de fato, 
+
+
+usar 
+
+só 
+
+'/ingredients.json' ali como primeiro parâmetro 
+
+
+__NÃO FUNCIONOU ___ (nossa definição da 'BASEURL', lá em 'axios-orders', não 
+SURTIU 
+
+EFEITO AQUI... não sei a razão disso.)
+
+
+-----------------------------------------
+
+
+
+
+
+Certo... talvez só funcione com requests de tipo '''POST'''' 
+
+essa 
+
+'baseURL' do axios? ------------> NÃO, ESQUEÇA TUDO ISSO... ---> 
+
+
+
+A RAZÃO 
+
+
+PARA 
+
+
+ESSE PROBLEMA AÍ É BEM SIMPLES:
+
+
+NÓS ESTÁVAMOS 
+
+USANDO 
+
+
+'axios.get' 
+
+em 
+
+
+vez 
+
+de 
+
+
+'axiosOrders.get'  (axiosOrders é o objeto/instância de axios criado por nós...) 
+
+
+
+
+
+---> CONTUDO, O PROFESSOR REALMENTE ESTÁ, POR ENQUANTO, USANDO 
+
+O 'OBJETO GLOBAL'/padrão 
+
+
+DE AXIOS ('axios.get')
+
+
+PARA FAZER 
+
+ESSE request 
+
+de tipo 'get',
+
+
+
+
+POR ISSO 
+
+
+VAMOS SEGUIR O SEU CÓDIGO, 
+
+vamos colocar 
+
+aquela url inteira 
+
+da nossa página no slot de '.get()'...
+
+
+
+ex:
+
+
+
+
+
+
+  componentDidMount() {
+    axios.get(
+      'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json/'
+    )
+    .then(
+      (response) => {
+        console.log(response);
+        console.log('test');
+      }
+    )
+  }
+
+
+
+
+
+
+----------------------------
+
+
+
+CERTO, ESSE CÓDIGO FUNCIONARÁ.
+
+
+
+------------------------- 
+
+
+
+
+
+
+
+
+CERTO... NOSSO OBJETIVO, AO CONSEGUIR O OBJETO 'response' 
+
+DA 
+
+
+RESPONSE RECEBIDA 
+POR NOSSO SERVIDOR,
+ 
+
+ É 
+
+
+ __SETTAR___ NOSSO STATE (de burgerbuilder)
+
+ PARA QUE 
+
+ ELE 
+
+ SEJA/TENHA O MESMO 
+
+
+ STATE 
+
+
+ QUE 
+
+ JÁ ESTÁ ARMAZENADO NO NOSSO SERVER.... (ou seja, fazer retrieve 
+ 
+ 
+ do 'STATE' armazenado no servidor, que tem os ingredients, 
+ 
+ 
+ E ENTÃO 
+ 
+ 
+ SETTAR NOSSO STATE PARA 
+ 
+ SER 
+ 
+ ESSE 
+ 
+ 
+ STATE DO SERVIDOR, AÍ....)
+
+
+
+
+
+
+
+
+
+ ---> provavelmente teremos de usar 'response.data' 
+
+ para conseguir esse state do servidor...
+
+
+
+ --------------------------------
+
+
+
+
+
+
+
+ TENTEI USAR UM CÓDIGO ASSIM:
+
+
+ 
+  componentDidMount() {
+    axios.get(
+      'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json'
+    )
+    .then(
+      (response) => {
+        console.log(response);
+        console.log('test');
+
+        const serverIngredients = response.data.ingredients;
+
+        const newBrowserIngredients = {
+          ...serverIngredients
+        }
+
+        this.setState(
+          {
+            ingredients: newBrowserIngredients
+          }
+        )
+
+
+
+
+      }
+    )
+  }
+
+
+
+
+,
+
+
+MAS ELE NÃO FUNCIONOU...
+
+
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+
+PROFESSOR FEZ TUDO DIFERENTEMENTE... --------> 
+
+
+
+
+
+Antes de mais nada, 
+
+a primeira mudança que ele fez 
+
+foi no NOSSO ANTIGO STATE 
+
+de 
+
+'INGREDIENTS'... ---> 
+
+
+
+nosso 
+
+
+
+
+state de ingredients, criado há tempos, 
+
+
+estava assim:
+
+
+
+
+
+
+''''''''''''''''''''''''
+
+
+
+
+state = {
+  ingredients: {
+    cheese: 0,
+    meat: 0, 
+    salad: 0,
+    bacon: 0
+  },
+
+  totalPrice: 4,
+  purchasable: false,
+  purchasing: false,
+  loading: false
+}
+
+
+
+
+
+''''''''''''''''''''''''''''
+
+
+
+
+AGORA O PROFESSOR VAI SUBSTITUIR O VALOR DAQUELA 
+
+
+
+PROPRIEDADE 
+
+'ingredients' 
+
+, aquele objeto com os valores dos ingredients sendo '0',
+
+
+POR UM SIMPLES 'null'. -----------> FAREMOS ISSO, EXPLICA O PROFESSOR,
+
+
+
+
+PQ ___aGORA ___ 
+
+
+OS 
+
+
+DADOS/VALORES DOS INGREDIENTS 
+
+
+
+SERÃO __fETCHEADOS___ 
+
+LÁ DA __ NOSSA DATABASE__ DO FIREBASE.... ------->
+
+
+
+
+
+
+Isso feito, o que o professor 
+
+vai 
+
+fazer é 
+
+
+
+
+usar 'THIS.SETstate()' 
+
+
+NESSE 
+
+'.then() block' 
+
+
+E ENTÃO 
+
+
+DEFINIR 
+
+'{ingredients: response.data}'...
+
+
+
+
+
+
+ex(tipo assim, acho):
+
+
+
+
+
+
+
+  componentDidMount() {
+    axios.get(
+      'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json'
+    )
+    .then(
+      (response) => {
+        console.log(response);
+        console.log('test');
+
+        this.setState(
+          {
+            ingredients: response.data
+          }
+        )
+
+
+
+
+      }
+    )
+  }
+
+
+
+
+
+
+
+
+  ----------------------------------------------------------
+
+
+
+
+
+
+
+
+  OBS::: ELE VAI FETCHEAR 
+
+  'response.data', 
+
+  e não 
+
+
+  'response.data.ingredients', 
+
+
+
+  PQ __NOSSA DATA __ JÁ É, 'NO ROOT', 
+
+'ingredients' para 
+
+início de conversa...
+
+
+-> certo ,
+
+
+mas AINDA ASSIM, CONTINUAMOS RECEBENDO UM ERRO... --------> 
+
+
+
+
+
+GANHAMOS 
+
+
+O ERRO FEIO DE 
+
+
+
+'TypeError: Cannot convert undefined or null to object'... --------------> 
+
+
+
+
+ISSO ACONTECE 
+
+DEVIDO 
+
+
+A UM MÉTODO QUE EXECUTAMOS 
+
+
+LÁ 
+
+EM 
+
+'OrderSummary' ----> 
+
+
+em OrderSummary, 
+
+nós executamos 
+
+um 
+
+
+código 
+
+
+'const ingredientSummary = Object.keys( this.props.ingredients ).map()'..... -------> 
+
+
+
+
+E ___ ESSE 'Object.keys' 
+
+
+SÓ __PODE ___ SER USADO __ EM 
+
+UMA PROPRIEDADE/OBJETO __ QUE 
+
+CONTENHA __ __PROPRIEDADES___ QUE POSSUAM VALORES.... (e como aqui 
+
+nós 
+
+SÓ TEMOS UMA PROPRIEDADE 'ingredients' com um valor 
+
+DE __NULL___, 
+não é possível loopar por dentro do valor 'null'...) 
+
+
+
+
+
+
+
+
+
+---> E ESSE PROBLEMA AÍ EM CIMA ___É COMUM, É UM 'COMMON USE-CASE' EM APLICATIVOS... -----> 
+
+
+como nós SÓ QUEREMOS ___fETCHEAR___ OS VALORES DOS INGREDIENTS 
+
+no nosso servidor ____NO INÍCIO (no PRIMEIRO CARREGAMENTO DE NOSSA PÁGINA), 
+
+
+O FATO DE A propriedade 
+'ingredients' estar 
+
+definida inicialmente (no segundo ZERO) como 
+
+
+'null' FAZ SENTIDO, mas é um OBSTÁCULO PQ ___ É IMPOSSÍVEL__ executar alguns 
+
+códigos SOBRE ESSE VALOR,
+ 
+ como esse map aí, que não tem como ser executado sobre 'null' (mais precisamente, 
+ não há COMO TER 'keys' DENTRO DE UM VALOR 'NULL'...)
+
+
+
+
+
+
+
+
+
+ --> certo, mas o fato é que 
+
+
+ NÓS ___SÓ FETCHEAMOS __ DADOS BEM NO INÍCIO DE NOSSO APLICATIVO (right at the start)...
+
+
+
+
+
+
+
+
+
+ --> e esse é um use-case COMUM EM APLICATIVOS: você só vai querer FETCHEAR DADOS 
+
+ DO SERVIDOR (dados json/javascript )
+
+
+ QUANDO 
+
+ ELE CARREGA PELA PRIMEIRA VEZ, e não depois... ----------------> e se o valor 
+
+ de 
+
+ alguma 
+
+ propriedade 
+
+
+
+ inicial for 'NULL', alguns CÓDIGOS QUE DEPENDEM DE DADOS como 'keys' e tal (como 'map()') 
+
+
+ VÃO __fALHAR___... ----------> ISSO 
+
+
+
+
+ PODE SER 
+
+
+ PREVENIDO, É CLARO; 
+
+
+ podemos prevenir 
+
+ esse comportamento 
+
+
+ POR MEIO 
+
+
+ DO ADD de IF CHECKS NOS LUGARES QUE __DEPENDEM __ DE INGREDIENTS/INGREDIENT DATA,
+
+ IF 
+
+
+ CHECKS __CHECANDO ___ PELA PRESENÇA/EXISTÊNCIA DE 'ingredients'... (ingredients que 
+ 
+ não sejam 'null')...
+
+
+
+
+
+
+
+
+ ---> resumindo: devemos CHECAR SE 'ingredients' EXISTEM __ANTES ___ DE RENDERIZAR, ANTES 
+
+ DE EXECUTAR CÓDIGO DE RENDER QUE 
+
+ __DEPENDE__ DESSES INGREDIENTS...   --> exemplo 
+
+ disos 
+
+
+ é 
+
+
+ o 
+
+ COMPONENT 
+
+ 'Burger', que 
+
+ tem um 
+
+ prop 
+
+ 'ingredients' QUE 
+
+ POSSUI UM VALOR DE 
+ 'this.state.ingredients'....
+
+
+
+
+ ex (código em BURGERBUILDER):
+
+
+
+
+return (
+
+  <Burger ingredients={this.state.ingredients} />
+
+
+)
+
+
+
+
+
+
+---------------------------------------
+
+
+
+PROFESSOR EXPLICA QUE 
+
+HÁ UM PUNHADO DE MANEIRAS PELAS QUAIS 
+
+PODEMOS SOLUCIONAR ESSE PROBLEMA do 'check' de ingredients/dados de um servidor...
+
+
+
+
+
+
+---> A SOLUÇÃO QUE 
+
+O PROFESSOR 
+
+
+APLICARÁ 
+
+
+
+É UMA __ QUE SERÁ __ UTILIZADA/ESCRITA __ DIRETAMENTE ___ NO NOSSO 
+
+'CONTAINER' 
+
+
+DE 
+
+BURGERBUILDER... ---> professor quer 
+
+QUE 
+
+
+___UM SPINNER___ SEJA MOSTRADO, AO INVÉS DO BURGER 
+
+
+APARECER IMEDIATAMENTE... ---> 
+
+OS 
+
+
+'BUILD CONTROLS' TAMBÉM
+
+
+NÃO APARECERÃO 
+
+
+ENQUANTO O 'SPINNER'
+
+ESTIVER SENDO MOSTRADO....  --------> OU SEJA,
+
+
+
+
+ENQUANTO ESPERAMOS 'THE LOADING OF THE INGREDIENTS',
+
+
+nem
+
+o nosso burger, nem o component 
+
+'buildControls'
+
+
+SERÃO MOSTRADOS... --------->
+
+
+
+
+
+
+
+PARA 
+
+
+
+CUMPRIR ESSA TAREFA,
+
+PROFESSOR ADICIONARÁ 
+
+
+
+___OUTRA VARIÁVEL__ DENTRO DE BURGERBUILDER,
+
+dentro do 
+
+método 
+
+'render()'...
+
+
+
+
+
+
+--> será uma variável com nome de 'burger'... -----> ISSO SERÁ __O BURGER_ E OS BUILDCONTROLS___... --------> 
+
+
+PROFESSOR ESCREVERÁ CÓDIGO CONDICIONAL EM CIMA 
+
+DESSA VARIÁVEL.... (de acordo com o LOAD DA RESPONSE DO NOSSO SERVIDOR, SE A RESPONSE NÃO 
+ESTIVER ACABADA, 
+VAMOS 
+
+
+QUERER O SPINNER, SE ESTIVER ACABADA, VAMOS QUERER O 
+
+BURGER E OS BUILDCONTROLS...)
+------------------------------------
+
+
+
+
+
+
+
+TIPO ASSIM, VAMOS QUERER ISSO DAQUI:
+
+
+
+
+  let burger = (
+      <Spinner />
+    );
+
+
+
+
+
+    if(this.state.ingredients) {
+      burger = (<Aux>
+      <Burger ingredients={this.state.ingredients}/>
+      <BuildControls 
+      disabled={disabledInfo} //'disabledInfo' será uma constante que terá aquele objeto com a 'CÓPIA DO STATE DE INGREDIENTS', mas aquela cópia tem uma alteração no INGREDIENT que será/não será removido, que estará tipo assim: 'cheese: false', ou 'bacon: true', etc.....
+      price={this.state.totalPrice}
+      ingredientAdded={this.addIngredientHandler} 
+      ingredientRemoved={this.removeIngredientHandler}
+       disableButton={ingredientCountSum}
+       ordered={this.purchaseHandler} />
+       </Aux>
+      )
+    }
+
+
+
+
+return (<Coisas>
+  {burger}
+  </Coisas>
+)
+
+
+
+
+
+
+-------------------------------------
+
+
+
+CERTO, COM ISSO, O BURGER INICIAL SERÁ UM 'SPINNER'.... (dizendo que está CARREGANDO... SÓ 
+VAI PARAR 
+
+DE CARREGAR 
+
+QUANDO ALGUMA COISA NO NOSSO CÓDIGO SETTAR O 
+
+'ingredients' de NULL para 'ALGUNS INGREDIENTS' ------------> e eu acho 
+
+que 
+
+
+essa 
+
+'coisa' no nosso código 
+
+
+será 
+
+O 
+
+'componentDidMount'...)
+
+
+
+
+
+------------------------------
+
+
+
+
+  OK, AGORA DEVEMOS RESOLVER AQUELE OUTRO PROBLEMA DE LÓGICA NA NOSSA OUTRA PONTA DO 
+
+  CÓDIGO, 
+
+  NAQUELA PONTA DE 
+
+  'orderSummary', que 
+
+  AINDA 
+
+  ESTÁ 
+  USANDo 
+
+
+  UM prop de 
+
+
+  'ingredients={this.state.ingredients}'        (E INGREDIENTS, É CLARO, INICIALMENTE É 'null' agora; essa é a causa de nosso erro, que nos obrigará a ajustar um pouco o código, agora.)
+
+
+
+
+
+
+
+
+  ---> pq o erro está sendo causado pelo OrderSummary -->
+
+
+
+
+
+
+
+é por isso que vamos até burgerBuilder 
+
+e definimos 
+
+uma nova variável,
+ 
+
+ uma variável de 
+
+ 'OrderSummary', que terá um valor 
+
+
+ INICIAL DE 'null' -------> ESSE VALOR 
+
+
+ ____SÓ DEIXARÁ ____ DE SER 
+
+ 'NULL' __ QUANDO O BURGER EXTRAÍDO DO SERVIDOR TERMINAR DE SER CARREGADO,
+
+ OU SEJA,
+  
+  QUANDO 
+
+  o 
+
+  'this.state.ingredients' NÃO FOR NULL 
+
+
+  (
+    ou seja,
+     
+     'if (this.state.ingredients)'...
+
+  ) --------> 
+
+
+
+  E ISSO __REALMENTE___ RESOLVERÁ 
+
+  O PROBLEMA 
+
+  DO NOSSO CÓDIGO... --> 
+
+
+
+  sempre que vocÊ 
+
+
+  TIVER 
+
+  ESSES PROBLEMAS 
+
+
+
+
+  DE 'INICIALIZAÇÃO COM VALOR DE NULL',
+
+
+  IF STATEMENTS E VARIÁVEIS INICIAIS COM VALOR DE 'NULL' 
+
+  SÃO SEUS MELHORES 
+
+  AMIGOS...
+
+
+  -------------------------------
+
+  FICARÁ ASSIM:
+
+
+let burger = null;
+
+let modalContent = null;
+
+
+
+  
+    if(this.state.ingredients) {
+      burger = (<Aux>
+      <Burger ingredients={this.state.ingredients}/>
+      <BuildControls 
+      disabled={disabledInfo} //'disabledInfo' será uma constante que terá aquele objeto com a 'CÓPIA DO STATE DE INGREDIENTS', mas aquela cópia tem uma alteração no INGREDIENT que será/não será removido, que estará tipo assim: 'cheese: false', ou 'bacon: true', etc.....
+      price={this.state.totalPrice}
+      ingredientAdded={this.addIngredientHandler} 
+      ingredientRemoved={this.removeIngredientHandler}
+       disableButton={ingredientCountSum}
+       ordered={this.purchaseHandler} />
+       </Aux>
+      )
+      
+     modalContent = (<OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice} clicked={this.purchaseCancelHandler} success={this.purchaseContinueHandler}></OrderSummary>)
+    }
+
+
+------------------------------------------
+
+
+
+
+
+CERTO, MAS ISSO ____AINDA NÃO RESOLVEU NOSSO PROBLEMA___... ---> 
+
+ainda 
+
+estamos com um erro no nosso aplicativo...
+
+EX:
+
+
+index.js:1 The above error occurred in the <BurgerBuilder> component:
+
+    at BurgerBuilder (http://localhost:3000/static/js/main.chunk.js:4274:5)
+    at aux (http://localhost:3000/static/js/main.chunk.js:4560:28)
+    at <anonymous> (http://localhost:3000/static/js/main.chunk.js:4956:7)
+    at main
+    at aux (http://localhost:3000/static/js/main.chunk.js:4560:28)
+    at Layout (http://localhost:3000/static/js/main.chunk.js:4694:5)
+    at div
+    at App (http://localhost:3000/static/js/main.chunk.js:447:1)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+
+--> é claro que AINDA VAMOS PRECISAR 
+
+
+
+DE OUTRO 'IF CASE',
+
+um 
+
+if 
+
+case 
+
+PARA 
+
+
+O CASO/HIPÓTESE 
+
+EM QUE 
+
+___o LOADING___ aCABOU, HIPÓTESE EM QUE 
+
+
+__JÁ TEMOS __ OS NOSSOS INGREDIENTS...  -------> para isso, 
+
+
+professor 
+
+vai adicionar/posicionar 
+
+aquele 
+
+
+
+VELHO 
+
+IF STATEMENT 
+
+de 
+
+'if (this.state.loading) {
+  modalContent = <Spinner />
+}' 
+
+
+
+LOGO ABAIXO DO CÓDIGO CONDICIONAL DE 'this.state.ingredients'....
+
+
+
+
+ex:
+
+
+
+
+
+
+let burger = null;
+
+let modalContent = null;
+
+
+
+  
+    if(this.state.ingredients) {
+      burger = (<Aux>
+      <Burger ingredients={this.state.ingredients}/>
+      <BuildControls 
+      disabled={disabledInfo} //'disabledInfo' será uma constante que terá aquele objeto com a 'CÓPIA DO STATE DE INGREDIENTS', mas aquela cópia tem uma alteração no INGREDIENT que será/não será removido, que estará tipo assim: 'cheese: false', ou 'bacon: true', etc.....
+      price={this.state.totalPrice}
+      ingredientAdded={this.addIngredientHandler} 
+      ingredientRemoved={this.removeIngredientHandler}
+       disableButton={ingredientCountSum}
+       ordered={this.purchaseHandler} />
+       </Aux>
+      )
+      
+     modalContent = (<OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice} clicked={this.purchaseCancelHandler} success={this.purchaseContinueHandler}></OrderSummary>)
+    }
+
+if (this.state.loading) {
+  modalContent = <Spinner />;
+}
+
+
+
+---------------------------
+
+
+
+CERTO,
+
+AGORA A 'ORDEM DE CARREGAMENTO' 
+
+desses if checks está correta...
+
+
+
+
+
+
+
+--> Certo, salvamos tudo isso, mas AINDA RECEBEMOS UM ERRO NO CONSOLE....
+
+
+
+O mesmo erro de antes. ------> é um problema com o 'ingredientCountSum', aquele 
+
+
+código original meu... --> terei que copiar a versão do professor, porque a minha 
+
+não vai funcionar magicamente do nada....
+
+
+
+
+
+
+
+
+
+
+-----> CERTO, CONSEGUI CONSERTAR MEU APLICATIVO, tudo com a ajuda do código do professor....
+
+
+
+
+
+
+---> agora nosso burger 
+
+
+SEMPRE DÁ UMA BREVE CARREGADA ANTES DE APARECER NA PÁGINA... (pq ele está sendo retrievado do server, teoricamente....)
+
+
+
+
+
+
+---------------------------
+
+
+Burger está funcionando como antes, as features antigas ainda estão iguais... -------> 
+
+
+
+A COISA LEGAL, AQUI, CONTUDO, 
+
+É QUE 
+
+SE NÓS IRMOS 
+
+ATÉ 
+
+
+A 
+
+
+DATABASE__ 
+
+
+
+
+
+DO FIREBASE 
+
+e então 
+
+editarmos 
+
+
+o valor dos INGREDIENTS,
+
+talvez 
+
+deixar 
+
+
+'meat' como '3',
+
+
+NÓS VAMOS AFETAR 
+
+DIRETAMENTE 
+
+
+O NÚMERO DE MEATS 
+
+com o qual  o BURGER SERÁ 
+
+CARREGADO INICIALMENTE NA NOSSA PÁGINA... (pq 
+o 
+
+
+
+nosso app sempre VAI RETRIEVAR/FAZER FETCH DE DADOS 
+
+DO NOSSO SERVIDOR quando ele for carregado 
+
+pela primeira vez, graças 
+
+ao código de 
+
+'componentDidMount' e 
+
+'AXIOS.GET', enfiado dentro desse método aí...)     -> certo,
+
+
+o fato 
+
+de que 
+
+agora estamos 
+
+fazendo fetch 
+
+dessas informações (informação dos ingredients) 
+
+
+DE NOSSO 
+
+BACKEND 
+
+é uma 
+
+
+EXCELENTE NOTÍCIA... melhoramos nosso aplicativo de novo... ------> AGORA, PORTANTO ,
+
+
+
+TEMOS 
+
+
+TANTO 
+
+UM 
+
+'POST' 
+
+COMO 
+
+UM 
+
+'GET' 
+
+
+REQUEST 
+
+POSICIONADOS NO NOSSO APLICATIVO... ----------->
+
+
+ e isso é bom...
+
+
+
+ ---------------------------------
+
+
+
+ PORÉM, 
+
+ PROFESSOR 
+
+
+
+ NOS MOSTRA UM PROBLEMA:
+
+
+
+ Se nós, por exemplo, 
+
+
+ formos até 
+
+ o
+
+
+ método 
+
+ '.get' de axios, 
+
+ em 'componentDidMount',
+
+
+ e então 
+
+
+ CAGARMOS A URL a qual é enviado o HTTP REQUEST de tipo get,
+
+ (talvez trocar '/ingredients.json' para '/ingredients', algo que caga tudo),
+
+
+
+
+
+ NÓS 
+
+ NÃO VEREMOS AQUELE 
+
+ MODAL DE ERRO CUSTOMIZADO QUE FIZEMOS ANTES... apenas 
+
+ veremos 
+
+ nosso spinner girando eternamente, o que não é bom (pq queremos 
+ 
+ aquele modal customizado de erros, é o nosso ERROR HANDLER flexível do axios...)
+
+ ------------------------
+
+
+
+ OK, MAS 
+
+
+ __PQ__ NÃO ESTAMOS RECEBENDO AQUELE MODAL ESPECIAL? -------> PROFESSOR 
+
+
+ APONTA QUE 
+
+
+ __ISSO PODE SER __ DIFÍCIL DE SPOTTAR/PERCEBEr____....
+
+
+
+
+
+
+
+ ----> EU ACHO QUE É POR CAUSA DESTE CÓDIGO AQUI:
+
+
+         axios.interceptors.request.use(
+            request => {
+                this.setState(
+                    {error: null}
+                )
+                return request;
+            }
+        )
+
+
+
+
+      ..... talvez pq 
+
+
+      NÓS ESTAMOS 
+
+
+      ___FAZENDO MANAGE DOS ERROS __ NO 'RECEIVE' (Responses),
+
+
+    
+
+    MAS NÃO 
+
+    DOS 
+
+    ERROS NO 'REQUEST' (no MAKE dos http requests)... ----------> 
+
+
+
+
+
+
+
+    PROFESSOR CONFIRMA MEUS PENSAMENTOS:
+
+
+
+  MAS ACHO QUE A RAZÃO É OUTRA... ---> 
+
+
+
+  ele afirma 
+
+
+  que 
+
+
+  NÓS, LÁ no 'withErrorHandler.js',
+
+
+  ESTAMOS 
+
+
+
+  DEFININDO OS 
+
+  
+INTERCEPTORS 
+
+
+DE 
+
+'AXIOS'
+ 
+ lá no 
+
+ MÉTODO 
+
+
+ 'componentDidMount'... (nesse hook específico aí)... -----------> 
+
+
+
+
+
+ E ESSA DEFINIÇÃO/SET DE INTERCEPTORS __PARA O __POST REQUEST___ FUNCIONOU MT BEM,
+
+
+ MAS NÃO SE PODE DIZER O MESMO QUANTO AOS ____ GET REQUESTS___... ---------> 
+
+
+
+
+ DEVEMOS PENSAR/RELEMBRAR 
+
+
+ O _diAGRAMA___ DOS LIFECYCLES...
+
+
+
+ --> ex:
+
+
+ 
+LIFECYCLE - CREATION:
+
+
+
+1) constructor (props) 
+
+
+
+2) componentWillMount()
+
+
+
+
+
+3) render() 
+
+
+
+
+4) Render child Components  (com seus próprios 'componentDidMount()'...)
+
+
+
+5) componentDidMount()
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+---> SE EXAMINARMOS ESSE NEGÓCIO AÍ, CONSTATAREMOS 
+
+
+QUE 
+
+
+'COMPONENTDIDMOUNT' 
+
+
+
+É CHAMADO, 
+
+NA VERDADE, 
+
+
+
+__________dePOIS_____ DE TODOS OS CHILD COMPONENTS___ SEREM RENDERIZADOS__....
+
+
+
+obs: código de 'componentDidMount', em 'BurgerBuilder':
+
+
+
+
+  componentDidMount() {
+    axios.get(
+      'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json'
+    )
+    .then(
+      (response) => {
+        console.log(response);
+        console.log('test');
+
+        this.setState(
+          {
+            ingredients: response.data
+          }
+        )
+
+
+
+
+      }
+    )
+  }
+
+
+
+
+  --------------------------------------------------------
+
+
+
+
+
+
+---> isso significa que 
+
+
+
+o 'componentDidMount()' 
+
+
+
+de 
+
+
+'BurgerBuilder' SÓ É __eXECUTADO__ (o seu código interior só é executado)
+
+
+
+
+DEPOIS 
+
+
+___ DE TODOS OS ___ 'componentDidMount()' 
+
+
+
+DOS CHILD COMPONENTS ___ TAMBÉM ___ TEREM SIDO EXECUTADOS...
+
+
+
+
+--------------------------------------------
+
+
+
+
+Certo, mas o que isso tem a ver com a ausência do modal de erros 
+
+aparecendo no nosso código, quando há uma url inválida?
+
+
+
+
+
+
+---> devemos pensar sobre o nosso component 'withErrorHandler', aquele hoc lá....
+
+
+
+código de 'withErrorHandler':
+
+
+
+
+
+    render() {
+      return ( 
+
+        <Aux>
+        <Modal show={this.state.error} modalClosed={this.errorConfirmedHandler}>
+            
+            {this.state.error ? this.state.error.message : null}
+            
+            </Modal>
+        <WrappedComponent {...this.props} />
+      </Aux>
+
+
+
+       
+      );
+    }
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+---> nesse 'withErrorHandler', nós estamos 
+
+
+WRAPPANDO ESSE/ESSES COMPONENTS (no caso, o component 'burgerbuilder') 
+
+
+
+COM 
+
+ESSE 'withErrorHandler',
+
+
+por meio 
+dessa sintaxe 
+
+
+de 
+
+'<WrappedComponent {...this.props} />'...  -------> e esse 'wrap' aí do 
+
+component 
+
+'burgerbuilder' 
+
+tem 
+
+uma 
+
+SÉRIA IMPLICAÇÃO:
+
+
+
+O 
+
+
+'componentDidMount' 
+
+
+DENTRO __ DO 'withErrorHandler'
+
+
+
+
+SÓ ___ VAI SER EXECUTADO___ DEPOIS QUE O 
+
+'componentDidMount' 
+
+
+DO 
+
+'burgerBuilder' 
+
+
+JÁ TIVER SIDO EXECUTADO...
+
+
+
+
+
+
+
+
+e o código do componentDidMount' que 
+
+temos 
+
+
+em 
+
+'withErrorHandler' é este:
+
+
+
+
+-------------------------------------------------------
+
+
+   componentDidMount() {
+
+        axios.interceptors.request.use(
+            request => {
+                this.setState(
+                    {error: null}
+                )
+                return request;
+            }
+        )
+
+    
+      axios.interceptors.response.use(res => res, (error) => {
+
+        this.setState(
+            {
+                error: error
+            }
+        )
+      });
+    }
+
+
+-----------------------------------------------
+
+
+
+
+OU SEJA,
+
+
+O CÓDIGO DE COMPONENTDIDMOUNT 
+
+
+de 
+
+'withErrorHandler' É 
+
+
+
+O CÓDIGO QUE ACABA, NO FINAL DAS CONTAS, 
+
+
+FAZENDO NOSSO 'ERROR MODAL' APARECER... -------> 
+
+
+e se esse 
+
+'componentDidMount' é executado de forma ATRASADA 
+
+em relação ao componentDidMount do 'burgerBuilder',
+
+
+isso faz com que tudo dê errado, faz com que o 
+
+MODAL DE ERRO NUNCA APAREÇA, 
+
+PQ FICAMOS PRESOS 
+
+EM UM SPINNER QUE NUNCA TERMINA... (spinner mostrado condicionalmente 
+em 
+'burgerBuilder'...) --------->  E ISSO 
+
+
+
+ACONTECE/ESTÁ ACONTECENDO JUSTAMENTE PQ 
+
+NÓS 
+
+ESTAMOS FAZENDO 
+
+
+'REACH OUT TO THE WEB' 
+
+NESSE 
+
+
+COMPONENT QUE FOI WRAPPADO ('burgerBuilder'),
+
+
+
+fizemos um REACH OUT TO THE WEB ___QUE NUNCA TERMINA__, fica sempre buscando (spinner girando)...
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+PARA 
+
+
+CONSERTAR 
+
+ESSE ERRO, 
+
+
+PROFESSOR DIZ QUE O FIX É SIMPLES:
+
+
+
+Deve-se trocar 
+
+
+o 'componentDidMount' 
+
+em 
+
+'withErrorHandler' 
+
+
+
+POR OUTRO LIFECYCLE HOOK/METHOD, 
+
+o método 
+
+
+
+'componentWillMount() {}'... ------> esse é um 
+
+
+fix 
+
+
+'HACKY'... ---> É 'HACKY' pq 
+
+
+esse 
+
+LIFECYCLE HOOK ___NÃO VAI MAIS SER SUPORTADO NO FUTURO, ELE 
+
+SERÁ 
+
+DESCONTINUADO, 100% DE CERTEZA.
+
+
+
+
+
+
+ficaria assim:
+
+
+
+
+
+
+    componentWillMount() {
+
+        axios.interceptors.request.use(
+            request => {
+                this.setState(
+                    {error: null}
+                )
+                return request;
+            }
+        )
+
+
+    
+      axios.interceptors.response.use(res => res, (error) => {
+
+        this.setState(
+            {
+                error: error
+            }
+        )
+      });
+    }
+
+
+------------------------------------------
+
+
+
+Ué, mas então,
+
+como 
+
+podemos 
+
+
+consertar esse problema?
+
+
+
+
+É SIMPLES, VEJA O GRÁFICO DA ORDEM DE EXECUÇÃO/EXISTÊNCIA DOS LIFECYCLE HOOKS, DE NOVO:
+
+
+
+
+
+
+1) constructor (props) 
+
+
+
+2) componentWillMount()
+
+
+
+
+
+3) render() 
+
+
+
+
+4) Render child Components  (com seus próprios 'componentDidMount()'...)
+
+
+
+5) componentDidMount()
+
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+Basta executarmos esse código dos interceptors em algum lifecycle hook/method que 
+
+seja 
+
+ANTERIOR ao 'render child components'... --------> 'Render()' nós também 
+
+não usaremos, pois é um MÉTODO ESPECIAL, PRÓPRIO... ----> CONSEQUENTEMENTE,
+
+a única etapa/método que sobra, além de 'componentWillMount', 
+
+É 
+
+
+
+'constructor(props)'.... -------------> 
+
+
+
+
+OU SEJA,
+
+
+DEVEMOS USAR 
+
+O 
+
+'constructor(props)' 
+
+
+PARA 
+
+SETTAR 
+
+ESSES INTERCEPTORS... ----------> como o 
+
+
+CONSTRUCTOR É O ___PRIMEIRO__ PASSO 
+
+
+DA CRIAÇAÕ DE NOSSO 
+
+
+COMPONENT,
+
+
+
+
+é evidente que 
+
+ESSES INTERCEPTORS 
+
+
+
+____sERÃO INVENTADOS/CRIADOS___ NO EXATO INSTANTE 
+
+
+EM QUE 
+
+NOSSO 
+
+COMPONENT É CRIADO...  
+
+
+
+
+
+
+
+
+
+---> USAMOS O CONSTRUCTOR, PORTANTO.... --> usamos ele 
+
+PQ 
+
+
+ELE FARÁ COM QUE 
+
+
+OS INTERCEPTORS SEJAM EXECUTADOS/CRIADOS/IMPOSTOS ___ANTES___ DO RENDER 
+
+
+DOS CHILD COMPONENTS, E ANTES (CONSEQUENTEMENTE) DOS 
+
+'componentDidMount' DOS CHILD COMPONENTS...  ----------> ENTRETANTO, 
+
+
+LI NA INTERNET QUE É MELHOR DEFINIR INTERCEPTORS DO AXIOS __DENTRO DO RENDER__ DO NOSSO 
+
+COMPONENT PARENT, E NÃO DENTRO DO 'constructor,' que é SEMPRE MELHOR DEIXAR O 'CONSTRUCTOR' LIMPO... É 
+
+melhor até NEM USAR O CONSTRUCTOR, só definir state e deixar por assim mesmo (sintaxe mais moderna e MELHOR).
+
+
+
+
+
+
+
+
+
+--> OBS:: não estaremos causando QUAISQUER 'SIDE EFFECTS' por meio do 
+
+SET 
+
+
+desses 
+
+
+'interceptors'... (mesmo eles sendo criados/escritos 
+
+em 
+
+'constructor/render', nós não estamos criando side-effects; não 
+
+estamos fazendo algo comO 'ENVIAR HTTP REQUESTS'/definir setTimeout 
+
+no constructor... ---> definir INTERCEPTORS __NÃO É A MESMA COISA __ QUE 
+
+FAZER SEND DE HTTP REQUESTS.... --> pq o SET de interceptors É __INSTANTÂNEO__... e sua 
+
+aplicação a um request/response é INSTANTÂNEO, TAMBÉM. É síncrono).    --------> 
+
+
+
+E NÓS 
+
+
+DE FATO QUEREMOS 
+
+
+REGISTRAR OS INTERCEPTORS __ANTES__ DE OS CHILD COMPONENTS SEREM RENDERIZADOS...
+
+
+
+
+
+
+
+
+---> SE AGORA SALVARMOS TUDO ISSO E RECARREGARMOS O APLICATIVO, vamos 
+
+constatar que 
+
+
+O MODAL DE ERRO NÃO APARECEU, E QUE O SPINNER 
+
+CONTINUA 
+
+
+
+
+NO LUGAR DO NOSSO MODAL DE ERRO... ---> esse approach do 
+
+
+'constructor', e de settar INTERCEPTORS DENTRO DO 
+
+
+CONSTRUCTOR, NÃO FUNCIONOU.
+
+
+--------------------------------------
+
+aCHEI ISTO AQUI NO STACKOVERFLOW:
+
+
+
+
+A class is used to intercept axios error. to bind arrow functions, componentDidMount() is being used. now I need to initiliaze data from the server so I have to use componentWillMount() except it will be removed in React 17 and warning message suggest I use constructor. When I do it gives me an error.
+
+import React, {Component} from "react";
+
+import Modal from "../../components/UI/Modal/Modal";
+import Aux from "../Auxiliary/Auxiliary";
+
+const withErrorHandler = (WrappedComponent, axios) => {
+    return class extends Component{
+        state = {
+            error: null
+        };
+
+        // componentWillMount() {
+        //  axios.interceptors.request.use(request => {
+        //      this.setState({
+        //          error: null
+        //      });
+        //      return request;
+        //  });
+        //  axios.interceptors.response.use(res => res, (error) => {
+        //      this.setState({
+        //          error: error
+        //      })
+        //  });
+        // }
+
+        constructor(props) {
+            super(props);
+            axios.interceptors.request.use(request => {
+                this.setState({
+                    error: null
+                });
+                return request;
+            });
+            axios.interceptors.response.use(res => res, (error) => {
+                this.setState({
+                    error: error
+                })
+            });
+        }
+
+
+
+        errorConfirmedHandler = () => {
+            this.setState({error: null})
+        };
+
+        render() {
+            return (
+                <Aux>
+                    <Modal show={this.state.error} modalClosed = {this.errorConfirmedHandler}>
+                        {this.state.error ? this.state.error.message : null}
+                    </Modal>
+                    <WrappedComponent {...this.props}></WrappedComponent>
+                </Aux>
+            );
+        }
+    }
+};
+
+export default withErrorHandler;
+I removed .json from URL to produce an error
+
+class BurgerBuilder extends Component {
+    state = {
+        ingredients: null,
+        totalPrice: 4,
+        purchasable: false,
+        purchasing: false,
+        loading: false,
+        // axiosError: null
+    };
+
+    componentDidMount() {
+        axios.get('https://burger-m.firebaseio.com/ingredients').then(response => {
+            this.setState({ingredients: response.data});
+        }).catch(error => {});
+    }
+..
+export default withErrorHandler(BurgerBuilder, axios);
+
+
+
+
+
+
+
+
+RESPOSTA:
+
+
+
+
+
+Keep constructor simple by just adding state and
+
+ do not use axios interceptors in constructor,
+ 
+ instead use it in render before returning your JSX code.
+
+
+
+
+
+
+--> ou seja, melhor NÃO SETTAR INTERCEPTORS NO CONSTRUCTOR,
+
+e sim 
+
+
+só fazer isto aqui:
+
+
+
+
+render() {
+        axios.interceptors.request.use(req => {
+            this.setState({ error: null })
+            return req;
+        })
+
+        axios.interceptors.response.use(response => response, error => {
+            this.setState({ error: error })
+        })
+return (
+            <Aux>
+                <Modal show={this.state.error} modalClosed={this.errorConfirmedHandler }>{this.state.error ? this.state.error.message : null}</Modal>
+                <WrappedComponent />
+            </Aux>
+        )
+
+
+--------------------------------------
+
+
+
+
+
+ou seja, enfiar 
+
+
+
+os interceptors dentro do método render...
+
+
+
+
+-----------------------------------
+
+
+
+
+ENTRETANTO, ISSO TAMBÉM NÃO FUNCIONOU... --------> 
+
+
+
+vi outra solução, que talvez funcione (é o mesmo approach do 'constructor', do set de axios interceptors dentro do constructor...):
+
+
+
+
+
+
+
+
+
+As per your condition, you can't use the componentDidMount() method. You MUST NOT use the render() method for setting up Axios interceptors because you are using withErrorHandler as a higher-order component which can lead to many interceptors eventually created while wrapping other components too. This is because for each render cycle, you are unnecessarily setting up an interceptor if you define it inside a render() method. You should set up an Axios interceptor only once in the component.
+
+The constructor() would be the best place to set this up (as per the latest version of React where componentWillMount() is deprecated).
+
+You can edit your code to include a constructor():
+
+constructor(props) {
+    super(props);
+
+    this.state = {
+        error: null
+    };
+
+    // clear the error when sending a request
+    axios.interceptors.request.use(req => {
+        this.state = {
+            error: null
+        };
+        return req;
+    });
+
+    axios.interceptors.response.use(res => res, err => {
+        this.state = {
+            error: err
+        };
+    });
+}
+Notice that here, you are not using the setState() method which throws a warning in constructor but you are directly setting the state, which is allowed only inside the constructor().
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+Bem, a questão é que todos 
+
+falaram um monte de soluções, mas NENHUMA funcionou.
+
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+I'm working on the same course. I got it to work by putting the constructor directly inside the anonymous, class-based component that gets returned by withErrorHandler. I initialize the state within the constructor as well. I'm not sure, but the issue might be that you're setting state before you call the constructor.
+
+const withErrorHandler = ( WrappedComponent, axios ) => {
+    return class extends Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                error: null
+            };
+            axios.interceptors.request.use(req => {
+                this.setState({error: null});
+                return req;
+            })
+            axios.interceptors.response.use(res => res, error => {
+                this.setState({error: error});
+                console.log("Error: " + error.message);
+            });
+        }
+Of course, you could assign the interceptors to variables here in order to eject them in componentWillUnmount below.
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+OK, 
+
+
+__NENHUM___ DOS APPROACHES FUNCIONOU.
+
+
+
+Eu desisto, 
+
+esse 
+
+
+
+errorHandler do professor não funciona 
+
+tão bem assim (pelo menos para problemas de network...)
+
+
+
+
+
+
+
+
+
+
+
+----> certo, acabamos com essa parte do app... não foi muito boa essa parte da aula,
+
+
+esse final aí, 
+
+do 'withErrorHandler'...
+
+
+
+
+
+
+
+
+
+
+
+---> O PRÓXIMO PASSO É ADICIONAR LÓGICA DE RETRIEVE DE DADOS (ingrdients) 
+
+das nossas 
+
+
+ORDERS 
+
+armazenadas no backend....  veremos isso na próxima aula.

@@ -1,0 +1,785 @@
+
+
+
+
+
+
+
+
+-> DEVEMOS COMBINAR NOSSOS REDUCERS,
+
+o 
+
+'BurgerBuilderReducer'
+
+
+e o 
+
+
+'orderReducer'...
+
+
+
+
+
+
+
+
+--> DEVEM SER COMBINADOS LÁ NO 'index.js',
+
+
+POR MEIO 
+
+DA 
+
+
+HELPER FUNCTION DE 'combineReducers'....
+
+
+
+
+-----------------------------
+
+
+
+(e nós JÁ FIZEMOS ISSO....)
+
+
+
+
+
+
+
+
+
+
+'const rootReducer = combineReducers({
+    burger: burgerBuilderReducer,
+    order: orderReducer
+})'
+
+
+
+
+--> EU JÁ HAVIA FEITO ISSO.... -----> 
+
+
+
+
+
+nosso aplicativo já está adapatado 
+
+para 
+
+
+essa divisão dos 'SLICES' 
+
+
+do 
+
+state..
+
+
+
+
+
+ex (em 'BurgerBuilder'):
+
+
+
+
+'const mapStateToProps = state => {
+    return {
+        ingr: state.burger.burger.ingredients,
+        price: state.burger.burger.totalPrice,
+        error: state.burger.error
+    }
+}
+'
+
+
+
+
+---------------------------
+
+
+
+
+
+em 
+
+
+'Checkout', 
+
+
+teremos 
+
+
+
+'const mapStateToProps = state => {
+    return {
+        ingr: state.burger.burger.ingredients,
+    }
+}
+'
+
+
+
+
+-----------------------
+
+
+
+
+
+em 
+
+'contactData',
+
+teremos:
+
+
+
+
+
+'const mapStateToProps = state => {
+    return {
+        ingr: state.burger.burger.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.orders.loading ////////ISSO DEVE SER TIRADO DE  'orders', pois é LÁ QUE ESTÁ A PROPRIEDADE DE 'loading'...
+    }
+}
+'
+
+
+
+
+------------------------------------
+
+
+
+
+SALVAMOS TUDO E RECARREGAMOS... --> nosso aplicativo ainda funciona...  -----> e a order realmente é enviada 
+
+
+ao 
+
+
+server...
+
+
+
+
+--------------------
+
+
+ENTRETANTO, 
+
+PROFESSOR 
+
+NOS DIZ QUE 
+
+
+1 PEQUENO DETALHE NA NOSSA PÁGINA ESTÁ __iNCORRETO___ ---> 
+
+
+
+
+é 
+
+
+um problema 
+
+
+com 
+
+o 
+
+'ID' 
+
+
+DE 
+
+NOSSo objeto 
+
+'order', 
+
+dentro do array 
+
+'orders'... ---> professor 
+
+nos 
+
+diz que 
+
+
+a propriedade 
+
+
+'id' está com um valor __iNCORRETO____...
+
+
+
+
+
+
+Como assim, incorreto? ---> 
+
+
+
+
+bem, professor 
+
+
+diz que 
+
+
+
+
+isso aqui:
+
+
+
+
+orders: {
+    {ingredients: {bacon: xxx, meat: xxxx}, 
+    price: 6.9,
+    name: xxxx,
+    email: xxxx,
+    street: xxxxx,
+    postalCode: xxxxx,
+    country: 'asadasd',
+    deliveryMethod: 'fastest',
+    id: {
+        name: "-MEE5J74SAQ"
+    }
+}
+
+
+
+
+
+
+ESTÁ __INCORRETO, INCORRETO JUSTAMENTE 
+
+POR CAUSA 
+
+
+
+DESSA PROPRIEDADE 
+
+'id'.... ----> mas essa é a ÚNICA COISA QUE 
+
+NÃO ESTÁ FUNCIONANDO.... --> fora isso, tudo da página 'checkout' 
+
+parece estar funcionando...
+
+
+
+------------------------
+
+
+
+
+
+----> consertei vários problemas no app... ---> consertei 
+
+o 
+
+LOGO aparecendo bugado 
+
+quando era reduzido tamanho da tela do aplicativo....
+
+
+
+
+
+
+---> entretanto, nosso 'id' das 'order' continua errado... -----> professor 
+diz que 
+
+o problema 
+
+
+reside 
+
+
+no fato de que 
+
+a 
+
+propriedade 
+
+
+'name' deveria ser extraída (ou seja, queremos só o VALOR de 'name: xxxx', e não 'name:xxx' em si....)
+
+
+
+
+
+isso pq o 
+
+'orderId' está 
+
+
+como 
+
+
+'orderId: {name: "-MegaMaazasasjisif'} 
+
+
+
+
+
+------------------------
+
+
+
+--> CONSERTEI, O PROBLEMA,
+
+FOI SÓ IR ATÉ 
+
+'order.js'
+
+
+
+E TROCAR 
+
+O CÓDIGO 
+
+DE 
+
+DISPATCH 
+
+do
+
+
+'success'  (em 'burgerAttempt'),
+
+
+de 
+
+
+'purchaseBurgerSuccess(response.data, orderData)'
+
+
+
+
+para 
+
+
+'''
+     .then(
+                                response => {
+                                        console.log(response);
+                                        dispatch(purchaseBurgerSuccess(response.data.name, orderData)); ////////EIS O CÓDIGO EM QUESTÃO.
+                                }
+                        )
+
+'''
+
+
+
+(E O PROFESSOR FEZ ESSE EXATO FIX NO SEU APP...)
+
+---------------------------
+
+
+
+
+
+CERTO... FORA ISSO TUDO, AS COISAS ESTÃO FUNCIONANDO BEM... --> só falta 
+
+o 
+
+
+___rEDIRECt___ DEPOIS __ DE ESSE 'SEND' 
+
+ocorrer... ------> é isso que vamos 
+
+
+TENTAR 
+FAZER 
+
+AGORA.. (sozinhos)...
+
+
+
+
+------------------
+
+
+
+
+OBS::: acho que vou TIRAR o código de 'react-router-dom', aquele 'withRouter', lá da página de 
+
+'ContactData'... ---> isso pq __EU NÃO USO __ NENHUM 'this.props.history.push', nem nada do gênero, nenhum prop desse tipo, lá nesse component... ----> se eu fizer isso,
+
+provavelmente vou poder wrappar 
+
+o component 
+
+com 
+'withErrorHandler' e ainda fazer ele funcionar com isso...
+
+
+
+
+
+(esqueça; melhor não usar o withErrorHandler nesse component... ---> estamos ficando com ERROS DE 'interceptors are undefined' 
+em 
+
+'withErrorHandler'...)
+
+
+
+
+-----------------------
+
+
+PARA 
+
+
+__rEDIRECIONAR__ o usuário __ depois 
+
+
+
+de 
+
+
+
+
+
+
+TERMINADO O PROCESSO DE 'SEND'/POST DE nossa order,
+
+
+
+
+devemos 
+
+executar 
+
+algum códigozinho 
+
+
+
+
+
+DEPOIS 
+
+
+DAQUELA EXECUÇÃO 
+
+
+
+
+
+DE 
+
+
+''''purchaseBurgerSuccess''''
+
+
+
+
+(e também precisamos de uma lógica para o ERROR CASE... - 'fail'...)
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+CERTO, CONSEGUI... --> para fazer esse redirect, criei uma nova propriedade na SLICE 
+
+do state global do redux 'order',
+
+
+
+uma nova propriedade chamada 'redirect'... (settada inicialmente como 'false')....
+
+
+
+
+
+
+
+
+depois disso, 
+
+settei um código condicional em 
+
+
+'ContactData', 
+
+
+para que 
+
+FOSSE RENDERIZADO UM COMPONENT/objeto '<Redirect />' 
+
+
+Caso fosse constatado que o 'this.props.redirect' estivesse como __TRUE___....
+
+
+
+--> o reducer de 'orderReducer', por meio da action 
+'PURCHASE_BURGER_SUCCESS', acaba 
+
+alterando, no seu case statement, o valor de 'redirect ' para 'true'...
+
+
+
+
+
+
+Resumindo, o código ficou assim:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(CONTACTDATA):
+
+
+
+ let form = (
+      <div className={ContactDataStyle.ContactData}>
+       
+        <h4>Enter your Contact Data</h4>
+        <form 
+        onSubmit={(event) => {  
+          
+              
+      if(!this.state.orderForm.name.value ||
+        !this.state.orderForm.street.value || 
+        !this.state.orderForm.zipCode.value ||
+        !this.state.orderForm.email.value ||
+        !this.state.orderForm.country.value ) {
+
+         alert('Please enter your contact information!');
+         return;
+        }
+          
+          
+          
+          
+          this.orderHandler(event)}}
+          
+          
+          >
+              {
+                formElementsArray.map(
+                  (formElement) => {
+                        console.log(formElement);
+                        return (
+                          <Input 
+                          changed={(event) => {this.inputChangedHandler(event, formElement.id)}}
+                          key={formElement.id}
+                          elementValue={formElement.id}
+                          touched={formElement.config.touched}
+                          invalid={!formElement.config.valid}
+                          elementType={formElement.config.elementType} 
+                          shouldValidate={formElement.config.validation}
+                          value={formElement.value} 
+                          elementConfig={formElement.config.elementConfig} />
+                        )
+                  }
+                )
+              }
+          <Button
+            disabled={!this.state.formIsValid}
+            btnType="Success"
+          >
+            ORDER
+          </Button>
+          {redirect} //////////////EIS O CÓDIGO EM QUESTÃO
+        </form>
+
+
+
+
+
+
+
+
+
+
+
+(EM 'orderReducer.js'):
+
+
+
+
+
+
+  const initialState = {
+            orders: [],
+            loading: false,
+            initialIngr: {
+                ingredients: {
+                                    bacon: 0,
+                                    salad: 0,
+                                    cheese: 0,
+                                    meat: 0,
+            }
+  }
+  ,
+  redirect: false
+  }
+
+
+.... const reducer = (state = initialState, action) => {
+             case orderActionTypes.PURCHASE_BURGER_SUCCESS:
+            const newOrder = {
+                ...action.orderData,
+                id: action.orderId,
+                
+            }
+            return {
+                ...state,
+                orders: state.orders.concat(newOrder),
+                loading: false,
+                redirect: true
+            };
+}
+
+   
+
+
+
+
+
+
+
+  ------------------------------
+
+
+
+
+
+
+
+
+
+
+
+  CERTO... O REDIRECT ESTÁ FUNCIONANDO... continuando as aulas...
+
+
+
+
+
+
+
+  o deliveryMethod do professor, por alguma razão, não foi passado.. (mas o meu foi...)
+
+
+
+
+  ---------------------------------------
+
+
+
+
+
+
+
+
+  PARA CONSERTAR O DROPDOWN,
+   
+   ele 
+
+
+faz uma breve alteração na propriedade 
+
+'value' dele.... (isso no STATE LOCAL DE 'ContactData'...)
+
+
+
+ex (ANTES):
+
+
+
+
+
+
+
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                        value: '',  //////ESTAVA ASSIM....
+                        validation: {},
+                        valid: true
+    },
+
+
+
+---------------------------------
+
+
+
+
+
+
+Ex( DEPOIS):
+
+
+
+
+
+
+
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                        value: 'fastest',  //////FICOU ASSIM.... (agora há um valor inicial, que é definido se nada for 'optado' pelo usuário... )
+                        validation: {},
+                        valid: true
+    },
+
+
+
+
+
+----------------------------

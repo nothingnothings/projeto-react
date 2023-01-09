@@ -1,0 +1,1324 @@
+---> na última lição, 
+
+
+aprendemos 
+
+sobre 
+
+
+'props'... 
+
+
+
+
+
+PROPS = OBJETO QUE NOS DÁ ACESSO A TODOS ATTRIBUTES/PROPRIEDADES 
+
+passados pelos nossos 'COMPONENT CALLS'  (como visto no Call de '<Person />' com os atributos de 'name' e de 'age'...)
+
+
+
+
+
+ELE REPRESENTA TODOS OS ATRIBUTOS PASSADOS A NOSSOS COMPONENTS... ---> certo...
+
+
+
+MAS ÀS VEZES
+ 
+
+
+
+ VOCÊ __NÃO VAI QUERER __ PEGAR ('get') ALGUMAS 
+
+
+ INFORMAÇÕES ____' DE FORA'____ (como esses '''calls'''' dos React components, em que passamos os atributos),
+
+
+ 
+
+
+ E SIM __QUERER MEXER __ NO __INTERIOR__ DE UM COMPONENT, 
+
+ mexer nos seus 'internals', também... --------------->
+
+
+
+ -------> POR EXEMPLO, 
+
+
+
+ NO NOSSO ARQUIVO 
+
+ 'App.js'... ---> digamos 
+
+
+ que 
+
+ nÓS __TAMBÉM __ QUEIRAMOS ADICIONAR 
+
+ __UM BOTÃO____ ....  um botão QUE 
+
+
+ SE FOR APERTADO,
+
+ SIMPLESMENTE 
+
+ ___tROCA__ UM DOS 'names' que usamos 
+
+ aqui, um dos attributes 'names' 
+ usados 
+
+ nos components....
+
+
+
+Professor digita '<button>Switch</button>' 
+
+e O INSERE ANTES DAS CALLS DO component 'Person'...
+
+
+
+ex:
+
+
+
+
+
+class App extends Component {
+  render = () => {
+
+
+       return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button>Switch</button> ////////EIS O CÓDIGO EM QUESTÃO.
+        <Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+        <Person name="Stephanie" age="30"/>
+      </div>
+    );
+
+      }
+}
+
+export default App;
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+
+BEM, EXPLICA O PROFESSOR,
+
+
+NÓS VAMOS VER MAIS SOBRE ___COMO LIDAR___ COM ESSE 
+
+'CLICK EVENT'
+
+nas próximas lições... ----> Mas 
+
+
+antes de tudo, 
+
+
+devemos 
+
+
+
+__DEFINIR___ esses 
+
+
+valores do atributo 'name', ou esse attribute de 'name', DE __ 
+
+UMA __ MANEIRA __''NÃO HARDCODEADA''...
+
+
+
+
+
+---> ATÉ O MOMENTO, ESSE ATRIBUTO DE 'name' 
+
+ESTÁ 
+
+__HARDCODADO___ NO NOSSO 
+
+CÓDIGO JSX... -------> e isso é ok, 
+
+aqui, 
+
+ 
+
+ MAS SE MAIS TARDE QUISERMOS ____MUDAR___ 
+
+ ESSE ATTRIBUTE, TEREMOS 
+
+ DE O ARMAZENAR EM UMA VARIÁVEL OU ALGO DO GÊNERO...
+
+
+ -------------------------------------------
+
+
+
+
+ Bem... esse component de 'App' é, na verdade, 
+
+ uma 
+
+ CLASSe  ---> e uma 
+
+
+ classe sempre tem 
+
+
+ ___PROPRIEDADES____  -----> e isso de uma 
+
+ classe ter 
+
+ PROPRIEDADES 
+ não 
+
+ é algo só do javascript, 
+
+ mas também 
+ de outras 
+
+ linguagens de programação...
+
+
+ ------------------------------
+
+
+
+
+ VOCê PODE PENSAR   
+
+
+EM UMA 
+
+'propriedade'
+
+como 
+
+BASICAMENTE 
+
+UMA 
+
+
+'VARIÁVEL DE UMA CLASSE'....
+
+
+---------------------------------------
+
+
+
+
+
+
+Professor explica que NO JAVASCRIPT COMUM, 
+
+você tipicamente 
+
+escreveria 
+
+
+
+isto aqui... :
+
+
+
+
+
+
+
+class App extends Component {
+    var something = someValue;
+}
+
+
+
+ESSA SINTAXE ___NÃO FUNCIONA EM UMA CLASSE___... ---> não funciona pq 
+
+ISSO É UMA SINTAXE ___ DE DEFINIR VARIÁVEIS__, QUE SÃO COISAS DISTINTAS DE PROPRIEDADES (propriedades tipicamente residem em CLASSES)...
+
+
+
+-----------------------------------
+
+
+
+
+
+EM UMA CLASSE, EXPLICA O PROFESSOR, É DADA A VOCê A SEGUINTE SINTAXE:
+
+
+class App extends Component {
+    something = "some Value";
+}
+
+
+
+
+ESSA SINTAXE FUNCIONA...
+
+
+---------------------------------------
+
+
+
+
+
+
+Certo...
+
+
+até aí, tudo bem...
+
+
+
+
+MAS EXISTE UMA _PROPRIEDADE ESPECIAL___ QUE VOCê 
+
+
+PODE DEFINIR 
+
+
+___ EM QUALQUER COMPONENT___ QUE 'estende' (extends) O 
+
+OBJETO 
+
+'Component'... (como 'App', de nosso projeto...)
+
+
+
+
+
+---> ISSO SIGNIFICA QUE __NÃO PODEMOS USAR __ ESSA PROPRIEDADE 
+
+ESPECIAL 
+
+EM 'person', na definição do react component de 'person'(
+
+        não podemos usar essa propriedade, em outras palavras, em:
+
+
+        'const person = (props) => {...}'...
+
+
+
+ 
+)   ----------> e nós não 
+
+podemos 
+
+DEFINIR PROPRIEDADES AQUI, DE QUALQUER FORMA, 
+
+POIS A DEFINIÇÃO DESSE REACT COMPONENT 
+
+É __uma função____ (e funções não aceitam propriedades....)
+
+
+------------------------------------------------------
+
+
+--> ainda assim, ESSA COISA QUE O PROFESSOR VAI NOS MOSTRAR,
+
+
+
+ESSA PROPRIEDADE ESPECIAL, 
+
+
+ela 
+
+SÓ PODE __sER USADA __ EM COMPONENTES __ QUE 
+
+
+FORAM CRIADOS POR MEIO DA SINTAXE 
+
+
+'class xxxx extends Component {...}'    (QUE É A SINTAXE MENOS RECOMENDADA PARA A CRIAÇÃO DE REACT COMPONENTS)..
+
+
+
+
+
+
+Ou seja, 
+
+ESSE APPROACH SÓ FUNCIONA EM COMPONENTS QUE FORAM CRIADOS PELA 'EXTENSÃO' DO OBJETO 'component'...
+
+
+
+
+
+--> dentro desse tipo de component, 
+
+
+podemos definir UMA PROPRIEDADE ESPECIAL CHAMADA 
+
+DE 
+
+'state'   (STATE)...
+
+
+
+
+
+state ---->  enquanto que 'props'( o conteúdo de 'props') são DEFINIDOS E PASSADOS 'por fora' DE NOSSOS COMPONENTS (como os attributes de 'name' e 'age' que foram passados a 'Person', a esse componente...),
+
+
+O 'state' É GERENCIADO ____ DE DENTRO_____ DE UM COMPONENTE.... 
+
+
+
+
+
+
+ex( do uso de 'state'):
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Perosn from './Person/Person';
+
+
+
+class App extends Component {
+    state /////////// EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+  render = () => {
+
+
+       return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button>Switch</button>
+        <Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+        <Person name="Stephanie" age="30"/>
+      </div>
+    );
+
+      }
+}
+
+export default App;
+
+
+
+
+
+
+
+
+
+IMPORTANTE!!!! ---> essa propriedade 'state' 
+
+
+SÓ 
+
+É DISPONÍVEL ASSIM EM "COMPONENTES QUE 'ESTENDEM' 'Component' "... ---> 
+
+OU SEJA,
+ 
+ SÓ É DISPONÍVEL EM ___''CLASS-BASED REACT COMPONENTS''___... --> 
+
+ na verdade, 
+
+desde o REACT 16.8, 
+
+uma 
+
+__NOVA FEATURE__ foi adicionada, a 'react hooks', é uma feature 
+
+que o professor nos explicará.... ----> COM ESSA NOVA FEATURE, 
+
+VOCÊ TAMBÉM PODE AGORA 
+
+GERENCIAR 'state' em 'FUNCTIONAL COMPONENTS' (naqueles componentes que 
+
+não usam a sintaxe 'class XXX extends Component {...} ') ---------->
+
+
+
+
+POR ENQUANTO, PORÉM, NÃO USAREMOS ESSA FEATURE.... falaremos dela mais tarde.
+
+--------------------------------------------------
+
+
+
+
+
+Certo, 
+
+adicionamos 
+
+'state'
+
+
+nesse 
+
+
+'CLASS-BASED COMPONENT'...    (e o add de 'state' nesse tipo de component é 
+
+A MANEIRA DEFAULT/CORRETA de fazer as coisas... )
+
+
+
+
+--> AINDA ASSIM, VOCê DEVE USAR 
+
+
+'''FUNCTION COMPONENTS'''' (como 'const person = (props) => {...}' ) SEMPRE 
+QUE POSSÍVEL, POIS
+
+
+VOCÊ  
+
+____DEVE SEMPRE ___ USAR 
+
+
+'STATE___ COM __ MUITO CUIDADO____ --> pq ter 
+
+'state'  
+
+EM TODOS OS COMPONENTS 
+
+DE SEU APLICATIVO, e fazer a manipulação/deixar aberta a opção de manipular 
+
+esse state 
+
+DE QUALQUER LUGAR DE SEU APP FAZ O SEU 
+
+APP FICAR 
+
+___RAPIDAMENTE ___ IMPREVISÍVEL____ E DIFÍCIL DE GERENCIAR.... (especialmente 
+
+se ele for ficando cada vez maior....)
+
+
+
+
+
+---> mas isso n quer dizer que VOCÊ NUNCA DEVE USAR ESSE 'state' e 
+
+os 
+
+'class-based react components'....
+
+
+
+
+Aqui, nesse nosso exemplo, faz perfeito 
+
+sentido usar 
+
+esse 'state' no nosso class-based react component de 'App'....
+-------------------------------------------
+
+
+
+
+NÓS INICIALIZAMOS 
+
+
+essa propriedade 
+
+
+POR MEIO DO 
+
+
+'PASS' 
+
+
+de um 
+
+___VALOR___... e esse 
+
+
+valor 
+
+É UM 
+
+
+__oBJETO JAVASCRIPT___....
+
+
+
+
+representação:
+
+'state = {
+
+}'                ( ou seja, é uma propriedade, mas ELE NÃO TEM A SINTAXE DE UMA PROPRIEDADE... tem a sintaxe de uma VARIÁVEL... )
+
+
+
+
+ex(representação no código....):
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+class App extends Component {
+    state = { /////////// EIS O CÓDIGO EM QUESTÃO.
+
+    } 
+
+
+
+
+  render = () => {
+
+
+       return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button>Switch</button>
+        <Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+        <Person name="Stephanie" age="30"/>
+      </div>
+    );
+
+      }
+}
+
+export default App;
+
+
+
+----------------------------------------
+
+
+
+
+ESSE VALOR 
+
+
+É UM OBJETO JAVASCRIPT...
+
+
+De novo, 
+
+'state' é uma RESERVED WORD, 
+
+
+e nós devemos/vamos usá-la 
+
+
+se QUEREMOS 
+
+
+_GERENCIAR ('manage')  ALGUM 
+
+
+
+'Component-internal data', poderíamos dizer....
+
+
+
+
+
+-------------------------------------
+
+
+
+certo...
+
+
+
+
+
+temos esse 'state' com o valor daquele objeto...
+
+
+
+Professor diz que dentro de 
+
+'state' 
+
+poderemos 
+
+
+ter 
+
+
+
+algo como 
+
+
+'persons' (pode ser qualquer nome; o professor 
+explica que ele usou uma propriedade de nome 'persons' nesse objeto 
+javascript...)
+
+
+
+
+
+O PROFESSOR EXPLICA QUE O VALOR DESSA PROPRIEDADE 'PERSONS'
+
+PODERÁ/DEVERÁ SER ___UM ARRAY___...
+
+
+ex:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+class App extends Component {
+    state = { 
+        
+        persons: []
+
+    } 
+
+
+
+
+  render = () => {
+
+
+       return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button>Switch</button>
+        <Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+        <Person name="Stephanie" age="30"/>
+      </div>
+    );
+
+      }
+}
+
+export default App;
+
+
+
+
+-----------------------------------
+
+
+Professor 
+
+explica que 
+
+dentro 
+
+
+de 
+
+'state'
+ 
+ PODEMOS USAR QUALQUER TIPO DE DADO 
+
+ QUE QUEREMOS...
+
+
+
+ poderíamos, por exemplo, 
+
+
+ definir uma 
+
+ propriedade 
+
+ 'Name', com um valor de 
+
+ 'some name', e outras coisas.... -------> você pode gerenciar 
+
+ QUALQUER COISA QUE VOCÊ QUISER...
+
+
+
+ -------------------------------
+
+
+
+
+ Aqui, o professor vai querer
+
+ GERENCIAR ('manage') UM 
+
+
+ ARRAY DE PESSOAS ('persons')...
+
+
+
+
+
+ ---> esse array de PERSONS, __DE NOVO__, é um 
+
+
+ __ARRAY ___ DE OBJETOS JAVASCRIPT ("{}")....
+
+
+
+
+ --> CADA OBJETO javascript nesse array 
+
+ terá 
+
+ UM 'name' (propriedade) 
+
+
+
+ e uma 
+
+ 'age', 
+
+ talvez de '28' (nesse espaço, deverá ser utilizado um NUMBER, e não uma STRING, como fizemos em 'age="26"', lá nos calls de 'Person'....)
+
+
+
+ ex:
+
+
+
+
+
+ 
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+class App extends Component {
+    state = { 
+        
+        persons: [ {name: 'Max', age: 28},
+    {name: 'Manu', age: 29},
+    {name: 'Stephanie' age: 30}
+        
+        
+        ]
+
+    } 
+
+
+
+
+  render = () => {
+
+
+       return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button>Switch</button>
+        <Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+        <Person name="Stephanie" age="30"/>
+      </div>
+    );
+
+      }
+}
+
+export default App;
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+PROFESSOR COLOCOU 
+
+
+OS 3 OBJETOS ALi, 
+
+de 'Max', 'Manu' e 'Stephanie'... ------->
+
+
+CERTO...
+
+
+
+A COISA QUE FOI DEFINIDA 
+
+
+
+DENTRO 
+
+
+DE 
+
+'State' 
+
+
+É O 
+
+
+___STATE__ de nosso aplicativo (é um 'STATE'...)
+
+
+veja nosso state:
+
+
+
+
+'
+    state = { 
+        
+persons: [ 
+    {name: 'Max', age: 28},
+    {name: 'Manu', age: 29},
+    {name: 'Stephanie' age: 30}
+        ]
+    } 
+
+    '
+
+
+-------------------------------------
+
+
+
+
+
+NÓS PODEMOS, AGORA, 
+
+
+ACESSAR 
+
+A PROPRIEDADE 
+
+
+'state' (e o mesmo vale PARA TODAS AS PROPRIEDADES, TODAS ELAS 
+
+PODEMOS ACESSAR DESSA FORMA, o state não é a única...) 
+
+POR MEIO 
+
+
+DE UMA SIMPLES SINTAXE...
+
+
+que sintaxe é essa?
+
+
+
+
+
+Bem, 
+
+
+PRIMEIRO __ DEVEMOS ___ ESCREVER '{}' no lugar em que queremos o referenciar... (pq o output dessa propriedade SEMPRE SERÁ __DINÂMICO___...)
+
+
+
+SEGUNDO, DEVEMOS ESCREVER 'this. + nome da propriedade que reside dentro desse 'class-based react component (componente criado a partir do 'extend' do objeto  'Component')'....
+
+
+EX: 'this.state'...
+
+
+
+
+
+
+
+RESUMINDO:
+
+
+
+1) {} 
+
+
+2) 'this'. + nome da propriedade interna que queremos chamar, e que reside dentro desse class-based react component....
+
+
+
+
+
+
+O PROFESSOR NOS 
+
+MOSTRA O USO DE 'State' 
+
+
+NOS ATRIBUTOS DAS CALLS DE 'Person'...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EX(REPRESENTAÇÃO):
+
+
+
+
+
+
+ 
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+class App extends Component {
+    state = { 
+        
+        persons: [ {name: 'Max', age: 28},
+    {name: 'Manu', age: 29},
+    {name: 'Stephanie' age: 30}
+        
+        
+        ]
+
+    } 
+
+
+
+
+  render = () => {
+
+
+       return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button>Switch</button>
+        <Person name="this.state.persons[0]" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+        <Person name="Stephanie" age="30"/>
+      </div>
+    );
+
+      }
+}
+
+export default App;
+
+
+
+
+--------------------------------------
+
+
+
+
+'this' --> se refere à CLASSE 'App'.... (devido à sintaxe ES6 que estamos usando...  )
+
+
+
+
+
+'this'. + state .....
+
+
+
+
+
+professor diz que PODEMOS ADICIONAR NOSSAS PRÓPRIAS PROPRIEDADES 
+
+A essas classes-components, mas isso é algo que veremos mais tarde...
+
+
+
+Basta vocÊ saber que 
+
+'state' é uma keyword especial, reservada....
+
+
+
+
+ELE ESCREVE
+ 
+
+
+ 'this.state.persons[0]' 
+
+PARA ACESSAR O PRIMEIRO ELEMENTO/OBJETO DAQUELE ARRAY DE PERSONS....
+
+
+ok, 
+mas como 
+
+ele pegará 
+
+só 
+
+
+o 'name'?
+
+
+
+--> existe algum método 'js' para isso, tenho certeza... um método de OBJETOS...
+
+
+
+
+Na verdade, preciso de UMA COMBINAÇÃO DE MÉTODOS...
+
+
+
+
+
+this.state.persons[0] ------> isso nos dá o valor de { name: 'Max', age: 29 }
+
+------------------------------------------
+
+
+
+
+
+talvez 'obj.keys()'...?
+
+
+
+
+
+Object.values(this.state.persons[0])  ---> isso vai retornar os valores de 'name' e de 'age' (ou seja, um array com 'Max' e '28'... -> ['Max', 28])
+
+
+
+
+--> se colocarmos o indexador '[0]', do lado 
+
+do function call de 'Object.values()', 
+
+É POSSÍVEL 
+
+
+QUE ESSE MÉTODO NOS RETORNE 'Max'.... (essa sintaxce é tecnicamente válida)...
+
+
+Devemos testar essa sintaxe...
+
+
+Object.values(this.state.persons[0])[0]
+
+
+CERTO, FUNCIONOU....
+
+
+
+esse método/combinação de calls realmente funciona...
+
+
+
+--------------------------------------
+
+
+
+
+Esse meu código funcionou, 
+
+
+
+mas aí o professor simplesmente vai
+ 
+
+ lá 
+
+
+ e escreve 
+
+
+
+ 'this.state.persons[0].name', e o negócio 
+
+ ___DÁ NA MESMA___... dá o mesmo resultado, 
+
+
+ mas sem os function calls de 'Object.values(this.state.persons[0])'...
+
+
+
+---------------------------------------
+
+
+
+
+
+OK, AGORA 
+
+EM VEZ DE HARDCODAR AQUELES VALORES,
+
+
+AGORA ESTOU 
+
+
+ACESSANDO 
+
+
+AS PROPRIEDADES naquele objeto 'person' no
+
+array 
+
+
+de 'persons' 
+
+
+no objeto 'state'...
+
+
+
+-------------------------------------
+
+
+PROFESSOR COPIA ESSE CÓDIGO E O REPLICA NOS OUTROS LUGARES DO NOSSO CÓDIGO,
+
+MAS ESCREVENDO 
+
+
+'this.state.persons[0].age', etc etc...
+
+----------------------------------
+
+
+
+ COM ISSO, VOLTAMOS AO NOSSO APLICATIVO 
+
+
+
+ E VEMOS O BOTÃO (que não faz nada) e o 
+
+ MESMO OUTPUT DE ANTES, 
+
+
+ mas agora esse output 
+
+
+ É DINÂMICO, 
+
+ está vinculado àquele 'state'... à propriedade 'state'...
+
+ --------------------------------------------
+
+
+
+ PROFESSOR DISSE QUE 
+
+
+ 'STATE' É UMA PROPRIEDADE ESPECIAL .... ENTRETANTO, ATÉ AGORA 
+
+ NÃO O UTILIZAMOS AINDA DE UMA MANEIRA ESPECIAL...
+
+
+
+
+
+ --> mas podemos MUDAR ISSO... COMO ASSIm 'mudar isso'? ---> O __STATE__ PODE 
+
+ _____MUDAR_____ (essa é a coisa ESPECIAL sobre ele) ---> E SE ELE 
+
+ ___MUDA___... (e essa capacidade de 'MUDAR' é EXCLUSIVA ao state...)
+
+
+
+
+ ---> SE O STATE MUDA, 
+
+
+ ELE VAI ___OBRIGAR__ O REACT ('lead react to') __ A RE-RENDERIZAR 
+
+
+ O NOSSO ___DOM____/UPDATAR O DOM (diz o professor)...
+
+  
+
+
+----------------------------------------------------
+
+
+ISSO QUER DIZER, EM OUTRAS PALAVRAS, QUE SE NÓS, POR EXEMPLO, 
+
+MUDARMOS 
+O 
+
+VALOR DE 'Max', na primeira propriedade do primeiro objeto do state,
+
+___PARA OUTRA COISA___,  ISSO 
+ 
+ VAI ACABAR 
+
+
+ FAZENDO  ESSE COMPONENT ESPECÍFICO (governado por esse objeto que contém 
+ essa propriedade com valor de 'Max') 
+
+ SER RE-RENDERIZADO...
+
+
+
+
+
+
+---> o professor nos mostrará esse conceito TAMBÉM 
+
+
+POR MEIO DE UMA DEMONSTRAÇÃO DE COMO 
+
+SÃO 
+
+FEITOS OS 'CLICK EVENTS'... (veremos isso em ação naquele elemento 'button'...)
+
+
+

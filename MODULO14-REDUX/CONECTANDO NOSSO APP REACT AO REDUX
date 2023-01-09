@@ -1,0 +1,971 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----> NÓS APRENDEMOS SOBRE O REDUX NO ARQUIVO 
+
+
+'redux-basics.js'... 
+
+
+
+
+
+
+----> agora vamos trabalhar com o PROJETO DO COUNTER,
+
+
+E não mais com aquele 'redux-basics.js'...
+
+
+
+
+
+
+
+
+
+------------> 
+
+VAMOS QUERER USAR AS VANTAGENS E FEATURES 
+
+DO REDUX 
+
+
+NO NOSSO APLICATIVO 
+
+
+
+'Counter'... 
+
+
+
+
+
+--> provavelmente o professor vai querer criar uma STORE 
+
+lá 
+
+
+em 
+
+
+'Counter.js'... -----------> PARA ISSO, PROVAVELMENTE 
+
+VAMOS 
+
+TER QUE PRIMEIRAMENTE 
+
+
+
+
+
+________IMPORTAR O REDUX___.... -------> VAMOS IMPORTAR 
+
+
+
+O 
+
+REDUX 
+
+
+E USÁ-LO PARA 
+
+
+
+FAZER 
+
+
+MANAGE 
+
+DO 
+
+STATE 
+
+
+DAQUELE 'COUNTER'...
+
+
+
+-------------------------------------
+
+
+
+
+
+PROFESSOR EXPLICA QUE, PARA UM APLICATIVO SIMPLES COMO ESSE NOSSO DE AGORA,
+
+o
+
+
+REDUX TALVEZ SEJA 'overkill',
+
+mas que 
+
+ainda 
+
+assim 
+
+é 
+
+BOM USAR 
+
+UM 
+
+APLICATIVO MAIS SIMPLES PARA ENTENDER COMO ELE FUNCIONA...
+
+
+
+
+
+------------------------------------------------------
+
+
+
+
+----> NÓS JÁ INSTALAMOS 'REDUX' nesse app... ------> POR ISSO 
+
+
+
+NÓS JÁ PODEMOS 
+
+CRIAR UMA 
+
+
+'STORE'...
+
+
+
+
+
+
+
+
+
+
+---> quanto À 'store',
+
+ELA 
+
+
+SEMPRE DEVE SER CRIADA _______ANTES_______/AO MESMO TEMPO EM QUE 
+
+É CRIADO NOSSO APP.... (ou seja, bem no INÍCIO DO 'START' do nosso app...) ------> 
+
+E 
+
+É EXATAMENTE 
+
+POR ISSO QUE 
+
+O LUGAR 
+
+
+IDEAL 
+
+PARA 
+
+CRIAR A STORE 
+
+
+
+É ________ 'index.js'____, o arquivo
+
+que 
+
+vai 
+
+
+sempre renderizar 
+
+nosso 
+
+'App.js'... -------> é um ótimo 
+
+lugar, o index.js,
+
+PQ 
+
+
+É 
+
+NELE QUE NÓS 
+
+FAZEMOS 
+
+'MOUNT' 
+
+
+de nosso component 'App' NO DOM, component que vai segurar todos os outros components...
+
+
+
+
+
+
+
+
+-------------> O PROFESSOR VAI LÁ E ESCREVE 
+
+
+
+
+'import { createStore } from 'redux'; ' 
+
+
+
+
+
+
+
+
+
+
+
+
+OU SEJA,
+
+ELE VAI IMPORTAR 
+
+A FUNÇÃO 
+
+
+
+'createStore' 
+
+
+
+DO PACOTE 'redux', para dentro do nosso aplicativo...
+
+
+
+ex:
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+
+
+
+
+
+ReactDOM.render(
+
+    <App />,
+  document.getElementById('root')
+);
+
+
+
+
+
+----------------------------------------
+
+
+
+
+CERTO... MAS E QUANTO AO CÓDIGO 'CRIADOR' DESSE 'STORE', ONDE DEVEMOS O COLOCAR? 
+
+
+
+
+-> professor explica que devemos o escrever 
+
+
+__ANTES__ DAQUELE 
+
+'ReactDOM.render()'  (que é o código que realmente faz MOUNT DO NOSSO APLICATIVO NA PÁGINA 
+
+INDEX.HTML...)
+
+
+
+
+
+
+--> professor VAI CRIAR O 'STORE' e então VAI O ARMAZENAR EM UMA CONSTANTE CHAMADA 
+
+DE 
+
+'store' (coisa bem padrão)...
+
+
+ex:
+
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+
+
+const store = createStore(); //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+ReactDOM.render(
+
+    <App />,
+  document.getElementById('root')
+);
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+CERTO... ESSE É O PRIMEIRO PASSO... 
+
+(
+
+    os passos são:
+
+
+    1) criar REDUCER
+
+
+    2) criar STORE
+
+
+    3) criar subscriptions ('.subscribe')
+
+
+    4) CRIAR actions.... 
+)
+
+
+
+-----------------------------------
+
+
+
+
+
+
+E NÓS APRENDEMOS, É CLARO, QUE 
+
+
+'createStore' 
+
+
+ACEITA/EXIGE UM 
+
+
+
+'REDUCER'
+
+como input/argumento/parâmetro ( a coisa enfiada dentro de '()' )...
+
+
+
+
+
+PARA ISSO, PROFESSOR TERÁ 
+
+DE IMPORTAR 
+
+
+OUTRA COISA 
+
+
+
+
+DE 
+
+'redux', que 
+
+OBVIAMENTE 
+
+
+SERÁ 
+
+
+o objeto 
+
+'reducer'...
+
+
+
+
+
+CONTUDO, ELE __NÃO VAI IMPORTAR, MUITO MENOS ESCREVER, 
+
+O 
+
+
+REDUCER 
+
+NESSE ARQUIVO 
+
+'index.js'... -----------> NÃO; 
+
+
+
+professor nos relata que 
+
+
+NÃO É BOM ESCREVER 
+
+
+O 
+
+REDUCER 
+
+NESSE 
+
+'index.js'... --------->  PROFESSOR NOS EXPLICA QUE 
+
+NÓS 
+
+VAMOS 
+
+
+TER 
+
+REDUCERS MAIS COMPLEXOS
+
+
+
+
+EM REACT APPS, com UM MONTE DE CÓDIGO, CÓDIGO PARA ____dIFERENTES___ TIPOS 
+
+
+DE 
+
+
+'ACTIONS',
+
+
+e é por isso que 
+
+
+
+
+________NÓS TIPICAMENTE___ ARMAZENAMOS A LÓGICA DO 'REDUCER' 
+
+
+
+
+___EM UM ARQUIVO PRÓPRIO...__ (ou em vários arquivos...) -----------> 
+
+
+
+
+
+
+PROFESSOR NOS EXPLICA QUE 
+
+
+
+___EXISTEM __ DIFERENTES SETUPS QUE VOCÊ PODE USAR 
+
+
+PARA 
+
+
+DEFINIR/ESCREVER 
+
+SEUS 
+
+REDUCERS.... 
+
+
+
+
+
+
+entretanto, 
+
+
+uma coisa muito comum é 
+
+
+
+___CRIAR UM FOLDER CHAMADO DE 
+
+'store' (no seu folder 'src', ao lado dos folders 
+
+'components' e 'containers'...).
+
+
+
+
+E NESSE FOLDER, VOCÊ PODE TER 
+
+
+UM ARQUIVO 
+
+CHAMADO 
+
+
+'reducer.js'... --------------> E SERÁ 
+
+
+
+NESSE ARQUIVO QUE O PROFESSOR 
+
+
+______eXPORTARÁ ____ O REDUCER QUE ELE VAI QUERER UTILIZAR... (utilizar naquele 
+
+'createStore()' em 'index.js'...)
+
+
+
+
+
+
+
+
+
+----------------> O REDUCER, nesse arquivo 
+
+
+
+'reducer.js', 
+
+
+
+AINDA 
+
+
+É UMA SIMPLES FUNÇÃO...
+
+
+
+
+
+
+
+
+
+escrevemos ele assim:
+
+
+
+
+
+
+
+
+-------------------------
+
+const reducer = (state, action) => {
+        return state;
+}
+
+
+------------------------
+
+
+
+
+
+
+
+
+
+O REDUCER/QUALQUER REDUCER SEMPRE VAI 
+
+
+
+
+1) ACEITAR/EXIGIR OS ARGUMENTOS 'state' e 'action' 
+
+
+
+
+
+2) RETORNAR 'state' (será  retornado o oldState, se você não fez nada dentro do body desse reducer...)
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+DEPOIS DISSO, É CLARO QUE O PROFESSOR 
+
+
+VAI 
+
+
+
+__EXPORTAR___ ESSE REDUCER,
+ 
+ por meio da sintaxe 
+
+
+
+
+ 'export default reducer;'
+
+
+
+
+
+
+ ex:
+
+
+
+
+ const reducer = (state, action) => {
+    return state;
+}
+
+
+export default reducer;
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+NÓS VAMOS EXPORTAR O REDUCER PARA QUE ELE POSSA SER UTILIZADO __FORA__ DESSE ARQUIVO 
+'reducer.js'....
+
+
+
+
+
+
+
+
+---------> NÓS TAMBÉM 
+
+
+
+ VAMOS QUERER SETTAR 
+
+ uma constante 
+
+ 'initialState' aqui,
+
+
+ QUE 
+
+
+
+ SERÁ UM OBJETO JAVASCRIPT, OBJETO JAVASCRIPT QUE SERÁ 
+
+ O STATE INICIAL (que provavelmente, nesse nosso caso,
+ 
+ será 
+ 
+ um 
+ 
+ state 
+ 
+ de 
+ 
+ {
+     counter: 0
+ })
+
+
+
+
+
+
+
+E O PROFESSOR PROVAVELMENTE VAI PEDIR QUE 
+
+NÓS DEFINAMOS 
+
+
+AQUELE PARÂMETRO 
+
+'state' 
+
+
+no formato de um 'DEFAULT PARAMETER VALUE',
+
+aquele 
+
+
+negócio de 
+
+
+'state = initialState'...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+const initialState = { //////////eis o código em questão
+    counter: 0
+}
+
+
+ 
+const reducer = (initialState, action) => { ///////eis o código em questão.
+    return state;
+}
+
+export default reducer;
+
+
+
+
+----------------------------------------
+
+
+
+PROFESSOR 
+
+
+
+FAZ EXATAMENTE ISSO QUE 
+
+
+ESCREVEMOS...
+
+
+
+
+
+
+
+
+
+---> com isso, 
+
+
+NÓS AGORA TEMOS UM 
+
+
+
+REDUCER COMPLETO... ----------> podemos o utilizar 
+
+
+LÁ 
+
+
+
+EM 
+
+'index.js',
+
+POR MEIO 
+
+
+DA SINTAXE DE IMPORTS... (do ES6,  e não do node.js)....
+
+
+
+-------------------------------
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+import reducer from './store/reducer'; ///////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+const store = createStore(reducer); //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+ReactDOM.render(
+
+    <App />,
+  document.getElementById('root')
+);
+
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+CERTO... ISSO QUER DIZER QUE AGORA TEMOS 
+
+UM 
+
+STORE EFETIVAMENTE CRIADO, CRIADO E COM UM 
+
+
+REDUCER JÁ ATRIBUÍDO A ELE (um reducer simples, sem nenhuma lógica, mas 
+
+ainda assim...)
+
+
+-----------------------------------------
+
+
+
+
+OU SEJA, CONSEGUIMOS FAZER A MESMA COISA FEITA LÁ EM 
+
+'redux-basics.js',
+
+
+A __cRIAÇÃO__ DE UM STORE__ E SUA VINCULAÇÃO A UM 'REDUCER'...
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+--> mas é evidente que 
+
+o 
+
+REDUCER SOZINHO NÃO FAZ MUITA COISA... --------> precisamos 
+
+
+DE 
+
+
+
+ACTIONS E SUBSCRIPTIONS (.subscribe)....
+
+
+
+
+
+
+
+-----------> NÓS TAMBÉM PRECISAMOS _______cONECTAR_________ ESSE 
+
+
+'store', recem criado por nós lá em 
+
+
+'index.js'
+,
+
+
+
+AO 
+
+NOSSO APLICATIVO REACT... 
+
+
+
+
+
+
+
+
+--> ALÉM DISSO, VAMOS QUERER SER CAPAZES DE CONSEGUIR 
+
+'slices DO STATE'  
+
+
+__NOS NOSSOS REACT ___ CONTAINERS__  (vamos querer isso para que 
+
+nos tornemos capazes de  FAZER DISPLAY DO STATE,  TALVEZ RENDERIZAR ALGO, dependendo 
+
+de qual STATE O APLICATIVO TEM...) --------> E, É CLARO,
+ 
+
+
+ NÓS 
+
+ TAMBÉM 
+
+
+
+ QUEREMOS SER CAPAZES DE FAZER __dISPATCH___ DE ACTIONS...
+
+
+
+
+
+
+
+
+
+
+
+ ---> e é isso que faremos na próxima aula:
+
+ conectaremos o REDUX AO REACT....

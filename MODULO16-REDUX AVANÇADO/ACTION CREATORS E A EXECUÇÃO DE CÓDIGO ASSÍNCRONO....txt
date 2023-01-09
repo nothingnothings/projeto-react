@@ -1,0 +1,459 @@
+
+
+
+
+
+
+
+
+
+--> CERTO, PROFESSOR CONTINUA A LIÇÃO DOS ACTION CREATORS...
+
+
+
+
+
+-------------------------
+
+
+Certo... código do professor ficou um pouco parecido com o nosso, 
+
+
+mas 
+
+
+há algumas diferenças....
+
+
+
+
+-------->  ELE DEIXOU AS 'ACTIONS' de 
+
+
+'add' 
+
+e 
+
+
+'subtract' COM UM VALOR DINÂMICO, um 
+
+valor dinâmico (em vez de hardCoded) que 
+
+É DEFINIDO 
+
+LÁ 
+
+
+de 
+
+'Counter.js'....
+
+
+
+
+
+
+ex (aNTES):
+
+
+
+
+export const add_counter = () => { 
+    return {
+        
+        type: ADD_COUNTER, 
+        value: 10 
+    }
+}
+
+
+
+
+
+
+
+EX(DEPOIS):
+
+
+
+
+
+
+export const add_counter = (value) => { 
+    return {
+        
+        type: ADD_COUNTER, 
+        value: value
+    }
+}
+
+
+
+----------------------------------------------
+
+
+
+
+ISSO FEITO, 
+
+
+
+o que ele FEZ 
+
+
+FOI 
+
+EDITAR
+ 
+
+  O CÓDIGO DE 'dispatch'
+
+  LÁ EM 
+
+
+
+  'Counter.js'...:
+
+
+
+
+
+
+  TIPO ASSIM:
+
+
+
+
+        onAddCounter: () => {
+        dispatch(
+          add_counter(3)
+         )
+      },
+      onSubtractCounter: () => {
+        dispatch(
+          sub_counter(3)
+        )
+      },
+
+
+
+----------------------------------
+
+
+
+E 
+
+ESSE 
+
+'3' AÍ VAI SER USADO DIRETAMENTE 
+
+
+COMO 'payload' DO NOSSO ACTION CREATOR,
+
+
+SERÁ 
+
+AQUELA PROPRIEDADE 
+
+'value'
+
+NO ACTION CREATOR... (nos action creators de 'add' e 'sub', na verdade...)
+
+
+
+
+
+
+-----> E ISSO REALMENTE FUNCIONA.
+
+
+
+
+
+
+
+
+
+-------------------------------
+
+
+
+POR FIM, 
+
+
+PROFESSOR FAZ OUTRA MUDANÇA NO CÓDIGO...
+
+
+
+
+
+
+
+---> ele diz que 
+FAZER 
+
+6 IMPORTS 
+
+NAMED 
+
+de 
+
+coisas em 
+
+'actions.js'
+
+
+É meio idiota... ---> devemos IMPORTAR TUDO COMO 1 ÚNICO OBJETO (como 'XXStyle', como fazíamos com css modules),
+
+
+E ENTÃO 
+
+
+ACESSAR 
+
+TUDO 
+NESSE OBJETO,
+
+
+tipo 
+
+assim:
+
+
+
+'actionCreators.inc_counter()'  -------> ISSO LÁ EM 'Counter.js'...
+
+
+
+
+-------------------------------------------
+
+
+
+PRONTO, FICOU ASSIM:
+
+
+
+
+
+import * as actionCreators from '../../store/actions';
+
+
+
+const mapDispatchToProps = dispatch => { ///////////DEVE SER SEGUIDO ESTE FORMATO.... -------> (sempre usar 'dispatch' como PARÂMETRO DESSA FUNÇÃO... ex: 'const mapDispatchToProps = dispatch => { return ...}' ...)
+  return {
+      onIncrementCounter: () => { 
+        
+        dispatch(  //////// É A VERSÃO MAIS RECENTE, NO NOSSO CURSO, usa apenas REFERÊNCIAS àS ACTIONS, que são na verdade DEFINIDAS EM 'actions.js', NAQUELES action CREATORS, como 'inc_counter', que importamos neste 'Counter.js'...
+        
+            actionCreators.inc_counter() ///EIS AQUI A DIFERENÇA. Lembre-se de sempre escrever '()' AO LADO DA REFERÊNCIA ao 'action creator' --> é esse '()' QUE VAI EFETIVAMENTE __eXECUTAR___ ESSE 'ACTION CREATOR', que é o creator que VAI BASICAMENTE NOS RETORNAR UMA 'ACTION' (que é o que desejamos; que uma action seja inserida nesse campo 'dispatch', que então A DISPATCHARÁ..)
+        
+      )
+      },
+      onDecrementCounter: () => {
+        dispatch(
+          actionCreators.dec_counter()
+        )
+      },
+      onAddCounter: () => {
+        dispatch(
+          actionCreators.add_counter(3)
+         )
+      },
+      onSubtractCounter: () => {
+        dispatch(
+          actionCreators.sub_counter(3)
+        )
+      },
+      onResultStored: (result) => {
+        dispatch(
+            actionCreators.result_store()
+        )
+      },
+      onDeleteResult: (id) => {
+        dispatch(
+          actionCreators.delete_result()
+        )
+      }
+  }
+}
+
+
+---------------------------------
+
+
+
+NÓS TAMBÉM 
+
+
+MOVEMOS O CÓDIGO DE 'actions.js'
+
+PARA 
+DENTRO 
+
+
+
+DE UM SUBFOLDER chamado 'actions', em 'store'...
+
+
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+OK, MAS E QUANTO AO 
+
+
+ASYNC CODE 
+
+COM ESSES 
+
+ACTION 
+
+CREATORS...?
+
+
+
+
+
+
+
+
+
+---> NOSSO STATE AGORA SERÁ MANIPULADO POR ESSES ACTIONS, DESSA VEZ COM 'ACTION CREATORS'...
+
+
+
+
+
+------------------------------------
+
+
+
+
+CERTO... ESTÁ FUNCIONANDO... ------> CONTUDO, TUDO ISSO QUE FIZEMOS ATÉ 
+
+AGORA 
+
+
+É __CÓDIGO SÍNCRONO, E NÃO ASSÍNCRONO_.... -> nossas 
+
+ACTIONS 
+
+AINDA ESTÃO SENDO SÓ COISAS QUE FORÇAM EXECUÇÃO DE __CÓDIGO SÍNCRONO__..... 
+
+
+
+
+
+
+Contudo, a UTILIDADE DOS 'ACTION CREATORS' É __JUSTAMENTE___ 
+
+AJUDAR/POSSIBILITAR A EXECUÇÃO DE 
+
+
+CÓDIGOS ASYNC COM 
+
+O REDUX...
+
+
+
+
+
+-----------> OK, DEVEMOS VER CÓDIGOS ASSÍNCRONOS NA PRÓXIMA AULA... -------> 
+
+
+
+
+
+
+OK, MAS HÁ UMA PERGUNTA IMPORTANTE:
+
+
+
+
+
+DEVEMOS USAR 'ACTION CREATORS' apenas para CÓDIGO ASSÍNCRONO? ------> eu acho que não... ---> 
+
+é melhor 
+
+
+usá-los de uma vez,
+
+Usá-los 
+
+sempre, 
+
+
+PQ 
+
+SE VOCê EVENTUALMENTE TIVER A NECESSIDADE DE ALGUM CÓDIGO 
+
+
+ASSÍNCRONO 
+
+NO SEU PROJETO,
+ 
+ VOCÊ NÃO VAI TER QUE REFATORAR TODO O CÓDIGO, reescrever 
+
+ todo o código das actions 
+
+ para que ele fique no formato 
+
+ dos 
+
+ 'action creators'...
+
+
+
+----------------------------
+
+
+--->  os 'ACTION CREATORS' são uma MANEIRA __cLEAN __ DE CRIAR SUAS ACTIONS,
+
+E COM ELES
+ 
+
+ VOCê 
+
+
+ TEM TUDO SOBRE AS 'ACTIONS' EM 1 ÚNICO ARQUIVo, 
+
+
+ sem nenhuma firula... ----> isso significa que 
+
+ VOCê NÃO TEM QUE 
+
+ CRIAR OS OBJETOS 
+
+ 'action' em nenhum outro lugar do seu código,
+
+ e também 
+
+ QUE 
+
+
+ VOCê PODE 
+
+ REFERENCIAR 
+
+ SUAS 
+
+ 'actions' dentro de 'action.js'
+
+
+ EM QUALQUER CONTAINER/COMPONENT DE SEU CÓDIGO...
+
+
+
+
+
+------------------> É POR ISSO QUE 
+
+É IDEAL__ SIMPLESMENTE USAR 'action creators' TANTO PARA CÓDIGO ASSÍNCRONO COMOO __ SÍNCRONO__...

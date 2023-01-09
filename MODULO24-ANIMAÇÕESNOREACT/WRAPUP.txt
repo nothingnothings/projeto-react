@@ -1,0 +1,169 @@
+HÁ MAIS LIBRARIES QUE PODEMOS ESTUDAR...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> OS KEY TAKEAWAYS É QUE VOCÊ SEMPRE 
+
+DEVE PENSAR 
+
+
+
+EM 
+
+'CSS ANIMATIONS E TRANSITIONS'... --> um monte de coisas 
+
+PODEM 
+
+SER CRIADAS/OBTIDAS 
+
+A 
+
+PARTIR 
+
+DESSAS PROPRIEDADES... ----> e MESMO 
+
+SE VOCÊ 
+
+'FALLBACKAR' a 
+
+
+libraries como 
+
+
+
+react-transition-group, como 
+
+você 
+
+percebeu,
+
+por trás das cenas 
+
+
+VOCÊ AINDA TRABALHA MUITO COM CSS TRANSITIONS... ---> a única diferença 
+
+de usar 
+
+css puro e usar isso aí é que 
+
+
+
+COM 
+
+'ISSO AÍ' 
+
+temos um 
+
+
+LAYER DE JAVASCRIPT 
+
+PARA 
+
+'ORQUESTRAR' 
+
+
+a 
+
+adição 
+
+desses 
+
+diferentes 
+
+estilos 
+
+css....
+
+
+
+
+
+---> ESSE É O 'KEY TAKEAWAY' que o professor 
+
+quer 
+
+que tiremos deste módulo..
+
+
+
+
+---> E AÍ VOCÊ TEM QUE DECIDIR QUAL JAVASCRIPT LIBRARY VOCÊ QUER 
+USAR.... --> 
+
+
+
+
+react-transition-group --> É BOM PQ TE DÁ 
+UM 
+
+NICE JAVASCRIPT LAYRE 
+que você 
+
+pode 
+
+adicionar 
+
+
+ao seu aplicativo... para, então, ORQUESTRAR SUAS ANIMAÇÕES CSS....
+
+
+
+
+
+
+
+
+
+REACT-MOTION ---> busque-as  SE VOCÊ QUISER 
+
+
+UM APPROACH MAIS 'CSS INDEPENDENT'... ---> essas libraries, como react-motion,
+
+AINDA 
+
+SÃO LIBRARIES QUE __USAM__ O CSS,
+
+
+
+MAS EMULAM 'REAL-WORLD PHYSICS' (no caso de react-motion)...
+
+
+-----------------------
+
+
+
+
+--> DEVEMOS PRATICAR ESSAS COISAS... --> 
+
+
+
+
+
+ADICIONAR ESSAS FEATURES NO BURGER BUILDER,
+
+ OU ENTÃO 
+
+ EM 
+
+
+ OUTROS PROJETOS... --> 
+
+
+
+
+ ANIMAÇÕES GUIAM O USUÁRIO, E PROVIDENCIAM 
+ UMA 
+
+ BOA USER EXPERIENCE...
+

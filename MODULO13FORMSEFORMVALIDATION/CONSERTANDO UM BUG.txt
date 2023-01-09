@@ -1,0 +1,259 @@
+ 
+
+
+ AO LONGO DESTE MÓDULO, ADICIONAMOS MTAS FORMS 
+
+ e 
+
+
+ 'validation related functionality'... ------------>  
+
+
+ E O PROFESSOR 
+
+
+
+ __PERCEBEU UM BUG__... ----> mas ele só percebeu esse bug DEPOIS DE GRAVAR 
+
+ AS AULAS...  
+
+
+
+
+
+
+
+
+
+
+
+
+ --> MAS NÃO É UM BUG MT GRAVE.... ---> vamos o consertar mais tarde no nosso curso.... ------->
+
+
+
+
+ LÁ 
+
+ NO NOSSO 
+
+
+ CONTAINER 
+
+
+ 'ContactData',
+
+
+
+ em que 
+
+
+ temos 
+
+
+
+
+O 
+
+
+STATE 
+
+
+'MANAGING OUR FORM CONTROLS'........ -----------> 
+
+
+
+'DELIVERYMETHOD' ---> esse é o nosso objeto 
+
+
+do 
+
+elemento 
+
+
+'select', certo? ----------> BEM, 
+
+
+NESSE 
+
+
+
+
+
+ELEMENTO, O PROFESSOR SETTOU UM 
+
+VALOR 
+
+
+INICIAL DE 
+
+'Empty string'...
+
+
+
+(
+
+
+    'value: '' ' 
+)
+
+
+
+
+------------------------
+
+
+
+BEM,
+
+E NÓS 
+
+
+TEMOS 
+
+
+AS OPÇÕES 
+
+'fastest' e 'cheapest'... ------------> 
+
+
+
+E, BEM,
+
+
+'empty string' (esse valor vazio) --------> 
+
+NÃO FAZ MUITO SENTIDO... ---------> ISSO 
+
+
+SIGNIFICA QUE 
+
+
+
+_______NA UI___ NÓS VAMOS 
+
+VER, DE FATO,
+
+
+OS VALORES 
+
+
+'Fastest' e 'Cheapest'... -----------> MAS SE NÓS NUNCA TROCARMOS 
+ESSA 
+
+OPÇÃO, nunca apertarmos 
+
+o dropdown 
+
+
+e 
+
+mudarmos para 
+
+'cheapest',
+
+
+O VALOR MANDADO AO SERVIDOR VAI SER __UMA EMPTY STRING____.... ---> e isso é bem 
+
+ruim... (
+
+
+
+    MAS EU JÁ CONSERTEI ESSE ERRO, então para mim não existe problemas.... ---------> EU CONSERTEI 
+
+
+    POR meio
+
+
+
+
+    DA DEFINIÇÃO 
+
+    DE UM VALOR INICIAL 
+
+
+    DE 'value' como sendo 
+
+    'fastest'... -------> isso conserta o problema... (se o usuário não definir nada 
+    
+    como valor inicial, o vallor 
+    
+    de esse 
+    
+    'deliveryMethod' será de 'cheapest'...)
+) ------------> 
+
+EU 
+
+TAMBÉM ESCREVI MAIS UM PEQUENO CÓDIGO, PARA CONSERTAR ESSE PROBLEMA... ------->
+
+
+
+código que escrevi foi (dentro de 'inputChangedHandler', um IF STATEMENT A MAIS):
+
+
+
+
+
+
+ inputChangedHandler = (event, inputIdentifier) => { 
+
+
+    if (inputIdentifier === 'select') { ///código 'inventado' por mim. Foi inventado para dar conta do 'CASE' do ELEMENTO 'dropdown'/select....
+      const updatedOrderForm = {
+        ...this.state.orderForm
+      }
+
+
+      const updatedFormElement = {
+        ...updatedOrderForm[inputIdentifier]
+      }
+
+      updatedFormElement.value = event.target.currentValue;
+
+      updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+      this.setState(
+        {
+          orderForm: updatedOrderForm
+        }
+      )
+
+      console.log(this.state);
+
+    }
+
+
+ }
+
+
+
+
+
+ -------------------------------------------------
+
+
+
+
+--> professor admite que o fix TEMPORÁRIO É 
+
+ADICIONAR 
+
+'fastest' ou 'cheapest' como 'value' inicial
+
+
+
+nesse objeto 'deliveryMethod' no 
+
+
+STATE 
+
+de 
+
+'ContactData'...
+
+
+
+
+
+

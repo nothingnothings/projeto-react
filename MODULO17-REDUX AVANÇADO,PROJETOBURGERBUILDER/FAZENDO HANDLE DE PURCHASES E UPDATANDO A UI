@@ -1,0 +1,1067 @@
+
+
+
+
+
+
+
+
+
+
+--> NAS ÚLTIMAS LIÇÕES,
+ 
+
+ ADICIONAMOS UM MONTE DE FUNCIONALIDADE AO NOSSO APP... ---> tudo está funcionando,
+
+
+ menos 
+ o 
+
+
+
+ REDIRECT 
+
+ depois 
+
+
+
+
+
+ de 
+
+
+
+
+ realizarmos uma 'order'...
+
+
+
+
+
+
+
+--> e o professor nos conta que EXISTEM __MUITAS MANEIRAS__ DE IMPLEMENTAR 'REDIRECTION'...
+
+
+
+
+
+
+
+
+
+---> UM JEITO É __passar uma REFERÊNCIA___, passar aquele
+
+
+
+'router history prop' (ou seja, 'this.props.history.push()', basicamente...) 
+
+
+
+
+
+A SEU 
+
+ACTION CREATOR
+ 
+
+ em 
+
+ 'order.js'...   --------> se você optasse por esse approach, 
+
+ vocÊ 
+
+
+
+
+ executaria esse 'this.props.history.push()' 
+
+
+ depois 
+
+
+ do 
+
+
+ dispatch de 'purchaseBurgerSuccess'/purchaseBurgerFail'...
+
+
+
+ ex:
+
+
+
+
+
+
+
+
+ export const purchaseBurgerAttempt = (orderData) => {
+        return (dispatch) => {
+                        dispatch(purchaseBurgerLoading());
+                        axiosOrder.post(
+                                '/orders.json', orderData
+                        )
+                        .then(
+                                response => {
+                                        console.log(response);
+                                        dispatch(purchaseBurgerSuccess(response.data.name, orderData));
+                                        this.props.history.push('/'); ///TIPO ISTO AQUI...
+                                }
+                        )
+                        .catch(
+                                error => {
+                                        dispatch(purchaseBurgerFail(error.message));
+                                        this.props.history.push('/'); //TIPO ISTO AQUI...
+                                }
+                        )
+        }
+}
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+
+---> MAS O PROFESSOR DIZ QUE ___ELE NÃO GOSTA__ DESTE APPROACH... -----> 
+
+
+
+mas diz que 
+
+você pode usar... -------> JÁ O APPROACH 
+
+QUE 
+
+
+ELE 
+
+
+VAI USAR 
+
+
+É 
+
+UM 
+
+
+'REDUX ONLY APPROACH'... ------------------->
+
+
+
+
+
+
+ESSE É UM APPROACH __dIFERENTE DAQUELE QUE UTILIZAMOS__ (que foi aquele do '<Redirect />' no container que desejamos, mas vinculado 
+a uma propriedade qualquer no state global do redux, no caso 'redirect: false'....)
+
+
+
+
+
+
+
+
+
+--> EIS O APPROACH DO PROFESSOR (vamos manter no código, só para referência):
+
+
+
+
+
+
+
+1) devemos adicionar uma NOVA ACTION lá em 'orderActionTypes',
+
+
+QUE 
+
+CHAMAREMOS 
+
+
+
+DE 
+
+
+'export const PURCHASE_INIT'...  -------->  (bem confuso esse nome...) --> 
+
+
+
+
+essa action vai ser dispatcheada 
+
+SEMPRE 
+
+
+QUE NÓS 
+
+
+CARREGAMOS A 
+
+
+PÁGINA 
+
+DE 
+
+'Checkout'... --------> ISSO FEITO, 
+
+
+PROFESSOR 
+
+
+VAI 
+
+
+CRIAR UM ACTION CREATOR,
+
+em 'order.js',
+
+
+PARA 
+
+ELE ... ------> 
+
+Professor 
+
+
+chamará 
+
+
+esse 
+
+
+'action creator' 
+
+
+
+de 
+
+
+
+
+'purchaseInit'...
+
+
+
+
+ex:
+
+
+
+
+
+export const purchaseInit = () => {
+
+}
+
+
+
+
+
+
+----------------
+
+
+
+
+
+ESSE ACTION CREATOR SERÁ UM ACTION CREATOR SIMPLES,
+
+vai 
+
+apenas 
+
+retornar um objeto javascript 'action'...
+
+
+(com um type e etc...)
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+export const purchaseInit = () => {
+
+            return {
+                type: actionTypes.PURCHASE_INIT
+            }
+            
+}
+
+
+
+------------------------------------
+
+
+
+
+ok, esse purchaseInit 
+
+
+vai ser utilizado no 'index.js',
+
+
+
+lá 
+
+
+
+em 
+
+'export {
+    purchaseBurger,
+    purchaseInit
+}
+
+from './order';'
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+ISSO FEITO,
+
+professor 
+vai 
+
+até 
+o 
+
+
+container 
+
+de 
+
+'Checkout'
+ 
+
+ e então 
+
+
+ adiciona 
+
+
+
+
+ um 
+
+ 'componentDidMount'...
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+
+componentDidMount() {
+
+}
+
+
+
+-------------------------------------------
+
+
+
+
+
+DENTRO 
+
+
+DE 
+
+'componentDidMount',
+
+
+o professor 
+
+vai querer 
+
+
+DISPATCHEAR 
+
+ESSA 
+
+
+ACTIOn...
+
+
+
+ex:
+
+
+
+
+
+
+componentDidMount() {
+
+        this.props.onPurchaseInit
+}
+
+
+
+
+-----------------------------------
+
+
+
+
+--> PROFESSOR VAI QUERER DISPATCHAR ESSA ACTION.... ---> por meio dessa action,
+
+lá no REDUCER (reducer de 'orderReducer'),
+
+
+PROFESSOR 
+
+
+VAI QUERER 
+
+
+
+ADICIONAR/SETTAR UMA NOVA PROPRIEDADE 
+
+
+
+NO STATE, algo como 
+
+
+
+deixar 'purchasing: TRUE' (será settada como 'true' quando terminada a compra),
+
+
+
+
+PARA 
+
+
+QUE 
+
+ENTÃO 
+
+
+
+__O USUÁRIO __ SEJA REDIRECIONADO __ QUANDO 
+
+
+O PROCESSO DE 'SEND' DA ORDER TERMINAR...
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+ok, ele vai fazer todas as coisas de sempre...
+
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onPurchaseInit: () => dispatch(actions.purchaseInit());
+    }
+}
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+OK... MAS O PROFESSOR DIZ QUE 
+
+
+VAMOS 
+
+USAR 
+
+
+
+'componentWillMount' 
+
+
+em vez 
+
+de 
+
+
+'componentDidMount'... (pq parece que NÃO VAMOS QUERER QUE ESSE 'DISPATCH' desse action creator/action aconteça TODA VEZ QUE O COMPONENT 'Checkout' for montado, e sim SOMENTE NA SEGUNDA E SUBSEQUENTES VEZES... )
+
+
+
+
+
+
+
+
+
+
+
+
+--> lá no reducer  de 
+
+
+'orderReducer',
+
+
+PROFESSOR 
+
+
+COLOCA 
+
+
+
+
+
+const initialState = {
+    orders: [],
+    loading: false,
+    purchased: false
+}
+
+
+
+
+case actionTypes.PURCHASE_INIT: 
+return {
+        ...state,
+        purchased: false
+}
+
+
+
+
+
+--------------------------------
+
+
+
+ESSA É A PARTE INTERESSANTE.... -------> NO 'INITIAL STATE',
+
+vamos 
+
+realmente 
+
+definir 
+
+o 
+
+STATE INICIAL DE 'purchased' como sendo __FALSE___... --------> 
+
+
+
+
+isso feito,
+
+
+
+AQUELE 
+
+'case' 
+
+de 
+
+ 
+'PURCHASE_INIT' 
+
+
+
+____________TAMBÉM__________ VAI querer 
+
+
+definir 
+
+
+'purchased' como sendo false... --------------------------->  MAS A PARTE 
+
+INTERESSANTE 
+
+É QUE 
+
+
+
+LÁ EM 
+
+
+
+
+'PURCHASE_BURGER_SUCCESS' VAMOS QUERER 
+
+
+ACTUALLY COLOCAR
+ 
+
+
+ 'purchased' como true,
+
+
+ pq isso é verdade... ------> 
+
+
+
+
+
+
+
+
+ ISSO VAI SIGNIFICAR, EM OUTRAS PALAVRAS,
+
+ QUE 
+
+
+ __o STATE __ DE 'purchased' REALMENTE VAI MUDAR __QUANDO NÓS DE FATO _REALIZARMOS O '_PURCHASE' 
+
+ de um burger... ---------> MAS O BENEFÍCIO, COM ESSE 'PURCHASE_INIT',
+
+ É QUE 
+
+
+
+ESSE STATE ____VAI SEMPRE __SE RESETTAR__ (vai ficar 'purchased: false') QUANDO VISITARMOS 
+
+O 
+
+CONTAINER de 'Checkout'...
+
+
+
+
+
+
+
+
+---> ISSO FEITO, 
+
+LÁ EM 
+
+
+'Checkout',
+
+
+
+NÓS VAMOS QUERER 
+
+RENDERIZAR/FAZER SER EXECUTADO O 
+OBJETO 
+
+'<Redirect />' 
+
+
+
+__SEMPRE QUE ___NÓS 'SUCCESSFULLY purchase something'...
+
+(essa parte do código do professor TEM A MESMA SINTAXE/PADRÃO 
+
+DA SINTAXE QUE NÓS UTILIZAMOS, com RENDER CONDICIONAL DE '<Redirect />')
+
+
+
+
+professor 
+
+vai 
+
+escrever:
+
+
+
+
+
+render() {
+    let summary = <Redirect to="/" />
+
+
+
+
+    if (this.props.ingr) {
+        let purchasedRedirect = <Redirect to="/" />  
+    }
+}
+
+
+
+
+
+-------------------------
+
+AÍ ELE VAI FAZER AS COISAS PADRÃO,
+
+
+vai 
+
+
+
+CONDICIONAR o show de '<Redirect />'
+ 
+
+
+
+
+ AO STATE 
+ de 
+
+
+ 'purchased', exatamente como nós fizemos....
+
+
+
+
+-----------------------------
+
+
+
+CERTO... MAS O CÓDIGO DO PROFESSOR É PROBLEMÁTICO, INTRODUZ UM PROBLEMA NA EXECUÇÃO...
+
+
+
+
+
+
+
+---> quando professor tenta pedir um novo burger, ele é REDIRECIONADO IMEDIATAMENTE 
+
+
+À PÁGINA 
+
+'BURGER BUILDER'... -------> isso 
+
+ocorre 
+
+
+devido ao FUNCIONAMENTO 
+
+
+DO 
+
+'componentWillMount'... ---> isso significa que 
+
+
+O __COMPONENTWILLMOUNT ___ É EXECUTADO 
+
+
+MT TARDIAMENTE... --------------------> 
+
+
+
+APESAR 
+
+
+D
+E 
+
+'componentWillMount' 
+
+
+
+RODAR 
+
+
+__ANTES __ DE 'render()',
+
+
+
+
+ELE __ NÃO PREVINE O RENDER COM OS __PROPS __VELHOS QUE RECEBEMOS ____ (os props 'this.props.purchased', basicamente)...
+
+
+
+---> E NOS PROPS VELHOS QUE RECEBEMOS,
+
+'purchased' AINDA CONSTA COMO 'true'... (e é POR ISSO QUE SOMOS REDIRECIONADOS...).
+
+
+
+
+
+Qual seria a solução? --> eu CHUTO que 
+
+
+é 
+
+
+escrever 
+
+'this.props.onPurchaseInit()'
+
+
+DENTRO DO 
+
+__CONSTRUCTOR__ 
+
+DE 
+
+'Checkout'... ----> PROFESSOR DEMONSTRA QUE ESTOU ERRADO... ---> ELE NÃO VAI QUERER 
+
+DISPATCHAR
+
+
+ESSE 
+
+NEGÓCIO 
+
+
+dentro 
+
+
+de 
+
+
+'Checkout',
+
+
+NÃO É AQUI 
+
+QUE 
+
+ESSE NEGÓCIO SERÁ CHAMADO,
+
+E JUSTAMENTE 
+POR ISSO 
+
+ELE 
+REMOVE 
+
+
+O 
+
+
+'mapDispatchToProps' 
+
+
+QUE EXECUTAVA ESSE NEGÓCIO... (E tira o 'componentWillMount')....
+
+
+
+
+
+
+--------------------------
+
+
+
+
+EM VEZ DISSO,
+
+PROFESSOR 
+DIZ QUE 
+
+___DEVEMOS 
+
+RODAR 
+
+'INIT_PURCHASE'__ 
+
+
+LÁ 
+
+
+
+NO __BURGER_BUILDER.... ____ (ou seja, UMA ETAPA AINDA ANTERIOR AO RENDER DE 'CHECKOUT'...).
+
+ 
+
+
+
+
+--> init purchase DEVE SER EXECUTADO/DISPATCHADO QUANDO 
+
+
+FOR 
+
+
+CLICADO O BOTÃO 
+
+
+
+'Order Now', lá 
+
+
+
+no 
+
+'BurgerBuilder'...
+
+
+
+--------------------------------------
+
+
+
+
+
+vai ser dentro do método 
+
+
+
+'purchaseContinuedHandler',
+
+LOGO 
+
+ANTES 
+
+
+
+DO 
+
+
+USUÁRIO 
+
+SER 'PUSHADO' (empurrado) 
+PARA 
+
+A OUTRA PÁGINA 
+
+POR MEIO 
+
+DE 
+
+'this.props.history.push('/checkout');'
+
+
+
+
+
+---------------------------------
+
+
+É AÍ QUE VAMOS QUERER INICIALIZAR UMA PURCHASE...
+
+
+
+------------------------------
+
+
+
+
+
+
+--> É POR ISSO QUE O PROFESSOR VAI VINCULAR ESSA ACTION DE 'onPurchaseInit' 
+
+
+EM 
+
+'BurgerBuilder', 
+
+
+e isso vai resolver nosso problema de redirect instantâneo quando clicamos em 'Order Now'...
+
+
+
+
+FICOU ASSIM:
+
+
+
+  purchaseContinueHandler = () => { 
+       this.props.onPurchaseInit();
+    this.props.history.push('/checkout');
+      
+    }
+
+
+----------------------------------
+
+
+
+
+PROFESSOR DIZ, NO ENTANTO,
+
+QUE 
+
+TEMOS 
+
+UM __ERRO__.... (um problema, na verdade...) --------> 
+
+
+O PROBLEMA 
+
+
+É 
+
+QUE 
+
+
+NOSSO 
+
+PREÇO (o 'price') 
+
+
+NUNCA 
+
+
+É 
+
+
+RESETTADO
+ 
+ QUANDO 
+
+ TERMINAMOS UMA 
+
+ 'PURCHASE'.... ----------> entretanto, 
+
+
+ isso é só na versão 
+
+ dele,
+
+
+ PQ 
+
+
+ A MINHA VERSÃO 
+
+
+ ESTÁ 
+
+ SEMPRE RETORNANDO PARA A PÁGINA INICIAL,
+
+ MAS 
+
+ A PÁGINA 
+
+ INICIAL JÁ 
+
+ ESTÁ COM O PREÇO CORRETO (6.90 dolares...)
+
+
+
+
+ ------------> VEREMOS ISSO NA PRÓXIMA LIÇÃO (vamos ver como ele solucionou esse problema no CÓDIGO DELE, E NÃO NO NOSSO...)

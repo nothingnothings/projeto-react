@@ -1,0 +1,382 @@
+
+
+
+
+Certo...
+
+
+
+com 
+
+
+
+o 'React.memo' (coisa de FUNCTIONAL COMPONENTS)
+
+
+
+e o 
+
+
+'shouldComponentUpdate' (coisa de class-based components),
+
+
+
+
+
+
+PODEMOS/PODERÍAMOS
+
+PENSAR 
+
+
+QUE SERIA 
+
+
+
+
+BEM MAIS LÓGICO SIMPLESMENTE ADICIONÁ-LOS, qualquer um dos 2, A QUALQUER 
+
+
+COMPONENT 
+
+CRIADO POR NÓS... -------------> 
+
+
+
+''''ah, vou wrappar todos os functional components com 
+
+
+React.memo, e em todos 'class-based components' usarei 
+
+'shouldComponentUpdate()'...''''''
+
+
+------------------------------------
+
+
+
+
+ISSO SERIA ALGO SÁBIO/INTELIGENTE? -------> ISSO PODE SOAR COMO UMA BOA IDEIA, 
+
+
+MAS NÃO É... ------> não é pq VOCÊ SEMPRE VAI TER ALGUNS 
+
+
+
+COMPONENTS que vão precisar dessa feature,
+
+vão precisar da FEATURE de __sEREM ATUALIZADOS___ QUANDO O PARENT 
+
+
+COMPONENT deles for atualizado... (
+
+Em casos como esses, em que seus components 'filhos' DEPENDEM
+
+DE ALGUM INPUT/props/state DE SEU 
+
+
+
+PARENT COMPONENT, 
+
+esse 
+
+
+data do input/props/state é 
+
+BASICAMENTE 
+
+
+__a ÚNICA 'DATA' QUE 
+
+
+O SEU 
+
+COMPONENT PAI 
+
+
+faz 
+
+'Manage' ----> e se essa 'data' do parent component for alterada, certamente 
+
+existirão casos em que a 'DATA' dos 
+
+CHILD COMPONENTS ___TERÁ___ DE MUDAR PARA ACOMPANHAR ESSA ALTERAÇÃO... -s
+
+
+
+)  -------------> EM CASOS COMO ESSES,
+
+
+SE VOCÊ IMPLEMENTAR 
+
+
+'React.memo()' 
+
+
+ou 
+
+'shouldComponentUpdate()',
+
+
+
+VOCÊ ACABARÁ FAZENDO MERDA, pq 
+
+essas 'funções'/features vão rodar E ENTÃO 
+
+VÃO CHECAR 
+
+
+SE O 
+
+
+'InPUT/STATE/PROPS' 
+
+REALMENTE 
+
+MUDARAM.. (
+
+    como este código de 'shouldComponentUpdate', que podemos citar como 
+
+    exemplo:
+
+
+            
+shouldComponentUpdate(nextProps, nextState) {
+    console.log('[Persons.js] shouldComponentUpdate');
+
+    if(nextProps.persons !== this.props.persons) {
+      return true; 
+    } else {
+      return false;
+    }
+    
+    
+}
+
+
+) -----------> e isso __PODE___ PARECEBER BOM... --> pode parecer 
+
+
+BOM 
+
+
+pq supostamente 
+
+ESSE CÓDIGO QUE 'BLOQUEIA UPDATES/RE-RENDERS'
+
+
+
+__SÓ SERÁ EXECUTADO__ quando REALMENTE O STATE/INPUT/PROPS 
+
+tiver mudado.... -------------> SIM, E ISSO É VERDADE... Entretanto,
+ 
+
+ UM PROBLEMA 
+
+
+QUE PASSA A EXISTIR NO NOSSO APP É QUE 
+
+
+ESSAS FUNÇÕES/FEATURES de 'React.memo' e 'shouldComponentUpdate' 
+
+__AINDA ACABAM SENDO EXECUTADAS__, MESMO NOS CASOS EM QUE 
+
+O 'UPDATE/RE-RENDER' DEVERIA 
+
+
+TER ACONTECIDO __aUTOMATICAMENTE__, '''SEM A MÁQUINA PENSAR'''... ----> isso significa 
+
+
+que por meio 
+
+
+de 
+
+React.memo/shouldComponentUpdate() VOCÊ 
+
+
+_aCABA___ INTRODUZINDO UM NOVO PROCESSO/FUNÇÃO NO FLOW DO SEU CÓDIGO,
+ 
+ UMA FUNÇÃO/FEATURE 
+
+ QUE 
+
+ ACABA RODANDO CÓDIGO DESNECESSÁRIO QUE PODE 
+
+ __ACABAR__ REDUZINDO SUA PERFORMANCE...
+
+ (tudo por causa do ''''check'''' que essas funções tem que realizar para 
+ saber se devem atualizar o seu component ou não, pq ISSO É ESSENCIALMENTE 
+ O QUE ESSAS FUNÇÕES FAZEM: elas rodam um 'check' e então CONTINUAM/CESSAM 
+ o update/re-render A PARTIR dessa  comparação)...
+
+
+
+
+ ---------------------------------------
+
+
+
+
+
+
+ --> certo, então esse '''CHECK'''   realizado por 
+
+
+ React.memo() e 'shouldComponentUpdate()' 
+
+
+ NÃO 
+
+ ACONTECE 
+
+ 'DE GRAÇA' -----> não é um check SUPER 'PERFORANCE-HEAVY',
+
+
+
+
+ MAS AINDA É CÓDIGO QUE ACABA SENDO EXECUTADO... -----------> e 
+
+
+SE VOCÊ FOR LÁ E WRAPPAR 
+
+___tODOS SEUS COMPONENTS COM CHECKS COMO ESSES (no caso de 'react.memo()'),
+
+
+E SE TIPO, digamos,
+
+
+60% DESSES COMPONENTS ___SEMPRE PRECISAM___ ATUALIZAR QUANDO 
+
+OS SEUS 'PARENTS 'ATUALIZAM (isso você vai saber ao ver seu funcionamento na página...; '''precisam 
+atualizar com os pais, ou não?''''), 
+
+
+
+sendo 
+
+esses 'checks' INÚTEIS NELES... -----------> bem, se for esse o caso, 
+
+talvez seja melhor nem mesmo usar 
+
+'shouldComponentUpdate' e 'React.memo()'...
+
+
+--------------------
+
+
+
+IMAGINE QUE DESASTRE: 
+
+
+
+RODAR CHECKS DESNECESSÁRIOS EM 
+
+
+60% DO SEU CÓDIGo... ---> é isso que acontece se vocÊ usar essas features de forma burra.
+
+
+
+
+
+
+É POR ISSO QUE 
+
+VOCÊ 
+
+
+DEVE 
+
+PENSAR ANTES DE OS UTILIZAR -----------------> VOCÊ 
+
+DEVE 
+
+
+PENSAR :
+
+
+
+'POR ACASO ESSE COMPONENT É PARTE DE UM PARENT COMPONENT QUE 
+
+PODE MUDAR, MAS CUJA MUDANÇA NÃO AFETARÁ ESSE MEU COMPONENT EM NADA?... (podemos 
+observar isso no nosso APLICATIVO: o component 
+
+'Persons', por exemplo, NÃO ESTÁ PREOCUPADO NEM UM POUCO 
+
+COM MUDANÇAS NO COMPONENT 'Cockpit'...) -----> se esse for o caso, 
+
+AÍ VOCÊ 
+
+
+REALMENTE DEVERÁ 
+
+
+__IMPLEMENTAR__ O SEU 
+
+'CHECK' (tanto por 'React.memo' quanto por 'shouldComponentUpdate')...
+
+
+
+
+
+
+É aí que você deverá implementar checks como:
+
+
+
+'
+
+
+            
+shouldComponentUpdate(nextProps, nextState) {
+    console.log('[Persons.js] shouldComponentUpdate');
+
+    if(nextProps.persons !== this.props.persons) {
+      return true; 
+    } else {
+      return false;
+    }
+    
+    
+}
+
+
+',
+
+
+
+
+CASO CONTRÁRIO, CASO VOCÊ SAIBA/ENTENDA
+ 
+ QUE EM __QUASE__ TODOS OS CASOS NAQUELE APLICATIVO SEU 
+
+
+ __CHILD COMPONENT___ DEVERÁ ATUALIZAR/SOFRER RE-RENDER A PARTIR 
+
+
+ DE MUDANÇAS/RE-RENDER DE SEU PARENT COMPONENT,
+
+
+
+ VOCÊ 
+
+ DEVE 
+
+
+ SE __aBSTER__ DE USAR 
+
+ 'shouldComponentUpdate' e 'React.memo', pq 
+
+ se você
+
+ fizer isso,
+
+ VOCê ESTARÁ ECONOMIZANDO LÓGICA E PROCESSAMENTO. 
+  
+
+
+
+--------------------------------------------------------------------
+
+
+

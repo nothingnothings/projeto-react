@@ -1,0 +1,2264 @@
+
+
+
+
+
+
+
+
+
+
+
+
+=---> o professor falou BASTANTE nas últimas aulas... --> falou mt para pouca coisa,
+
+
+
+
+ele explicou um monte 
+
+
+de 
+coisa 
+
+
+para 
+
+apenas 
+
+
+explicar 
+
+O 
+
+__SWITCH___ ENTRE 2 DIFERENTES PÁGINAS... ----> mas é importante, é claro, 
+
+
+SABER 
+
+
+ESSAS 
+
+COISAS, pq é elas que nos deixam usar 
+
+
+o router de forma efetiva...
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+AGORA, NO ENTANTO, 
+
+
+O PROFESSOR 
+
+
+QUER 
+
+
+QUE 
+
+NÓS 
+
+CONSIGAMOS 
+
+
+____Carregar um 'single post' 
+
+
+A 
+
+PARTIR 
+
+DE UM 
+
+CLICK EM 
+
+SEU 
+
+
+
+'COMPONENT'/elemento, o elemento que o representa,
+
+dentro 
+
+
+daquele 
+
+
+
+component 'posts'... --------> ISSO PQ,
+
+ATÉ AGORA,
+
+nada 
+
+
+acontece 
+
+quando 
+
+
+clicamos 
+
+
+nesses 
+
+'posts'
+
+no home,
+
+
+
+NADA ACONTECE...
+
+
+
+-----------------------
+
+
+
+
+a RAZÃO PARA ISSO 
+
+
+É 
+
+QUE 
+
+LÁ NO NOSSO COMPONENT
+'POSTS',
+
+
+
+em que 
+
+
+NÓS 
+
+
+TEMOS 
+
+
+
+
+
+AQUELE 
+
+HANDLER 
+
+
+de 
+
+'this.postSelectedHandler(post.id)' (no prop 'clicked', passado ao component 'post'),
+
+
+
+QUE 
+
+
+É 
+
+__USADO 
+
+
+
+PARA ___ 
+
+
+
+FAZER O HANDLING ___dO/DE UM CLICK 
+
+
+
+NAQUELE/NAQUELES COMPONENT/S 'Post'... --------------> O PROBLEMA 
+
+
+
+AQUI 
+
+
+É 
+
+JUSTAMENTE 
+
+
+QUE 
+
+
+
+ESSE 
+
+
+'postSelectedHandler' 
+
+
+
+________ESTÁ SETTANDO UM __STATE___ ('this.setState({selectedPostId: id})') QUE É __COMPLETAMENTE IRRELEVANTE... ------->
+
+
+
+
+
+ele é/está 
+
+completamente 
+
+
+irrelevante 
+
+
+
+PQ _O PROFESSOR/NÓS __ NÃO ESTAMOS 
+
+
+MAIS 
+
+
+'HANDLING' O STATE 
+
+
+
+DO COMPONENT 'Posts'...   (nosso state está como 'state = {
+    posts: []
+}
+
+
+',
+
+
+
+
+MAS 
+
+NÓS 
+
+
+NEM ESTAMOS MAIS USANDO ESSE STATE AÍ...
+
+)
+
+
+
+
+
+-----------------------------
+
+
+OK, MAS O QUE QUEREMOS, AGORA, EXATAMENTE???
+
+
+
+
+
+
+
+
+---->>>> quando um POST (dentro do component 'posts' )
+
+
+É CLICADO,
+
+
+
+EU VOU QUERER ___ ________CARREGAR_________ O COMPONENT 
+
+
+'FULLPOST'
+
+
+COM OS DADOS DESSE POST QUE FOI CLICADO....
+
+
+
+
+
+
+
+
+
+---> PARA ISSO, PARA mostrar esse 'FullPost', 
+
+NÓS TAMBÉM PRECISAMOS, É CLARO ,
+
+
+__DETERMINAR__ EM QUAL LUGAR DE NOSSO APP ELE ____dEVERÁ SER MOSTRADO____/renderizado.... ---------> 
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+__PODERÍAMOS___ O RENDERIZAR NO COMPONENT 'Blog', de fato... (poderíamos o renderizar aí, em vez de o renderizar NO COMPONENT 'Posts'...)
+
+
+
+
+---> ou seja, poderíamos o renderizar em 'Blog.js'... ------> ESSA É __UMA DAS OPÇÕES___...
+
+
+
+
+--> se quiséssemos/quisermos que 
+
+ele fosse/seja 
+
+RENDERIZADO 
+
+
+EM 
+
+'Blog.js',
+
+
+vamos começar 
+
+
+pela 
+
+escrita 
+
+
+de 
+
+
+
+'<Route path="" ....... exact />'.............
+
+
+
+
+
+NESSE LUGAR, NO ENTANTO (na verdade, isso também 
+
+se aplica A QUALQUER LUGAR EM QUE VOCÊ GOSTARIA DE RENDERIZAR 
+
+ESSE component 'FullPost'),
+
+
+PRECISARÍAMOS/PRECISAMOS  CONSEGUIR 
+
+
+AQUILO 
+
+
+QUE 
+
+
+É 
+
+CHAMADO 
+
+
+DE 
+
+
+'''''''''''''''DYNAMIC ROUTING PARAMETER''''''''''''....
+
+
+
+
+
+
+
+
+---> o professor AFIRMA ISSO PQ ELE AFIRMA QUE DEVEMOS ANALISAR O CÓDIGO 
+
+
+DE RENDER Do component 'Post', o ''OUTPUT DE POST''', lá 
+
+
+
+em 
+
+'Posts'... ---------->
+
+
+
+ex:
+
+        render() {
+
+            let posts = <p style={{textAlign: 'center'}}>Something went wrong!</p>;
+        if (!this.state.error) {
+            posts = this.state.posts.map(post => { return (<Post ///render do component POST... 
+                    {...this.props}
+                    key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)}/>); ////////essa é a PARTE IMPORTANTE.
+            });
+        }
+
+
+          return  <section className="Posts">
+            {posts}
+            </section>
+        }
+
+-------------------------------
+
+
+
+
+
+
+
+
+
+
+
+O professor sublinha o 'postSelectedHandler'... -----> ele 
+
+
+DESTACA ___ O 'post.id'... ------> ISSO É __MUITO IMPORTANTE___.... -----> 
+
+
+É IMPORTANTE PQ __CADA UM DE NOSSOS POSTS TEM UM 'post.id' ÚNICO___... -----> 
+
+
+
+E é esse post.id que é usado PARA __SELECIONAR___ E RENDERIZAR AS INFORMAÇÕES 
+
+DO POST QUE FOI CLICADO, renderizar essas informações lá no component 
+
+'FullPost'...
+
+
+
+
+
+
+----> esse 'post.id' é importante PQ QUANDO NÓS CLICAMOS EM UM POST, O REACT/JAVASCRIPT 
+
+
+___ENGINE___ PRECISA __sABER QUAL POST FOI AQUELE__... ---> pq esse conhecimento aí é que 
+
+determina 
+
+QUAL POST DEVERÁ/VAI SER CARREGADO... ------> e esse 'id' aí NÃO VAI MUDAR
+
+QUANDO NÓS USAMOS/VIAJAMOS POR 
+
+DIFERENTES 'ROUTES ' (quando trocamos de uma route para a outra....)
+
+
+
+
+
+
+
+
+
+
+ainda bem QUE 
+
+
+
+
+______EXISTE UMA MANEIRA DE CONSEGUIR ESSE 
+
+'id', esse 'post.id' lá 
+
+
+do código de 
+
+
+render 
+
+de 
+
+
+'Post',
+ 
+
+ lá em 
+
+
+ 'Posts'.... (
+
+     e se conseguimos FAZER __gET/ACESSAR __ esse 'post.id' 
+
+
+     em 
+
+     'Blog.js',
+
+
+     NÓS CONSEGUIMOS __EFETIVAMENTE__ 
+
+     RENDERIZAR 
+
+     'FullPost' 
+
+     LÁ....
+ ) 
+
+
+
+
+
+
+
+
+
+
+ ---> ok, mas como podemos fazer isso, como podemos passar esse 'post.id'
+  
+
+
+  AO COMPONENT 'Blog'?  ---------> PARA FAZER ISSO ,
+
+
+
+  DEVEMOS PASSAR O ID (post.id) ___COMO PARTE __ DE NOSSA 
+
+
+  _____URL________ ------> FAZEMOS ISSO PARA __QUE LÁ 
+
+
+  NO COMPONENT 'FULLPOST', quando nós o CARREGARMOS, NÓS 
+
+
+  SEJAMOS 
+
+
+  _______CAPAZES__ DE __PEGAR (fazer 'GET') DESSE 
+
+
+  PARÂMETRO/PAREMETER  E ENTÃO ___cARREGAR __ O POST 
+
+
+  APROPRIADO, DE ACORDO 
+
+
+  COM ESSE PARAMETER RECEBIDO...
+
+
+
+
+
+
+
+  -----------------------------
+
+
+
+  Antes de mais nada,
+   
+
+   o código de render 
+
+
+   das coisas 
+
+   em 'Blog.js' estava assim:
+
+
+
+
+EX:
+
+
+
+<Route path="/" exact component={Posts} />
+<Route path="/new-post" exact component={NewPost} />
+
+
+
+-------------------------------------------------
+
+
+Certo... o professor diz que se quisermos 
+
+PASSAR ESSE 'PARAMETER' AÍ, antes de mais nada (até mesmo antes dA __dEFINIÇÃO DA ROTA/ROUTE DE 'FullPost' no component 'Blog.js'),
+
+
+
+_______DEVEMOS _______ 
+
+
+
+COMUNICAR 
+
+O 
+
+
+REACT-ROUTER-DOM,
+
+
+DEVEMOS O INFORMAR DO FATO DE QUE 
+
+__aGORA__ TEMOS UM 
+
+'DYNAMIC ELEMENT' DENTRO 
+
+
+
+DESSA URL/COMO PARTE DESSA URL...
+
+
+
+
+
+
+
+CERTO.... mas nós não podemos escrever algo assim:
+
+
+
+
+<Route path="/1" exact component={FullPost} />
+<Route path="/2" exact component={FullPost} />
+<Route path="/3" exact component={FullPost} />
+
+
+
+
+
+
+
+----> NÃO PODEMOS SEGUIR ESCREVENDO ESSAS ROUTES INFINITAMENTE, UMA PARA CADA 'POST'...
+
+
+
+
+
+--> n podemos pq ISSO SERIA UM PESADELO, E TBM PQ EM __99.9%__ dos aplicativos 
+
+VOCÊ __NÃO VAI SABER ___ QUANTAS ROUTES POSSÍVEIS 
+
+
+SERÃO definidas, aqui/em qualquer lugar de seu aplicativo... ----------> 
+
+
+
+
+
+PARA SOLUCIONAR ESSE PROBLEMA DO 'HARDCODING' de diferentes IDs,
+
+
+podemos 
+
+
+
+___dEFINIR UM 'VARIABLE/FLEXIBLE PARAMETER'....  --------> 
+
+
+esse parâmetro 
+
+flexível
+ 
+
+é escrito 
+
+
+
+com 
+
+'/:nomeDeSuaEscolha'...
+
+
+
+
+
+OU SEJA, 
+
+é 
+
+
+
+':' + nomeDeSuaEscolha,QualquerNome....
+
+
+
+
+
+
+dois pontos + nome...
+
+
+
+
+
+
+E ESSE VALOR 
+
+AÍ 
+
+__É ESCRITO___ DENTRO 
+
+DA PROPRIEDADE 
+
+
+
+'path' 
+
+
+do Route.... 
+
+
+
+
+
+
+
+
+--> veja o código-exemplo do professor:
+
+
+
+'<Route path="/:postId" exact component={FullPost}'
+
+
+
+----------------------------------------
+
+
+
+
+
+ex:
+
+
+
+
+<Route path="/" exact component={Posts} />
+<Route path="/:postId" exact component={FullPost} />
+<Route path="/new-post" exact component={NewPost} />
+
+
+
+
+
+
+OU SEJA, O PROFESSOR 
+
+
+escolhe 
+
+
+
+UM 
+
+'DYNAMIC ROUTING PARAMETER' 
+
+
+
+de nome 
+
+'/:postId'.... --------------> ELE EXPLICA QUE 
+
+
+ESSE 
+
+
+
+PARÂMETRO 
+
+
+DINÂMICO 
+
+
+
+
+________vAI SER SUBSTITUÍDO ___ DE FORMA DINÂMICA____........ ---> o que 
+
+ele faz 
+
+
+é basicamente 
+
+dizer ao 
+
+'react-router-dom':
+
+
+
+
+""""""""""""""HEY, SEMPRE QUE VOCÊ TIVER '/'+ algumPathAleatório,NãoDefinidoNasOutrasRoutes', 
+
+
+É ESSA ROUTE de '/:id' QUE DEVERÁ SER SELECIONADA/ATIVADA.... (e não as outras)...""""""""""""" ------> 
+
+
+
+E SIM, 
+
+
+ISSO 
+
+FARÁ COM QUE 
+
+
+AS OUTRAS ROUTES DEFINIDAS 
+
+
+EM 
+
+'Blog.js' 
+
+(
+
+
+    as routes de 
+
+
+<Route path="/" exact component={Posts} />
+
+E 
+
+    <Route path="/new-post" exact component={NewPost} />
+)
+
+
+
+
+__SOFRAM __INTERFERÊNCIA___ 
+
+
+
+
+DESSA 
+
+
+
+ROUTE COM 'PARAMETER DINÂMICO'... --------> como assim, 'interferência'? ------->
+
+
+
+BEM, ELAS SERÃO __DESCONSIDERADAS/IGNORADAS__, 
+
+e será 
+
+apenas 
+
+optada 
+
+
+a 
+
+Route de path '/:id'.... ----------> OK,
+
+
+MAS COMO 
+
+
+SOLUCIONAR ISSO? --------> PROFESSOR 
+
+
+
+
+APONTA QUE É SIMPLEs:
+
+
+DEVEMOS _____CORRIGIR ___ A ______ORDEM_____
+
+
+
+ DAS NOSSAS ROUTES... ------> 
+
+
+
+
+
+A route com 
+
+
+'parameter dinâmico' 
+
+
+
+DEVERÁ 
+
+FICAR POR ÚLTIMO... (pq ela vai funcionar TIPO UM _'''CATCH BLOCK'''"____ --> o código 
+
+das routes é 
+
+LIDO
+ 
+ 
+ DE __CIMA __ PARA BAIXO__;  ------> isso significa que 
+ 
+ 
+ SE NÓS COLOCARMOS 
+ 
+ O '/:id' por ÚLTIMO na ordem de execução 
+ 
+ dos 'Routes', 
+ 
+ 
+ ELE __SÓ SERÁ ___ EXECUTADO __ se os routes ATIVADOS pelo 
+ 
+ 
+ usuário 
+ 
+ não foram aqueles 
+ 
+ 
+que tem o 'path' de '/' e '/new-post', nesse nosso exemplo...
+
+
+
+ 
+ )
+
+
+
+
+
+ex:
+
+
+
+
+<Route path="/" exact component={Posts} />
+<Route path="/new-post" exact component={NewPost} />
+<Route path="/:postId" exact component={FullPost} /> ////////////////////COLOCAMOS ESSE ROUTE COM 'parâmetro dinâmico por último', pq aí 
+                                                            /////////EVITAMOS BIZARRICES COMO '/new-post' sendo CONSIDERADO/INTERPRETADO COMO UM  ____''''ID'''''___, como um dos parâmetros desse parâmetro dinâmico de '/:id'...
+
+
+
+
+
+
+
+
+
+
+
+
+---> isso pq a marcação 
+
+
+
+'/:nomeDoSeuParâmetro' 
+
+
+
+
+
+_______APENAS __ COMUNICA AO REACT A SEGUINTE FRASE: ''''''temos algo DINÂMICO, AQUI''''' -----> e é por isso 
+
+que 
+
+
+essas routes geralmente 
+
+FICAM 
+LÁÁÁÁ EMBAIXo das outras routes, 
+
+
+colocadas para serem executadas POR ÚLTIMO.
+
+
+
+------------------------------------------
+
+
+
+
+OK....
+
+
+
+'/:id' ----------> ESSE, PORTANTO, 
+
+É 
+
+
+UM 
+
+'ROUTE PARAMETER'.... route parameter clássico... -----------> 
+
+
+
+
+
+
+
+
+CERTO, MAS SÓ ISSO NÃO BASTA... -------> nós vamos querer 
+
+_____USAR_______ ESSE PARÂMETRO... ------> vamos querer 
+
+
+
+ESSENCIALMENTE QUE ___ ________ ESSE PARÂMETRO SEJA ___________ PASSADO (passed) 
+
+
+
+
+QUANDO NÓS CLICARMOS 
+
+
+EM ALGUMA 
+
+'ROUTE' DO NOSSO CÓDIGO..... (e eu creio que vamos enfiar uma route no nosso 
+
+component/components 'Post'...) --------------> PARA 
+
+
+ISSO,
+
+
+
+EXPLICA 
+
+O PROFESSOR ,
+
+
+
+
+
+DEVEMOS 
+
+
+
+
+
+_______fAZER HANDLE ___ DE UM CLICK EM UM 'SINGLE POST',
+
+
+UM 
+
+HANDLE DE UM CLICK EM UM SINGLE POST,
+
+LÁ 
+
+NO COMPONENT 
+
+
+'Posts'...
+
+
+
+
+-------------------------------
+
+
+
+
+
+-------> E EXISTEM 2 MANEIRAS DE FAZER HANDLE DESSE CLICK em um 
+
+'single post component' (nesteado em um component maior, como esse 'Posts')....
+
+
+
+
+
+
+
+1A MANEIRA) -----------> EIS O CÓDIGO DE 
+
+
+
+'Posts.js':
+
+
+
+
+
+
+class Posts extends Component {
+    state = {
+        posts: []
+
+    }
+
+
+    postSelectedHandler = (id) => {
+        this.setState({selectedPostId: id});
+    }
+
+    componentDidMount () {
+        axios.get( '/posts' )
+            .then( response => {
+                const posts = response.data.slice(0, 4);
+                const updatedPosts = posts.map(post => {
+                    return {
+                        ...post,
+                        author: 'Max'
+                    }
+                });
+                this.setState({posts: updatedPosts});
+                
+            } )
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    
+    
+    
+        render() {
+
+            let posts = <p style={{textAlign: 'center'}}>Something went wrong!</p>;
+        if (!this.state.error) {
+            posts = this.state.posts.map(post => { return (<Post 
+                    {...this.props}
+                    key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)}/>);
+            });
+        }
+
+
+          return  <section className="Posts">
+            {posts}
+            </section>
+        }
+    
+}
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+
+A PRIMEIRA MANEIRA/APPROACH É 
+
+
+
+_______sIMPLESMENTE__ FAZER O WRAP___ DAQUELE 
+
+
+
+
+
+COMPONENT '<Post>' 
+
+QUE RENDERIZAMOS NESSE 
+
+
+component 'Posts', 
+
+
+
+__O WRAP DESSE 'POST'
+ 
+
+
+ EM ___ UM '''Link'''''___.....  --------------> 
+
+
+
+
+
+
+ E ESSE APPROACH 
+
+
+
+
+
+
+
+ É ________pERFECTLY___ FINE, E PROVAVELMENTE 
+
+ a 
+
+
+
+ 'MAIN WAY OF DOING THIS'...  ------> 
+
+
+
+ e 
+
+o professor 
+
+
+quer 
+
+
+começar 
+
+pela demonstração de como utilizar esse approach... --------> 
+
+
+
+
+
+
+
+PARA ISSO,
+
+ELE VAI ___IMPORTAR____ 
+
+'Link' 
+
+
+da 
+
+package 
+
+de 
+
+
+'react-router-dom',
+
+
+lá naquele 
+
+component 
+
+'Posts'...
+
+
+
+
+
+
+
+
+
+--> o professor faz uma breve observação: poderíamos 
+
+
+ter usado 'NavLink' em vez de 'Link', aqui, caso quiséssemos/queiramos 
+
+ESTILIZAR/DEFINIR UM STYLE para o 'active' desse link...  
+
+
+
+
+
+
+
+
+Certo,
+
+
+ele vai simplesmente 
+
+wrappar 
+
+
+nosso 
+
+'Post' com o 
+
+component 
+
+
+'Link'....
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+ return (
+     
+     
+     
+     <Link>
+     <Post 
+                    {...this.props}
+                    key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)}/>
+                </Link> 
+                    
+                    
+ )
+
+
+
+
+
+
+
+ -----------------------------------
+
+
+
+
+
+
+
+
+
+
+ CERTO... AÍ ESTARÍAMOS BASICAMENTE SETTANDO UM LINK.... ------> 
+
+
+
+
+
+
+
+
+ mas isso não é tudo, para fazer o handle correto de clicks nos nossos components 'Post' individuais,
+  
+
+  PRECISAMOS 
+
+
+  DEFINIR UMA 
+
+  PROPRIEDADE 
+
+  'to' (vai mudar a url para esse local aí)
+
+
+
+
+  DE VALOR xxxxxx.....
+
+
+
+
+
+  E ESSE 
+
+
+
+  VALOR 
+
+
+  'xxxxxx' 
+
+
+  DEVERÁ 
+
+
+  SER 
+
+
+  ____ALGO DINÂMICO________,,,,
+
+
+
+  E 
+  ESSE 
+
+
+
+  ALGO DINÂMICO ________É AQUELE ID ___ DINÂMICO/PARÂMETRO DINÂMICO 
+
+
+  que escrevemos naquela 
+
+
+  'Route' 
+
+
+  em 
+
+  'Blog.js'... (
+
+      É 
+
+      aquela route com 
+
+      'path="/:postId" '
+
+
+
+
+  )
+
+
+
+
+
+
+
+
+
+PARA FAZER ISSO, professor diz que podemos SIMPLESMENTE PASSAR O 'ID ITSELF' aqui... (mas esse 
+
+id é DINÂMICO, por isso não sabemos o que escrever dentro desse 'to={}'...)
+
+
+
+
+
+
+OBS::::::::::::: NESSE NOSSO EXEMPLO AQUI, REALMENTE PODEMOS PASSAR 
+
+nosso 'ID ITSELF'....; ENTRETANTO, 
+
+
+se você tiver URLS MAIS LONGAS,
+
+URLS 
+como 
+
+
+'/posts/'  e aí SÓ __eNTÃO __ O ID,
+
+
+aí 
+
+você teria 
+
+que 
+escrever 
+
+algo como 
+
+
+'<Link to={'/posts/' + idDinâmico}.........
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+AQUI, NO ENTANTO, 
+
+
+
+ESTAMOS APENAS FAZENDO HANDLE 
+
+
+de um valor de 
+
+'/:id',
+ 
+
+ ou seja,
+
+ um 
+ 'slash' + DIRETAMENTE O ID DINAMICO.... -------> e é por isso que 
+
+ podemos 
+
+ simplesmente 
+
+ passar 
+
+
+ 'the id itself' como 
+
+
+ valor 
+
+ do 
+
+ 'to={}'... ------------------->
+
+
+
+
+
+
+
+
+
+
+
+
+ CERTO.................
+
+
+
+
+ E NESSE 
+
+
+ 'Link to' 
+
+
+ QUE 
+
+ ESTÁ ___WRAPPANDO________o 
+
+
+ component 'Post',
+
+
+ VAMOS QUERER 
+
+
+
+ ESCREVER 
+
+ UMM 
+
+
+
+ 'to'
+
+
+
+ de valor 
+
+ '{post.id}'...
+
+
+
+
+
+
+
+
+ EX:
+
+
+
+
+
+
+
+
+
+
+    posts = this.state.posts.map( post => {
+      
+      
+      
+      return (<Link to={post.id}> //////////eis o código em questão
+     <Post 
+                    {...this.props}
+                    key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)}/>
+                </Link> 
+                    
+                    
+ )
+
+
+    }
+    )
+
+
+
+-----------------------------------------------
+
+
+
+
+(NESSE CASO AÍ, o 'post.id', essa variável, TAMBÉM ESTÁ SE APROVEITANDO 
+
+DO MÉTODO 'map()', mesma coisa 
+
+vista
+ 
+ 
+ em 
+ 
+ 
+ 'key={post.id}', post.title, etc etc...)
+
+
+
+
+
+
+
+
+ ---------> 
+
+
+ CERTO...
+
+
+ E DEFINIR O 'to'
+
+
+ desse link como 
+
+ sendo esse valor 
+
+ aí 
+
+ VAI FAZER COM QUE 
+
+ ELE TRIGGUE 
+
+ A 
+
+
+ ROUTE 
+
+ de 
+
+ path
+
+ '/:postId'...     (que vai ser dinâmico; vai ser 1, 2, 4, 3, qualquer coisa, de acordo com o CLICK do usuário em algum dos components 'post'...)
+
+
+
+
+
+ ----------------------------------
+
+
+
+
+
+
+
+
+ CERTO... ESTAMOS QUASE ACABADOS COM ESSE APPROACH....
+
+
+ Agora 
+
+ só temos 
+
+ que:::
+
+
+
+ ----> FAZER COM QUE 
+
+ O 
+
+
+ COMPONENT 
+
+ 'Post' 
+
+
+SEJA ____ CARREGADO_____ QUANDO alcançada a Route de path '/:id'...  -------> 
+
+
+
+PARA 
+
+ISSO,
+
+
+PROFESSOR FARÁ 
+
+OUTRA 
+
+ALTERAÇÃO,
+
+
+OUTRA GAMBIARRA.... -------> no 
+
+
+arquivo 
+
+'Blog.js',
+
+
+ELE VAI 
+
+
+IMPORTAR ___ O component 
+
+
+'FullPost' 
+
+
+
+
+LÁ 
+
+
+
+DO FOLDER 
+
+'FullPost'...
+
+
+
+
+
+
+------> CERTO,
+
+
+ISSO QUER DIZER QUE 
+
+
+AGORA 
+
+
+
+
+
+
+_______ESTAMOS RENDERIZANDO O COMPONENT 
+
+'FullPost' em 'Blog.js'....
+
+
+
+
+
+
+
+
+
+
+
+------> certo... mas ainda assim, NADA ACONTECE QUANDO 
+
+CLICO EM ALGUM DOS COMPONENTS 'Post'...
+
+
+
+
+
+
+
+
+
+------> Professor aponta que ESQUECEMOS 
+
+
+DO PROP 'key'
+
+
+NOS 
+
+
+NOSSOS COMPONENTS... ------> esse prop 
+'key'
+
+
+
+
+FALTOU 
+
+
+NO 
+
+component 
+
+'<Link />'
+
+
+
+EM 
+
+
+'Posts'... ---> isso pq 
+
+'Link'
+
+É O COMPONENTE 'OUTER' desse render aí,
+
+
+
+e ele deve 
+
+ter um prop de 'key',
+
+
+
+PQ 
+
+ELE É LOOPADO POR DENTRO, por meio da atuação de 'map'...  -----> O 'OUTERMOST ELEMENT' de um loop SEMPRE DEVE TER UM PROP de 'key'...
+
+
+
+
+
+
+-------------------------------------------
+
+Certo....mas mesmo assim, quando clico em algum dos component 'post', 
+
+nada acontece.... (nem mesmo a URL é alterada...) -----------> CERTO,
+
+
+CORRIGI O PROBLEMA...
+
+
+
+
+O '<Link />'
+
+
+ESTAVA ASSIM:
+
+
+
+
+
+
+<Link to={post.id} />',
+
+
+
+E 
+
+ELE 
+
+
+ERA 
+
+PARA 
+
+
+ESTAR ASSIM:
+
+
+
+
+ <Link to={'/' + post.id} />
+
+
+
+
+
+
+ --------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Certo... mas agora,
+
+quando clicamos 
+
+em algum 
+
+
+
+dos 'post',
+
+
+
+NOSSA PÁGINA 
+
+MUDA 
+
+
+PARA 
+
+
+A 
+
+URL 
+
+com o path 'dinâmico' do post... (
+
+
+
+    tipo 
+
+
+
+    'localhost:3000/3'...., ou 2, ou 1, etc...
+)
+
+
+
+
+
+
+Ou seja, o domain + path/path do ID 
+
+
+APARECE 
+
+NA NOSSA 
+
+URL BAR.... --------> 
+
+
+
+
+
+
+E NÓS VEMOS, ALÉM DISSO, 
+
+QUE NOSSA 
+
+PÁGINA 
+
+MUDA 
+
+
+PARA 
+
+
+'Please Select a Post', com um 
+
+espaço em branco embaixo (onde deveriam ficar os 
+
+
+COMPONENTS 'post'...) --------> ISSO 
+
+
+PODE 
+
+
+
+PARECER NÃO FAZER SENTIDO,
+
+
+mas 
+
+
+faz sentido em 1 
+
+aspecto... --------------> 
+
+
+
+
+
+
+NÓS _______NÃO CARREGAMOS _______o 
+
+
+
+'post' ('FullPost', esse component aí)
+
+
+
+COM SUCESSO 
+
+
+nesse local... ------------> 
+
+
+
+
+
+
+
+NÓS NÃO CARREGAMOS/NÃO TIVEMOS SUCESSO EM CARREGAR 
+ESSE COMPONENT 
+
+
+PQ ___ ......
+
+
+
+
+
+
+
+veja o código de 
+
+
+
+'FullPost.js':
+
+
+
+
+
+
+import React, { Component } from 'react';
+import axios from 'axios';
+
+import './FullPost.css';
+
+class FullPost extends Component {
+    state = {
+        loadedPost: null
+    }
+
+    componentDidUpdate () {
+        if ( this.props.id ) {
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) ) {
+                axios.get( '/posts/' + this.props.id )
+                    .then( response => {
+                        // console.log(response);
+                        this.setState( { loadedPost: response.data } );
+                    } );
+            }
+        }
+    }
+
+    deletePostHandler = () => {
+        axios.delete('/posts/' + this.props.id)
+            .then(response => {
+                console.log(response);
+            });
+    }
+
+    render () {
+        let post = <p style={{ textAlign: 'center' }}>Please select a Post!</p>;
+        if ( this.props.id ) {
+            post = <p style={{ textAlign: 'center' }}>Loading...!</p>;
+        }
+        if ( this.state.loadedPost ) {
+            post = (
+                <div className="FullPost">
+                    <h1>{this.state.loadedPost.title}</h1>
+                    <p>{this.state.loadedPost.body}</p>
+                    <div className="Edit">
+                        <button onClick={this.deletePostHandler} className="Delete">Delete</button>
+                    </div>
+                </div>
+
+            );
+        }
+        return post;
+    }
+}
+
+export default FullPost;
+
+
+
+
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+Dentro desse código,
+
+veja 
+
+o 
+
+
+'componentDidUpdate'...:
+
+
+
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+    componentDidUpdate () {
+        if ( this.props.id ) {
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) ) {
+                axios.get( '/posts/' + this.props.id )
+                    .then( response => {
+                        // console.log(response);
+                        this.setState( { loadedPost: response.data } );
+                    } );
+            }
+        }
+    }
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+Nesse 
+
+'componentDidUpdate',
+
+
+
+
+
+aquele 
+
+
+statement 
+
+de 
+
+
+
+'if (this.props.id)'
+
+
+
+ESTÁ 
+
+
+__CAGANDO TUDO___.... --------> 
+
+
+
+está 
+
+cagando tudo 
+
+PQ 
+
+
+'this.props.id',
+
+
+
+NESSE 
+
+COMPONENT 
+
+
+'FullPost',
+
+
+
+NÃO ESTÁ MAIS SENDO SETTADO/PASSADO..... ---------> (pq esse negócio, esse 'id' do 'this.props.id' desse component 
+
+'Fullpost' 
+
+ERA __PASSADO__ PELO 'Posts', mas aqui queremos renderizar 
+
+o 
+
+'FullPost' STANDALONE, sem 
+
+depender de 
+
+'Posts'... ) -------> 
+
+
+
+E ISSO 
+
+ESTÁ CAGANDO TUDO pq 
+
+
+
+'this.props.id' 
+
+
+NÃO 
+
+
+ESTÁ SE APROVEITANDO/NÃO SE APROVEITA  
+
+
+
+DO RETRIEVE DO PARÂMETRO QUE RETRIEVAMOS POR MEIO DA URL...
+
+
+
+--------------------------------------------
+
+
+
+
+
+'this.props.id' 
+
+
+NÃO ESTÁ MAIS SETTADO... não é por meio de 'this.props.id' 
+
+que 
+
+vamos
+
+realmente 
+
+RETRIEVAR o PARAMETER que 
+
+estamos 
+
+passando 
+
+
+
+pela 'route'/url... (route com dynamic parameter...)
+
+
+
+
+
+
+
+
+
+
+
+---> parece que A ÚNICA COISA QUE ESTÁ FUNCIONANDO É ___a TROCA ___ DA URL QUANDO 
+
+CLICAMOS EM UM POST, 
+
+
+e a correspondente mudança, 
+
+A __REMOÇÃO___ DAQUELA LISTA DE 'POST' e a adição/renderização de 
+
+'Please Select a Post!'  (que é o que acontece quando 'this.props.id' não é encontrado/retorna falsy)
+
+
+na nossa tela.... ----------> OU SEJA,
+
+
+
+NOSSO 
+
+'COMPONENT' EM SI ESTÁ SENDO CARREGADO (o component que tem tanto 'please select a post' como TAMBÉM TEM NOSSO '''POST''' em si...)...
+
+
+O 
+
+PROBLEMA, O que resta fazer aqui, é 
+
+
+___ SERMOS BEM SUCEDIDOS EM ___eXTRAIR_ __ 
+
+
+O __PARÂMETRO___ PASSADO EM NOSSA ROTA (parâmetro que é representado, na rota, por '/:postId')....
+
+
+
+
+
+
+
+
+VEREMOS ISSO NA PRÓXIMA AULA....

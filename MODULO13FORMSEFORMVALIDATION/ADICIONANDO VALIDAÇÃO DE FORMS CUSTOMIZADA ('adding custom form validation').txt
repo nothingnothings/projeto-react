@@ -1,0 +1,1853 @@
+
+
+
+
+
+
+
+
+
+
+--> nossa form certamente está melhor... 
+
+
+
+
+--> mas é claro que 
+
+
+
+NÃO TEMOS ALGO MUITO IMPORTANTE, AINDA... -------> 
+
+
+
+validação... -----> nós 
+
+
+ainda 
+
+
+não estamos validando os inputs do usuário (na verdade, eu já estou, com meu próprio código, mas 
+
+o professor vai me mostrar algo novo)....
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+--> O USUÁRIO SEMPRE VAI QUERER SABER SE SUA FORM ESTÁ VÁLIDA OU NÃO, se ele pode proceder ou não....
+
+
+
+
+
+
+
+--> ANGULAR ----> ANGULAR TEM UMA PACKAGE DE VALIDATION ____BUILT-IN_______....
+
+
+
+
+
+
+
+----> JÁ O REACT _______NÃO TEM UMA PACKAGE__ DE VALIDATION __ BUILT-IN_... ---> isso significa que 
+
+você 
+
+precisa 
+
+
+CODAR 
+
+a validação 
+
+
+de sua página 
+
+POR CONTA PRÓPRIA... ---------> HÁ, CERTAMENTE,
+
+
+ALGUMAS 
+
+
+TPPs (third party packages) que 
+
+
+vocÊ talvez queira checar, 
+
+
+
+
+Mas em geral vocÊ consegue 
+
+
+construir 
+
+VALIDATION 
+por conta própria.... ---------> 
+
+
+
+E O PROFESSOR 
+
+
+__QUER__ CONSTRUIR __ isso por conta própria... 
+
+
+
+
+
+------------------------------
+
+
+
+O OBJETIVO, AGORA, 
+
+É 
+FAZER 
+
+
+COM QUE 
+
+
+
+SEMPRE 
+QUE 
+UM 
+
+
+INPUT SEJA 
+
+INSERIDO NOS NOSSOS INPUT FIELDS,
+
+SUA 
+
+
+VALIDADE SEJA CHECADA... --------> e é claro que 
+
+
+a 
+
+
+
+ 
+
+ VALIDADE ___ DE UM INPUT __ DEVERÁ/VAI SER __ REGULADA ___ PELAS 
+
+
+ ____________REGRAS__________ QUE NÓS DEFINIRMOS/DEFINIMOS 
+
+ LÁ 
+
+
+ NA 
+
+
+ 'orderForm', dentro do nosso state (no caso desse nosso aplicativo...) ----->
+
+
+
+
+ isso quer dizer que o que regerá 
+
+ a validação de um determinado elemento será 
+
+
+ eses código aqui, por exemplo:
+
+
+
+  name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+      } 
+
+
+------------------------------------
+
+
+
+
+Dentro desse objeto, já é possível 
+
+
+avistar 
+
+
+o 
+
+'type' (elementType ---> ex: 'select'/'input'/'textarea', etc)
+
+
+e o 'config' (que tem outro 'type', que dessa vez governa 
+
+OS HTML ATTRIBUTES 
+
+DAQUELE ELEMENTO EM PARTICULAR.... ----> que, nesse caso, terá um type de 'text')
+
+
+
+---------> MAS 
+
+
+ALÉM 
+
+
+DESSE OBJETO __SIMPLES AÍ__,
+
+esse objeto 
+
+que 
+
+faz apenas a 'DETERMINAÇÃO DO ELEMENTO' (as restrições básicas do elemento),
+
+
+NÓS 
+
+
+
+_________TAMBÉM PODEMOS/PROVAVELMENTE VAMOS TER_____ UMA 
+
+
+key
+
+
+chamada 
+
+de 
+
+
+'validation'.... -------->
+
+
+
+
+ex:
+
+
+
+
+  name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+        validation: .... ////////EIS A KEY EM QUESTÃO
+      } 
+
+
+
+----------------------------
+
+
+
+DENTRO DESSA KEY NÓS __VAMOS SETTAR_ ___ REGRAS___... ---> regras que 
+
+QUEREMOS 
+
+QUE 
+
+
+SEJAM 
+
+
+__RESPEITADAS___.... (e essas regras vão ficar em um OBJETO.)
+
+
+
+
+ex:
+
+
+
+
+
+
+  name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+        validation: {
+
+        }
+      } 
+
+
+---------------------------------
+
+
+
+
+
+Dentro dessa key,
+
+podemos 
+
+ter uma 
+
+regra 
+
+como 
+
+
+
+
+
+'required: true' -------------> ISSO VAI ESTAR DIZENDO 'ESSE FIELD, ESSE INPUT FIELD __É UM FIELD __ QUE 
+
+É ABSOLUTAMENTE NECESSÁRIO__, PRECISA __ ESTAR PRESENTE/SER PREENCHIDO PARA __ QUE NOSSA ORDER POSSA SER ENVIADA...' --> esse field 
+específico 
+
+__PRECISA ___eSTAR PREENCHIDO __ PARA QUE A ORDER SEJA ENVIADA, tipo isso....
+
+
+
+
+
+
+
+
+----------> ESSA REGRA,
+
+
+'required: true', 
+
+
+É __UM RULESET________MUITO USADO___, em qualquer tipo de aplicativo....
+
+
+
+
+
+
+-------------> 
+
+
+E É JUSTAMENTE POR ISSO QUE DEVEMOS TESTAR 
+
+
+
+ESSA 'VALIDATION' de 'required' no nosso código,
+
+
+queremos 
+
+que 
+
+O USUÁRIO SEJA BARRADO/RECEBA UMA MENSAGEM DE ALERTA E SEJA BARRADO __ se qualquer um 
+
+dos 
+
+input fields estiver VAZIO... (ou seja,
+
+
+se o VALOR de QUALQUER UM DOS INPUTS estiver vazio, com exceção do 'dropdown'...)
+
+
+
+
+--> para isso, vamos adicionar 
+
+'validation: {
+    required: true
+}
+
+'
+
+
+
+
+
+DENTRO DE CADA UM DOS 
+
+OBJETOS 
+
+
+lá no 'State' de 'ContactData'... (menos no 'deliveryMethod', é claro.)
+
+
+
+ex:
+
+
+
+  state = {
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+validation: {
+    required: true
+}
+      },
+
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Street',
+        },
+        value: '',
+validation: {
+    required: true
+}
+      },
+
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+validation: {
+    required: true
+}
+      },
+
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country',
+        },
+        value: '',
+
+      },
+
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+validation: {
+    required: true
+}
+      },
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                        value: 'fastest'
+        
+    
+    
+    } },
+
+    loading: false,
+  };
+
+
+
+
+
+  ----------------
+
+
+  Certo... fizemos isso. E agora?
+ 
+
+
+ COMO VAMOS FAZER 'check' pelo 'true' em 
+
+ 'required'? -----------> 
+
+
+
+
+
+
+
+
+ PARA ISSO, PROFESSOR NOS EXPLICA QUE 
+
+ ____ELE VAI CRIAR OUTRO MÉTODO EM 'ContactData',
+
+ um método 
+
+
+ INÉDITO...
+
+
+
+
+--> ele nomeará 
+
+esse método 
+
+
+
+'checkValidity = () => {
+
+}
+'
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+--> E aí ele vai colocar como EXPECTED PARAMETERS 
+
+
+uns 
+
+parâmetros 
+
+de 
+
+'value' 
+
+e 
+
+'rules'... --------> 
+
+
+
+checkValidity = (value, rules) => {
+
+}
+
+
+
+
+
+
+
+
+
+E AÍ 
+
+
+ESSE MÉTODO 
+
+'checkValidity' 
+
+
+
+VAI __rETORNAR ___ 'TRUE' OU 'FALSE' ___ DEPENDENDO __ 
+
+
+
+DO INPUT DO USUÁRIO, 
+
+
+
+DE ACORDO COM A VALIDADE, SE É VÁLIDO OU NÃO....
+
+
+
+--------------> para checar se O INPUT DO USUÁRIO É VÁLIDO OU NÃO, NESSE MÉTODO DEDICADO,
+
+__TAMBÉM __ VAMOS 
+
+PRECISAR 
+
+
+DE 
+
+UM 
+
+
+STATE/PROPRIEDADE NO STATE 
+
+DE 
+
+'valid', que 
+
+será 
+
+'true' ou 'false',
+
+dependendo 
+
+
+
+do 
+
+INPUT DO USUÁRIO (e é claro que precisamos codar isso, contudo.)
+
+
+
+
+
+
+
+
+
+
+O professor vai definir essa propriedade dentro do nosso state... --> 
+
+e o valor inicial dessa propriedade 
+
+será 
+
+'false'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+ state = {
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+validation: {
+    required: true
+},
+valid: false
+      },
+
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Street',
+        },
+        value: '',
+validation: {
+    required: true
+},
+valid: false
+      },
+
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+validation: {
+    required: true
+},
+valid: false
+      },
+
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country',
+        },
+        value: '',
+        validation: {
+            required: true
+        },
+        valid: false
+
+      },
+
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+validation: {
+    required: true
+},
+valid: false
+      },
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                        value: 'fastest'
+        
+    
+    
+    } },
+
+    loading: false,
+  };
+
+
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+E professor ressalta que é óbvio que você poderia (pode, se quiser)
+
+
+ADICIONAR ESSA KEY 
+
+'valid: xxx' 
+
+como uma SUBKEY de 'validation'...
+
+
+
+
+---------------------------------
+
+
+
+Certo, isso feito, 
+
+agora 
+
+
+em 
+
+
+'checkValidity' 
+
+O PROFESSOR 
+
+VAI QUERER
+ 
+
+
+
+
+ RETORNAR 'true' ou 'false' 
+
+
+ DE ACORDO COM O INPUT DO USUÁRIO... ---> esse 
+
+ 'true' ou 'false'
+  
+  SERÁ ENTÃO USADO 
+
+
+  EM 
+
+  'inputChangedHandler' 
+
+
+
+  MUDAR AQUELA PROPRIEDADE 
+
+  'valid' de 'false' para 'true', por exemplo (se for constatado que realmente é válido o input do usuário...
+  
+  )
+
+
+
+  ---> certo, mas naquele método 
+
+  '
+  checkValidity(value, rules)',
+
+
+  o código interno 
+
+  desse método 
+
+  vai depender 
+
+  DAS REGRAS QUE NÓS TEMOS.... ---------->
+
+
+
+
+  Primeiramente, o que o professor vai fazer é checar 
+
+
+
+  'se rules tiver uma rule de REQUIRED' (ou seja, se isso aí for 'trueish'),
+
+
+  EU VOU QUERER 
+
+
+
+
+CHECAR A VALIDADE (outro if block...)'...
+
+
+
+
+
+
+
+
+ex (representação):
+
+
+
+
+
+  checkValidity(value, rules) {
+
+      
+      if (rules.required) { //////EIS O CÓDIGO EM QUESTÃO.
+          ...
+      }
+  }
+
+---------------------------
+
+
+
+
+Certo... 
+
+
+e dentro desse if block interno,
+ 
+
+ professor
+  
+
+  nos explica que 
+
+  ele vai querer 
+
+  MANIPULAR UMA 
+
+  variável 
+
+
+  de 
+
+  'isValid', que 
+
+  é definida primeiramente (como 'false')
+
+  no lado de FORA desse if check interno...
+
+
+
+  ex:
+
+
+
+
+
+  
+  checkValidity(value, rules) {
+
+            let isValid = false; ////////EIS O CÓDIGO EM QUESTÃO
+      
+      if (rules.required) { 
+          ....
+      }
+  }
+
+
+----------------------------------------
+
+
+
+
+
+Certo... ----> aí, dentro daquele if block interno,
+
+
+
+professor vai fazer uma COMPARAÇÃO (e comparisons/comparações SEMPRE RETORNAM 'true' ou 'false')...
+
+
+--> essa comparação será
+ 
+
+ ___VERDADEira__ se 'value' não for igual a uma empty string,
+
+
+ E 
+
+ ___FALSa ('false')
+
+ SE ELA 
+
+ FOR IGUAL A UMA EMPTY STRING...
+
+
+
+
+
+ EX:
+
+
+
+
+   checkValidity(value, rules) {
+
+            let isValid = false; 
+      
+      if (rules.required) { 
+          isValid = value !== '';
+      }
+  }
+
+
+---------------------------
+
+
+Certo...
+
+
+
+'isValid', portanto, ao final desse código, ficará 
+
+OU 
+
+'true' ou 'false', dependendo 
+
+DO 
+
+__VALUE___ inserido nos nossos input fields...
+
+
+
+------------>  certo... 
+
+
+mas 
+
+só 
+
+checar 
+
+
+
+'isValid = value !== ''       ' 
+
+
+
+NÃO VAI SER SUFICIENTE.... ------> não vai ser suficiente pq 
+
+
+
+
+NÓS PRECISAMOS ____TIRAR ___ OS ESPAÇOS EM BRANCO 
+
+DESSE 
+
+'value' aí, para ___REMOVER__ QUAISQUER 
+
+
+ESPAÇOS EM BRANCO 
+
+NO INÍCIO E FIM 
+
+DO VALUE inputtado pelo usuário... (pq senão o usuário pode simplesmente só digitar vários espaços em branco e então enviar uma order...)
+
+
+
+ex:
+
+
+
+
+
+   checkValidity(value, rules) {
+
+            let isValid = false; 
+      
+      if (rules.required) { 
+          isValid = value.trim() !== '';
+      }
+  }
+
+
+----------------------------------
+
+
+
+
+
+E NO FINAL DE 'checkValidity',
+
+
+É CLARO QUE VAMOS RETORNAR 
+O VALOR 
+
+de 
+
+'isValid' (que será 'true' ou 'false')....
+
+
+
+ex:
+
+
+
+
+
+   checkValidity(value, rules) {
+
+            let isValid = false; 
+      
+      if (rules.required) { 
+          isValid = value.trim() !== '';
+      }
+
+      return isValid;
+  }
+
+
+
+
+
+
+-----------------------------
+
+
+lá 
+
+
+no 'inputChangedHandler', 
+
+
+nós vamos ADICIONAR UM  CÓDIGO 
+
+PARA 
+
+
+ENTÃO 
+
+
+__CHECAR_ __ SE O VALOR QUE 
+
+
+É INPUTTADO 
+
+PELO USUÁRIO 
+
+
+É VÁLIDO OU NÃO (conforme o usuário vai digitando 
+
+coisas no input...)
+
+
+
+
+
+
+--> para isso, professor vai escrever 
+
+
+
+
+'updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)',
+
+
+LOGO EMBAIXO 
+
+DO CÓDIGO 
+QUE 
+
+UPDATAMOS
+
+
+o 'value' 
+
+
+de 
+
+
+'updatedFormElement' para ser IGUAL ao 
+
+'event.target.value' (valor inputtado pelo usuário)...
+
+
+
+ex:
+
+
+
+
+
+
+
+   checkValidity(value, rules) {
+
+            let isValid = false; 
+      
+      if (rules.required) { 
+          isValid = value.trim() !== '';
+      }
+
+      return isValid;
+  }
+
+
+
+
+
+
+
+
+
+
+
+inputChangedHandler = (event, inputIdentifier) => { 
+
+
+
+      const updatedFormElement = {
+        ...updatedOrderForm[inputIdentifier]
+      }
+
+      updatedFormElement.value = event.target.currentValue;
+
+      updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+      this.setState(
+        {
+          orderForm: updatedOrderForm
+        }
+      )
+
+      console.log(this.state);
+
+    }
+
+
+    const updatedOrderForm = { 
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+    updatedFormElement.value = event.target.value;
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation) /////////EIS O CÓDIGO EM QUESTÃO.
+
+
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    this.setState(
+      {
+        orderForm: updatedOrderForm
+      }
+    )
+
+
+  console.log(this.state);
+  }
+
+
+
+-----------------------------------
+
+
+
+
+com isso, agora teremos um código que 
+
+VAI 
+
+
+
+__aTIVAMENTE__ CHECAR PELA VALIDADE DO USER INPUT NOS NOSSOS INPUT FIELDS (se o usuário 
+
+escrever merda, 
+
+nosso CÓDIGO VAI REAGIR,
+
+vai 
+
+definir 
+
+a propriedade 
+
+'valid' do 'updatedFormElement' (qualquer que seja, pois esse valor é dinâmico) COMO 
+
+SENDO 
+
+'true'/'false' ------> 
+
+
+E ISSO PODE SER USADO 
+
+PARA 
+
+
+RETORNAR 
+
+'null'/ MOSTRAR UMA MENSAGEM DE ERRO COM 'alert', ou talvez mostrar um aviso customizado, codado por nós...
+
+
+)
+
+
+
+
+
+
+Ex:
+
+
+
+
+
+
+inputChangedHandler = (event, inputIdentifier) => { 
+
+
+
+      const updatedFormElement = {
+        ...updatedOrderForm[inputIdentifier]
+      }
+
+      updatedFormElement.value = event.target.currentValue;
+
+      updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+      this.setState(
+        {
+          orderForm: updatedOrderForm
+        }
+      )
+
+      console.log(this.state);
+
+    }
+
+
+    const updatedOrderForm = { 
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+    updatedFormElement.value = event.target.value;
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation) /////////EIS O CÓDIGO EM QUESTÃO.
+
+
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    this.setState(
+      {
+        orderForm: updatedOrderForm
+      }
+    )
+
+
+  console.log(this.state);
+  }
+
+
+
+
+
+  --------------------------------
+
+
+
+
+
+
+
+  Depois disso aí,
+
+
+
+
+  ''''updatedFormElement.valid'''' terá um 
+
+
+  valor 
+
+
+  de 
+
+
+  'true' ou 'false'... ----> e podemos fazer check por isso...
+
+
+
+  --> o professor 
+
+
+  escreve umas coisas 
+
+  dentro 
+
+
+  do 
+
+  nosso input field,
+
+  e ele vai mudando de 'false' para 'true', 
+
+  dependendo 
+
+
+  da coisa 
+
+  que 
+
+  digitamos... (se digitamos só white spaces, 
+  
+  
+  valid CONTINUA SENDO 'false', pois 
+
+  nós 
+
+  estamos 
+
+  TRIMMANDO O VALUE COM 'value.trim()'...
+  )
+
+
+
+
+  ----------------------------
+
+
+
+
+  ALÉM DESSE CHECK BÁSICO AÍ, 
+
+  poderíamos também, aqui, 
+
+  nesse 
+
+  checkValidity,
+
+  CHECAR 
+
+  POR 
+
+
+  outras 
+
+  regras,
+
+
+
+  OUTRAS REGRAS QUE PODEMOS IR CRIANDO... -----> 
+
+
+
+  ex:
+
+
+
+  podemos criar uma regra de 'minLength',
+
+  que 
+
+
+  CHECA O 
+
+
+  TAMANHO DO INPUT DO USUÁRIO... (se o input for menor do que 
+  
+  
+  um determinado limite, retornamos 'false'... )
+
+
+
+
+
+
+  --> 
+
+  ficaria 
+
+  tipo assim:
+
+
+
+
+
+  if (rules.minLength) {
+       
+    isValid = value.length >= rules.minLength
+
+
+  }
+
+
+
+
+
+
+
+  COM ISSO, VAMOS TER UM LIMITE EM TODOS OS INPUTS, um limite MÍNIMO de LENGTH (número de caracteres,
+  
+  basicamente)... ---> podemos colocar um 
+
+
+  'minLength'
+
+
+
+  de 
+  '1', '2', '3', algo assim...
+
+
+
+
+
+  EX:
+
+
+
+    checkValidity(value, rules) {
+
+            let isValid = false; 
+      
+      if (rules.required) { 
+          isValid = value.trim() !== '';
+      }
+
+
+
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength
+        }
+
+
+
+
+      return isValid;
+  }
+
+
+
+
+
+----------------------------
+
+
+E É CLARO QUE VOCÊ PODE SER CRIATIVO,
+pode criar 
+
+regras 
+mais complexas --> pode SUBDIVIDIR
+ 
+
+ suas 
+
+ regras,
+
+ colocar/acessar 
+
+
+
+ objetos dentro dessas regras, 
+
+ como 
+
+
+ 'isValid = value.length >= rules.minLength.absoluteMinimum',
+
+ ou algo 
+
+ do gênero...
+
+
+
+
+
+ --> VOCê PODE SER BEM CRIATIVO, 
+
+ PODE 
+
+ CRIAR SUAS PRÓPRIAS REGRAS __dINAMICAMENTE__....
+
+
+
+
+
+
+
+
+ ---> o professor vai usar 
+
+ a 
+
+ 'minLength',
+
+ aqui,
+
+ como exemplo,
+
+ no 
+
+
+ ZIPCODE...
+
+que será 5....
+
+
+
+
+ ---> PARA EXEMPLIFICAR MAIS AINDA,
+
+ PROFESSOR VAI ADICIONAR UMA 
+
+ 'maxLength'
+
+ desse
+ 
+
+ ZIPCODE, que será 
+
+
+ de 
+ '5' também.... 
+
+
+ (isso significa que 
+ 
+ O 
+ 
+ ZIPCODE 
+ 
+ inputtado pelo usuário 
+ 
+ 
+ DEVERÁ 
+ 
+ 
+ 
+ ___SER OBRIGATORIAMENTE__ DE LENGTH '5'... ---> 5 caracteres, 5 NÚMEROS... )
+
+
+
+
+ ex:
+
+
+
+
+
+  zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+validation: {
+  required: true,
+  minLength: 5,
+  maxLength: 5
+} ,
+validity: false
+      }
+
+
+
+
+
+
+
+
+
+checkValidity(value, rules) {
+
+  let isValid = false; 
+
+if (rules.required) { 
+isValid = value.trim() !== '';
+}
+
+if (rules.minLength) {
+  isValid = value.length >= rules.minLength
+}
+
+
+if (rules.maxLength) {
+    isValid = value.length >= rules.maxLength
+}
+
+
+return isValid;
+}
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> ENTRETANTO, 
+
+PROFESSOR APONTA QUE 
+
+NOSSA 
+
+ATUAL
+
+LÓGICA DE VERIFICAÇÃO/AUTENTICAÇÃO TEM UMA 
+
+
+
+__FALHA CRUCIAL___... ----> logo o professor nos dirá qual é ela....
+
+
+
+
+
+------------------------
+
+
+PARA CHECAR SE NOSSA VALIDAÇÃO FUNCIONA,
+
+
+
+
+professor 
+
+volta 
+
+
+ao nosso código 
+
+
+
+
+---> ele digita '555' 
+
+
+
+no 
+
+
+ZIPCODE,
+
+
+e aí 
+
+
+
+o negócio AINDA RETORNA 'true'....  -------> isso significa que nosso 
+
+check ESTÁ __FALHANDO__.... há algum problema de lógica... ---> É EXATAMENTE 
+
+ESSA 
+
+
+a 
+
+
+'FALHA'
+
+DE QUE 
+
+O PROFESSOR ESTAVA FALANDO... -------> 
+
+
+
+
+
+SE FORMOS 
+
+ATÉ 
+
+
+checkValidity
+
+
+
+
+e dermos 
+uma olhada 
+
+na 
+sua lógica, 
+
+
+na 
+
+SEQUENCIA 
+
+DE IF CHECKS,
+
+
+vamos 
+
+perceber 
+
+QUE  
+
+
+______NÓS ESTAMOS CHECANDO ____ CADA REGRA 1 ATRÁS DA OUTRA__... (e não 
+
+todas elas simultaneamente....) -------->
+
+
+
+
+veja o código:
+
+
+
+
+
+
+
+
+checkValidity(value, rules) {
+
+  let isValid = false; 
+
+if (rules.required) {  //////1
+isValid = value.trim() !== '';
+}
+
+if (rules.minLength) { //////2 
+  isValid = value.length >= rules.minLength
+}
+
+
+if (rules.maxLength) { //////3 
+    isValid = value.length <= rules.maxLength
+}
+
+
+return isValid;
+}
+
+
+---------------------------------------------
+
+
+
+
+
+OU SEJA,
+
+ELES ESTÃO SENDO CHECADOS 1 DE CADA VEZ... (e queremos que eles sejam checados 
+
+SIMULTANEAMENTE...) ------> e isso significa que 
+
+
+basta ACONTECER/SER RETORNADO 
+
+
+'true' 
+
+PARA 
+
+
+O __ÚLTIMO IF CHECK__, O IF CHECK 
+
+de 
+
+'rules.maxLength',
+
+PARA QUE 
+
+'isValid' FIQUE 
+
+COMO TRUE PARA AQUELE INPUT... ( o que caga tudo... queremos 
+
+
+que 
+
+'rules.maxLength' seja checado ao MESMO TEMPO QUE 
+
+'minLength' é checado...)..
+
+
+
+
+O problema, portanto, 
+
+é que 
+
+CADA REGRA 
+
+ESTÁ 
+
+SENDO CHECADA 
+
+'UMA APÓS A OUTRA', 
+
+o que 
+
+resulta 
+
+que 
+
+o código 
+
+vai ser 
+
+
+definido como 'truthy' quando NÃO É TRUTHY...
+
+
+---> VAMOS CONSERTAR ESSE PROBLEMA NA PRÓXIMA AULA ,
+
+DE NOME 
+
+
+'Fixing a Common Validation Gotcha'....
+
+

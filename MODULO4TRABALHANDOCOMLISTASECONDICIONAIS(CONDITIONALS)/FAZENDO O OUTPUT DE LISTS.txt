@@ -1,0 +1,935 @@
+
+
+
+Certo... começaremos 
+
+
+tentando 
+
+
+FAZER COM QUE O CÓDIGO DE 
+
+
+<div>
+  <Person 
+  name={this.state.persons[0].name}
+  age={this.state.persons[0].age} />
+  <Person 
+  name={this.state.persons[1].name} 
+  age={this.state.persons[1].age}
+  changed={this.nameChangedHandler} 
+  click={this.switchNameHandler.bind( this, 'Max!' )}>  
+  My Hobbies: Racing</Person>  
+  <Person 
+  name={this.state.persons[2].name} 
+  age={this.state.persons[2].age}/>
+
+
+
+  </div>
+
+
+
+
+
+SEJA 
+
+
+
+OUTPUTTADO COMO UMA 
+
+
+LISTA DE VERDADE... (E não essa bagunça aí)...
+
+
+
+
+
+
+
+-------------> Se examinarmos nosso código com atenção, 
+
+veremos que no 'state'
+
+
+
+temos definidas 3 'person' 
+
+
+
+
+DENTRO DE UM ARRAY DE 'persons'...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+class App extends Component {
+  state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+
+
+
+------------------------------------------------------
+
+
+
+
+COMO O PROFESSOR REFERIU ANTERIORMENTE, em outros frameworks que talvez conheçamos, 
+
+
+
+como 'vue', NÓS TERÍAMOS UMA 'DIRECTIVE' aqui DENTRO DO COMPONENT (como '<Person v-for />') , 
+
+
+algo como 
+
+
+'v-for' (vue)  ou 'ngFor' (Angular)....
+
+
+
+-------------------------------------------
+ 
+EM REACT NÓS __NÃO TEMOS ESSAS 'DIRECTIVES'...
+
+nós não temos essas directives pq ___TUDO QUE ESTÁ DENTRO DOS COMPONENTS, DENTRO DOS SEUS CALLS, 
+DENTRO 
+
+
+DAQUELE MÉTODO 'return()' É, NO FINAL DAS CONTAS, __CÓDIGO JAVASCRIPT___....
+
+
+
+
+
+
+----------------------------> é código javascript.... 
+
+
+
+----> DA MESMA FORMA QUE TRATAMOS OS CÓDIGOS CONDICIONAIS (if statements e etc... que FORAM TRATADOS COMO CÓDIGO JAVASCRIPT COMUM), 
+
+podemos 
+
+TRATAr A CRIAÇÃO DAS LISTS...  ------> também gerenciamos ('handle') AS LISTS 
+
+
+COMO SE ESTIVÉSSEMOS LIDANDO COM CÓDIGO JAVASCRIPT COMUM.... -------> 
+
+
+
+
+
+
+----------> ISSO QUER DIZER QUE NÓS USAMOS AS 'DEFAULT TOOLS' do javascript 
+
+para criação de listas, na criação de listas do REACT. 
+
+
+
+
+-------------------------------------
+
+
+
+
+Certo...
+
+
+
+mas como 
+
+
+
+este código:
+
+
+
+
+<div>
+  <Person 
+  name={this.state.persons[0].name}
+  age={this.state.persons[0].age} />
+  <Person 
+  name={this.state.persons[1].name} 
+  age={this.state.persons[1].age}
+  changed={this.nameChangedHandler} 
+  click={this.switchNameHandler.bind( this, 'Max!' )}>  
+  My Hobbies: Racing</Person>  
+  <Person 
+  name={this.state.persons[2].name} 
+  age={this.state.persons[2].age}/>
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+SE PARECERIA,
+
+
+CASO TIVÉSSEMOS 
+
+DE USAR 
+
+
+JAVASCRIPT COMUM?
+
+
+
+
+
+Bem, 
+
+eu não sei...
+
+
+
+
+
+
+o professor diz que, antes de mais nada, 
+
+
+devemos usar 
+
+
+'{}'....
+
+
+
+WRAPPAR TUDO COM '{}'....
+
+
+
+
+
+----> {} ---> TEREMOS DE USAR ISSO PQ VAMOS QUERER 
+
+
+___RENDERIZAR ALGO DINâMICO ___ DENTRO DO NOSSO CÓDIGO JSX............
+
+
+
+
+---> Isso feito, 
+
+
+vamos querer 
+
+
+
+renderizar 
+
+
+
+NOSSO ARRAY DE 'PERSONS' dentro do STATE...
+
+
+
+
+é por isso que o professor vai 
+
+escrever 
+
+
+'{this.state.persons}'....
+
+
+
+
+
+
+Ex:
+
+
+
+
+
+
+
+<div>
+{this.state.persons} //////////////EIS O CÓDIGO EM QUESTÃO.
+  <Person 
+  name={this.state.persons[0].name}
+  age={this.state.persons[0].age} />
+  <Person 
+  name={this.state.persons[1].name} 
+  age={this.state.persons[1].age}
+  changed={this.nameChangedHandler} 
+  click={this.switchNameHandler.bind( this, 'Max!' )}>  
+  My Hobbies: Racing</Person>  
+  <Person 
+  name={this.state.persons[2].name} 
+  age={this.state.persons[2].age}/>
+
+
+
+  </div>
+
+
+
+  -----------------------------------------------
+
+
+
+
+  essa sintaxe vai simplesmente 
+
+
+
+  se referir ao array de 
+
+  'persons: [
+      { name: 'Max', age: 28 },
+      { name: 'yyyy', age: 28 },
+      { name: 'zzz', age: 28 }
+  ]'
+
+
+
+  -------------------------------------
+
+
+
+
+
+  CERTO, MAS SÓ ISSO 
+
+  __NÃO SERÁ O BASTANTE___.... ---> isso 
+
+  não vai renderizar nossa LISTA POR SI SÓ... --> 
+
+  pq se 
+
+  nós passarmos/referenciarmos esse array,
+
+  NÓS APENAS ESTAREMOS PASSANDO 
+
+  UM ___ ARRAY __ DE OBJETOS JAVASCRIPT,
+
+
+  E AQUI NÓS __QUEREMOS OUTPUTTAR___ UMA LISTA ('<ul>' com '<li>'s), 
+
+
+  e não 
+
+  um array de objetos... ----------> queremos 
+
+  algo que 
+
+  seja 
+
+  COMPREENDIDO COMO HTML, que dê a 
+
+  ordem que QUEREMOS QUE 
+
+  uma <UL> seja PRODUZIDA...
+
+
+
+  --------------------------------------
+
+
+
+  Professor aponta que 
+
+  NÓS PRECISAMOS ___CONVERTER___ ESSE ARRAY DE OBJETOS JAVASCRIPT (o qual NÃO É CÓDIGO JSX VÁLIDO ) 
+
+  EM CÓDIGO __JSX___ VÁLIDO___....
+
+
+
+
+
+
+---> para isso,
+ 
+ O JAVASCRIPT VANILLA __NOS OFERECE UMA FUNÇÃO__ PARA _________ 
+
+
+ CONVERTER ___ ARRAYS____ _____ ......
+
+
+
+
+ O NOME DESSA FUNÇÃO/método É (adivinhei) 
+
+ '.map()'...
+
+
+
+
+ ---> map() SIMPLESMENTE 
+
+
+ ''''MAPPEIA'''' CADA ELEMENTO EM UM DETERMINADO ARRAY (como os objetos 'person' dentro do nosso array 'persons'...)
+
+
+ 'INTO SOMETHING ELSE'....
+
+
+
+ mapeia 
+
+ ___PARA/COMO_____ OUTRA COISA..........
+
+
+
+
+
+
+Esse método 
+
+'map()'
+
+
+faz isso 
+
+
+
+POR MEIO DA EXECUÇÃO DE UM 
+
+
+___MÉTODO INTERNO___.... (devemos passar uma arrow function/função interna a ele)...
+
+
+
+
+
+ESSE MÉTODO INTERNO É EXECUTADO __EM CADA ELEMENTO___ DENTRO DE UM DETERMINADO ARRAY....
+
+
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+ESSE MÉTODO é passado como parâmetro ao 'map()'... 
+
+
+O 
+
+
+
+'map()' 
+
+
+
+EXIGE como parâmetro, nessa função interna:
+
+
+
+
+1) O  ELEMENT DO ARRAY, como input desse método... (nesse caso, será o objeto/objetos 'person')
+
+
+
+
+2) o FUNCTION BODY dessa ARROW FUNCTION...
+
+
+
+ex:
+
+
+
+
+{this.state.persons.map(
+    person => {}
+)}
+
+
+
+
+--------------------------------------
+
+
+
+
+2) O FUNCTION BODY DESSA ARROW FUNCTION/função anônima passada ao método 'map()'
+
+SERÁ EXECUTADO EM __cADA ____ ELEMENTO NO ARRAY de 'persons' (nesse caso)...
+
+
+
+
+
+3) nesse function body, você É OBRIGADO __A FAZER_ __ 'RETURN' __ DE ALGO... --> 
+
+você deve retornar __A COISA__ COMO VOCÊ QUER QUE SEJA 
+MAPPEADO ESSE 'ITEM' (person, nesse caso)  ('return what you want to map this ITEM INTO'  )...
+
+
+
+---> certo, nós temos um ARRAY DE OBJETOS JAVASCRIPT, 
+
+o array 'Persons',
+
+
+e nós QUEREMOS MAPPEAR/CONVERTER 
+
+ESSE NEGÓCIO EM __OUTRA COISA___.... ------> o método 'map' que 
+
+estamos utilizando aqui
+
+
+___CONVENIENTEMENTE___ RETORNA UM 
+
+NOVO ARRAY.... -------> e como eu 
+
+simplesmente PRINTO esse array dessa forma aí, solto, dentro do 
+
+'jsx', 
+
+
+O REACT VAI BASICAMENTE __TENTAR___ PEGAR OS ELEMENTOS INDIVIDUAIS DESSE 
+
+ARRAY E OS RENDERIZAR AO DOM... (se eles forem  CÓDIGO JSX VÁLIDO)... --->
+
+
+isso significa 
+
+QUE NOSSO OBJETIVO 
+
+
+___É SIMPLESMENTE ___ USAR AQUELE ARRAY DE 'persons' definido em 
+
+'state' COMO 
+
+'''BASE''''
+ 
+ PARA CONSEGUIRMOS, aqui, RETORNAR 
+
+ ____ CÓDIGO JSX VÁLIDO (um elemento '<ul>' válido, ou vários elementos '<li>' válidos...)........
+
+
+
+ ou seja, 
+
+ vamos querer que 
+
+
+ CADA ELEMENTO NO ARRAY DE 'persons'
+
+ ACABE __MAPPEADO ('map()' ) COMO 
+
+ UM CÓDIGO 
+
+ JSX REPRESENTATIVO DE SUA EXISTÊNCIA...
+
+
+
+
+Como aqui o professor quer que CADA ELEMENTO do array de 'persons' vire UM 
+
+DE NOSSOS COMPONENTS, 
+
+
+ele simplesmente escreve:
+
+
+
+
+{this.state.persons.map(
+    person => {
+        return <Person /> ////////EIS O CÓDIGO EM QUESTÃO.
+    }
+)}
+
+
+--------------------------------------------
+
+
+
+CÓDIGO COMPLETO:
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+{this.state.persons.map(
+    person => {
+        return <Person />
+    }
+)} 
+  <Person 
+  name={this.state.persons[0].name}
+  age={this.state.persons[0].age} />
+  <Person 
+  name={this.state.persons[1].name} 
+  age={this.state.persons[1].age}
+  changed={this.nameChangedHandler} 
+  click={this.switchNameHandler.bind( this, 'Max!' )}>  
+  My Hobbies: Racing</Person>  
+  <Person 
+  name={this.state.persons[2].name} 
+  age={this.state.persons[2].age}/>
+
+
+
+  </div>
+
+
+
+---------------------------------------------
+
+
+
+Escrevemos 
+
+'return <Person />' neste 
+
+lugar pq NO FINAL DAS CONTAS 
+
+
+
+CADA 'person javascript object'
+
+
+
+PODE SER ___REPRESENTADO COMO UM 'PERSON COMPONENT' nesse nosso projeto...
+
+
+
+
+Feito isso, 
+
+
+nós SIMPLESMENTE TEMOS QUE ASSIGNAR 
+
+'name' e 'age' nesse/nesses
+
+
+'novo component'/'novos components'...
+
+
+
+
+Ok. Mas como fazemos isso? afinal, 
+
+nós VAMOS TER QUE FAZER ISSO COM VÁRIOS ITEMS... e os names e ages deles todos 
+
+não são iguais...
+
+
+
+---> professor explica 
+
+
+que vamos 
+
+escrever 
+
+
+
+isto aqui:
+
+
+
+
+
+
+
+
+<div>
+{this.state.persons.map(
+    person => {
+        return <Person name={person.name}/>
+    }
+)} 
+  <Person 
+  name={this.state.persons[0].name}
+  age={this.state.persons[0].age} />
+  <Person 
+  name={this.state.persons[1].name} 
+  age={this.state.persons[1].age}
+  changed={this.nameChangedHandler} 
+  click={this.switchNameHandler.bind( this, 'Max!' )}>  
+  My Hobbies: Racing</Person>  
+  <Person 
+  name={this.state.persons[2].name} 
+  age={this.state.persons[2].age}/>
+
+
+
+  </div>
+
+
+
+  -------------------------------------
+
+
+
+
+
+
+
+  UÉ, MAS COMO ASSIM?
+
+
+
+Bem, vocÊ deve pensar... 
+
+
+pense nesses códigos ISOLADOS...:
+
+
+
+
+
+
+
+
+state = { ///////MUITO IMPORTANTE.
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 26 }
+    ],
+
+
+
+<div>
+{this.state.persons.map(
+    person => {
+        return <Person name={person.name}/>
+    }
+)} 
+
+
+
+-----------------------------------------------------
+
+
+
+como naquele método 'map()' 
+
+estamos recebendo UM OBJETO PERSON/OS OBJETOS 'PERSON' que 
+
+
+estão naquele ARRAY 
+
+no 
+
+'state', 
+
+
+Nós podemos usar 
+
+
+ESSA VARIÁVEL/INPUT de 
+
+'person' (que representa TODOS OS COMPONENTS PERSON, 1 DE CADA VEZ) 
+
+
+e então acessar 
+
+o 
+
+'name' desse input (que é o 'name' DE CADA UM DOS OBJETOS/'person', POIS 
+
+O __MAP ___ PASSA POR DENTRO DE CADA UM DELES)....
+
+
+
+é por isso que está escrito 
+
+'<Person name={person.name} />'
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( person => {
+        return <Person 
+        name={person.name} 
+        age={person.age} />
+      })}
+    </div>
+  )
+
+
+
+
+
+------------------------------ 
+
+
+
+COM ISSO, POSSO ME LIVRAR DE TODOS OS CÓDIGOS/INVOCAÇÕES REPETIDAS 
+
+
+DE 'Person' que ficaram mais abaixo...
+
+
+nosso código inteiro de 'render()' ficará assim:
+
+
+
+
+ex:
+
+
+
+render = () => {
+    
+
+    const style = {
+      backgroundColor: 'white', 
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+    }
+
+
+
+let persons = null;
+
+
+if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( person => {
+        return <Person name={person.name} age={person.age} />
+      })}
+    </div>
+  )
+}
+
+
+
+
+return (
+  <div className="App">
+    <h1>Hi, I'm a React App</h1>
+    <p>This is really working!</p>
+    <button 
+    style={style}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    {persons}
+
+   
+
+  </div>
+);
+
+
+   }
+ }
+
+
+
+ ------------------------------------------
+
+
+O QUE ISSO, ESSAS MUDANÇAS, VÃO FAZER É:
+
+
+
+AS COISAS VÃO CONTINUAR IGUAIS, MAS NOSSO CÓDIGO FICOU BEM MAIS LEGÍVEL/ELEGANTE...
+
+
+
+--> o único problema é QUE AS FUNÇÕES DE 'mudar os nomes a partir de cliques'
+
+
+NÃO ESTARÃO FUNCIONANDO, AQUELES HANDLERS NÃO VÃO FUNCIONAR POR ENQUANTO PQ 
+
+NÓS REMOVEMOS 
+
+OS ATRIBUTOS DE 
+
+
+'changed' 
+
+
+e 
+
+
+de 'clicked'... (removemos os handlers)...
+
+
+
+
+
+
+--->  OU SEJA, AGORA ESTAMOS OUTPUTTANDO NOSSO CONTEÚDO/NOSSO ARRAY 
+
+
+COMO __UMA LISTA__ POR MEIO DO REACT E POR MEIO DO MÉTODO 'map()' do javascript vanilla...
+
+
+
+--------------------------------------
+
+
+Apertamos 'toggle persons' ---> constatamos que 
+
+
+NOSSO CÓDIGO ESTÁ FUNCIONANDO... 
+
+
+
+
+
+--> entretanto, nós também recebemos UM NOVO WARNING no console... ---> ele diz que devemos 
+
+TER UM 
+
+'UNIQUE KEY PROP'... --> professor logo nos explicará o sentido disso. (pq isso é super importante)...
+
+
+
+
+
+
+MAS PERCEBEMOS QUE NOSSO OUTPUT DE ARRAYS JAVASCRIPT COMO LISTAS ESTÁ FUNCIONANDO...
+
+
+

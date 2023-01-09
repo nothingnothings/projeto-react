@@ -1,0 +1,252 @@
+
+
+
+
+
+
+
+
+---> REACT 
+
+
+
+'o que, porque e como?' 
+
+
+
+
+
+
+
+---> O QUE É O REACT?
+
+
+
+
+
+---> professor cita uma frase 
+
+direto da page do react ---> ''react 
+
+é uma LIBRARY JAVASCRIPT USADA PARA 
+
+CONSTRUIR __USER INTERFACES__....''
+
+
+
+
+
+
+
+---> é uma frase bonita, mas oq significa ?
+
+
+
+
+
+--> parte mais importante:  é uma """LIBRARY JAVASCRIPT""""
+
+
+
+
+
+
+---> ou seja, 
+
+
+ela trata de CRIAR 'JAVASCRIPT-DRIVEN APPS'... ---> 
+
+
+basicamente, 
+
+
+APLICATIVOS 
+
+____rEACT____ SEMPRE RODAM NO BROWSER...
+
+
+ELES _NUNCA RODAM NO SERVER, 
+ 
+
+ eles rodam no 
+
+ ____browser___.... ----> E ISSO 
+
+
+ NOS DÁ UMA GRANDE VANTAGEM... ----> as coisas 
+
+ ACONTECEM INSTANTANEAMENTE, 
+
+ POIS ELAS 
+
+ ___ACONTECEM NO BROWSER DO USUÁRIO___ ---> isso quer 
+
+
+ DIZER QUE NÓS NÃO TEMOS QUE ESPERAR POR UMA '''SERVER RESPONSE'''
+
+ PARA CONSEGUIR UMA 
+
+ NOVA PÁGINA, OU PARA RENDERIZAR ALGO NOVO NA NOSSA PÁGINA...
+
+
+ -----------------------------------------------------
+
+
+
+
+ A OUTRA PARTE IMPORTANTE naquela frase 
+
+
+ é 
+
+ 'user interfaces'.... -----> USER INTERFACES SÃO 
+
+
+ BASICAMENTE O QUE O USUÁRIO ___ENXERGA__...
+
+
+
+ --> e o react 
+
+ É 'ALL ABOUT' ISSO AÍ, all about USAR 
+
+
+ COMPONENTES PARA CONSTRUIR INTERFACES DE USUÁRIO...
+
+
+
+ -------------------------------------------------
+
+
+
+
+ SE VOCÊ PENSAR BEM SOBRE ISSO, 
+
+ VOCÊ PODE 
+
+ __SPLITTAR__ QUALQUER PÁGINA 
+
+
+ DA INTERNET (webpage) 
+
+ EM 
+
+ MÚLTIPLOS/vários COMPONENTS... 
+
+
+
+
+
+---> EXEMPLO BÁSICO:
+
+
+
+
+temos uma página 
+
+
+aleatória, uma página....
+
+
+
+
+com 
+
+
+
+UM HEADER (lá em cima)....
+
+
+
+uma SIDEBAR.. (NA ESQUERDA)....
+
+
+
+e um __CONTEÚDO___ (à Direita).... -----> esse conteúdo teria 2 subdivisões, uma superior, chamada de 'headline', e outra inferior, chamada de 'article content' (ou qualquer outro nome que você quer dar).
+
+
+
+------------------------------------------------
+
+
+
+MAS PQ PENSAR DESSA FORMA É ÚTIL/importante?
+
+
+
+--> PQ SE NÓS SPLITTARMOS NOSSO WEBAPP/website nesses componentes, 
+
+nós podemos CONSTRUIR ESSES 'BUILDING BLOCKS' como pedaços 
+
+CONTIDOS DE CÓDIGO... ---> isso quer dizer que nós não temos que consturir 
+nosso código inteiro EM UMA "__FIGURA GRANDE__" ('one bigger picture'); NÃO,
+NÓS 
+
+PODEMOS(e devemos ) SPLITTAR NOSSO PROJETO EM MÚLTIPLOS COMPONENTES, COMPONENTES MENORES... --> 
+
+dividir o código facilita o trabalho em equipe, E TAMBÉM NOSSO TRABALHO ___INDIVIDUAL__ (faz 
+nosso código ser mais MANAGEABLE)
+
+
+
+
+--------> EX: Se quisermos mudar/mudarmos o comportamento 
+
+do HEADLINE mais para frente no nosso projeto, 
+
+NÓS APENAS TEREMOS QUE ADENTRAR O CÓDIGO DESSE COMPONENTE 
+e o updatar... (e aí não vamos ter que procurar esse código numa maçaroca de código,
+ de códigos das outras partes de nosso site... )
+
+
+
+
+ ---> ALÉM DISSO, NÓS TAMBÉM PODEMOS ___fACILMENTE ___ ____REUTILIZAR COMPONENTES__...
+
+
+ ---> ex: se nós tivermos um 
+
+  componente 'LIST ITEM' e queremos OUTPUTTAR 
+
+  UMA __LISTA__ de vários desses list item/s, 
+
+
+
+  NÓS AÍ APENAS PRECISAREMOS ESCREVER ESSE CÓDIGO 1 ÚNICA VEZ, pq ele será 
+  capaz de ser REUTILIZADO... -------> ELE PODERÁ 
+
+  SER REUTILIZADO PQ, E ISSO __É IMPORTANTE, 
+
+  PQ REACT COMPONENTS 
+
+
+
+  ____PODEM SER PENSADOS/TRATADOS COMO ___  'CUSTOM HTML ELEMENTS'... ---> no final 
+  das contas,
+   
+
+VOCÊ ESTÁ/ESTARÁ ESCREVENDO 'CUSTOM HTML ELEMENTS' --->  é isso que o react faz, basicamente....
+
+
+VOCÊ ESTÁ/ESTARÁ ESCREVENDO 'CUSTOM HTML ELEMENTS' -----> ISSO BASICAMENTE RESOLVE 
+
+O PROBLEMA DAS USER INTERFACES COMPLEXAS (e únicas) ... --> pq 
+
+várias partes/componentes 
+
+REACT podem ser REUTILIZADAS EM 
+
+___MÚLTIPLOS PROJETOS____/INTERFACES... --------> resolvemos 
+
+o problema 
+
+
+das user interfaces por meio do write de pedaços de código MANTAINABLE, MANAGEABLE E REUSABLE... ----> 
+
+pedacinhos de código (components) QUE VOCê PODE ENFIAR NO SEU PROJETO SEMPRE QUE VOCÊ 
+PRECISA OS UTILIZAR...
+
+
+
+
+DEVEMOS VER ALGUNS EXEMPLOS...

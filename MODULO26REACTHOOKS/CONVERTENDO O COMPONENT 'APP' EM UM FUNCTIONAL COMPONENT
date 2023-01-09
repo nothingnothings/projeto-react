@@ -1,0 +1,1168 @@
+
+
+
+APRENDEMOS, PORTANTO,
+
+SOBRE 
+
+
+'useState' 
+
+
+e 
+
+
+'useEffect',
+
+QUE 
+
+
+SÃO 
+
+
+AS 
+
+2 
+
+COISAS 
+
+MAIS 
+
+IMPORTANTES,
+
+
+OS 
+
+
+2 HOOKS MAIS IMPORTANTES 
+
+USADOS 
+
+
+
+NO REACTHOOKS....
+
+
+
+
+
+
+------------------------------------------------------------------
+
+
+
+
+
+
+useState --> USADO PARA ____ FAZER MANAGE __ DO STATE NO SEU FUNCTIONAL COMPONENT....
+
+
+
+
+useEffect --> usado PARA FAZER HANDLE DE SIDE EFFECTS, COMO 'HTTP CALLS', PAGE-WIDE EVENTLISTENERS e assim por diante...
+
+
+
+
+
+
+
+
+HÁ OUTRO HOOK IMPORTANTE,
+
+UM 
+
+ROOK 
+
+RELACIONADO 
+
+
+à 
+
+
+'CONTEXT API'
+
+ providenciada 
+
+ PELO REACT...
+
+
+
+
+
+
+
+
+---> DEVEMOS ESTUDAR ESSE HOOK.... --> PARA VER COMO 
+
+ESSE HOOK 
+
+FUNCIONA,
+
+PROFESSOR 
+
+ADICIONA OUTRO ARQUIVO 
+
+
+NOS NOSSOS COMPONENTS,
+
+um
+
+
+arquivo 
+
+chamado 
+
+
+de 
+
+
+'Header.js'...
+
+
+
+
+
+
+
+--> E TAMBÉM OUTRO COMPONENT,
+
+CHAMADO 
+
+DE 
+
+'Auth.js'...
+
+
+
+
+
+
+
+---> O PROFESSOR NOS EXPLICA QUE 
+NÃO 
+VAI QUERER 
+
+ADICIONAR ROUTING NESSE PROJETO,
+
+
+mas 
+
+
+
+vai 
+
+'FAKEAR' 
+
+
+
+
+UM 
+
+MULTI-PAGE 
+
+APP BEM SIMPLES....
+
+
+----------------------------
+
+
+
+
+
+
+--> PARA MOSTRAR COMO ISSO FUNCIONA, FUNCIONARÁ,
+
+
+
+
+o professor 
+
+importa 
+
+o react from react,
+
+evidentemente...
+
+
+
+
+
+
+--> DEPOIS DISSO,
+
+
+ELE CRIA O FUNCTIONAL COMPONNET 
+
+DE 
+
+
+'header'...
+
+
+
+--------------------------
+
+
+
+
+PROFESSOR 
+
+
+
+ESCREVE 
+
+
+'<header>
+    <button></button>
+</header>'
+
+
+-----------------------------
+
+
+
+
+E 
+
+ELE 
+
+ADICIONA 
+
+
+UM BUTTON ALI DELIBERADAMENTE,
+
+PQ 
+
+ELE 
+
+__NÃO QUER RECARREGAR A NOSSA PÁGINA 
+
+A 
+
+PARTIR 
+
+DE CLICKS 
+
+NESSES BUTTONS....
+
+
+
+
+O PRIMEIRO BUTTON 
+
+SERÁ 
+UMA 
+
+'TodoList',
+
+
+E O SEGUNDO 
+
+SERÁ 
+
+
+
+
+UMA SEÇÃO 
+
+DE 
+
+
+'Auth'...
+
+
+
+ex:
+
+
+
+
+import React from 'react';
+
+const header = (props) => {
+  <header>
+    <button>Todo List</button> | <button>Auth</button>
+  </header>;
+};
+
+export default header;
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+BASICAMENTE QUANDO 
+
+ESSES BOTÕES 
+
+FOREM CLICADOS, 
+
+o professor 
+
+VAI QUERER 
+
+'SWITCH',
+
+
+
+vai 
+
+querer 
+
+
+executar um método 
+
+chamado 
+
+'onLoadToDos',
+
+
+
+
+
+
+
+aí vamos passar uma função  (lá no parent component)
+
+
+como 
+
+prop 
+
+a 
+
+esse 
+
+'Header.js'....
+
+
+
+
+
+EX:
+
+
+
+
+import React from 'react';
+
+const header = (props) => {
+  <header>
+    <button onClick={props.onLoadTodos}>Todo List</button> |{' '}
+    <button onClick={props.onLoadAuth}>Auth</button>
+  </header>;
+};
+
+export default header;
+
+
+-----------------------------
+
+
+
+
+ISSO FEITO,
+
+VAMOS 
+
+
+IMPORTAR 
+
+
+'Header'
+
+lá 
+
+em 
+
+'App.js'....
+
+
+
+-------------------------------
+
+
+ISSO FEITO,
+
+É EVIDENTE QUE 
+
+
+VAMOS 
+
+TER 
+
+
+DE 
+
+ALTERAR 
+
+ESSE COMPONENT 
+
+'App.js',
+
+TRANSFORMÁ-LO EM UM 
+
+CLASS-BASED  COMPONENT...
+
+
+
+
+
+
+
+
+--> MAS ANTES DISSO,
+PROFESSOR 
+
+QUER 
+
+FAZER 
+
+UM 
+
+'SWITCH'
+
+
+
+ENTRE 
+
+'<Todo />'
+
+
+e 
+
+'<Auth />'
+
+
+
+
+
+
+
+--> ANTES DISSO,
+
+
+DEVEMOS 
+
+
+ESCREVER 
+
+
+NOSSO COMPONENT 
+
+DE 
+
+'Auth.js'... ----> 
+
+
+
+EX:
+
+
+
+import React from 'react';
+
+
+const auth = props => {
+        <h1>Auth Component</h1>
+}
+
+
+
+export default auth;
+
+-----------------------------------
+
+
+
+
+IMPORTAMOS 
+ISSO 
+EM 
+
+
+'App.js'
+
+também....
+
+
+EX:
+
+
+
+import React, { Component } from 'react';
+
+
+import Todo from './components/Todo';
+
+import Header from './components/Header';
+
+import Auth from './components/Auth';
+
+class App extends Component {
+
+
+
+
+
+
+    render() {
+        return (
+            <div className="App">
+                <Header />
+                <hr></hr>
+                <Todo />
+                <Auth />
+            </div>
+        );
+    }
+}
+
+
+
+
+export default App;
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+É FEIO,
+
+
+mas 
+
+é 
+isso aqui,
+ por enquanto...
+ 
+
+
+
+
+ --> AGORA TEMOS ESSE HEADER COM 
+
+BOTÕES 
+
+de 
+
+'TodoList' e 
+
+'Auth'... -------> 
+
+
+
+
+AGORA 
+
+DEVEMOS 
+
+FAZER COM QUE 
+
+
+
+APP.js
+VIRE 
+UM HOOK-BASED FUNCTIONAL COMPONENT....
+
+
+
+
+
+
+
+
+
+--> depois disso, vamos querer 'MANAGE THAT AUTH STATUS' e  então 
+
+O UTILIZAR 
+
+NAS DIVERSAS 
+
+PARTES 
+
+DE NOSSO APP... 
+
+
+
+
+
+--> começamos pela conversão 
+
+daquele class-based App.js em 
+um 
+functional...
+
+
+
+EX:
+
+
+
+
+const App = (props) => {
+    
+      return (
+        <div className="App">
+          <Header />
+          <hr></hr>
+          <Todo />
+          <Auth />
+        </div>
+      );
+    
+  }
+  
+  export default App;
+  
+
+
+  --------------------------------------
+
+
+
+
+A PARTE 
+
+INTERESSANTE, AGORA, É QUE 
+
+PODEREMOS 
+
+
+'SWITCH' 
+
+ENTRE 
+
+ESSAS 
+
+2 
+PAGES,
+
+ENTRE 
+
+A PAGE 
+
+DE 
+
+'Todo' 
+
+e 
+
+a 
+page 
+
+de 
+
+'Auth'....
+
+
+
+
+
+PARA ISSO,
+
+PARA 
+
+PODER FAZER O SWITCH ENTRE PAGES (que serão pAGES __FUNCTIONAL COMPONENTS, E NÃO CONTANIERS, COMO VIMOS em aplicativos 'normais' de react, com o REACT ROUTER),
+
+vamos ter que __FAZER MANAGE___ 
+
+
+
+DE 
+
+STATE 
+
+DENTRO 
+
+
+DESSE FUNCTIONAL COMPONENT 
+
+DE 
+
+'App.js'...
+
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+-------------> 
+
+
+DENTRO 
+
+
+
+DE 
+
+'App.js',
+
+É EVIDENTE QUE 
+
+VAMOS 
+
+TER 
+
+DE USAR 
+
+'useState'.....
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+const App = (props) => {
+
+
+        useState();
+    
+      return (
+        <div className="App">
+          <Header />
+          <hr></hr>
+          <Todo />
+          <Auth />
+        </div>
+      );
+    
+  }
+  
+  export default App;
+  
+
+
+
+
+
+
+  -------------------
+
+
+
+  VAMOS USAR 
+
+
+
+  'useState()'
+
+
+  PARA 
+
+
+  SWITCHAR 
+
+
+  ENTRE 
+
+  '<Todo />'
+
+  e 
+
+  '<Auth />',
+
+  provavelmente 
+  POR MEIO 
+
+
+  DE UNS MÉTODOS 
+
+  QUE 
+
+  VÃO 
+
+  TROCAR
+   
+   ENTRE 
+
+   'Auth' e 
+
+
+   'Todo' 
+
+   no nosso state...
+
+
+
+
+
+   vou tentar fazer por conta própria...
+
+   --------------------------------
+
+
+
+
+   OK... ACHO QUE CONSEGUI...
+
+
+   FICOU ASSIM:
+
+
+
+
+
+
+
+
+const App = (props) => {
+  const [currentPage, setCurrentPage] = useState('');
+
+  const onLoadAuth = () => {
+    console.log('test');
+    setCurrentPage('auth');
+  };
+
+  const onLoadTodo = () => {
+    console.log('test');
+    setCurrentPage('todo');
+  };
+
+  let page = <div></div>;
+
+  if (currentPage === 'auth') {
+    page = <Auth />;
+  }
+
+  if (currentPage === 'todo') {
+    page = <Todo />;
+  }
+
+  return (
+    <div className="App">
+      <Header onLoadTodo={onLoadTodo} onLoadAuth={onLoadAuth} />
+      <hr></hr>
+      {page}
+    </div>
+  );
+};
+
+export default App;
+
+
+
+
+
+
+--------------------------------------------------
+
+
+
+
+
+--> O PROFESSOR ESCREVEU UM CÓDIGO PARECIDO,
+
+mas 
+
+ele 
+
+
+definiu um negócio um pouco diferente...
+
+
+
+
+ESTA LINHA AQUI:
+
+
+  const [currentPage, setCurrentPage] = useState(''); -------> ELE DEFINIU O STATE INICIAL COMO 'auth', e não como  (''), empty string....
+
+
+
+---> ele diz que quis fazer assim pq queria 'start on the auth page'...
+
+
+
+
+-------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+--> depois disso, ele fez 
+
+
+algo semelhante àquilo que eu 
+fiz... ---> 
+
+
+
+
+
+
+ENTRETANTO, EM VEZ 
+
+DE 
+
+USAR 
+2 HANDLERS,
+
+ELE 
+
+USOU 
+
+SÓ 
+1.... ---> 
+
+
+
+ele 
+
+
+escreveu 
+
+
+
+'const switchPage = (pageName) => {
+
+        setCurrentPage(pageName); ////--> ISSO VAI FAZER COM QUE O 'currentPage' VELHO __ SEJA __SUBSTITUÍDO__ POR ESSE 'pageName', que provavelmente VAMOS PASSAR COMO ARGUMENTO ali embaixo, no render de '<Header />'...
+}'
+
+
+
+
+(e ele também usa a sintaxe DO __BIND__ AQUI, para acertar o 'this'...)
+
+
+
+
+EX:
+
+
+
+<Header onLoadTodos={switchPage.bind(this, 'todos') onLoadAuth={switchPage.bind(this, auth)}}
+
+
+
+
+
+
+
+
+
+
+
+.BIND(this, xxxx) -----> O SEGUNDO ARGUMENTO 
+
+SERÁ 
+
+
+__ O ARGUMENTO RECEBIDO __ PELA FUNÇÃO 
+
+'switchPage' como 'pageName'...
+
+
+
+
+
+
+
+FICARIA/FICA TIPO ASSIM:
+
+
+
+
+// const [currentPage, setCurrentPage] = useState('auth'); 
+
+// const switchPage = (pageName) => {
+//     setCurrentPage(pageName);
+// }
+
+// return (
+//     <div className="App">
+//       <Header onLoadTodo={switchPage.bind(this, 'todos')} onLoadAuth={switchPage.bind(this, 'auth')} /> //sintaxe alternativa, usada pelo professor....
+//       <hr></hr>
+//       {page}
+//       {/* <Todo />
+//           <Auth /> */}
+//     </div>
+//   );
+// };
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+-----------> agora, é claro, devemos USAR 
+
+ESSA VARIÁVEL 
+
+
+de 
+'page',
+
+
+e que 
+
+agora 
+
+segura tanto um valor 
+
+de 
+
+'todos' 
+
+ou 
+
+'auth'... --> 
+
+O PROFESSOR 
+
+
+ENTÃO 
+
+USAR 
+UMA 
+
+TERNARY EXPRESSION 
+
+PARA 
+
+RENDERIZAR OU 
+
+'<Auth />'
+
+ou 
+
+'<Todo />'...
+
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+// const [currentPage, setCurrentPage] = useState('auth'); 
+
+// const switchPage = (pageName) => {
+//     setCurrentPage(pageName);
+// }
+
+// return (
+//     <div className="App">
+//       <Header onLoadTodo={switchPage.bind(this, 'todos')} onLoadAuth={switchPage.bind(this, 'auth')} /> //sintaxe alternativa, usada pelo professor....
+//       <hr></hr>
+//       {
+//          currentPage === 'auth' ? <Auth /> : </Todo>
+//              }
+//       
+//    
+//     </div>
+//   );
+// };
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+OK.... 
+
+
+
+
+TAMBÉM 
+
+
+
+
+PERCEBEMOS QUE 
+
+A FUNÇAÕ DE 'cleanup' 
+
+RODA QUANDO FAZEMOS __UNMOUNT__ DO COMPONENT 
+
+
+DE 
+
+'todo'... (como havíamos o adicionado anteriormente, é evidente que ele 
+
+é 
+
+executado...)
+
+
+
+
+
+
+
+
+
+--> CONVERTEMOS 
+
+
+NOSSO COMPONENT 
+
+'App.js'
+
+em um 
+
+
+FUNCTIONAL COMPONENT...
+
+
+
+
+
+
+
+--> AGORA DEVEMOS DIVAR NAQUELE OUTRO HOOK INTERESSANTE QUE 
+
+O PROFESSOR 
+
+HAVIA MENCIONADO ANTERIORMENTE...
+
+(hook de 'useContext()'...)
+
+
+

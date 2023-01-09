@@ -1,0 +1,852 @@
+
+
+
+
+
+Certo...
+
+
+
+
+
+Deve-se entender que 
+
+
+'useEffect' 
+
+
+
+
+PODE SER UM POUCO TRICKY... é meio chatinho de se usar....
+
+
+
+
+
+
+
+
+---> NA SUA FORMA MAIS PURA, O 'useEffect' RODA __TODA HORA__... ele roda 
+
+
+__SEMPRE QUE NOSSO COMPONENT FOR ___RE-RENDERIZADO (ou seja, atualizado de qualquer forma possível)...
+
+
+
+
+
+ELE RODA TODA HORA pq ele COMBINA  os lifecycles (o funcionamento, na verdade)
+
+
+de 
+
+'componentDidMount' e 'componentDidUpdate'... --------> CERTO,
+
+
+
+MAS E SE QUISÉSSEMOS 
+
+
+ENVIAR UM 
+
+HTTP REQUEST AQUI, 
+
+
+coisa normal,
+ 
+
+ MAS UM HTTP REQUEST 
+ QUE 
+
+
+ SÓ É ENVIADO QUANDO 
+
+
+ ___ O COMPONENT ______ É RENDERIZADO ________PELA ___PRIMEIRA VEZ___, 
+
+
+ E NÃO PARA CADA 
+
+ re-render cycle do nosso component?
+
+
+
+ Como podemos fazer isso? --------> PARA 'HIGHLIGHTAR' esse problema,
+
+
+
+o professor 
+
+
+
+DEFINE UMA CALL 
+
+
+DE 
+
+
+
+'setTimeout' 
+
+DENTRO 
+
+
+DA 
+
+
+'FUNCÃO INTERNA' 
+
+
+do 
+
+
+
+'useEffect'...
+
+
+
+
+ELE DEFINE UM 
+
+
+timeout DE 1 SEGUNDO (1000ms)... 
+
+
+
+
+quando der esse 1 segundo, 
+
+
+A FUNÇÃO DO PRIMEIRO PARÂMETRO SERÁ EXECUTADA. (e o professor explica que ele está 
+
+
+escrevendo 
+esse 
+
+
+'setTimeout' APENAS PARA + OU - FAKAR UM 
+
+HTTP REQUEST, SIMULAR UM HTTP REQUEST 
+
+
+no meio da execução do nosso app...)
+
+
+
+
+
+A COISA QUE ESSE 'setTimeout' VAI EXECUTAR,
+
+ASSIM QUE DER O TEMPO,
+ 
+ é 
+
+
+ executar 
+
+
+um ALERT de 
+'Saved data to cloud'...
+
+
+
+
+
+
+
+EX(REPRESENTAÇÃO):
+
+
+
+
+
+
+
+const Cockpit = (props) => {
+
+
+    useEffect(() => {
+      console.log('[Cockpit.js] useEffect');
+
+
+      setTimeout(() => {
+          alert('Saved data to cloud');
+      }, 1000);
+    });
+
+
+
+
+--------------------------
+
+
+
+PENSE UM POUCO:
+
+
+um usuário 
+
+gostaria
+ 
+ que 
+
+
+
+ um ALERT de 
+'Saved data to cloud'...'
+
+
+
+APAREÇA
+ 
+
+
+ ___QUANDO UM COMPONENTE/O COMPONENTE 
+
+ CARREGA__, por exemplo... 
+
+
+
+ Isso significa que o usuário 
+
+ ficaria 'fine' 
+
+ se visse isso quando ele recarregasse a página....
+
+
+
+----------------------------------
+
+
+
+
+CERTO....
+
+
+AGORA IMAGINE VOCÊ USANDO ESSE APP.
+
+
+
+você clica 
+
+
+em 
+
+'toggle persons' ---> saved data to cloud
+
+
+
+digita alguma coisa ---> saved data to cloud
+
+
+
+respira --> saved data to cloud.
+
+
+
+-----------------------------------------------
+
+
+ISSO PODE FICAR BEM IRRITANTE... --> não é o que eu quero...
+
+
+
+Como podemos controlar 
+
+quando 
+
+
+esse alert aparece? como podemos 
+
+
+fazer com que 
+
+
+
+ELE _____APENAS SEJA __ EXECUTADO 
+
+___ QUANDO NOSSAS 'persons' mudarem ( e não em TODA E QUALQUER OUTRA CONDIÇÃO/ALTERAÇÃO no nosso app)? 
+
+
+
+
+
+
+--> bem, 
+
+PARA ISSO,
+
+
+
+
+
+VOCÊ DEVE ___ADICIONAR ___ UM SEGUNDO ARGUMENTO/PARÂMETRO 
+
+
+
+a 
+'useEffect'... -----------> ESSE SEGUNDO 
+
+
+
+ARGUMENTO 
+
+É UM 
+
+
+___ARRAY____ EM QUE 
+
+VOCê SIMPLESMENTE 
+
+
+___APONTA___ A TODAS 
+
+
+AS VARIÁVEIS 
+
+
+E DADOS QUE 
+
+
+__SERÃO USADOS/SÃO USADOS__ NO SEU EFEITO....
+
+
+
+ex:
+
+
+
+
+
+
+
+
+const Cockpit = (props) => {
+
+
+    useEffect(() => {
+      console.log('[Cockpit.js] useEffect');
+
+
+      setTimeout(() => {
+          alert('Saved data to cloud');
+      }, 1000);
+    }, 
+    
+    [] /////segundo parâmetro.
+    
+    
+    
+    );
+
+
+
+
+}
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+MAS PQ ESSE PARÂMETRO? ---> bem, pq o REACT 
+
+não é esperto o suficiente 
+
+
+para saber quando executar aquele ALERT por conta própria no presente momento... mas 
+
+
+
+se NÓS 
+
+COLOCARMOS UMAS VARIÁVEIS 
+
+E DATA USÁVEL AQUI DENTRO, 
+
+
+poderemos fazer algo...
+
+
+
+
+
+--> nós SABEMOS que nós __SÓ VAMOS QUERER ___ EXECUTAR 
+
+AQUELE 
+
+'alert' 
+
+QUANDO 
+
+___NOSSAS 'person' 
+
+
+
+MUDAREM.......
+
+
+
+
+
+BEM, então, se sabemos isso, basta nós adicionarmos 
+
+
+'props.persons' 
+
+AQUELE ARRAY 
+
+do segundo parâmetro de 'useEffect' (pq 'props.persons' SERÁ UM 'PIECE OF DATA' que vamos utilizar para 
+definir o comportamento de 'useEffect'...)
+
+
+
+EX:
+
+
+
+
+
+
+
+
+const Cockpit = (props) => {
+
+
+    useEffect(() => {
+      console.log('[Cockpit.js] useEffect');
+
+
+      setTimeout(() => {
+          alert('Saved data to cloud');
+      }, 1000);
+    }, 
+    
+    [props.persons] /////segundo parâmetro.
+    
+    
+    
+    );
+
+
+
+
+}
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+PROFESSOR FALA ALGO INTERESSANTE:
+
+
+
+
+
+SE VOCÊ TEM 
+
+
+____DIFERENTES EFEITOS___, CADA UM DEPENDENDO DE ___DIFERENTES DADOS___, 
+
+
+
+VOCÊ PODE CUMULAR 'useEffect()s'... ---> vocÊ pode chamar MÚLTIPLOS 'useEffect', 
+
+CADA UM 
+
+COM UM 
+
+
+DIFERENTE EFEITO/atribuição....
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+const Cockpit = (props) => {
+
+
+    useEffect(() => {
+      console.log('[Cockpit.js] useEffect');
+
+
+      setTimeout(() => {
+          alert('Saved data to cloud');
+      }, 1000);
+    }, 
+    
+    [props.persons] /////segundo parâmetro.
+    
+    
+    
+    );
+
+
+
+
+
+
+    useEffect(() => {}, ///////EIS O CÓDIGO EM QUESTÃO.
+    
+    
+    []
+    
+     )
+
+
+
+
+
+
+
+}
+
+
+
+
+-------------------------
+
+
+CHAMAR MAIS DE 1 'useEffect' É ABSOLUTELY FINE...
+
+
+
+Podemos ter tantos dele quanto quisermos...
+
+
+
+
+
+
+
+
+CERTO,
+
+por meio de 
+
+
+'useEffect(() => {
+      console.log('[Cockpit.js] useEffect');
+
+
+      setTimeout(() => {
+          alert('Saved data to cloud');
+      }, 1000);
+    }, 
+    
+    [props.persons] /////segundo parâmetro.
+    
+    
+    
+    );',
+
+
+
+
+    DEFINIMOS 
+
+
+    QUE 
+
+
+    aquele 
+    
+
+    ALERT APENAS DEVE SER EXECUTADO 
+
+
+    QUANDO 
+
+    'props.persons' 
+
+
+    FOR ALTERADO...
+
+
+
+
+
+    RESULTADO DISSO:
+
+
+
+
+    quando eu recarregar a página,
+
+    vou ganhar o alerta inicial, sim...
+
+
+
+    mas se eu clicar no botão 
+
+
+    TOGGLE,
+
+
+    NÃO SERÁ MOSTRADO O ALERTA,
+     
+
+     PQ 
+
+     as 
+
+     'PERSONS' 
+
+
+     NÃO MUDARAM... 
+
+
+    
+
+
+-----> MAS SE EU DIGITAR ALGO NO INPUT FIELD, 
+
+
+eu ___CONSIGO____ O ALERT 
+
+
+DE NOVO, 
+
+
+
+pq isso __MUDA AS MINHAS 'PERSONS'__.... (só o 'toggle' que não muda... )
+
+
+
+
+
+
+
+
+
+
+
+
+---> PORTANTO, ISSO JÁ É UM AVANÇO A RESPEITO DE 
+
+
+'useEffect()',
+
+
+esse segundo parâmetro 
+
+
+__NOS PERMITE___ DEFINIR QUAL COISA 
+
+DEVERÁ 
+
+
+SER ALTERADA PARA QUE 
+
+
+O PRIMEIRO ARGUMENTO de 'useEffect' (o código a ser executado)
+
+
+SEJA EXECUTADO...............
+
+
+
+
+
+
+
+
+CERTO,
+
+
+MAS E SE QUISÉSSEMOS APENAS
+
+
+EXECUTAR AQUELE CÓDIGO DO PRIMEIRO PARÂMETRO 
+
+
+DE 
+
+
+'useEffect' 
+
+
+
+NA __PRIMEIRA VEZ ___ que o component é renderizado?    -------> BEM, PARA 
+
+ISSO 
+
+
+EXISTE UM PEQUENO 'SHORTCUT'... -----> você DEVE 
+
+
+PASSAR UM 
+
+
+'EMPTY ARRAY' 
+
+COMO SEGUNDO PARÂMETRO DE 
+
+'useEffect()'...
+
+
+ex:
+
+
+
+
+
+
+const Cockpit = (props) => {
+
+
+    useEffect(() => { 
+      console.log('[Cockpit.js] useEffect');
+      setTimeout(() => {
+        alert('Saved data to the cloud!');
+      }, 1000)
+    }, []); /////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+---------------------------------------
+
+
+QUANDO PASSAMOS UM __ARRAY VAZIO___ COMO SEGUNDO PARÂMETRO 
+
+
+de um 'useEffect', 
+
+
+
+ISSO FAZ COM QUE 
+
+O CÓDIGO DEFINIDO 
+
+__DENTRO DO 'useEffect()', NO PRIMEIRO PARÂMETRO,
+
+
+SEJA 
+
+
+___APENAS EXECUTADO____ NO PRIMEIRO RENDER 
+
+DAQUELE ELEMENTO (ele deixa de ser executado 
+
+em RE-RENDERIZAÇÕES SUBSEQUENTES....)
+
+
+
+
+MAS PQ ISSO FUNCIONA? ----> FUNCIONA PQ __iSSO DIZ AO REACT QUE ___ ESSE 
+
+'effect' NÃO TEM 'DEPENDENCY' alguma.... pq 
+
+
+o 
+
+
+segundo 'argumento' do método 
+
+
+'useEffect' É SEMPRE 
+
+
+UM ARRAY que, SE FOR ALTERADO,
+ 
+ ACABA FAZENDO COM QUE O CÓDIGO DEFINIDO 
+
+
+ NO PRIMEIRO PARÂMETRO 
+
+
+
+ DO 'useEffect' SEJA EXECUTADO.... e, como você aqui não tem NENHUMA DEPENDENCY (array vazio), 
+
+
+
+ ISSO SIGNIFICA QUE VOCÊ NÃO TEM NENHUMA DEPENDENCY.... POR TER NENHUMA DEPENDENCY, AS DEPENDENCIES 
+
+ NUNCA PODERÃO MUDAR, o que, por consequência, acaba fazendo com que 
+
+ NOSSOS CÓDIGOS DEFINIDOS NO PRIMEIRO PARÂMETRO NUNCA SEJAM EXECUTADOS...
+
+
+
+
+
+-------> ele vai rodar para o primeiro render, mas ele NUNCA VAI RODAR DE NOVO, DEPOIS DISSO (mesmo após 
+vários e vários re-renders do nosso component...)
+
+
+
+
+
+
+
+
+
+------->    RESUMINDO:
+
+
+
+
+                                                        
+SE VOCÊ PRECISA DE ALGUM EFEITO COMO O PROPORCIONADO POR 'componentDidMount' (dos class-based components),
+
+
+mas em FUNCTIONAL COMPONENTS, ( e um efeito SÓ COMO O DE 'componentDidMount', sem executar um efeito como o de 'componentDidUpdate', que também existe dentro de 'useEffect'...) 
+
+VOCÊ 
+
+
+DEVE USAR 
+
+
+o 'useEffect' E ENTÃO PASSAR 
+
+UM 
+
+ARRAY VAZIO COMO O VALOR DO SEGUNDO PARÂMETRO desse 'useEffect'...
+------------------------------------------------------
+
+
+
+
+
+--> AGORA, SE VOCÊ PRECISA DEFINIR UMA DEPENDECY DE ALGUM __FIELD__/COISA DO SEU APP, 
+
+você 
+
+DEVE O PASSAR aqui, nesse segundo parâmetro... ---> quando esse field/coisa MUDAR,
+
+o 
+
+
+código do primeiro parâmetro 
+
+
+de 'useEffect' SERÁ __eXECUTADO___...
+
+
+-------------------------------
+

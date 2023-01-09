@@ -1,0 +1,255 @@
+
+
+
+
+
+
+--> NAS ÚLTIMAS LIÇÕES, APRENDEMOS MUITO SOBRE __sTATE__....
+
+
+state E PROPS....
+
+
+
+
+---> APRENDEMOS 
+
+
+__ QUE TODO COMPONENTE DO REACT ___ RECEBE 'PROPS'...
+
+
+ex:
+
+
+
+
+const app = props => {
+    ...
+}
+
+
+
+----------------------------
+
+
+
+APRENDEMOS TBM QUE O REACT '16.8' 
+
+introduziu a FEATURE 
+
+de ___'STATE MANAGEMENT'___ EM ___tODOS OS COMPONENTES___, ATÉ os 'functional components' (components criados com a sintaxe DE FUNÇÕES, E NÃO A de classes(class-based components).)
+
+
+
+
+-----------------------------
+
+
+
+MESMO ASSIM,
+
+
+não interessa se vocÊ 
+
+estiver 
+
+gerenciando 
+
+STATES por meio de CLASS-BASED COMPONENTS ou por 'functional components',
+
+
+SE VOCÊ ESTIVER 
+
+
+___GERENCIANDO____ 'state/states' 
+
+NESSE COMPONENT,
+
+
+tanto por uso da propriedade 'state = {}' e por meio do método 'this.setState()', 
+
+
+
+
+OU POR MEIO DO USO DO REACTHOOK de 'useState',
+
+
+
+
+NÃO INTERESSA O APPROACH ESCOLHIDO POR VOCÊ....  --> você 
+
+
+sempre poderá 
+
+DIFERENCIAR 
+
+
+
+SEUS COMPONENTS 
+
+
+ENTRE 
+
+COMPONENTS 
+
+'stateful'
+
+
+
+E 
+
+
+'stateless'....
+
+
+
+--------------------------
+
+
+
+
+STATEFUL ---> é um componente que FAZ 'MANAGEMENT' do state/dos states do seu aplicativo... não interessa se ele usa o reacthook de 'useState', ou se ele usa a CLASS-BASED APPROACH com a propriedade 'state'...
+
+
+
+---------------------------
+
+
+
+
+
+
+UM COMPONENTE COMO 
+
+
+'person', que definimos com o código:
+
+
+
+'
+const person = ( props ) => {
+
+    return(
+        <div>
+            <p>I'm {props.name} and I am {props.age} years old!</p>
+            <p>{props.children}</p>
+        </div>
+    )
+};
+
+'
+
+
+
+
+ESSE COMPONENT, DEFINIDO NO ARQUIVO 'Person.js',
+
+É CONSIDERADO 
+
+
+___UM 'STATELESS COMPONENT'... --> é considerado assim 
+
+PQ ESSE COMPONENT  ___NÃO TEM NENHUM ___ 'INTERNAL STATE MANAGEMENT' --->
+
+
+E UMA BOA PRÁTICA __É SEMPRE CRIAR ___ A 
+
+MAIOR QUANTIDADE POSSÍVEL DESSE TIPO DE COMPONENT NO SEU PROJETO... -----------> esses 
+
+
+components também são chamados de 'presentational', ou de 'dumb' ---> são chamados ASSIM PQ 
+
+__NÃO CONTÊM___ NENHUMA LÓGICA INTERNA... -----> 'presentational' --> pq eles APRESENTAM UMA COISA, ELES 
+
+'OUTPUTTAM CONTEÚDO', apenas pegam conteúdo e então os outputtam de uma maneira ESTRUTURAdA ---> e é por isso 
+
+q são excelentes, 
+
+não gastam mtos recursos e são simples....  ---> devemos forrar nosso aplicativo com esses 
+
+
+
+
+
+
+
+
+
+
+
+---> já os 'STATEFUL' components são chamados também 
+
+
+de 'SMART COMPONENTS', ou de 'CONTAINER COMPONENTS', pois eles CONTÊM  O ___STATE____ DE SEU APLICATIVO____....
+
+
+
+
+
+----> VOCê SEMPRE VAI QUERER APENAS 1 PUNHADO DESSES, E NÃO MUITOS... --> na verdade, 
+
+depende do TAMANHO DO SEU APLICATIVO... ---> se você tiver 
+
+UM APLICATIVO 
+
+COM __MILHARES___ DE COMPONENTS, DE 'dumb components', é evidente que 
+
+você terá uma dezena de 'smart' components... ----> A IDEIA 
+
+
+É QUE VOCÊ SE RESTRINJA A CRIAR 
+
+
+UM PROJETO COM BEM MAIS 'DUMB COMPONENTS' --> pq isso deixa o aplicativo muito mais fácil de entender --> 
+
+fica bem fácil de ver O FLOW DE DADOS no seu aplicativo, e fica fácil de ver ONDE FICA 
+
+SUA 'MAIN LOGIC', e o lugar no código em que seus dados são convertidos e transferidos para o resto do app...
+
+
+
+
+
+
+
+---> PORTANTO, SE QUALQUER PESSOA/VOCÊ QUISER MUDAR ALGUMA COISA SOBRE O APP, a primeira coisa que 
+
+pode-se fazer 
+É 
+
+
+___REDUZIR__ O NÚMERO DE 'SMART' COMPONENTS... -------> pq se você tiver um monte de components 
+
+COM STATE MANAGEMENT, isso vai ACABAR CRIANDO UM CÓDIGO EM QUE 
+
+__CADA COISA __ FAZ SUA PRÓPRIA TAREFA__, O QUE PODE LEVAR A UMA GRANDE CONFUSÃO, SPAGHETTI CODE E 
+
+
+UM CÓDIGO DIFÍCIL DE FAZER MAINTENANCE E REUTILIZAR, ETC ETC...
+
+
+
+
+--> devemos ter a maior quantidade de presentational components possíveis.... --> apenas 
+use 
+
+'smart' components EM ALGUNS DETERMINADOS COMPONENTS... 
+
+
+
+
+
+
+container, smart, stateful... ----> SÃO RUINS.
+
+
+
+
+dumb, presentational, stateless....  -------> SÃO BONS
+
+
+
+
+
+
+------------------------------------------------

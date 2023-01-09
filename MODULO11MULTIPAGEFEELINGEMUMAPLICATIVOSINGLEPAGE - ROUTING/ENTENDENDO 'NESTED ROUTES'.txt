@@ -1,0 +1,1701 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> ATÉ AGORA NO NOSSO APP, 
+
+
+NÓS 
+
+
+
+
+
+CARREGAMOS 
+
+
+
+A ROTA 
+
+
+DE 
+
+
+'single post'  (
+
+    ou seja, 
+
+    a route de código 
+
+
+    '<Route path="/:id" exact component={FullPost} />'
+
+)
+
+
+
+
+
+COMO 
+
+
+____PARTE ____ 
+
+
+DE NOSSA PÁGINA BLOG (que por si só é um CONTAINER...)
+
+
+
+
+
+
+
+
+
+
+------>
+
+nós fizemos/elaboramos esse setup 
+
+PARA QUE 
+
+
+
+O COMPONENT/container/page
+
+'Posts' 
+
+
+
+SEJA __SUBSTITUÍDO PELO COMPONENT/container/page
+
+
+'FullPost' quando clicamos em algum dos 'Post' em 'Posts'...
+
+
+
+
+
+
+
+
+-------> PROFESSOR EXPLICA QUE __ DEFINITIVAMENTE PODEMOS FAZER ISSO__...., podemos 
+
+
+settar 
+
+nosso 
+
+aplicativo dessa forma...
+
+
+
+
+
+
+-----> ENTRETANTO, EXISTIRÃO CASOS 
+
+
+
+________EM QUE VOCê ___ VAI QUERER QUE 
+
+SEJA 
+
+DEFINIDA/EXISTA UMA 
+
+'NESTED ROUTE'...
+
+
+
+
+
+
+
+
+
+---> como assim?
+
+
+
+
+
+--> serão casos em que 
+
+VOCÊ VAI QUERER ___CARREGAR UM CERTO COMPONENT___/CONTEÚDO __________DENTRO 
+
+
+__________ DE OUTRO COMPONENT____, outro component que ___tAMBÉM__ É CARREGADO POR MEIO 
+
+DE 
+
+'ROUTING'...
+
+
+
+
+
+
+
+Professor explica que, até agora,
+
+temos 
+
+
+apenas
+
+
+'1 LEVEL' de routing, 
+
+
+um level 'FLAT'.... 
+
+
+
+
+Ou seja,
+
+
+
+temos 
+
+
+apenas 
+
+
+
+3 routes,
+
+
+definidas no mesmo nível... ------> 
+
+
+temos 
+
+
+
+
+1) a route de '/' 
+
+
+
+
+2) a route de '/new-post'
+
+
+
+3) a route de '/:id'
+
+
+
+
+
+
+
+
+
+essas 3 routes estão definidas no 
+
+container 
+
+de 
+
+
+'Blog'.... -----------> 
+
+
+NELE NÓS 
+
+
+RENDERIZAMOS ____dIFERENTES__ COMPONENTS__ PARA DIFERENTES __ ROUTES...
+
+
+
+
+
+
+
+
+
+---> e isso, esse setup aí, é ABSOLUTELY FINE...
+
+
+
+
+-------------------
+
+
+
+CERTO... MAS DIGAMOS QUE QUEREMOS CARREGAR UM POST ESPECÍFICO...
+
+
+
+
+ESSE POST AÍ NÃO VAMOS QUERER RENDERIZAR ESPECIFICAMENTE DENTRO DO COMPONENT 'Blog',
+
+
+
+E SIM 
+
+VAMOS QUERER QUE ELE SEJA ___RENDERIZADO___ DENTRO DO 
+
+
+COMPONENT 
+
+'Posts.js' ('<Posts>'),
+
+
+
+BEM 
+
+DEBAIXO 
+
+
+daquele render de 
+
+
+'{posts}'....
+
+
+
+
+ex(do código de 'Posts'):
+
+
+
+
+---------------------------------
+
+     return  <section className="Posts">
+            {posts}
+            </section>
+
+
+-------------------------------------
+
+
+
+
+PARA ISSO, 
+
+
+PROFESSOR EXPLICA QUE 
+
+
+
+__VAI QUERER___ WRAPPAR__ ESSE 
+
+
+'<section className="Posts">' 
+
+
+
+
+
+
+EM UMA __dIV___.... ------> 
+
+
+E DENTRO 
+
+
+DESSE NEGÓCIO, O PROFESSOR 
+
+
+VAI ADICIONAR AQUELA NOSSA 
+
+ROUTE 
+
+
+DE 
+
+
+'/:id'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+     return  
+    <div>
+     <section className="Posts">
+            {posts}
+     </section>
+            <Route path="/:id" exact component={FullPost} />
+    </div>
+
+
+
+
+--------------------------------
+
+
+
+PARA USAR ESSA ROUTE, É ÓBVIO QUE O PROFESSOR PRECISA IMPORTAR 
+
+
+O COMPONENT 
+
+'FullPost'..., 
+
+
+
+e também 
+
+
+o component 
+
+'Route' do 
+
+'react-router-dom'....
+
+
+
+
+
+
+
+
+----> PROFESSOR EXPLICA QUE 
+
+
+AGORA 
+
+
+ELE PODE RENDERIZAR UM 
+
+'SINGLE POST'
+
+
+
+DEBAIXO DE SUA LISTA DE 'POSTS'... 
+
+
+
+(
+
+
+       com 
+
+
+       o código 
+
+
+
+
+     return  <div>
+            <section className="Posts">
+             {posts}
+                </section>
+             <Route path="/:id" exact component={FullPost} />
+            </div>
+
+
+)
+
+
+
+
+
+
+
+------> ele diz que pode renderizar um single post ali 
+
+
+PQ ____ELE ESTÁ USANDO 
+
+'ROUTE'
+ 
+
+ EM UM ___COMPONENT__ DIFERENTE___... -------> 
+
+
+
+ E ISSO, DE FATO, É ALGO QUE VOCê ___PODE ___ fAZER:
+
+
+ Você 
+
+
+ pode 
+
+ definir 
+
+
+
+ o objeto 'Route'/a 'Route' em si 
+
+
+
+ EM ___qUALQUER LUGAR___ DE SEU APLICATIVO, EM QUALQUER ARQUIVO.... ------> 
+
+
+
+
+ VOCÊ PODE FAZER ISSO, COM CERTEZA... 
+
+
+
+ BASTA QUE 
+
+ VOCÊ 
+
+
+ WRAPPE
+  
+
+
+
+  A PÁGINA/COMPONENT/CONTAINER 
+
+  que está 
+
+  utilizando/settando 
+
+
+  está 
+
+  'Route'
+
+
+  ___ESTEJA ___ WRAPPADA 
+
+
+
+  ___ COM O OBJETO/COMPONENT 
+
+
+
+  '<BrowserRouter>',
+
+
+  como visto 
+
+
+
+  em 
+
+  'App.js',
+
+
+  em que 
+
+
+
+  encontramos 
+
+
+------------------------------------------
+
+  return (
+         <BrowserRouter> //////////ISTO AQUI.
+              <div className="App">
+                     <Blog />
+              </div>
+       </BrowserRouter> 
+  
+  )
+
+----------------------------
+
+
+
+ALI O 
+
+
+COMPONENT 'BLOG' é wrappado,
+
+
+e como o component 
+
+'Posts' é apenas um CHILD COMPONENT 
+
+
+de 
+
+'Blog',
+
+nosso site e 
+
+suas 
+
+routes vão funcionar perfeitamente...
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+
+CERTO... 
+
+
+
+
+MAS SE FIZERMOS ESSA TROCA DE '''___LOCAL___ DA ROUTE''', 
+
+da route 
+
+
+
+de 
+
+
+'FullPost',
+
+
+
+
+AQUELE SWITCH STATEMENT 
+
+
+LÁ 
+
+
+
+EM 
+
+'Blog.js'
+
+
+FICARÁ UM POUCO REDUNDANTE/INÚTIL,
+
+POIS ESTARÁ ___wRAPPANDO__
+
+
+
+APENAS 
+
+1 ÚNICO ELEMENTO (E ele só é útil/faz algo quando está wrappando vários, vários components que CONFLITAM...)
+
+
+
+
+
+
+
+
+
+
+
+
+---> o professor também se livra do import do 
+
+
+Component 
+
+'FullPost', 
+
+lá 
+
+
+em 
+
+'Blog.js',
+
+
+pq ele diz que não vai mais precisar disso.
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+CERTO. O PROFESSOR SALVA TODOS OS ARQUIVOS....  ----> vamos até nossa 
+
+
+página,
+ 
+
+
+ e tudo PARECE ESTAR A MESMA COISA... -----> mas agora, se clicarmos 
+
+ em 
+
+
+
+
+ ALGUM __dOS POSTS___ ('single post'/s) ,
+
+
+
+ VEREMOS 
+
+
+
+ QUE __A UI __ NUNCA VAI UPDATAR___ NOSSA TELA FICARÁ BRANCA pra sempre... 
+
+
+
+
+
+
+
+ A RAZÃO PARA ISSO É :
+
+
+
+
+
+
+SIMPLES ------> NÓS AGORA ACABAMOS DE CRIAR 
+
+AQUILO QUE 
+
+
+É CHAMADO DE 
+
+
+
+'''''NESTED ROUTE'''''''.... -----> ou seja:
+
+
+
+
+agora 
+
+
+temos 
+
+
+coisas chamadas 
+
+'route routes' ----> como 
+
+
+
+'<Route path="/"  exact component={Posts} />' 
+
+
+e 
+
+
+
+"<Route path="/new-post" />'
+
+
+
+
+
+
+
+ESSAS ROUTES AÍ ESTÃO NO 'TOPMOST LEVEL'... ---> é o level em que O REACT/BROWSER 
+
+
+
+REAGE 
+a QUAISQUER 
+
+
+CHANGES...
+
+
+
+
+
+
+
+
+----> O problema, aqui, é que 
+
+
+o component 
+
+
+'Posts'
+
+
+
+__eSTÁ ___ SENDO CARREGADO/renderizado ___ POR MEIO 
+
+DA NOSSA 
+
+
+'ROOT ROUTE' 
+
+
+DE 
+
+"/".... ------------> e isso, por sua vez, é um problema 
+
+
+PQ ____ 
+
+
+A ROUTE ___ DE 'FullPost' (que renderiza nosso 'FullPost', que é justamente 
+nosso
+
+'post individual que foi clicado, renderizado na tela')
+
+
+
+
+
+ESTÁ ____DENTRO ____ DELE, dentro de 'Posts'... (é a route de código '<Route path="/:id" exact component />')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> o problema é que essa 
+
+rota 
+
+'<Route path="/:postId" exact component />'
+
+
+
+NÃO SERÁ ALCANÇADA POR 
+
+NOSSA NAVEGAÇÃO... ---------> NÃO SERÁ ALCANÇADA POR NOSSA NAVEGAÇÃO 
+
+PQ 
+
+
+NÓS TEMOS UM 'EXACT MATCHING' AO path de '/'.... (NÓS TEMOS 
+
+ESSE 'EXACT MATCHING' EM DECORRÊNCIA DA ''BOOLEAN PROPERTY'' 'exact', posicionada 
+
+na Route de path '/'...) ----------> EX:
+
+
+
+
+
+<Route path="/" exact component={Posts} />  /////////////olha o 'exact' ali....
+
+
+-----------------------------------------------------
+
+
+
+
+
+E ESSE 'EXACT' AÍ ___ NA NOSSA ROUTE 'ROOT' ___ faz com que 
+
+
+O COMPONENT 'Posts', que ____cONTÉM __ NOSSA ROUTE DE '/:postId',
+
+NUNCA 
+
+
+SEJA RENDERIZADO... ---> nunca vai ser renderizado 
+
+PQ QUANDO CLICAMOS 
+
+EM UM POST ('post individual'),
+
+
+A URL/PATH 
+vai mudar 
+
+para 
+
+
+'localhost:3000/1', ou algo do gênero,
+
+e esse 
+
+exact posicionado 
+
+em 
+
+'<Route path="/" />"
+
+
+
+
+____EXIGE___ QUE O FINAL DESSA URL 
+
+seja 
+
+um '/' simples, e nada mais do que isso.... ('localhost:3000/')...
+
+
+
+
+
+
+
+------> e isso é um problemão, pq é justamente 
+
+no component 
+
+
+de 
+
+'Posts'
+ 
+ QUE 
+
+ ESTÁ 
+
+ A 
+
+ <Route /> 
+
+
+ QUE FARÁ/FAZ 
+
+
+ O RENDER DE NOSSO COMPONENT 
+
+ 'FullPost'...  (renderizado 'for a given id')...
+
+
+ -------------------------------------------------
+
+
+
+
+
+
+
+ PARA CONSERTAR ESSE PROBLEMA, A SOLUÇÃO É MEIO LÓGICA:
+
+
+
+ DEVEMOS ____REMOVER____ O EXACT ____ que 
+
+
+ colocamos 
+
+
+
+ naquela 
+
+ route de 
+
+ '<Route path="/" component={Posts} />'.... ---------> isso por sua vez vai 
+
+
+ FAZER COM QUE 
+
+
+
+O NOSSO CÓDIGO ACEITE 
+
+
+essa route 
+
+renderizar o component 'Posts' para as urls 
+
+
+''''tudo que começa com /'''' (prefixing).... --------> e isso vai fazer 
+
+
+os posts serem renderizados, agora sim, para coisas 
+
+como 
+
+'localhost:3000/1', 'localhost:3000/2', 'localhost:3000/3', etc... ---------->
+
+
+ENTRETANTO, 
+
+
+PARA QUE 
+
+ISSO NÃO FERRE 
+
+A INTERAÇÃO 
+
+
+COM A OUTRA ROUTE, COM A ROUTE DE 
+
+
+'/new-post'  (Que TAMBÉM COMEÇA COM '/'), 
+
+
+
+PROFESSOR 
+
+
+APONTA QUE 
+
+
+DEVEMOS 
+
+MUDAR A ORDEM, 
+
+COLOCAR
+ 
+
+
+ A ROUTE de path 
+
+
+ DE 
+
+ '/' (o mais root de todos) 
+
+
+ NO FINAL,
+
+
+ e a route 
+
+
+
+DE PATH DE 
+
+
+'/new-post'  EM CIMA DELA (para que seja parseada antes, e para que evite que 
+
+
+SEJA SEMPRE CARREGADA A ROUTE DE 'Posts' EM VEZ DE ___ÀS VEZES___/quando necessário/quando clicado o botão 'New Post' 
+
+seja renderizada a route de '/new-post', que é o que desejamos).
+
+
+
+
+
+
+
+
+
+
+
+E AGORA, PORTANTO,  O SWITCH VAI FAZER SENTIDO DNV,
+
+pq 
+
+
+agora de novo vamos querer 
+
+
+que 
+
+
+APENAS 1 ROUTE SEJA RENDERIZADA, E QUE A OUTRA (RESTANTE) 
+
+SEJA 
+
+
+IGNORADA...
+
+
+
+
+
+
+
+
+
+
+--> certo, mas nosso código está com PROBLEMA: 
+
+
+nosso 
+
+component 
+
+'FullPOst' não é renderizado embaixo quando clicamos em algum dos 'Post' em 'Posts'...
+
+
+
+
+
+
+
+--> CONSEGUI CONSERTAR, eu havia passado
+ 
+ '/:id' na route,
+
+
+ e o correto 
+
+ era 
+
+ '/:postId'...
+
+
+
+
+
+
+
+
+ --> agora, quando clicamos em um 
+
+dos POSTS,
+
+
+
+
+
+o component 'FullPost' 
+
+É 
+
+RENDERIZADO MAIS ABAIXO, COM
+
+
+NOSSO 
+
+
+'POST' COrrespondente...
+
+
+
+
+
+
+
+
+
+----> certo,
+ 
+
+ mas é possível que 
+
+
+
+ OUTRO PROBLEMA SURJA.... --------> digamos 
+
+
+ que, 
+
+ em vez 
+
+ de 
+
+ termos 
+
+
+ a disposição, em 'Blog.js',
+
+
+
+ das routes assim:
+
+
+
+
+    <Switch>
+                <Route path="/new-post" component={NewPost}  />
+                <Route path="/" component={Posts} />
+                </Switch>
+
+
+
+
+
+,
+
+
+
+
+
+AS TIVERMOS ASSIM:
+
+
+
+
+
+    <Switch>
+                <Route path="/new-post" component={NewPost}  />
+                <Route path="/posts" component={Posts} />
+                </Switch>
+
+
+-------------------------------
+
+
+ou seja, 
+
+
+
+se tivéssemos 
+
+
+'/posts'   -------------------> e se fizéssemos isso, teríamos de ajustar todas nossas ocorrências desse '/' no nosso código, como os códigos de 'this.props.history.push('/' + id)' no 'postSelectedHandler', etc....
+
+
+em 
+
+vez 
+
+de 
+
+
+'/' (slash nothing)....
+
+
+-----------------------------
+
+
+
+
+
+
+MAS 
+
+
+SE O PROFESSOR REALIZAR
+ 
+
+ ESSA 
+
+ TROCA DE 
+
+
+
+ '/' para '/posts',
+
+
+
+
+
+ NÓS 
+
+ VEREMOS QUE 
+
+
+
+ ISSO CRIARÁ UM PROBLEMA:
+
+
+ Nossos posts ('post') 
+
+ serão 
+
+
+ renderizados na págnia inicial 'localhost:3000/posts',
+
+
+ sim,
+
+
+
+ MAS __ QUANDO __ NÓS CLICARMOS __ EM ALGUM 
+
+
+ DOS 
+
+ 'Post',
+
+
+
+ NOSSO CONSOLE VAI SE ENCHER DE ERROS,
+
+ E 
+
+
+ O COMPONENT 
+
+ 'FullPost' nÃO SERÁ RENDERIZADO em 
+
+
+
+
+ baixo dos nossos posts... -------> VAMOS 
+
+
+
+ GANHAR 
+
+ UM 
+
+
+ ERRO 
+
+
+ JUSTAMENTE ___PQ NOSSA 'NESTED ROUTE'__, LÁ NAQUELE COMPONENT 
+
+ 'Posts',
+
+
+
+
+PARSEIA/ESTÁ PARSEANDO 
+
+
+
+
+o path de 
+
+
+'/:postId'... ---------------------------------> E ESSE 
+
+PATH AÍ 
+
+
+
+
+
+______NÃO ESTÁ SENDO '''APENSO'''' (appended) 
+
+AO 
+
+
+
+PATH __ DA ROUTE__ QUE ERA RESPONSÁVEL/É RESPONSÁVEL __ PELO 
+
+
+CARREGAMENTO DO COMPONENT 'Posts'... (conflito/incompatibilidade de ROUTE NAMES...)
+
+
+
+(ou seja, aquela nested route quer um 
+
+path de 
+
+'localhost:3000/1', etc,
+
+e nós
+
+estamos 
+
+
+dando um 
+
+path de 
+
+
+'localhost:3000/posts/1'... ----> o que faz com que nosso código falhe....
+
+
+)
+
+
+
+
+------------------------------------------
+
+
+Certo... acho que entendi... ok, mas como resolver isso? --------> 
+
+
+
+
+PROFESSOR DIZ QUE 
+
+O FIX É SIMPLES,
+
+
+BASICAMENTE 
+
+TERÍAMOS 
+
+QUE 
+
+ADICIONAR '/posts/' ao início desse path dessa route nesteada... tipo assim:
+
+
+
+
+
+
+ANTES(agora):
+
+
+
+<Route path="/:postId" exact component={FullPost} />
+
+
+
+
+
+
+DEPOIS( com o path CONSERTADO):
+
+
+
+<Route path="/posts/:postId" exact component={FullPost} />
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+ISSO FARÁ O 'NESTED ROUTING' VOLTAR A FUNCIONAR, dessa vez com essa url 
+
+que é 
+
+'/posts/idDinâmico'... -----------------> MAS 
+
+
+
+
+É EVIDENTE 
+
+
+QUE 
+
+É MT ___CUMBERSOME___ DE FICAR 
+
+
+
+
+escrevendo código assim.... --> o professor quer dizer 
+
+
+
+
+USAR uma 
+
+URL 'HOME'/ROOT 
+
+que 
+
+seja 
+
+algo diferente de 
+
+'/'...  --------------------> 
+
+
+
+
+
+
+
+ainda assim, se você quer INSISTIR EM USAR 
+
+algo assim, 
+
+
+algo como 
+
+
+'/posts/' , 
+
+
+UMA 
+
+
+
+ALTERNATIVA __MELHOR__ DO QUE FICAR 'HARDCODANDO' 
+
+
+esses 
+
+
+nomes 
+
+
+
+
+É ___sIMPLESMENTE__ CONSEGUIR
+
+
+O 'CURRENTPATH' (há uma propriedade que 
+
+NOS DÁ O CURRENTPATH DO USUÁRIO), 
+
+
+CONSEGUIR
+
+
+o 'currentPath' 
+
+de forma DINÂMICA... -------> você faz isso 
+
+
+PARA QUE ___ESSA ROUTE__ AÍ, ESSA ROUTE de '/posts/:id' (ou '/:postId')
+
+
+REALMENTE 
+
+
+FIQUE/VIRE 
+
+
+UMA 
+
+
+'FLEXIBLE, DYNAMIC, NESTED ROUTE'... -------> PARA ISSO,
+
+
+
+
+PARA CONSEGUIR ESSE EFEITO,
+
+
+DEVEMOS 
+
+
+SETTAR 
+
+O PATH 
+
+
+DESSA 
+
+ROUTE 
+
+
+COMO SENDO ALGO DINÂMICO... (ou seja, usamos '{}'...).
+
+
+ex (COMO ESTÁ AGORA):
+
+
+
+<Route path="/posts/:id" exact component={FullPost} />
+
+
+
+
+
+
+ex(COMO O PROFESSOR QUER QUE ESCREVAMOS):
+
+
+
+
+<Route path={} exact component={FullPost} /> 
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+CERTO, MAS O QUE USAMOS DENTRO DESSA MARCAÇÃO DINÂMICA? -----> professor 
+
+
+
+nos 
+
+
+
+dá 
+
+
+o método/propriedade.... ------> 
+
+
+
+
+o nome do negócio é 
+
+
+
+'this.props.match.url' 
+
+
+
+
+
+
+
+OU SEJA, É A PROPRIEDADE 
+
+'url'
+
+
+DENTRO DE 
+
+'match',
+
+
+
+que nos 
+
+DÁ 
+
+
+
+______bASICAMENTE___ A URL QUE 'CARREGAMOS ATÉ AGORA', ou seja,
+
+
+a URL que o usuário CARREGOU ATÉ AGORA....  ( ou seja, no caso dessa route 
+
+de 
+
+'/posts/:id', SERIA/É 
+
+
+
+
+
+_______A URL__ QUE FOI RESPONSÁVEL___ POR CARREGAR ___ ESSE COMPONENT 
+
+
+'Posts'....  --> nesse caso, isso é '/posts/', ou '/' (antes da alteração de 'posts' que o professor fez no código)...)
+
+
+
+
+
+
+
+
+
+
+CERTO, E É EXATAMENTE ESSE 
+
+'this.props.match.url' 
+
+QUE PRECISAMOS 
+
+
+FAZER 
+
+
+
+'PRE-PEND' (anexar ANTES), 
+
+
+
+ANEXAR 
+
+
+
+
+__aNTES___ DA PARTE 'flexível' (aquela parte '/:id')
+
+
+
+DA NOSSA URL...
+
+
+
+
+
+
+
+OU SEJA, 
+
+FICARÁ 
+
+
+ASSIM (em 'Posts.js'):
+
+
+
+'''<Route path={this.props.match.url + '/:id'} exact component={FullPost} />'''
+
+
+
+
+
+
+
+
+
+
+
+----> e esse 
+
+
+'this.props.match.url' é muito bom, é bom pq é DINÂMICO, ELE __vAI SEMPRE SE 'RESOLVE'__ PARA 
+
+
+SER A COISA QUE EXISTIA ___ ANTES___ DE '''APPENDARMOS''' (append) 
+
+esse 
+
+
+'/:id'...
+
+
+
+
+
+
+
+SALVAMOS TUDO, E AGORA TEMOS EXATAMENTE O MESMO COMPORTAMENTO DE ANTES, 
+
+
+
+mas 
+
+isso apenas prova que 
+
+
+NOSSAS ALTERAÇÕES FUNCIONARAM.... ----->  nós agora estamos DINAMICAMENTE 
+
+adicionando 
+
+
+'/'  (ou '/posts/') ao 
+
+
+NOSSO 
+
+
+
+
+'path dinâmico', ao path '/:id' 
+
+
+DA ROUTE DE COMPONENT 'FullPost'...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> E É ASSIM QUE CRIAMOS 
+
+'
+TRULY NESTED ROUTES'
+
+
+
+no nosso aplicativo react, com o REACT ROUTER.

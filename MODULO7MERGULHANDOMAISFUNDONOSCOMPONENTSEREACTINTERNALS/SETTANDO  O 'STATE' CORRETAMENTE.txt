@@ -1,0 +1,1325 @@
+
+
+
+NÓS APRENDEMOS UM MONTE SOBRE 
+
+'HIGHER ORDER COMPONENTS'... --------> 
+
+
+E AGORA 
+
+
+DEVEMOS VOLTAR AOS NOSSOS 
+
+
+'REGULAR COMPONENTS', POR ASSIM DIZER...
+
+
+
+
+
+
+
+--> COMPONENTS comuns... --> Temos components 
+
+
+como o 
+
+
+nosso 
+
+'App.js',
+
+
+
+
+QUE ___DE FATO USAM ___ STATE... 
+
+
+
+
+COMO  O 
+
+
+
+'App.js',
+
+
+QUE 
+
+
+
+___É REALMENTE UM CLASS-BASED COMPONENT, com um state bem definido....
+
+
+
+
+
+---------------------------------------
+
+
+
+
+E O QUE O PROFESSOR VAI NOS MOSTRAR AGORA É ALGO 
+
+
+QUE SÓ IMPORTA 
+
+PARA 
+
+
+CLASS-BASED COMPONENTS 
+
+QUE UTILIZAM 
+
+
+A PROPRIEDADE  'state'
+
+
+
+e 
+
+
+usam 
+
+
+'setState()'...  PARA __UPDATAR__ ESSE STATE.... ------> certo...
+
+
+
+
+A BOA NOTÍCIA É QUE,
+
+LÁ EM 
+
+
+'App.js',
+
+
+NÓS 
+
+__eSTAMOS USANDO 
+
+'setState' 
+
+
+DE FORMA CORRETA.....
+
+
+
+
+
+
+CÓDIGO DE COMO ESTAMOS executando 'setState', 
+
+NO MOMENTO:
+
+
+
+ nameChangedHandler = (event, id) => { 
+    const personIndex = this.state.persons.findIndex(
+      p => {
+        return p.id === id;
+      }
+    );
+
+
+
+    const person = {
+      
+      
+      ...this.state.persons[personIndex]
+    }
+
+
+    person.name = event.target.value;
+
+
+    const persons = [...this.state.persons];
+
+
+
+    persons[personIndex] = person;
+    this.setState({ persons: persons});     ////////ISSO, JUNTO DE TODO O RESTO DO CÓDIGO (uso do SPREAD OPERATOR) está CERTO.
+
+
+ }
+
+
+
+
+ -------------------------------
+
+
+
+
+
+
+
+ ---> CERTO,
+
+ ESTAMOS 
+
+
+ USANDO DE FORMA CORRETA... --> contudo, 
+
+
+ professor 
+
+
+ diz que 
+
+
+ É _FÁCIL__ USAR 
+
+
+
+ o 'this.setState' 
+
+
+ DE 
+
+
+ FORMA INCORRETA,
+
+
+
+ E QUE 
+
+ AGORA ELE VAI NOS MOSTRAR
+
+
+ __cOMOO EVITAR_ ISsO... 
+
+
+
+
+
+
+
+
+
+ -----------------------------------
+
+
+
+
+
+ MAS COMO PODEMOS USAR 'this.setState' 
+
+
+
+ DE UMA FORMA INVÁLIDA^?  ------> bem, 
+
+ digamos 
+
+
+ que 
+
+
+ SEMPRE QUE
+
+
+
+
+ NOSSO 
+
+ 'name' dos 'persons' 
+
+ MUDA 
+
+
+ e então 
+
+
+ executamos 
+
+
+
+ o 
+
+
+ 'nameChangedHandler' (que realiza o CHANGE dos '<p>' a partir 
+ 
+ 
+ 
+ do CHANGE do name...) ,
+  
+
+
+  VAMOS QUERER __cONTAR____ CADA __ KEYSTROKE/CHANGE__ executado/OCORRIDO
+   
+
+   na página....
+
+
+
+
+
+
+--> PARA ISSO, 
+
+PARA 
+
+
+'Contar cada keystroke/change' realizado pelo 
+
+usuário,
+
+
+
+TEMOS 
+
+QUE ALTERAR O MÉTODO 
+
+'nameChangedHandler'... --------> SE QUEREMOS 
+
+
+
+QUE 
+
+ISSO SEJA IMPLEMENTADO, 
+
+
+
+___NÓS VAMOS QUERER _ METER UM 'this.setState()' 
+
+NÃO SÓ 
+
+PARA ____
+
+ALTERAR AS PERSONS/array PERSONS (' this.setState{ persons: persons}' ),
+
+
+
+MAS
+
+__TAMBÉM___  
+
+
+
+UM __CONTADOR___, um 'counter' QUE VAMOS 'KEEP TRACK OF' no nosso aplicativo... ---> temos que __CRIAR__ ESSE COUNTER,
+ é claro...
+
+
+
+
+
+
+
+---> PARA QUE 
+
+
+TENHAMOS UM 'COUNTER',
+
+
+PODEMOS 
+
+ADICIONAR
+
+
+
+UM 'Counter' 
+
+ao nosso 
+
+
+OBJETO 
+
+'state'... --------> 
+
+
+chamaremos 
+
+
+de 
+
+'changeCounter'... (e começará com o valor 0)..
+
+
+
+
+ex:
+
+
+
+ state = {    
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false,
+    showCockpit: true,
+    changeCounter: 0 /////////EIS O CÓDIGO EM QUESTÃO.
+
+  }
+
+
+
+  -------------------------------------------
+
+
+
+
+
+  CERTO... ISSO FEITO,
+
+
+  NÓS VAMOS QUERER 
+
+
+
+  ___ESCREVER ___ UMA LÓGICA
+
+
+  NO 
+
+  'nameChangedHandler' 
+
+  QUE 
+
+  FARÁ 
+
+
+COM QUE 
+
+
+SEMPRE +1 seja adicionado 
+
+ao COUNTER quando 
+
+UMA CHANGE/TYPE do usuário acontecer na nossa página...
+
+
+
+PARA ISSO,
+ 
+ BASTA ADICIONARMOS UMA SEGUNDA 'PROPRIEDADE' 
+
+
+ naquele 
+
+ OBJETO PASSADO 
+
+ ao 'this.setState()'.... -----> a segunda propriedade, é óbvio, será 'changeCounter';
+
+
+ O VALOR DESSE 'NOVO changeCounter' VAI SUBSTITUIR o valor do 'VELHO changeCounter', 
+
+ definido lá no 'state'....
+
+
+
+
+COMO O VALOR DESSE 'changeCounter' VAI __SEMPRE___ DEPENDER DO 'old state',
+
+E NÓS SEMPRE VAMOS QUERER INCREMENTÁ-LO pelo valor de 1 ('+1'),
+
+
+PROVAVELMENTE VAMOS ESCREVER ALGO COMO 
+
+
+" 'NÚMERO DO COUNTER VELHO' +  1    "
+
+
+
+
+Ou seja, precisamos do 
+
+'velho changeCounter'  MAIS 1 (que é a alteração, há sempre apenas 1 alteração por UPDATE do counter...)
+
+
+
+
+
+PROFESSOR DIZ QUE PODEMOS USAR 
+
+'this.state.changeCounter + 1' (teoricamente...)
+
+
+
+
+
+
+ ex:
+
+ this.setState( { persons: persons, changeCounter: this.state.changeCounter + 1 }); 
+
+
+
+
+
+ -----------------------------
+
+
+
+ COM ISSO,
+
+
+ COM ESSAS MUDANÇAS,
+
+
+
+ AGORA 
+
+
+ DEVEMOS
+
+
+ TER UM 
+
+ SETUP 
+
+
+ EM QUE 
+
+ __NÓS UPDATAMOS__ O CHANGE COUNTER A PARTIR 
+
+
+ DE mudanças no nosso state (a partir do RUN de 'nameChangedHandler'...) 
+
+
+
+
+
+
+
+
+ ---> SE NÓS SALVARMOS ESSE NEGÓCIO E ENTÃO RECARREGARMOS 
+
+ A PÁGINA.... ---> professor usa 
+
+
+
+ AS REACT DEVTOOLs 
+
+
+ para 
+
+
+ VER OS COMPONENTS DE NOSSA PÁGINA... --> e nós realmente conseguimos 
+
+
+ ver um 
+
+ 'changeCounter' NO ___sTATE__ DA NOSSA PÁGINA...
+
+
+
+
+
+---> CERTO.... E SE EXAMINARMOS 
+
+AS 'REACT DEVTOOLS',
+
+vamos ver que  
+
+
+o 'changeCounter: 0' 
+
+
+VAI __AUMENTAR EM 1 __ PARA CADA TYPE (cada letra que inputtarmos nos input fields)
+
+QUE FIZERMOS... 
+
+
+
+
+---> ISSO PODE 
+
+
+APARENTAR QUE 
+
+
+NOSSO CÓDIGO de 'changeCounter' ESTÁ FUNCIONANDo... --> pode parecer que 
+
+está tudo certo,
+
+
+
+MAS __O PROFESSOR EXPLICA __ QUE 
+
+
+_____________eSSA É A MANEIRA ____ ERRADA ____ DE __UPDATAR__ 
+_____ ESSE 
+
+'COUNTER'...
+
+
+
+
+
+
+
+UÉ, MAS PQ É A 'MANEIRA ERRADA'? ----> é a maneira errada 
+
+
+
+PQ, POR TRÁS DAS CENAS,
+
+
+'this.setState()'
+ 
+
+
+
+ ___NÃO  (DOES NOT) 
+
+
+TRIGGA  IMEDIATAMENTE 
+
+ UM UPDATE DO ___sTATE___ DESSE COMPONENT E UM SUBSEQUENTE 
+
+ __RE-RENDER CYCLE__... -----> em vez disso,
+
+ o que 
+
+ esse 'setState()' faz É 
+
+
+ ___bASICAMENTE 'AGENDAR UM UPDATE' 
+
+
+ DO STATE...  ----> e o REACT AÍ VAI ___REALIZAR__ 
+
+ ESSE 'STATE UPDATE' e o seu SUBSEQUENTE RE-RENDER CYCLE 
+
+
+ __QUANDO ELE ___ ______TIVER__ OS 'RESOURCES' ___ DISPONÍVEIS 
+
+ PARA FAZER ESSA OPERAÇÃO... ( ou seja, LITERALMENTE 
+ 
+ QUANDO ELE PENSAR: 'HMM, ESSA É UMA BOA HORA PARA FAZER ISSO', ou 
+ 
+ 'oh, now is the best time to do this'... ) -----------> TIPICAMENTE,  ____ ESSE 
+
+
+ PROCESSO DE 'AGENDAMENTO--->UPDATE' 
+
+
+ É _INSTANTÂNEO___, PRINCIPALMENTE 
+
+
+ EM APLICATIVOS 
+
+
+ ___SIMPLES COMO O NOSSO___, 
+
+ MAS ESSE 
+
+
+ 'UPDATE INSTANTÂNEO' por meio 
+
+
+ de 'this.setState()' 
+
+
+
+ ___________________________NÃO É GARANTIDO 100%_____________________....
+
+
+
+
+
+
+
+
+
+ -------> E O PROFESSOR QUER QUE NÓS MEMORIZEMOS ESSA NOÇÃO PQ ELA É MT IMPORTANTE:
+
+
+
+
+ VOCÊ CHAMA 'this.setState()' 
+
+ DE ____FORMA __SÍNCRONA___ NO SEU CÓDIGO (sem promises),
+
+
+ MAS MESMO QUE TENHA SIDO CHAMADO NORMALMENTE, DE FORMA 'SÍNCRONA',
+
+
+ ___ O UPDATE DO STATE (por 'setState()'___ NÃO VAI SER INSTANTÂNEO 100% GARANTIDO...,
+
+
+ NÃO HÁ NADA QUE GARANTA QUE ELE __SERÁ __eXECUTADO__ E 'FINISHED' INSTANTANEAMENTE...
+
+
+
+NADA GARANTE QUE ELE SEJA __eXECUTADO E ACABADO (finished) INSTANTANEAMENTE...
+
+ --------------------------------------------------------
+
+
+
+
+
+RESUMINDO:
+
+
+
+ISSO SIGNIFICA QUE 
+
+
+
+'this.setState()',
+
+QUANDO USADO 
+
+
+
+___PARA UM UPDATE_ _ DE STATE__ 
+
+
+
+
+
+_________ELE NÃO __ GARANTE/NÃO É GARANTIDO QUE 
+
+ELE SERÁ 
+
+
+
+__ O 'LATEST STATE', ou o 'PREVIOUS STATE', do qual você dependia... --> ex: 'setState()' QUE DEMORA DEMAIS PARA ACABAR/CONCLUIR... --> isso vai ENBANANAR COMPLETAMENTE O FLOW DO SEU CÓDIGo....
+
+
+
+
+
+
+
+
+EXEMPLO: 
+ 
+
+
+poderíamos estar usando 'this.setState(this.state.changeCounter + 1)' 
+
+
+
+E AÍ 
+
+
+O 
+
+'changeCounter' que estamos 
+
+PEGANDO 
+
+do 'state'
+
+__PODE __ ACABAR NÃO SENDO o 
+
+'LATEST STATE' do nosso component,
+
+ele pode ser, por exemplo,
+ 
+ um 
+
+ 'OLDER STATE' que __JÁ ACABOU DE SER DEFINIDO 
+ 
+ POR UM 'setState' PRÉVIO... (enquanto que o LATEST state, o 
+ 
+ LATEST STATE __ DE VERDADE __, AINDA ESTÁ/ESTARÁ ACABANDO 
+ 
+ SEU 'setState'...  ) --------> E ISSO 
+
+ VAI CAGAR COMPLETAMENTE 
+
+
+ A LÓGICA/FLOW DO SEU CÓDIGO...
+
+
+
+ --------------------------------------------
+
+
+
+
+
+
+
+ PARA EXEMPLIFICAR A SITUAÇÃO, PROFESSOR 
+
+
+ DIZ QUE VOCÊ 
+
+ DEVE IMAGINAR 
+
+
+ que 
+
+ VOCÊ ESTÁ 
+
+ CHAMANDO
+
+
+ 'this.setState()' 
+
+
+
+ EM _ALGUM OUTRO LUGAR DE SEU APLICATIVO__.... --------> ou seja,
+
+ devemos imaginar que 
+
+ EXISTE UM OUTRO 
+
+ '.setState()' 
+
+
+ QUE ESTARÁ OCORRENDO __QUASE SIMULTANEAMENTE__ A ESSE 
+
+ UPDATE de 'changeCounter' PROPORCIONADO POR 
+
+
+ 'setState()'... ---------> e, além disso, nesse exemplo,
+
+ POR ALGUMA 
+
+ ___RAZÃO ___ O 'this.setState' das PERSONS 
+
+
+ e do 
+
+ 'changeCounter' 
+
+ NÃO VAI/NÃO EXECUTA 
+
+
+ IMEDIATAMENTE, e o OUTRO 
+
+
+ UPDATE DE 'this.setState()'  (no outro component, por exemplo)
+
+
+
+ _TERMINA MAIS CEDO____ -------> ALGUMA COISA COMO ESSE EXEMPLO... -------> 
+
+
+
+
+ SE ISSO ACONTECER,
+
+
+ ESSE 
+
+ STATE DO QUAL VOCÊ ESTÁ DEPENDENDO AQUI,
+  
+
+  ESSE STATE 
+
+
+  DE CÓDIGO 
+
+  'this.state.changeCounter' , usado para UPDATAR o counter com 'this.setState',
+   
+
+
+   PODERÁ 
+
+
+   _____SER UM STATE INESPERADO ('unexpected state'),
+
+
+
+   PODERÁ 
+   __ NÃO SER O 'PREVIOUS STATE' QUE VOCÊ 
+
+   ESPERAVA SER... ------------------------------------------>
+
+
+
+
+
+
+
+   -------->
+
+   -------->-
+
+
+   -----------> E É __POR ISSO__ QUE EXISTE 
+
+   UMA MANEIRA/APPROACH 
+
+
+   __MELHOR___ DE ESCREVER CÓDIGOS COMO ESSE,
+
+
+
+   DE ESCREVER 
+
+   CÓDIGOS/CÓDIGOS QUE UPDATAM STATE/'this.setState()s' QUE 
+
+
+   __DEPENDEM__ DE UM 'PREVIOUS STATE'/'OLD STATE'  ---------> 
+
+
+   ESSE APPROACH 
+
+
+   ____AINDA ENVOLVE O USO__ DE 
+
+
+   'this.setState()'....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   this.setState() --------> PROFESSOR EXPLICA 
+
+
+
+   __QUE ELE ACEITA OUTROS PARÂMETROS __aLÉM DAQUELE __ OBJETO JAVASCRIPT (o 'novo state') 
+
+
+   QUE PASSAMOS A ELE... ------------> 
+
+
+   ELE EXPLICA QUE 
+
+
+   ESSE MÉTODO __TAMBÉM FUNCIONA ___ QUANDO VOCÊ 
+
+
+   __PASSA ___ UMA ___FUNÇÃO___ A ELE.... 
+
+
+
+
+
+
+
+
+E VOCÊ PODE USAR ___QUALQUER UMA DAS SINTAXES: 
+
+
+
+1) SINTAXE 'OG' (original) -----> é aquela em que você PASSA UM OBJETO (o novo state) COMO PARÂMETRO...
+
+
+
+
+
+2) SINTAXE MODERNA/USADA PARA CÓDIGO QUE DEPENDE DE 'OLD STATES' para updatar o state.... ------> SINTAXE QUE UTILIZA UMA __FUNÇÃO INTERNA__...
+
+
+
+
+
+
+
+
+
+
+
+
+---> QUANDO VOCÊ ESTÁ ESCREVENDO/DEFININDO __STATE_ UPDATES__  QUE __NÃO DEPENDEM__ DE 
+
+'OLD STATES'/DO 'OLD STATE',
+
+NÃO ___HÁ NADA __ DE ERRADO __ EM PASSAR UM OBJETO/O OBJETO QUE SERÁ 
+
+O 'NOVO STATE' COMO PArÂMETRO... --------> ISSO SIGNIFICA QUE 
+
+
+SE NÓS 
+
+NÃO TIVÉSSEMOS CODADO O 
+
+'CHANGECOUNTER' NO NOSSO PROJETO (
+
+
+    ou seja,
+
+
+    se o código ainda produzisse apenas alterações 
+
+    em 
+
+    'persons', como 
+
+
+    'this.setState( { persons: persons } )'
+),
+
+
+
+ESSE 
+
+CÓDIGO 
+
+
+de 
+
+
+'this.setState( 
+ {persons: persons} 
+
+)' 
+
+
+
+
+__SERIA __PERFEITO__...
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+CONTUDO,
+
+
+COM O 'changeCounter' 
+
+NO NOSSO CÓDIGO (no nosso STATE ORIGINAL) 
+
+
+e 
+
+
+com a REFERÊNCIA A ELE POR MEIO DO CÓDIGO 
+
+
+'this.state.changeCounter + 1' no 'this.setState()',
+
+
+
+NÓS ___SOMOS FORÇADOS ___ 
+
+
+
+A USAR 
+
+
+A SINTAXE QUE O PROFESSOR NOS ENSINARÁ 
+
+AGORA,
+
+
+POIS 
+
+
+ELA EVITA 
+
+
+____CONFLITOS DE 'ORDEM' ___ NO CÓDIGO (conflitos em relação ao 'START' e 'END' do UPDATE 
+produzido por cada 'this.setState()', em decorrÊncia do 'SCHEDULING' dos state updates...)
+
+
+
+
+--------------------------------
+
+
+
+OK, MAS COMO 
+
+É ESSE SEGUNDO APPROACH/SINTAXE 
+
+
+
+de 
+
+
+'this.setState()'...?
+
+
+
+
+
+--> BEM, PROFESSOR EXPLICA QUE 
+
+VOCÊ VAI RECEBER 
+
+2 ARGUMENTOS, nessa função/método:
+
+
+
+
+
+
+ex:
+
+
+this.setState(... , ....) {
+    persons: persons,
+
+    changeCounter: this.state.changeCounter + 1
+}
+
+
+
+--------------------------------
+
+
+
+
+PROFESSOR EXPLICA 
+
+QUE O PRIMEIRO 
+
+ARGUMENTO 
+
+SERÁ 
+
+'prevProps',
+
+
+E QUE O SEGUNDO será 
+ 
+
+
+ 'props'   (SÃO OS 'CURRENT PROPS' de seu COMPONENT; são usados QUANDO/CASO VOCÊ PRECISA DELES...)
+
+
+
+
+
+ EX:
+
+
+
+
+
+ 
+this.setState(prevState, props) {
+    persons: persons,
+
+    changeCounter: this.state.changeCounter + 1
+}
+
+
+
+------------------------------------
+
+
+
+CERTO... AÍ NÓS PASSAMOS UMA 
+
+
+ARROW FUNCTION COMO PARÂMETRO DESSE MÉTODO....
+
+
+
+ex:
+
+
+
+
+
+ 
+this.setState((prevState, props) =>  { //////EIS O CÓDIGO EM QUESTÃO.
+    persons: persons,
+
+    changeCounter: this.state.changeCounter + 1
+}
+)
+
+
+
+
+------------------------------------
+
+
+FEITO ISSO,
+
+
+DENTRO DO FUNCTION BODY DAQUELA 
+
+ARROW FUNCTION
+
+__vOCÊ 
+
+
+__DEVERÁ __RETORNAR ___ 
+
+
+
+ESSE  NOVO OBJETO 'STATE' QUE VOCÊ DESEJA....
+
+(nesse caso, é  {persons: persons, changeCounter: this.state.changeCounter})
+
+
+
+
+
+ex:
+
+
+
+
+this.setState((prevState, props) =>  { 
+   
+   
+   
+   
+   
+   return{ persons: persons,
+            changeCounter: this.state.changeCounter + 1
+             }
+}
+)
+
+
+
+
+-----------------------------------------------------
+
+
+
+É EVIDENTE, EXPLICA O PROFESSOR,
+
+QUE DENTRO 
+
+
+DESSE 'FUNCTION BODY' 
+
+
+VOCÊ NÃO VAI MAIS SE REFERIR A 'this.state' (STATE ANTIGO),
+
+
+E SIM 
+
+vai se referir 
+
+a 
+
+
+'prevState'.... (O PARÂMETRO QUE TEMOS NESSE PRÓPRIO CALL DE 'this.setState()'...)...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+this.setState((prevState, props) =>  { 
+   
+   
+   
+   
+   
+   return{ persons: persons,
+            changeCounter: prevState.changeCounter + 1 ///////////EIS O CÓDIGO EM QUESTÃO.
+             }
+}
+)
+
+--------------------------------------------
+
+
+
+
+
+POR MEIO DESSA SINTAXE ALTERNATIVA/APPROACH ALTERNATIVA 
+
+DO 
+
+
+'this.setState()',
+
+
+
+O ___REACT___ VAI, AGORA SIM, ___GARANTIR___ QUE ESSE 'prevState' 
+
+___SERÁ ___REALMENTE 
+
+
+O 'PREVIOUS STATE' QUE VOCÊ ESPERA/ESPERARIA usar nesse setState()...
+
+
+
+
+
+
+
+
+PROFESSOR SALVA E RECARREGA O CÓDIGO ---> VEMOS O 
+
+
+exato mesmo funcionamento de antes,
+
+MAS DEVEMOS RECORDAR 
+
+QUE 
+
+ESSE APPROACH AÍ, a diferença
+
+entre os DOIS APPROACHS
+
+
+É VISTA PRINCIPALMENTE EM APPs 
+
+MAIORES, em que 
+
+
+o 'SCHEDULING' dos STATE UPDATES 
+
+
+
+por meio do 'setState()' 
+
+
+
+PODE SOFRER ATRASOS...
+
+
+
+
+
+
+-------------------------------
+
+
+
+PROFESSOR SALVA TUDO, 
+
+
+E TUDO FUNCIONA... ------> AGORA SABEMOS A MANEIRA MAIS ÓPTIMA DE UPDATAR O STATE... (quando depende-se de OLD STATES para definir os NEW STATES...)
+
+
+
+
+
+
+
+VEREMOS O PROFESSOR USAR ESSE PADRÃO/PADRÕES 
+
+
+MÚLTIPLAS VEZES AO LONGO DO CURSO... NÃO SE TRATAM DE 
+
+PADRÕES OPCIONAIS;
+
+ESSA É  REALMENTE A 'BEST-PRACTICE'
+
+em relação ao 
+
+
+UPDATE do STATe... (que dependem do VELHO STATE)...

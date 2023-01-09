@@ -1,0 +1,345 @@
+
+
+
+
+
+
+---> de volta ao projeto em que trabalhamos até agora,
+
+
+aquele 
+
+PROJETO 
+
+
+DO COMPONENT 'Person'...
+
+
+Nesse projeto, nós já tínhamos alguns estilos aplicados ao component/components...
+
+
+
+
+
+---> estilos COMO OS __BORDERS___ ao redor 
+
+
+dos components, que formam efetivamente 'CARDS' (parecem cards, realmente, graças aos estilos).
+
+
+
+
+
+
+--> Também 
+
+temos 
+
+
+ESTILOS 
+
+NO NOSSO 
+
+'BUTTON'... ----------------------->
+
+
+
+ENTRETANTO, JÁ É POSSÍVEL ENCONTRAR UM 
+
+
+PROBLEMA DE ESTILOS NESSE BOTÃO, imediatamente... ------------> O PROBLEMA TEM RELAÇÃO COM O __BORDERS___
+HOVER___... ---------> 
+
+
+QUANDO PASSAMOS NOSSO MOUSE POR CIMA DESSE BOTÃO,
+
+ele NÃO MUDA DE COR, ele não tem o pseudoseletor CSS
+
+'button:hover'
+
+
+
+aplicado sobre si.... (e isso é um grande problema, é um problema dos inline-styles).
+
+
+
+
+
+
+--> CÓDIGO 
+
+DESSE 'button':
+
+
+
+
+render() {
+
+
+
+
+const style = {
+    ....
+}
+
+
+
+
+
+
+
+
+
+
+
+return (
+  <div className="App">
+    <h1>Hi, I'm a React App</h1>
+    <p>This is really working!</p>
+    <button 
+    style={style}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    {persons}
+
+   
+
+  </div>
+);
+
+}
+
+
+
+
+
+
+
+----------------------------------------------
+
+
+Nesse botão,
+
+
+
+NÓS COLOCAMOS ESTILOS POR MEIO 
+
+DO APPROACH DOS 
+
+'inline-styles'... ------> 
+
+
+
+
+
+NÓS DEFINIMOS OS ESTILOS 
+
+NAQUELA CONST 
+
+
+'style',
+
+e depois 
+
+OS APLICAMOS 
+
+POR MEIO 
+
+DO CÓDIGO/PROP 
+
+
+'style={style}'....
+
+
+
+
+--------> ou seja, 
+
+
+NÓS UTILIZAMOS, ALI, 
+
+JAVASCRIPT 
+
+__PARA ___ CRIAR UM 
+
+
+OBJETO 
+
+E ENTÃO 
+
+
+ASSIGNAR ESSE TAL OBJETO 
+
+EM 
+
+UMA PROPRIEDADE/PROP 'style' 
+
+
+
+do elemento 
+
+'button'... ---> e é o react que 
+
+TEM O 'ENCARGO' de aplicar esses estilos 
+
+
+NO ELEMENTO EM SI, no elemento html em si...
+
+
+
+
+
+
+---> O PROBLEMA, AQUI, ENTRETANTO, 
+
+É __QUE____ 
+
+
+NÃO PODEMOS USAR ___ PSEUDOSELETORES___ NATIVAMENTE (como ':hover', ':active', etc etc.)
+
+
+
+
+
+
+---> A VANTAGEM DOS INLINE-STYLES, PORÉM, 
+
+
+É ___QUE___ O ESTILO DEFINIDO POR NOSSAS MÃOS 
+
+
+__É APLICADO __ SOMENTE __ AO 
+
+
+ELEMENTO EM QUE O ESTILO ESTÁ SCOPADO... ( ou seja, 
+
+esse estilo que definimos em 'style' SERÁ SCOPADO/APLICADO 
+
+__sOMENTE___ A ESSE BOTÃO EM QUE ESCREVEMOS 
+
+
+'style={style}', E EM MAIS NENHUM LUGAR 
+
+DE NOSSO APLICATIVO,
+
+nem mesmo em outros elementos 'button'...)
+
+
+
+
+
+
+
+
+
+---> E O PROFESSOR JÁ MENCIONOU: 
+
+
+
+a alternativa a esse approach seria 
+
+
+DEFINIR OS ESTILOS EM UM ARQUIVO 
+
+.CSS SEPARADO E ENTÃO USAR 
+
+A SINTAXE DE IMPORTS 
+
+PARA 
+
+IMPORTAR 
+
+
+O ESTILO PARA O NOSSO PROJETO... --> entretanto,
+ 
+ isso faz com que o estilo FIQUE DISPONÍVEL GLOBALMENTE...
+
+
+
+
+---> A VANTAGEM DESSE APPROACH É QUE __PSEUDO-SELETORES__ FUNCIONAM NORMALMENTe...
+
+
+
+
+--> a desvantagem é que, se por exemplo, 
+
+escrevermos 
+
+'button {}' 
+
+no arquivo css, 
+
+
+ESSE SELETOR __SERÁ APLICADO A TODOS OS BOTÕES DO NOSSO APLICATIVO, MESMO 
+
+
+QUE ELES ESTEJAM/ESTIVESSEM 
+
+POSICIONADOS EM OUTROS COMPONENTS, COMPONENTS em que 
+
+NÃO IMPORTAMOS AQUELE 
+
+ARQUIVO .css...  ---------------------> ESSES SÃO 
+
+
+ALGUNS DOS PROBLEMAS QUE O PROFESSOR QUER RESOLVER NESTE MÓDULO.
+
+
+
+-----------------------------------
+
+
+
+ALÉM DISSO, 
+
+
+O PROFESSOR TAMBÉM QUER 
+
+
+OLHAR OUTRA COISA:
+
+
+
+E SE NÓS QUISÉSSEMOS, ACTUALLY,
+
+TAMBÉM 
+
+
+___MUDAR OS ESTILOS ___ DINAMICAMENTE___?   ---> DEVEMOS COMEÇAR COM ISSO...
+
+
+
+
+
+
+
+Para aprendermos a MUDAR ESTILOS DINAMICAMENTE,
+
+
+vamos começar com 
+
+o estilo 
+
+do botão 
+
+
+'toggle persons' --> ESSE BOTÃO DEVERÁ  
+
+
+___TER UMA OUTLINE ____ VERDE__ SE NÓS 
+
+ESTIVERMOS 
+
+_________PRESTES _____ A ___ MOSTRAR AS ____ PESSOAS COM UM CLIQUE___,
+
+
+E  UM ____RED OUTLINE___ SE ESTIVERMOS PRESTES 
+
+
+___A __rEMOVER__ A PERSON LIST... ---------> VEREMOS COMO FAZER 
+
+
+ESSAS ALTERAÇÕES DINÂMICAS 
+
+
+DE ESTILO NA PRÓXIMA AULA...

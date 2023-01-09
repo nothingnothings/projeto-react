@@ -1,0 +1,1909 @@
+
+
+
+
+Ok... não é uma simples questão de importar o backdrop... não é uma simples questão de importar o backdrop 
+
+
+
+PQ NÓS __aINDA NEM FIZEMOS UM BOTÃO __ DE EXPANDIR/RETRAIR 
+
+
+O 
+
+
+
+SIDEDRAWER...
+
+
+
+
+------------> O BACKDROP___ deverá ficar_ __ ATRÁS DO SIDEDRAWER... --> e nós 
+
+JÁ TEMOS UM COMPONENT 
+
+'BACKDROP' 
+
+lá no folder 'UI'... ------> mas como 
+
+podemos o 
+
+
+incorporar ao sidedrawer? -------> BEM, 
+
+DA MESMA FORMA EM QUE O ADICIONAMOS AO MODAL,
+
+
+VAMOS QUERER ADICIONÁ-LO 
+
+
+NO COMPONENT 'SIDEDRAWER'... ----> é aí que 
+
+
+entra o IMPORT 
+
+E USO 
+
+
+DO COMPONENT 
+
+'AUX', 
+
+e do component 
+
+'Backdrop'...
+
+
+------------------------------
+
+
+
+Ok... mas o professor menciona algo bizarro: ele diz 
+
+
+para 
+
+usarmos 
+
+o component 'Modal' 
+
+nesse 
+
+
+arquivo de 'SideDrawer.js'...  (ERA UM ERRO. O COMPONENT QUE ELE QUERIA ERA 'Backdrop'...)
+
+
+
+
+
+CÓDIGO DO PROFESSOR (e meu):
+
+
+
+
+
+import React from 'react';
+
+import SideDrawerStyle from './SideDrawer.module.css'
+
+import Logo from '../../Logo/Logo';
+
+
+import Aux from '../../../hoc/Auxiliary';
+
+
+import Backdrop from '../../../components/UI/Backdrop/Backdrop'
+
+
+
+import NavigationItems from '../NavigationItems/NavigationItems';
+
+
+const sideDrawer = (props) => {
+
+    return (
+        <Aux> /////////////EIS OS CÓDIGOS EM QUESTÃO.
+            <Backdrop />
+        <div className={SideDrawerStyle.SideDrawer}>
+            {/* <Logo height="11%"/> */}
+            <div className={SideDrawerStyle.Logo}>
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+
+        </Aux>
+    )
+
+
+}
+
+export default sideDrawer;
+
+
+
+
+-------------------------------------------------------------
+
+
+
+
+
+
+Certo... --> mas se recarregarmos nosso aplicativo, não veremos o Backdrop 
+
+atrás do nosso sidedrawer... (algo ainda não foi implementado, certamente).
+
+
+
+
+
+SIMPLES: 
+
+
+ele não foi mostrado 
+
+___PQ NÃO DEFINIMOS NENHUM PROP DE 'show' 
+
+no NOSSO CALL 
+
+
+DE 
+
+'Backdrop', lá no 
+
+component 
+
+'SideDrawer...'
+
+
+
+
+---------------------
+
+
+
+EX(início de uma SOLUÇÃO):
+
+
+
+
+    return (
+        <Aux>
+            <Backdrop show={}/>
+        <div className={SideDrawerStyle.SideDrawer}>
+            {/* <Logo height="11%"/> */}
+            <div className={SideDrawerStyle.Logo}>
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+
+        </Aux>
+    )
+
+
+-------------------------------------
+
+
+
+ENTRETANTO, 
+
+PARA QUE 
+
+ESSE 
+
+
+'show' RETORNE UM RESULTADO 'TRue',
+
+
+VAMOS TER QUE ESCREVER UM CÓDIGO CONDICIONAL... -----> mas isso ainda não faz sentido. Há muito código ainda 
+
+
+faltando...
+
+
+
+
+
+
+
+
+
+
+---> professor explica que se nós INSPECIONARMOS O BACKDROP,
+VEREMOS 
+
+AQUELA PROPRIEDADE IMPORTANTÍSSIMA 
+
+DE 
+
+
+'props.show'... ------> E ESSE 
+
+
+
+PROP TEM QUE 
+
+ESTAR 
+
+
+'true' 
+
+PARA QUE 
+
+O BACKDROP SEJA MOSTRADO... -----> É CLARO 
+
+
+QUE NÓS PODERÍAMOS 
+
+
+simplesmente 
+
+escrever, lá em 
+
+'SideDrawer.js',
+
+
+
+algo como
+
+
+'<Aux>
+    <Backdrop show />' -------------->  pq se nós digitarmos só o nome do prop SOLTO ASSIM, ele será considerado (essa propriedade) COMO UM VALOR BOOLEAN DE 'true'... ---------> 
+
+
+
+    SE FIZERMOS ISSO, 
+
+VAMOS CONSEGUIR 
+
+
+O BACKDROP 
+
+APLICADO 
+
+
+NO NOSSO 
+
+
+COMPONENT 
+
+'SIDEDRAWER'....
+
+
+
+
+
+
+---------------------------
+
+
+
+
+CERTO.... MAS ISSO TRAZ/TROUXE 
+
+
+OUTROS PROBLEMAS.... -------> esse 
+
+backdrop 
+
+está 
+
+sendo mostrado 
+
+
+
+__aTÉ MESMO NA VERSÃO DE DESKTOP___... ------> 
+
+
+RESOLVI ISSO POR MEIO 
+
+
+DAQUELE MÉTODO QUE O PROFESSOR ME ENSINOU NA LIÇÃO PASSADA:
+
+
+
+
+
+CÓDIGO (CSS) --> ver aquele '.BackdropNoShow' na media query...:
+
+
+
+
+
+.SideDrawer {
+    position: fixed;
+    width: 280px;
+    max-width: 70%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    background-color: white;
+    padding: 32px 16px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-out;
+}
+
+
+
+.Open {
+    transform: translateX(0);
+}
+
+
+
+.Close {
+    transform: translateX(-100%);
+}
+
+
+.Logo {
+    height: 11%;
+    margin-bottom: 32px;
+}
+
+
+
+
+@media (min-width: 500px) {
+    .SideDrawer {
+        display: none;
+    }
+
+
+    .BackdropNoShow {
+        display: none;
+    }
+} 
+
+-------------------------
+
+
+
+AÍ, LÁ NO 
+
+
+CÓDIGO DE 
+
+'SideDrawer':
+
+
+
+
+import React from 'react';
+
+import SideDrawerStyle from './SideDrawer.module.css'
+
+import Logo from '../../Logo/Logo';
+
+
+import Aux from '../../../hoc/Auxiliary';
+
+
+import Backdrop from '../../../components/UI/Backdrop/Backdrop'
+
+
+
+import NavigationItems from '../NavigationItems/NavigationItems';
+
+
+const sideDrawer = (props) => {
+
+
+
+
+
+
+
+
+    return (
+        <Aux>
+            <div className={SideDrawerStyle.BackdropNoShow}> ///////EIS O CÓDIGO EM QUESTÃo.
+            <Backdrop show/>
+            </div>
+        <div className={SideDrawerStyle.SideDrawer}>
+            {/* <Logo height="11%"/> */}
+            <div className={SideDrawerStyle.Logo}>
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+
+        </Aux>
+    )
+
+
+}
+
+
+
+export default sideDrawer;
+
+
+
+
+
+
+
+
+
+---------------------------------
+
+
+OU SEJA,
+
+
+EU FIZ O WRAP COM AQUELA <DIV> aleatória e aí 
+
+
+
+APLIQUEI UM ESTILO ADICIONADO SOMENTE PELA MEDIA QUERY DO DESKTOP... ('.DesktopNoShow')....
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+--> ok, mas eu tenho que ver a versão do  PROFESSOR... ---> PROFESSOR explica 
+
+
+que 
+
+
+DEVEMOS REGISTRAR 
+
+
+UM 'CLICK LISTENER'
+ 
+
+  no nosso BACKDROP (naquele backdrop invocado 
+  
+  em 
+  
+  
+  'SideDrawer'....)
+
+
+
+
+
+
+
+
+
+---> Certo, mas o problema é que 
+
+NÓS JÁ TEMOS UM 
+
+'CLICKLISTENER'
+
+
+LÁ NO NOSSO BACKDROP...
+
+
+
+Recorde o código de 'Backdrop':
+
+
+
+
+const backdrop = (props) => {
+
+   return props.show ? <div className={Backdrop.Backdrop}
+    onClick={props.clicked} ////////eis o código em questão.
+  
+   style={
+       {
+           transition: 'opacity 2s linear'
+       }
+   }
+   
+   >
+
+
+
+
+   </div> : null
+
+}
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+esse 'clicked' vai disparar QUALQUER MÉTODO QUE QUEREMOS DISPARAR.... (ou seja,
+
+podemos 
+
+passar 
+
+um prop 
+
+
+'clicked={...}' lá no 
+
+
+'SideDrawer'...)
+
+
+
+
+
+
+
+
+Certo... mas aqui há um problema: 
+
+
+no 'clicked' de 'Modal', nós 
+
+
+simplesmente 
+
+propagamos 
+
+o método 
+
+
+
+
+
+'purchaseCancelHandler', representado pelo prop de 'modalClosed'....
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+MAS PRECISAMOS 
+
+PASSAR ISSO 
+
+
+POR MEIO DO 
+
+SIDEDRAWER...
+
+
+
+--> talvez inventar um novo método em 'sideDrawer'? um método que feche 
+
+
+
+remova o backdrop e o sidedrawer quando clicamos no backdrop...  ---> se quiséssemos 
+
+fazer isso,
+
+teríamos 
+
+
+de 
+
+
+CONVERTER 
+
+
+O COMPONENT 
+
+'SideDrawer' 
+
+
+EM UM ___STATEFUL COMPONENT____ (class-based).... e não 
+
+
+haveria nada de errado em fazer isso, 
+
+
+
+MAS O PROFESSOR ___ DIZ __ QUE 
+
+
+SE FIZÉSSEMOS ISSO, NÓS TAMBÉM ACABARÍAMOS TRIGGANDO O SIDEDRAWER lá 
+
+
+
+em 'Toolbar'...
+
+
+
+
+
+---------------------------------
+
+
+
+ISSO SIGNIFICA QUE NÓS TAMBÉM PRECISAMOS 
+
+
+CRIAR UMA CONEXÃO 
+
+ENTRE 
+
+
+
+A TOOLBAR E O SIDEDRAWEr, para que o sidedrawer funcione corretamente...
+
+(aquela <div> de 'MENU'....) -----> e o professor 
+
+
+aponta que 
+
+
+
+NÓS JÁ TEMOS ESSA CONEXÃO, NA VERDADE... ---> a conexão 
+
+entre os 
+
+dois está 
+
+
+NO COMPONENT 'LAYOUT'....
+
+
+
+
+CÓDIGO DE LAYOUT:
+
+
+
+
+
+const layout = (props) => { 
+
+
+
+    return(
+        <Aux>
+        {/* <div>Toolbar, SideDrawer, Backdrop</div> */}
+        <Toolbar/>
+        <SideDrawer />
+        <main className={LayoutStyle.Content}>
+            {props.children}
+        </main>
+        </Aux>
+    
+    );
+
+
+
+
+
+}
+
+
+-------------------------------------
+
+
+
+
+talvez seja necessário transformar esse component 
+
+'Layout' 
+
+
+em um stateful component? -----> pq é ALI 
+
+QUE  
+
+
+NÓS TEMOS TANTO 
+
+
+
+O 'TOOLBAR' COMO O 'SIDEDRAWER'...
+
+
+--------------------------------------
+
+
+E É EXATAMENTE ISSO QUE O PROFESSOR VAI FAZER...
+
+-----------------------------------------
+
+
+
+
+
+
+CERTO, REALIZAMOS A CONVERSÃO:
+
+
+
+
+
+
+
+
+
+class Layout extends Component { 
+
+
+    render() {
+
+
+
+        return(
+            <Aux>
+            {/* <div>Toolbar, SideDrawer, Backdrop</div> */}
+            <Toolbar/>
+            <SideDrawer />
+            <main className={LayoutStyle.Content}>
+                {this.props.children}
+            </main>
+            </Aux>
+        
+        );
+    
+    }
+
+
+
+
+
+
+
+}
+
+
+
+
+export default Layout;
+
+
+
+
+
+
+
+
+-------------------------------------------------------------
+
+
+
+
+
+POIS BEM. --> nesse component 
+
+
+'Layout', agora devemos 
+
+
+criar 
+
+
+um método 
+
+
+PARA ____fECHAR___ O BACKDROP E O SIDEDRAWER QUANDO CLICAMOS NO BACKDROp...
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+--> podemos fazer tanto o listen to ao SIDEDRAWER EM SI FECHANDO, POR MEIO 
+
+
+DO 'CLICK' NO BACKDROP EM SI...  COMO TAMBÉM 
+
+
+FAREMOS O LISTEN TO DO CLIQUE NO 'TOGGLE MENU' PARA ABRIR O SIDEDRAWER (por meio da toolbar)...
+
+
+
+
+
+------------------------------
+
+
+
+CERTO,
+
+
+AGORA O PROFESSOR 
+
+
+VAI NOS MOSTRAR A PARTE INTERESSANTE, O MÉTODO EM 'LAYOUT':
+
+
+
+
+
+
+
+
+--> ele vai chamar esse método de 
+
+
+'sideDrawerClosedHandler' -----------> 
+
+
+
+
+
+
+sideDrawerClosedHandler = () => {
+
+
+}
+
+
+
+------------------------------------
+
+
+
+
+E O PROFESSOR TAMBÉM VAI CRIAR/FAZER UM MANAGE DE UM ___STATE___ 
+
+
+NESSE COMPONENT STATEFUL DE 'Layout'...
+
+
+Ex:
+
+
+
+
+state = {}
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+O STATE CONTERÁ A SEGUINTE INFORMAÇÃO:
+
+
+
+
+INFORMAÇÃO 
+
+
+
+DO STATUS DO SIDEDRAWER,
+
+
+SE 
+
+
+_____ELE ESTÁ VISÍVEL OU NÃO___....
+
+
+
+ex:
+
+
+
+'
+class Layout extends Component {
+    state = {
+        showSideDrawer: true 
+    }
+}
+
+'
+
+
+
+
+
+
+
+O PROFESSOR DEIXA ESSE VALOR DE 'showSideDrawer' COMO __TRUE___, INICIALMENTE,
+
+APENAS 
+
+PARA QUE 
+
+SEJA MAIS FÁCIL O NOSSO TESTING....
+
+
+
+
+
+
+
+
+
+CERTO... Então,
+
+
+ali em 
+
+
+
+'sideDrawerClosedHandler', professor vai escrever:
+
+
+
+
+''''
+sideDrawerClosedHandler = () => {
+    this.setState(
+        {
+            showSideDrawer: false
+        }
+    )
+}
+'''''''''''
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+AGORA, PORTANTO, É NECESSÁRIO 
+
+PASSAR 
+
+ESSE HANDLER AÍ 
+
+ao component 
+
+'SideDrawer'  (que contém o BACKDROP que desejamos inserido no seu meio...)
+
+
+
+
+
+
+
+
+
+
+
+
+---> É POR ISSO QUE O PROFESSOR VAI INVENTAR UM PROP DE 'closed', com esse método no interior...
+
+
+
+
+
+ex:
+
+
+<SideDrawer closed={this.sideDrawerClosedHandler}/>
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+
+SIDEDRAWER, 
+
+por sua vez, ficará com o código do component 'Backdrop' assim:
+
+
+
+
+
+
+-----------------------------------------------
+
+    return (
+        <Aux>
+            <div className={SideDrawerStyle.BackdropNoShow}
+         >
+            <Backdrop show clicked={props.closed} ////////EIS O CÓDIGO EM QUESTÃO.
+          
+                />
+            </div>
+        <div className={SideDrawerStyle.SideDrawer}>
+            {/* <Logo height="11%"/> */}
+            <div className={SideDrawerStyle.Logo}>
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+
+        </Aux>
+    )
+
+
+}
+
+
+
+export default sideDrawer;
+
+
+--------------------------------------
+
+
+
+
+
+---> certo, mas ainda temos um problema aqui... ---> 
+
+
+
+aquele prop de 'show' (que está solto ali) DEVERÁ 
+
+sER 
+
+
+'BOUND DINAMICALLY' 
+
+TAMBÉM.. ------> deverá 
+
+
+
+ser boundado 
+
+
+a um novo prop que vamos criar em 
+
+'Layout', um prop chamado de 
+
+
+'open'... (props.open)....
+
+
+
+
+ex:
+
+
+
+    return (
+        <Aux>
+            <div className={SideDrawerStyle.BackdropNoShow}
+         >
+            <Backdrop show={props.open} clicked={props.closed} ////////EIS O CÓDIGO EM QUESTÃO.
+          
+                />
+            </div>
+        <div className={SideDrawerStyle.SideDrawer}>
+            {/* <Logo height="11%"/> */}
+            <div className={SideDrawerStyle.Logo}>
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+
+        </Aux>
+    )
+
+
+}
+
+
+
+export default sideDrawer;
+
+
+
+
+------------------------------------------
+
+
+
+
+ESSA PROPRIEDADE/prop 'open' DEVERÁ 
+
+
+___SER CRIADA __ LÁ 
+
+NO LAYOUT.... ------------> 
+
+
+
+E ESSE PROP DEVERÁ 
+
+SER O SIMPLES VALOR DE 
+
+
+
+'open={this.state.showSideDrawer}', 
+
+
+
+PQ ___ELE VAI SIMPLESMENTE ____ MOSTRAR O VALOR 
+
+
+CONTIDO EM 'showSideDrawer' no momento... (que é 'true', btw, neste momento...)
+
+
+
+
+
+
+
+
+
+
+(O PROFESSOR ESTABELECEU UMA CHAIN 
+
+'Layout-SideDrawer-Backdrop'.... ) (com o prop de 'closed'...)
+
+
+
+
+
+
+
+PROP 'closed' --> 
+
+
+
+ELE FOI TRANSMITIDO ASSIM:
+
+
+
+
+Layout-                               SideDrawer-                               Backdrop
+
+
+this.sideDrawerClosedHandler/'closed'   --->  'clicked={props.closed}'  ----->  'onClick={props.clicked}'
+
+closed={this.sideDrawerClosedHandler}
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+OK, MAS E QUANTO A 'show'...? ----> show é 
+
+
+DEFINIDO 
+
+
+
+EM 
+
+'sideDrawer', e é passado 
+
+
+AO
+
+
+'Backdrop'....
+
+
+
+
+
+
+'show={props.open}'... ------------------------>  'open' precisa ser DEFINIDO LÁ NO LAYOUT...
+
+
+
+
+
+
+'open={this.state.showSideDrawer}'...
+
+
+
+
+
+
+
+--------------------------------------------------
+
+
+
+
+AGORA, COM TODAS ESSAS ADIÇÕES,
+
+NÓS AINDA TEREMOS O BACKDROP ALI, ATRÁS DO 'SIDEDRAWER'... --> mas se clicarmos 
+
+
+no BACKDROP, 
+
+
+ele sumirá (mas o sidedrawer ficará no mesmo lugar)...
+
+
+
+
+
+
+
+
+
+---> para solucionar esse problema, provavelmente vamos ter que 
+
+escrever código condicional com 
+
+'showSideDrawer'... ----------> 
+
+
+
+
+CERTO, 
+
+ACHO QUE 
+
+
+SOLUCIONEI O PROBLEMA..... ---> ENCONTREI O __TRUQUE__ --> RESOLVI 
+
+
+O PROBLEMA POR MEIO DE UMA TERNARY EXPRESSION LÁ 
+
+
+EM 
+
+'sideDrawer'...
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+    return (
+
+
+
+
+        props.open
+
+
+        ?
+
+        
+        
+        <Aux>
+
+
+    
+
+            <div className={SideDrawerStyle.BackdropNoShow} 
+         >
+            <Backdrop show={props.open} clicked={props.closed}
+          
+                />
+            </div>
+        <div className={SideDrawerStyle.SideDrawer}>
+            {/* <Logo height="11%"/> */}
+            <div className={SideDrawerStyle.Logo}>
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+            
+
+        </Aux>
+
+    
+
+        : 
+
+
+        null
+
+        
+    )
+
+
+}
+
+
+
+
+--------------------------
+
+
+
+
+
+
+
+
+
+
+OU SEJA, TUDO DEPENDE ___ DAQUELE 
+
+'props.open'... ----> 
+
+
+pq ele REPRESENTA 
+
+
+'showSideDrawer: false/true'... ----> 
+
+
+
+E SE ELE ESTIVER 'FALSE', o drawer não é mostrado.
+
+
+
+Se estiver true, o drawer é mostrado.... -------> 
+
+
+AGORA SÓ PRECISO 
+
+CRIAR ALGUMA LÓGICA 
+
+NO COMPONENT 
+
+
+'Menu'  (em 'toolbar')
+
+
+QUE FAÇA 
+
+
+
+COM QUE ESSE STATE MUDE PARA 'true'....
+
+
+
+
+
+Certo.... coloquei um toggle menu sanduíche ali na esquerda, reutilizei meu código 
+
+lá do site 'uhost'... -----> ajustei 
+
+
+e ficou bom... ---> o ÚNICO PROBLEMA É QUE 
+
+AGORA 
+
+
+O BACKDROP 
+
+NÃO FECHA MAIS COM 
+
+'BUTTON CLIcks' 
+
+
+nele...
+
+
+
+
+
+---------------------------------
+
+
+
+
+---> CERTO, CONSEGUI CONSERTAR TUDO POR CONTA PRÓPRIA. Era só 
+
+renomear alguns métodos (BackdropCloseHandler, BackdropOpenHandler) 
+
+
+
+E AÍ AJEITAR 
+
+OS PROPS 
+
+DE 
+
+'OPEN' e 'CLOSED'....
+
+
+
+
+
+----> ok, mas há algo que 
+
+
+DEIXAMOS DE UTILIZAR/IMPLEMENTAR... ---> aqueles estilos de 
+
+
+'.Open' 
+
+
+e 
+
+
+'.Close' 
+
+
+lá 
+
+
+no 'SideDrawer.module.css' ---------> esses estilos 
+
+
+vão fazer com que 
+
+
+nosso sidedrawer abra suavemente/feche suavemente...
+
+
+
+
+
+
+
+
+----> Para isso, devemos ir até 
+
+
+o component 'SideDrawer.js' 
+
+
+
+e então 
+
+
+
+criar 
+
+
+
+uma 
+
+
+let (variável) de nome 
+
+
+'attachedClasses', que será 
+
+um 
+ARRAY 
+
+
+com os estilos 
+
+
+'SideDrawerStyle.Sidedrawer, SideDrawerStyle.Close'...
+
+
+
+
+ex:
+
+
+
+
+
+
+const sideDrawer = (props) => {
+
+    let attachedClasses = [SideDrawerStyle.SideDrawer, SideDrawerStyle.Close ];
+
+
+
+
+
+
+
+    return (
+
+
+
+
+        props.open
+
+
+        ?
+
+        
+        
+        <Aux>
+
+
+    
+
+            <div className={SideDrawerStyle.BackdropNoShow} 
+         >
+            <Backdrop show={props.open} clicked={props.closed}
+          
+                />
+            </div>
+        <div className={SideDrawerStyle.SideDrawer}>
+            {/* <Logo height="11%"/> */}
+            <div className={SideDrawerStyle.Logo}>
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+            
+
+        </Aux>
+
+    
+
+        : 
+
+
+        null
+
+        
+    )
+
+
+}
+
+
+
+export default sideDrawer;
+
+
+
+-----------------------------------------
+
+
+
+
+
+CERTO... 
+
+
+E A 
+
+
+CLASSE 'open' deverá ser adicionada QUANDO 
+
+
+A PROPRIEDADE 'open' estiver como ''''TRUE'''''....
+
+
+
+
+
+
+---> para isso, o professor vai enfiar um IF CHECK 
+
+dentro 
+
+do componente 'sideDrawer'....
+
+
+
+
+'if (props.open) {
+        attachedClasses = [SideDrawerStyle.SideDrawer, SideDrawerStyle.Open ]
+}'  ----------> 
+
+
+OU SEJA,
+
+ELE VAI 
+
+
+____REDEFINIR O ESTILO da variável 'attachedClasses' __ PARA O ESTILO DE 
+
+'OPEN'...
+
+
+
+
+EX:
+
+
+
+
+
+const sideDrawer = (props) => {
+
+    let attachedClasses = [SideDrawerStyle.SideDrawer, SideDrawerStyle.Close ];
+
+
+    if (props.open) {
+        attachedClasses = [SideDrawerStyle.SideDrawer, SideDrawerStyle.Open];
+    }
+
+
+
+
+
+
+
+    return (
+
+
+
+
+        props.open
+
+
+        ?
+
+        
+        
+        <Aux>
+
+
+    
+
+            <div className={SideDrawerStyle.BackdropNoShow} 
+         >
+            <Backdrop show={props.open} clicked={props.closed}
+          
+                />
+            </div>
+        <div className={SideDrawerStyle.SideDrawer}>
+            {/* <Logo height="11%"/> */}
+            <div className={SideDrawerStyle.Logo}>
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+            
+
+        </Aux>
+
+    
+
+        : 
+
+
+        null
+
+        
+    )
+
+
+}
+
+
+
+export default sideDrawer; 
+
+
+
+
+------------------------------------
+
+
+
+PARA COMPLETAR ESSA MUDANÇA, PROFESSOR PRECISA 
+
+
+ASSIGNAR 
+
+O VALOR 
+
+
+DA variáveL 
+
+
+
+'attachedClasses'
+
+
+
+AO 
+
+'<div className= {}'> DO COMPONENT 'sideDrawer'... -------> 
+
+
+
+E É EXATAMENTE ISSO QUE ELE FARÁ, 
+
+
+ELE SUBSTITUIRÁ
+ 
+
+
+ '''' <div className={SideDrawerStyle.SideDrawer}>''''' 
+
+
+
+
+
+ POR 
+
+
+
+ '<div className={attachedClasses}'>' 
+
+
+
+
+
+
+
+
+ É CLARO, 
+
+
+
+ ISSO 
+
+ __NÃO FUNCIONOU DIREITO__.... (
+
+     os nossos estilos 
+     FORAM 
+
+     __RESETTADOS__, NÃO SEI COMO... 
+ ) 
+
+
+
+
+
+
+ AGORA ENTENDI... PROFESSOR NÃO HAVIA ESCRITO O CÓDIGO INTEIRO...
+
+
+
+ O código 
+
+ inteiro é :
+
+
+
+
+ '<div className={attachedClasses.join(' ')}'   (ISSO UNIRÁ OS 2 ITEMS DAQUELE(s) ARRAY(s) ALI..., O QUE RESULTARÁ NO ESTILO CORRETo...)
+
+
+
+
+
+
+ ---------------------------------------
+
+
+
+ CERTO,
+
+ MAS O PROBLEMA DA ANIMAÇÃO __NÃO TOCAR__ AINDA PERSISTE... ------> 
+
+
+
+
+
+
+ E NÃO HÁ SOLUÇÃO PARA ISSO, NO MOMENTO... ---> o que precisamos fazer 
+
+
+
+ é copiar a versão atual do código e imitar o código do professor, porque 
+
+
+ o FLOW 
+
+
+ dos components e props dele está 
+
+ completamente diferente do nosso......
+
+ 
+
+
+
+ --------------------------------------------------
+
+
+
+
+
+
+
+
+ CERTO.
+
+
+ CRIAMOS 2 'FORKS' DO NOSSO PROJETO.... --->
+
+
+
+ FORK 'novoprojetoreact5' ---> usa o MEU CÓDIGO, o código que não tem a animação bonita do 'sidedrawer' abrindo e fechando quando clicamos no 'toggle menu'... ------> essa versão USAVA TERNARY EXPRESSION em 'sideDrawer' para fazer o display do sideDrawer... ('props.show ? <div 'sidedrawer /> : null ')....
+
+
+
+
+
+FORK 'NOVOPROJETOREACT6' ----> usa o CÓDIGO DO PROFESSOR, QUE 
+
+TEM A ANIMAÇÃO DE 
+
+'Closed' do SideDrawer aplicada, mas que 
+
+ainda não tem um 
+
+'toggle menu' do sidedrawer funcional.... --> mas esse drawer ainda DESAPARECE 
+
+quando 
+
+clicamos 
+
+
+no backdrop... (oq é ótimo).

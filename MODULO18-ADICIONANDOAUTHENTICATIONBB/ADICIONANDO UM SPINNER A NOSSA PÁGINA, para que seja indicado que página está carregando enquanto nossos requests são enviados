@@ -1,0 +1,760 @@
+
+
+Queremos mostrar um spinner 
+
+
+
+quando 
+
+
+
+
+
+
+OS PROCESSOS DE 
+
+'SIGNUP'/'SIGNIN'
+
+
+estiverem 
+
+
+acontecendo....
+
+
+
+-----------------
+
+
+O primeiro passo, é claro,
+
+é IMPORTAR O SPINNER 
+
+
+LÁ 
+
+EM 
+
+
+
+'Auth.js' (nosso container...).
+
+
+
+-----------------------
+
+
+OK, JÁ CONSEGUI ADICIONAR O SPINNER.... ---> e ele está funcionando, funcionando sem problemas... 
+
+
+
+
+
+
+
+
+
+
+O CÓDIGO FICOU ASSIM:
+
+
+
+
+
+
+('authReducer.js'):
+
+
+
+const initialState = {
+        token: null,
+        userId: null,
+        error: null,
+        loading: false
+}
+
+
+const authStart = (state, action) => {
+        return updateObject(state, {loading: true, error: null})
+}
+
+
+
+const authSuccess = (state, action) => {
+    return updateObject(state, {
+                loading: false,
+                error: null,
+                token: action.token,
+                userId: action.userId
+
+
+    })
+}
+
+
+const authFail = (state, action) => {
+    return updateObject(
+        state, {
+            error: action.error,
+            loading: false
+        }
+    )
+}
+
+
+
+
+
+
+
+
+
+
+Auth.js(Container):
+
+
+
+
+
+
+
+import Spinner from '../../components/UI/Spinner/Spinner';
+
+
+
+render() {
+
+
+
+
+
+    let form = !this.props.loading 
+    
+    ? 
+    
+    (
+      controlElementsArray.map(
+        // <div>
+        //   <form>
+
+        ////ESSE É O __MESMO CÓDIGO/MODELO __ usado lá em 'ContactData'...
+        (controlElement) => (
+          <Input
+            changed={(event) => {
+              this.inputChangedHandler(event, controlElement.id);
+            }}
+            key={controlElement.id} ///'id: key'...
+            elementValue={controlElement.id}
+            touched={controlElement.config.touched}
+            invalid={!controlElement.config.valid}
+            elementType={controlElement.config.elementType}
+            shouldValidate={controlElement.config.validation}
+            value={controlElement.value}
+            elementConfig={controlElement.config.elementConfig}
+          />
+        )
+      )
+    ) 
+    
+    : 
+    
+    (
+      <Spinner />
+    );
+
+
+}
+
+
+
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+  };
+};
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+Nesse caso,
+
+
+estamos 
+
+
+FAZENDO 
+
+
+MANAGE 
+
+
+DO 
+
+SPINNER 
+
+__POR MEIO DO REDUX____ ---> é conveniente, 
+
+pq 
+
+
+NOSSOS PROCESSOS 
+
+DE 
+
+
+'AUTHENTICATION' (auth) 
+
+
+todos 
+
+tem 
+
+relação 
+
+
+com 
+
+
+o 
+
+REDUX, 
+
+
+
+por isso 
+
+faz mt sentido ter um 
+
+state de 
+
+'loading' 
+
+no state dele... (e não um loading no state tradicional, no state do CONTAINER de 'Auth.js'...)
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+---> Certo.... mas também vamos querer 
+
+QUE 
+
+MENSAGENS DE ERRO __ SEJAM MOSTRADAS__ CASO ENVIEMOS 
+
+
+__dADOS __ ERRADOS 
+
+AO 
+
+'signup/signin'... ------> PARA 
+
+
+
+FAZER 
+
+ISSO,
+
+
+DEVEMOS 
+
+
+NOS 
+
+
+APROVEITAR
+ 
+ DO 
+
+
+ FATO 
+
+ DE QUE 
+
+
+ NÓS __REALMENTE___ ARMAZENAMOS 
+
+ ERROS EM POTENCIAL ('potential errors') 
+
+
+
+ NA NOSSA STORE... ---> e como os ERRORS RELACIONADOS 
+
+
+ ao send de requests relativos a AUTH 
+
+
+ são 
+
+ sempre 
+
+ ARMAZENADOS NA MINHA STORE,
+
+ POR 
+
+ CONTA DO CÓDIGO DE NOSSAS ACTIONS ('error: error'),
+
+
+
+ podemos 
+
+
+
+ simplesmente 
+
+ VINCULAR 
+
+ O 
+
+ STATE 
+
+ DE 
+
+ 'Auth.js' ( o container)
+
+
+
+
+
+ 
+A PROPRIEDADE 
+
+'error' 
+
+
+no state GLOBAL DO REDUx...
+
+
+tipo assim:
+
+
+
+''''''''''''''''''
+
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error
+    }
+}
+
+''''''''''''''''
+
+
+
+
+
+
+-------------------
+
+
+
+
+CERTO.... 
+
+
+E NÓS PROVAVELMENTE
+
+VAMOS 
+
+VINCULAR 
+
+ESSE 
+
+'prop' 
+
+de 
+'
+error' 
+
+
+àlguma coisa.... --------> 
+
+E 
+
+
+
+DEVEMOS RESSALTAR QUE 
+
+O 
+
+__fIREBASE__ EM SI __ NOS DÁ UMA 'NICE ERROR MESSAGE'... --> nosso backend, criado por nós,
+
+
+talvez
+
+
+
+FAÇA ISSO NO FUTURO (quando o criarmos)... --> o backend também 
+
+pode 
+
+ser fornecido por alguma empresa...
+
+
+
+
+
+
+
+--> O PROFESSOR VAI USAR O BACKEND DO FIREBASe, e a ERROR MESSAGE DELES TAMBÉM... -------> 
+
+
+
+
+E, MUNIDO DESSA PROPRIEDADE 'error',
+
+PROFESSOR 
+
+
+PODE __FAZER DISPLAY DE UMA MENSAGEM DE ERRO __ AO 
+
+USUÁRIO...
+
+
+
+
+
+
+--> para isso,
+
+professor 
+criará
+ 
+
+
+ UMA 
+
+ NOVA 
+
+LET
+
+ em 
+
+
+
+ 'Auth.js',
+
+
+
+
+ que chamará 
+
+
+ de 
+
+
+ 'errorMessage'... ---> seu valor inicial será de 
+
+
+ 'null'....
+
+
+
+
+
+ ex:
+
+
+
+ let errorMessage = null;
+
+
+
+
+ ------------------------------
+
+
+
+
+
+
+ AÍ O PROFESSOR COLOCA UM IF STATEMENT... ---> 
+
+
+
+ se 
+
+
+
+'if (this.props.error) {
+    errorMessage = (
+        <p>{this.props.error.message}</p>
+    )
+}'
+
+
+
+
+
+
+
+
+OU SEJA,
+
+SERÁ 
+
+OUTPUTTADA 
+
+A 
+MENSAGEM ('.message') 
+
+DE ERRO 
+
+ARMAZENADA 
+
+NAQUELE 
+
+OBJETO 
+
+'error' 
+
+do 
+
+firebase....
+
+ex:
+
+
+
+
+'if (this.props.error) {
+    errorMessage = (
+        <p>{this.props.error.message}</p>
+    )
+}'
+
+
+
+-------------------
+
+
+
+
+
+
+---> de novo, 
+
+essa propriedade 
+
+'message' 
+
+só existe 
+
+dentro 
+
+desse 
+
+
+objeto 
+
+'error'
+
+
+
+retornado 
+
+pelo firebase....
+
+
+(talvez seu backend não tenha isso. )
+
+-------------
+
+
+
+
+
+
+-------->  vou querer outputtar
+ 
+ esse negócio aí LOGO ABAIXO DA NOSSA FORM...
+
+
+
+
+
+
+
+
+ ---->       .catch(error => {
+            console.log(error);
+            dispatch(authFail(error.response.data.error));
+        })
+
+
+
+
+
+
+
+
+----------------------
+
+
+
+
+
+
+SALVAMOS TUDO, MANDAMOS UMA 'EMPTY FORM'.... ---> vamos 
+
+ver 
+
+
+'INVALID_EMAIL'... --->  
+
+
+
+podemos editar 
+
+esse texto aí no nosso <p>{this.props.errorMessage}</p>
+
+
+
+
+
+
+
+
+
+--> VOCÊ PODE VER TODOS OS ERROS POSSÍVEIS, RETORNADOS PELO 'FIREBASE REST AUTH API',
+
+se vocÊ olhar sua documentação... --> 
+
+
+'Common Error codes':
+
+
+
+EMAIL_EXISTS
+
+OPERATION_NOT_ALLOWED
+
+TOO_MANY_ATTEMPTS_TRY_LATER
+
+
+
+-------------------------
+
+
+
+
+--> é evidente que 
+PODEMOS __MANIPULAR 
+
+___ 
+
+
+O QUE 
+
+ESTARÁ 
+
+ESCIRTO NO NOSSO '<p></p>',
+
+
+PODEMOS 
+
+
+
+
+
+USAR ALGUMA FUNÇÃO JAVASCRIPT 
+
+PARA FAZER COM QUE 
+
+OS 
+ERROS 
+
+FIQUEM 
+
+ASSIM:
+
+'
+Operation not Allowed '
+
+
+
+
+EM VEZ __ DE ASSIM:
+
+
+'OPERATION_NOT_ALLOWED'...
+
+
+
+
+
+
+
+
+
+--> TALVEZ ESTE CÓDIGO AQUI FUNCIONE... :
+
+
+
+    <p style={{
+            color: 'red'
+          }}>{this.props.error.message.replace(/ /g,"_")}</p>
+
+
+
+
+
+          '.replace(/ /g,"_")' ---> ISSO PARECE SER UM MÉTODO '.replace()', que 
+
+          usa 
+
+          UM REGEX (regular expression) como 
+
+          PARÂMETRO... --> certo.. mas isso NÃO FUNCIONOU... (por alguma razão)
+
+      
+
+
+
+
+-----------------
+
+JÁ ESTA VERSÃO AQUI FUNCIONOU:
+
+
+{this.props.error.message.replaceAll('_'," ")} -------------> 
+
+
+
+
+'.replaceAll('caracterAserSubstituído', 'caracterQueVaiSubstituir')'....
+
+
+
+
+----------------------------------------
+
+
+
+
+--> CERTO...
+
+
+AGORA 
+
+
+
+DEVEMOS 
+
+VER O PRÓXIMO PASSO... -------> 

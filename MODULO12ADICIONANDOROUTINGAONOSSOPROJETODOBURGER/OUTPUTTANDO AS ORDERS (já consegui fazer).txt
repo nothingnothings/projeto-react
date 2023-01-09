@@ -1,0 +1,101 @@
+
+
+
+
+
+
+
+--> OK, EU JÁ FIZ ISSO... --------> a única diferença, aqui, relevante, 
+
+é que 
+
+o professor 
+
+escreve 
+
+lá em 
+
+
+'Order.js' um código para ACHATAR O NÚMERO PERIÓDICO DE 'price'... ------>
+
+
+
+é um pouco diferente do código que eu utilizei;
+
+
+ele utilizou 
+
+
+'Number.parseFloat(props.price.toFixed(2))'...
+
+
+----------------------------------
+
+
+No caso do professor, ele adicionou um código (em 'Orders') tipo 
+
+
+'render () {
+    return (
+        <div>
+            {this.state.orders.map(
+                order => (
+                    <Order 
+                    key={order.id}
+                    ingredients={order.ingredients}
+                    price={order.price} />
+                )
+            )}
+        </div>
+    )
+}
+'
+
+
+
+--------------------------------
+
+
+É claro que ele escreveu mais linhas de código, também em 'Order.js',
+
+
+
+mas se quisermos ver a versão dele do código, devemos examinar a aula nº 12 deste módulo...
+
+
+(ele fez uso de métodos como '.push()' para pushar um 'OBJETO ingredient' para 
+
+dentro de um array de ingredients, e coisas do gênero... )
+
+
+
+
+
+--> ele também colocou um estilo para '''SEPARAR'''' (Visualmente, é claro)
+
+
+1 'INGREDIENT' do outro, para ficar mais bonito...
+
+
+
+
+
+-------------------------------
+
+
+Certo, ajustei os estilos... acho que está tudo certo.
+
+
+
+
+
+
+Tudo certo, mesmo...  ---> até MELHOREI O APLICATIVO DO BURGER, coloquei um 
+
+
+DISPLAY DOS BURGERS na página de 
+
+'Orders'...   (corrigi até mesmo o style MOBILE...)
+
+
+Agora para o wrap-up do módulo.... 

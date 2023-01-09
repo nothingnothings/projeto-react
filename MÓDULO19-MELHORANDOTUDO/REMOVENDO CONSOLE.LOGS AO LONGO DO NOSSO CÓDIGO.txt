@@ -1,0 +1,55 @@
+
+
+
+
+
+
+--> OPTIMIZAMOS MUITAS COISAS NO NOSSO APLICATIVO, ATÉ AGORA...
+
+
+
+
+
+
+
+
+
+
+--> devemos 
+
+
+remover 
+
+nossos 
+
+console.logs...
+
+
+
+--> também devemos remover imports desnecessários...
+
+
+
+
+
+--> os CONSOLE.LOGS EXISTIRÃO DURANTE A PRODUCTION, TAMBÉM,
+
+e 
+
+vão 
+
+deixar 
+
+sua vida mais difícil... (E vão dar 'insights' no interior do seu app, aos seus usuários...)
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+Certo. Consegui, tirei todos os console.logs de meu código....

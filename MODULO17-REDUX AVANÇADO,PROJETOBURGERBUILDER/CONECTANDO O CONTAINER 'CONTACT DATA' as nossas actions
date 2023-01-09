@@ -1,0 +1,755 @@
+
+
+
+
+
+
+--> eu já conectei 
+
+
+os action creators/actions ao 
+
+
+meu 
+
+
+
+container 
+
+
+
+'ContactData',
+
+só 
+
+não sei se esse connect está correto...
+
+
+
+
+--------------
+
+
+
+
+--> talvez eu ainda precise CONECTAR O STATE, OS INGREDIENTS QUE FICAM 
+
+NAQUELA 
+
+'orderData',
+
+aos INGREDIENTS DO STATE DO REDUX... 
+
+(estou falando do código de 
+
+
+'orderHandler', aquele código de:
+
+
+
+'''''''''''''''''''''''''
+
+
+    const orderData = {
+      // ingredients: this.props.ingredients, /
+      ingredients: this.props.ingr, //código que agora está usando o REDUX.
+      price: this.props.price, //código que agora está usando o REDUX.
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+    };
+
+
+'''''''''''''''''''
+
+)
+
+
+
+
+
+
+
+---> certo, hora de alterar tudo isso...
+
+
+
+
+---------------------------------
+
+
+Mas antes, assistimos um pouco da aula do professor... ---> 
+
+
+
+professor 
+
+nos 
+
+diz que 
+
+ele 
+
+tem o método 
+
+
+'orderHandler'... ---> esse método DEVE AINDA __CONTINUAR __ NO NOSSO CÓDIGO, POIS ELE AINDA É NECESSÁRIO....
+
+
+
+
+seu código é:
+
+
+
+
+
+
+ orderHandler = (event) => {
+    event.preventDefault(); ///VAI PREVENIR O RELOAD DA PÁGINA.(e sim, precisamos do parâmetro 'event' para acessar esse método especial, método que PREVINE O COMPORTAMENTO DEFAULT DO BROWSER DE __RECARREGAR___ PÁGINAS QUANDO UM 'SUBMIT' OCORRE DENTRO DE UMA FORM...)
+
+
+this.setState({
+      loading: true,
+    });
+
+    const orderData = {
+      ingredients: this.props.ingr, //código que agora está usando o REDUX.
+      price: this.props.price, //código que agora está usando o REDUX.
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+    };
+
+
+
+
+    axiosOrder
+      .post('/orders.json', orderData)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          loading: false,
+        });
+      });
+  };
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+O 'orderHandler' É DISPARADO __QUANDO CLICAMOS 
+NO BOTÃO 
+
+DE 
+
+
+'order'...
+
+
+
+
+
+
+---> mas algumas coisas serão alteradas nele... ---> 
+
+
+o 
+
+'this.setState({loading: true})' 
+
+SERÁ ____REMOVIDO__, POIS NÓS 
+
+NÃO VAMOS 
+
+
+MAIS 
+
+FAZER HANDLE DO 'LOADING' com ele...
+
+
+
+---------------------------
+
+
+
+
+CERTO... MAS O PROFESSOR __PROVAVELMENTE___ VAI QUERER 
+
+QUE 
+
+CHAMEMOS 
+
+
+
+'onOrderAttempt', NOSSO DISPATCH DAQUELE ACTION CREATOR ASSÍNCRONO,
+
+
+
+
+
+dentro desse 'orderHandler', como parte de seu CODE FLOW...
+
+
+
+------------------------
+
+
+tipo assim, talvez(?):
+
+
+
+
+
+
+orderHandler = (event) => {
+
+
+event.preventDefault();
+
+            
+            
+    
+ this.onOrderAttempt(); //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+            const orderData = {
+      ingredients: this.props.ingr, //código que agora está usando o REDUX.
+      price: this.props.price, //código que agora está usando o REDUX.
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+    };
+
+
+
+
+    ......
+
+}
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+MAS O PROFESSOR DIZ QUE 
+
+ELE 
+
+
+NÃO VAI QUERER 
+
+A 
+
+LÓGICA DE 'FORMULAÇÃO DE ORDER' aqui,
+ 
+
+ pois 
+
+
+
+ELE JÁ FEZ/ESCREVEU 
+
+ESSE CÓDIGO 
+
+DE 'REACH OUT' ao axios 
+
+
+
+LÁ 
+
+
+NAS NOSSAS ACTIONS...
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+----> Mas o professor então nos diz que 
+
+ELE VAI QUERER 
+
+IMPORTAR 
+
+
+nossa instância do axios nesse 'ContactData' mesmo assim,
+
+E QUE 
+
+AGORA 
+
+
+ELE 
+
+VAI QUERER 
+
+
+IMPORTAR 
+
+
+
+
+
+AQUELE 
+
+
+hoc 
+'withErrorHandler'
+
+que críamos 
+
+
+no PASSADO 
+
+para 
+
+
+esse arquivo 
+
+
+
+'ContactData'..... ---->  ele nos diz que isso não é 100% necessário, e que não tem relação total 
+
+com redux,
+ 
+ mas que 
+
+ ele quer usar 
+
+ esse 
+
+
+ HOC mesmo assim... 
+
+
+
+
+
+ --------------------------
+
+
+
+
+
+ quanto ao 'mapDispatchToProps',
+
+
+
+ PROFESSOR 
+
+ escreve 
+
+ mesmo código que nós:
+
+
+
+
+import * as actions from '../../store/actions/index';
+ 
+const mapDispatchToProps = (dispatch) => {
+  return {
+      onOrderAttempt: (orderData) => {
+          dispatch(actions.purchaseBurgerAttempt(orderData))
+      }
+  }
+}
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+CERTO...  ---> esse 
+
+'onOrderAttempt'
+
+
+
+
+DEVE SER __ CHAMADO _ DENTRO 
+
+DO 
+
+
+'orderHandler'...
+
+--------------------------------
+
+
+
+
+
+
+ISSO QUER DIZER QUE NOSSO CÓDIGO FICOU TIPO ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ orderHandler = (event) => {
+    event.preventDefault(); ///VAI PREVENIR O RELOAD DA PÁGINA.(e sim, precisamos do parâmetro 'event' para acessar esse método especial, método que PREVINE O COMPORTAMENTO DEFAULT DO BROWSER DE __RECARREGAR___ PÁGINAS QUANDO UM 'SUBMIT' OCORRE DENTRO DE UMA FORM...)
+    console.log(this.props.ingr);
+
+
+   const orderData = {
+     
+      ingredients: this.props.ingr, //código que agora está usando o REDUX.
+      price: this.props.price, //código que agora está usando o REDUX.
+      name: this.state.orderForm.name.value, //código gerenciado localmente, pelo state local do 'ContactData'...
+      email: this.state.orderForm.email.value, //código gerenciado localmente, pelo state do 'ContactData'...
+      street: this.state.orderForm.street.value, //código gerenciado localmente, pelo state do 'ContactData'...
+      postalCode: this.state.orderForm.zipCode.value, //código gerenciado localmente, pelo state do 'ContactData'...
+      country: this.state.orderForm.country.value, //código gerenciado localmente, pelo state do 'ContactData'...
+      deliveryMethod: this.state.orderForm.deliveryMethod.value, //código gerenciado localmente, pelo state do 'ContactData'...
+    };
+
+
+
+
+
+    this.props.onOrderAttempt(orderData); //É ISSO QUE FARÁ O DISPATCH DE NOSSA ACTION e que passará essa 'orderData' criada logo acima...
+
+
+
+ }
+
+
+
+
+
+
+
+
+
+ ------------------------------------
+
+
+
+ COM ISSO, NOSSA ACTION AGORA REALMENTE __SERÁ DISPATCHADA__ COM UM CLICK... 
+
+
+
+
+
+
+ --> e até aí, tudo bem.... --> mas há ALGUMAS COISAS NA PÁGINA QUE VÃO DEIXAR DE FUNCIONAR,
+
+ NÃO FUNCIONARÃO COMO ANTES...
+
+
+
+
+
+ --> por exemplo,
+
+ no 
+
+
+ método 
+
+
+ 
+ 'render(){}' 
+
+
+
+
+ DO 
+
+
+
+
+ container 
+
+
+ 'ContactData',
+
+
+
+
+
+ nós temos:
+
+
+
+
+
+
+--------------------------------------------
+
+
+  render() {
+       const formElementsArray = [];
+       for (let key in this.state.orderForm) {
+         formElementsArray.push(
+           {
+             id: key,
+             config: this.state.orderForm[key]
+           }
+         )
+       }
+
+    let form = (
+      <div className={ContactDataStyle.ContactData}>
+        <h4>Enter your Contact Data</h4>
+        <form 
+        onSubmit={(event) => { 
+            if(Object.keys(this.props.ingr).length === 0) {
+              event.preventDefault();
+              alert('Please build a valid burger in "Burger Builder" page!');
+              return;
+            }
+          
+              
+      if(!this.state.orderForm.name.value ||
+        !this.state.orderForm.street.value || 
+        !this.state.orderForm.zipCode.value ||
+        !this.state.orderForm.email.value ||
+        !this.state.orderForm.country.value ) {
+
+         alert('Please enter your contact information!');
+         return;
+        }
+
+          this.orderHandler(event)
+          
+          }}
+          
+          
+          >
+              {
+                formElementsArray.map(
+                  (formElement) => {
+                        console.log(formElement);
+                        return (
+                          <Input 
+                          changed={(event) => {this.inputChangedHandler(event, formElement.id)}}
+                          key={formElement.id}
+                          elementValue={formElement.id}
+                          touched={formElement.config.touched}
+                          invalid={!formElement.config.valid}
+                          elementType={formElement.config.elementType} 
+                          shouldValidate={formElement.config.validation}
+                          value={formElement.value} 
+                          elementConfig={formElement.config.elementConfig} />
+                        )
+                  }
+                )
+              }
+
+            <Button
+            disabled={!this.state.formIsValid}
+            btnType="Success"
+          >
+            ORDER
+          </Button>
+        </form>
+      </div>
+    );
+
+
+
+
+
+
+
+
+
+
+
+    if (this.state.loading) {
+      form = <Spinner />;
+    }
+
+
+    return (
+      <div>{form}</div>
+    );
+  }
+}
+
+
+
+-----------------------------------
+
+
+
+
+BEM, A QUESTÃO 
+
+É 
+
+QUE 
+
+
+
+nós ainda temos aquele código 
+
+
+de 
+
+
+
+
+'''''''''''''''''''''
+    if (this.state.loading) {
+      form = <Spinner />;
+    }
+
+
+'''''''''''''''''''''
+
+
+
+
+
+
+
+---> ESSE CÓDIGO AÍ, que depende do state de 'loading' para 
+
+MOSTRAR UM SPINNER, agora simplesmente nunca mais será executado... (pq a propriedade 'loading' n existe mais...)
+
+
+
+
+
+
+
+
+---> E, BEM, NÓS __VAMOS ESTAR 'LOADING', se pensarmos com bom senso,
+
+
+
+
+QUANDO CLICAMOS 
+
+
+
+NO BOTÃO DE 
+
+'order'... ----->  por isso nós PRECISAMOS 
+
+
+CRIAR ALGUMA COISA/STATE EM ALGUM LUGAR 
+
+
+DE 
+
+'loading: true' 
+
+quando 
+
+dispatchamos 
+
+aquela action e ela não conclui... ---------> ISSO SIGNIFICA QUE 
+
+NÓS 
+
+
+VAMOS 
+
+TER 
+QUE 
+
+FAZER 
+
+MANAGE 
+
+DAQUELE 
+
+
+'STATE' 
+
+DE 
+
+LOADING __LÁ NO NOSSO 'REDUX STORE', no store global do redux... ------> devemos 
+
+
+fazer isso PQ ___NÓS REALMENTE __COLOCAMOS TODO O PROCESSO DE 'ORDERING' 
+
+NO REDUX...
+
+
+
+
+
+
+
+
+---> para fazer isso,
+
+
+PRECISAMOS 
+
+
+
+__ADICIONAR MAIS LÓGICA/ACTIONS AO 'reducer.js'....  -------> 
+
+
+
+E 
+
+
+É ISSO QUE FAREMOS NA PRÓXIMA AULA...

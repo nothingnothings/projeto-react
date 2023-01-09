@@ -1,0 +1,229 @@
+
+
+
+
+
+
+APRENDEMOS SOBRE COMO USAR PSEUDOSELECTORS COM OS CSS MODULES... ---> 
+
+
+aprendemos também 
+
+sobre 
+
+como NESTEAR 
+
+CLASSES 
+
+
+E AINDA AS IMPORTAR POR MEIO DAQUELE OBJETO 'classes/classes2' IMPORTADO 
+
+DE 
+
+'App.module.css',
+
+
+NAS LIÇÕES PRÉVIAS....
+
+
+---------------------------------------
+
+
+
+
+AGORA O PROFESSOR QUER NOS MOSTRAR O PROCESSO 
+
+DE USAR/DEFINIR 
+
+
+
+______MEDIA QUERIES____ COM 
+
+OS CSS MODULES.... -----------> ELE VAI USAR 
+
+COMO EXEMPLO 
+
+
+
+O COMPONENT 
+
+
+'Person.js'...
+
+
+-----------------------------------
+
+
+Lá em 'Person.js',
+ 
+
+
+ ele assignou o estilo 
+
+
+ de 
+
+ 'classes.Person' AO COMPONENT 'PERSON'... ------> 
+
+
+import Pessoa from './Person.module.css';
+
+
+
+ E NÓS JÁ TÍNHAMOS UM CÓDIGO DE MEDIA QUERY 
+
+
+ PARA 
+
+
+ ESSE COMPONENT, 
+
+ TÍNHAMOS O CÓDIGO 
+
+
+
+
+'''''
+ @media (min-width: 500px) {
+    .Person {
+        width: 450px;
+    }
+} 
+
+''''''
+
+
+ESSE CÓDIGO ERA ADICIONADO PELO 'RADIUM', COMO BEM PODEMOS NOS LEMBRAR.
+
+
+
+O PROFESSOR VAI COMENTAR ESSE CÓDIGO PARA DENTRO DO NOSSO PROJETO, POIS 
+
+ELE O UTILIZARÁ...
+
+
+
+
+
+
+
+Ex (representação do código .css DE 'PERSON'...): 
+
+
+
+
+.Person {
+    width: 60%;
+    margin: 16px auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 16px;
+    text-align: center;
+}
+
+
+
+ @media (min-width: 500px) {
+    .Person {
+        width: 450px;
+    }
+} 
+
+
+
+--------------------------------
+
+
+
+
+ESSA, ESSENCIALMENTE, É UMA MEDIA QUERY NORMAL DE JAVASCRIPT QUE AJUSTA 
+
+O TAMANHO DE NOSSO COMPONENTE/COMPONENTE COM CLASSE '.PERSON' DE 
+
+
+ACORDO COM ALTERAÇÕES NO ___TAMANHO DA JANELA DO BROWSER__... (viewport maior do que 500px ativa esse media query. )
+
+
+
+
+
+--------> PROFESSOR EXPLICA QUE ESSA CLASSE 'PERSON' AINDA SERÁ 
+
+IMPORTADA NORMAL 
+
+
+por meio 
+
+do código 
+
+
+'div className={classes.Person}', 
+
+lá 
+
+em 
+'Person.js'... 
+
+
+
+ELE VAI CONSEGUIR IMPORTAR ESSE ESTILO AÍ, DESSA CLASSE, MESMO 
+
+QUE ESSA CLASSE ESTANDO __wRAPPADA___ POR/EM UM MEDIA QUERY (como é o caso de nosso código-exemplo).
+
+
+----------------------------------------
+
+
+
+----> ISSO QUER DIZER QUE O MEDIA QUERY SERÁ APLICADO __NORMALMENTE__, QUANDO 
+
+USAMOS 
+
+___'CSS MODULES'____... -----> basta colocarmos/aplicarmos UMA DETERMINADA __CLASSE__, e o 
+
+MEDIA QUERY VINCULADO A ELA SERÁ AUTOMATICAMENTE APLICADO TAMBÉM...
+
+
+
+
+
+
+--> DEVEMOS SEMPRE PENSAR NO  'classes' em 
+
+'import classes from './Person.module.css' 
+
+
+
+COMO UM __OBJETO___ JAVASCRIPT QUE TE DÁ 
+
+
+ACESSO A UMA VERSÃO '''STRING____''' 
+
+
+DE SEUS ESTILOS/CLASSES CSS,
+
+ 
+ MAS UMA VERSÃO STRING QUE ___FOI AJUSTADA__, QUE TEVE SEU NOME 
+
+ ALTERADO PARA SER '''UNIQUE''''... -------> os módulos transformam isso 
+
+ em 
+
+
+
+ 'nome + localIdentName + hash' PARA QUE 
+
+ NÃO EXISTA CONFLITO DESSA CLASSE/ESTILO COM MAIS NENHUM ELEMENTO/ESTILO DEFINIDO NO APP...
+
+
+ ESSA É A IDEIA POR TRÁS DOS MÓDULOS CSS....
+
+
+------------------------------------------------------------
+
+
+
+
+Using CSS Modules in create-react-app Projects: https://medium.com/nulogy/how-to-use-css-modules-with-create-react-app-9e44bec2b5c2
+More information about CSS Modules: https://github.com/css-modules/css-modules
+

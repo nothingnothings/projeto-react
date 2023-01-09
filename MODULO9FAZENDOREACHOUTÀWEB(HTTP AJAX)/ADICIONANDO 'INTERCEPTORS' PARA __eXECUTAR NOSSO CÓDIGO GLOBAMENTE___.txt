@@ -1,0 +1,1875 @@
+
+
+
+
+
+
+
+
+
+
+
+----> FAZER O HANDLE (HANDLING) 
+
+
+DE ERROS 
+
+
+__LOCALMENTE__, 
+
+
+EM COMPONENTS__, 
+
+
+FAZ MUITO SENTIDO...  ---> faz muito sentido 
+
+
+PQ VOCÊ 
+
+
+PROVAVELMENTE 
+
+
+VAI SEMPRE QUERER 
+
+
+
+FAZER 
+
+
+DIFERENTES 
+
+COISA COM 
+
+
+OS ERROS,
+
+DEPENDENDO 
+
+
+DE QUAL COMPONENT VOCÊ ESTÁ/qual component você está utilizando/codando.......
+
+
+
+EX: 
+
+
+
+naquele código de 'get' 
+
+do AXIOS você 
+
+
+talvez queira 
+
+
+
+mostrar uma mensagem de 'Something went wrong!', 
+
+
+mas 
+
+em alguma 
+
+outra parte do código, em outro 
+
+component 
+
+da página,
+
+
+TALVZE 
+
+VOCÊ 
+
+
+QUEIRA FAZER ALGO ____DIFERENTE___....  
+
+
+
+
+--------------------------------
+
+
+
+
+
+CERTO... HÁ CASOS E CASOS, certamente... ------> 
+
+
+e em cada um desses casos você pode 
+
+querer 
+
+
+EXECUTAR 
+
+UM ERROR HANDLING CODE (em 'catch') 
+
+DISTINTO...
+
+
+
+
+
+
+
+
+
+---->ENTRETANTO, 
+
+
+HÁ CASOS EM QUE 
+
+___VOCÊ __ NÃO VAI QUERER 
+
+EXECUTAR 
+
+
+UM 
+
+'ERROR HANDLING CODE' ESPECÍFICO 
+
+
+ÀQUELE 
+
+pedaço do código/component do código.... ----------> nesses casos aí, você 
+
+
+vai estar pensando 
+
+
+'eu vou querer mandar essa mensagem de erro/aplicar essa lógica 
+
+de error 
+
+handling 
+
+
+___eM QUALQUER/TODOS 
+
+OS 
+
+CATCH BLOCKS DO MEU CÓDIGO'...       --------> NESSES CASOS AÍ,
+
+
+
+VOCê 
+
+VAI QUERER 
+
+
+
+___ APLICAR UMA LÓGICA DE 'ERROR HANDLING' ___GLOBALMENTE_; ou seja, 
+
+
+você 
+
+não quer 
+
+que o código se importe 
+
+
+COM O __LOCAL ___ DO CÓDIGO 
+
+
+
+ONDE 
+
+
+O 
+
+'HTTP REQUEST' FOI FORMULADO, não... --> ele vai aplicar 
+
+
+aquela lógica de 'error handling '
+
+
+
+___ EM TODOS OS LUGARES ___ DO CÓDIGO EM QUE 
+
+
+OCORRER UM HTTP REQUEST... ------------------------->
+
+
+
+
+
+E VOCÊ 
+
+PODE 
+
+FAZER ISSO, NO/COM O AXIOS,
+
+
+
+
+COM A AJUDA 
+
+DA FEATURE 
+
+
+
+CHAMADA DE 
+
+'INTERCEPTORS'... -------------------->  __iNTERCEPTORS___ SÃO 
+
+
+FUNÇÕES __QUE VOCÊ PODE DEFINIR __ GLOBALMENTE___, 
+
+
+
+E 
+
+
+QUE 
+
+SERÃO 
+
+
+__eXECUTADAS ___ PARA TODO E QUALQUER ___REQUEST___ SAINDO DO SEU 
+
+APP ___ E 
+
+
+PARA __  ___ TODA E QUALQUER ___ RESPONSE ___ RETORNANDO 
+
+
+A ELE... ----------------------->   ESSA FEATURE 
+
+
+DOS 
+
+'INTERCEPTORS' 
+
+
+
+
+É ___eXTREMAMENTE/ESPECIALMENTE ÚTIL ___ PARA, 
+
+POR EXEMPLO,
+
+
+DEFINIR 
+
+
+ALGUNS 
+
+
+'COMMON HEADERS' 
+
+
+NOS SEUS REQUESTS... (como um 'authorization header', por exemplo)...
+
+
+
+
+
+
+
+--> TAMBÉM É UTIL, POR EXEMPLO,
+
+
+
+
+__PARA __ O RETURN DE RESPONSES EM GERAL,
+
+
+SE/QUANDO VOCÊ QUISER 
+
+
+__lOGGAR__ AS RESPONSES__...
+
+
+
+
+
+
+
+
+--> também 
+
+
+é útil para 
+
+
+CASOS EM QUE 
+
+VOCê 
+
+
+__qUER__ FAZER HANDLE DE ERROS __GLOBALMENTE___....
+
+
+
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+O PROFESSOR NOS MOSTRARÁ 
+
+
+
+COMO 
+
+ADICIONAR 
+
+INTERCEPTORS
+
+
+
+
+NO NOSSO PROJETO....
+
+
+
+
+
+
+
+
+
+
+
+
+--> vamos até o arquivo 
+
+'index.js',
+
+
+PQ ____ESSE É O ARQUIVO __ MAIS GLOBAL QUE TEMOS NO NOSSO APLICATIVO,
+
+
+É O ARQUIVO 
+
+
+
+
+EM QUE 
+
+
+___ NÓS ''''ACTUALLY'''' INICIAMOS 
+
+
+
+PROPRIAMENTE O NOSSO 
+
+REACT APP, 
+
+
+POR MEIO DO 
+
+
+MOUNT DELE (do react app) 
+
+
+
+NO 
+
+__dOM___ (por meio de 'ReactDOM.render(<App />, document.getElementById('root') ') ...
+
+
+
+
+------------------------------------------------
+
+
+
+
+PARA CONSEGUIR 
+
+
+INTRODUZIR INTERCEPTORS AO NOSSO PROJETO, 
+
+PROFESSOR 
+
+EXPLICA QUE 
+
+ELE VAI 
+
+TER QUE IMPORTAR 
+
+
+'axios'
+ 
+ PARA DENTRO DO 
+
+ 'index.js',
+
+ TAMBÉM...
+
+
+
+ -------------------
+
+
+
+ ex:
+
+
+ import axios from 'axios';
+
+  import axios from 'axios';
+   import axios from 'axios';
+    import axios from 'axios';
+     import axios from 'axios';
+      import axios from 'axios';
+
+
+
+
+
+
+
+
+
+--------> CERTO.
+
+
+
+O PROFESSOR NOS EXPLICA UM DETALHE CURIOSO:
+
+
+
+
+TODOS OS IMPORTS 
+
+
+DE 
+
+'axios' 
+
+
+EM UM DETERMINADO PROJETO ___ SEMPRE_ ___ SEGUIRÃO 
+
+A MESMA 
+
+'CONFIGURATION', COMPARTILHAM A MESMA 'CONFIGURATION'... ---------> 
+
+
+
+
+
+E É EXATAMENTE 
+
+POR ISSO 
+
+
+QUE 
+
+
+PODEMOS 
+
+
+
+
+ESCREVEr 
+
+'axios.xxxx' 
+
+
+
+
+SOLTO LÁ 
+
+
+EM 
+'index.js'
+
+
+
+
+
+
+
+E esse 'xxxx' será 
+
+__'.interceptors'...
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+
+import axios from 'axios';
+
+
+
+
+
+axios.interceptors ////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+ReactDOM.render(
+
+    <App />,
+  document.getElementById('root')
+);
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+E, DE NOVO,
+COMO 
+
+O PROFESSOR EXPLICOU,
+
+
+
+
+'axios.interceptors'
+
+
+SERÁ ENTÃO COMPARTLHADO NÃO 
+
+SÓ 
+
+APENAS 
+
+NESSE ARQUIVO 
+
+
+'index.js',
+
+
+MAS TAMBÉM 
+
+
+
+
+__'ACROSS ALL FILES IN YOUR PROJECT'.... ---------> ISSO 
+
+SIGNIFICA
+ 
+
+
+ QUE 
+
+ 'axios.interceptors' 
+
+
+
+ ___VAI AFETAR __ QUALQUER REQUEST_, QUALQUER REQUEST ENVIADO 
+
+ DE __QUALQUER LUGAR__ DO SEU CÓDIGO, 
+
+
+ DE QUALQUER COMPONENT...
+
+
+ ----------------------------
+
+
+
+
+ Certo....
+
+
+ E DENTRO 
+
+ DO 
+ 'axios.interceptors'
+
+
+ PODEMOS ACESSAR O OBJETO 'request'
+
+ POR MEIO 
+
+
+
+ DA 'dot notation'...
+
+
+
+ ex:
+
+
+
+
+ axios.interceptors.request
+
+
+
+
+ ----------------------------------------------------------
+
+
+
+
+
+
+ ISSO FEITO,
+
+ PODEMOS USAR O MÉTODO 
+
+ '.use()' 
+
+
+ PARA __SETTAR__ UM NOVO INTERCEPTOR....
+
+
+
+ ex:
+
+
+  axios.interceptors.request.use();
+
+
+
+
+
+
+
+
+
+
+
+  -------> ESSE 'INTERCEPTADOR'/interceptor,
+
+
+
+  quando utiliza 
+
+
+  o método 
+
+  '.use()',
+
+
+
+  EXIGE
+
+
+  __ UMA FUNÇÃO INTERNA (arrow function)
+   
+
+   COMO INPUT___... ---------> 
+
+
+
+
+
+
+   e essa função interna ___rECEBE____ 'O REQUEST'/'OS REQUESTS' 
+
+
+
+   QUE SERÁ/SERÃO ENVIADOS 
+
+
+   ___cOMO INPUT/PARÂMETRO/ARGUMENTO...
+
+
+
+   ex:
+
+
+
+
+
+     axios.interceptors.request.use(
+       (request) =>  {...} 
+     );
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+
+
+
+----> PROFESSOR PROPÕE UM CONSOLE.LOG DE 'request', para 
+
+ver o que exatamente 
+
+
+
+fica dentro desse objeto,
+
+se usarmos um 'interceptor' 
+
+para __INTERCEPTAR__ um de nossos requests....
+
+
+
+ex:
+
+
+
+
+
+     axios.interceptors.request.use(
+       (request) =>  {console.log(request)} 
+     );
+
+
+
+
+
+
+
+
+
+
+
+OBS, O OBJETO 'REQUEST' QUE ESTÁ SENDO __rECEBIDO__ NESSE MÉTODO 
+
+'request.use()' NÃO 
+
+É __PROPRIAMENTE____ O REQUEST 
+
+
+EM SI...; 
+
+
+
+
+O QUE ELE É, NA VERDADE, É O 'OBJETO CONFIG' DO REQUEST... (por isso que 
+
+
+uma sintaxe mais correta (mas q n muda nada, em questão de efeitos) SERIA ESTA:
+
+
+
+'''''
+     axios.interceptors.request.use(
+       (config) =>  {console.log(config)} 
+     );
+
+
+''''''''''''''''''''''''''
+)
+
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+essa coisa que será console.loggada será 
+
+o 
+
+'request configuration' (o objeto de CONFIGURAÇÃO do nosso/dos nossos requests)....
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> QUANDO VOLTARMOS AO APLICATIVO,
+
+
+IMEDIATAMENTE 
+
+VEREMOS 
+
+ALGO NO CONSOLE...:
+
+
+
+
+adapter: ƒ xhrAdapter(config)
+headers: {common: {…}, delete: {…}, get: {…}, head: {…}, post: {…}, …}
+maxBodyLength: -1
+maxContentLength: -1
+method: "get"
+timeout: 0
+transformRequest: [ƒ]
+transformResponse: [ƒ]
+url: "https://jsonplaceholder.typicode.com/postssssssssssss"
+validateStatus: ƒ validateStatus(status)
+xsrfCookieName: "XSRF-TOKEN"
+xsrfHeaderName: "X-XSRF-TOKEN"
+__proto__: Object
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+ESSE/ISSO É 
+
+A CONFIGURAÇAÕ 
+
+
+____ DOS NOSSOS REQUEST___ QUE FOI 
+
+ENVIADA ___PARA FORA ___ (para o servidor)... -------> a única 
+
+coisa 
+
+
+que 
+
+
+
+o 
+
+'.interceptors.request.use()' 
+
+
+FAZ 
+
+___É EXECUTAR CÓDIGO DENTRO DO 'use()',
+
+
+CÓDIGO 
+
+
+QUE 
+
+
+ALTERA/INTERCEPTA 
+
+
+
+OS 
+
+
+REQUESTS 
+
+QUE 
+
+ESTÃO SAINDO DE NOSSO BROWSERSIDE....
+
+
+
+
+
+
+--> podemos ver várias propriedades,
+
+
+como 
+ 
+
+ OS HEADERS que foram/são adicionados,
+
+
+
+ o 'method',
+
+
+
+ o 
+
+ 'timeout',
+
+
+ etc etc....
+
+
+
+
+
+ ------------------------------
+
+
+
+
+ENTRETANTO, 
+
+EXPLICA O PROFESSOR,
+
+
+
+PODEMOS VER QUE 
+
+
+
+NOSSA PÁGINA ESTÁ BIZARRA... ---> NÓS ESTAMOS 
+
+COM 
+
+
+'Something went wrong' 
+
+EM VEZ 
+
+
+DE AQUELA 
+
+LISTA DE POSTS QUE 
+NOSSA PÁGINA SEMPRE TEM, AO SER CARREGADA (lista de posts que 
+
+FOI EXTRAÍDA 
+
+LÁ 
+
+DO 
+
+SERVIDOR 'jsonplaceholder'...) ----------> 
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+
+
+O 
+
+
+
+
+
+
+     axios.interceptors.request.use(
+       (config) =>  {console.log(config)} 
+     );
+
+
+
+
+
+
+
+ESTÁ ____bARRANDO/BLOQUEANDO_____ NOSSOS HTTP REQUESTS____... (todos eles, de verdade... não é só esse do 'fetch posts', mas também os de tipo DELETE, e de tipo POST; também os de PUT e PATCH.)
+
+
+
+
+
+
+OU SEJA, SE VOCê 
+
+NÃO ESCREVER NADA A MAIS NO INTERCEPTOR, DEIXAR ELE NA FORMA 'NUA E CRUA', DEFAULT,
+
+
+
+ele vai 
+
+
+
+
+1) executar o código que você colocou no '.use()' block....
+
+
+
+2) BLOQUEAR o send de HTTP REQUESTS feito por sua página browserside...
+
+
+
+
+
+--------------------------------------------------------------
+
+
+
+
+
+
+Se você quiser que o http request SAIA 
+
+
+DO SEU BROWSERSIDE, CONSIGA ALCANÇAR O SERVIDOR,
+
+VOCÊ 
+
+
+
+___PRECISA___ adicionar um statement a mais 
+
+dentro do '.use()' block,
+
+
+
+VOCÊ PRECISA 
+
+
+ADICIONAR 
+
+
+'return request'  ( ou 'return config', se você escreveu 'config' em vez de request)...
+
+
+
+
+ex:
+
+
+
+
+
+     axios.interceptors.request.use(
+       (config) =>  {
+         
+         console.log(config);
+         return request;
+         
+         
+         
+         } 
+     );
+
+
+---------------------------
+
+ISSO VAI CONSERTAR ESSE 
+
+'BLOCK' 
+
+DO 
+
+SEND DE HTTP REQUESTS...
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+CERTO... MAS ENTÃO, QUAL É A __UTILIDADE__ DO 'interceptors'? ------> 
+
+
+
+BEM SIMPLES,
+
+PODEMOS ___eDITAR___ NOSSO/NOSSOS HTTP REQUESTS 
+
+
+QUE 
+
+ENVIAMOS DE NOSSO BROWSERSIDE.... --> podemos 
+
+
+EDITAR 
+
+SEU CONTEÚDO,
+
+LÁ DENTRO 
+
+
+DO '.use() block'... --------> podemos 
+
+
+
+fazer coisas 
+
+
+
+
+COMO ____adICIONAR HEADERS___... AOS HTTP REQUESTS, E TAMBÉM ADICIONAR 
+
+
+OUTRAS COISAS À 'CONFIG FILE' DOS 
+
+
+NOSSOS HTTP REQUESTS...
+
+
+
+-----------------------------------------------------------
+
+
+--> OUTRO DETALHE DO FUNCIONAMENTO DE 
+
+
+'.interceptors.request.use()' -----------> 
+
+
+
+ESSE NEGÓCIO VAI __eXECUTAR__ A LÓGICA/CÓDIGO 
+
+
+
+NO INTERIOR 
+
+
+DE 
+
+'.use()' 
+
+
+___TODA___ E QUALQUER VEZ EM QUE OCORRER 
+
+
+
+UM 
+
+HTTP REQUEST 
+
+NO NOSSO BROWSERSIDE..... ----------> 
+
+
+
+ISSO SIGNIFICA QUE,
+
+nesse nosso aplicativo 'Posts',  
+
+
+VAMOS 
+
+
+VER UM CONSOLE.LOG de 'request' (O OBJETO __CONFIG __ DE NOSSAS REQUESTS, PARA 
+SER MAIS PRECISO) 
+
+
+TODA VEZ QUE 
+
+CLICARMOS EM UM 
+
+DOS 'POSTS' da nossa página (pq isso faz FETCH DE DADOS NO SERVIDOR 'jsonplaceholder'...)
+
+
+
+
+
+
+
+
+
+---> ou seja, 
+
+
+'the interceptor also ran, 
+
+EVEN IF IT WAS FIRED FROM A DIFFERENT COMPONENT...' -----> BECAUSE 
+
+
+ALL COMPONENTS AND ALL AREAS OF YOUR APP ARE COVERED BY ITS USAGE...
+
+---------------------------------------------------------------------
+
+
+
+
+
+-------> 
+
+LÁ NO
+
+
+
+
+'''
+
+
+     axios.interceptors.request.use(
+       (config) =>  {
+         
+         console.log(config);
+         return request;
+         
+         
+         
+         } 
+     );
+
+
+''''
+
+
+
+
+
+
+
+PODEMOS 
+
+
+
+__PASSAR UM SEGUNDO ARGUMENTO___, UM SEGUNDO ARGUMENTO QUE ___tAMBÉM ___ SERÁ UMA FUNÇÃO__...
+
+
+
+
+
+
+ou seja, 
+
+
+o '.use()' aceita/exige 
+
+2 ARGUMENTOS:
+
+
+
+
+
+
+ARGUMENTO 1: 'the request changing function' (como o nosso console.log)
+
+
+
+
+ARGUMENTO 2: 'the ERROR HANDLING FUNCTION' --> este é OPCIONAL...
+
+
+
+
+
+
+
+
+
+
+esse argumento/argumento-função 
+
+
+de error handling 
+
+
+terá 
+
+uma 
+
+
+sintaxe 
+
+como 
+
+
+'error => {
+  console.log(error);
+}'
+
+
+
+
+-------------------------
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+axios.interceptors.request.use(
+  (request) => { //here, inside this arrow function inside the '.use()' block, you CANT __EDIT__ YOUR REQUEST CONFIG FILE (o arquivo de configuração do seu request/requests....)
+
+    console.log(request);
+    return request;
+  }, 
+  error => {
+    console.log(error); /////////EIS O CÓDIGO EM QUESTÃO.
+  }
+);
+
+
+
+---------------------------------
+
+
+
+
+Certo....
+
+
+mas vocÊ não vai só 
+
+fazer 
+
+esse 'console.log' 
+
+
+do erro... ---> 
+
+
+você 
+
+
+também 
+
+vai adicionar 
+
+
+um statement 
+
+como 
+
+
+
+'return Promise.reject(error);' ---------> 
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+axios.interceptors.request.use(
+  (request) => { //here, inside this arrow function inside the '.use()' block, you CANT __EDIT__ YOUR REQUEST CONFIG FILE (o arquivo de configuração do seu request/requests....)
+
+    console.log(request);
+    return request;
+  }, 
+  error => {
+    console.log(error); 
+    return Promise.reject(error); /////////EIS O CÓDIGO EM QUESTÃO.
+  }
+);
+
+
+
+
+
+
+
+
+
+ VOCê ___fARA ISSO 
+
+
+
+PARA QUE VOCÊ __FAÇA ''FORWARD'' DO SEU ERRO AO __rEQUEST__ como vocÊ o escreveu 
+
+
+NO COMPONENT... -------> PQ SE VOCÊ TIVER 
+
+ESSE 
+
+'ERROR' 
+
+LÁ 
+
+NO COMPONENT, VOCÊ PODERÁ FAZER __HANDLE__ MELHOR DO 'ERROR'__ POR MEIO 
+
+DO USO 
+
+
+DO MÉTODO '.catch()'.... ---------> ISSO FAZ SENTIDO QUANDO VOCÊ 
+
+
+TEM ALGUMA __TASK LOCAL__ QUE VOCê QUER FAZER_,
+
+
+
+como talvez 
+MOSTRAR ALGO NA 
+
+UI;
+
+
+também 
+
+
+é útil em casos em que 
+
+
+
+VOCÊ QUER 
+
+
+LOGGAR SEUS ERROS 
+
+
+EM UM ARQUIVO GLOBAL DE ERROS, ARQUIVO GLOBAL DE ERROS QUE 
+
+É ENVIADO AUTOMATICAMENTE A UM SERVIDOR REMOTO, OU COISA DO GÊNERO...
+
+--------------------------------------------------
+
+
+
+
+
+
+-> O PROFESSOR VAI TESTAR 
+
+ESSA FEATURE 
+
+
+do 'error handling' 
+
+do interceptors... ------> ele vai 
+
+até 
+
+
+'Blog.js'
+ 
+
+
+ E DEIXA NOSSA URL INVÁLIDA, DE NOVO (muda para 'postsssss'....)
+
+
+
+
+
+
+
+
+
+
+
+ ---> entretanto, 
+
+ quando ele faz isso,
+
+
+
+ NÃO VEMOS ERRO NENHUM OUTPUTTADO NA ABA 'CONSOLE'...  -------> A RAZÃO 
+
+ PARA ISSO 
+
+
+ É QUE 
+
+ ESTE CÓDIGO DE ERROR HANDLING:
+
+
+
+
+   error => {
+    console.log(error); /////////EIS O CÓDIGO EM QUESTÃO.
+    return Promise.reject(error);
+  }
+);
+
+
+
+
+
+
+SÓ 
+
+
+
+
+CONSOLE.LOGGARÁ O ERRO/UM 
+
+
+ERROR 
+
+
+SÓ 
+
+
+SERÁ RECEBIDO __ SE ESSE ERRO TIVER RELAÇÃO ____ COM 
+
+
+
+__CONECTIVIDADE__ (internet ruim), e não com algo burro, como 
+
+um USO DE URL INCORRETA.... ------------> OU SEJA, 
+
+
+
+ESSE OBJETO 'ERROR' SÓ É RECEBIDO 
+
+
+
+SE __O 'REQUEST SENDING' FALHA....
+
+
+
+---------------------------------------------------------------------
+
+
+
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+É EVIDENTE QUE TEMOS, TAMBÉM,
+
+
+INTERCEPTORS 
+
+PARA 
+
+O 
+
+
+'CAMINHO CONTRÁRIO' --------> TEMOS 
+
+
+INTERCEPTORS
+
+
+
+PARA __RESPONSES___....
+
+
+
+
+
+usamos a mesma sintaxe 
+
+dos requests,
+
+
+mas 
+
+usamos 
+
+'response' em vez de 'request'...
+
+Ex:
+
+
+
+
+
+
+
+axios.interceptors.response.use();
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+CERTO, 
+
+
+
+E DA MESMA FORMA DE ANTES, 
+
+VAMOS 
+
+
+ADICIONAR 
+
+
+2 
+
+
+
+FUNÇÕES INTERNAS 
+
+COMO 
+
+
+PARÂMETROS/ARGUMENTOS 
+
+
+desse método 
+
+'.use()'....
+
+
+
+
+1) A FUNÇÃO/ARGUMENTO QUE __ALTERA ___ O RESPONSE/OS RESPONSES RECEBIDO(s) PELO NOSSO BROWSER...
+
+
+
+
+2) A FUNÇÃO DE 'ERROR HANDLING'...
+
+
+
+
+
+
+---------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+SUA SINTAXE SERÁ QUASE EXATAMENTE IGUAL:
+
+
+
+
+
+
+
+
+axios.interceptors.response.use(
+  (response) => { 
+
+    console.log(response);
+    return response;
+  }, 
+  error => {
+    console.log(error);
+       return Promise.reject(error);
+  }
+);
+
+
+
+-------------------------------------------------
+
+
+
+
+TUDO IGUAL,
+
+
+TAMBÉM 
+
+FAZEMOS 
+
+
+O 'REJECT'
+
+
+
+do 
+
+
+objeto 'error' por meio de 'return Promise.reject(error)',
+
+
+PARA 
+
+QUE 
+
+CONSIGAMOS 
+
+FAZER MANAGE 
+DESSE 
+
+
+'ERROR' 
+
+LOCALMENTE,
+
+
+EM UM DETERMINADO COMPONENT (o component que GEROU O OBJETO 'ERROR')...
+
+
+
+
+-----------------------------------------
+
+
+
+
+SE RECARREGARMOS NOSSA PÁGINA,
+
+PERCEBEREMOS 
+
+QUE 
+
+NOSSO ERRO DE receive de RESPONSE 
+
+agora 
+
+está sendo HANDLADO __LOCALMENTE___ 
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+CERTO, PORTANTO, 
+
+
+
+ESSA É UMA MANEIRA DE ___MANIPULAr__ POTENCIALMENTE SUAS 
+
+RESPONSES/REQUESTS, 
+
+
+
+
+fazer log deles, definir headers, 
+
+ou coisas loucas.... 
+
+
+(
+  É MUITO COMUM USAR 
+
+  INTERCEPTORS PARA __aDICIONAR 'AUTHORIZATION HEADERS', por exemplo...
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+PORÉM, EXISTE UMA ___MANEIRA __ DIFERENTE __ DE ACESSAR 
+
+
+A 
+
+'CONFIGURAÇÃO GLOBAL DO AXIOS',
+
+
+
+UM APPROACH QUE O PROFESSOR NOS MOSTRARÁ __NA PRÓXIMA LIÇÃo___...
+
+
+
+
+
+
+
+
+
+
+
+(
+
+
+  UMA FEATURE 
+
+  INTERESSANTE DOS HEADERS ( E ÚTIL) 
+
+
+  É QUE 
+
+  ELES SEMPRE SÃO APLICADOS __ANTES__ DO '.then()'/catch 
+
+  BLOCKS 
+
+
+  DO AXIOS QUE VOCÊ TEM NO SEU CÓDIGO ''''NORMAL''''. (flow normal de 'axios.get().then()', por exemplo....)
+
+
+
+
+  ex:
+
+
+
+
+
+
+
+
+
+  Interceptors
+You can intercept requests or responses BEFORE they are handled by then or catch.
+
+// Add a request interceptor
+axios.interceptors.request.use(function (config) {
+    // Do something before request is sent
+    return config;
+  }, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  });
+
+// Add a response interceptor
+axios.interceptors.response.use(function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    return response;
+  }, function (error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    return Promise.reject(error);
+  });
+
+
+
+
+
+)
+
+
+
+-----------------------

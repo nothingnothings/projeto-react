@@ -1,0 +1,643 @@
+
+
+
+
+
+
+
+
+
+
+
+--------->  AGORA QUE APRENDEMOS UM MONTE SOBRE MIDDLEWARE nas últimas lições,
+
+
+e 
+
+agora que 
+
+
+TEMOS 
+
+UMA MANEIRA BOA
+
+DE 
+
+FAZER DEBUG DO NOSSO 
+
+'redux app',
+
+
+
+
+
+NÓS DEVEMOS VOLTAR AO NOSSO APP __ E ENTÃO PENSAR __ SOBRE A __ EXECUÇÃO DE CÓDIGO __ 
+
+ASSÍNCRONO (async code)...
+
+
+
+-------------------------------
+
+
+
+
+NO NOSSO PROJETO 'COUNTER',
+
+
+
+contrariamente Àquilo que foi visto em 
+
+'BurgerBuilder',
+
+
+
+NÓS __NÃO TEMOS __ TAREFAS ASSÍNCRONAS SENDO EXECUTADAS/EXISTENTES...
+
+
+-----------------------------------
+
+
+
+--> É CLARO QUE A CRIAÇÃO 
+
+
+DE 
+
+UM 
+
+
+'CÓDIGO ASSÍNCRONO' é fácil, nesse nosso aplicativo... -->>>
+
+
+digamos 
+
+
+QUE SEMPRE QUE 
+
+
+
+ARMAZENARMOS UM NOVO 'result' naquela li,
+ 
+
+
+
+
+
+
+ como visto no código de 'result.js':
+
+
+
+
+
+
+import * as actionTypes from '../../store/actions';
+
+const initialState = {
+  results: []
+};
+
+const resultReducer = (state = initialState, action) => {
+
+
+  switch (action.type) { 
+
+   case actionTypes.RESULT_STORE: 
+        return {
+            ...state, 
+            results: state.results.concat({
+
+
+              value: action.result,  
+            resultId: new Date() * Math.random()
+       
+            }
+            )      
+            
+        };
+
+        case actionTypes.DELETE_RESULT:
+
+
+           const updatedArray = state.results.filter(
+            (result) => {
+                return result.resultId !== action.resultId; 
+            }
+            )
+            return {
+                ...state,
+                results: updatedArray
+            }
+        break;
+    default:
+      return state;
+  }
+};
+
+export default resultReducer;
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+DEVEMOS 
+
+
+__sIMULAr___ QUE __ ESSE RESULT __TAMBÉM ESTARÁ 
+
+SENDO 
+
+ARMAZENADO EM UM SERVIDOR....
+
+
+
+
+
+
+(ou seja, aquele 
+
+código 
+
+
+de 
+
+'''''''''''''''''''''
+
+
+return {
+            ...state, 
+            results: state.results.concat({
+
+
+              value: action.result,  
+            resultId: new Date() * Math.random()
+       
+            }
+
+
+
+
+
+'''''''''''''''''''''''''
+
+
+DEVERÁ
+ 
+
+
+ SER EXECUTADO DE FORMA ASSÍNCRONA...
+
+)
+
+
+
+
+
+
+
+
+
+
+É EVIDENTE QUE NÃO VAMOS REALMENTE USAR UM SERVIDOR; NÃO VAMOS ARMAZENAR 
+
+NOSSO 'RESULT' EM UM SERVIDOR DE VERDADE... ---> EM VEZ DISSO, VAMOS USAR 
+
+
+'setTimeout()' 
+
+PARA 
+
+
+__sIMULAR__ esse 'store' em um servidor...
+
+
+
+
+
+
+
+--> setTimeout() VAI SIMULAR O TEMPO QUE DEMORA 
+
+
+para armazenar algo no servidor... ---------> 
+
+
+
+
+E NÓS VAMOS QUERER 
+
+
+QUE 
+
+O 
+
+STORE SEJA 
+
+
+__aTUALIZADO__ ('updated') 
+
+
+APENAS 
+
+
+
+___DEPOIS DE ESSE 'timer' TER TERMINADO... 
+
+
+
+
+
+
+
+
+
+--> e vamos querer A MESMA COISA com o 'DELETE_RESULT'...
+
+
+
+
+
+
+
+
+
+para isso, é claro, vamos 
+
+
+ter que 
+
+escrever, lá em 
+
+'actionTypes.STORE_RESULT',
+
+nesse case aí,
+
+
+
+
+
+UM CÓDIGO ASSÍNCRONO...
+
+
+
+
+
+
+
+
+
+
+
+eu imagino algo assim:
+
+
+
+
+
+
+case actionTypes.RESULT_STORE: 
+
+
+    setTimeout((state) => {const lateResults = state.results.concat
+    (
+       value: action.result,
+       resultId: newDate() * Math.random() 
+    )} , 2000)
+
+
+        return {
+            ...state, 
+            results: lateResults
+       
+            }
+
+---------------------------------
+
+
+
+
+
+É CLARO QUE 
+
+
+ESSE CÓDIGO AÍ __PROVAVELMENTE __ NÃO FUNCIONARÁ....
+
+
+
+
+
+
+
+
+
+E DE FATO,
+ 
+
+
+ ESTE CÓDIGO AQUI:
+
+
+
+        case actionTypes.RESULT_STORE: 
+            setTimeout((state) => {const lateResults = state.results.concat
+              (
+                {
+                 value: action.result,
+                 resultId: new Date() * Math.random() 
+                })
+                return {
+                  ...state,
+                  results: lateResults
+                }
+
+
+              }
+              , 20000);
+
+
+
+
+
+
+__________ NÃO FUNCIONA___... (as 'actions' SÃO EXECUTADAS __IMEDIATAMENTE,
+
+E NÃO 
+
+depois desse intervalo de '20s'...)
+
+
+-------------------------------------
+
+
+
+
+
+
+OK, 
+
+
+MAS 
+
+PQ ISSO ACONTECE? -----> acontece pq, CONFORME O PROFESSOR NOS EXPLICOU ANTERIORMENTE,
+
+
+o 
+'REDUCER'
+
+
+
+SEMPRE __VAI SE EXECUTAR __ DE FORMA SÍNCRONA, e nunca assíncrona__...
+
+
+
+
+
+
+
+
+
+
+
+---> ISSO SIGNIFICA QUE ESCREVER 
+
+
+'setTimeout'
+
+
+
+___DENTRO DO REDUCER ___ É ___COMPLETAMENTE INÚTIL....
+
+
+
+
+
+
+Não faça isso, basicamente:
+
+
+   case actionTypes.RESULT_STORE: 
+            setTimeout((state) => /////////////NUNCA ESCREVA ISTO DENTRO DE UM REDUCER.... (códigos dentro do REDUCER SEMPRE SÃO EXECUTADOS SÍNCRONAMENTE, IMEDIATAMENTE...)
+             {const lateResults = state.results.concat
+              (
+                {
+                 value: action.result,
+                 resultId: new Date() * Math.random() 
+                })
+                return {
+                  ...state,
+                  results: lateResults
+                }
+
+
+              }
+              , 20000);
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+isso significa que fazer isto:
+
+
+
+setTimeout(() => {
+
+return {
+    ...state
+}
+
+}, 1000);
+
+
+
+
+
+
+
+
+
+
+
+É ALGO QUE NÃO FUNCIONA__.... -----> VOCê NÃO PODE FAZER O RETURN DE UM 
+
+__STATE___ DE DENTRO 
+
+
+DE 
+
+UM 
+
+'setTimeout'/qualquer outro código assíncrono... ------> NÃO É ASSIM QUE 
+
+O JAVASCRIPT 
+
+FUNCIONA....
+
+
+
+
+
+pense assim:
+
+
+essa função 'setTimeout' 
+
+
+SÓ SERÁ EXECUTADA APÓS 2 SEGUNDOS.... ------> mas o 
+
+'SWITCH STATEMENT' 
+
+JÁ 
+
+__TERÁ ACABADO SUA EXECUÇÃO __ QUANDO ISSO ACONTECER... -----> é por isso que 
+
+o 
+
+
+
+'return'
+
+
+dentro 
+
+
+desse 
+
+TIMER NÃO FUNCIONA__....
+
+
+
+
+-----------------------------------
+
+
+
+O QUE VOCÊ FARIA, PARA SOLUCIONAR ESSE PROBLEMA/LIMITAÇÃO,
+
+
+seria 
+
+
+RETORNAR __UMA PROMISE__ DENTRO 
+
+DESSE 
+
+'setTimeout',
+
+
+UMA 
+
+PROMISE QUE 
+
+
+SE RESOLVERIA 
+
+
+DEPOIS DE TER PASSADO UM CERTO TEMPO.... ----> OK, MAS ISSO __também É IMPOSSÍVEL__... --> é IMPOSSÍVEL_
+
+
+
+PQ __ O NOSSO REDUCER ( e qualquer reducer ) NÃO ESPERA 
+
+RECEBER 
+
+
+UMA 
+
+'PROMISE',
+
+ELE NÃO FUNCIONA COM PROMISES... -----------------> 
+
+
+
+
+
+RESUMINDO:
+
+
+
+
+EXECUTAR CÓDIGO ASSÍNCRONO (async code)
+
+
+DENTRO 
+
+
+
+DE 
+
+__rEDUCERS__ É /_____COMPLETAMENTE __ IMPOSSÍVEL__...
+
+
+
+-------------------------------------
+
+
+
+
+
+--> entretanto, há uma maneira alternativa... um approach 
+
+QUE NOS 
+
+
+DEIXA 
+
+
+CRIAR/ESCREVER CÓDIGO ASSÍNCRONO 
+
+
+com 
+
+o 
+
+
+'REDUX'... --------> 
+
+
+É 
+
+AQUILO QUE 
+
+CHAMAMOS 
+
+DE 
+
+
+
+'ACTION CREATORS', que são 
+
+
+coisas que 
+
+NOS AJUDAM A FAZER EXATAMENTE ISSO...
+
+
+
+
+
+
+
+
+
+--> VAMOS VER ACTION CREATORS NA PRÓXIMA AULA... ---> vamos ver como 
+
+eles funcionam, como eles 
+
+nos deixam
+
+
+EXECUTAR/ADICIONAR CÓDIGO ASSÍNCRONO COM O REDUX...

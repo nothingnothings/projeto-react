@@ -1,0 +1,2358 @@
+
+
+
+
+
+
+
+
+--> até agora, aprendemos muito sobre erros e sobre 
+
+
+DESCOBRIR O STATE DO SEU APLICATIVO... --> 
+
+
+bem,
+
+
+às vezes você terá casos em que 
+
+
+
+SEU CÓDIGO CERTAMENTE NÃO ESTÁ PERFEITO,
+ 
+
+ VOCê SABE QUE ELE EVENTUALMENTE FALHA, 
+
+
+
+MAS VOCê NÃO CONSEGUE GARANTIR QUE ELE SEMPRE VAI FALHAR/FUNCIONAR...
+
+
+
+
+
+
+
+--> NESSES CASOS, você vai querer MOSTRAR UMA TELA DE ERRO BONITA PARA SEUS USUÁRIOS,
+
+NÃO VAI QUERER QUE ELES RECEBAM NADA, OU UMA MENSAGEM FEIA...
+
+
+
+
+
+
+
+
+--------> PROFESSOR VAI NOS MOSTRAR UM EXEMPLO CONSTRUÍDO... ('constructed example')....
+
+
+
+
+------------------------------------------------
+
+
+
+
+DIGAMOS QUE 
+
+
+
+NO NOSSO PROJETO, QUANDO 
+
+UMA CLASSE 
+
+'person'  ('<div className={classes.Person}>')
+
+É RENDERIZADA ,
+
+
+
+DIGAMOS QUE 
+
+NÓS realmente TENHAMOS UMA 
+
+
+CHANCE de ____RECEBER UM ERRO___... -----> 
+
+
+
+
+CÓDIGO DE 'PERSON':
+
+
+
+
+
+
+const person = (props) => { 
+
+
+
+  
+  return (
+    
+  
+  <div className={Pessoa.Person}>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+-----------------------------------------
+
+
+
+
+
+Certo... o que o professor vai fazer aqui é 
+
+____CRIAR _____ UMA CONSTANTE 
+
+
+'rnd',
+
+
+QUE TERÁ UM VALOR DE 
+
+
+'Math.random()'...
+
+
+
+
+------------------------------------
+
+
+Ex:
+
+
+
+
+
+
+
+const person = (props) => { 
+
+
+const rnd = Math.random();
+
+  
+  return (
+    
+
+  
+  <div className={Pessoa.Person}>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+--------------------------------------------
+
+
+
+
+
+CERTO... E SE 
+
+
+'rnd' for MAIOR DO QUE 0.7 ('rnd > 0.7'),  (OU SEJA, TEMOS UMA CHANCE DE 30% DE GANHAR ESSE ERRO),
+
+
+
+NÓS VAMOS QUERER 
+
+FAZER 
+
+'THROW' de 
+
+um novo OBJETO 'Error',
+ 
+
+ com uma mensagem 
+
+ de 
+ 'Something went Wrong'....
+
+
+
+
+ ex:
+
+
+
+
+ 
+const person = (props) => { 
+
+
+const rnd = Math.random();
+
+
+    if (rnd > 0.7) {
+        throw new Error('Something went wrong'); //////////EIS O CÓDIGO EM QUESTÃO.
+    }
+
+
+
+  
+  return (
+    
+
+  
+  <div className={Pessoa.Person}>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+
+---------------------------------------
+
+
+
+
+
+E esse código aí deve ficar no function body, 
+
+é claro, e não no 'return statement'...
+
+
+
+
+
+--> O RESULTADO DESSE CÓDIGO É QUE àS VEZES NÓS 
+
+
+VAMOS CONSEGUIR/NÓS VAMOS RECEBER 
+
+
+ESSE ERRO.... ---------> 
+
+
+
+e esse erro aparece,  de fato...
+
+
+
+--> nossa página html é substituída
+ 
+
+ por uma 
+
+
+ que diz 
+
+
+ 'Error: Something went wrong' -----> essa página então nos diz 
+
+ QUAL LUGAR DO CÓDIGO QUE ATIROU ('throw') 
+
+
+
+ ESSE ERRO/mensagem de erro...
+
+
+
+
+
+
+
+---> como esse código de erro (que é ''''ALEATÓRIO'''') 
+é DISPARADO EM CADA UM DE NOSSOS COMPONENTS, 
+
+É BEM PROVÁVEL QUE ELE SEJA EXECUTADO/ENCONTRADO....
+
+ ----------------------------------------------------------
+
+
+
+
+
+Claro que esse é um EXEMPLO CONSTRUÍDO,
+ 
+
+
+
+ MAS EM UM APLICATIVO DE VERDADE,
+
+
+ VOCÊ PODE TER DE FATO ALGUM CÓDIGO QUE 
+
+
+RODA ALGUMA OPERAÇÃO,
+ 
+ FAZ REACH OUT A UM WEBSERVER que pode falhar,
+  
+E QUE 
+
+__CERTAMENTE PODE FALHAR__, e que VOCÊ NÃO CONSEGUIRÁ 
+
+
+GARANTIR QUE NÃO O FARÁ... --------> MAS 
+
+NÃO SERIA 
+
+
+
+BOM FAZER 'CATCH' DESSE ERRO 
+
+
+E ENTÃO 
+
+'HANDLE IT GRACIOUSLY'? ------------------> PARA ISSO, 
+
+
+
+O PROFESSOR 
+
+
+ADICIONA UM __NOVO COMPONENT AO NOSSO CÓDIGO___, 
+
+UM NOVO COMPONENT QUE 
+
+
+FAZ PARTE 
+
+
+DE UMA NOVA FEATURE QUE FOI ADICIONADA 
+
+
+COM O 
+
+REACT 16.... -----------> OS DESENVOLVEDORES
+
+
+
+CHAMAM ESSE RECURSO/FEATURE DE 
+
+
+'ErrorBoundary'... ----------> E, POR ISSO, VAMOS CRIAR 
+
+
+UM FOLDER EXATAMENTE COM ESSE NOME...
+
+
+
+-------------------------------------
+
+
+
+
+Esse folder terá esse nome PQ
+
+
+VOCÊ PODE CRIAR AQUILO QUE 
+
+CHAMAM 
+
+DE 
+
+
+
+'ERROR BOUNDARY COMPONENTS' NO SEU INTERIOR....
+
+
+
+
+
+
+---> Professor cria um arquivo de nome 
+
+'ErrorBoundary.js', 
+
+
+MAS ELE EXPLICA QUE VOCÊ PODE ESCOLHER QUALQUER NOME....
+
+
+
+
+
+MAS O CONCEITO DE FATO É CHAMADO DE 'ERRORBOUNDARY'...
+
+
+
+
+
+
+
+
+---> dentro desse arquivo .js,
+
+
+o professor 
+
+criará 
+
+
+
+
+UMA 
+
+
+CLASSE 
+
+DE NOME 
+
+
+
+'ErrorBoundary'...,
+
+
+
+E ENTÃO ELE FARÁ 
+
+
+'EXTEND'
+
+
+
+de 'Component'... ---> (obs: ele também importa o React e o 'Component' de 'React' nesse arquivo)...
+
+
+
+
+
+
+----------------------------------------------------------
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+class ErrorBoundary extends Component {
+
+}
+
+
+
+
+
+
+
+
+
+
+export default ErrorBoundary;
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+DENTRO DESSE 'CLASS-BASED COMPONENT', 
+
+O PROFESSOR 
+
+TAMBÉM 
+
+VAI QUERER 
+
+__RENDERIZAR__ ALGUMA COISA COM 
+
+'render()'...----> e dentro 
+
+de 'render()" ele terá o método/função 
+
+
+
+'return ()'....
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+class ErrorBoundary extends Component {
+
+    render() {
+        
+
+
+
+        return (
+
+
+            
+
+
+        );
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+export default ErrorBoundary;
+
+
+
+-------------------------------------------
+
+
+
+
+O QUE O PROFESSOR PRETENDER 
+
+
+RETORNAR NO 'return'
+
+É SIMPLESMENTE 
+
+
+UM CÓDIGO JSX,
+
+UM 
+
+
+'<H1>' TAG...
+
+
+Nessa tag, ele dirá 'Something went wrong'... (e ele tira os '()', pois E ELE __SÓ RETORNARÁ ESSE ÚNICO ELEMENTO, NESSE STATEMENT)....
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+class ErrorBoundary extends Component {
+
+    render() {
+        
+
+
+
+        return <h1>Something went wrong</h1>;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+export default ErrorBoundary;
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+ENTRETANTO,
+ 
+
+
+ ELE ___SÓ VAI QUERER___ CHAMAR 
+
+ ESSE NEGÓCIO AÍ QUANDO/SE 
+
+
+
+ ___UM ERRO/NOSSO ERRO OCORRER_____... ---------> 
+
+
+
+
+PARA QUE ELE CONSIGA IMPLEMENTAR 'CONDICIONAIS' ao nosso código, 
+
+e para que 
+
+essa <H1> TAG seja mostrada apenas quando 
+
+uma condição for satisfeita (o erro acontecer),
+ 
+
+
+
+ O PROFESSOR 
+
+
+ ADICIONA 
+
+
+
+ A PROPRIEDADE 
+
+ 'state = {}'   (possibilitada pela sintaxe CLASS-BASED COMPONENT)
+
+
+ AO CÓDIGO....
+
+
+
+
+ -------------------------------
+
+
+
+
+
+ ex:
+
+
+ 
+import React, { Component } from 'react';
+
+
+
+
+
+
+class ErrorBoundary extends Component {
+
+
+    state = {
+        
+    }
+
+
+
+
+
+    render() {
+        
+
+
+
+        return <h1>Something went wrong</h1>;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+export default ErrorBoundary;
+
+
+
+
+---------------------------------
+
+
+
+
+
+DENTRO DESSE 
+
+'STATE',
+
+ele vai definir uma propriedade 
+
+
+inicial 
+
+
+
+de 
+
+'hasError: false';
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+class ErrorBoundary extends Component {
+
+
+    state = {
+        hasError: false
+    }
+
+
+
+
+
+    render() {
+        
+
+
+
+        return <h1>Something went wrong</h1>;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+export default ErrorBoundary;
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+A OUTRA COISA QUE ELE FARÁ NESSE 
+
+'STATE'
+
+
+É ARMAZENAR uma propriedade 
+
+'errorMessage'... ---> e o valor dessa 'errorMessage' 
+
+SERÁ  " '' ", ou seja, uma EMPTY STRING...
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+class ErrorBoundary extends Component {
+
+
+    state = {
+        hasError: false,
+        errorMessage: ''
+    }
+
+
+
+
+
+    render() {
+        
+
+
+
+        return <h1>Something went wrong</h1>;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+export default ErrorBoundary;
+
+
+
+
+------------------------------------------  
+
+
+ISSO FEITO, 
+
+
+PODEMOS 
+
+ADICIONAR 
+
+
+AGORA __UM NOVO 
+
+
+__MÉTODO___ NO BODY DO NOSSO COMPONENT (e não em 'render()'),
+
+
+UM MÉTODO 
+
+
+CHAMADO 
+
+
+DE 
+
+
+'componentDidCatch' (O QUE QUER DIZER: 'COMPONENT CONSEGUIU CAPTURAR UM ERRO')...
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+class ErrorBoundary extends Component {
+
+
+    state = {
+        hasError: false,
+        errorMessage: ''
+    }
+
+
+
+
+    componentDidCatch = () => {
+
+
+
+
+   
+    }
+
+
+
+
+
+
+
+    render() {
+        
+
+
+
+        return <h1>Something went wrong</h1>;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+export default ErrorBoundary;
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+
+Certo... o que eu vou chutar É QUE O CÓDIGO VAI FICAR ASSIm:
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+class ErrorBoundary extends Component {
+
+
+    state = {
+        hasError: false,
+        errorMessage: ''
+    }
+
+
+
+
+    componentDidCatch = () => {
+
+
+
+        this.setState(
+            {
+
+                hasError: true,
+                errorMessage: ...
+            }
+        )
+
+
+   
+    }
+
+
+
+
+
+
+
+    render() {
+        
+
+
+
+        return <h1>Something went wrong</h1>;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+export default ErrorBoundary;
+
+
+
+--------------------------------------------
+
+
+
+
+CERTO...
+
+
+
+
+
+
+
+
+--> esse componentDidCatch SERÁ 
+
+__ UM ___ MÉTODO ___ QUE 
+
+
+SEMPRE RECEBERÁ (parâmetro)
+
+
+
+
+UM 
+
+
+
+
+'ERROR' E uma POSSÍVEL 'info'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+class ErrorBoundary extends Component {
+
+
+    state = {
+        hasError: false,
+        errorMessage: ''
+    }
+
+
+
+
+    componentDidCatch = (error, info) => {
+
+
+
+        this.setState(
+            {
+
+                hasError: true,
+                errorMessage: ...
+            }
+        )
+
+
+   
+    }
+
+
+
+
+
+
+
+    render() {
+        
+
+
+
+        return <h1>Something went wrong</h1>;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+export default ErrorBoundary;
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+ESSE 
+
+
+'error' 
+
+
+e essa 
+
+
+'info' 
+
+
+SÃO PASSADOS AUTOMATICAMENTE 
+
+A 
+
+
+ELE POR ___MEIO DO REACT____...
+
+
+
+
+
+
+
+---> E, IMPORTANTE!!!! ----> O 'componentDidCatch' SERÁ 
+
+
+___EXECUTADO___ SEMPRE QUE 
+
+
+ALGUM COMPONENT QUE 
+
+
+___WRAPPARMOS___ COM O 
+
+
+
+'ErrorBoundary'
+
+
+
+DER/NOS ENTREGAR/NOS ATIRAR UM ____ERRO___....
+
+
+
+
+
+
+---> O PROFESSOR LOGO NOS MOSTRARÁ COMO FAZER ISSO... MAS ANTES DISSO, 
+
+
+DEVEMOS COMPLETAR A LÓGICA DE 'componentDidCatch'.... ----> 
+
+DENTRO 
+
+
+DESSE MÉTODO, 
+
+O PROFESSOR VAI QUERER 
+
+
+DEFINIR 
+
+
+
+
+'this.setState()'   (pq agora nós DE FATO CONSEGUIMOS UM ERRO, e por isso o STATE DE NOSSO APLICATIVO DEVE/DEVERÁ MUDAR...)
+
+
+
+
+E ENTÃO,
+ 
+ DENTRO 
+
+ DE 
+
+ 'setState()',
+
+
+
+ O PROFESSOR 
+
+
+ VAI DEFINIR 
+
+
+
+ UM NOVO ESTADO (objeto {} ) 
+
+
+
+ com 
+
+
+ UMA PROPRIEDADE 
+
+
+ 'hasError' DE 'TRUE'...
+ 
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+class ErrorBoundary extends Component {
+
+
+    state = {
+        hasError: false,
+        errorMessage: ''
+    }
+
+
+
+
+    componentDidCatch = (error, info) => {
+
+
+
+        this.setState(
+            {
+
+                hasError: true,
+            }
+        )
+
+
+   
+    }
+
+
+
+
+
+
+
+    render() {
+        
+
+
+
+        return <h1>Something went wrong</h1>;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+export default ErrorBoundary;
+
+
+
+
+-------------------------------------------
+
+
+
+
+E ELE 
+
+
+TAMBÉM 
+
+VAI DEFINIR 
+
+
+A 'errorMessage' 
+
+
+como sendo igual 
+
+
+A 
+
+
+
+'error'  (o 'error' QUE RECEBEMOS COMO ___PARÂMETRO____ NESSE MÉTODO 'componentDidCatch'...)....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+class ErrorBoundary extends Component {
+
+
+    state = {
+        hasError: false,
+        errorMessage: ''
+    }
+
+
+
+
+    componentDidCatch = (error, info) => {
+
+
+
+        this.setState(
+            {
+
+                hasError: true,
+                errorMessage: error ///////eis o código em questãO.
+            }
+        )
+
+
+   
+    }
+
+
+
+
+
+
+
+    render() {
+        
+
+
+
+        return <h1>Something went wrong</h1>;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+export default ErrorBoundary;
+
+
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+DEPOIS DISSO,
+
+
+PROFESSOR 
+
+
+EXPLICA QUE NO 
+
+INTERIOR 
+
+
+DO MÉTODO 
+
+
+'render()'
+
+
+
+NÓS DEVEMOS 
+
+
+TER ___ 
+
+2 POSSÍVEIS 'OUTCOMES' ____ ---> 
+
+
+
+UM OUTCOME EM QUE 
+
+
+O ERROR __APARECE__/existe, E OUTRO 
+
+EM QUE 
+
+ELE __NÃO APARCE__
+
+
+
+----------------------------------------------------
+
+
+
+
+
+É POR ISSO QUE ELE VAI ADICIONAR UM 
+
+_iF STATEMENT__ NO EXTERIOR DESSE MÉTODO RENDER... --> 
+
+
+nesse if statement, 
+
+
+ele vai escrever 
+
+
+
+'if (this.state.hasError) {
+
+}'  (OU SEJA, '''OU NOSSO APLICATIVO TEM UM ERRO''''....)    ''ou não''....
+
+
+
+NO CASO 
+
+DE ELE TER UM ERRO,
+
+
+
+VAMOS QUERER 
+
+QUE 
+
+
+'
+
+AQUELA 
+
+
+TAG <H1> 
+
+SEJA REALMENTE OUTPUTTADA...
+
+
+
+
+
+
+(EU TENTEI CRIAR MINHA VERSÃO DO CÓDIGO):
+
+
+
+
+
+
+ex:
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+class ErrorBoundary extends Component {
+
+
+
+    state = {
+        HasError: false,
+        errorMessage: ''
+    }
+
+
+
+
+    componentDidCatch = (error, info) => {
+
+
+
+
+        this.setState(
+            
+            {
+            HasError: true, 
+            errorMessage: error
+        }
+        
+        
+        
+        );
+
+    }
+
+
+    render() {
+        
+        let mensagemDeErro = null;
+        if (this.state.HasError) {
+            mensagemDeErro = (<h1>Something went wrong</h1>); ///////minha versão do código.
+        }
+        return {mensagemDeErro};
+    }
+}
+
+
+
+export default ErrorBoundary;
+
+
+
+--------------------------------------
+
+
+
+
+
+ENTRETANTO, 
+
+
+PROFESSOR ME MOSTROU UMA SINTAXE BEM MELHOR:
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+class ErrorBoundary extends Component {
+
+
+
+    state = {
+        HasError: false,
+        errorMessage: ''
+    }
+
+
+
+
+    componentDidCatch = (error, info) => {
+
+
+
+
+        this.setState(
+            
+            {
+            HasError: true, 
+            errorMessage: error
+        }
+        
+        
+        
+        );
+
+    }
+
+
+    render() {
+        
+        if (this.state.HasError) {
+           return <h1>{this.state.errorMessage}</h1>;
+        }
+        
+    }
+}
+
+
+
+export default ErrorBoundary;
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+'''''
+    render() {
+        
+        if (this.state.HasError) {
+           return <h1>{this.state.errorMessage}</h1>;
+        }
+        
+    }
+
+'''''
+
+
+
+
+'this.state.errorMessage' -----> isso É BASICAMENTE 
+
+
+UMA REFERÊNCIA AO 
+
+CÓDIGO/MENSAGEM DE ERRO 
+
+QUE OBTEMOS 
+
+
+POR MEIO 
+
+DO PASS 
+
+
+
+do argumento 'error' ('errorMessage: error') À PROPRIEDADE 
+
+
+'componentDidCatch()'... o que é bem melhor...
+
+
+-------------------------------------
+
+
+
+
+
+
+CERTO... 
+
+
+MAS O PROFESSOR TAMBÉM VAI COLOCAR UM ELSE CASE,
+ 
+ aqui...
+
+
+
+ o else case será 
+
+
+ '
+
+ return this.props.children;' ----------------------------> PROFESSOR 
+
+ DIZ QUE 
+
+
+ ESSE RETURN AQUI 
+
+
+ ______É BEM IMPORTANTE____ ------> É BEM 
+
+ IMPORTANTE ESSA SINTAXE 'this' na frente de 'props.children'... ----> 
+
+
+
+
+ PQ ISSO? --------> pq QUANDO ACESSAMOS 
+
+ 'PROPS' em um 
+
+
+ component 
+
+ de TIPO 
+
+ 'CLASS-BASED', como este (e não um FUNCTIONAL COMPONENT; em functional components basta nós chamarmos 'props.propriedadeEscolhidaOuPassadaAesseComponent'),
+
+
+
+
+ NÓS PRECISAMOS 
+
+
+ ADICIONAR 
+
+
+ ESSE 
+ 'this' na frente.... 
+
+
+
+(E O PROFESSOR, AQUI, FOI EM FRENTE E ACESSOU 
+
+A PROPRIEDADE 
+'CHILDREN' DESSE OBJETO 'props' 
+
+EXISTENTE 
+
+DENTRO DESSE COMPONENT 
+
+'ErrorBoundary'...)
+
+
+
+
+
+EX:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+class ErrorBoundary extends Component {
+
+
+
+    state = {
+        HasError: false,
+        errorMessage: ''
+    }
+
+
+
+
+    componentDidCatch = (error, info) => {
+
+
+
+
+        this.setState(
+            
+            {
+            HasError: true, 
+            errorMessage: error
+        }
+        
+        
+        
+        );
+
+    }
+
+
+    render() {
+        
+        if (this.state.HasError) {
+           return <h1>{this.state.errorMessage}</h1>;
+        } else {
+            return this.props.children; ///EIS O CÓDIGO EM QUESTÃO.
+        }
+        
+    }
+}
+
+
+
+export default ErrorBoundary;
+
+
+-------------------------------------------------
+
+
+
+
+
+
+MAS PQ 
+
+
+'RETURN THIS.PROPS.CHILDREN'? ----> PQ ESSE CÓDIGO AÍ 
+
+__RETORNARÁ______ A COISA/O OBJETO/COMPONENT EM QUE 
+
+___WRAPPAMOS ____ ESSA CLASSE 'ErrorBoundary'.... (nesse caso, retornará 
+
+O '''CONTEÚDO''''____ DO COMPONENT 'Person', o conteúdo 
+
+
+QUE DEVE SER RETORNADO CASO NÃO EXISTA/APAREÇA UM ERRO....).
+
+
+
+
+
+
+
+
+
+OU seja,
+
+
+
+'return this.props.children' 
+
+
+é o NOSSO 'DEFAULT CASE' do nosso aplicativo, 
+
+o que deve acontecer 
+
+QUANDO NENHUM ERRO ACONTECE/APARECE. ----------> 
+
+
+
+
+E, CASO ACONTEÇA ALGUM ERRO, 
+
+NOSSO CÓDIGO FARÁ 
+
+
+'CATCH' 
+E OUTPUTTARÁ 
+
+A MENSAGEM 
+
+
+DE ERRO POR MEIO DAQUELE PRIMEIRO 'IF CASE', 
+
+aquele 
+
+if statement 
+
+
+de 
+
+'(this.state.hasError) {
+    return <h1>{this.state.errorMessage}
+}',
+
+
+E POR MEIO 
+
+
+DAQUELE 
+
+MÉTODO 
+
+
+
+'componentDidCatch' 
+
+
+
+POR FIM, O PROFESSOR escreve 'export default ErrorBoundary'...
+
+
+-------------------------------------------------------
+
+
+
+
+Ok, mas a pergunta é:
+
+
+
+quando 
+
+'componentDidCatch' é disparado, na verdade?
+
+
+
+
+
+
+
+
+-------> PROFESSOR APONTA QUE ELE UTILIZARÁ 
+
+
+
+O 'ErrorBoundary' LÁ NO 
+
+
+NOSSO arquivo 
+
+
+'App.js',
+
+
+
+
+
+
+E ELE VAI WRAPPAR NOSSA 'PERSON' 
+
+com ele... 
+------------------------
+
+
+
+
+Para isso, 
+
+ele vai importar 
+
+
+'ErrorBoundary'....
+
+
+
+
+
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+
+
+
+------------------------------------
+
+
+
+
+
+
+DEPOIS DISSO,
+
+
+
+ELE VAI ATÉ 
+
+
+O COMPONENT 'Person',
+
+
+de código 
+
+'<Person>' 
+
+
+
+
+E WRAPPA ESSE NEGÓCIO AO SEU REDOR....
+
+
+
+
+CERTO.
+
+WRAPPAMOS ESSE NEGÓCIO EM OUTRAS PALAVRAS...
+
+
+
+
+
+
+
+'ErrorBoundary' --------> ESSE ERRORBOUNDARY É, EM OUTRAS PALAVRAS,
+
+
+UM 
+
+'HIGHER ORDER COMPONENT'... -------> ISSO QUER DIZER QUE ELE É SIMPLESMENTE 
+
+UM 
+
+
+__COMPONENT QUE WRAPPA OUTRO COMPONENT, E QUE TEM O OBJETIVO DE FAZER ___HANDLE___ 
+DE QUAISQUER ERROS 
+
+QUE 
+'Person' possa dar 'throw',
+
+ESSA É A SUA TAREFA/ENCARGO.
+
+
+
+----------------------------------------------------
+
+
+
+
+
+---> certo... professor explica, também, que 
+
+COM ESSE 
+
+ErrorBoundary WRAPPANDO NOSSA PERSON, NÓS 
+
+TAMBÉM 
+
+DEVEMOS 
+
+MOVER A 'key' de 'person' de lugar,
+
+
+DEVEMOS 
+
+MOVÊ-LA AO 
+
+
+COMPONENT BOUNDARY, em vez de deixar em 'Person'....
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+if (this.state.showPersons) {
+
+
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        
+        return <ErrorBoundary
+        key={person.id}> /////EIS O CÓDIGO EM QUESTÃO.
+        
+        <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+        </ErrorBoundary>
+      })}
+
+
+    
+    </div>
+  );
+
+
+--------------------------------
+
+
+
+
+
+
+CERTO, MAS PQ ISSO? --------> 
+PRECISAMOS 
+
+
+FAZER ISSO PQ __ 'ERRORBOUNDARY' É AGORA O COMPONENTE 
+MAIS EXTERNO 
+
+
+QUE É MAPPEADO,
+
+
+e a 'key' SEMPRE 
+
+
+TEM QUE ESTAR ______NO ELEMENTO MAIS EXTERNO___, QUANDO USAMOS 
+UM 
+
+MÉTODO '.MAP()'...  (pq esse é o elemento que nós de fato replicamos,
+O ELEMENTO INTEIRO, COM 'ERRORBOUNDARY' WRAPPANDO E TUDO MAIS....)
+
+
+
+-------------------------------------------
+
+
+
+
+COM ISSO, SALVAMOS NOSSO CÓDIGO E RECARREGAMOS.
+
+
+
+
+
+------> voltamos ao nosso app....  --> CLICAMOS EM 'PERSON' 
+
+
+ATÉ OBTERMOS UM ERRO.... --------> 
+
+
+QUANDO O ERRO OCORRER, 
+
+NÓS AINDA VEREOMS
+
+
+
+AQUELE CÓDIGO DE ERRO NO MEIO (na página mesmo), INFELIZMENTE... --------> ENTRETANTO, 
+
+O PROFESSOR 
+
+DIZ QUE ESSA MENSAGEM AÍ ___SÓ APARECE DURANTE O DEVELOPMENT MODE do react__, pq 
+
+NA NOSSA PÁGINA DE VERDADE, 
+
+APENAS 
+
+O ERRO DO CONSOLE VAI APARECER (a página em si não carregará, o que 
+
+deixará de mostrar ao usuário essa feia mensagem de erro).
+
+
+
+
+
+
+
+
+------------> NO 'PRODUCTION MODE'/CÓDIGO DE PRODUÇÃO, 
+
+VOCÊ NÃO VERÁ ESSA PÁGINA 
+
+FEIA 
+
+
+
+DE CÓDIGO DE ERRO,
+
+e sim você 
+
+
+
+VERÁ 
+
+A COISA/CÓDIGO 
+
+
+QUE VOCê ESCREVEU 
+
+
+
+DENTRO DO SEU 'ERROR BOUNDARY'... ------> no nosso exemplo, 
+
+nós 
+
+
+simplesmente 
+
+veremos 
+
+aquela 
+
+
+'errorMessage', MAS 
+
+
+PODEMOS DEFINIR COISAS/AVISOS/MENSAGENS DE ERRO 
+
+MAIS COMPLEXAS....
+
+
+
+
+--------------
+
+
+
+
+
+
+------> MAS ISSO NÃO QUER DIZER QUE VOCÊ DEVE 'CLUSTER' TODO SEU APLICATIVO 
+
+
+COM ERROR BOUNDARIES... -----> vocÊ deve apenas 
+
+WRAPPAR 
+
+OS TRECHOS DO SEU CÓDIGO QUE VOCE ACHA QUE REALMENTE NECESSITAM DISSO. --> 
+
+
+APENAS USE-OS 
+
+se vocÊ 
+
+
+
+TEM ALGUM CÓDIGO QUE VOCÊ 
+
+_____sABE____ QUE PODE FALHAr... (que é uma hipótese possível/provável)...
+
+
+
+
+
+
+-------> PQ isso?
+
+
+Bem, pq se UM CÓDIGO TEM A __CHANCE DE FALHAR___, ISSO PROVAVELMENTE 
+
+SIGNIFICA QUE 
+VOCÊ, COMO DESENVOLVEDOR,
+
+
+FEZ ALGUMA CAGADA DURANTE O DESENVOLVIMENTO...
+
+
+
+
+
+
+--------> APENAS USE ERROR BOUNDARIES PARA CASOS EM QUE VOCê 
+
+SABE QUE 
+
+AQUELE CÓDIGO VAI FALHAR/PODE FALHAR;
+
+
+
+
+ERROR BOUNDARIES SÃO BONS PARA MOSTRAR 'CUSTOM ERROR MESSAGES', 
+
+
+e só para isso. -------> FAÇA COM QUE APENAS 
+
+1 PEDAÇO DO CÓDIGO FALHE, deixando O RESTO 
+
+DO CÓDIGO CONTINUAR FUNCIONANDO... ---> aí, na sua página 
+
+
+existirá apenas uma parte '''quebrada''' (e terá 
+sua CUSTOM ERROR MESSAGE), mas o conjunto da obra não será 
+
+comprometido.
+
+
+
+
+
+
+--------> NO PRÓXIMO MÓDULO,
+
+
+O PROFESSOR VAI REMOVER ESSE CÓDIGO DO ERROR BOUNDARY, E DEIXARÁ 
+
+DE WRAPPAR O PERSON COM ELE..

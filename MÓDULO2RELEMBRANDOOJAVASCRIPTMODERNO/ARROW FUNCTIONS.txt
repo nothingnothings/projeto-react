@@ -1,0 +1,284 @@
+
+
+
+
+APRENDEMOS SOBRE ARROW FUNCTIONS...
+
+
+
+
+JAVASCRIPT FUNCTION NORMAL:
+
+
+
+function myFnc() {
+    ...
+}
+
+
+
+
+
+
+ARROW FUNCTION 
+
+
+
+const myFnc = () => {
+    ...
+}
+
+
+
+------------------------------
+
+
+
+
+ARROW FUNCTION --> É UMA SINTAXE UM POUCO MENOR DO QUE A COMUM, POIS 
+
+NÃO TEM a keyword 'function'...
+
+
+
+
+
+---> MAS MAIS IMPORTANTE DO QUE ISSO, 
+
+AS ARROW FUNCTIONS SOLUCIONAM UM 
+PROBLEMA 
+
+MUITO CHATO, 
+
+
+OS PROBLEMAS 
+
+DA keyword 'this'....
+
+
+
+
+
+
+THIS KEYWORD ---> normalmente, com o javascript normal, 
+
+ELA NEM SEMPRE SE REFERE ÀQUILO QUE VOCÊ ESPERA (expect to...)   ------> 
+
+
+
+MAS QUANDO VOCÊ USA 'THIS' DENTRO DE UMA ARROW FUNCTION, 
+
+ESSE THIS SEMPRE VAI __MANTER__ O SEU PRÓPRIO CONTEXTO, NÃO 
+
+VAI MUDAR MAGICAMENTE DE REFERENCIAL...
+--------------------------------
+
+
+
+
+
+---> DEVEMOS ACESSAR O JSBIN 
+
+
+e ver arrow functions em prática...
+
+
+
+professor escreve 
+
+a função
+
+
+
+
+
+function printMyName(name) {
+    console.log(name);
+}
+
+
+
+printMyName('Max');
+
+
+
+-------------------------------------
+
+
+
+ISSO VAI PRINTAR 
+
+'MAX'...
+
+
+
+
+
+O equivalente 
+
+arrow function 
+
+
+seria 
+
+
+
+
+const printMyName = name => {
+    console.log(name);
+}
+
+
+
+
+
+
+ISSO AINDA VAI PRINTAR MAX_______
+
+
+
+
+*** se você recebe apenas 1 único argumento/parâmetro, 
+
+vocÊ pode OMITIR os parênteses...
+
+
+
+------------------------------------------------
+
+
+
+
+Se você vai usar uma arrow function que NÃO RECEBE PARÂMETROS, VOCÊ 
+DEVE ESCREVER ASSIM:
+
+
+
+
+
+const printMyName = () => {
+
+}
+
+
+
+----------------------------------------------- 
+
+
+ou seja, esse formato:
+
+
+
+
+
+const printMyName =  => {
+
+}
+
+
+NÃO FUNCIONA..
+
+
+----------------------------------
+
+
+
+
+
+
+
+HÁ TAMBÉM OUTRA ALTERNATIVA QUANTO AO 'function body' das arrow 
+functions... ------> 
+
+
+OBVIAMENTE,
+
+
+MUITAS FUNÇÕES  APENAS 
+
+
+__RETORNAM__ (Return) ALGUMA COISA...
+
+
+
+
+
+ex(uma função de MULTIPLY):
+
+
+
+
+const multiply = number => {
+    return number * 2;
+}
+
+
+console.log(multiply(2));
+
+
+
+
+-----------------------------
+
+
+
+ESSA É A SINTAXE ALTERNATIVA DO BODY DAS ARROW FUNCTIONS:
+
+
+
+SE VOCÊ TEM APENAS 1 ÚNICO STATEMENT, UM ÚNICO STATEMENT QUE FAZ __reTURN___ de algum 
+
+valor, 
+
+
+VOCÊ PODE __oMITIR COMPLETAMENTE__ os curly braces... ({})....
+
+
+
+
+MAS PARA QUE VOCÊ CONSIGA FAZER ISSO, VOCÊ DEVE 
+
+OBRIGATORIAMENTE REMOVER A KEYWORD 'return'..
+
+
+ex:
+
+
+
+
+const multiply = number => number * 2;
+
+
+
+console.log(multiply(2));
+
+
+
+
+(OU SEJA, AQUI OMITIMOS 
+
+OS CURLY BRACES 
+
+E OS PARÊNTESES DO PARÂMETRO...)
+
+
+
+------------------------------------
+
+
+
+
+ESSA É A VERSÃO MAIS CURTA DAQUELA FUNÇÃO...
+
+
+const multiply = number => number * 2; 
+
+
+
+
+
+---> ISSO AINDA VAI RETORNAR O RESULTADO DESSA FUNÇÃO normalmente... ---> mas de uma forma bem mais concisa...
+
+
+
+--> ARROW FUNCTION É MUITO UTILIZADA.

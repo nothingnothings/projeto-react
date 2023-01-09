@@ -1,0 +1,1451 @@
+
+
+
+
+
+
+---> estou quase conseguindo, mas o burger ainda não 
+
+
+
+
+é alterado quando o re-renderizo na minha outra página... não sei porque o burger 
+
+
+ANTIGÃO (dá página burgerbuilder) não está sendo repassado para a nova página... (já fiz 
+
+o extract dos queryParams, mas não adiantou de muita coisa....)
+
+
+
+
+
+
+
+-------> DEVE SER ALGUMA COISA NO COMPONENT BURGER QUE ESTÁ CAGANDO TUDO... não é possível, isso...
+
+
+
+
+
+
+
+
+
+
+
+
+
+O código problema deve ser este aqui (em Burger):
+
+
+
+.reduce(
+    (arr, el) => {
+      return arr.concat(el)
+    },
+    []);
+
+
+
+
+
+---------------------------
+
+
+
+
+O problema, na verdade, 
+
+
+reside neste 
+
+
+código:
+
+
+
+
+
+
+
+
+  Object.keys(props.ingredients)
+  .map(igKey => {
+    
+    return [...Array(props.ingredients[igKey])].map(
+
+      ( _, i ) => {
+        return <BurgerIngredient key={igKey + i} type={igKey} />
+      }
+    
+
+    
+    )
+  }
+  )
+  
+
+
+
+
+
+
+
+
+
+
+  naquele 'map', ali, certamente...
+
+
+
+
+
+  (ainda não consegui implementar esse negócio, não consegui implementar por conta própria)..
+
+
+
+
+
+
+
+
+
+
+
+
+  -----------------------
+
+  OK, PROFESSOR DIZ QUE DEVEMOS IMPLEMENTAR ESSA LÓGICA, AGORA....
+
+
+
+
+
+
+
+
+
+
+  --> ele diz que tudo começa no component 'BurgerBuilder',
+
+  em que 
+
+  ELE FAZ 
+
+
+  PUSH 
+
+  da página 
+
+  '/checkout', no 
+
+
+
+  'checkoutContinueHandler... ------------> 
+
+
+
+
+
+
+
+
+  A PRIMEIRA COISA QUE ELE VAI FAZER É SUBSTITUIR ESSE 
+
+
+
+
+'this.props.history.push(
+  '/checkout'
+)
+
+
+
+
+
+POR UM __JAVASCRIPT OBJECT__... ----> 
+
+
+dentro desse javascript object,
+
+professor 
+
+
+
+vai definir 
+
+
+
+uma propriedade 
+
+de 
+
+'pathname' como igual a 
+
+'/checkout' (mesma coisa de antes, portanto...)
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+'this.props.history.push(
+  
+  
+  
+  {
+        pathname: '/checkout',
+
+  }
+
+) 
+
+
+
+
+----------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+MAS É CLARO QUE NÃO SERÁ SÓ ISSO: 
+
+ele 
+
+
+também 
+
+vai adicionar uma propriedade 
+
+
+'search', 
+
+
+que terá 
+
+um valor 
+
+
+
+QUE 
+
+
+SERÁ 
+
+MINHA 'SEARCH QUERY'/search parameter... (usada para 
+
+construir o burger na página 'Checkout'... ) -------> PARA ISSO, É CLARO, 
+
+
+
+PROFESSOR 
+
+
+
+NOS EXPLICA QUE __ELE PRECISA____ ENCODAR____ os ingredients 
+
+no 
+
+'state' 
+
+de 
+
+burgeBuilder... -------> PARA ENCODAR,
+
+ele provavelmente 
+
+
+VAI USAR 
+
+
+
+UM TEMPLATE LITERAL... (``, backticks)...
+  
+
+
+
+
+
+
+--> bem, para isso ele diz que VAI CRIAR UMA NOVA CONSTANTE, A QUAL ELE CHAMARÁ 
+
+
+DE 
+
+'queryParams'...
+
+
+
+ex:
+
+
+
+
+const queryParams = 
+
+
+
+
+this.props.history.push(
+  
+  
+  
+  {
+        pathname: '/checkout',
+        search: ''
+
+  }
+
+) 
+
+
+
+
+--------------------------------
+
+
+
+
+CERTO... E ESSE 'queryParams'
+
+
+DEVERÁ SER UM __EMPTY ARRAY___, INICIALMENTE... ------> AÍ NÓS VAMOS QUERER 
+
+
+ADICIONAR ELEMENTOS 
+
+
+A 
+
+ESSE ARRAY....
+
+
+
+
+ex:
+
+
+
+
+const queryParams = [];
+
+
+
+
+this.props.history.push(
+  {
+        pathname: '/checkout',
+        search: ''
+  }
+) 
+
+
+
+--------------------->
+
+
+
+E O ADD DESSES ELEMENTOS SERÁ FEITO __POR MEIO DE UM FOR IN LOOP__....
+
+
+
+--> e o loop será '''loope por TODAS AS PROPRIEDADES 
+
+DENTRO 
+
+DE 
+'this.state.ingredients'... ''''''''' ( ou seja, nos ingredients que eu tenho...)
+
+
+
+
+ex:
+
+
+const queryParams = [];
+
+
+
+for (let i in this.state.ingredients)
+
+
+this.props.history.push(
+  {
+        pathname: '/checkout',
+        search: ''
+  }
+) 
+
+
+
+
+----------------------------------------
+
+
+ISSO FEITO, 
+
+
+O PROFESSOR VAI QUERER FAZER __PUSH___ 
+
+
+de 
+
+
+alguma coisa PARA dentro de 
+
+
+'this.state.ingredients'
+
+
+
+__PARA ___ DENTRO 
+
+DAQUELE ARRAY 
+'queryParams'...
+
+
+
+
+
+ex:
+
+
+
+
+
+const queryParams = [];
+
+
+
+for (let i in this.state.ingredients) {
+  queryParams.push();
+}
+
+
+this.props.history.push(
+  {
+        pathname: '/checkout',
+        search: ''
+  }
+) 
+
+
+
+-------------------------------
+
+
+OK, MAS QUAL COISA ELE
+ 'PUSHARÁ'
+
+
+ PARA 
+
+ DENTRO DE 
+
+
+ 'queryParams'? ---> professor explica que 
+
+
+ ele 
+
+
+ vai 
+
+ PRIMEIRAMENTE, DENTRO DO SLOT DO 'push', 
+
+
+ USAR UM 
+
+
+ 'HELPER METHOD',
+
+
+ um method 
+
+
+
+ que JÁ VIMOS ANTES,
+
+ QUE É 
+
+ O 
+
+
+
+ 'encodeURIComponent()'... ------> 
+
+
+
+
+
+
+
+
+
+
+
+ encodeURIComponent() differs from encodeURI as follows:
+
+var set1 = ";,/?:@&=+$";  // Reserved Characters
+var set2 = "-_.!~*'()";   // Unescaped Characters
+var set3 = "#";           // Number Sign
+var set4 = "ABC abc 123"; // Alphanumeric Characters + Space
+
+console.log(encodeURI(set1)); // ;,/?:@&=+$
+console.log(encodeURI(set2)); // -_.!~*'()
+console.log(encodeURI(set3)); // #
+console.log(encodeURI(set4)); // ABC%20abc%20123 (the space gets encoded as %20)
+
+console.log(encodeURIComponent(set1)); // %3B%2C%2F%3F%3A%40%26%3D%2B%24
+console.log(encodeURIComponent(set2)); // -_.!~*'()
+console.log(encodeURIComponent(set3)); // %23
+console.log(encodeURIComponent(set4)); // ABC%20abc%20123 (the space gets encoded as %20)
+
+
+
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+
+ESSE NEGÓCIO VAI ___ENCODAR___ NOSSO OBJETO 'this.state.ingredients',
+
+
+fará com que 
+
+ele fique com um monte de letras e números bizarros (encodados)...
+
+
+
+
+
+--> o professor explica que ele vai encodar PQ ISSO É CONVENIENTE,
+ 
+ É UM MÉTODO QUE ___aCABA __ COM OS WHITE SPACES___ entre 
+
+
+ os key-value pairs dentro de 
+
+ 'this.state.ingredients'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+const queryParams = [];
+
+
+
+for (let i in this.state.ingredients) {
+  queryParams.push(encodeURIComponent());
+}
+
+
+this.props.history.push(
+  {
+        pathname: '/checkout',
+        search: ''
+  }
+) 
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+Certo... mas é EVIDENTE QUE 
+
+ESSE 
+
+'encodeURIComponent()' EXIGE UM PARÂMETRO, EXIGE ALGO, QUE DEVE SER ENFIADO DENTRO 
+
+DO SEU SLOT... ---> a coisa que o professor enfiará 
+
+é 
+
+a variável/propriedade representada por uma variável, aquele 
+
+
+'i'  em 'let i in this.state.ingredients', nesse loop...
+
+
+
+
+
+
+eX:
+
+
+
+
+
+const queryParams = [];
+
+
+
+for (let i in this.state.ingredients) {
+  queryParams.push(encodeURIComponent(i));
+}
+
+
+this.props.history.push(
+  {
+        pathname: '/checkout',
+        search: ''
+  }
+) 
+
+
+
+
+---------------------------
+
+
+
+
+
+
+Ou seja, esse código aí vai fazer COM QUE 
+
+
+OS 'KEYS'/property names do objeto 'ingredients' SEJAM ENFIADOS NAQUELE 
+
+'queryParams'....
+
+
+
+
+--> certo, mas é evidente que 
+
+SÓ ESSE CÓDIGO AÍ NÃO SERÁ SUFICIENTE.. -------> 
+
+
+o professor ainda 
+
+PRECISA 
+
+
+
+DOS ___vALORES__ (as quantidades)
+
+
+
+DE CADA INGREDIENT, DE CADA KEY, e isso 
+
+
+com um formato 
+
+
+
+'cheese=1', 'salad=3', 'meat=4', etc etc....
+
+
+
+
+
+
+PARA ISSO, ELE VAI USAR O encodeURIComponent __DE NOVO___, MAS DESSA VEZ COM OS VALORES de nosso state... ---> para isso, 
+
+
+ele vai escrever....
+
+
+
+ex:
+
+
+
+
+
+const queryParams = [];
+
+
+
+for (let i in this.state.ingredients) {
+  queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+}
+
+
+this.props.history.push(
+  {
+        pathname: '/checkout',
+        search: ''
+  }
+) 
+
+
+
+
+----------------------------------------------------------------
+
+
+
+ou seja,
+
+
+'this.state.ingredients[i]', o valor dessa KEY ESPECÍFICA ('i', que representa 
+
+OS PROPERTY __NAMES__ DOS INGREDIENTS no nosso state....)...
+
+
+
+
+
+
+
+
+---> certo, com isso, com essa alteração, teremos 
+
+efetivamente 
+
+um 
+
+
+ARRAY DE STRINGS
+
+
+em 
+
+
+'queryParams'...
+
+
+(
+
+  ou seja, um array como 
+
+
+
+
+  '["cheese=2", "meat=3", "salad=5"]'....
+)
+
+
+
+
+--------->  CERTO, E ESSE 'QUERYPARAMS', ESSE ARRAY DE STRINGS, É 
+
+
+A COISA QUE 
+
+O PROFESSOR VAI QUEREr ______UNIR________ por meio 
+
+
+
+do 
+
+
+
+método 
+
+'.join()'.... -----------> 
+
+
+
+
+E ELE VAI UNIR ESSAS STRINGS POR MEIO DA ADIÇÃO DE 
+
+um 
+
+
+'&' no meio de cada uma delas... ----> e ele vai armazenar esse valor 
+
+
+dessas STRINGS TODAS UNIDAS EM UMA STRING ÚNICA (com vários '&' as separando) 
+
+
+
+DENTRO 
+
+
+DE 
+
+
+UMA CONSTANTE, CHAMADA DE 'queryString'....
+
+
+
+
+
+
+ex:
+
+
+
+
+const queryParams = [];
+
+
+
+for (let i in this.state.ingredients) {
+  queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+}
+
+
+const queryString = queryParams.join('&');
+
+
+
+
+
+this.props.history.push(
+  {
+        pathname: '/checkout',
+        search: ''
+  }
+) 
+
+
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+POR FIM, O PROFESSOR VAI QUERER 
+
+ANEXAR 
+
+
+
+ESSE 
+
+'QUERYPARAM', ESSE 
+
+
+'queryString',
+
+
+
+
+Na propriedade 
+
+
+'search' 
+
+
+DE NOSSO MÉTODO '.push()', logo abaixo....
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+const queryParams = [];
+
+
+
+for (let i in this.state.ingredients) {
+  queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+}
+
+
+const queryString = queryParams.join('&');
+
+
+
+
+
+this.props.history.push(
+  {
+        pathname: '/checkout',
+        search: queryString
+  }
+) 
+
+
+---------------------------------
+
+
+
+
+
+-------> mas antes de só escrever 
+
+'queryString' nessa propriedade 'search', o professor vai colocar
+ 
+ um 
+
+ '?' 
+
+
+
+
+ então ficará 
+
+
+
+ search: '?' + queryString
+
+
+
+
+
+
+
+
+ --------------------------
+
+
+ CERTO, COM ISSO 
+
+
+ CONSEGUI 
+
+ FAZER COM QUE 
+
+
+ A URL FICASSE ALTERADA PARA TER ESSE 
+
+ QUERYPARAM AÍ...
+
+ EX:
+
+ http://localhost:3000/checkout?bacon=3&cheese=2&meat=2&salad=1 ---> certo, 
+
+
+
+ a URL está sendo alterada,
+
+
+
+
+ mas o meu burger não está sendo influenciado por isso... --> tenho que 
+
+ codar algum jeito 
+
+
+ de 
+
+
+
+ __eXTRAIR__ ('parse') o queryparams 
+
+ enfiado na minha url....
+
+
+
+
+
+
+
+
+------------> E ESSE PARSING DA NOSSA URL DEVERÁ/DEVE ACONTECER __NO COMPONENT___
+
+
+'CHECKOUT'... -------->
+
+
+
+e esse parsing deverá acontecer na etapa/método/lifecycle hook de 
+
+
+'componentDidMount()'....   (o professor explica que 
+
+
+ELE VAI USAR 'componentDidMount' em vez de 'componentDidUpdate' pq 
+
+ELE SABE 
+
+QUE 
+
+
+ESSE COMPONENT 'CHECKOUT' VAI SER OBRIGATORIAMENTE 
+
+MONTADO NO NOSSO DOM, pq é ele que vai ser a 'nova página'...) ----> isso principalmente
+
+PQ ELE NÃO ESTÁ NESTEADO EM OUTRA PÁGINA, OU QUALQUER COISA DO GÊNERO...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------> BEM, DENTRO DO 'componentDidMount'
+
+
+O PROFESSOR VAI USAR AQUELE CÓDIGO QUE JÁ VIMOS ANTES,
+
+aquele 
+
+
+
+'const queryParams = new URLSearchParams()'...
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+componentDidMount() {
+  const query = new URLSearchParams(this.props.location.search);
+}
+
+
+
+
+
+---------------------------------------
+
+
+
+
+this.props.location.search -------> DEVEMOS COLOCAR ISSO PQ 
+
+ISSO AÍ ___iNCLUI___ O '?' com os nossos queryParams... -----> 
+
+
+
+e o fato de 
+
+termos 
+
+esse 
+
+
+'?' não nos atrapalha, pois o TRABALHO DE 
+
+'URLSearchParams' é ____JUSTAMENTE__ EXTRAIR ___ ESSES 
+
+'queryParams' 
+
+
+de nossa url....
+
+
+
+
+
+
+
+
+
+ISSO FEITO, O PROFESSOR VAI QUERER CRIAR UMA CONSTANTE 
+
+
+DE 
+
+'ingredients', que segurará um OBJETO... ----> dentro 
+
+
+
+
+desse 'ingredients', desse objeto, vamos querer enfiar 
+
+'''algumas coisas....'''' (os ingredients)... -----> para isso, 
+
+
+
+professor usará 
+
+
+UM
+
+
+
+'for of loop'
+
+
+PARA 
+
+
+LOOPAR POR DENTRO 
+
+DAS PROPRIEDADES 
+
+
+DE 
+
+'query' (Que é aqueles searchParams...);
+
+
+por meio desse loop,
+
+
+ele vai 
+
+executar 
+
+
+'query.entries()'   (entries() é um MÉTODO DISPONÍVEL em OBJETOS...)
+
+
+
+
+
+
+ex:
+
+
+
+componentDidMount() {
+  const query = new URLSearchParams(this.props.location.search);
+  const ingredients = {};
+  for (let param of query.entries()) {
+    
+  }
+}
+
+
+
+
+
+
+
+----------------------------------------------
+
+
+O QUE O PROFESSOR VAI QUERER É QUE 
+
+
+
+
+
+ESSE 'for of loop' 
+
+RETORNE VALORES 
+
+COMO 
+
+
+'['salad', '1']',
+
+'['meat', '2']',
+
+'['bacon', '5']
+
+
+
+
+
+........................
+
+
+
+---> ELE VAI QUERER ISSO PARA QUE ELE POSSA ENTÃO ENFIAR 
+
+
+esses negócios no objeto 'ingredients', mas como KEY-VALUE PAIRS..
+
+
+
+
+
+
+
+
+basicamente, para fazer isso,
+
+
+
+ele 
+
+
+escreve 
+
+
+
+
+'for (let param of query.entries()) {
+
+    ////// ['salad', '1'] 
+
+    ingredients[param[0]] = +param[1]
+
+    ///tipo 'ingredients[salad] = 1', que será 'salad: 1', dentro do OBJETO 'ingredients'...
+
+
+}
+
+
+
+
+
+ficará assim, portanto:
+
+
+
+
+
+componentDidMount() {
+  const query = new URLSearchParams(this.props.location.search);
+  const ingredients = {};
+  for (let param of query.entries()) {
+
+      ingredients[param[0]] = +param[1]
+  }
+}
+
+
+
+
+
+---------------------------------
+
+OK, MAS PQ 
+
+
+'+param[1]'? ----> É PQ VAMOS QUERER CONVERTER __ ESSE __ 
+
+VALOR DE 
+
+'1/2/3/4/5/x' em 
+
+
+um NÚMERO, E NÃO UMA STRING... (para que ele possa funcionar com os cálculos realizados 
+
+no nosso código...)
+
+
+
+
+-------------------------
+
+
+
+
+
+
+---> isso feito, o professor poderá então chamar 
+
+'
+this.setState()'  (SIM, DENTRO DE 'componentDidMount'),
+
+
+
+ E ENTÃO 
+
+
+
+ DEFINIR 
+
+
+ 'ingredients: ingredients'...
+
+
+
+
+
+
+
+ ex(código completo):
+
+
+
+ componentDidMount() {
+  const query = new URLSearchParams(this.props.location.search);
+  const ingredients = {};
+  for (let param of query.entries()) {
+
+      ingredients[param[0]] = +param[1]
+  }
+
+
+  this.setState({ingredients: ingredients})
+}
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+
+
+Salvamos tudo isso, e aí checamos se funcionou...
+
+
+
+
+
+
+
+
+CÓDIGO COMPLETO:
+
+
+
+
+
+
+
+
+
+  componentDidMount() {
+    
+
+
+        const query = new URLSearchParams(this.props.location.search);
+
+
+        console.log(query);
+
+        console.log(query.entries());
+
+
+        const ingredients = {};
+
+
+        for (let param of query.entries()) {
+            
+                console.log(param);
+
+                ingredients[param[0]] = +param[1];
+        }
+
+        this.setState(
+            {
+                ingredients: ingredients
+            }
+        )
+
+
+    }
+
+
+
+  
+-----------------------------------------------------
+
+
+
+
+---> vamos ver se nosso state realmente foi settado,
+
+e 
+
+se 
+
+nosso burger realmente foi alterado pelos queryParams...
+
+
+
+
+
+
+
+
+
+-> e, sim, de fato ele foi alterado pela extração desses queryParams e pelo set 
+
+do state de acordo com eles...
+
+
+(não é fácil fazer essa extração, na verdade)...
+
+
+
+
+
+
+
+
+
+
+
+-> PROFESSOR DIZ QUE AGORA SOMOS CAPAZES DE PASSAR 
+
+DATA 
+
+
+POR MEIO DE QUERYPARAMS,
+
+o que é um 
+GRANDE AVANÇO, 
+
+é claro...
+
+
+
+
+
+
+
+
+
+--> o próximo passo é trabalhar na 'CONTACT DATA' que deverá ser mostrada ao usuário,
+
+quando ele clicar em 'continue'...

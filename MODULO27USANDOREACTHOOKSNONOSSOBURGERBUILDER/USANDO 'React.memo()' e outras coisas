@@ -1,0 +1,429 @@
+
+
+
+
+
+
+
+
+
+-----> acabamos com TODOS OS CONTAINERS,
+
+
+
+
+MAS 
+
+AINDA 
+
+
+TEMOS ALGUNS CLASS-BASED 
+
+
+COMPONENTS QUE 
+
+PODEMOS 
+
+TRANSFORMAR 
+
+
+EM 
+
+
+FUNCTIONAl....
+
+
+
+
+
+
+--> PROFESSOR DIZ QUE ESTAMOS USANDO UM CLASS-BASED COMPONENT 
+
+LÁ 
+
+EM 
+
+'BurgerIngredient'...
+
+
+
+
+
+
+-----> 
+
+NOSSO CÓDIGO JÁ ESTÁ ASSIM:
+
+const BurgerIngredient = (props) => {
+  let ingredient = null;
+
+  switch (
+    props.type 
+  ) {
+    case 'bread-bottom':
+      ingredient = <div className={BurgerIngredientStyles.BreadBottom}></div>;
+
+      break;
+
+    case 'bread-top':
+      ingredient = (
+        <div className={BurgerIngredientStyles.BreadTop}>
+          <div className={BurgerIngredientStyles.Seeds1}></div>
+          <div className={BurgerIngredientStyles.Seeds2}></div>
+          <div></div>
+        </div>
+      );
+
+      break;
+
+    case 'meat':
+      ingredient = <div className={BurgerIngredientStyles.Meat}></div>;
+
+      break;
+
+    case 'cheese':
+      ingredient = <div className={BurgerIngredientStyles.Cheese}></div>;
+
+      break;
+
+    case 'bacon':
+      ingredient = <div className={BurgerIngredientStyles.Bacon}></div>;
+
+      break;
+
+    case 'salad':
+      ingredient = <div className={BurgerIngredientStyles.Salad}></div>;
+
+      break;
+
+    default:
+      ingredient = null; 
+  }
+
+  return ingredient;
+};
+
+
+
+------------------------------------------
+
+
+
+
+
+--> também convertemos 
+
+'OrderSummary' em um functional...
+
+
+
+
+
+
+
+
+-> no component 
+
+'Modal',
+
+
+
+vamos alterar algumas coisinhas...
+
+
+
+
+
+
+
+
+-> NESSE LUGAR AÍ,
+
+EU JÁ HAVIA USADO 
+
+'useMemo()'...
+
+
+ex:
+
+
+
+
+
+const Modal = (props) => {
+
+
+      return (
+        <Aux>
+          <Backdrop show={props.show} clicked={props.modalClosed} />
+          
+          
+          
+        {    useMemo(() => {return ( ///////EIS O CÓDIGO EM QUESTÃO.
+             <div
+             className={ModalStyle.Modal}
+             style={{
+               transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
+               opacity: props.show ? '1' : '0',
+             }}
+           >
+             {props.children}
+           </div>
+        )},  [props.children, props.show])      
+                                                }
+        </Aux>
+      );
+    
+  }
+
+
+
+
+
+----------------------------------------
+
+
+ISSO VAI AGIR COMO 
+
+'shouldcomponentupdate()',
+
+basicamente... -------> 
+
+
+
+
+
+
+O PROFESSOR,
+
+NESSE NOSSO EXEMPLO,
+
+
+USOU 
+
+
+'React.memo()' PARA WRAPPAR 
+
+o 
+'modal' em si,
+
+EM VEZ 
+
+
+DE 
+
+USAR 
+
+'useMemo()' (que wrappa/wrappou nosso código jsx, na nossa versão do código)...
+
+
+
+
+
+ex(VERSÃO DO PROFESSOR):
+
+
+
+const Modal = (props) => {
+      return (
+        <Aux>
+          <Backdrop show={props.show} clicked={props.modalClosed} />
+          
+          
+          
+    ///    {    useMemo(() => {return ( ///////PROFESSOR DEIXOU DE USAR ISTO.
+             <div
+             className={ModalStyle.Modal}
+             style={{
+               transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
+               opacity: props.show ? '1' : '0',
+             }}
+           >
+             {props.children}
+           </div>
+        )},  [props.children, props.show])      
+                                                }
+        </Aux>
+      );
+    
+  }
+
+
+
+
+
+export default React.memo(Modal); ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+-----------------------------------------
+
+
+na versão 
+
+de 
+
+
+'React.memo()',
+
+O SEGUNDO ARGUMENTO 
+
+
+DELE É JUSTAMENTE  
+
+
+sua 
+
+'OWN COMPARISON FUNCTION'... --------> 
+
+
+dentro 
+
+
+
+dessa nossa versão do negócio, vamos passar 
+
+
+'prevProps' e 'nextProps',
+
+tudo 
+
+para 
+fazer 
+COMPARAÇÕES PARA 
+
+ENTÃO 
+
+RODAR 'memo'/shouldcomponentupdate caso 
+
+
+esses valores/variáveis sejam alterados
+
+
+
+
+
+
+VERSÃO DO PROFESSOR:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const Modal = (props) => {
+      return (
+        <Aux>
+          <Backdrop show={props.show} clicked={props.modalClosed} />
+          
+          
+          
+    ///    {    useMemo(() => {return ( ///////PROFESSOR DEIXOU DE USAR ISTO.
+             <div
+             className={ModalStyle.Modal}
+             style={{
+               transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
+               opacity: props.show ? '1' : '0',
+             }}
+           >
+             {props.children}
+           </div>
+        )},  [props.children, props.show])      
+                                                }
+        </Aux>
+      );
+    
+  }
+
+
+
+
+
+export default React.memo(Modal, ()); ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OBS::: 
+
+'useMemo()' 
+
+e 
+
+
+'React.memo()'
+
+
+NÃO SÃO A MESMA COISA... (um é um HOC, o outro é um REACT HOOk... --> seus comportamentos SÃO DIFERENTES...)
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+
+import classes from './Modal.css';
+import Aux from '../../../hoc/Aux/Aux';
+import Backdrop from '../Backdrop/Backdrop';
+
+const modal = props => {
+ 
+  return ( ///////DIFERENTE DE NOSSO CÓDIGo.
+    <Aux>
+      <Backdrop show={props.show} clicked={props.modalClosed} /> 
+      <div
+        className={classes.Modal}
+        style={{
+          transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
+          opacity: props.show ? '1' : '0'
+        }}
+      >
+        {props.children}
+      </div>
+    </Aux>
+  );
+};
+
+export default React.memo( ////DIFERENTE DE NOSSO CÓDIGO.
+  modal,
+  (prevProps, nextProps) =>
+    nextProps.show === prevProps.show &&
+    nextProps.children === prevProps.children
+);
+
+
+
+-------------------------
+
+
+
+
+
+

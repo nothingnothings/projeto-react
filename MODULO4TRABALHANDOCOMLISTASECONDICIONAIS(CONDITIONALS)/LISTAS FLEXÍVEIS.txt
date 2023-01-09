@@ -1,0 +1,1914 @@
+
+
+
+
+
+AGORA QUE ADICIONAMOS UM MONTE DE FUNCIONALIDADES 
+
+
+AO NOSSO CÓDIGO, E AGORA QUE 
+
+
+APRENDEMOS 
+
+SOBRE 
+
+'key',
+
+
+DEVEMOS 'FINE-TUNE' nosso aplicativo um pouco mais.... ---> precisamos 
+
+
+
+fazer um fine-tuning de algumas coisas 
+
+
+COMO por exemplo....
+
+
+
+
+
+--> bem, no nosso COMPONENTE 'PERSON', nós 
+
+
+AINDA TEMOS 
+
+
+NOSSO ELEMENTO 'input' QUE TEM AQUELE 
+
+HANDLER DE 'onChange'...  ('onChange={props.changed}'), 
+
+
+
+AINDA TEMOS ESSE CÓDIGO AÍ, QUE SEMPRE TENTA 
+
+EXECUTAR 
+o prop
+'changed' de nossos props,
+
+
+E QUE TAMBÉM CONSEGUE O 'value' como um INPUT....  
+
+
+
+-------------------------------
+
+
+
+NOSSO OBJETIVO, NESTE MOMENTO, É FAZER 
+
+
+
+_______COM QUE ______ O 'PERSON COMPONENT' EM QUE ESCREVEMOS 
+
+ALGUMA PORCARIA (no input field) 
+
+
+TENHA SEU '<P>' com o 'name' 
+
+ALTERADO
+ 
+
+ PELO INPUT....
+
+
+
+
+
+ ----> agora que RENDERIZAMOS UMA LISTA E __TEMOS CONTEÚDO _____ REALMENTE DINÂMICO____ ,
+
+
+
+ NÓS FINALMENTE PODEMOS 
+
+
+ SETTAR ESSA FEATURE AÍ ___ DE UMA MANEIRA REALMENTE DINÂMICA__... -----> para que 
+
+
+ CONSIGAMOS IMPLEMENTAR 
+
+
+ ESSA FEATURE,
+
+
+ NÓS PRECISAMOS 
+
+ ESCREVER 
+
+ UMA BOA 
+
+ LÓGICA 
+
+ NA PROPRIEDADE/PROP de 'changed'... ----> esse propriedade 'changed' 
+
+ PRECISA SER __APONTADA ___ PARA ALGUM 
+
+ 'EVENTLISTENER'/'método' 
+
+ QUE CORRETAMENTE 
+
+
+ UPDATARÁ 
+
+
+
+ O 'state' 
+
+
+ DE NOSSO APLICATIVO.... 
+
+
+
+
+ É por isso 
+ 
+
+ que o professor vai ADICIONAR UMA PROPRIEDADE 
+
+
+
+ DE 
+
+ 'changed'
+
+
+ ÀQUELE 'COMPONENT(s) CONDICIONAL(is' (o component/components que EXISTEM DENTRO DO 'IF STATEMENT')....
+
+
+
+
+
+ ex:
+
+
+
+
+
+ if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        name={person.name} 
+        age={person.age} 
+        key={person.id}
+        changed={...}/>
+      })}
+    </div>
+  )
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+AGORA PRECISAMOS APONTAR O 
+
+'changed' 
+
+A ALGUM MÉTODo...
+
+
+
+--> bem, nós ANTES HAVÍAMOS 
+
+CRIADO UM 
+
+MÉTODO 
+
+
+
+CHAMADO DE 
+
+
+'nameChangedHandler'...
+
+
+
+
+O código desse negócio antes havia sido definido assim:
+
+
+
+
+
+
+   nameChangedHandler = (event) => {  ////substituído por 'deletePersonHandler'....
+
+   this.setState({  
+      persons: [
+       { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+     });
+
+    console.log(event.target.value);
+   }
+
+
+
+-------------------------
+
+
+
+nós vamos usar 
+
+
+esse método/o nome desse método em 'changed={}'... 
+
+(NÓS VAMOS USAR ESSE MÉTODO, MAS VAMOS ANTES ALTERAR TODA SUA LÓGICA INTERNA)....
+
+
+
+
+-----------------------------
+
+
+
+CERTO... 
+
+
+agora dentro 
+
+desse 'nameChangedHandler', eu vou precisar 
+
+
+____DE 2 PEDAÇOS DE INFORMAÇÃO___... --------------->
+
+
+
+
+EU VOU PRECISAR:
+
+
+
+
+1) DO objeto 'event' (ou seja, podemos manter o código do nameChangedHandler intacto neste aspecto...);
+precisamos desse objeto 'event' como parâmetro PARA QUE AINDA SEJA POSSÍVEL CONSEGUIR 
+ACESSO AO 'event.target.value', que é A COISA QUE FARÁ 
+COM QUE O NOSSOS '<p>' SEJAM ALTERADOS PELO INPUT DO USUÁRIO, basicamente...
+
+(e esse objeto 'event' pode ser passado ao nosso 'changed={}' sem problemas; ele ficará 
+'changed={(event) => {...}})
+
+
+
+2) MAS EU TAMBÉM VOU PRECISAR DE UM ___SEGUNDO INPUT____;  eu vou querer 
+
+CONSEGUIR 
+
+O ___ID____ DO ELEMENTO/COMPONENT cujo <p> vamos querer que seja EDITADO/ALTERADO 
+
+pelo input do usuário...   (também poderíamos colocar o 'index' dos elementos, aqui, MAS COMO 
+
+NÓS JÁ ASSIGNAMOS A NOSSOS OBJETOS 'person'  UNS IDs aleatórios, vamos usar os IDS...)
+
+
+
+
+CERTO, ISSO 
+
+SIGNIFICA QUE 
+
+NOSSO MÉTODO 
+'nameChangedHandler' vai ficar 
+
+
+assim, por enquanto:
+
+
+
+
+
+
+
+
+
+   nameChangedHandler = (event, id) => {  //EIS O CÓDIGO EM QUESTÃO.
+
+   this.setState({  
+      persons: [
+       { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+     });
+
+    console.log(event.target.value);
+   }
+
+
+
+   ------------------------------------
+
+
+
+
+   Certo...
+
+
+   como esse método 
+
+   'nameChangedHandler' 
+
+
+   VAI PRECISAR 
+
+
+   DE 
+
+   2 PEDAÇOS 
+
+   DE INFORMAÇÃO, ORIUNDOS 
+
+   DOS NOSSOS 
+
+   'Person components'/elements no array, 
+
+   PRECISAREMOS 
+
+   USAR 
+
+
+   AQUELA SINTAXE BIZARRA 
+
+   DE ARROW FUNCTIONS, 
+
+
+   aquele WRAPPING do MÉTODO QUE QUEREMOS 
+
+   EXECUTAR, lá 
+
+   em 
+
+
+   'changed={}'... (vamos ter que WRAPPAR o 'this.nameChangedHandler' para então poder escrever 'this.nameChangedHandler()'...)
+
+
+
+
+
+
+REPRESENTAÇÃO:
+
+
+
+changed={() => this.nameChangedHandler();}
+
+
+
+
+
+
+REPRESENTAÇÃO COMPLETA:
+
+
+
+
+
+
+
+
+
+   nameChangedHandler = (event, id) => {  
+
+   this.setState({  
+      persons: [
+       { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+     });
+
+    console.log(event.target.value);
+   }
+
+
+
+
+ if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        name={person.name} 
+        age={person.age} 
+        key={person.id}
+        changed={() => this.nameChangedHandler();}/>
+      })}
+    </div>
+  )
+
+
+
+  ----------------------------------------
+
+
+
+
+
+
+
+
+
+essa função '() => {this.nameChangedHandler()}' 
+
+
+É A FUNÇÃO QUE 
+
+
+__aCABA SENDO EXECUTADA ____ A PARTIR DO EVENTO/DE UM EVENTO 
+
+'onChange' no nosso projeto... (por causa de 'onChange={props.change}', LÁ NO COMPONENTE 'Person' em 'Person.js'...)
+
+
+
+
+
+--------------------------------------
+
+
+
+Certo...
+
+
+
+Como ESSE EVENTO ___aCABA___ EXECUTANDO essa função overall de '() => {this.nameChangedHandler()}',
+
+
+
+É 
+
+EVIDENTE 
+
+QUE NÓS PODEMOS 
+
+
+
+
+EXPERAR (Expect) 
+
+
+UM OBJETO 
+
+
+'event' 
+
+
+nessa arrow function aí... (pq é o event em si QUE ESTARÁ DANDO CAUSA/TRIGGANDO ESSA FUNÇÃO...)
+
+
+
+ex:
+
+
+
+
+
+
+
+
+   nameChangedHandler = (event, id) => {  
+
+   this.setState({  
+      persons: [
+       { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+     });
+
+    console.log(event.target.value);
+   }
+
+
+
+
+ if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        name={person.name} 
+        age={person.age} 
+        key={person.id}
+        changed={(event) => this.nameChangedHandler();}/> ///eis o método em questão.
+      })}
+    </div>
+  )
+
+
+
+
+
+--------------------------------
+
+
+
+NÓS FAZEMOS ESSA GAMBIARRA 
+
+AÍ 
+
+__PARA __ PODERMOS FAZER OUTRA GAMBIARRA; PARA QUE PODEMOS, BASICAMENTE,
+
+
+passar 
+
+
+ESSE objeto 'event' 
+
+DE NOVO, dessa vez por meio de 'this.nameChangedHandler(event)',
+
+
+
+PARA QUE ELE ENTÃO POSSA SER USADO 
+
+
+
+LÁ NO NOSSO MÉTODO 'nameChangedHandler'...
+
+
+ex:
+
+
+
+
+   nameChangedHandler = (event, id) => {  
+
+   this.setState({  
+      persons: [
+       { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+     });
+
+    console.log(event.target.value);
+   }
+
+
+
+
+ if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        name={person.name} 
+        age={person.age} 
+        key={person.id}
+        changed={(event) => this.nameChangedHandler(event);}/> //////EIS O MÉTODO EM QUESTÃO.
+      })}
+    </div>
+  )
+
+
+
+
+
+
+--------------------------------------------------
+
+
+
+Ok... mas se lembra quando dissemos 
+
+que o PROFESSOR PRECISAVA DE 
+
+2 PEDAÇOS DE INFORMAÇÃO em 'nameChangedHandler()'? --->
+
+
+BEM, 
+
+
+
+AGORA NÓS TEREMOS DE COLOCAR OUTRA 'EXPECTATIVA'
+
+
+nesse call de 'this.nameChangedHandler',
+
+
+
+TEREMOS DE COLOCAR 
+
+
+
+UM PARÂMETRO/O PARÂMETRO 
+
+
+DE 
+
+'person.id', 
+
+QUE SERÁ REPASSADO, POR MEIO DESSE CÓDIGO/ESCRITA, 
+
+AO MÉTODO 
+
+
+'nameChangedHandler'...
+
+
+
+
+
+REPRESENTAÇÃO:
+
+
+
+
+
+
+   nameChangedHandler = (event, id) => {  
+
+   this.setState({  
+      persons: [
+       { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+     });
+
+    console.log(event.target.value);
+   }
+
+
+
+
+ if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        name={person.name} 
+        age={person.age} 
+        key={person.id}
+        changed={(event) => this.nameChangedHandler(event, person.id);}/> //////EIS O MÉTODO EM QUESTÃO.
+      })}
+    </div>
+
+
+
+
+
+----------------------------------
+
+
+
+PROFESSOR EXPLICA 
+
+QUE ESSA PROPRIEDADE 
+
+'id' 
+
+
+ESTÁ DISPONÍVEL
+
+JUSTAMENTE 
+
+POR NÓS ESTARMOS 
+
+DENTRO DESSE MÉTODO 
+
+DE '.map()', aqui... --------> (PQ NÓS JÁ VAMOS TER CONSEGUIDO 
+
+ACESSO AO OBJETO 'person', e, por consequência,
+ acesso ao ID....)
+
+
+
+
+ -----------------------------------
+
+
+
+ Com esse repasse de 'person.id' e 'event' 
+
+
+
+ AO 
+
+ MÉTODO 
+
+
+
+ 'nameChangedHandler', 
+
+
+
+ NÓS FINALMENTE PODEMOS TRABALHAR COM ESSES 'PEDAÇOS DE INFORMAÇÃO/PEDAÇOS DE DATA'...
+
+
+
+
+ ---------------------------------------------
+
+
+
+ Código de 'nameChangedHandler' no momento:
+
+
+
+
+
+  nameChangedHandler = (event, id) => { 
+
+    this.setState({  
+      persons: [
+        { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    });
+
+    console.log(event.target.value);
+  }
+
+
+
+
+-----------------------------------------
+
+
+
+
+POR MEIO DE 'nameChangedHandler',
+
+
+NÓS QUEREMOS 
+
+
+
+__UPDATAR____ O STATE, mas é claro que 
+
+APENAS QUEREMOS UPDATAR O STATE 
+
+__PARA A 'PERSON' CUJO INPUT 
+
+FIELD O usuário digitou...
+
+
+
+A primeira coisa que precisamos fazer, dentro desse método,
+
+
+É ENCONTRAR 
+
+essa person (professor cria uma const de nome 'person')....
+
+
+
+
+E podemos fazer isso por meio do 
+
+
+
+REACH OUT 
+
+À
+
+
+
+'this.state.persons' .......
+
+
+
+MAS NÃO USAREMOS SÓ ISSO, NÃO... ---> teremos DE CHAMAR 
+
+
+
+UM MÉTODO DE ARRAYS nesse negócio; USAREMOS O MÉTODO 
+
+'find()'....  (na verdade, não usaremos 'find'; e sim usaremos 'findIndex()'...)
+
+
+
+ex:
+
+
+
+
+
+
+
+  nameChangedHandler = (event, id) => { 
+
+    const person = this.state.persons.find();
+
+
+
+    this.setState({  
+      persons: [
+        { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    });
+
+    console.log(event.target.value);
+  }
+
+
+
+
+----------------------------------------
+
+
+
+
+Certo... 
+
+
+
+você deve se lembrar 
+
+QUE O MÉTODO 
+
+
+'FIND()' 
+
+
+SEMPRE 
+
+___EXIGE UMA FUNÇÃO INTERNA__, que 
+
+
+será 
+
+sempre 
+
+uma 
+
+'elemento ---> código a ser executado em cada elemento do array para encontrar o elemento que desejamos....'
+
+
+
+Formato é:
+
+
+
+
+const array1 = [5, 12, 8, 130, 44];
+
+const found = array1.find(element => element > 10);
+
+console.log(found);
+// expected output: 12
+
+
+
+
+---------------------------------
+
+
+Nesse caso específico, 
+
+
+vamos 
+
+escrever:
+
+
+
+
+
+
+
+
+
+    const person = this.state.persons.find(person => {
+      ...
+    });
+
+
+------------------------------
+
+
+
+Certo, mas que código de 'find' devemos executar em cada elemento?
+
+
+...Bem, provavelmente VAMOS USAR O 'event' nesse lugar aqui...
+
+
+
+ex:
+
+
+
+
+    const person = this.state.persons.find(person => {
+      person.name === event.target.value; ///////talvez isso daqui?
+    });
+
+
+
+(ESSA NOSSA VERSÃO FALHOU).
+
+-----------------------------------
+
+
+
+
+Professor destaca que nós também poderíamos ter usado '.findIndex()'... --> esse 
+método TAMBÉM ENCONTRA UM ELEMENTO EM UM ARRAY, MAS O ENCONTRA ___PELO SEU INDEXADOR___ ---> professor diz que é evidente que poderíamos ter passado o indexador DIRETAMENTE a essa função, mas que ele queria 
+
+NOS MOSTRAR ESSE APPROACH ALTERNATIVO COM O '.find()'... (que tira vantagem do 'id' de cada elemento)...
+
+
+
+
+Bem, professor cagou para o nosso código, e acabou usando 'findIndex()'...
+
+
+---------------------------------
+
+
+
+Certo, o código até agora está assim:
+
+
+
+
+
+  nameChangedHandler = (event, id) => { 
+
+    const person = this.state.persons.findIndex();
+
+
+
+    this.setState({  
+      persons: [
+        { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    });
+
+    console.log(event.target.value);
+  }
+
+
+
+
+--------------------------------------------------
+
+
+
+
+---> certo, o professor usará 'findIndex()'... --->
+
+
+
+o findIndex() SEMPRE 
+
+
+
+EXIGE/ACEITA UMA FUNÇÃO COMO ARGUMENTO... (uma função interna/arrow function/função anônima, quase a mesma coisa que vimos com 'find()'...)
+
+
+
+
+Ela aceita essa função DA MESMA FORMA QUE '.map()' o faz... ---> e assim 
+
+como 'map()',
+
+
+o 'findIndex()' 
+
+vai executar o código no seu function body 
+
+EM CADA ELEMENTO 
+
+DAQUELE ARRAY em que vocÊ o chamou...
+
+
+
+
+
+---> aqui, o professor vai executar uma 
+
+
+
+função 
+
+
+'p' 
+
+
+(p é para 'person', basicamente)
+
+
+
+
+
+---> 
+
+
+
+p => {
+
+}
+
+
+
+--------------------------------
+
+
+
+Certo, mas o que escreveremos nesse function body? ------> aqui 
+
+
+NÓS NÃO MAPPEAREMOS OS ELEMENTOS 
+
+EM ALGO NOVO, 
+
+
+e sim 
+
+NÓS 
+
+APENAS 
+
+
+____fAREMOS RETURN___ DE 
+
+ALGO QUE SATISFAÇA 
+
+O NOSSO CRITÉRIO... ---> vou querer QUE 
+
+
+A PESSOA PELA QUAL EU ESTAVA PROCURANDO SEJA ___RETORNADA____...
+
+
+
+
+
+
+A pessoa que eu vou querer 
+
+SERÁ 
+
+A PESSOA CUJO 
+
+'p.id' É __IGUAL___ AO 'id' ____ QUE EU RECEBI COMO PARÂMETRO NESSE método 'nameChangedHandler'...
+
+
+Para isso, 
+
+
+vamos escrever 
+
+
+
+'return p.id === id;'
+
+
+
+
+
+
+
+CÓDIGO COMPLETO:
+
+
+
+
+
+
+
+
+  nameChangedHandler = (event, id) => { 
+
+    const person = this.state.persons.findIndex(
+      p => {
+        return p.id === id;
+      }
+    );
+
+
+
+    this.setState({  
+      persons: [
+        { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    });
+
+    console.log(event.target.value);
+  }
+
+
+
+
+  ------------------------------
+
+
+  Certo... 
+
+
+
+  se esse 'p.id === id' retornar TRUE, 
+
+
+  o OBJETO 'person' QUE QUEREMOS 
+
+  SERÁ EFETIVAMENTE RETORNADO....
+
+
+
+  Certo, 
+
+  mas o professor ainda não acabou por aqui....
+
+
+  Não acabou pq 
+
+
+  a constante 'person' ainda não foi utilizada em nada de nosso código... apenas 
+
+  temos o elemento 'person' que desejávamos, agora....
+
+
+
+  professor renomeia 'const person' para 'const personIndex',
+
+
+  POIS ESSA FUNÇÃO 
+
+
+  '.findIndex()' vai ter, ACTUALLY,
+
+  ENCONTRADO 
+
+
+  '''APENAS''' O INDEXADOR DA PESSOA 
+
+  que tem a propriedade/prop 'id' EQUIVALENTE ao 'id' PASSADO POR 
+
+  'nameChangedHandler'...
+
+
+  ----------------------------
+
+
+  ISSo feito, o professor pode então 
+
+
+  CONESGUIR ACESSO 
+
+  À CONSTANTE 'person' em si 
+
+  POR MEIO 
+
+  DA 
+
+
+  escrita 
+
+
+  'const person = this.state.persons[personIndex]'
+
+
+
+
+  EX:
+
+
+
+
+
+
+  
+  nameChangedHandler = (event, id) => { 
+
+    const personIndex = this.state.persons.findIndex(
+      p => {
+        return p.id === id;
+      }
+    );
+
+
+const person = this.state.persons[personIndex];
+
+
+    this.setState({  
+      persons: [
+        { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    });
+
+    console.log(event.target.value);
+  }
+
+
+
+  ---------------------------------
+
+
+
+
+
+
+  Certo... agora  temos essa 'person'... --> 
+
+
+
+
+  OBS::: COMO ANTES, COMO VIMOS ANTERIORMENTE,
+
+
+
+  É UMA ÓTIMA PRÁTICA ____ NÃO MUTAR ___ ('to not mutate') 
+
+  O NOSSO 
+
+  'STATE' 
+
+DIRETAMENTE.... ---->    -----------> Uma 'PERSON'
+
+no array de 'PERSONS', como você pode CONFIRMAR 
+
+POR MEIO DESSA ESCRITA NO NOSSO STATE:
+
+
+
+state = {
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 }, ////UMA 'PERSON'..
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+
+
+
+
+  Uma dessas 'person', como você pode ver aqui, 
+
+  É SEMPRE 
+
+
+  ___UM OBJETO JAVASCRIPT__... ---->   COMO O PROFESSOR NOS DISSE ANTES,
+
+
+  ___JAVASCRIPT OBJECTS SÃO SEMPRE ____ REFERENCE TYPES___... ---->>>>
+
+  ISSO SIGNIFICA QUE NÓS NUNCA DEVEMOS OS MUTAR DIRETAMENTE; não devemos os mutar 
+
+  diretamente 
+
+
+  PQ AS CONSTANTES SEMPRE NOS DARÃO ___POINTERS__ A ELES; NUNCA ARMAZENARÃO SEU VERDADEIRO 
+  CONTEÚDO...
+
+
+isso significa que
+
+'                                             '
+  const person = this.state.persons[personIndex]; -----------> 
+
+  VAI ARMAZENAR UM MERO 'POINTER' ao objeto 'person' dentro daquele array, na memória 
+  do nosso app...
+
+
+-------------------------------------
+
+
+
+
+É POR ISSO QUE O MELHOR APPROACH AQUI É 
+
+
+
+______cRIAR UMA DUPLICATA DO OBJETO ANTIGO____ POR MEIO DO USO 
+
+DO SPREAD OPERATOR.... 
+
+
+
+
+----> 
+
+
+nós vamos, primeiramente, ENVOLVER O 'this.state.persons[personIndex]' aqui chamado
+
+EM UMA 
+
+NOTAÇÃO DE OBJETO (pois vamos querer que esse objeto específico CONTINUE SENDO UM OBJETO)...
+
+
+ex:
+
+
+const person = {
+  this.state.persons[personIndex]
+}
+
+
+------------------------------
+
+
+
+DEPOIS DISSO, NÓS VAMOS USAR O SPREAD OPERATOR NA FRENTE DESSE NEGÓCIO PARA 
+
+QUE ELE 'jorre' o conteúdo do objeto 'this.state.persons[personIndex]'
+
+PARA DENTRO DESSE NOVO OBJETO 'person'...
+
+
+
+ex:
+
+
+
+
+
+const person = {
+  ...this.state.persons[personIndex]
+}
+
+
+
+
+
+(OU SEJA, REALIZAMOS O MESMO PROCESSO QUE HAVÍAMOS APLICADO 
+
+AOS ARRAYS, MAS DESSA VEZ COM UM 'OBJECT'...) ---> o spread operator 
+
+
+VAI DISTRIBUIR TODAS AS PROPRIEDADES 
+
+DO OBJETO 
+
+ORIGINÁRIO 
+
+'person' 
+
+
+EM UM NOVO OBJETO 'person', INDEPENDENTE DO 'ANTIGO/ORIGINÁRIO'...
+
+
+
+--------------------------------------------------------------------------
+
+
+
+
+
+Professor explica que AQUI EXISTE UM APPROACH DIFERENTE, ALTERNATIVO, 
+
+PARA '''ALTERAR O OBJETO ANTIGO, MAS SEM O ALTERAR''''... ----> 
+
+
+
+É basicamente a MESMA COISA que o 'const person = {
+  ...this.state.persons[personIndex]
+}',
+
+
+
+MAS COM UMA SINTAXE DIFERENTE...
+
+
+
+
+
+
+--> é a escrita/sintaxe 
+
+
+de 
+
+
+'const person = Object.assign ({, this.state.persons[personIndex]})'     (OU SEJA, É O USO DO MÉTODO 'Object.assign' PARA CRIAR UM NOVO OBJETO (aquele primeiro parâmetro de '{}') que terá 'this.state.persons[personIndex]' INSERIDO NO seu INTERIOR...)
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+
+ESSA É A ALTERNATIVA,
+
+MAS ELA É 
+
+MAIS 'ANTIQUADA' do que 
+
+o approach do spread operator...
+
+
+(mas nenhum dos approaches é melhor do que o outro...)
+
+
+-----------------------------------------------
+
+
+
+
+---> CERTO, COM ISSO EU TENHO O OBJETO 'person'.... ---> mas o que 
+
+eu quero UPDATAR 
+
+do 'person' 
+
+É APENAS 
+
+O __'NAME'___, a propriedade 
+
+
+'name' 
+
+
+desse objeto person... ---> É POR ISSO 
+
+
+
+QUE O PROFESSOR 
+
+
+VAI ESCREVER 
+
+
+'person.name = ....'   (AQUI, ELE ESTARÁ MANIPULANDO ___A CÓPIA____ DE 'person'/'persons' do array, E NÃO O objeto(s) 'person'(s) ORIGINAL...)....
+
+
+
+
+Aí, 
+
+feito isso ,
+
+
+ele vai 
+
+definir 
+
+
+'person.name' 
+
+como sendo 
+
+
+'event.target.value'...
+
+
+
+--------------------------------------
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+  
+  nameChangedHandler = (event, id) => { 
+
+    const personIndex = this.state.persons.findIndex(
+      p => {
+        return p.id === id;
+      }
+    );
+
+
+const person = {
+  ...this.state.persons[personIndex]
+}
+
+
+person.name = event.target.value; ///////////EIS O CÓDIGO EM QUESTÃO....
+
+
+
+
+
+    this.setState({  
+      persons: [
+        { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    });
+
+    console.log(event.target.value);
+  }
+
+
+
+
+  --------------------------------------
+
+
+
+  (ou seja, esse 'event.target.value' É SIMILAR ÀQUILO QUE FIZEMOS ANTERIORMENTE 
+  
+  COM 'this.setState' e com o 'name: event.target.value').....
+
+
+
+
+  MAS AGORA, É CLARO, 
+
+
+  O PROFESSOR VAI QUERER 
+
+  ____UPDATAR___ O ARRAY DE PERSONS... -------> e ele vai QUERER UPDATAR 
+
+
+  ____ O ARRAY ___ EXATAMENTE NA POSIÇÃO 
+
+  'personIndex', na posição que o professor obteve por meio de 'personIndex'...
+
+
+
+  -----------------------------------------
+
+
+
+  PARA ISSO, DE NOVO, 
+
+  O PROFESSOR VAI USAR O 
+
+  SPREAD OPERATOR...
+
+
+
+
+  ele vai 
+
+  escrever 
+
+
+
+  'const persons' (pq ele vai criar um NOVO ARRAY de 'persons'...),
+
+
+
+
+  e então vai definir esse array como sendo 
+
+
+  '[...this.state.persons];' (OU SEJA, ELE VAI __DUPLICAR O ARRAY INTEIRO DE 'persons' no nosso state___ )...
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+  nameChangedHandler = (event, id) => { 
+
+    const personIndex = this.state.persons.findIndex(
+      p => {
+        return p.id === id;
+      }
+    );
+
+
+const person = {
+  ...this.state.persons[personIndex]
+}
+
+
+person.name = event.target.value;
+
+
+const persons = [...this.state.persons];
+
+
+
+
+
+    this.setState({  
+      persons: [
+        { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    });
+
+    console.log(event.target.value);
+  }
+
+
+
+
+----------------------------------------------------------
+
+
+
+
+
+FEITO ISSO, 
+
+PARA UPDATAR 
+
+APENAS AQUELE 
+
+ELEMENTO QUE MUDOU (UPDATAR ESSE ELEMENTO DE FORMA DINÂMICA, pois o indexador 
+é dinâmico), 
+
+
+o professor 
+
+
+escreve 
+
+
+'persons[personIndex] = person;' ------------> OU SEJA,
+
+
+
+DENTRO DO array 'persons', 
+
+a 'person' com INDEXADOR de 'personIndex' (indexador dinâmico) 
+
+DEVERÁ 
+
+
+SER DEFINIDA COMO SENDO 'person' ('person' ---> ISSO QUER DIZER A NOSSA __NOVA 'PERSON'__, A PERSON 
+                                  QUE FORA DEFINIDA MAIS ACIMA COM 'const person = {...this.state.persons[personIndex]}' )
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+  nameChangedHandler = (event, id) => { 
+
+    const personIndex = this.state.persons.findIndex(
+      p => {
+        return p.id === id;
+      }
+    );
+
+
+const person = {
+  ...this.state.persons[personIndex]
+}
+
+
+person.name = event.target.value;
+
+
+const persons = [...this.state.persons];
+
+
+
+persons[personIndex] = person;
+
+
+
+    this.setState({  
+      persons: [
+        { name: 'Max', age: 28 }, 
+      { name: event.target.value, age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    });
+
+    console.log(event.target.value);
+  }
+
+
+
+---------------------------------------
+
+
+
+E, DE NOVO, TENHA SEMPRE EM MENTE QUE AQUI 
+
+
+_______o PROFESSOR ESTÁ TRABALHANDO COM __CÓPIAS__, e não 
+
+COM O ARRAY ORIGINAL DE 'persons'/objeto original de 'person'(s)...
+
+
+
+------------------------------------------
+
+
+
+
+AGORA, COM ISSO,
+ 
+
+ NÓS TEREMOS CRIADO UM 
+
+
+ ____ ARRAY DE PERSONS 'updatado'___ AO MESMO 
+
+ TEMPO QUE 
+
+
+ MANTEMOS O 
+
+ ANTIGO ARRAY DE PERSONS....
+
+
+ ------------------------------
+
+
+ Isso finalmente 
+
+
+ NOS DEIXARÁ 
+
+
+ ___DEFINIR O 'state' (com 'this.setState()' )  (e SIM, vamos remover o antigo código de 'setState()'...)
+
+
+ COMO  SENDO 
+
+ ESSE 
+
+ ARRAY __UPDATADO___ 
+
+ de 'persons'.... definido nesse nosso método 'nameChangedHandler'...
+
+
+
+
+
+
+
+ REPRESENTAÇÃO:
+
+
+this.setState({persons: persons});
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+CÓDIGO COMPLETO:
+
+
+
+
+
+
+
+  nameChangedHandler = (event, id) => { 
+
+    const personIndex = this.state.persons.findIndex(
+      p => {
+        return p.id === id;
+      }
+    );
+
+
+const person = {
+  ...this.state.persons[personIndex]
+}
+
+
+person.name = event.target.value;
+
+
+const persons = [...this.state.persons];
+
+
+
+persons[personIndex] = person;
+
+
+
+    this.setState({   ///////////EIS O CÓDIGO EM QUESTÃO. 
+      persons: persons
+    });
+
+    console.log(event.target.value);
+  }
+
+
+
+  ----------------------------
+
+
+  OU SEJA, O ARRAY ANTIGO SERÁ COPIADO, será copiado 
+
+
+
+  E ENTÃO 1 ÚNICO ELEMENTO SERÁ UPDATADO 
+
+  com o 
+
+
+  valor de 
+
+  'person.name = event.target.value'.....
+
+
+
+
+
+  --------------------------------------------------
+
+
+
+
+
+
+  É MUITO CÓDIGO, SIM, 
+
+  MAS É 
+
+  O APPROACH MAIS EFICIENTE ___SEM MUDAR O STATE/MUTAR O 'STATE' __ DO NOSSO 
+
+  PROJETO...
+
+
+
+
+
+
+  ---> SE SALVARMOS TUDO ISSO, VEREMOS QUE 
+
+
+  OS WARNINGS E ERROS NO CONSOLE TERÃO SUMIDO...
+
+
+
+
+  --> e agora, quando nós escrevemos NOS INPUT FIELDS dos components, 
+
+
+
+  OS '<p>' DOS OBJETOS SÃO ALTERADOS, 1 input field para cada component... ---> AGORA 
+
+
+  TEMOS 
+
+  ___UM COMPONENTE ___ VERDADEIRAMENTE __ 'FLEXÍVEL' ___ definido no nosso código... --> 
+
+  AGORA 
+
+
+  TEMOS UM APLICATIVO REALMENTE FLEXÍVEL QUE 
+
+  SE APROVEITA DE FEATURES MODERNAS PARA interagir com as suas partes...

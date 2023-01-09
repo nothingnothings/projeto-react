@@ -1,0 +1,963 @@
+
+
+
+---> NA ULTIMA LICAO, QUEBRAMOS NOSSO APLICATIVO. MAS JA CONSERTAMOS, 
+
+PQ CONSERTAMOS OS IMPORTS... AGORA SÓ 
+
+FALTA 
+
+
+CONSERTAR 
+
+O 
+
+COMPONENT 
+
+'Posts', fazer o component 'Post' 
+
+
+ser incorporado por ele, 
+
+para que 
+
+ele possa 
+então 
+
+
+ser renderizado em 'blog'...
+
+
+
+
+
+
+
+
+
+TODOS OS OUTROS COMPONENTS, AQUELE 
+
+'FULLPOST' 
+
+
+E 
+'NEWPOST',
+
+SERÃO
+
+
+CARREGADOS 
+
+
+
+___cOMO PÁGINAS EXTRAS DE NOSSO APP__, POR MEIO DO 
+
+ROUTING...  --------> E ISSO FAZ, CONSEQUENTEMENTE,
+
+QUE 
+
+
+ELES SEJAM TRANSFORMADOS EM ___cONTAINERS___... (subcontainers de 'Blog'...) --> 
+
+
+
+ELES 
+
+
+SE TORNARAM 'CONTAINERS' 
+
+
+PQ 
+
+ELES NÃO MAIS SÃO APENAS 'INCLUÍDOS' EM OUTRO COMPONENT,
+
+MAS TAMBÉM
+
+SÃO NO 'ROOT LEVEL' DE SUAS PÁGINAS/PEDACOS DO APLICATIVO. ---> isso 
+
+
+pq 
+
+teremos 
+
+
+
+
+2-3 '''root level components''' no nosso aplicativo, 
+
+
+o 
+
+'home' (com os 'posts'), 
+
+
+
+o 
+
+
+'fullPost'
+
+
+
+e 
+
+
+o 
+
+'newPost'...
+
+
+
+
+------------------------------------------
+
+
+
+
+
+AGORA DEVEMOS TRABALHAR/CRIAR O COMPONENT 
+
+'POSTS',
+
+
+QUE 
+
+É 
+
+O ÚNICO COMPONENT 
+
+QUE REALMENTE ESTA FALTANDO NO NOSSO CÓDIGO.
+
+
+
+
+
+--> PARA ISSO O PROFESSOR PEGARA 
+
+AQUELE 
+
+
+código que temos em 'Blog.js',
+
+aquele 
+
+
+'<section className="Posts">
+    {posts}
+    </section>'
+
+
+
+
+
+
+ELE VAI PEGAR ISSO E ENFIAR 
+
+NO 
+
+
+COMPONENT 'posts'... ---> 
+
+ESSE 
+
+'posts' 
+
+
+SERÁ 
+UM 
+
+___cLASS BASED COMPONENT__...
+
+
+
+
+
+---------------------------------------
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+import React, { Component } from' react';
+
+
+class Posts extends Component {
+    
+    
+    
+    
+        render() {
+
+            <section className="Posts">
+            {posts}
+            </section>
+        }
+
+    
+
+}
+
+
+
+export default Posts; 
+
+-----------------------------------------
+
+
+
+
+
+
+'{posts}, É CLARO, AINDA INEXISTE NESSE COMPONENT ESPECÍFICO.... ---> ele 
+
+nao existe pq essa variavel/const era criada DINAMICAMENTE LÁ 
+
+
+NO COMPONENT 
+
+'Blog'... -------> É POR ISSO QUE DEVEMOS PEGAR 
+
+TODA 
+
+A LÓGICA CRIADORA DESSA VARIÁVEL,PRESENTE 
+
+EM 
+
+'BLog',
+
+
+
+para entao a enfiar 
+
+
+no component 'Posts'...
+
+
+(
+
+    ESSA LÓGICA É:
+''''''''''''''''
+
+let posts = <p style={{textAlign: 'center'}}>Something went wrong!</p>;
+        if (!this.state.error) {
+            posts = this.state.posts.map(post => {
+                return <Post 
+                    key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)} />;
+            });
+        }
+
+
+
+''''''''''''''''''''''''''
+)
+
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+CERTO, ASSIM QUE 
+
+FAZEMOS ISSO, TOPAMOS COM OUTRO PROBLEMA:
+
+
+
+esse negócio aí, essa lógica, 
+
+
+
+
+DEPENDE 
+
+
+DO ___STATE____ DE UM COMPONENT( como visto pelo código 'if (!this.state.error) {} ')...
+
+
+
+---------------------------------------------
+
+
+
+ISSO, ESSE PROBLEMA, POR SUA VEZ,
+
+
+NOS OBRIGARÁ 
+
+A 
+
+FAZER 
+
+___MANAGE___ DO STATE__ DOS 'posts' 
+
+
+
+____DENTRO DO COMPONENT 'posts'... (o que faz sentido...) -----> para isso,
+
+
+
+vamos
+
+
+
+PEGAR
+
+O 
+
+STATE 
+
+
+DE 
+
+
+'Blog',
+
+
+que 
+
+tem um código de 
+
+
+
+''''''
+
+    state = {
+        posts: [],
+        selectedPostId: null,
+        error: false
+    }
+''''''''''''''''''
+
+
+
+
+E AÍ VAMOS O TRANSPLANTAR 
+
+
+PARA O 
+
+
+COMPONENT 
+
+'posts'.... ------------> 
+
+
+
+
+NÓS TEREMOS 
+
+
+AQUELAS 3 PROPRIEDADES ALI.... ---------> 
+
+
+
+mas o professor então 
+
+
+explica que 
+
+
+VAI 
+
+remover
+AQUELAS 2 
+OUTRAS PROPRIEDADES ('error' e 'selectedPostId'... ) --------> 
+
+
+
+
+ELE VAI AS REMOVER...  ------> isso, por sua vez,
+
+iria quebrar 
+
+
+
+a parte 
+
+
+do código de 
+
+
+'clicked={() => this.postSelectedHandler(post.id)}' ---------> 
+
+
+
+
+
+ESse prop aí, em que 
+
+executamos 
+
+o 
+
+
+'postSelectedHandler', com um pass de 'post.id',
+
+
+
+O PROFESSOR 
+
+EXPLICA QUE 
+
+
+DEVEMOS 
+
+SIMPLESMENTE 
+
+
+
+PEGAR ESSE MÉTODO 
+
+'postSelectedHandler'
+
+
+LÁ 
+
+
+DE 
+
+'Blog.js' 
+
+
+E ENTÃO TAMBÉM O TRANSPLANTAR PARA O COMPONENT 
+
+'Posts.js'...
+
+
+
+
+
+
+EX(fICARÁ ASSIM O CÓDIGO):
+
+
+
+
+class Posts extends Component {
+    state = {
+        posts: [],
+        selectedPostId: null,
+        error: false
+    }
+
+
+    postSelectedHandler = (id) => {
+        this.setState({selectedPostId: id});
+    }
+
+
+
+    
+    
+    
+        render() {
+
+            let posts = <p style={{textAlign: 'center'}}>Something went wrong!</p>;
+        if (!this.state.error) {
+            posts = this.state.posts.map(post => {
+                return <Post 
+                    key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)} />;
+            });
+        }
+
+
+            <section className="Posts">
+            {posts}
+            </section>
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+
+}
+
+
+-----------------------------------
+
+
+
+
+
+POR FIM, PROFESSOR PEGARÁ 
+
+
+DO BLOG COMPONENT 
+
+
+AQUELE 
+
+
+MÉTODO/LIFECYCLE HOOK DE 
+
+
+'componentDidMount()'...
+
+
+
+
+
+
+
+
+
+
+---> ISSO, POR SUA VEZ, FARÁ COM QUE 
+
+ O 
+
+
+ 'BLOG.JS'
+
+ FIQUE 
+
+
+ 'SECO'... --> ELESÓ FICARÁ COM 
+
+ O 
+
+
+ RENDER 
+
+ do 
+
+ 'blog' 
+
+ e 
+
+ daquela 'toolbar'/links das partes 
+
+ do aplicativo...
+
+
+
+
+
+
+
+
+
+
+
+
+ --> para SIMPLIFICAR UM POUCO O NOSSO CÓDIGO, O PROFESSOR 
+
+
+ COMENTA PARA FORA AQUELA SINTAXE QUE FAZ CATCH DE ERROS,
+
+ naquele 
+
+ 'componentDidMount' do nosso 'Posts.js'...
+
+
+ ---------------------------------------
+
+
+
+
+ COM ISSO, 
+
+
+ NOSSO 
+
+
+ COMPONENT 
+
+ 'POSTS' 
+
+
+ ESTARÁ CRIADO... ------> e ele faz FETCH ___DE SEUS PRÓPRIOS 
+
+ 'posts'; o component 'posts' faz fetch dos próprios 'posts'... --> 
+
+
+ ELE TAMBÉM OS RENDERIZA NA TELA.... 
+
+
+
+
+
+
+
+
+
+ ---> BEM... nós nos ESQUECEMOS DE IMPORTAR 
+
+ 'axios' 
+
+
+ NO COMPONENT 
+
+ 'posts'... -> e é exatamente que fazemos... --> mas importamos 
+ 
+
+ A NOSSA INSTANCIA CUSTOM DE AXIOS, E NAO O AXIOS GLOBAL/DEFAULT... 
+
+
+
+
+ex:
+
+
+
+'import axios from '../../../axios;' ' 
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+COM ISSO, AGORA TEREMOS UM APLICATIVO QUE VAI FUNCIONAR MAIS UMA VEZ... --> mas 
+
+
+esse aplicativo SÓ VAI FUNCIONAR SE NÓS IMPORTAMOS 
+
+NOSSO RECÉM-CRIADO COMPONENT 'posts'... (nesse component 'Blog.js')
+
+
+
+
+
+
+
+
+
+
+
+o 'blog.js' 
+FICARÁ ASSIM:
+
+
+ render () {
+    
+
+        return (
+            <div className={BlogStyle.Posts}>
+                <header>
+                    <nav>
+                        <ul  style={{
+                            listStyle: 'none',
+                            margin: '0',
+                            padding: '0', 
+                            display: 'flex row',
+                            justifyContent: 'center'
+                        }}>
+                            <li style={{
+                                    display: "inline-block",
+                                    margin: "20px"
+                            }}><a style={{
+                                textDecoration: 'none', 
+                                color: 'black'
+                            }}    href="/" >Home</a></li>
+                            <li style={{
+                                    display: "inline-block",
+                                    margin: "20px"
+                            }}><a  style={{
+                                textDecoration: 'none', 
+                                color: 'black'
+                            }} href="/new-post">New Post</a></li>
+                        </ul>
+                    </nav>
+                </header>
+                   <Posts /> ////////////////EIS O NOSSO NOVO COMPONENT 'Posts'...
+            
+            </div>
+        );
+    }
+}
+
+
+========================
+
+
+
+
+
+
+
+
+
+
+
+
+
+O CÓDIGO DE 'POSTS 'FICOU ASSIM....:
+
+
+
+import React, { Component } from 'react';
+
+import axios from '../../../axios';
+
+import Post from '../../../components/Post/Post';
+
+
+class Posts extends Component {
+    state = {
+        posts: []
+
+    }
+
+
+    postSelectedHandler = (id) => {
+        this.setState({selectedPostId: id});
+    }
+
+    componentDidMount () {
+        axios.get( '/posts' )
+            .then( response => {
+                const posts = response.data.slice(0, 4);
+                const updatedPosts = posts.map(post => {
+                    return {
+                        ...post,
+                        author: 'Max'
+                    }
+                });
+                this.setState({posts: updatedPosts});
+                // console.log( response );
+            } )
+            .catch(error => {
+                console.log(error);
+                // this.setState({error: true});
+            });
+    }
+
+    
+    
+    
+        render() {
+
+            let posts = <p style={{textAlign: 'center'}}>Something went wrong!</p>;
+        if (!this.state.error) {
+            posts = this.state.posts.map(post => { return (<Post 
+                    key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)}/>);
+            });
+        }
+
+
+          return  <section className="Posts">
+            {posts}
+            </section>
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export default Posts; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------
+
+
+---> por fim, professor aponta que devemos importar alguns estilos 
+
+css 
+
+nesse 
+
+component 'posts'... ---> professor cria um arquivo 
+
+'Posts.module.css',
+ 
+
+ onde ficarao os estilos desse negocio
+ 
+
+ -----------------------------------------
+
+
+
+
+
+ CERTO,
+
+ COM TUDO AGORA 
+
+ SALVO,
+
+
+ veremos 
+
+
+ que 
+
+
+ NA NOSSA PÁGINA INICIAL TEREMOS __aPENAS__ O 
+
+
+
+COMPONENT 'Posts', com os diversos 'post' 
+
+renderizados ali... 
+
+
+(nós não vemos mais 'FullPost' 
+
+e 
+
+'NewPost'...)
+
+
+
+
+---------------------------
+
+
+
+
+Pode parecer que o professor fez muita coisa durante essas licoes, 
+
+mas 
+
+na 
+
+real ele só fez um simples reestructuring do nosso código, 
+
+
+reestructuring --> 
+
+
+
+NESSE SIMPLES REESTRUCTURING,
+
+ELE TRANSFORMOU 
+
+
+NOSSOS COMPONENTS QUE ANTES ERAM 'DUMB' 
+
+EM __cONTAINERS__ 'INDEPENDENTES'... --> além disso, 
+
+
+ele criou aquele novo container de 'posts', que 
+
+agora 
+segura 
+
+o component 'post' (que é renderizado multiplas vezes no seu interior.)
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+
+AGORA, PORTANTO, NÓS TEMOS DIFERENTES COMPONENTS/CONTAINERS 
+
+
+QUE PODEM ___sER UTILIZADOS __ COMO '''PÁGINAS''' 
+
+DIFERENTES NO NOSSO APP....  -------> PQ NÓS 
+
+
+VAMOS QUERER
+ 
+
+ __CARREGAR___ _____OUUUUUU 
+
+
+
+ 1) TODOS OS POSTS;
+
+
+ 2) UM ÚNICO POST 
+
+
+ 3) OU A PÁGINA 'NEW POST'...
+
+
+ ------------------------------------------
+
+
+
+
+ ---> AGORA PRECISAMOS DO 'ROUTING' PARA 
+ INCLUIR 
+
+ ESSA 
+
+
+
+ 2a e 3a '''páginas''', 
+
+
+ para 
+
+
+ fazer a página que MOSTRA APENAS 1 ÚNICO POST,
+
+
+ e para 
+
+ fazer 
+
+ A PÁGINA DE 'new POst', criação de post....

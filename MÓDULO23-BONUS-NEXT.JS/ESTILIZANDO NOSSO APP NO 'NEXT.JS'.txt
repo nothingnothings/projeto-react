@@ -1,0 +1,791 @@
+
+
+
+
+
+
+--> AGORA QUE DEMOS UMA OLHADA NO FUNCIONAMENTO 
+
+
+DE 
+
+'Next.js',
+
+
+
+E 
+
+
+COMO 
+
+
+PODEMOS TRABALHAR COM COMPONENTS 
+
+DENTRO 
+
+DO 
+
+
+NEXT.JS,
+
+
+
+
+DEVEMOS 
+
+
+VER 
+
+
+O 
+
+'STYLING'... ---------------> 
+
+
+
+
+
+
+DURANTE O CURSO,
+
+TRABALHANDO COM 
+
+'create-react-app',
+
+
+o 
+PROFESSOR 
+
+NOS 
+
+ENSINOU 
+
+SOBRE 
+
+O 
+
+
+'css-modules'... ---> mas 
+
+
+ele 
+também 
+
+NOS DISSE QUE 
+
+
+___TEMOS OUTRAS ___ OPÇÕES (como 'inline styles'...) ----------> CERTO,
+
+
+
+
+MAS 
+
+
+O QUE 
+
+FAZEMOS QUANDO 
+
+TRABALHAMOS 
+COM 
+
+
+
+'Next.js'? ---------> BEM,
+
+O PROFESSOR 
+
+
+NOS DIZ QUE 
+
+
+O 
+
+
+
+'Next.js'
+
+
+
+_TEM SUA PRÓPRIA 
+
+MANEIRA 
+
+DE 
+
+'STYLING'... ------------------------> 
+
+
+
+
+
+
+
+TEM A PRÓPRIA MANEIRA DE STYLE 
+
+
+
+DE REACT.... ---------> 
+
+
+
+
+PROFESSOR 
+
+
+DIZ QUE, NO ENTANTO,
+
+
+VOCÊ 
+
+
+__AINDA PODE USAR __ INLINE STYLES__, E QUE 
+
+VOCê __AINDA PODE USAR 
+
+
+'RADIUM'............... 
+
+
+
+
+
+
+
+---> A ÚNICA COISA __QUE VOCÊ _______NÃO PODE __ USAR 
+
+É 
+
+JUSTAMENTE 
+
+O 
+
+'CSS-MODULES'...
+
+ 
+
+
+ -----> você NÃO PODE USAR O CSS MODULES PQ __VOCê _NÃO PODE ACESSAR/NÃO CONSEGUE 
+ ACESSAR 
+
+
+
+ A 
+
+ 'WEBPACK CONFIGURATIOn' 
+
+ usada 
+ pelo 
+
+ next.js....
+
+
+
+
+
+ (ERRADO. O PROFESSOR ESTÁ __ERRADO__. ISSO 
+ 
+ DO 
+ 
+ CSS 
+ 
+ MODULES 
+ 
+ JÁ MUDOU; 
+ 
+ O 
+ 
+ NEXT.JS 
+ 
+ SUPORTA, SIM,
+ 
+ 
+ 
+ CSS MODULES...) 
+
+
+
+ EX:
+
+
+ Adding Component-Level CSS
+Next.js supports CSS Modules using the [name].module.css file naming convention.
+
+CSS Modules locally scope CSS by automatically creating a unique class name. This allows you to use the same CSS class name in different files without worrying about collisions.
+
+This behavior makes CSS Modules the ideal way to include component-level CSS. CSS Module files can be imported anywhere in your application.
+
+For example, consider a reusable Button component in the components/ folder:
+
+First, create components/Button.module.css with the following content:
+
+
+
+
+
+
+
+
+CSS Modules are an optional feature and are only enabled for files with the .module.css extension. Regular <link> stylesheets and global CSS files are still supported.
+
+In production, all CSS Module files will be automatically concatenated into many minified and code-split .css files. These .css files represent hot execution paths in your application, ensuring the minimal amount of CSS is loaded for your application to paint.
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+ENTRETANTO,
+
+
+MESMO QUE 
+
+
+O 
+
+
+'CSS MODULES' funcione (e ele funciona),
+
+
+
+O 
+
+
+REACT 
+
+
+OFERECE 
+
+
+__OUTRA MANEIRA __ 
+
+DE 
+
+ESTILIZAR 
+
+SEUS 
+COMPONENTS,
+
+out of the box....
+
+
+
+
+
+
+
+---------> E ESSE APPROACH TE DEIXA ___ESTILIZAR __ SEUS COMPONENTS __ 
+
+
+E TAMBÉM 
+
+TER 
+
+'SCOPED STYLING'...  
+
+
+
+
+
+
+--> PROFESSOR USA 
+
+O 
+
+COMPONENT 
+
+'User.js'
+
+
+
+
+DE EXEMPLO...
+
+
+
+
+
+
+
+
+--> PROFESSOR DIZ QUE 
+
+DEVEMOS 
+
+
+ADICIONAR UMA 
+
+
+TAG 
+
+'<style></style>'
+
+
+
+DENTRO 
+
+
+DO NOSSO COMPONENT 
+ 
+ JSX...
+
+
+ ex:
+
+
+
+
+ import React from 'react';
+
+const user = (props) => {
+  return (
+    <div>
+      <h1>{props.name}</h1>
+      <p>Age: {props.age}</p>
+      <style></style> ///////EIS O CÓDIGO EM QUESTÃO.
+    </div>
+  );
+};
+
+export default user;
+
+
+-------------------------------
+
+
+
+
+AÍ,
+
+DENTRO 
+
+DESSE 
+
+STYLE,
+
+
+
+VOCÊ 
+
+DEFINE 
+ 
+'jsx' COMO UM ___PROP___... ----------> 
+
+
+
+
+
+
+
+e 
+
+'jsx',
+
+por sua vez,
+
+
+É UM __PROP __ RECONHECIDO 
+
+PELA 
+
+
+TAG 
+
+'<style />',
+
+AQUI,
+
+
+
+JUSTAMENTE 
+
+PQ 
+
+
+O 
+
+
+'next.js'
+ 
+
+ USA 
+
+ UMA 
+
+ PACKAGE 
+
+
+ ESPECIAL 
+
+
+ CHAMADA 
+
+ DE 
+
+
+
+
+ '''''STYLEDJSX'''''... 
+
+
+
+
+
+ ---> O 
+
+
+ 'styledjsx'
+
+ É UMA 
+
+ PACKAGE
+
+ QUE 
+
+
+ SIMPLESMENTE 
+
+ TE 
+
+ DEIXA 
+
+
+ ESCREVER 
+
+ SEU 
+
+ CÓDIGO 
+
+
+ CSS 
+
+
+ DENTRO 
+
+ DO 
+
+ SEU 
+
+
+ CÓDIGO 
+ JSX,
+
+
+
+
+ E ÁI 
+
+ ELE 
+
+ VAI AUTOMATICAMENTE 
+
+
+ 'pull them out' 
+
+
+ E ENTÃO 
+
+ VAI 
+
+ OS 
+
+ APLICAR 
+
+ AOS 
+
+ SEUS 
+
+
+
+ COMPONENTS e 
+
+ então SCOPAR __ AQUELE 
+
+ DETERMINADO 
+
+
+ ESTILO 
+
+ àQUELE COMPONENT em que você escreveu esse prop de 'jsx' (ou seja, é tipo INLINE STYLES...)
+
+
+
+ ---------------------------------------------
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+ import React from 'react';
+
+const user = (props) => {
+  return (
+    <div>
+      <h1>{props.name}</h1>
+      <p>Age: {props.age}</p>
+      <style jsx></style> ///////EIS O CÓDIGO EM QUESTÃO.
+    </div>
+  );
+};
+
+export default user;
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+Mas esse negócio _NÃO É EXATAMENTE IGUAL 
+
+a 'inline styles'.. ---> 
+
+o professor 
+
+escreve 
+
+o código assim:
+
+
+
+
+<style jsx>
+
+{
+`
+
+`
+}
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+(SIM, A SINTAXE É BEM BIZARRA... você vai escrever os ESTILOS 
+
+dentRO 
+
+DOS BACKTICKS,
+
+
+DENTRO 
+
+
+DOS 
+CURLY BRACES, WRAPPADOS POR 
+
+AQUELE 
+
+'<style></style>') ----------> 
+
+
+
+
+
+
+
+
+
+
+
+o professor diz que 
+
+DENTRO 
+
+DESSE 
+
+'<style></style>'
+
+
+
+
+PODEMOS 
+
+ESTILIZAR 
+
+NOSSA 
+
+'div'...
+ 
+
+
+
+ ex:
+
+
+
+
+
+
+
+<style jsx>
+
+{
+`
+    div {
+        border: 1px solid #eee;
+        box-shadow: 0 2px 3px #ccc;
+        padding: 20px;
+        text-align: center;
+    }
+`
+}
+
+
+</style>
+
+
+
+
+
+
+------------------------------
+
+
+
+CÓDIGO COMPLETO:
+
+
+
+
+
+ import React from 'react';
+
+const user = (props) => {
+  return (
+    <div>
+      <h1>{props.name}</h1>
+      <p>Age: {props.age}</p>
+      <style jsx> { ///////EIS O CÓDIGO EM QUESTÃO.
+        `
+    div {
+        border: 1px solid #eee;
+        box-shadow: 0 2px 3px #ccc;
+        padding: 20px;
+        text-align: center;
+    }
+`
+      }
+      </style> ///////////
+    </div>
+  );
+};
+
+export default user;
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+SIM,
+
+É UM CÓDIGO 
+
+BEM 
+
+'CUMBERSOME'... -------> e esse exemplo aqui nos mostra que 
+
+AS 
+
+
+
+COISAS 
+
+ESCRITAS 
+
+DENTRO 
+
+DE 
+
+'style'
+
+
+SERÃO APLICADAS A TODOS OS ELEMENTOS 
+
+
+
+QUE TEM AQUELA TAG dentro 
+
+do 
+
+
+JSX QUE VOCÊ ESTÁ RETORNANDO... (ou seja,
+
+OS ESTILOS REALMENTE SÃO 'SCOPED'; É UMA __MANEIRA ALTERNATIVA __ DE SCOPING,
+
+PARALELA 
+AO
+'CSS-MODULEs'...)
+
+
+
+
+
+
+
+
+
+
+---> ESSA SINTAXE 'ALTERNATIVA' 
+
+do 
+
+
+
+NEXT.JS 
+
+
+
+
+É BOA __ PQ FUNCIONA/TE DEIXA ESCREVER 
+
+
+MEDIA QUERIES COM ELA, TAMBÉM...
+
+
+
+
+
+
+
+--------------------

@@ -1,0 +1,223 @@
+APRENDEMOS NESTE MÓDULO O ___BÁSICO __SOBRE O REDUX___... 
+
+
+
+
+
+
+
+
+
+
+---> HÁ MUITAS COISAS QUE AINDA NÃO VIMOS, COMO 
+
+
+
+__RODAR__ ASYNC CODE COM O REDUX... -----> o professor 
+
+
+acha que 
+
+é importante 
+
+
+primeiramente 
+
+
+
+VER O BÁSICO DO REDUX, entretanto; 
+
+
+
+
+
+Agora podemos usar 
+
+esse conhecimento básico NO 
+
+
+NOSSO 
+
+PROJETO DO BURGER.... ---------> 
+
+
+NÓS APRENDEMOS 
+
+SOBRE 
+
+
+
+COMO 
+
+O REDUX FUNCIONA EM GERAL,
+
+
+
+
+
+APRENDEMOS SOBRE 
+
+O STORE,
+
+REDUCERS (o reducer, dividido... 'combineReducers'),
+
+
+ACTIONS....
+
+
+
+
+
+
+---> TAMBÉM APRENDEMOS QUE __SEMPRE DEVEMOS ALTERAR NOSSO STATE DE FORMA ___iMMUTABLE_,
+
+
+e que NUNCA DEVEMOS MUTAR DIRETAMENTE O 'STORE'... -------> também 
+
+vimos 
+
+
+QUE 
+
+NÓS 
+
+AINDA 
+
+TRABALHAMOS COM 
+
+
+
+
+'CONTAINERS' E 'PRESENTATIONAL COMPONENTS'...
+
+
+
+
+
+
+---------------------------
+
+
+--> nós ainda TEMOS 'CONTAINERS',
+
+e eles são CONECTADOS AO REDUX... ---> os CONTAINERS
+
+
+TAMBÉM
+SÃO 
+
+
+OS LUGARES EM QUE 
+
+
+
+___CONSEGUIMOS O STATE DO REDUX, por meio da função 
+
+
+
+'mapStateToProps = state => {
+    return {
+        ...
+    }
+}
+'....
+
+
+
+
+
+-------> NÓS TAMBÉM APRENDEMOS QUE A FUNÇÃo/coisa 
+
+
+
+
+'mapDispatchToProps'
+
+
+
+TAMBÉM 
+
+É 
+USADA 
+
+
+
+NOS NOSSOS CONTAINERS, 
+
+
+e que 
+
+
+PODEMOS 
+
+
+
+USAR UM FLUXO
+ 
+
+
+'''' store redux --> container --> subcomponents do container '''' 
+
+
+
+PARA DISTRIBUIR ESSE STATE INICIAL DO 'store'... 
+
+
+
+
+
+
+--> OU SEJA,
+
+NOSSO 'PATTERN'  não mudou tanto assim, a única coisa que realmente mudou 
+
+foi o 
+
+'STATE INICIAL', que agora é 'MANAGED IN REDUX'... (para a grande maioria das partes 
+do nosso App... ) 
+
+
+
+---> MAS É CLARO QUE PODEMOS 
+
+
+
+CRIAR __ QUANTOS CONTAINERS __ QUEREMOS NA NOSSA 'APLICATION'... ----> nós fazemos isso 
+
+PARA AS CONECTAR AO 'STATE DO REDUX',
+
+para 
+
+então 
+
+PEGAR 
+
+AS 
+
+'RELEVANT SLICES OF THE STATE', por meio daquela 
+
+
+função/expressão 
+
+'mapStateToProps'... ----------> E ENTÃO AS INFORMAÇÕES DESSAS 'SLICES OF THE STATE' (global state)
+
+SÃO 
+
+DISTRIBUÍDAS
+
+A TODOS 
+
+OS PRESENTATIONAL 
+
+COMPONENTS EMBEDDADOS NESSE 
+
+'Container'
+
+
+-----------------------
+
+
+
+
+
+ESSE É O CORE DO REDUX... -----> NA PRÓXIMA LIÇÃO VAMOS APLICAR REDUX NO NOSSO APLICATIVO 'BURGER BUILDER'...

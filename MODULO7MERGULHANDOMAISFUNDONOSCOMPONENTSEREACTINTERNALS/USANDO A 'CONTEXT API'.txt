@@ -1,0 +1,2461 @@
+
+
+
+
+
+
+
+---> VAMOS APRENDER A USAR A 'CONTEXT API'...
+
+
+
+
+
+
+------> O PROFESSOR VAI CRIAR UM NOVO FOLDER... (na root) --> folder chamado 
+
+
+de 
+
+
+'context'... ------> DENTRO DESSE FOLDER,
+
+
+PROFESSOR 
+
+
+VAI CRIAR 
+
+
+
+UM ARQUIVO 
+
+
+'auth-context.js'.... (authentication context.js)...
+
+
+
+
+
+
+DENTRO DESSE ARQUIVO,
+ 
+
+
+ELE VAI CRIAR AQUILO QUE 
+
+
+CHAMAM 
+
+
+
+DE 
+
+'CONTEXT OBJECT' --------------> E ESSE OBJETO 'CONTEXT' NOS É DADO PELO ___REACT___.... 
+
+
+
+
+
+
+
+
+
+
+
+para que possamos criar um objeto desses, precisamos 
+
+
+__IMPORTAR ___ O REACT NO NOSSO ARQUIVO__...
+
+
+----------------------------------------------
+
+
+
+
+ISSO FEITO,
+
+
+O PROFESSOR VAI CRIAR UMA 
+
+
+CONST 
+
+CHAMADA 
+
+
+DE 
+
+
+'authContext' 
+
+
+
+E VAI ARMAZENAR UM CALL DESSE OBJETO 'context' no seu interior...
+
+
+
+
+
+vai fazer isso por meio do código 'React.createContext()'..... 
+
+
+
+ELE TAMBÉM VAI ESCREVER UM EXPORT STATEMENT PARA EXPORTAR ESSE 'authContext'....
+
+
+
+
+
+
+EX:
+
+
+import React from 'react';
+
+
+
+const authContext = React.createContext();
+
+
+
+export default authContext;
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+Certo... é importante entender 
+
+que 
+
+
+'React.createContext()'  
+
+
+
+
+ACTUALLY  ___NOS DEIXA___ INICIALIZAR ___ NOSSO 
+
+
+
+'CONTEXT' 
+
+
+
+COM UM ___VALOR DEFAULT__...
+
+
+
+
+
+
+---> ELE NOS DEIXA FAZER ISSO 
+
+
+
+PQ O 
+
+
+'context/authContext' É, NO FINAL DAS CONTAS,
+
+
+É ___UM 'CONTEXTO'/objeto JAVASCRIPT  ___ DISPONÍVEL ____'''GLOBALMENTE''''___  ------------> mas 
+
+
+
+dizer que 
+
+
+ESSE OBJETO 
+
+É 
+
+'DISPONÍVEL GLOBALMENTE' __NÃO É ___ UMA AFIRMAÇÃO 100% CORRETA... -------> NÃO É CORRETA 
+
+
+________PQ VOCÊ__ É AQUELE QUE ESCOLHE ___ EM QUE LUGARES__ DO CÓDIGO ___ ESSE 
+
+
+OBJETO ___ FICA/ESTÁ ___ DISPONÍVEL__...
+
+
+
+
+
+
+
+
+----> mas o que importa é 
+
+que 
+
+
+'authContext'/QUALQUER CONTEXT 
+
+
+é um 
+
+
+__OBJETO__ QUE PODE SER PASSADO 
+
+
+'BETWEEN REACT COMPONENTS' ___________SEM USAR___________ 'PROPS'_____..... (por trás das cenas, por assim dizer...)
+
+
+
+
+
+
+
+
+---> isso quer dizer, essencialmente, que podemos 
+
+passar aquele 'isAuthenticated' ___ EM TODOS OS COMPONENTS_ __ SEM USAR PROPS... (Basta usar esse objeto...)
+
+
+
+
+
+
+(OBS::: TECNICAMENTE, ESSE 'CONTEXT' ___NÃO PRECISA __ SER NECESSARIAMENTE UM OBJETO. VOCê 
+
+TAMBÉM PODE TER UM ARRAY, UMA STRING, UM NÚMERO, UM ___SYMBOL___ como VALOR de 'CONTEXT')...
+
+
+
+
+
+
+---> mas o TIPO DE VALOR/DATATYPE mais usado 
+
+
+com 
+
+
+'createContext' É 
+
+
+__oBJETOS/UM OBJETO__... ------> É POR ISSO 
+
+
+
+
+QUE O PROFESSOR 
+
+
+VAI INICIALIZAR 
+
+
+ESSE CALL 
+
+
+de 
+
+'React.createContext()' COM UM PASS 
+
+
+DE UM OBJETO... ({})
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+const authContext = React.createContext({}); //////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+export default authContext;
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+DENTRO DESSE 'CONTEXT' (do OBJETO do parâmetro do createContext) VOCê 
+
+
+
+PODE DEFINIR __QUALQUER VALOR QUE VOCÊ QUISER___.... -------> O PROFESSOR 
+
+
+VAI DEFINIR UM 
+
+
+VALOR DE 
+
+
+
+'{authenticated: false}' ... --------> E ELE 
+
+
+
+__TAMBÉM (,) VAI ADICIONAR UM 
+
+
+___MÉTODO 'LOGIN' ___ DENTRO DESSE OBJETO...
+
+
+
+
+
+
+
+
+
+Ex:
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+const authContext = React.createContext({authenticated: false, login: }); //////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+export default authContext;
+
+
+
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+Certo... mas oq ele fará nesse 
+
+método 
+
+
+'login...'? ---------> BEM, PRIMEIRO ELE EXPLICA QUE __eSSE MÉTODO ___ NÃO VAI FAZER __NADA POR SI SÓ__... -->
+
+como assim? ----->  BEM, O QUE O PROFESSOR QUER DIZER É QUE ESSE MÉTODO/PROPRIEDADE 'login' __VAI 
+
+APENAS __ CONTER UMA 
+
+__'EMPTY ANONYMOUS FUNCTION', por isso ele diz que ISSO NÃO FARÁ NADA POR SI SÓ.. (é tipo uma 'FRAME' para enfiar coisas dentro).
+
+
+
+
+ex:
+
+
+
+
+import React from 'react';
+
+
+
+const authContext = React.createContext({
+    
+    
+    authenticated: false,
+    
+     login: () => {} }); //////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+export default authContext;
+
+
+
+
+
+------------------------------------
+
+
+
+
+Certo... --> E O professor está adicionando esse 'login' de valor '() => {}' AQUI 
+
+
+___PQ SE ELE INICIALIZAR SEU VALOR DEFAULT COM TUDO 
+
+
+AQUILO QUE VAMOS QUERER SER CAPAZES DE ACESSAR 
+
+
+NESSE OBJETO 'context', DE DIFERENTES LUGARES EM NOSSA APPLICATION, 
+ 
+
+SE EU FIZER ESSE NEGÓCIO, SE EU ESCREVER ESSE 
+
+'() => {}' NO 
+
+
+LUGAR DO VALOR DO 'login', 
+
+___EU VOU GANHAR __ UMA MELHOR 'AUTO-COMPLETION' por parte DO MEU __IDE__ (o IDE vai dar SUGESTÕES MELHORES)... ----->  E ESSA 
+
+É ___ A ___ÚNICA ___ RAZÃO PARA USAR ESSA SINTAXE/DEFINIR uma arrow function VAZIA dentro do 'login'....
+
+
+
+
+
+---> professor diz que ESSA É A ÚNICA RAZÃO 
+
+PARA DEFINIR 
+'() => {}' 
+
+
+PQ ELE NÃO SE IMPORTA MT  COM O VALOR 'PADRÃO/DEFAULT' de login... --->  ele não 
+
+
+
+se importa 
+
+
+
+PQ 
+
+
+aGORA __ o 
+
+
+'authContext' ____VAI SER USADO NO 'App.js'.... -------> CERTO,
+
+
+E COMO DEVEMOS 
+
+USAR 
+
+
+ESSE OBJETO? (professor vai nos mostrar como, e vai nos mostrar ____COMO __NÃO INTERESSA O VALOR QUE VOCÊ DEFINE COMO 'VALOR DEFAULT/INICIAL' DO 'login'... )
+
+
+
+
+
+
+
+
+
+
+
+---> PARA QUE CONSIGAMOS USAR UM OBJETO 'context',
+
+
+PRECISAMOS PRIMEIRAMENTE ___iMPORTAR___ ESSE OBJETO 
+
+
+em 
+
+
+'App.js'...
+
+
+
+
+
+
+ESCREVEMOS:
+
+
+
+import AuthContext from '../context/Auth-context'
+
+
+
+
+
+-------------------------
+
+
+
+
+
+
+
+NÓS USAMOS ESSA SINTAXE AÍ __PQ __ O 'AuthContext' __vAI PODER __sER USADO ____COMO 
+
+SE FOSSE UM COMPONENT___.... -----> E ESSE OBJETO 'CONTEXT'
+
+
+
+__dEVERÁ__ WRAPPAr ___ ______TODAS AS PARTES DO SEU aplicativo 
+
+QUE 
+
+
+VÃO 
+
+
+
+PRECISAR DE ACESSO A ESSE 'CONTEXT'.... --------->  NO CASO DO NOSSO APLICATIVO,
+
+quem 
+
+usa 
+
+'login' e 'isAuthenticated'   SÃO __OS COMPONENTS 'COCKPIT' (login)   e PERSONS (isAuthenticated)...
+
+
+
+
+ISSO SIGNIFICA, EM OUTRAS PALAVRAS,
+
+
+
+QUE 
+
+
+ESTE GRANDE TRECHO AQUI:
+
+
+
+
+
+
+
+
+'
+
+  {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={this.loginHandler}
+          />
+        ) : null}
+  {persons}
+
+
+'
+
+
+
+
+
+DEVERÁ ___SER WRAPPADO___ NO MEU
+
+
+'AuthContext'...
+
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+
+O CÓDIGO VAI FICAR ASSIM:
+
+
+
+''''''
+<AuthContext>
+  {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={this.loginHandler}
+          />
+        ) : null}
+  {persons}
+
+</AuthContext>
+'''''''
+
+
+
+
+
+
+VAMOS WRAPPAR TUDO ISSO NESSE 'AuthContext' PQ 
+
+ESSAS SÃO AS PARTES DO NOSSO CÓDIGO QUE REALMENTE 
+
+SE IMPORTAM COM 'AUTHENTICATION'...
+
+
+---------------------------------------
+
+
+
+
+CERTO... MAS O PROFESSOR EXPLICA QUE NÃO 
+
+
+BASTA NÓS ESCREVERMOS 
+
+DE FORMA SIMPLES 
+
+
+uma sintaxe como 
+
+
+'<AuthContext></AuthContext>' ........
+
+
+
+
+NÃO, AQUI NÓS DEVEMOS 
+
+
+
+ESCREVER '.Provider' 
+
+NO __FINAL DO NOME__/INVOCAÇÃO DESSE COMPONENT....
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+<AuthContext.Provider> //////EIS O CÓDIGO EM QUESTÃO.
+  {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={this.loginHandler}
+          />
+        ) : null}
+  {persons}
+
+</AuthContext.Provider>
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+'<xxxxx.Provider>' ---> ESSE É O MODELO DE COMPONENT/COMPONENT 
+
+
+
+DE 'CONTEXT' PROVIDENCIADO __PELO REACT___... -------> e aí você 
+
+
+
+VAI WRAPPAR TODAS AS PARTES DO SEU CÓDIGO NAS QUAIS VOCÊ
+
+VAI QUERER 
+
+USAR 
+
+
+ESSE 
+
+'CONTEXT' 
+
+
+MAIS PARA FRENTE....
+
+
+
+
+
+--> ESSENCIALMENTE, AGORA 
+
+SOMOS CAPAZES DE INTERAGIR COM O 'CONTEXT' DE 'AUTHENTICATION' 
+
+
+ 
+DENTRO DOS COMPONENTS 'COCKPIT' e 'PERSONS'..... ------> E ___TAMBÉM___ SOMOS, É CLARO,
+
+CAPAZES DE __aCESSAR__ ESSE CONTEXTO NO PRÓPRIO ARQUIVO/COMPONENT 'APP', POIS 
+
+É NELE QUE ESTAMOS IMPORTANDO O OBJETO 'CONTEXT'....
+
+
+
+
+
+
+Certo... ---> e 
+
+
+esse 
+
+'<AuthContext.Provider>' 
+
+
+
+
+
+ACEITA/EXIGE UM 
+
+
+__PROP___ DE 
+
+
+'value'....
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+<AuthContext.Provider value={}>
+
+...
+
+
+
+</AuthContext.Provider>
+
+
+
+
+-----------------------------------
+
+
+
+
+E É JUSTAMENTE A __EXISTÊNCIA ___ DESSE 
+
+PROP 'value' ___ QUE FAZ 
+
+OS VALORES 
+
+
+'DEFAULT' DEFINIDOS LÁ EM 'auth-context.js' 
+
+__NÃO IMPORTAREM ___ NEM UM POUCO ( ou seja, é POR ISSO QUE 
+
+nós termos 
+
+definido 
+
+'authentication: false' 
+
+e 
+
+
+
+'login: () => {}' 
+
+
+
+
+__LÁÁÁÁA no 'authContext.js' 
+
+
+É __ALGO QUE NÃO IMPORTA NEM UM POUCO___... ---> não importa nem um pouco 
+
+PQ ___ELES SERÃO __ IGNORADOS E SUBSTITUÍDOS POR esse 
+
+prop 'value' COLOCADO NO CALL/INVOCAÇÃO 
+
+
+do component 'xxxxx.Provider' que é providenciado pelo OBJETO 'Context' do 
+
+REACT...
+
+
+
+
+
+)
+
+
+
+
+
+
+---> os valores 'DEFAULT' DEFINIDOS ___LÁ EM 'auth-context.js' 
+
+
+___SÓ VÃO IMPORTAR__ QUANDO 
+
+
+NÓS __ NÃO DEFINIMOS NENHUM PROP 'value' 
+
+
+Lá 
+
+
+em 
+
+
+'<AuthContext.Provider></AuthContext.Provider>'....
+
+
+
+------------------------------------------
+
+
+E isso, o valor 'default'  REALMENTE PODE PARECER INÚTIL/IRRELEVANTE ---> .....
+
+
+
+ENTRETANTO,
+
+
+
+__HÁ CASOS, 'USE-CASES',
+
+
+COMO ___O NOSSO DE AGORA ___, que __VÃO USAR __ ESSE VALOR DEFAULT, sim.... ------> 
+
+
+
+vão usar 
+
+o valor default 
+
+
+___PQ VOCê VAI QUERER __tER UM VALOR ___DINÂMICO__, UM 'value' 
+
+___DINÂMICO___... ------> mas PQ um VALOR DINÂMICO, NESSE NOSSO EXEMPLO? -------> 
+
+
+BEM, 
+
+
+O __'AUTHENTICATION STATUS' PODE/VAI MUDAR, AFINAL DE CONTAS... --> é por isso que 
+
+
+
+O PROFESSOR __VAI FAZER __ MANAGE__ DO 'authentication status' 
+
+__LÁ ___ NO APP.JS 
+
+e então 
+
+__VAI PASSAR ___  o nosso 'CURRENT STATE' do 'AUTHENTICATION STATUS' 
+
+
+AO PROP 'value'... ----->  isso quer dizer, em outros termos,
+
+
+que o 
+
+
+valor de 'value' 
+ 
+___SERÁ __ UM OBJETO JAVASCRIPT_ __ ('{}' ).....
+
+
+ 
+ E ESSE OBJETO JAVASCRIPT ___TERÁ ___ A EXATA MESMA ESTRUTURA 
+
+
+ DO 
+
+ 'OBJETO CONTEXT DEFAULT/PADRÃO' 
+
+ (ou seja,
+ 
+ 
+ vai ser 
+ 
+ 
+ 'authenticated: false,
+ login: () => {}' 
+ )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ RESULTADO (representação do que falamos agora):
+
+
+
+
+
+
+
+
+ 
+<AuthContext.Provider value={{
+    authenticated: false, ///este código está ERRADO/INCOMPLETO.
+    login: () => {}
+}}>
+  {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={this.loginHandler}
+          />
+        ) : null}
+  {persons}
+
+</AuthContext.Provider>
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+LEMBRE-SE: 
+
+professor 
+
+colocou 
+
+
+
+ authenticated: false,
+    login: () => {}
+
+
+
+LÁ 
+
+
+no 
+
+'const authContext = React.createContext({})' 
+
+PQ 
+
+__ELE QUERIA UM MELHOR AUTO-COMPLETION__ por parte do IDE...
+
+
+
+
+
+
+
+
+----> Certo... mas professor __FAZ ALGUMAS ALTERAÇÕES, AQUI__... --> ele não vai copiar __EXATAMENTE__ o código de 
+
+'auth-context.js', do component 
+
+'AuthContext',
+
+
+para dentro 
+
+desse valor do prop 'value'.... --> não,
+
+
+ele vai, por exemplo,
+
+
+definir
+
+
+'authenticated' COMO SENDO IGUAL 
+
+
+A 
+
+'this.state.authenticated'... (o que é diferente de um simples 'authenticated: false')
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+<AuthContext.Provider value={{
+    authenticated: authenticated: this.state.authenticated,
+    login: () => {}
+}}>
+  {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={this.loginHandler}
+          />
+        ) : null}
+  {persons}
+
+</AuthContext.Provider>
+
+
+-----------------------------------
+
+
+
+OK, MAS 
+
+
+pq DIABOS
+ 
+ ele escreveu '  authenticated: authenticated: this.state.authenticated' ? --------> 
+
+
+
+ ELE FEZ ISSO PQ __ ELE AINDA VAI QUERER ___ FAZER 
+
+
+ 'MANAGE DO AUTHENTICATION STATUS' no nosso COMPONENT 'App', no STATE do nosso App... ---> ele vai 
+
+ fazer 
+
+
+ ISSO 
+
+ PQ ___ EXISTE 1 COISA ___ QUE _________NÃO MUDA_______ QUANDO VOCÊ USA 
+
+ 'context'/objetos 'context'....  --------> a coisa que não muda 
+
+ É O FENÔMENO/FATO ____DO REACT ___ RE-RENDERIZAR/UPDATAR ___ SEMPRE 
+
+
+ QUE O STATE OU OS PROPS (dos components 'person', 'persons', 'cockpit' e 'app', nesse 
+ nosso exemplo) MUDAREM/FOREM ALTERADOS...  ---------> ISSO 
+
+ SIGNIFICA 
+
+
+
+ _______QUE A SIMPLES __ MUDANÇA ___ DE ALGO/props/state/VALORES 
+
+
+ em um 'CONTEXT OBJECT' (como 'AuthContext') 
+
+
+ __NÃO___ ENSEJA __ UPDATES/RE-RENDERS 
+
+ DE NOSSOS COMPONENTS/DE NOSSO APLICATIVO...  ----> e é __POR ISSO__ que 
+
+
+ O professor 
+
+
+ AINDA VAI/VAI ADMINISTRAR O 'authentication state' 
+
+
+
+ ____________DENTRO DO ______  STATE do component 'App.js'.... --> ele vai fazer 
+
+ isso 
+
+
+
+ PQ 
+
+ QUANDO 
+
+ o 
+
+
+ component 'AuthContext.Provider' SE APROVEITA DO VALOR DESSA PROPRIEDADE por meio 
+
+ do código 
+
+
+ '{authenticated: this.state.authenticated}', ARMAZENA O VALOR DESSA PROPRIEDADE 
+
+ DENTRO 
+
+ DE UMA PROPRIEDADE 
+
+ 'authenticated' 
+
+
+DENTRO DO prop 'value' QUE VAI USAR DEPOIS...
+
+
+
+
+
+(nosso 'authentication status' AINDA É GERENCIADO/MANAGED 
+
+___DENTRO DO COMPONENT 'APP', MAS AGORA NÓS TAMBÉM 
+
+VAMOS ARMAZENAR O 'current STATE' do AUTHENTICATION STATUS 
+
+
+dentro da propriedade 'authenticated' armazenada no prop 'value' QUE É PASSADO 
+
+a 'AuthContext'...)
+
+
+
+
+
+
+
+
+E COMO 'value' 
+É __EFETIVAMENTE ___ UM 'PROP' 
+
+do
+
+objeto 'context', do objeto/component 'AuthContext.Provider', isso 
+
+
+SIGNIFICA QUE o valor 
+
+
+de 'this.state.authenticated', enfiado dentro da propriedade 'authenticated' DENTRO 
+
+do prop 'value' PASSADO ao 
+
+
+component 'AuthContext', SEMPRE ___SERÁ __ATUALIZADO __ QUANDO O ___STATE/STATUS__ DO NOSSO 
+
+
+'authenticated' (lá no STATE de 'App') for alterado....
+
+ 
+
+
+
+ --> contudo, o professor aponta que NÓS TAMBÉM 
+
+ TEMOS A KEY/key-value pair 
+
+
+
+ de 
+
+
+ 'LOGIN' dentro desse objeto passado ao prop 'value'.....
+
+
+
+
+ ---> CONTUDO, NÓS NÃO VAMOS escrever '() => {}' como havíamos escrito lá 
+
+ no 'const authContext', lá no arquivo 'auth-context.js'... ----> não,
+
+ o valor 
+
+
+ de 'login' que vamos colocar aqui __SERÁ ___ UM POINTER___ AO 'loginHandler' (método criado dentro do component 'App'...)
+
+
+('this.loginHandler)'....
+
+
+
+ eX:
+
+
+
+
+
+ <AuthContext.Provider value={{
+    authenticated: authenticated: this.state.authenticated,
+    login: this.loginHandler //////////////////EIS O CÓDIGO EM QUESTÃO.
+}}>
+  {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={this.loginHandler}
+          />
+        ) : null}
+  {persons}
+
+</AuthContext.Provider>
+
+
+
+
+--------------------------------
+
+
+ISSO,
+
+
+ESSE 
+
+
+'login: this.loginHandler' SERÁ, NO FINAL DAS CONTAS, UMA REFERENCE/REFERÊNCIA 
+
+
+
+
+A essa função 'loginHandler'..........
+
+
+
+
+
+--> CERTO,
+
+e isso aí,
+
+
+essas 2 propriedades, 
+
+
+'authenticated' 
+
+e 
+
+'login',
+
+
+
+ESTÃO __NO MEU ___ OBJETO 'CONTEXT'__.... (que é/foi definido tanto em 'auth-context.js'
+
+QUANTO EM 'App.js', nesse 'AuthContext.Provider'...) -------->  E 
+
+
+E
+
+
+ESSE OBJETO 
+
+
+'CONTEXT'  
+
+
+
+__PODE SER___, AGORA, ___ UTILIZADO 
+
+
+
+EM 
+
+'COCKPIT' 
+
+
+e 
+
+'PERSONS' ---> eles (cockpit e persons) podem USAR ESSAS PROPRIEDADES DENTRO DE 'value' do AuthContext.Provider
+
+
+___PQ_____ ____ELES __FORAM/ESTÃO__ WRAPPADOS ____ POR 
+
+ESSE ''''COMPONENT''''/CONTEXTO de 
+
+'AuthContext.Provider'... (estão wrappados por esse wrapper...)
+
+
+
+
+
+
+REVEJA O CÓDIGO:
+
+
+
+
+
+
+ <AuthContext.Provider value={{
+    authenticated: authenticated: this.state.authenticated,
+    login: this.loginHandler //////////////////EIS O CÓDIGO EM QUESTÃO.
+}}>
+  
+  WRAPPADO
+  
+  {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            login={this.loginHandler}
+          />
+        ) : null}
+  {persons}
+
+
+WRAPPADO(fim do WRAP)
+
+
+</AuthContext.Provider>
+
+
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+---------->  Certo... 
+
+
+agora devemos 
+
+
+VER 
+
+
+
+__COMO __ PODEMOS USAR ___ ESSAS PROPRIEDADES____ 
+
+DENTRO 
+
+
+
+DO 
+
+
+COMPONENT 
+
+'Persons'...(no arquivo 'Persons.js')....
+
+
+
+
+
+
+
+------> lá em 'Persons', PRECISAMOS SEGUIR ALGUNS 
+
+PASSOS 
+
+
+_PARA __ CONSEGUIR ___ IMPORTAR __ O 'AuthContext' e suas propriedades... -------->
+
+
+
+É POR ISSO QUE VAMOS ESCREVER 
+
+
+'import AuthContext from '../../context/auth-context'
+
+
+
+----------------------------------------------
+
+
+
+
+
+Certo...
+
+
+
+agora 
+
+
+estamos 
+
+
+COM ESSE CONTEXTO importado 
+
+em 
+
+'Persons.js'....
+
+
+
+
+
+
+----> CERTO, AGORA, DENTRO DE 'Persons.js',
+ 
+
+ NÓS NÃO QUEREMOS ELABORAR/PROVIDENCIAR('provide')/CRIAR O CONTEXTO/UM CONTEXTO,
+
+
+ E SIM __ QUEREMOS __ CONSUMIR __ UM CONTEXT __ JÁ CRIADO __ (o objeto context de nome 'AuthContext')...
+
+
+
+------> PARA __CONSUMIR__ UM ___CONTEXT__, você deve 
+
+IR ___ATÉ O LUGAR___ EM QUE VOCê ________rETORNA_ __ SEU CÓDIGO JSX (no component 
+
+em que você importou o objeto 'Context' em questão.... ) -----> PQ É NESSE 
+
+
+
+'RETURN STATEMENT' de JSX code que você vai querer USAR ESSE CONTEXT...
+
+
+
+
+
+ex (lugar do código de 'Persons' em que queremos CONSUMIR o 'AuthContext'...):
+
+
+
+
+
+
+return (
+      this.props.persons.map((person, index) => {
+            
+       return <Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}
+        isAuth={this.props.isAuthenticated}/>  
+          
+    }
+  
+      )
+    )
+
+  
+
+
+---------------------------------------------------
+
+
+
+
+
+
+Certo,
+ 
+ é nesse lugar.... ------> NÓS VAMOS QUERER USAR O ___CONTEXTO__/CONTEXT 
+
+
+ de 
+
+
+ 'AuthContext' 
+
+ _________NESSE RETURN DO COMPONENT 'PERSON'/DESSE CÓDIGO JSX... ---------->
+
+
+
+
+ PARA FAZER ISSO, BASTA FAZERMOS O __WRAP__ de todo nosso código JSX retornado com o return statement 
+
+ com o 'component/context '
+
+ de 
+
+
+ 'AuthContext.Consumer'....
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+ return (
+        <AuthContext.Consumer>
+         this.props.persons.map((person, index) => {
+            
+      
+        <Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}
+        isAuth={this.props.isAuthenticated}/>  
+        
+    }
+   
+      )
+     </AuthContext.Consumer>
+    )
+
+
+  ----------------------------------------
+
+
+
+
+
+  CERTO... WRAPPAMOS tudo isso, todo esse código JSX retornado, com 
+
+
+  O WRAPPER do 'AuthContext.Consumer'...
+
+
+
+
+
+  ---> PROFESSOR EXPLICA QUE, COMO ESSE NEGÓCIO É UMA ''JAVASCRIPT EXPRESSION'', PRECISAMOS 
+  WRAPPAR todo 
+
+  o código 
+
+  desde 
+
+  'this.props.persons.map()' até o final desse return statement....
+
+  vai ficar assim:
+
+
+
+
+
+
+
+
+  
+  render() {  
+    console.log('[Persons.js] rendering...');
+    return (
+      <AuthContext.Consumer>
+      {this.props.persons.map((person, index) => {
+            
+       return (<Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}
+        isAuth={this.props.isAuthenticated}
+        />  
+       );
+    
+
+       })}
+      </AuthContext.Consumer>
+    )
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------
+
+
+
+CONTUDO,
+
+professor aponta 
+
+que 
+
+
+'AuthContext.Consumer' ___AINDA __ NÃO É A SINTAXE COMPLETA/TOTALMENTE CORRETA__... -----> ué,
+
+
+
+MAS __PQ__?
+
+
+
+---> É PQ '<AuthContext.Consumer>' 
+
+
+
+______NÃO ACEITA___ CÓDIGO JSX ___ COMO __CHILD___ DE SEU COMPONENT/CONTEXTO CONSUMIDo...
+
+
+(
+  isso significa que não são suportadas 
+
+  TODAS AS LINHAS DE CÓDIGO DE 
+
+
+
+{this.props.persons.map((person, index) => {
+            
+       return (<Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}
+        isAuth={this.props.isAuthenticated}
+        />  
+       );
+    
+
+       })},
+
+
+
+
+  POIS ESSE 
+
+  MÉTODO 
+
+
+  'MAP' ESTÁ RETORNANDO UM COMPONENT/CÓDIGO JSX (o component 'Person')...
+
+
+
+)
+
+
+
+--> isso significa que
+
+
+ENTRE A OPENING E CLOSING TAGS 
+
+de 
+'AuthContext.Consumer'
+
+
+NÃO PODE EXISTIR '< >'... ---------> UÉ, MAS ENTÃO 
+
+
+O QUE DIABOS 
+
+
+
+COLOCAMOS 
+
+
+NO MEIO DELE, O QUE WRAPPAREMOS COM ELE? -------> DEVE-SE 
+
+
+
+SEMPRE ___ COLOCAR __ UMA _______fUNÇÃO__ NO MEIO 
+
+
+DOS OPENING/CLOSING TAGS 
+
+desse 
+
+'context' que será consumido... ---------> É POR ISSO QUE 
+
+
+
+______o PROFESSOR VAI ESCREVER UMA ARROW FUNCTION, ARROW FUNCTION QUE 
+
+
+___eVENTUALMENTE__ VAI __RETORNAR TODO ESSE CÓDIGO JSX....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+  render() {  
+    console.log('[Persons.js] rendering...');
+    return (
+      <AuthContext.Consumer>
+      {() => {this.props.persons.map((person, index) => {
+            
+       return (<Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}
+        isAuth={this.props.isAuthenticated}
+        />  
+       );
+    
+
+       })}}
+      </AuthContext.Consumer>
+    )
+    }
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+CERTO. ESSE CÓDIGO ESTÁ __cERTO__...  
+
+
+
+
+essa função (
+
+
+
+
+  na verdade, 
+
+
+  ___TODO O CÓDIGO__ COLOCADO 
+
+
+  NO '{}' APÓS
+   
+  A INSERÇÃO 
+
+  DO 
+
+
+  '<AuthContext.Consumer>'... --> que no final das contas, É O __MÉTODO/FUNÇÃO__ que acaba RETORNANDO NOSSO CÓDIGO JSX...
+)
+
+
+ 
+SERÁ __ EXECUTADA PELO 
+
+
+OBJETO 'AuthContext.Consumer' (ou, melhor dizendo, pela 'Context API' do REACT) __PARA NÓS__...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+certo... -----> MAS ESSA '''FUNÇÃO'''' colocada dentro do '{}' 
+
+
+VAI __rECEBER UM ARGUMENTO__, ELA NÃO VAI FICAR LIMPA COMO '() => {código jsx que queremos retornar/código geral que queremos retornar}'...
+
+
+
+
+
+Não, o argumento que essa ''função'' vai receber 
+
+é 
+
+'context'.... ----> esse argumento é/SERÁ__ UM __ OBJETO 'CONTEXT'___....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+  render() {  
+    console.log('[Persons.js] rendering...');
+    return (
+      <AuthContext.Consumer>
+      {(context) => {this.props.persons.map((person, index) => { ////////EIS O CÓDIGO EM QUESTÃO.
+            
+       return (
+         <Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}
+        isAuth={this.props.isAuthenticated}
+        />  
+       );
+    
+
+       })}}
+      </AuthContext.Consumer>
+    )
+    }
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+CERTO... receber-se-á um 
+
+OBJETO 'context' como parâmetro ---> E É __ASSIM__ QUE VAMOS 
+
+
+GANHAR ACESSO AO OBJETO 'AuthContext' __NESSE__ TRECHO DO NOSSO CÓDIGO __ (nesse 
+
+return de código JSX)....
+
+
+
+
+Ou seja, 
+
+
+o que vai acontecer é:
+
+
+
+<AuthContext.Consumer> ----> vai __'''''REPASSAR'''' O OBJETO 'context 'AuthContext'
+
+
+__ AO ____ ARGUMENTO '(context)' ESCRITO LOGO ABAIXO, DENTRO DO CURLY BRACES... ---> e é 
+
+ESSE OBJETO 'context' __QUE VAI __eXECUTAR___ NOSSO CÓDIGO JSX/CÓDIGO GERAL__ COLOCADO 
+
+
+___DENTRO DAS CURLY BRACES DA ARROW FUNCTION___...
+
+
+
+
+
+<AuthContext.Consumer> -------> || (context) => {codigoJsx} 
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+VAMOS GANHAR 
+
+AQUELE 
+
+'ARGUMENT' por meio do 'AuthContext.Consumer' -----> 
+
+
+
+e esse argument 
+
+VAI EXECUTAR 
+
+
+NOSSA FUNÇÃO DO FUNCTION BODY DESSA ARROW FUNCTION PARA NÓS.... ------>
+
+
+
+
+E DENTRO DO CÓDIGO
+
+
+'''''
+       return (
+         <Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}
+        isAuth={this.props.isAuthenticated}
+        />  
+       );
+    
+'''''''''''
+
+
+
+
+(esse código JSX retornado) 
+
+
+NÓS __TEREMOS ACESSO AO OBJETO 
+
+'context', pois fizemos toda aquela mão de WRAPPAR o component/context 
+
+
+'AuthContext.Consumer' EM VOLTA DESSE CÓDIGO, E TAMBÉM PQ PASSAMOS UM 
+
+ARGUMENTO DE 
+
+'(context)' para executar esse nosso código...
+
+
+
+----------------------------------------------
+
+
+
+
+
+AGORA, FINALMENTE, 
+
+
+PODEMOS ___fORWARDAR___ O OBJETO 'CONTEXT' (e as propriedades/valores contidos NO SEU INTERIOR)
+
+ao PROP 
+
+de 'isAuth' QUE TEMOS ALI EMBAIXO...
+
+
+
+
+--> MAS, É CLARO, RELEMBRA O PROFESSOR,
+
+
+nós 
+
+__NÃO QUERÍAMOS ___/NÃO ERA NOSSA IDEIA USAR E REPASSAR 
+
+
+um valor armazenado em 'AuthContext' 
+
+
+AO COMPONENTE 'Persons'... -----> não, nossa 
+
+
+ideia 
+
+
+era __EVITAR___ O REPASSE DESNECESSÁRIO DE PROPS NO NOSSO APLICATIVO... -----> isso significa que 
+
+
+
+NÓS QUERÍAMOS USAR O 'AuthContext' EM __PERSONS__, E NÃO EM 'PERSON'... (ou seja, queríamos SKIPPAR 
+aquele 
+
+'CICLO/LAYER EXTRA' DE COMponents, de repasse de um prop por entre múltiplos components)....
+
+
+-------------------------------------
+
+
+
+
+
+
+COMO NOSSO OBJETIVO __nÃO É/NÃO ERA__ consumir 
+
+
+
+'AuthContext' 
+
+
+
+EM 'Persons',
+
+
+O PROFESSOR SIMPLESMENTE __REMOVE__ 'AuthContext.Consumer' e 
+
+o restante do código relacionado a ele que havíamos escrito em 'Persons'...
+
+
+
+
+
+
+reverteremos ao status inicial, mas antes disso 
+
+
+O PROFESSOR TAMBÉM 
+
+
+
+VAI REMOVER AQUELE 'isAuth={this.props.isAuthenticated}' QUE ESTÁVAMOS FORWARDANDO....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ return (
+         this.props.persons.map((person, index) => {
+            
+      
+        <Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}
+       />
+        
+    }
+   
+      )
+    )
+
+
+  --------------------------------------------
+
+
+
+
+
+
+
+
+
+  ------> NÓS TAMBÉM VAMOS REMOVER O IMPORT DE 'AuthContext' DE 
+
+  NOSSO 
+
+  'Persons.js'... (não vamos mais precisar dele aqui...)
+
+
+
+
+
+
+  --> VAMOS QUERER,
+  ISSO SIM, 
+
+
+  USAR 
+
+
+
+  O CONTEXT OBJECT de 'AuthContext' 
+
+
+  ___LÁ NO COMPONENT ___ 
+
+
+  'PERSON'...
+
+
+
+
+
+
+
+---> o professor então escreve/insere o '<AuthContext.Consumer>' 
+
+
+LOGO ABAIXO 
+
+
+DO NOSSO 'HOC' de 'Aux'.... ----> ele explica que se VOCÊ PRECISASSE do context 
+
+
+de 'AuthContext' em uma área maior/pegando mais código JSX escrito aqui, 
+
+você pode 
+
+COLOCÁ-LO, POR EXEMPLO, ABRANGENDO o 'Aux' (em vez de sendo englobado/sendo CHILd do 'Aux')....
+
+
+OBS: ELE TAMBÉM VAI ESCREVER AQUELA 'FUNÇÃO' de arrow que vem junto com o 'AuthContext.Consumer',
+
+
+e também 
+
+vai criar/escrever aquele argumento de 'context' recebido por essa função, e repassado por 'AuthContext.Consumer'..
+
+
+
+---> ENTRETANTO, 
+EU CAPTEI 
+
+A IDEIA ERRADA... --------> O PROFESSOR __SÓ WRAPPARÁ O __ PEDAÇO DE CÓDIGO DENTRO 
+
+
+
+DE 
+
+'AUX'
+
+
+
+__QUE ABSOLUTAMENTE__ PRECISA __ DO CONTEXT de 'AuthContext'.. -----> isso significa que ___ELE SÓ VAI WRAPPAR AQUELA NOSSA TERNARY EXPRESSION com esse 'context'...
+
+
+
+
+
+
+
+EX (RESULTADO):
+
+
+
+
+
+
+
+  render() {
+    console.log('[Person.js] rendering...');
+
+    return (
+
+
+      <Aux>
+        <AuthContext.Consumer>
+        { (context) => {this.props.isAuth ? ( <p className={Pessoa.green}>VALIDATION SUCCEEDED</p> ) : ( <p className={Pessoa.red}>VALIDATION INCOMPLETE</p> )} } /////////////EIS O CÓDIGO EM QUESTÃO.
+        </AuthContext.Consumer>
+
+        <p key="i1" onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+
+        <p key="i2">{this.props.children}</p>
+
+        <input
+          key="i3 "
+          // ref={(inputElement) => {inputElement.focus();}}
+          // ref={(inputElement) => {this.inputProperty = inputElement}} 
+          ref={this.inputProperty}
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+CERTO... ISSO FEITO, 
+
+AGORA FINALMENTE PODEREMOS 
+
+
+USAR 
+
+
+O CÓDIGO/VALORES/PROPRIEDADES 
+
+
+ARMAZENADOS 
+
+dentro do 
+
+objeto 'AuthContext' NESSA 
+
+
+TERNARY EXPRESSION DE NOSSO PROCESSO DE VALIDAÇÃO/AUTHENTICATION... -------> ISSO 
+
+SIGNIFICA QUE 
+
+
+
+O PROFESSOR VAI 
+
+
+PODER ___SE LIVRAR____ DAQUELE 'prop de 2o grau' (repassado por entre 2 diferentes components/2 layers de components) 
+
+de 
+
+
+'this.props.isAuth' -----------> ELE VAI PODER SE LIVRAR 
+
+
+DESSE PROP NA TERNARY EXPRESSION, PODERÁ O SUBSTITUIR 
+
+
+POR 
+
+
+'context.authenticated'  (e isso vai funcionar pq lá em 'App.js', no component 'App', dentro do 
+
+prop 'value' do 'AuthContext.Provider' NÓS __dEFINIMOS___ 
+
+' '''''''''''
+
+
+
+  value={
+      {
+    authenticated: this.state.authenticated,
+    login: this.loginHandler
+  }
+
+
+
+''''''''''''''''''''''
+  
+  
+  
+  
+
+)
+
+
+
+
+
+
+
+
+
+
+
+
+  ---------------------------------
+
+
+
+
+CERTO... com isso, AGORA ESTAMOS CONSUMINDO NOSSO 'CONTEXT' no component 'Person' 
+
+PARA 
+
+QUE CONSIGAMOS 
+
+___FAZER O OUTPUT__ _DOS DADOS CORRETOS...
+
+
+
+
+
+
+--> ok, mas ainda temos um PROBLEMA, NA VERDADE, UM PROBLEMAO:
+
+
+
+
+
+O botão de 'LOGIN' __não funciona mais___... -----> E TAMBÉM NÃO É POSSÍVEL 
+
+
+
+VER 
+
+os dizeres 
+
+'Authentication succeeded/incomplete'...
+
+
+
+
+
+------> ALGUMA COISA NÃO ESTÁ CERTA...  ----> 
+
+
+PARA CONSERTAR 
+
+
+ESSES PROBLEMAS,
+
+
+VOLTAMOS 
+
+
+AO 
+
+
+COMPONENTE 'COCKPIT',
+
+que 
+
+é onde 
+
+temos 
+
+
+aquele 
+
+
+'props.login'...
+
+
+
+
+
+
+
+----> professor explica que devemos 'CONSUMIR O CONTEXT' nesse lugar aqui, também...
+
+
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+import AuthContext from '../../context/auth-context';
+
+
+
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <div className={cockpit.buttons}>
+        <button 
+        ref={toggleBtnRef}
+        className={btnClass} 
+        onClick={props.clicked}>Show/Hide Persons</button>
+        <AuthContext.Consumer>
+       { (context) => <button onClick={context.login}>Login</button> } /////////eis o código em questão.
+        </AuthContext.Consumer>
+        </div>
+        </div>
+    );
+    
+    
+
+
+
+
+    }
+
+
+
+
+---------------------------------
+
+
+
+
+---> CERTO, 
+
+
+MAS O BOTÃO __ AINDA NÃO ESTÁ FAZENDO COISA ALGUMA__.... (e ainda não vemos nada, nem 'authentication succeeded' nem nada.)
+
+
+
+
+
+Substituímos 'props.login' por 'context.login'...
+
+
+
+
+
+
+--> salvamos tudo e recarregamos a página... ainda não funciona.
+
+
+
+
+
+CONTEXT API --> É ESPECIALMENTE ÚTIL SE VOCê TIVER CHAINS DE DATA SUPER LONGAS, de prop-passes tri longos...
+
+
+
+
+
+
+
+----> CONSERTEI O PROBLEMA: ERA UM PROBLEMA 
+
+
+
+DE '{}' (curly braces) 
+
+
+LÁ 
+
+
+NO component 'Person'...

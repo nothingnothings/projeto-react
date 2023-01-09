@@ -1,0 +1,842 @@
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+ --> NA ÚLTIMA LIÇÃO, 
+
+
+ APRENDEMOS 
+
+
+ A 
+
+
+ 'REDIRECIONAR CONDICIONALMENTE' ('''conditionally redirect''') o usuário...
+
+
+
+
+
+
+
+ --> E essa maneira, condicional, é uma 
+
+ 'NICE WAY' de redirecionar o usuário... ---------> MAS 
+
+
+ PARA 
+
+
+
+ SERMOS BEM SINCEROS,
+
+
+ O APPROACH/DISPOSIÇÃO 
+
+
+ DE CÓDIGO 
+
+
+ QUE USAMOS 
+
+
+
+ EM 
+
+ 'NewPost' (
+
+
+class NewPost extends Component {
+    state = {
+        title: '',
+        content: '',
+        author: 'Max',
+        submitted: false
+    }
+
+    componentDidMount() {
+        console.log(this.props);
+    }
+    
+
+    postDataHandler = () => {
+        const data = {
+            title: this.state.title,
+            body: this.state.content,
+            author: this.state.author
+        };
+        axios.post('/posts', data)
+            .then(response => {
+                console.log(response);
+                this.setState({
+                    submitted: true
+                })
+            });
+    }
+
+    render () {
+
+            let redirect = null;
+
+            if(this.state.submitted) {
+                redirect = (
+                    <Redirect to="/" />
+                )
+            }
+
+
+        return (
+            <div className="NewPost">
+                {redirect}
+                <h1>Add a Post</h1>
+                <label>Title</label>
+                <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
+                <label>Content</label>
+                <textarea rows="4" value={this.state.content} onChange={(event) => this.setState({content: event.target.value})} />
+                <label>Author</label>
+                <select value={this.state.author} onChange={(event) => this.setState({author: event.target.value})}>
+                    <option value="Max">Max</option>
+                    <option value="Manu">Manu</option>
+                </select>
+                <button onClick={this.postDataHandler}>Add Post</button>
+            </div>
+        );
+    }
+}
+
+export default NewPost;
+
+ )
+
+
+
+
+
+NÃO VAI SEMPRE 
+
+
+
+SER 
+
+
+
+O APPROACH QUE VAMOS UTILIZAR... (it wont be always the way you are going to do that...) --------->
+
+
+
+ISSO 
+
+
+
+PQ, NO FINAL DAS CONTAS,
+
+
+
+VOCÊ GERALMENTE VAI QUERER QUE ___DEPOIS __ QUE 
+
+O POST É SUBMITTADO,
+
+
+A PÁGINA SEJA TROCADA POR OUTRA ('''' you will only want to SWITCH the page...'''') -------> 
+
+
+
+E 
+
+se você quer 
+
+
+SIMPLESMENTE SÓ ___ TROCAR UMA PÁGINA POR OUTRA ('''switchar''' as páginas),
+
+
+PROFESSOR 
+
+DIZ QUE 
+
+
+
+BASTA VOCÊ 
+
+
+UTILIZAR 
+
+AQUELE 
+
+
+PROP 
+
+
+DE 
+
+'history'... --------> LEMBRE-SE:
+
+
+essa 
+
+propriedade/objeto
+
+
+
+'history' é passado/criado
+ 
+
+
+ EM ____TODO E QUALQUER COMPONENT___ QUE FICAR 
+
+ DENTRO 
+
+ DAQUELE 
+
+ OBJETO/COMPOENT 
+
+
+
+ 'BrowserRouter', introduzido pelo 'react-router-dom'...
+ (
+
+     ex:
+
+    import { BrowserRouter } from 'react-router-dom;'
+
+     class App extends Component {
+  render() {
+    return ( <BrowserRouter> /////////EIS O CÓDIGO EM QUESTÃO.
+      <div className="App">
+        <Blog />
+      </div>
+      </BrowserRouter>
+    );
+  }
+}
+
+export default App;
+
+ )
+
+
+
+
+
+-----> ou seja, se você wrappar algum component (como seu component 'App' em geral) nesse 
+
+component aí, 
+
+
+seus components child OBRIGATORIAMENTE 
+
+TERÃO 
+
+
+ESSA 
+
+
+PROPRIEDADE/PROP 'history'...
+
+
+
+
+
+
+--> o 'NewPost' é carregado por 'Blog', por isso ele 
+
+DEFINTIVAMENTE É WRAPPADO PELO 
+
+'BrowserRouter'...
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> DENTRO DE QUALQUER UM DOS COMPONENTS WRAPPADOS POR 'BrowserRouter'
+
+vamos ter:
+
+
+
+1) history 
+
+2) match 
+
+
+3) location
+
+
+
+
+----------------------------------
+
+
+
+
+PROP 'HISTORY'  -----> TEM UM MONTE DE 
+
+
+'convenience methods' que podemos utilizar, como 
+
+
+
+'goForward' 
+
+
+e 
+
+
+
+'goBack'... 
+
+
+
+
+
+-----> HISTORY TEM ___MÉTODOS ___ PARA ____'REPLACE'__ A CURRENT ROUTE POR OUTRA, 
+
+
+E TAMBÉM PARA ____PUSHAR____ (empurrar) UMA NOVA ROUTE ___ na barra de endereços do usuário...
+
+
+
+
+
+
+
+
+
+---> justamente por ter esses métodos especiais, podemos escrever nosso código que 
+
+
+RETORNA 
+
+
+o usuário 
+
+
+à página 
+
+'posts' 
+
+
+POR MEIO DESSE APPROACH DESSES MÉTODOS EM 'history'....
+
+
+
+
+
+
+
+ex(código antigo, atual.... que utiliza UM STATE CHANGE para fazer com que aquele objeto 'Redirect' SEJA ___RENDERIZADO ___ NO COMPONENT 'NewPost'.... ------> o que, por sua vez, faz O USUÁRIO SER REDIRECIONADO, QUANDO É RENDERIZADO (quando 'this.state.submitted = true'...)):
+
+
+
+
+    postDataHandler = () => {
+        const data = {
+            title: this.state.title,
+            body: this.state.content,
+            author: this.state.author
+        };
+        axios.post('/posts', data)
+            .then(response => {
+                console.log(response);
+                this.setState({ //////////PROFESSOR EXPLICA QUE PODEMOS COMENTAR PARA FORA ESSE TRECHO QUE 'SETTA O STATE' de nosso aplicativo... 
+                    submitted: true
+                })
+            });
+    }
+
+
+
+
+-------------------------------------
+
+
+
+
+Professor explica que 
+
+
+SE NÓS SEGUIRMOS ESSE APPROACH DO 'history', desse prop aí, PODEMOS 
+
+
+
+REMOVER 
+
+ESSE CÓDIGO 'SETTADOR DE STATE' ('this.setState()') em 
+
+
+'NewPost'... -------> PARA 
+
+FAZER ISSO, 
+
+
+
+PARA 
+
+
+REDIRECIONAR O USUÁRIO SEM 
+
+O SET DE STATE, E SEM ESSA VINCULAÇÃO DO STATE AO RENDER DE UM OBJETO/COMPONENT 'Redirect,
+
+
+PROFESSOR 
+
+
+
+
+APONTA QUE 
+
+PODEMOS 
+
+
+SIMPLESMENTE 
+
+
+ACESSAR 
+
+
+
+'this.props.history.push()' --------------> OU SEJA,
+
+
+
+DEVEMOS 
+
+
+
+
+SIMPLESMENTE USAR 
+
+O MÉTODO 
+
+'.push()'
+
+
+
+NESSE 
+
+
+
+'HISTORY' aí....
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+    postDataHandler = () => {
+        const data = {
+            title: this.state.title,
+            body: this.state.content,
+            author: this.state.author
+        };
+        axios.post('/posts', data)
+            .then(response => {
+                console.log(response);
+                this.props.history.push('');
+            });
+    }
+
+
+-----------------------------------------
+
+
+
+
+
+CERTO...
+
+
+
+
+E DENTRO DO PARÂMETRO DESSE 
+
+'.push'
+
+
+
+VAMOS SIMPLESMENTE 
+
+
+'PUSHAR' (empurrar)
+ 
+
+
+ A NOVA PÁGINA 
+
+ QUE O USUÁRIO 
+
+ DEVERÁ ACESSAR...
+
+
+
+
+
+
+ professor escreve 
+
+
+ 'this.props.history.push('/posts');  ' ,
+
+
+ ISSO 
+
+
+ FARÁ COM QUE 
+
+ ELE SEJA REDIRECIONADO À PÁGINA INICIAL de nosso apP ('/posts', ou '/')...
+
+
+
+
+
+
+
+
+ -------> CERTO, ISSO VAI RESULTAR NO MESMO COMPORTAMENTO DE ANTES,
+
+ NOSSO APP VAI 
+
+ voltar à página inicial quando 
+
+
+ o processo de send  do http request de tipo 'Post' terminar..... -----> 
+
+
+
+ esse 
+
+ 'retorno à página inicial' é feito por meio de um __PUSH__ daquela route/path 
+
+
+ NO NOSSO BROWSER.... -----> ENTRETANTO, 
+
+
+
+
+ SE VOCÊ QUISER 
+
+ SABER AS TECNICALIDADES, 
+
+
+ SAIBA 
+
+
+ QUE 
+
+ 'push'
+
+
+ FAZ __ O PUSH__ DE UMA __NOVA PÁGINA__ NO STACK... (e essa '''NOVA PÁGINA''' 
+ 
+ é justamente nossa 
+ 
+ página inicial, 'posts'... --> mas poderia ser QUALQUER OUTRA PÁGINA... por isso que 
+ 
+ 
+ '.push()' é tão versátil e tão utilizado...)
+
+
+
+
+
+
+
+
+ JÁ 
+
+ '<Redirect />'
+
+
+
+ __________SUBSTITUI____ A PÁGINA ATUAL (quando ausente o objeto '<Switch />' ) 
+
+
+ PELA PÁGINA QUE 
+
+ VOCê DEFINIU EM 
+
+ 'to={}'....
+
+
+
+
+
+
+
+
+ DIFERENÇA ENTRE 'REDIRECT'   E 'PUSH', no nosso browser... :
+
+
+
+ se você tomar um 'REDIRECT', se você então CLICAR 
+
+
+ EM '<--' (botão de voltar),
+
+
+
+ você _____NÃO VOLTARÁ ___ À PÁGINA ANTERIOR... (você voltará, MAS 
+ 
+ ___VOCê NÃO ___ CONSEGUIRÁ VOLTAR 
+ 
+ À 
+ 
+ 
+ 'ÚLTIMA PÁGINA', à página anterior à existência da atual... ---> isso ocorre pq 
+ 
+ 
+ O _______<rEDIRECT />____ VAI SEMPRE __ SUBSTITUIR __ A ÚLTIMA PÁGINA DO 
+ 
+ 'STACK' pela página que você definiu em 'to={}'.... -----> isso significa que 
+ 
+ 
+ NÃO HAVERÁ COMO VOLTAR _____DE VERDADE__ À PÁGINA QUE EXISTIA ANTES 
+ 
+ DA NOSSA ATUAL, se você estiver aplicando o objeto '<Redirect />'...)
+
+
+
+
+
+
+
+
+
+
+
+
+ JÁ COM O 
+
+
+ 'this.props.history.push', VOCê APENAS __aDICIONA UMA NOVA PÁGINA _ ''''POR CIMA''' DA PÁGINA 
+
+
+ ANTERIOR/DA PÁGINA ORIGINÁRIA.... ------> e é exatamente por isso que SE VOCÊ APERTAR O BOTÃO 
+
+ '<--' (goBack) do browser, 
+
+
+
+ VOCê _CONSEGUIRÁ __ VOLTAR à PÁGINA ANTERIOR A ESSE 'PUSH' que aconteceu durante o runTime do seu app...
+
+
+
+ ---------------------------
+
+
+
+
+
+
+ RESUMINDO:
+
+
+
+
+ '<REDIRECT />' ------> ___SUBSTITUI___ A 'CURRENT PAGE ON THE STACK'... __E NÃO PODEMOS__ RETORNAR À PÁGINA ANTERIOR, QUANDO ISSO ACONTECE.
+
+
+ 'this.props.history.push(''''')' ------>  ___ADICIONA ___ UMA '''nova página''' (na verdade, ele faz 
+ com que aquela url/path ali seja adicionado no seu browser, o que faz essa nova página ser renderizada) no 
+ SEU STACK DE PÁGINAS... ------->  SE USAMOS 
+ ESTE APPROACH, AINDA É POSSÍVEL RETORNAR à PÁGINA ANTERIOR, quando esse redirecionamento/push acontece... 
+
+
+
+
+
+ ----------------------------------
+
+
+
+
+ Certo... mas há ainda um TERCEIRO APPROACH, 
+
+
+ um approach que 
+ 
+
+ ENVOLVE USO DE OUTRO 
+ MÉTODO 
+
+
+
+ DENTRO DE 
+
+
+ 'this.props.history'... ------------> É O MÉTODO 
+
+
+
+ '.replace()' --------> ESSE MÉTODO TEM BASICAMENTE O __MESMO COMPORTAMENTO___ 
+
+ DO OBJETO/COMPONENT '<Redirect />';;; ------> OU SEJA,
+
+ ESSE 
+ 
+ MÉTODO VAI __SUBSTITUIR__ A URL/PATH atual do seu app PELA 
+
+ STRING/VARIÁVEL QUE 
+
+ VOCê PASSA 
+
+
+ EM SEU PARÂMETRO...
+
+
+
+
+ ex:
+
+
+
+ this.props.history.replace('/posts');
+
+
+
+
+ -------------------------------------
+
+
+
+
+ ex(no código):
+
+
+
+
+ 
+    postDataHandler = () => {
+        const data = {
+            title: this.state.title,
+            body: this.state.content,
+            author: this.state.author
+        };
+        axios.post('/posts', data)
+            .then(response => {
+                console.log(response);
+                this.props.history.replace('/posts'); /////////EIS O CÓDIGO EM QUESTÃO.
+            });
+    }
+
+
+-------------------------------------------------
+
+
+
+
+E O PROFESSOR TESTA 
+
+ESSE 
+
+'.REPLACE()', 
+
+
+e constata o que ele havia dito antes: ele 
+
+
+não poderá 
+
+RETORNAR À PÁGINA ANTERIOR AO 'REPLACE', pq essa página 
+
+TERÁ 
+
+SIDO SUBSTITUÍDA, BASICAMENTE... (e deixa de existir).
+
+
+
+
+
+
+'.REPLACE()' === <Redirect />
+
+
+
+
+
+
+ISSO É VERDADE. --> você pode usar qualquer um dos 2... 
+
+
+
+
+
+
+
+----> ELES SÃO IGUAIS,
+
+MAS É BOM SABER 
+
+OS 
+
+2 
+
+PQ 
+
+PODE existir 
+
+
+ALGUM USE-CASE EM QUE 
+
+VOCÊ VAI QUERER 
+
+
+RENDERIZAR 
+
+AQUELE COMPONENT '<Redirect />' 
+
+CONDICIONALMENTE,
+
+
+e esse 
+
+'.replace()' 
+
+
+É OUTRA FORMA FÁCIL DE FAZER ISSO... (sem usar aquele render de '<Component />') ------> 
+
+
+
+CERTO,
+
+AÍ COM ESSES MÉTODOS/APPROACHES 
+
+VOCÊ PODE 
+
+
+___REDIRECIONAR___ O USUÁRIO____ DEPOIS DE 
+
+UMA 
+
+OPERAÇÃO 
+ 
+ TER 
+
+ ACABADO.... (código assíncrono).
+
+ 

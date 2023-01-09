@@ -1,0 +1,299 @@
+
+
+
+
+
+
+
+
+
+
+
+---> a propriedade 'ingr' (que é 'state.burger.ingredients') do 
+
+
+burgerbuilder ESTÁ APARECENDO COMO 'UNDEFINED'...
+
+
+
+
+
+
+
+
+
+
+
+
+----> nossa criação do 'burger: {
+    ingredients: {
+        bacon: ..
+    },
+    totalPrice: 222222
+}'
+
+
+
+
+CAGOU TUDO... -----> precisamos 
+
+
+
+alterar nosso código, deixar de usar aquela utility function MOMENTANEAMENTE,
+
+tudo 
+
+para que 
+
+
+
+consigamos fazer com que o state seja updatado de forma adequada dnv...
+
+
+
+---------------------------------------
+
+
+
+CONSEGUI fazer funcionar.... 
+
+
+
+eis o código em questão:
+
+
+
+      const updatedBurger = {
+          ...state.burger
+        }
+        const updatedBurgerIngredients = {
+          ...updatedBurger
+        }
+        const insideUpdatedBurgerIngredients = updatedBurgerIngredients.ingredients;
+      return {
+        ...state,
+        burger: {totalPrice: state.burger.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+        ingredients: {
+          ...insideUpdatedBurgerIngredients,
+          [action.ingredientName]: state.burger.ingredients[action.ingredientName] + 1
+        }
+      }
+      }
+
+
+
+--------------------------------
+
+
+
+UMA ___BAGUNÇA___.... ---> próximo passo é tentar fazer isso ENCAIXAR 
+
+
+
+naquela 'utility function' 
+
+de 
+
+
+'add_ingredient'...
+
+
+('const add_ingredient')...
+
+
+
+----------------------------
+
+
+
+
+
+
+
+
+CONSEGUI __FAZER O __MALDITO CÓDIGO FUNCIONAR___....
+
+
+
+
+EIs o resultado:
+
+
+
+
+
+
+
+
+
+
+const ingredient_add = (state, action) => {
+  const updatedBurger = {
+    ...state.burger
+  }
+  const updatedBurgerIngredients = {
+    ...updatedBurger
+  }
+  const insideUpdatedBurgerIngredients = updatedBurgerIngredients.ingredients;
+  return updateObject(state, { //////////ISSO REALMENTE FUNCIONOU, ESSE TRANSPLANTE DE LÓGICA (outsourcing) REALMENTE FUNCIONOU__...
+    burger: {totalPrice: state.burger.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+      ingredients: {
+        ...insideUpdatedBurgerIngredients,
+        [action.ingredientName]: state.burger.ingredients[action.ingredientName] + 1
+      }
+    }
+  }
+  )
+  
+
+}
+
+
+-----------------------------------
+
+  switch (action.type) {
+    case actionTypes.INGREDIENT_ADD:
+
+  return ingredient_add(state, action);
+
+
+---------------------------------
+
+
+
+
+
+
+
+COM ISSO, 
+
+AGORA 
+
+TEREMOS 
+
+
+UM 
+
+REDUCER
+ 
+
+ BEM MAIS 
+
+ 'lean',
+
+ bem mais magrinho... -------> o código 'pesado' de 'add_ingredient'
+
+
+ FOI OUTSOURCEADO
+  
+  PARA 
+
+  ESSA 
+
+  
+
+  FUNÇÃO AUXILIAR 
+
+
+  'add_ingredient'...
+
+
+
+  -------------------------
+
+
+
+
+
+  AGORA DEVEMOS FAZER A MESMA COISA COM 
+
+  'delete_ingredient'...
+
+
+
+
+  ---------------------
+
+
+  CERTO... CONSEGUI FAZER O CÓDIGO FUNCIONAR:
+
+
+
+
+
+
+
+
+
+
+const ingredientRemove = (state, action) => {
+  const updatedBurger = {
+    ...state.burger
+  }
+  const updatedBurgerIngredients = {
+    ...updatedBurger
+  }
+
+  const insideUpdatedBurgerIngredients = updatedBurgerIngredients.ingredients;
+  return updateObject(state, {
+    burger: {totalPrice: state.burger.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+      ingredients: {
+        ...insideUpdatedBurgerIngredients,
+        [action.ingredientName]: state.burger.ingredients[action.ingredientName] - 1
+      }
+    }
+  }
+  )
+}
+
+
+
+
+  case actionTypes.INGREDIENT_REMOVE:
+   return ingredientRemove(state, action);
+
+
+
+
+   ---------------------------------------
+
+
+
+
+
+   OK... AGORA DEVEMOS PARTIR
+    
+
+    PARA 
+
+
+
+    O 
+
+
+
+
+    NOSSO REDUCER 
+
+
+
+    de 
+
+
+    'ASYNC ACTION DISPATCHES', aquele reducer que vai LIDAR COM 
+
+
+
+    SEND DE AXIOS HTTP REQUESTS...
+
+
+
+
+  ---------------
+
+
+  Professor, no vídeo dessa aula ('creating action creators'),
+
+
+  FAZ EXATAMENTE O QUE FIZEMOS.... (menos a parte da UTILITY FUNCTION...)
+

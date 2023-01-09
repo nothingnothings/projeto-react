@@ -1,0 +1,1077 @@
+
+
+
+
+
+--> na última lição,
+
+finalmente 
+
+usamos 
+
+
+a 
+token 
+
+PARA 
+
+CONSEGUIR 
+
+ACESSO 
+
+A 
+
+
+RESOURCES PROTEGIDOS na nossa página... (aos resources do nosso database...)
+
+
+
+
+
+
+
+
+
+
+---> agora, o professor quer 
+
+
+conseguir 
+
+VER 
+QUE 
+
+ESTAMOS 
+
+LOGGADOS
+
+ 
+
+ __POR MEIO 
+ __ DE NOSSA UI_______............ -------> talvez um ícone de um usuário do do ícone do burger....
+
+
+
+
+
+
+
+ -------------------
+
+ Isso pq, até agora,
+
+ se loggarmos 
+
+ com sucesso,
+
+ não vemos diferença nenhuma na página...
+
+
+
+
+
+
+
+
+
+
+--> um bom começo, por exemplo,
+
+
+seria 
+trocar 
+
+
+o 
+
+
+component/link
+
+'Authenticate' (aquele navLink com 'Authenticate') 
+
+
+
+POR 
+
+
+
+'Logout', 
+
+
+um 
+
+'Logout' que realmente 
+
+
+FIZESSE LOGOUT DO USUÁRIO...
+
+
+
+
+--------------------------------
+
+
+
+E para isso, provavelmente vamos ter que 
+
+editar 
+
+o 
+
+código 
+
+
+de 
+
+'NavItems'/'NavItem'...
+
+
+
+
+
+------------------------
+
+
+
+
+
+EU ESCREVI UM CÓDIGO ASSIM:
+
+
+
+
+(APP.JS):
+
+
+
+    return(
+        <BrowserRouter>
+        <div>
+       <Layout >
+         {/* {this.state.show ? <BurgerBuilder/> : null} */}
+         {/* <BurgerBuilder />
+         <Checkout /> */}
+         <Switch>
+         <Route path="/checkout" component={Checkout} />
+         <Route path="/orders" component={Orders} />
+         <Route path="/auth" component={Auth} />
+         <Route path="/logout" component={Logout}/>  ///eis o código em questão.
+        <Route path="/" component={BurgerBuilder} //obs: 'exact' nessa route NÃO É NECESSÁRIO, pois já temos o SWITCH STATEMENT/OBJECT ali em cima; se colocássemos o 'exact' + o 'switch', isso seria redundante...
+        />
+      
+        </Switch>
+       </Layout>
+       </div>
+       </BrowserRouter>
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+(em 'NavigationItems'):
+
+
+
+class NavigationItems extends Component {
+
+    render() {
+
+    
+  let authenticate = (
+    <NavigationItem link={'/auth'}>Authenticate</NavigationItem>
+  )
+
+
+  if (this.props.token) {
+    authenticate = <NavigationItem link={'/logout'}>Logout</NavigationItem>
+  }
+
+
+return (<ul className={NavigationItemsStyle.NavigationItems}>
+        
+        <NavigationItem closed={this.props.closed} link={'/'}  >Burger Builder</NavigationItem>
+
+
+    
+        <NavigationItem link={'/orders'} closed={this.props.closed} >Orders</NavigationItem>
+        {/* <NavigationItem link={'/auth'}>Authenticate</NavigationItem> */}
+        {authenticate}
+
+
+</ul>
+)
+    }
+};
+
+const mapStateToProps = (state) => {
+    return {
+     token: state.auth.token
+    }
+}
+
+
+
+export default connect(mapStateToProps)(NavigationItems);
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+OBS::: PARA CONSEGUIR 
+
+FAZER 
+
+'LOGOUT',
+
+talvez 
+
+eu 
+
+tenha 
+
+que 
+
+CRIAR UM CONTAINER (leia-se: página extra do app) 
+
+
+
+
+QUE 
+
+
+DIRÁ 
+
+
+'logging out of Burger Builder'.... ---> essa página vai 
+
+
+__ESVAZIAR__ O 
+
+TOKEN 
+
+
+EXISTENTE 
+
+
+NO 
+
+'state.auth.token',
+
+e também o 'userId'
+
+que fica 
+
+lá dentro... ---> e eu acho que é exatamente isso 
+
+
+que 
+
+o professor 
+
+vai nos pedir...
+
+
+
+
+------------------------------------------
+
+
+
+
+--> o professor não vai mostrar a 'foto de um usuário';
+
+ele 
+
+vai 
+
+apenas 
+
+manter 
+
+o 
+
+'logout' (mas isso seria um bom exercício; fazer com que 
+
+o __LOGO __ DO BURGER BUILDER__ TROQUE PARA 
+
+UM ESTILO 
+
+CSS 
+
+
+
+DE 
+
+UM 
+
+CARINHA,
+
+caso 
+
+o usuário esteja logado...) -----> E essa pode 
+
+
+ser uma 
+
+
+
+GRANDE ADIÇÃO AO NOSSO APP,
+
+e 
+
+é 
+RELATIVAMENTE 
+
+FÁCIL
+
+ 
+ DE IMPLEMENTAR...
+
+
+
+
+
+
+
+ -----------------------------
+
+
+
+
+
+
+
+
+ E PROFESSOR 
+
+
+ REALMENTE 
+
+ VAI 
+
+ ATÉ 
+
+  o
+   
+   'NAVIGATIONITEMS'... 
+
+
+
+
+
+
+
+
+
+OK, ESSA TROCA 
+
+DE 
+
+'Authenticate' 
+
+para 
+
+'Logout' 
+
+JÁ __FUNCIONA__... 
+
+
+conseguimos 
+fazer, por conta própria... ---> talvez 
+
+
+seria 
+
+
+legal 
+
+
+MUDAR 
+
+
+O LOGO DO BURGER BUILDER POR UM CARINHA,
+
+como eu disse antes...
+
+
+
+
+------------------
+
+
+
+--> OK, CONSEGUI COLOCAR O CARINHA POR CIMA 
+
+
+DO 
+
+
+
+'LOGO' do burger builder,
+
+quando estamos LOGGADOS... (usei o react redux,
+
+e 
+
+
+o 
+
+
+
+'this.props.token', lá em 
+
+'TOOLBAR'.... ----> tive que converter esse component 
+
+
+em 
+um container/class-based component, no entanto...)
+
+
+
+
+
+
+
+
+
+
+
+
+Ok, mas ainda faltam alguns ajustes... -----> eu quero 
+
+
+FAZER DISPLAY DO 'NOME DO USUÁRIO' (Será 
+a 
+
+parte 
+
+da 
+
+ESQUERDA 
+do email 
+
+
+do usuário, que 
+
+será 
+
+outputtada 
+
+dentro 
+
+da Toolbar, logo depois do '<UserIcon />' que eu criei...)
+
+
+
+
+
+-------------
+
+OK, dei uma arrumada no app... ---> agora 
+
+a foto 
+
+do nosso 
+
+'user' aparece,
+
+e o seu nome TAMBÉM...
+
+
+
+
+--> FALTA FAZER O LOGOUT FUNCIONAR...
+
+
+
+
+
+
+
+---> devo criar um NOVO CONTAINER, que será a PÁGINA DE LOGOUT...
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+OK, MAS ANTES DISSO, VEMOS O APPROACH DO PROFESSOR... --> ele 
+
+nos 
+
+diz que 
+
+'NavigationItems.js'
+
+É 
+
+
+__UM PRESENTATIONAL__ COMPONENT,
+
+e justamente 
+
+por 
+isso 
+
+
+NÃO __PODEMOS __aDICIONAR O REDUX A ELE__.... ----> bem, na verdade,
+
+nós podemos (E eu já fiz isso, foi só transformar ele em um 
+
+CLASS-BASED COMPONENT...) ---------> 
+
+
+
+
+O PROFESSOR DIZ QUE PODERÍAMOS FAZER ISSO (como fizemos),
+
+MAS 
+
+QUE
+
+
+__eLE NÃO RECOMENDA ISSO__...   ------->  ELE NÃO RECOMENDA PQ 
+
+ISSO AÍ 
+
+
+
+__QUEBRA JUSTAMENTE ___ AQUELA IDEIA DE TER 
+
+__aPENAS UNS POUCOS_ 'CONTAINER COMPONENTS' no seu 
+
+aplicativo... (sempre vamos querer 
+
+
+__POUCOS___ CONTAINERS de verdade, que estarão conectados ao 'STORE'....)
+
+
+
+
+
+--> É BOM TER MUITOS 
+
+'DUMB COMPONENTS',
+
+que 
+
+NÃO FICAM CONECTADOS 
+
+À 'store' do redux...
+
+
+
+
+
+
+
+
+
+--> UM APPROACH MELHOR 
+
+É 
+
+__PEGAR_ __/EDITAR __ UM DOS 
+
+
+
+'CONTAINERS' QUE 
+
+__SEGURA (holds)
+
+
+ESSE 
+
+
+TAL NAVIGATIONITEM/NAVIGATIONITEMS... -------> e aqui, no nosso app,
+
+
+
+
+__NÃO É NO ___ FOLDER DE 
+
+
+'Containers' (onde estão nossos containers)
+
+
+
+
+
+QUE 
+
+VAMOS 
+
+ENCONTRAR
+ 
+ O 
+
+ CONTAINER QUE 
+
+ SEGURA 
+
+ 'NAVITEMS',
+
+ e 
+
+ 
+
+
+ SIM 
+
+
+
+LÁ NOS HOCS,
+
+
+no 
+
+folder 
+
+de 
+
+'Layout'... -----> O LAYOUT É, DE FATO, 
+
+UM 
+
+'CLASS-BASED COMPONENT'...
+
+
+
+
+
+
+
+
+
+
+--> E LÁ NOS REALMENTE HAVÍAMOS IMPLEMENTADO 
+
+A 
+
+'TOOLBAR' 
+
+e o 
+
+SIDEDRAWER,
+
+como 
+
+visto 
+
+neste código aqui:
+
+
+
+
+
+render() {
+
+
+
+        return(
+            <Aux>
+            <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler}/>
+            <SideDrawer closed={this.sideDrawerCloseHandler} open={this.state.showSideDrawer}  />
+            <main className={LayoutStyle.Content}>
+                {this.props.children}
+            </main>
+            </Aux>
+        
+        );
+    
+    }
+
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+---> 
+
+O IMPORTANTE, AQUI, É QUE 
+
+AMBOS COMPONENTS, 
+
+
+
+'Toolbar' e 'SideDrawer',
+
+USAM 
+
+___ O 'NavItems'...
+
+
+
+---------------------------------
+
+
+
+
+
+--> E É EXATAMENTE POR ISSO QUE FAZ 
+
+__SENTIDO__ CONECTAR
+ 
+
+ O 
+
+ 'LAYOUT'
+
+ ao 
+
+ nosso 
+
+ REDUX STORE...
+
+
+
+ --------------------
+
+
+ CERTO, JÁ CONECTAMOS... E AGORA? 
+
+
+
+
+
+
+
+
+
+ --> PROFESSOR DIZ QUE VAMOS PASSAR A 
+
+ 'AUTH INFORMATION' 
+
+
+
+ ao __TOOLBAR__ e ao 
+
+
+ 'SideDrawer' (bem mais efetivo, realmente)... ----> vamos passar isso POR MEIO DE PROPS, É CLARO...
+
+
+
+ ex (Layout):
+
+
+
+
+         return(
+            <Aux>
+            {/* <div>Toolbar, SideDrawer, Backdrop</div> */}
+            <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} token={this.props.token} email={this.props.email}/>
+            <SideDrawer closed={this.sideDrawerCloseHandler} open={this.state.showSideDrawer} token={this.props.token} email={this.props.email}  />
+            <main className={LayoutStyle.Content}>
+                {this.props.children}
+            </main>
+            </Aux>
+        
+        );
+
+
+
+
+
+const mapStateToProps = (state) => {
+    return {
+        token: state.auth.token,
+        email: state.auth.email
+    }
+}
+
+
+
+
+
+
+---------------------------
+
+
+
+
+
+
+Ok, mas tem um negócio que NÃO ESTÁ FUNCIONANDO... meu '<p>' não está ficando 
+
+com 
+
+ o 
+
+ email/username da pessoa que 'loggou' na página...
+
+
+
+ --------------------------
+
+
+
+
+ OK, AGORA ESTÁ FUNCIONANDO MAIS UMA VEZ...
+
+
+
+
+ ----
+
+
+
+
+ Mas ainda não acabamos de fazer o que o professor queria... ---> o botão 
+
+ de 
+
+ 'Authenticate' 
+
+ NÃO ESTÁ TROCANDO 
+
+ PARA 
+
+
+
+ 'Log out', agora...
+
+
+
+ -------------------------
+
+
+
+
+
+
+ OK, CONSEGUI... ---> código está funcionando EXATAMENTE COMO 
+
+ ANTES,
+
+
+ mas 
+
+
+ SEM TRANSFORMAR 
+
+
+ O COMPONENT 'NavItems' 
+
+ em um 
+ CONTAINER....
+
+
+
+
+
+
+
+
+ -------> fazemos a mesma coisa com 'SideDrawer', QUE TAMBÉM PRECISA 
+
+
+ FAZER O REPASSE DE UM PROP RELATIVO A 'token' para fazer o 'Authenticate' 
+
+ trocar para 
+
+ 'Log out'...
+
+
+
+
+
+
+
+
+ -------------------------------
+
+
+
+ E EU FIZ EXATAMENTE A MESMA COISA, E DEU CERTO... (aplicativo está ficando bom...)
+
+
+
+
+
+
+
+
+
+
+
+ --> CERTO... MAS O CÓDIGO DO PROFESSOR 
+
+ TEM UMA COISA UM POUCO DIFERENTE DA NOSSA...
+
+
+
+
+
+
+
+
+
+ PROFESSOR FALA DA TOKEN NO STATE/slice de state 
+
+ de 
+
+ 'authReducer'.... -----> 
+
+
+
+ SE 
+
+ O 
+
+ 'TOKEN' 
+
+ estiver como 
+
+'null' (que é o valor inicial, como visto em 'token: null'..),
+
+NÃO ESTAREMOS AUTENTICADOS... --> 
+
+
+MAS 
+
+SE 
+
+ELE NÃO FOR 'null',
+
+
+
+ESTAREMOS AUTENTICADOS...
+
+
+
+
+
+
+O CÓDIGO DO PROFESSOR (em 'Layout') FICOU ASSIM:
+
+
+
+
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.token !== null
+    }
+}
+
+
+
+--------------------------------
+
+
+
+É UM CÓDIGO UM POUCO DIFERENTE DO NOSSO, QUE SÓ ESTAVA ASSIM
+
+
+
+
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token
+    }
+}
+
+
+
+
+
+
+---------------------------
+
+
+Ok, vou lá e faço essa alteração...
+
+
+
+
+
+
+
+
+
+---> ok, agora nosso código está funcionando bem...
+
+
+
+
+
+
+--> há um problema no STYLING que o professor __NÃO RESOLVE__ (pq eu acho que é impossível
+ 
+ de resolver, como ele nos explicou uma vez...) ---> quando 
+
+
+ clicamos 
+
+ em 
+
+ 'Authenticate', no navlink,
+
+ ele 
+
+ FICA COM AQUELE ESTILO ___dEBAIXO___ 
+
+
+DO 
+'NAVLINK' da página em que estamos ('Logout')... ---> entretanto,
+
+quando 
+
+
+REALMENTE __LOGGAMOS__ NA PÁGINA,
+
+o 
+
+estilo 
+
+que fica em baixo 
+
+de 
+
+'Logout'
+ 
+
+ -___SOME___...
+
+
+
+
+
+
+
+
+
+ ---> na próxima lição, asseguraremos que 
+
+ QUANDO 
+
+ CLICAMROS 
+
+ EM 
+
+ 'LOGOUT', ALGO REALMENTE ACONTEÇA...

@@ -1,0 +1,3681 @@
+
+
+
+
+---> comecamos escrevendo 
+
+
+
+'create-react-app' no nosso console... ---> isso vai criar 
+
+UM 'TEMPLATE'
+
+
+
+de um NOVO APLICATIVO REACT...
+
+
+
+
+----> Certo, ajeitei um pouco o código...
+
+
+
+
+A primeira tarefa que o professor 
+
+
+nos passa é esta:
+
+
+
+
+<li>Create an input field (in App component) with a 
+
+change listener which outputs the length of the 
+
+
+entered text below it (e.g in a paragraph). </li>
+
+
+
+
+
+
+--------------------------------
+
+
+
+Certo...
+
+ACho que consegui 
+
+
+resolver a primeira tarefa....
+
+
+
+Coloquei um código tipo este:
+
+
+(em 'app')...
+
+
+
+
+import './App.css';
+import React, {Component} from 'react';
+import Char from './Char/Char'; ///isso ainda não foi utilizado no nosso código
+import Validation from './Validation/Validation'; ///isso também ainda não foi utilizado no nosso código.
+
+
+
+
+
+class App extends Component {
+
+
+  state = {
+    userInput: ''
+  }
+
+
+
+  inputChangedHandler = (event) => { ///////////MÉTODO SUPER IMPORTANTE. Ele que faz o UPDATE do nosso state....
+
+
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+
+
+
+
+  render() {
+
+  return (
+    <div className="App">
+      <ol>
+        <li>Create an input field (in App component) with a change listener which outputs the length of the entered text below it (e.g in a paragraph). </li>
+        <li>Create a new component (=> ValidationComponent) which receives the text length as a prop </li>
+        <li>Inside the ValidationComponent, either output "Text too short" or "Text long enough" depending on the text length (e.g. take 5 as a minimum length) </li>
+        <li>Create another component (=> CharComponent) and style it as an inline box (=> display: inline-block, padding: 16px, text-align: center, margin: 16px, border: 1px solid black).</li>
+        <li>Render a list of CharComponents where each CharComponent receives a different letter of the entered text (in the initial input field) as a prop. </li>
+        </ol>
+        <p>HINT: Keep in mind that Javascript strings are basically arrays!</p>
+        <hr />
+        <input 
+          type="text" 
+          onChange={(event) => {this.inputChangedHandler(event)}} ///essa é a parte IMPORTANTE do meu código... é isso que faz com que o parâmetro 'event' seja enviado ao 'inputChangedHandler'...
+          value={this.state.userInput} />  ////valor inicial do input field, que é VAZIO (ver o 'state' definido logo acima)...
+        <p>{this.state.userInput.length}</p>  /////'.length' ----> vai dar o NÚMERO DE LETRAS QUE INSERIMOS NO NOSSO INPUT... esse número, por sua vez, é extraído DO NÚMERO DE LETRAS QUE ESTÁ em 'this.state.userInput' (lá no nosso state)...
+
+    </div>
+  );
+
+  }
+}
+
+export default App;
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+CERTO, 
+AGORA 
+
+DEVEMOS 
+
+
+TENTAR O SEGUNDO  E TERCERIO PASSOS...
+
+
+
+
+'
+<li>Create a new component (=> ValidationComponent) 
+which receives the text length as a prop </li>'
+
+
+'
+<li>Inside the ValidationComponent, either
+ output "Text too short" or "Text long enough" depending on the
+  text length (e.g. take 5 as a minimum length) </li>
+'
+
+
+
+
+
+
+CONSEGUI FAZER O SEGUNDO PASSO ----> fiz isso por meio de um 'spaghetti code'.... ---> 
+
+
+
+primeiramente criei 
+
+um componente 'validationComponent' 
+
+
+por meio deste código, em 
+
+'Validation.js'... --->
+
+
+
+
+
+import React from 'react';
+
+const validation = (props) => {
+  let answer = {
+    message: 'text too short',
+  };
+
+  if (props.textLength >= 5) {
+    answer = {
+      message: 'Text long enough',
+    };
+  }
+
+  return <div className="validation">{answer.message}</div>;
+};
+
+export default validation;
+
+
+
+
+(OU SEJA, EU USEI AQUELE TRUQUE DOS IF STATEMENTS COM O REACT QUE O PROFESSOR ME ENSINOU, 
+
+aquele uso de variáveis ('let answer = xxxx' ) e if statements...) -------> FIZ ISSO PARA O 
+
+TERCEIRO PASSo...
+
+
+
+
+
+
+
+
+FEITO ISSO,
+
+eu escrevi isto aqui 
+
+no 'App.js'...:
+
+
+
+
+
+<p textLength={this.state.userInput.length}>{this.state.userInput.length}</p>
+        <Validation textLength={this.state.userInput.length} />
+
+
+------------------------------------------------
+
+
+
+
+
+DEPOIS DISSO,
+
+
+O PROFESSOR PEDE:
+
+
+'                                                                                                                                                                                                   '
+<li>Create another component (=> CharComponent) and style it as an inline box (=> display: inline-block, padding: 16px, text-align: center, margin: 16px, border: 1px solid black).</li>
+
+
+
+--> Certo,
+
+nós vamos
+
+
+EM FRENTE 
+
+
+E CRIAMOS 
+
+UM ELEMENTO/component 
+
+
+'char'
+
+
+
+COM O SEGUINTE CÓDIGO, 
+dentro 
+
+da pasta 
+
+'Char'...:
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+import React from 'react';
+
+import './Char.css';
+
+
+
+
+
+
+const char = (props) => {
+
+    const style = {
+        display: 'inline-block',    
+        padding: '16px',
+        margin: '16px',
+        border: '1px solid black',
+        textAlign: 'center'
+    }
+
+
+    return (
+        <div className="char" style={style}>
+        <p>Test test test test</p>
+        </div>
+
+
+    )
+
+
+
+
+
+    
+}
+
+
+
+
+export default char;
+
+
+
+
+
+-------------------------------------------------
+
+
+
+Isso feito, 
+
+invocamos esse elemento em 'app', logo após 
+
+o nosso component 'validation'...
+
+
+
+
+---------------------------
+
+
+
+CERTO, 
+
+
+AGORA 
+
+
+TEMOS 
+
+
+
+OUTRA TAREFA, MAIS DIFÍCIL:
+
+
+
+<li>Render a list of CharComponents where
+ each CharComponent receives a different letter 
+ of the entered text (in the initial input field) as a prop. </li>
+
+
+
+
+
+
+String.prototype.split() ----> 
+
+
+Se o separator for uma string vazia (""), a string
+
+
+ será convertido em um array contendo cada um de seus caracteres em UTF-16.
+
+
+
+
+--------------------------------------------
+
+
+Certo.... mas eu realmente não sei o que fazer depois disso....
+
+não faço ideia.
+
+
+
+Vou ver o vídeo do professor...
+
+
+
+
+
+-------------------------------------------------------------------------------
+
+
+
+
+
+
+VERSÃO DO PROFESSOR:
+
+
+
+
+
+
+ele começa simples, 
+
+começa 
+
+
+PELA CRIAÇÃO 
+
+
+DE UM ELEMENTO 
+
+'INPUT' 
+
+
+
+em 'APP.JS'.... ... ele vai CRIAR UM 
+
+
+INPUT FIELD COM 
+
+UM 'CHANGE LISTENER' ('onChange')... esse change listener 
+
+
+VAI SEMPRE 
+
+
+__OUTPUTTAR____  a 'length' 
+
+
+
+DO TEXTO INPUTTADO PELO USUÁRIO LOGO ABAIXO  DE SI...
+
+
+
+-----------------------------------
+
+
+
+
+
+Professor 
+
+
+escreve 
+
+
+
+
+<hr />   (HORIZONTAL LINE) ---> ele diz para escrever assim: '< />' (self closing tag)....
+
+
+
+
+-----------------------------------
+
+
+
+Depois disso, 
+
+
+ele escreve 
+
+
+
+um 
+
+
+'<input 
+
+type="text"
+onChange={} />
+
+
+---------------------------
+
+
+ESSE LISTENER 
+
+'onChange' vai executar 
+
+um certo método dentro dos curly braces....
+
+
+
+
+DEVEMOS ADICIONAR ESSE MÉTODO AO 
+
+
+NOSSO COMPONENTE 
+
+'App'....
+
+
+
+
+---> 
+
+
+críamos um método 
+
+
+chamado 
+
+
+de
+
+
+'inputChangedHandler' ...
+
+
+
+
+
+com o código 
+
+
+
+'inputChangedHandler = () => {
+
+}'
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+ELE ENTÃO 
+
+
+COLOCA/PASSA 
+
+UM objeto 
+
+'event' 
+
+A ESSE 
+
+
+'inputChangedHandler'...
+
+
+
+CÓdigo ficará:
+
+
+'
+class App extends Component {
+  inputChangedHandler = (event) => {
+
+  }
+}
+
+'
+
+
+---------------------------
+
+
+
+FEITO 
+
+
+ISSO,
+ 
+ O PROFESSOR 
+
+
+ VAI QUERER 
+
+
+ ARMAZENAR 
+
+
+
+
+O ESTADO INICIAL 
+
+
+DESSE NOSSO ELEMENTO 'input'
+
+
+NO 
+
+
+MÉTODO 
+
+'state' 
+
+
+de dentro 
+
+
+
+do COMPONENTE 'app'...  professor 
+
+
+nomeia 
+
+esse negócio como 
+
+'userInput'... e ele inicialmente será UMA 
+
+EMPTY STRING...
+
+
+
+
+
+
+ex:
+
+
+
+
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+}
+
+
+-------------------------------------
+
+
+
+
+
+FEITO ISSO, 
+
+
+
+AGORA O PROFESSOR VAI QUERER 
+
+
+ESCREVER UM 
+
+'this.setState()'
+ 
+
+ dentro 
+
+
+ do inputChangedHandler, 
+
+ pois 
+
+
+ É A RELAÇÃO ENTRE ESSES 2 
+
+ QUE PRODUZIRÁ 
+
+ EFEITOS/MUDANÇAS NA NOSSA PÁGINA....
+
+
+
+
+
+AÍ ELE VAI DEFINIR ESSE NOVO STATE 
+
+
+como 
+
+sendo 
+
+IGUAL 
+
+
+A 
+
+
+'event.target.value'...
+
+
+
+(não há necessidade de 'key' aqui, pois NÃO SE TRATA DE UMA LIST...)
+
+
+
+
+ ------------------------------------
+
+
+
+
+ ex:
+
+
+
+
+
+
+ 
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+}
+
+
+
+
+---------------------------------------------
+
+
+
+
+ISSO FEITO, 
+
+
+
+O PROFESSOR 
+
+ENTÃO
+
+
+ESCREVERÁ
+ 
+
+ UM 
+
+
+ 'TWO-WAY BINDING'  COM A AJUDA 
+
+ DESSE 
+
+ 'this.setState' de 'event.target.value'... 
+
+
+
+
+
+ --> isso significa QUE O PROFESSOR ALÉM 
+
+ DE REGISTRAR 
+
+
+
+ ESSE método como UM 
+
+ __HANDLER___ 
+
+
+ em 
+
+ 'onChange={}', 
+
+
+
+MAS 
+
+também
+
+VAI DEFINIR 
+
+ O VALOR 
+
+ INICIAL DESSE 
+
+ elemento 
+
+ 'input'
+  
+  COMO SENDO 
+
+  '{this.state.input}' (QUE SERÁ AQUELA EMPTY STRING)... --> e isso TAMBÉM PERMITE QUE O 'value' do input SEJA UPDATADO DE ACORDO COM O 'this.state.userInput' (que, por sua vez, lembre-se, é UPDATADO POR 'setState()' em inputChangedHandler )
+
+
+
+
+  RESULTADO:
+
+
+
+
+
+
+
+ 
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+      </div>
+    )
+  }
+
+}
+
+
+
+-------------------------------------------------------
+
+
+
+CERTO,
+
+ISSO FARÁ COM QUE 
+
+
+O LATEST 
+valor do 
+
+
+'input' sempre seja refletido 
+
+no nosso state... (e no 'VALUE' de 'input'....)
+
+
+
+
+---------------------------------------------------
+
+
+
+
+ATÉ AGORA, NÃO FIZEMOS NADA DE ESPECIAL...
+
+
+
+--------------------------------------
+
+
+
+
+
+---> nosso input field está funcionando.... --> ENTRETANTO, 
+
+
+AGORA DEVEMOS 
+
+
+FAZER COM QUE 
+
+
+O <P> LOGO ABAIXO 
+
+
+do 'INPUT ELEMENT' 
+
+
+
+OUTPUTTE A COIS QUE NÓS ESCREVEMOS NO INPUT FIELD...
+
+
+
+É 
+
+por isso que o professor vai adicionar UM <P> logo abaixo 
+
+do ELEMENT 'INPUT'...
+
+
+ex:
+
+
+
+
+
+
+
+ 
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+    <p></p>
+      </div>
+    
+    )
+  }
+
+}
+
+
+
+----------------------------------------------
+
+
+
+DENTRO 
+
+DESSE <p>, o professor 
+
+
+ENTÃO 
+
+VAI INSERIR CONTEÚDO DINÂMICO....
+
+
+
+vai inserir '{this.state.userInput}'...
+
+
+
+-------------------------------------------
+
+
+
+ISSO VAI PRODUZIR EXATAMENTE O EFEITO QUE DESEJÁVAMOS... ---> tudo 
+
+que digitarmos agora APARECERÁ 
+
+
+NO <p>...
+
+
+
+-----------------------------------
+
+
+
+
+O PRÓXIMO PASSO, AGORA, é
+
+
+CRIAR UM NOVO COMPONENT ('validation') 
+
+QUE RECEBE/RECEBERÁ 
+
+
+
+O COMPRIMENTO DO TEXTO INPUTTADO ('text length') 
+
+COMO UM PROP...
+
+
+
+----------------------------------------------------
+
+
+
+
+PROFESSOR CRIA UM NOVO FOLDER, 'Validation', 
+
+com 
+
+
+um arquivo 'Validation' no interior.... ---------> 
+
+
+
+PROFESSOR 
+
+MENCIONOU 
+
+
+
+EM UM DOS VÍDEOS QUE 
+
+__NÓS NÃO PRECISAMOS DE 'STATE'___ NESSES  COMPONENTS 
+
+
+MAIS SIMPLES... por isso não vamos adicionar state algum ,aqui...
+
+
+
+
+
+Vamos criar um 
+
+
+FUNCTIONAL COMPONENT... ---->
+
+
+
+
+
+
+
+ESCREVEMOS
+
+
+import React from 'react';
+
+'const validation = (props) => {
+
+}'
+
+
+export default validation;
+
+
+--------------------------------------
+
+
+
+
+
+Certo... ---------> depois disso 
+
+DEVEMOS OBRIGATORIAMENTE 
+
+
+RETORNAR UM CÓDIGO 
+
+JSX ('return ();' ) 
+
+
+
+DENTRO 
+
+
+
+DO NOSSO FUNCTIONAL COMPONENT...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+'const validation = (props) => {
+  return (
+
+  );
+
+
+}'
+
+
+export default validation;
+
+
+
+---------------------------------------
+
+
+POR ENQUANTO, PROVISORIAMENTE,
+ 
+ O PROFESSOR 
+
+ APENAS 
+
+ RETORNARÁ 
+
+
+ UM 
+
+ <p> EM QUE 
+
+ DIREMOS 
+
+ 'text too short' (obviamente TEXTO QUE AINDA NÃO É CONDICIONAL; É APENAS UM PLACEHOLDER)
+
+
+
+
+
+ ex:
+
+
+
+
+
+ import React from 'react';
+
+const validation = (props) => {
+  return (
+    <div className="validation">
+    <p>Text too short!</p>
+    </div>
+  );
+
+
+}
+
+
+export default validation;
+
+
+
+--------------------------------------
+
+
+
+CERTO, 
+
+
+AGORA 
+
+TEMOS ESSE COMPONENT...
+
+
+Devemos o importar 
+
+
+em 
+
+'App.js'...
+
+
+
+
+
+
+usamos 
+
+
+
+a sintaxe 
+
+
+
+
+import Validation from './Validation/Validation';
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+DEPOIS DISSO, PODEMOS CHAMAR 
+
+
+'<Validation />' 
+
+
+
+
+EM LUGARES DO MEU 'App'... ----> coloco 
+
+
+
+esse negócio 
+
+
+LOGO 
+
+ABAIXO 
+
+DO 
+
+
+'<p>{this.state.userInput}</p>'....
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+ 
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+    <p>{this.state.userInput}</p>
+    <Validation /> ////EIS O CÓDIGO EM QUESTÃO.
+      </div>
+    
+    )
+  }
+
+}
+
+
+
+
+--------------------------------------
+
+
+
+CERTO...
+
+MAS O PROFESSOR QUERIA 
+
+QUE PASSASSEMOS 
+
+
+o 
+
+
+'text length' 
+
+
+
+COMO UM 
+
+
+PROP 
+
+A ESSE 
+
+
+COMPONENT... 
+
+
+
+
+---> para isso, podemos escrever um prop de 'inputLength' nesse call de 
+
+'Validation'.... ----> se fizermos isso, podemos 
+
+então 
+
+escrever:
+
+
+
+'Validation inputLength={this.state.userInput.length}'.... -----> THIS WILL DO THE TRICk.
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+    <p>{this.state.userInput}</p>
+    <Validation inputLength={this.state.userInput.length}/> ////EIS O CÓDIGO EM QUESTÃO.
+      </div>
+    
+    )
+  }
+
+}
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+FINALMENTE, SE FIZERMOS ISSO,
+
+PODEMOS 
+
+
+ACESSAR 
+
+ESSE PROP LÁ 
+
+
+no component 'validation' 
+
+
+por meio 
+
+da escrita 
+
+
+'props.inputLength'...
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+DEPOIS DISSO,
+
+
+
+TEMOS 
+
+A TERCEIRA TAREFA:
+
+
+__OUTPUTTAR____ 
+
+
+
+OU 
+
+'text too short' 
+
+
+ou 
+
+'text long enough' 
+
+
+DEPENDENDO DO TEXT LENGTH do input do usuário (devemos usar '5' como LENGTH MÍNIMO)...
+
+
+
+
+
+---------------------------------------------
+
+
+PARA ISSO, 
+
+O PROFESSOR 
+
+
+VAI ADICIONAR 
+
+UM 
+
+__sEGUNDO PARÁGRAFO AO 
+
+NOSSO 
+
+
+component de 
+
+'VALIDATIOn'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+ import React from 'react';
+
+const validation = (props) => {
+  return (
+    <div className="validation">
+    <p>Text long enough</p>
+    <p>Text too short!</p>
+    </div>
+  );
+
+
+}
+
+
+export default validation;
+
+
+
+
+---------------------------------------
+
+
+
+
+OK... MAS AGORA 
+
+
+O PROFESSOR SÓ VAI QUERER OUTPUTTAR ___ 1 DESSES '<p>'... -----> 
+
+ele vai 
+
+ter que usar if statements, no final das contas....  ---> mas if STATEMENTS
+
+___fORA___ DO código jsx retornado com 'return'... 
+
+
+
+
+
+
+
+
+--> poderíamos usar TERNARY EXPRESSIONS, MAS FICA MUITO FEIO....
+
+
+
+
+VERSÃO DE TERNARY EXPRESSION:
+
+
+
+<div>
+{
+
+
+
+  props.inputLength > 5 
+  
+  ?
+
+  <p>Text long enough</p>
+
+  :
+
+  <p>Text too short</p>
+
+
+}
+</div>
+
+
+
+
+
+
+
+
+
+ISSO FUNCIONA, 
+
+
+É CLARO, 
+
+
+MAS FICA MUITO FEIO ---> fica difícil de ler...
+
+
+DEVEMOS USAR TERNARY EXPRESSIONS COM CUIDADo... (aqui seria ok usar, 
+
+mas ainda assim 
+
+É MELHOR USAR O APPROACH SUPERIOR, QUE É 
+
+O DA CRIAÇÃO DE 
+
+UMA VARIÁVEL E ENTÃO A CRIAÇÃO DE UNS IF STATEMENTS...)
+
+
+-------------------------------------------
+
+
+
+
+Professor usa o approach 
+
+mais legal/melhor, 
+
+das variáveis 
+
+com 
+
+os if statements...
+
+
+
+
+ele escreve:
+
+
+
+
+
+
+
+
+const validation = (props) => {
+
+
+  let validationMessage = 'Text long enough';
+
+
+
+
+  if (props.inputLength <= 5) {
+    validationMessage = 'Text too short';
+  }
+
+
+
+
+  return (
+    <div className="validation">
+    <p>{validationMessage}</p>
+    </div>
+  );
+
+
+}
+
+
+
+------------------------------------
+
+
+CERTO... ISSO FUNCIONARÁ.
+
+
+
+
+TEREMOS O MESMO COMPORTAMENTO DE ANTES, MAS 
+
+AGORA 
+
+TEREMOS 
+
+UM <p> que 
+
+dirá 
+
+
+OU 
+
+'text long enough' 
+
+
+ou 
+
+'text too short'...
+
+
+
+
+-----------------------------------------------
+
+
+
+
+  
+
+  AGORA DEVEMOS 
+
+  VER A TAREFA 
+  Nº 4, 
+
+
+  A TAREFA QUE NOS PEDE 
+
+  PARA CRIAR OUTRO COMPONENT,
+
+
+
+  um componente 
+
+  'char' 
+
+
+   e então o ESTILIZAR COM 
+
+   ALGUNS ESTILOS ESPECÍFICOS...
+
+
+
+
+----------------------------------------
+
+
+
+
+
+Professor cria um novo folder,
+
+
+de nome 
+
+'Char'...
+
+
+com um arquivo 'Char.js'.....
+
+
+
+
+escrevemos 
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+import React from 'react';
+
+
+const char = () => {
+
+
+
+  return (
+    <div>
+
+    </div>
+  )
+}
+
+
+export default char;
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+PODEMOS ESTILIZAR 
+
+ESSE NOSSO COMPONENT DE 2 FORMAS:
+
+
+podemos 
+
+
+1)
+
+
+IMPORTAR UM ARQUIVO CSS de fora desse arquivo (e os estilos do arquivo css ficarão DISPONÍVEIS GLOBALMENTE, FICARÃO DISPONÍVEIS A TODOS OS ARQUVIOS .JS do nosso projeto...)
+
+--> se fizermos assim, devemos assignar uma CLASSE À nossa div com 'className';
+
+essa classe então RECEBERÁ OS ESTILOS DEFINIDOS Com a sintaxe '.nomedaclasse' lá no arquivo .css importado...
+
+
+
+
+
+
+2) DEFINIR 'INLINE STYLES'... --> 
+
+é aquele 
+
+negócio 
+
+de escrever 
+
+
+
+'const style = {
+  backgroundColor = 'green'
+}',
+
+
+
+por exemplo.
+
+
+
+DEPOIS,
+
+
+ACESSAMOS 
+
+ESSE ESTILO 
+
+NA NOSSA DIV/component 
+
+por meio 
+
+de 
+
+'div style={style}' />...
+
+
+
+
+
+
+--------------------------------------------------
+
+
+
+
+PROFESSOR OPTA PELO SEGUNDO APPROACH....
+
+
+
+
+
+
+
+import React from 'react';
+
+
+const char = (props) => {
+
+  const style = {
+    display: 'inline-block',
+    padding: '16px',
+    margin: '16px',
+    border: '1px solid black',
+    textAlign: 'center'
+  }
+
+
+  return (
+    <div style={style}>
+
+    </div>
+  )
+}
+
+
+export default char;
+
+
+
+------------------------------------
+
+
+
+
+CERTO, 
+
+AGORA TEMOS ESSE COMPONENTE 
+
+PREPARADO... 
+
+
+PODEMOS O IMPORTAR NO NOSSO ARQUIVO 
+
+
+'App.js',
+
+QUE É 
+
+ONDE QUEREMOS O UTILIZAR....
+
+
+
+
+
+Escrevemos 
+
+
+
+'import Char from './Char/Char'...
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+AGORA 
+
+
+TEMOS 
+
+
+AS 2 QUESTÕES DIFÍCEIS, 
+
+
+AS 2 ÚLTIMAS...
+
+
+
+
+
+
+---> 
+
+
+O PROFESSOR 
+
+
+VAI QUERER RENDERIZAR UMA LISTA 
+
+
+DE 
+
+
+components 
+
+'Char' 
+
+em que 
+
+
+__CADA__ COMPONENTE 'Char' 
+
+RECEBERÁ/RECEBE 
+
+__UMA DIFERENTE LETRA __ DO TEXTO ___ QUE 
+
+VOCÊ INPUTTOU... os 
+
+char Components deverão 
+
+RECEBER, cada um deles,
+ 
+ uma LETRA como um PROP...
+
+ -------------------------
+
+
+
+
+
+
+ PROFESSOR DECIDE ___RENDERIZAR ESSA LISTA ____ LOGO ABAIXO 
+
+ DO ELEMENTO 
+
+ '<Validation inputLength={this.state.userInput.length} />'....
+
+
+
+
+
+ ---------------------------------
+
+
+ PROFESSOR EXPLICA QUE ALI ELE PODERIA, É CLARO, usar aquele 
+
+ método 
+
+ '.map()'...,
+
+
+
+ MAS QUE 
+
+ ELE 
+
+ VAI QUERER 
+
+
+ DEIXAR A LÓGICA JAVASCRIPT __FORA __ DO BLOCO 'jsx' retornado com 
+ 
+ 'return'..... ---->  
+
+
+
+ isso significa que 
+
+
+ ALI, NAQUELE ESPAÇO '{}', 
+
+ o professor 
+
+
+ VAI SIMPLESMENTE QUERER RENDERIZAR UMA VARIÁVEL/CONST QUE 
+
+ __ELE JÁ PREPAROU/PREPARA ___ ANTERIORMENTE AO SEU OUTPUT/RENDERIZAÇÃO...
+
+
+
+
+ ex:
+
+
+
+
+
+
+ 
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+    <p>{this.state.userInput}</p>
+    <Validation inputLength={this.state.userInput.length}/>
+    {} ///////////EIS O CÓDIGO EM QUESTÃO.
+      </div>
+    
+    )
+  }
+
+}
+
+
+
+--------------------------------------------
+
+
+
+
+
+Certo...
+
+devemos preparar essa variável/const...
+
+
+
+O professor 
+
+
+vai 
+
+DEFINIR 
+
+ESSA VARIÁVEL 
+
+
+____DENTRO___ do método 
+
+'render()'...
+
+
+
+Ele vai lá 
+
+
+
+e define 
+seu nome 
+
+
+como sendo 
+
+
+
+
+
+'const charList'... ----> professor usa 'const' 
+PQ ELE 
+
+___NUNCA VAI MUDAR ___ ESSE 'charList'...
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+
+
+    const charList = ... ///EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+    <p>{this.state.userInput}</p>
+    <Validation inputLength={this.state.userInput.length}/>
+    {} 
+      </div>
+    
+    )
+  }
+
+}
+
+
+
+
+--------------------------------------------------
+
+
+
+charList,
+
+explica o professor, 
+
+
+deverá 
+
+
+'REACH OUT' ao 
+
+nosso 
+
+
+'this.state.userInput' E 
+
+
+
+ENTÃO __CHAMAR ___ 
+
+
+
+'.map()'
+
+
+SOBRE 
+
+ESSA STRING/VALOR AÍ...
+
+
+
+ex:
+
+
+
+
+this.state.userInput.map()
+
+
+
+
+----------------------------------------------
+
+
+
+
+O PROFESSOR/NÓS FAREMOS ISSO PARA QUE 
+
+POSSAMOS 
+
+__MAPPEAR___ CADA ELEMENTO 
+
+
+___ DAQUELE '''''ARRAY''''' 
+
+
+EM UM NOVO ELEMENTO/ELEMENTOS...
+
+
+
+Certo, mas aqui há um _PROBLEMA_:
+
+
+não existe um 'array' de 
+'userInput',
+
+pq userInput
+
+É SIMPLESMENTE 
+
+1 ÚNICA PROPRIEDADE, de valor " '' " (empty string, uma empty string que depois É ALTERADA PARA SER AQUILO QUE O USUÁRIO INPUTTOU)...
+
+
+
+
+certo, 
+
+
+mas o professor SOLUCIONA 
+
+
+ESSE PROBLEMA POR MEIO 
+
+DO USO 
+
+DO MÉTODO 
+
+
+'.split()', que 
+
+é um método 
+
+
+__EXISTENTE EM TODAS AS STRINGS___... ---------> 
+
+se nós 
+
+
+escrevermos 
+
+'split('')'   (ou seja, se passarmos UMA EMPTY STRING COMO PARÂMETRo),
+
+
+ESSE
+
+MÉTODO 
+
+
+FAZ COM QUE 
+
+A PALAVRA QUE 
+
+PASSAMOS 
+
+A ELE 
+
+SEJA 
+
+MUTILADA, 
+
+
+SEJA ESQUARTEJADA 
+
+
+EM 1 ARRAY de muitos elementos, sendo CADA 
+
+ELEMENTO 1 LETRA DAQUELA PALAVRA...
+
+
+(e é exatamente isso que queremos, aqui).
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+
+
+    const charList = this.state.userInput.split('').map();
+
+
+
+
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+    <p>{this.state.userInput}</p>
+    <Validation inputLength={this.state.userInput.length}/>
+    {} 
+      </div>
+    
+    )
+  }
+
+}
+
+
+
+-------------------------------------
+
+
+
+
+CERTO... mas é EVIDENTE QUE NÃO ACABAMOS, aqui...
+
+
+Não acabamos PORQUE 
+
+AINDA 
+
+
+NÃO ESCREVEMOS 
+
+
+A LÓGICA DO MÉTODO '.map()'...
+
+
+---------------------------------------
+
+
+
+
+
+
+professor diz que em '.map()' nós 
+
+
+VAMOS RECEBER 'char/character/letter'
+
+
+COMO PARÂMETRO, certamente....
+
+
+
+
+
+precisamos enfiar 
+
+esse parâmetro de 'char' na sintaxe de uma arrow function interna... isso
+ significa que o código ficará:
+
+
+
+
+
+
+
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+
+
+    const charList = this.state.userInput.split('').map(
+      (char) => {
+  
+    }
+    );
+
+
+
+
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+    <p>{this.state.userInput}</p>
+    <Validation inputLength={this.state.userInput.length}/>
+    {} 
+      </div>
+    
+    )
+  }
+
+}
+
+
+
+
+----------------------------------
+
+
+
+
+
+POR MEIO DESSE 
+
+método 
+
+'.map()', 
+
+
+explica o professor,
+
+
+vamos QUERER 
+
+
+
+____rETORNAR UM CÓDIGO JSX/COMPONENT 
+
+
+de 
+
+'Char'....
+
+
+
+
+É por isso que ele vai 
+
+escrever 
+
+'return <Char />' 
+
+
+
+dentro do function body do '.map()'... (pq ele vai querer QUE 
+
+OS ELEMENTOS/LETRAS QUE PASSAMOS A ESSE MÉTODO '.MAP()' SEJAM 
+
+CONVERTIDOS EM ELEMENTOS 
+
+'Char'....)
+
+
+
+
+
+Ex:
+
+
+
+
+
+
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+
+
+    const charList = this.state.userInput.split('').map(
+      (char) => {
+        return <Char ... /> EIS O CÓDIGO EM QUESTÃO.
+    }
+    );
+
+
+
+
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+    <p>{this.state.userInput}</p>
+    <Validation inputLength={this.state.userInput.length}/>
+    {} 
+      </div>
+    
+    )
+  }
+
+}
+
+
+
+-------------------------------------------
+
+
+
+Certo... 
+
+
+
+
+Nesse 'return' do código 
+
+jsx 
+
+
+de 
+
+
+'<Char />' (invocação desse component),
+
+
+
+o PROFESSOR 
+
+
+
+VAI DEFINIR 
+
+UM 
+
+
+'prop' 
+
+
+de nome 
+
+
+'character'...
+
+
+E dentro desse PROP 
+
+
+___ELE VAI PASSAR O __ 'char' 
+
+QUE ELE RECEBEU COMO INPUT 
+
+NESSE MÉTODO '.map()'...
+
+
+
+
+
+
+
+
+ex(representação):
+
+
+
+
+
+
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+
+
+    const charList = this.state.userInput.split('').map(
+      (char) => {
+        return <Char character={char} /> EIS O CÓDIGO EM QUESTÃO.
+    }
+    );
+
+
+
+
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+    <p>{this.state.userInput}</p>
+    <Validation inputLength={this.state.userInput.length}/>
+    {} 
+      </div>
+    
+    )
+  }
+
+}
+
+
+
+
+-----------------
+
+
+
+
+FEITO ISSO, 
+
+O PROFESSOR FINALMENTE PODERÁ 
+
+USAR 
+
+
+
+ESSE 
+
+
+prop 
+
+
+de 
+
+'character' 
+
+
+DENTRO DO COMPONENT de 
+
+'char'...
+
+
+-------------
+
+ex (component 'Char'):
+
+
+
+
+
+
+
+const char = (props) => {
+
+    const style = {
+        display: 'inline-block',    
+        padding: '16px',
+        margin: '16px',
+        border: '1px solid black',
+        textAlign: 'center'
+    }
+
+
+    return (
+        <div className="char" style={style}>
+        <p></p>
+        </div>
+
+
+    )
+
+
+
+
+
+    
+}
+
+
+
+--------------------------------------
+
+
+
+
+Certo... agora 
+
+
+o professor vai querer 
+
+usar 
+
+
+
+esse 
+
+
+'props.character' em algum lugar desse component...
+
+
+
+ele vai 
+
+simplesmente outputtar 
+
+'<div style={style}>
+    {props.character}
+  </div>'
+
+  .....
+
+
+
+
+  EX:
+
+
+
+
+
+  
+const char = (props) => {
+
+    const style = {
+        display: 'inline-block',    
+        padding: '16px',
+        margin: '16px',
+        border: '1px solid black',
+        textAlign: 'center'
+    }
+
+
+    return (
+        <div className="char" style={style}>
+        <p>{props.character}</p>
+        </div>
+
+
+    )
+
+
+
+
+
+    
+}
+
+
+--------------------------
+
+
+
+Certo...
+
+
+
+
+
+PROFESSOR EXPLICA QUE 
+
+ 
+ EM 'App.js'
+
+
+ NOSSA LISTA 
+
+
+ É CRIADA 
+
+ POR MEIO 
+
+
+ DA CONVERSÃO 
+
+
+ DO ARRAY 
+
+
+ de 
+
+ 'this.state.userInput' 
+
+ 
+COM USO DO MÉTODO '.map()'   (que é o negócio que realmente realiza a conversão).
+
+
+
+
+
+
+
+
+LEMBRE-SE: 'MAP' __NÃO TOCA/ALTERA___ O STATE ORIGINAL/array original que está no STATE, 
+
+ELE APENAS __cRIA UMA CÓPIA IDÊNTICA E INDEPENDENTE EM RELAÇÃO A ELE... (o que é bom).
+
+
+
+----------------------------------------------------
+
+
+
+Feito isso, podemos simplesmente inserir 'charList' (que é a constante 
+QUE SEGURA TODO ESSE CÓDIGO JSX DO NOSSO ARRAY...) naquele slot '{}' que temos 
+
+no final 
+
+do código do nosso 'App' component...  (depois do component 'validation'...)
+
+
+
+
+EX:
+
+
+
+
+
+
+
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+
+
+    const charList = this.state.userInput.split('').map(
+      (char) => {
+        return <Char character={char} /> 
+    }
+    );
+
+
+
+
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+    <p>{this.state.userInput}</p>
+    <Validation inputLength={this.state.userInput.length}/>
+    {charList}/////////// EIS O CÓDIGO EM QUESTÃO.
+      </div>
+    
+    )
+  }
+
+}
+
+
+
+-----------------------------------------------------------
+
+
+
+ISSO FEITO, 
+
+VAMOS RECEBER UM ___ERRO___ (pq o professor está usando só 
+
+'.map()' em cima daquela string, e não '.split('').map', que é o código 
+
+QUE EFETIVAMENTE SPLITTA A STRING INPUTTADA PELO USUÁRIO 
+
+EM DIVERSOS ELEMENTOS INDEPENDENTES EM UM ARRAY, array que é então CONVERTIDO 
+EM UMA LISTA PELO '.map()' ao final do call...) 
+
+
+
+
+----> ESSE ERRO DIZ QUE '''this.state.userInput.map'''  NÃO É UMA FUNÇÃO ---> 
+ele diz isso 
+
+PQ MAP() não é TIPICAMENTE UM MÉTODO DE STRINGS... (é conhecido como método de 
+ARRAYS E OBJETOS, MAS NÃO DE STRINGS...) ---------> PROFESSOR NOS EXPLICA 
+
+
+QUE STRINGS SÃO '''''KIND OF'''''' ARRAYS JAVASCRIPT, MAS 'NOT REALLY'.... ---> para 
+
+
+REALMENTE AS TRANSFORMARMOS EM ARRAYS JAVASCRIPT, DEVE-SE CHAMAR 
+
+'.split()' em cima dos seus valores....
+
+
+
+
+'.split('')'  (pass de STRING VAZIA) ---> VAI FAZER COM QUE TODAS AS LETRAS DO 
+
+ARRAY SEJAM SEPARADAS E ENTÃO VIREM ELEMENTOS INDEPENDENTES EM UM NOVO ARRAY....
+
+
+---------------------------
+
+
+CERTO!!!
+
+
+AGORA NOSSO CÓDIGO ESTÁ FUNCIONANDO:
+
+
+
+
+
+ELEMENTOS DIV COM 1 ÚNICA LETRA 
+
+VÃO SENDO CRIADOS A PARTIR 
+
+DO NOSSO INPUT 
+
+
+NO INPUT FIELD....
+
+
+-----------------------
+
+
+
+
+Certo....
+
+
+
+mas eu ainda não sei se realmente cumprimos a tarefa....
+
+
+
+lembre-se da tarefa:
+
+
+
+<li>Render a list of CharComponents where each
+ CharComponent receives a different letter of
+  the entered text (in the initial input field) as a prop. </li>
+
+
+-----------------------------------
+
+
+
+Aqui, na verdade, nós não 
+
+
+renderizamos uma LISTA PROPRIAMENTE DITA, 
+
+e sim 
+
+APENAS 
+
+UM 
+
+__ MONTE DE ELEMENTOS 'DIV' ___, CADA UM COM UMA 
+
+LETRA no seu interior...
+
+
+
+
+Além disso,
+
+
+
+Nós também percebemos que 
+
+no console 
+
+
+NÓS RECEBEMOS 
+
+
+
+O ERRO/warning 
+
+
+
+de 
+
+'Each child in an array or iterator should have a unique "KEY" prop'... --->
+
+
+ISSO SIGNIFICA QUE 
+
+
+ESTÁ FALTANDO 
+
+
+
+A PROP/PROPRIEDADE 
+
+
+'key' 
+
+nos nossos COMPONENTS, e essa key é importante, 
+
+POIS 
+
+É ELA QUE AJUDA 
+
+O REACT A 
+
+
+'KEEP TRACK OF' do estado de nosso aplicativo, é ela que permite comparar 
+
+
+o FUTURO E O PASSADO DE NOSSO APLICATIVO no virtual dom do react...
+
+
+
+-----------------------------------------------------------
+
+
+
+Para consertar 
+
+esse problema, 
+
+
+devemos ADICIONAR UMA KEY ao nosso elemento 'Char'... ---> CONTUDO,
+
+
+
+O ADD DESSA KEY PODE SER UM POUCO 'TRICKY'... ---> um pouco 
+
+tricky PQ 
+
+
+
+NÓS NÃO TEMOS NENHUM 'unique id' para cada elemento (e isso é o ideal 
+para a definição de um prop 'key'...) ---------> PARA RESOLVER ESSE PROBLEMA,
+
+
+
+O PROFESSOR DECIDE USAR ___o INDEXADOR____ DOS NOSSOS ELEMENTOS (sim, apesar de ser uma bad practice) 
+
+em '.map()'... ---> 
+
+ele ressalta QUE ISSO 
+
+NÃO É NADA ÓPTIMO, 
+
+MAS QUE AINDA 
+
+
+É MELHOR DO QUE __NÃO TER KEY __ ALGUMA...
+
+
+
+É por isso que ele vai escrever:
+
+
+
+
+
+
+
+
+
+
+
+class App extends Component {
+  state = {
+    userInput: ''
+  }
+
+
+
+
+
+  inputChangedHandler = (event) => {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+
+
+  render() {
+
+
+    const charList = this.state.userInput.split('').map(
+      (char, index) => { //////////EIS O CÓDIGO EM QUESTÃO
+        return <Char character={char} key={index} />  ///////EIS O CÓDIGO EM QUESTÃO.
+    }
+    );
+
+
+
+
+    return (
+      <div className="App">
+
+
+
+    <input
+    type="text" 
+    onChange={() => {this.inputChangedHandler()}}
+    value={this.state.userInput}
+    <p>{this.state.userInput}</p>
+    <Validation inputLength={this.state.userInput.length}/>
+    {charList}
+      </div>
+    
+    )
+  }
+
+}
+
+
+
+----------------------------------------
+
+
+
+COM ISSO, 
+
+SALVAMOS E RECARREGAMOS 
+
+
+A PÁGINA,
+
+e agora 
+
+
+NÃO TEMOS MAIS AQUELE WARNING CHATo de 'não existe key'... 
+
+
+
+
+
+
+------------------------------
+
+
+
+(ainda não temos uma 'LIST' propriamente dita, mas mesmo assim o professor procede para 
+
+a resolução da 6a e última etapa...)
+
+
+
+--> <li> When you click a CharComponent, it should be removed from the entered text </li>
+
+
+
+
+--------------------------------
+
+
+
+Para que consigamos ter essa função 
+
+no nosso app,
+
+precisamos 
+
+criar 
+
+UM NOVO HANDLER,
+ 
+ um CLICKHANDLER... (prop de 'clicked' no elemento 'Char'..., que depois 
+ 
+ é utilizado por meio do handler de 'onClick'...) --> e então 
+
+ vincular 
+
+ isso 
+
+
+ a alguma função,
+
+ algo como 
+
+
+
+ 'deleteCharHandler = () => {
+
+ }'
+
+
+
+no component 'App'...
+
+
+nós vinculamos tudo certinho, 
+
+
+e escrevemos 
+
+
+'clicked={() => this.deleteCharHandler(index)}'  ( OU SEJA, PASSAMOS 'INDEX', o index do elemento que foi selecionado/deverá ser deletado, A ESSE MÉTODO 'deleteCharHandler'...)
+
+
+
+
+
+
+E agora 
+
+
+temos um 
+
+deleteCharHandler com 
+
+
+o código de 
+
+
+'deleteCharHandler = (index) => {
+
+
+}'
+
+
+
+-----------------------------
+
+
+A pergunta agora é:
+
+
+
+o que podemos executar 
+
+dentro do method body 
+
+desse negócio para que 
+
+seja realmente deletado o elemento 'char' de uma letra e também 
+
+essa mesma letra 
+
+no nosso input field?
+
+
+
+
+
+---> provavelmente teremos de usar 
+
+
+'this.setState()'....
+
+
+
+
+-----------------------
+
+
+
+
+ex:
+
+
+
+
+
+
+'deleteCharHandler = (index) => {
+
+)
+
+}'
+
+
+
+----------------------------------
+
+
+
+Realmente não sei o que escrever.
+
+
+Provavelmente terei de DELETAR aquele elemento com algum método 
+
+javascript (como 'remove' ou 'removeChild') 
+
+
+E ENTÃO UPDATAR 
+
+o state 
+
+com 
+
+'setState'....
+
+
+
+
+
+
+
+---> professor explica que agora que nós conseguimos 
+
+esse 
+
+'index', 
+
+nós vamos querer
+
+
+UPDATAR O USERINPUT.... esse 
+
+'userInput'
+ 
+ que,
+  como aprendemos,
+
+
+  é 
+
+  APENAS
+  'KINDOF A JAVASCRIPT STRING'...
+
+
+
+-------------------------
+
+
+
+
+A PRIMEIRA COISA QUE O PROFESSOR 
+
+
+FARÁ 
+AQUI 
+
+É 
+
+conseguir 
+
+acesso 
+
+
+ao 
+
+'text'... por isso 
+
+ele cria uma const 
+
+de nome 
+
+'text', 
+
+
+com o valor 
+
+
+de 
+
+'this.state.userInput.split('')'  (OU SJEA, É O MESMO CÓDIGO QUE USAMOS EM 'charList'...)
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+deleteCharHandler = (index) => {
+  const text = this.state.userInput.split('');
+)
+
+}
+
+
+
+
+--------------------------------------
+
+
+De novo, isso fará com QUE 
+
+
+AQUELA STRING DO INPUT SEJA 
+
+
+TRANSFORMADA EM UM ARRAY de 
+
+vários elementos que são apenas 1 única letra....
+
+
+
+
+Agora que temos esse 
+
+'array of characters',
+
+
+
+
+O PROFESSOR 
+
+
+
+DECIDE 
+
+___REMOVER ___ UM DESSES 
+
+
+ELEMENTOS 
+
+
+POR MEIO 
+
+
+DO 
+
+
+MÉTODO 
+
+
+'.splice()'... --> ele passa como parâmetros os valores 'index' (recebido por deleteCharHandler) e '1'...
+
+
+
+------------------------------------
+
+
+
+
+ex:
+
+
+
+
+
+
+
+deleteCharHandler = (index) => {
+  const text = this.state.userInput.split('');
+  text.splice(index, 1); ----------> isso vai REMOVER esse determinado elemento de nosso array de 'text', que foi criado a partir de 'userInput'... 
+)
+
+}
+
+
+
+
+---------------------------------
+
+
+Certo,
+
+
+MAS ISSO POR 
+
+
+SI SÓ __NÃO VAI ALTERAR EM NADA __ O 
+
+'VISUAL' DO 
+
+NOSSO APLICATIVO...
+
+
+------------------------------
+
+
+ISSO FEITO,
+
+O QUE O PROFESSOR VAI QUERER 
+
+
+FAZER AGORA 
+
+É 
+
+
+CRIAR UMA NOVA CONSTANTE,
+
+
+'updatedText', 
+
+em que 
+
+O PROFESSOR 
+
+VAI SIMPLESMENTE USAR A CONSTANTE 
+
+'text' (que é um ARRAY DE CHARACTERS, tenha isso em mente)....
+
+
+
+ELE VAI 
+
+ENTÃO 
+
+usar o método '.join()' 
+
+EM CIMA 
+
+
+DESSA CONSTANTE 
+
+
+'text'...
+
+
+
+
+
+
+
+
+
+
+O método join() junta todos os 
+elementos de um array (ou um array-like object) em uma string e retorna esta string.
+
+
+
+separador Optional
+Específica uma string para separar cada 
+elemento adjacente do array. O separador é 
+convertido em uma string se necessário. Se omitido, 
+os elementos do array são separados com uma vírgula (","). 
+Se o separador FOR UMA STRING VAZIA, todos os elementos são 
+juntados SEM NENHUM CARACTER entre eles.
+
+
+
+
+
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+ deleteCharHandler = (index) => {
+  const text = this.state.userInput.split('');
+  text.splice(index, 1);
+  const updatedText = text.join(''); ////aqui, uma STRING VAZIA é passada, o que fará com QUE TODOS OS MINI-ITEMS daquele ARRAY SEJAM UNIDOS EM 1 ÚNICA STRING, 1 ÚNICA STRING SEM AQUELA 'letter/character' que foi excluída por meio de 'text.splice(index, 1);'....
+
+)
+
+}
+
+
+
+--------------------------------------------
+
+
+
+Certo,
+
+
+agora que escrevemos todo esse código,
+
+eu PRESSUPONHO 
+
+que o passo final 
+
+é 
+
+
+UPDATAR O STATE DE NOSSO CÓDIGO 
+por meio 
+
+
+de 
+
+
+'this.setState()'....
+
+
+
+(e então passar esse 'updatedText' como VALOR de 
+
+'userInput'...)
+
+
+
+
+ex:
+
+
+
+
+
+ deleteCharHandler = (index) => {
+  const text = this.state.userInput.split('');
+  text.splice(index, 1);
+  const updatedText = text.join('');
+  this.setState(
+    {
+      userInput: updatedText
+    }
+  );
+
+
+)
+
+}
+
+
+
+-----------------------------------------------
+
+
+
+FINALMENTE, AGORA 
+
+CONSEGUIMOS 
+
+
+FAZER 
+
+
+ESSE MÉTODO FUNCIONAR...
+
+
+
+
+A lógica do método funciona,
+
+nosso aplicativo é updatado de acordo com O __REMOVE__ daquele 
+
+
+elemento de nosso código, e tudo funciona bem...
+
+
+
+
+
+
+
+---> o handler vai pegar meu text, o UPDATAR e realizar 
+
+o processo para qualquer texto que eu inputtar...
+
+
+
+--> tudo está funcionando, o conditional rendering está funcionando, 
+
+
+e O OUTPUT DE LISTAS, TAMBÉM.
+
+
+
+Conditional Rendering: https://reactjs.org/docs/conditional-rendering.html
+Lists & Keys: https://reactjs.org/docs/lists-and-keys.html
+

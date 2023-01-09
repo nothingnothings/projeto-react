@@ -1,0 +1,965 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+NOSSA PÁGINA AINDA NÃO ESTÁ APARECENDO... --> professor 
+nos 
+
+diz que 
+
+
+NOSSO SCRIPT/BUILD PRODUZIDO PELO 
+
+WEBPACK 
+
+
+AINDA 
+
+NÃO 
+
+ESTÁ INSERIDO DENTRO DO NOSSO ARQUIVO 'index.html'...
+
+
+
+
+(e também que NÃO TEMOS O FOLDER 
+
+
+'dist',
+
+onde deverão ser colocados esses arquivos de NOSSA BUILD..)
+
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+--> PARA FAZER COM QUE NOSSO PROJETO FUNCIONE E PARA QUE ELE FIQUE 'SERVABLE' pelo 
+
+
+webpack-dev-server,
+
+
+DEVEMOS 
+
+CONECTAR
+ 
+ NOSSO 
+
+
+ 'index.html'
+
+
+ AOS ARQUIVOS 
+
+ OUTPUTTADOS 
+
+QUE 
+
+SÃO GERADOS 
+
+
+
+QUANDO USAMOS 
+
+
+O DEV SERVER... --> e quando usamos o dev server,
+
+ESSES ARQUIVOS SÓ EXISTEM 'IN MEMORY',
+
+MAS 
+
+ELES AINDA SÃO GERADOS... ----> E NÓS 
+
+PRECISMAOS 
+
+
+INSTALAR 
+
+
+
+UM 
+
+
+OUTRO PACKAGE PARA ISSO....  ------> 
+
+
+
+DEVEMOS 
+
+
+INSTALAR 
+A 
+
+PACKAGE 
+
+
+'html-webpack-plugin'...
+
+
+
+
+
+
+
+
+--> ISSO É UM PLUGIN ESPECIAL QUE 
+
+NOS PERMITE 
+
+__CONECTAR___ NOSSO 
+
+
+INDEX.HTML COM O NOSSO OUTPUT... ---> e o webpack 
+vai fazer, com essa package,
+
+isso 
+AUTOMATICAMENTE,
+
+E AÍ VAI INJETAR NOSSOS 'BUNDLED'
+
+SCRIPTS e assim por diante 
+
+__DENTRO DESSE HTML... ---> 
+
+
+
+para que 
+
+
+essa package funcione sobre o nosso código,
+
+
+SÓ 
+
+TEMOS 
+
+QUE 
+IR 
+ATÉ 
+
+O 
+
+
+'webpack.config.js'
+
+
+
+E ENTÃO 
+
+
+ADICIONAR 
+UM 
+
+
+NOVO 
+
+'node',
+
+DE NOME 
+
+
+'plugins'...
+
+
+será 
+
+
+um 
+
+
+node/prorpeidaed 
+
+
+
+
+de nome 
+
+'plugins:',
+
+
+
+E SEU VALOR 
+
+SERÁ UM ARRAY... -> dentro 
+
+
+desse 
+
+array 
+
+
+
+VAMOS 
+
+ESCREVER 
+
+
+'[new HtmlWebpackPlugin()]'...
+
+
+
+
+ex:
+
+
+
+
+
+module.exports = {
+    ....
+
+
+
+
+
+
+    plugins: [new HtmlWebpackPlugin()]
+}
+
+
+
+
+
+
+
+
+-----------------------
+
+
+ISSO FEITO,
+
+DEVEOMS 
+
+SIMPLESMENTE 
+
+EXECUTAR O WEBPACK 
+
+para 
+
+
+'
+''' The plugin will generate an html5 file for you that includes all your webpack 
+bundles in the body using SCRIPT tags... '''
+
+
+
+
+
+
+
+
+
+
+--> certo, agora nossa página está 'CARREGANDO',
+
+MAS 
+
+ESTÁ 
+
+CARREGANDO EM __BRANCO__... (resultado indesejado)..
+
+
+
+
+no console,
+
+lemos 
+
+'webpack output is served from ' (NADA ESCRITO...) --> 
+
+isso 
+
+significa que 
+NÓS NÃO ESPECIFICAMOS 
+
+
+O LUGAR QUE DEVE SER 'SERVED' pelo devServer... (lá no webpack.config.js)....
+
+
+-----------------------------------
+
+
+
+
+TENTEI COLOCAR ISTO:
+
+    
+
+    devServer: {
+        contentBase: './src'
+    }
+
+
+
+
+    MAS NÃO FUNCIONOU... 
+
+
+
+
+
+---------------------------
+
+
+PROFESSOR NOS EXPLICA QUE 
+
+O 
+
+
+SETUP 
+
+
+DE 
+
+'HtmlWebpackPlugin' NÃO ACABOU NO NOSSO 
+
+'webpack.config.js'.... --------> NÃO..
+
+
+
+
+ele 
+
+vai 
+
+
+até o código de 
+
+
+'    plugins: [
+        new HtmlWebpackPlugin()
+    ]
+
+
+''''
+
+
+
+
+
+--------> ELE 
+
+NOS DIZ QUE 
+
+DENTRO 
+
+DO 
+
+
+() devemos 
+
+COLOCAR 
+
+UM 
+
+
+PARÂMETRO,
+
+ 
+
+
+ UM __OBJETO___ EM QUE __CONFIGURAMOS ESSE PLUGIN__.... --> no caso 
+
+ do professor,
+
+
+ ele
+
+ vai 
+
+ adicionar uma 
+
+ propriedade 
+
+
+ de 
+
+ 'template'... ---------> 
+
+
+
+
+ ESSA TEMPLATE __É ___ O ARQUIOV 'index.html'
+
+ QUE 
+ O 
+
+ PROFESSOR QUER 
+ USAR 
+
+
+ COMO UMA 
+
+ 'Basis'... -------> e ali,
+
+ é claro, 
+
+ O PROFESSOR 
+
+
+ QUER 
+
+ ESCOLHER 
+
+ O ARQUIVO 
+
+
+ 'index.html'
+
+
+ que temos no folder de 'SRC'...  ---> para comunicar isso,
+
+ professor 
+
+
+ vai 
+
+ escrever 
+
+
+
+ '__dirname + '/src/index.html' --------> COM ISSO, CONSTRUÍMOS UM 'CAMINHO'/path 
+
+
+
+ ATÉ 
+
+ O 
+
+ NOSSO 
+
+
+ ARQUIVO index.html...
+
+
+ ex:
+
+
+
+
+
+  plugins: [
+
+         new HtmlWebpackPlugin(
+             
+             {
+                template: __dirname + '/src/index.html'
+             };
+    ]
+
+
+
+---------------------------------
+
+
+CERTO,
+
+AGORA 
+
+QUE 
+
+CONSEGUIMOS __APONTAR__ A ESSE ARQUIVO QUE VAMOS TER COMO 
+
+'TEMPLATE',
+
+
+O 
+
+PROFESSOR 
+VAI QUERER 
+
+
+__INJETAR___ 
+
+
+
+O 'STUFF DO WEBPACK' 
+
+
+
+PARA DENTRO 
+
+DO __BODY__ ('body') 
+
+
+
+DESSE ARQUIVO INDEX.HTML...
+
+
+
+
+vai ficar assim:
+
+
+
+
+
+
+
+
+  plugins: [
+
+         new HtmlWebpackPlugin(
+             
+             {
+                template: __dirname + '/src/index.html',
+                inject: 'body'
+             }
+    ]
+
+
+------------------------------
+
+
+
+
+
+
+
+A ÚNICA COISA QUE RESTA, AGORA, 
+
+É DEFINIR 
+
+O __NOME DA 'OUTPUTTED FILE',
+
+QUE 
+
+TAMBÉM 
+
+DEVERÁ 
+
+SER 
+
+'index.html' (e é por isso que escrevemos 'filename: index.html')...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+  plugins: [
+
+         new HtmlWebpackPlugin(
+             
+             {
+                template: __dirname + '/src/index.html',
+                inject: 'body',
+                filename: 'index.html'
+             }
+    ]
+
+
+
+-------------------------
+
+
+
+
+CERTO... MAS 
+
+ISSO, POR ENQUANTO,
+
+
+SÓ 
+
+
+VAI 
+
+
+ACONTECER 'in memory',
+
+MAS 
+
+MAIS 
+T
+ARDE, COM 
+
+O WORKFLOW 
+
+DE 
+
+PRODUCTION, VAMOS TER AS 'REAL FILES' que poderão 
+
+ser enviadas a um servidor...
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+-----> REVISITAMOS 
+
+
+'localhost:8080'  -------> ENCONTRAMOS 
+
+
+
+_____UMA PÁGINA EM BRANCO,
+
+E UM MONTE DE 
+
+
+__ERROS__ NO CONSOLE... --> 
+
+
+esses  são 
+
+
+'REACT ERRORS', e esse é um bom sinal... -> SIGNIFICA QUE 
+
+NOSSO 
+
+
+APLICATIVO 
+
+
+
+
+ESTÁ RODANDO... ---> O ERRO 
+
+NOS 
+
+
+INFORMA QUE 
+
+ESQUECEMOS DE EXPORTAR ALGUMA COISA.... ------> 
+
+ESQUECEMOS 
+
+DE EXPORTAR 
+
+O 
+
+'App.js'....
+
+
+
+(mas esse não é o caso para mim....)
+
+
+
+ex:
+
+
+ncaught ReferenceError: Link is not defined
+
+
+
+
+
+
+------
+
+
+APÓS 
+
+IMPORTAR 
+
+O 
+
+
+
+PACOTE/PACKAGE DE 'Link'
+
+lá do 
+'react-router-dom',
+
+
+
+NOSSA PÁGINA 
+
+
+
+CONSEGUE SER CARREGADA...
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+--> NÓS CONSEGUIMOS VER 
+
+'USERS' E 'PIZZA',
+
+e 
+
+
+
+
+nossa página está funcionando..
+
+
+
+
+
+
+
+NOSSA PÁGINA ESTÁ FUNCIONANDO, 
+
+
+E O LAZY LOADING TAMBÉM... (quando clicamos no 'Link' de 'PIZZA', nós 
+
+BAIXAMOS 
+
+O 
+
+SCRIPT DE 
+
+'Pizza', da route de pizza mesmo....) --> isso é visto na aba 'network'...
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+----> LAZY LOADING ESTÁ FUNCIONANDO, 
+
+
+E NOSSO 
+
+
+
+APLICATIVO REACT 
+
+
+TAMBÉM ESTÁ FUNCIONANDO...
+
+
+
+
+
+
+
+
+--> O STYLING DO ELEMENTO 'PIZZA' TAMBÉM ESTÁ FUNCIONANDO (css modules também está funcionando,
+ 
+ 
+ conseguimos settar isso...)
+
+
+
+
+
+
+
+
+ --> É, MAS MEU CSS MODULES ESTÁ MEIO __ESTRANHO__... -> o 
+
+
+ 'class' da pizza 
+
+ está 
+
+ tipo 
+
+
+ 'BfwHvtpyqvWX2z4QM0ZQ',
+
+
+ EM VEZ 
+
+
+ DE 
+
+ ALGO COMO 
+
+ 'PizzaImage__PizzaImg__3RIyo',
+
+ COMO O DO PROFESSOR... ---> ACHO QUE SEI A RAZÃO 
+
+ DE ISSO 
+
+ TER ACONTECIDO... --> 
+
+
+ É POR CAUSA 
+
+ DESTE 
+
+ CÓDIGO AQUI,
+
+ 
+
+
+ 'localIdentName: '[name]_[local]_[hash:base64:5]',
+
+ LÁ EM 
+
+
+
+
+ ''''
+
+
+        options: {
+                           importLoaders: 1, ///idiossincrasia do 'CSS-LOADER'... --> só ele precisa dessa propriedade. Essa propriedade informa A ELE QUANTOS LOADERS VAO SER EXECUTADOS ANTES DELE, DURANTE O RUNTIME... --> no caso, digitamos '1', pq apenas o 'postcss-loader' VAI SER EXECUTADO ANTES DELE...
+                           modules: true,
+                        //    localIdentName: '[name]_[local]_[hash:base64:5]' ///deprecado. Não existe mais.
+                       }  },
+
+
+
+'''''',
+
+
+QUE 
+
+EU REMOVI 
+
+
+POIS ESTAVA GERANDO ERROS (código deprecado, ele não é mais configurado/settado aí ...)
+
+
+
+
+
+
+--------------------------
+
+
+CONSEGUI CONSERTAR (Ativei esse recurso aí de NAMING especial), FICOU ASSIM:
+
+
+
+
+
+    { loader: require.resolve('css-loader'),  ///estes códigos (dentro de 'use: []') são PARSEADOs E ANALISADOs__ DE BAIXO __ PARA CIMA___...( orientação inversa....) --> e, SIM, A ORDEM IMPORTA, NESSE 'use'...
+                       options: {
+                           importLoaders: 1, ///idiossincrasia do 'CSS-LOADER'... --> só ele precisa dessa propriedade. Essa propriedade informa A ELE QUANTOS LOADERS VAO SER EXECUTADOS ANTES DELE, DURANTE O RUNTIME... --> no caso, digitamos '1', pq apenas o 'postcss-loader' VAI SER EXECUTADO ANTES DELE...
+                           modules: {
+                               auto: true, ////é a mesma coisa que 'modules: true', mas DENTRO DO OBJETO de configuração...
+                               localIdentName: "[name]__[local]___[hash:base64:5]"  ////ESSA É A __SETTING QUE IMPORTA__, EIS O CÓDIGO EM QUESTÃO.
+                           }
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+
+OK.... ---> 
+
+
+AGORA 
+
+TEMOS 
+
+
+
+
+__UM WORKING WORFLOW,
+
+UM WORKING PROJECT SETUP COM O QUAL 
+
+
+
+__PODEMOS CRIAR __ UM REACT__ APP,
+
+CRIAR UM 
+
+REACT APP COM 
+
+
+AS FEATURES QUE 
+
+APRENDEMOS 
+
+DURANTE 
+
+ESTE CURSO...
+
+
+
+
+
+
+
+
+
+---> CLARO QUE ESSE É SÓ O 'DEVELOPMENT WORKFLOW'...
+
+
+
+
+
+
+
+--> se queremos SHIPPAR ESSE CÓDIGO A UM SERVIDOR,
+
+
+temos que 
+
+FAZER ALGUNS AJUSTES,
+
+AJUSTES 
+
+
+PARA 
+
+O OPTIMIZAR,
+
+
+
+PREPARAR 
+
+
+
+E OPTIMIZAR PARA PRODUÇÃO...

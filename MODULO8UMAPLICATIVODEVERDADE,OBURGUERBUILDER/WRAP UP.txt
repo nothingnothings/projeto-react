@@ -1,0 +1,191 @@
+
+
+
+
+
+
+
+
+
+
+AO LONGO DAS MUITAS LIÇÕES,
+
+
+CONSTRUÍMOS NOSSA PRIMEIRA 
+
+'REACT APPLICATION'... -->> nele 
+
+
+temos UM MONTE DAS FEATURES 
+
+QUE APRENDEMOS 
+
+
+NAS PRIMEIRAS LIÇÕEs...
+
+
+
+
+APRENDEMOS:
+
+
+
+
+1) COMO PLANEJAR SEU APP 
+
+
+
+2) COMO SPLITTAR SEU APP EM COMPONENTS
+
+
+
+
+
+3) COMO FAZER ESSES COMPONENTS SE COMUNICAREM.... (por meio de PROPS)
+
+
+
+
+4) VIMO SOBRE COMO PASSAR 'METHOD REFERENCES' PELOS COMPONENTS, PARA QUE, POR EXEMPLO,
+ 
+ UM CLICK NO BACKDROP ___tRIGGUE__ UM MÉTODO 
+
+ LÁ 
+
+ EM OUTRO COMPONENT, COMO NO COMPONENT 'layout', nesse caso...
+
+
+
+
+
+
+
+ --> TODOS ESSES SÃO CONCEITOS ''CORE'' DE APLICATIVOS 
+
+ REACT MODERNOS .... 
+
+
+
+
+
+ --> TUDO ISSO É MT IMPORTANTE. ------> 
+
+
+
+
+
+ --> SE LIGAR EM 
+
+ COISAS 
+
+ COMO 
+
+
+
+ O 
+
+
+HIGHER ORDER COMPONENT DE '
+
+auxiliary'
+
+
+É ALGO MT IMPORTANTE.
+
+
+
+
+
+
+
+
+
+OUTRA COISA IMPORTANTE ------> O MECANISMO 
+
+
+'SHOULDCOMPONENTUPDATE'... 
+
+
+
+
+
+---> TUDO ISSO É CRUCIAL __ PARA CONSTRUIR __ APLICATIVOS REACT__... 
+
+
+
+
+----------------------------------
+
+
+
+
+Mas ainda não vimos o suficiente... --> vamos 
+
+
+aprender sobre como 
+
+
+
+FAZER 
+
+
+'REACH OUT TO THE WEB'  
+
+PARA 
+ 
+SALVAR/FAZER FETCH DE DADOS LÁ/DE LÁ....
+
+
+
+
+
+
+
+---> TAMBÉM VAMOS DESCOBRIR SOBRE COMO ___fAZER MANAGE__ DO 'STATE'__ DE UMA 
+
+
+FORMA MAIS OPTIMIZADA...
+
+
+
+
+
+---> VAMOS VER TAMBÉM 
+ COMO __ FAZER 
+
+
+ ___ROUTING____ DE NOSSO APLICATIVO,
+
+
+
+ e muitas outras coisas legais...
+
+
+
+ -------------------------------------
+
+
+
+
+
+ ENTRETANTO, AQUI TEMOS UMA BOA FUNDAÇÃO,
+
+ e o professor nos encoraja 
+
+ A BRINCAR 
+
+ COM ESSE PROJETO, 
+
+
+ ADICIONAR MAIS COMPONENTS,
+
+
+ MAIS INGREDIENTS AO BURGER, MUDAR O STYLING,
+
+ qualquer coisa...
+
+
+
+
+
+--> FIQUE MELHOR COM O REACT... --> construir projetos É O MELHOR JEITO DE FICAR BOM EM ALGUMA COISA.

@@ -1,0 +1,295 @@
+
+
+
+
+
+
+
+
+
+--------> 
+
+
+DEVEMOS 
+
+VER COMO SÃO AS MENSAGENS DE ERRO 
+
+
+EM APLICATIVOS REACT...
+
+
+
+
+
+
+--> NO PROJETO DAS 'PERSON',
+ 
+ O PROFESSOR VAI 
+
+ ADICIONAR UMA MENSAGEM DE ERRO NO CÓDIGO...
+
+
+
+
+
+
+ ---> no código de lá, 
+
+ NO TRECHO 
+
+
+ EM QUE 
+
+ __ADICIONAMOS  __' PERSON' ___ ( ou seja, 
+ 
+ 
+
+ em 
+
+
+
+ 'person.name = event.target.value;',
+
+
+ NOSSA 'UPDATED PERSON',
+
+
+
+
+
+ NÓS FAZEMOS 'REACH OUT' 
+
+
+ ao valor 
+
+ de 
+
+
+ 'event.target.value' 
+
+ PARA 
+
+ CONSEGUIR 
+
+ O VALOR 
+
+
+ DO NEGÓCIO QUE O USUÁRIO INPUTTOU...
+ 
+
+ )
+
+
+
+
+
+
+ ---> ALI, NESSE LOCAL EM QUE 
+
+ O PROFESSOR/NÓS ASSIGNAMOS 
+
+ O VALOR 
+
+ DE NAME 
+
+ como 
+
+ 'event.target.value',
+
+
+ digamos que 
+
+
+
+ NÓS NÃO ACESSAMOS 
+
+ 'EVENT.TARGET' (Que é o correto a se fazer, se queremos pegar o input 
+ 
+ do usuário, BTW),
+
+
+
+ IMAGINE QUE 
+
+ NÓS 
+
+
+ FAZEMOS REACH OUT A 
+
+
+ 'event.input.value';, 
+
+
+ O QUE É 
+
+ ___UMA SINTAXE_____ ____ERRADA_____....
+
+
+
+ Digamos que fizemos/fazemos esse erro... ---------->
+
+
+
+
+ Bem, quando nós 
+
+
+ reiniciarmos nossa página 
+
+
+ e então 
+
+CLICARMOS NO 'TOGGLE' 
+
+DAS PERSONS,
+
+ESSA FEATURE AINDA FUNCIONARÁ... ---> 
+entretanto, 
+
+
+ao ESCREVERMOS ALGO NAS CAIXAS DE INPUT,
+
+
+A PÁGINA NOS DARÁ UM ERRO BEM FEIO. ---> e esse erro bem feio É 
+
+__MOSTRADO POR NOSSO 'DEV WORKFLOW' (ele não aparece NORMALMENTE; se você fosse um 
+usuário usando essa página, 
+você não veria coisa alguma aqui, o código simplesmente só 
+
+não iria funcionar/não faria coisa alguma, e nenhum erro seria mostrado. Essa é 
+uma das UTILIDADES 
+
+das error messages 
+
+
+dos REACT APPS, elas nos MOSTRAM O QUE PODEMOS ALTERAR PARA CONSERTAR O NOSSO CÓDIGO.)
+
+
+-----------------------------------------
+
+
+
+
+Certo... nós temos a mensagem DE ERRO
+
+NA PÁGINA (no conteúdo da página) 
+
+
+E A MENSAGEM 
+
+DE ERRO __NO CONSOLE___.... ---> devemos sempre 
+
+preferir 
+
+
+a mensagem de erro 
+
+
+NO CONSOLE....  -------> a mensagem de erro 
+
+
+
+é 
+
+'TypeError: Cannot read property 'value' of undefined at 
+_this.nameChangedHandler'
+
+
+App.js:27 ----------> event.input.value ---> esta linha está INCORRETA.
+
+
+
+
+
+
+
+-------------> ISSO NOS DIZ que A PARTE ANTERIOR À VALUE (a propriedade 'input') ESTÁ 
+
+'UNDEFINED' no nosso código... (ela NÃO EXISTE, EM OUTRAS PALAVRAS ---> NÃO EXISTE 
+NO JAVASCRIPT DEFAULT, E NÃO EXISTE POR MEIO DO CÓDIGO DE NOSSA PRÓPRIA MÃO.)
+
+
+
+------------> Certo, 
+
+
+mas mesmo sabendo que esse 'input' NÃO EXISTE em 'event', 
+
+nós 
+
+ainda 
+
+
+TERÍAMOS DE SABER (de alguma forma) que 
+
+
+'target' é a propriedade correta, nesse caso.... (nós 
+
+
+só vamos conseguir saber isso 
+
+SE DERMOS UMA OLHADA 
+
+NA ___DOCUMENTAÇÃO__ DO OBJETO 'event', em sites como o 
+
+MDN) -------------------------> isso vai te dar as informações de que vocÊ precisa...
+
+
+
+
+
+
+
+
+Certo, mas HÁ VÁRIAS 
+
+VEZES EM QUE MENSAGENS DE ERRO SÃO MENOS ÚTEIS do que este exemplo.... --> MESMO 
+
+
+SE A MENSAGEM EM SI FOR 'CRYPTIC',
+
+
+na grande maioria dos casos você 
+
+
+será capaz DE DESCOBRIR O ERRO... --> algo que te ajuda 
+
+sempre é o 
+
+
+
+LINE NUMBER (aquele 'App.js:27') ---> ISSO 
+
+
+TE AJUDA 
+
+IR ATÉ AQUELE TRECHO DO SEU CÓDIGO E ENTÃO TENTAR 
+
+ENTENDER O QUE ACABOU DANDO ERRADO NAQUELA LINHA...
+
+
+
+
+
+--> você não deve ter medo, e não deve entrar em pânico. Você deve 
+
+ler as mensagens de erro, ir até a linha do erro, 
+
+e aí procurar na internet.
+
+Buscar também 
+
+em sites como MDN.
+
+
+
+
+
+
+--> CERTO, MAS E QUANTO A ERROS DE LÓGICA? ('logical errors')
+
+
+
+BEM, NÓS VEREMOS ESSE TIPO 
+
+DE ERRO NA PRÓXIMA AULA...

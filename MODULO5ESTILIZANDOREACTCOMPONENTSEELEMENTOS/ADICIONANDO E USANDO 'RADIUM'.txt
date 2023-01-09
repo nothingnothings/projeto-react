@@ -1,0 +1,835 @@
+AGORA 
+
+QUE APRENDEMOS 
+
+
+SOBRE 
+
+COMO 
+
+
+
+
+SETTAR 
+
+DINAMICAMENTE 
+
+
+___eSTILOS E CLASSES__, 
+
+
+
+Devemos voltar ao assunto das 
+
+LIMITAÇÕES 
+
+
+__dOS INLINE STYLES___ ..... --------> MAIS IMPORTANTE PARA NÓS É O FATO 
+
+DE QUE NÃO PODEMOS USAR PSEUDOSELETORES (como ':hover' aos nossos botões..) ---------> 
+
+
+
+
+
+
+
+button:hover  
+
+
+
+
+
+
+
+
+É UM PSEUDOSELETOR ---> UM SELETOR BASEADO EM OUTRO SELETOR, e isso é indicado pelo ':'.
+
+
+
+
+
+
+--------------------------------------------------------------------
+
+
+
+
+
+NÓS NÃO PODEMOS ASSIGNAR 
+
+
+'PSEUDOSELETORES'
+
+
+no nosso projeto atual, 
+pois estamos 
+
+usando 
+
+
+
+INLINE-STYLES.... (é verdade).
+
+
+
+(
+
+    nós 
+
+    temos 
+
+    aquele 
+
+
+    'const style = {
+        ...
+    }'
+
+
+
+    e 
+
+
+
+    depois 
+
+    aquele 
+
+
+    'style={style}'
+)
+
+
+----------------------------------
+
+
+
+
+PROFESSOR DIZ QUE É EVIDENTE QUE PODERÍAMOS CONSERTAR ISSO COM O 'HACKY APPROACH',
+
+
+poderíamos 
+
+consertar esse negócio DEFININDO UM ESTILO PARA O BOTÃO 
+
+LÁ NO ARQUIVO 
+
+
+'App.css',
+
+
+MAS O PROFESSOR JÁ MENCIONOU QUE ESSE ESTILO FICARIA, SE FIZÉSSEMOS ISSO, SCOPADO 
+
+A TODOS OS BOTÕES DA NOSSA PÁGINA, E NÓS NÃO QUEREMOS ISSO, QUEREMOS QUE 
+
+ESSE ESTILO ESPECÍFICO de 'button:hover' FIQUE SCOPADO NESSE NOSSO 
+
+BUTTON ESPECÍFICO...
+
+
+
+
+
+
+
+---> uma alternativa a isso seria, como disse o professor,
+
+
+COLOCAR UNS 'UNIQUE IDS'/'UNIQUE CLASSES' para os elementos 
+
+de nossa página.....
+
+
+
+
+
+
+
+
+-----> Mas se fizéssemos isso, utilizássemos esses 'unique ids'/'unique classes', 
+
+perderíamos 
+
+
+ESSE RECURSO DOS 
+
+INLINE STYLES, 
+
+
+QUE É UM RECURSO ___BEM LEGAL____, e que é 
+
+muito prático...  (é prático pq PODEMOS OS EDITAR DENTRO 
+DO NOSSO CÓDIGO/FLOW DE CÓDIGO javascript, COMO VISTO EM 
+'
+style.backgroundColor = 'red' '--------> É POR ISSO QUE 
+
+VAMOS QUERER 
+
+
+TER OS DOIS, o approach do IMPORT POR ARQUIVO css e o APPROACH 
+
+dOS INLINE-STYLEs...
+
+
+
+
+
+
+
+
+---> É POR ISSO QUE ___VAMOS QUERER APRENDER A USAR ___ 
+
+'PSEUDOSELECTORS' 
+
+
+e 'MEDIA QUERIES' 
+
+
+
+NOS NOSSOS 'NORMAL JAVASCRIPT INLINE STYLES'....  -----> isso, por default,
+
+NÃO 
+__É POSSÍVEL___... ------------> ENTRETANTO,
+ 
+
+
+ PODEMOS 
+
+
+
+ ____ADICIONAR UMA THIRD PARTY PACKAGE____, UMA 
+
+ TTP BEM POPULAR, QUE 
+
+
+ FARÁ 
+
+
+ ESSE TRABALHO PARA NÓS,
+
+ fará com que 
+
+
+ O ADD 
+
+ de 'PSEUDOSELECTORS' e 'media queries' 
+
+ SEJA 
+
+ POSSÍVEL 
+
+
+ NOS NOSSOS INLINE STYLES... ------------>
+
+
+
+ PARA ISSO, DEVEMOS INSTALAR 
+
+ ESSA TPP, chamada 
+
+
+ de 
+
+ 'radium'....
+
+
+
+
+ ----> vamos ter que 
+
+ escrever 
+
+
+
+ 'npm install --save radium'...
+
+
+
+
+
+'--save' --->  ISSO FAZ COM QUE A VERSION NUMBER SEJA __fIXADA___ no 'package.json'; isso permite O FÁCIL COMPARTILHAMENTO DO NOSSO PROJETO.
+
+
+--------------------------------------------------------
+
+
+
+Certo...
+
+
+
+
+---> instalamos esse package.... ------------> ESSE 
+
+
+
+PACKAGE É BEM POPULAR,
+
+
+ELE NOS PERMITE 
+
+USAR 
+
+
+INLINE STYLES COM MEDIA QUERIES E PSEUDOSELECTORS....
+
+
+
+------------------------------------------------------
+
+
+
+
+Depois que o negócio terminou de instalar,
+ 
+
+ podemos o utilizar....
+
+
+
+
+
+
+
+PARA USARMOS O 'RADIUM', devemos IMPORTÁ-LO 
+
+NO ARQUIVO EM QUE 
+
+
+QUEREMOS O UTILIZAR.... ---> isso pode ser em qualquer LUGAR 
+
+DO NOSSO CÓDIGO, PODERÍAMOS COLOCAR EM 'Person.js', em 'App.js', qualquer lugar...
+
+
+
+
+
+
+--> mas nós vamos lá e o colocamos 
+
+
+em 
+
+
+'App.js',
+
+
+POIS É 
+
+
+ALI QUE EU TENHO UM BOTÃO, E É NELE QUE EU VOU QUERER ADICIONAR UM 
+
+'HOVER STATE'...
+
+
+
+
+---> para importar radium, 
+
+eu escrevo
+ 
+
+
+ 'import Radium from 'radium'; ' 
+
+
+
+ ----------------------------------------
+
+
+
+
+
+ COM ISSO IMPORTADO,
+
+
+ FICA DISPONÍVEL 
+
+
+ O OBJETO 
+
+
+ 'Radium' 
+
+
+ no nosso 
+
+
+ arquivo.... 
+
+
+ E
+
+
+ esse objeto tem vários métodos/propriedades....
+
+
+
+
+
+
+ MAS ISSO AÍ NÃO BASTA PARA QUE O RADIUM SEJA UTILIZADO....
+
+
+
+ Para que 
+
+ os efeitos 
+
+
+ do radium INCIDAM
+  
+  sobre o nosso código,
+   
+devemos 
+
+
+ir até 
+
+
+aquela linha 
+
+em que 
+
+'exportamos' 
+
+
+
+o component 'App', ou seja,
+ 
+ LÁ EMBAIXO,
+
+
+
+ E ENTÃO 
+
+ WRAPPAR esse 'App' 
+
+COM 
+
+O NOSSO OBJETO 'Radium'...
+
+
+
+
+
+ex:
+
+
+
+
+export default App; 
+
+
+VAI VIRAR:
+
+
+
+export default Radium(App);
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+O 'RADIUM' 
+
+
+É UMA ESPÉCIE DAQUILO QUE CHAMAMOS DE 
+
+'HIGHER-ORDER COMPONENT'....  -----> NÓS VEREMOS ISSO MAIS TARDE NO NOSSO PROJETO, E APRENDEREMOS SOBRE COMO CRIÁ-LOS...
+
+
+
+
+
+
+
+
+---->'HIGHER-ORDER COMPONENT'.... --> pode parecer 
+
+
+'super fancy', 
+
+mas no final das contas 
+
+
+É __APENAS UM 'COMPONENT WRAPPANDO O SEU COMPONENT', o que 
+
+
+faz COM QUE 
+
+ALGUMAS __DE SUAS FUNCIONALIDADES EXTRAS____ SEJAM INJETADAS 
+
+NAQUELE SEU COMPONENT 'BÁSICO' (como 'App', aqui neste exemplo).
+
+
+
+
+
+
+
+--> no caso de 'RADIUM', 
+
+
+ele vai adicionar ALGUMAS SINTAXES EXTRAS AO nosso 'App', umas sintaxes 
+
+QUE PARSEARÃO OS NOSSOS ESTILOS ESPECIAIS (mediaq e pseudoselectors) E ENTENDER 
+
+
+ALGUMAS FEATURES EXTRAS QUE PASSAREMOS A UTILIZAr.
+----------------------------------------------------------------
+
+
+
+
+
+
+--> E ESSAS FEATURES DO RADIUM, DEPOIS QUE VOCê O 'IMPORTA' COM ESSES CÓDIGOS AÍ,
+
+
+
+podem/poderão 
+
+
+SER UTILIZADAS 
+
+
+TANTO 
+
+
+EM 'DUMB COMPONENTS' (Components FUNCIONAIS, como 'person') 
+
+
+
+COMO 
+
+
+EM 
+
+'SMART COMPONENTS' (Components CLASS-BASED, como 'App')...
+
+
+
+
+(contudo, para que o radium seja utilizado em 'Person.js',
+
+
+também 
+
+precisamos 
+
+dos códigos 
+
+
+
+'import Radium from 'radium'; 
+
+
+e 
+
+
+'export default Radium(person)' naquele arquivo, também. )
+------------------------------------------------------------
+
+
+
+
+COM ISSO ADICIONADO, 
+
+
+
+PODEMOS 
+
+
+
+COMEÇAR A USAR ALGUMAS NOVAS FEATURES.... -------> 
+
+
+
+
+
+
+E NÓS 
+
+VAMOS USAR ESSAS FEATURES LÁ NO NOSSO 'STYLE', pq 
+
+'radium' é 'ALL ABOUT STYLES'...
+
+
+
+-------------------------------------
+
+
+
+
+TEMOS O NOSSO 'STYLE', de código 
+
+
+    const style = {
+      backgroundColor: 'green', 
+      color: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+      
+    },
+
+
+
+
+    QUE 
+
+    SERÁ ADICIONADO AO 'BUTTON', NO FINAL DAS CONTAS...
+
+
+
+
+
+
+
+--> eu vou querer ADICIONAR UM __HOVER STYLE___ nesse 
+
+estilo...
+
+
+
+
+
+
+
+--> munidos de 'RADIUM' no nosso arquivo/projeto, 
+
+
+nós podemos 
+
+
+adicionar 
+
+
+
+
+UMA ___NOVA PROPRIEDADE____ AO objeto 'style'...
+
+
+
+essa propriedade será 
+
+
+chamada de 
+
+
+':hover' (COM AS STRINGS, MESMO...)
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+    const style = {
+      backgroundColor: 'green', 
+      color: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+      ':hover' ////////EIS O CÓDIGO EM QUESTÃO.
+    }
+
+
+----------------------------------------
+
+
+
+CERTO.
+
+
+O PROFESSOR EXPLICA QUE 
+
+
+______qUALQUER PSEUDOSELETOR QUE VOCê QUISER (':') PODERÁ 
+
+SER ADICIONADO 
+
+NO LADO 'PROPERTY' desse key-value... ----> TODOS OS PSEUDOSELECTORS 
+
+SÃO SUPORTADOS, BASTA QUE VOCÊ OS WRAPPE EM ''....  -------> você precisa de '' PQ OS NOMES DOS PSEUDOSELECTORS SEMPRE COMEÇAM COM ':', e esse : no início de palavras NÃO É LIDO PELA JAVASCRIPT ENGINE COMO CÓDIGO JAVASCRIPT VÁLIDO/property names válidos...
+
+
+
+
+
+por isso que escrevemos ':hover', e não :hover...
+------------------------------------------
+
+
+
+
+
+COMO DEVEMOS NOS LEMBRAR, 
+
+É POSSÍVEL CRIAR JAVASCRIPT PROPERTY NAMES 
+
+__COMO STRINGS__ (e não obrigatoriamente com 'nomes dinâmicos'...).....
+
+
+
+
+
+
+CERTO... 
+
+
+E O ___VALOR___ DESSA 'PROPRIEDADE'
+
+
+será 
+
+SIMPLESMENTE SEU 'SET DE ESTILOS' para aquele 
+
+
+
+PSEUDOSELETOR (nesse caso, o 'hover state'...) --------> para isso, 
+
+devemos 
+
+
+colocar como valor um 
+
+JAVASCRIPT OBJECT ('{}')
+
+
+E ENTÃO COLOCAR NOSOS ESTILOS NO SEU INTERIOR, como se fossem propriedades... (sintaxe ES6).
+
+
+
+ex:
+
+
+
+
+
+
+
+    const style = {
+        backgroundColor: 'green'
+      color: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+      ':hover': {
+            backgroundColor: 'lightgreen'        ////////EIS O CÓDIGO EM QUESTÃO.
+            color: black
+      } 
+    }
+
+
+
+----------------------------------
+
+
+
+
+
+DEPOIS, PROFESSOR USA ESSA SINTAXE AQUI para 
+
+
+CONSEGUIR 
+
+O CARÁTER 'DINÂMICO' 
+
+DO STYLE DO NOSSO BOTÃO (ele usa [':hover'] depois de 'style' para conseguir selecionar aquela 
+propriedade específica SEM O JAVASCRIPT DIZER QUE NÃO CONSEGUE ENTENDER AQUELA SINTAXE)....
+
+
+eis o código:
+
+
+
+
+  style.backgroundColor = 'red';   
+  style[':hover'] = { ////////eis o código em questão.
+    color: 'black',
+    backgroundColor: 'pink'
+  }
+
+
+
+---------------------------------
+
+
+
+COM ISSO, 
+
+ESTAREMOS USANDO 
+
+
+__UMA FEATURE DO 'RADIUM'___... -------> 
+
+
+FEATURE DO RADIUM ---> SER CAPAZ DE ASSIGNAR UMA PROPRIEDADE 
+
+QUE É 
+
+UM 
+
+'PSEUDOSELETOR' VÁLIDO DE CSS NA DEFINIÇÃO DE UM ESTILO POR MEIO DO MÉTODO 'INLINE'...
+
+
+
+
+
+-------------------------
+
+
+SALVAMOS A PÁGINA 
+
+E RECARREGAMOS 
+
+TUDO. --------> 'lightred' não existe, 'salmon' existe.
+
+
+
+
+
+
+---> AGORA TEMOS O MELHOR DOS 2 MUNDOS:
+
+
+
+TEMOS SCOPED STYLES (benefício do inline styles), mas SCOPED STYLES QUE FUNCIONAM 
+
+COM PSEUDOSELECTORS (benefício do radium.)
+
+
+
+
+
+
+
+----------> CERTO. RADIUM 
+
+NÃO TE LIMITA A APENAS OS PSEUDOSELECTORS... ---> vocÊ também 
+
+PODE ADICIONAR/ESCREVER 
+
+______MEDIA QUERIES___.... ------> veremos como fazer isso NO NOSSO COMPONENT 'PERSON'...
+
+
+---------------------------------

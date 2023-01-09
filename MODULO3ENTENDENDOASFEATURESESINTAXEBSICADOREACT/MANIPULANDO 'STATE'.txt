@@ -1,0 +1,947 @@
+
+
+
+
+--> na última lição, nós 
+
+
+executamos 
+
+
+'switchNameHandler' A PARTIR DE UM EVENTO 'CLICK' (onClick)...
+
+
+
+
+
+--> AGORA NÓS QUEREMOS __MANIPULAR NOSSO 'STATE' ___ a partir de um click... ---> 
+
+
+
+para tal, 
+
+
+
+
+O PROFESSOR VAI REMOVER O 'CONSOLE.LOG' statement....
+
+
+
+
+
+Depois disso, ele vai simplesmente digitar, 
+
+
+
+dentro do function body de 'switchNameHandler', 
+
+
+o código 
+
+de 
+
+
+
+'this.state' (OBS: ESSE 'THIS' __ SÓ VAI FUNCIONAR SE VOCê ESTIVER USANDO A SINTAXE 
+
+
+'method = () => {
+    ...
+}') -----------> CASO 
+
+CONTRÁRIO,
+ 
+
+ O 
+
+ 'this.state' NÃO VAI FUNCIONAR, POIS O 'THIS' vai apontar PARA OUTRA COISA, NÃO VAI APONTAR PARA A CLASSE 'App' (em que o 'state' reside...).
+
+
+
+
+
+
+
+ ----------------------------------------------------------------------------
+
+
+
+
+
+certo... vamos escrever 
+
+
+
+this.state.persons[0].name = 'Maximillian';  -------------------->
+
+
+
+
+
+ISSO, ESSE CÓDIGO AÍ, 
+
+VAI ACABAR __REDEFININDO___ O VALOR DE UMA PROPRIEDADE 
+
+DENTRO 
+
+DO 'state'... (o valor da propriedade 'name' dentro do objeto 'person' dentro do array 'persons' dentro da PROPRIEDADE 'STATE' SERÁ ___ALTERADO ____...) ---> isso significa uma ALTERAÇÃO NO __STATE__ DO NOSSO COMPONENT --> O QUE SIGNIFICA __ UM UPDATE/RE-RENDER DE NOSSA __UI___....
+
+
+
+
+
+----> ou seja, 
+
+esse nosso código, 
+
+ESSE CÓDIGO QUE SERÁ EXECUTADO 
+
+A PARTIR DE UM 'CLICK' no elemento button, 
+
+
+VAI CAUSAR UMA ___ALTERAÇÃO NA PROPRIEDADE 'STATE', O QUE VAI, POR CONSEQUÊNCIA, 
+
+
+CAUSAR UMA REAÇÃO VIOLENTA NA NOSSA PÁGINA... ---> O REACT __VAI FORÇAR__ ESSE 
+
+ELEMENTO A __UPDATAR/RE-RENDERIZAR PARA REFLETIR ESSA ALTERAÇÃO...
+
+
+
+
+
+
+ex(representação do código inteiro):
+
+
+
+
+
+class App extends Component {
+
+
+
+  state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ]
+  }
+
+
+
+switchNameHandler = () => {
+  //console.log('Was clicked!');
+  this.state.persons[0].name = 'Maximillian'; //eis o código em questão...
+}
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={}>Switch Name</button> /////////
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+------------------------------
+
+
+
+
+
+
+CERTO... FIZEMOS AS ALTERAÇÕES....
+
+
+
+
+o botão está funcionando (vemos o console.log...)
+
+
+
+NO ENTANTO, 
+
+O STATE ___NÃO ESTÁ SENDO MUDADO___.... 
+
+o STATE não está sendo mudado E NÃO ESTÁ FORÇANDO A RE-RENDERIZAÇÃO/UPDATE 
+
+daquele elemento....
+
+
+
+
+
+
+--> no console, por sua vez, vemos 
+
+um aviso:
+
+
+
+'Line 17: Do not mutate state directly. Use setState()  react/no-direct-mutation-state'
+
+
+
+
+------------------------------------------
+
+
+
+
+
+PROFESSOR DIZ PARA IGNORARMOS ESSE 
+
+AVISO... ---->  
+
+
+ainda assim, nada mudou...
+
+
+
+
+
+
+BASICAMENTE, NÓS NÃO DEVEMOS__ MUDAR/ALTERAR__ O 'STATE'
+ 
+
+
+ __DIRETAMENTE__, como fizemos agora.... --> se fizermos 
+
+ isso, 
+
+ o REACT 
+
+ NÃO VAI RECONHECER __ESSA MUDANÇA DE 'state'___, E NÃO 
+
+ ___ VAI 'PICK UP' essa mudança....
+
+
+
+ OU SEJA:
+
+
+ //DON'T DO THIS: this.state.persons[0].name = 'Maximillian';
+
+
+ ---------------------------------------
+
+
+
+ EM VEZ DE USAR 
+
+ ESSA SINTAXE/MUDANÇA 
+
+ DE HOMEM DAS CAVERNAS, 
+
+
+
+ nós devemos 
+
+
+ USAR A SINTAXE ESPECIAL QUE 
+
+ O REACT 
+
+
+ NOS DÁ...
+
+
+
+ A sintaxe/método que o 
+
+
+
+ react nos dá 
+
+
+ é 
+
+
+ 'this.setState()'....
+
+
+
+
+
+ '.setState()' ----> ESSE É UM MÉTODO __NÃO DEFINIDO POR NÓS__... --->  ESSE É 
+
+ UM MÉTODO ___ 'extended by Component'... ----> o OBJETO GIGANTE 'Component'
+
+
+ CONTÉM ESSE MÉTODO... ---> e o objeto gigante 'Component' é disponibilizado pela library do 
+
+ 'React'...
+
+
+ -------------------------------------------
+
+
+
+Certo...
+
+
+método 'setState()', extraído de 'Component'...
+
+
+
+--> ESSE MÉTODO 
+
+
+NOS PERMITE ____ATUALIZAR___ ESSA PROPRIEDADE 
+
+especial 'state'... ----> esse método 
+
+
+VAI GARANTIR __ QUE O REACT__ FIQUE SABENDO DESSA __MUDANÇA___ NO 
+
+STATE/nos nossos components, O QUE FAZ 
+
+COM QUE ELE (O REACT) UPDATE O DOM COM SUCESSO...
+
+
+
+
+Esse 
+
+
+'setState()' 
+
+
+ACEITA/EXIGE 
+
+UM 
+
+
+
+_______oBJETO____ ({}) COMO ARGUMENTO...
+
+
+
+EX:
+
+
+
+
+class App extends Component {
+
+
+
+  state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ]
+  }
+
+
+
+switchNameHandler = () => {
+  //console.log('Was clicked!');
+  this.setState({}); ////////////EIS O CÓDIGO EM QUESTÃO. 
+}
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={}>Switch Name</button> /////////
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+-------------------------------------------------------
+
+
+
+
+
+TUDO O QUE PASSARMOS NESSE 
+
+OBJETO ('{}')
+
+
+SERÁ 
+
+ENTÃO __FUNDIDO__ ('merged') COM 
+
+AQUILO QUE 
+
+JÁ EXISTE NO NOSSO 'State'...
+
+
+
+
+----------------------------------------------------
+
+
+
+
+Isso quer dizer que, se aqui eu definir 
+
+'persons' (a propriedade 'persons') 
+
+
+COMO SENDO 
+
+
+UM 
+
+____ARRAY UPDATADO___, O REACT 
+
+
+VAI __MERGEAR_(fundir)
+
+
+ESSE ARRAY COM 
+
+OS DADOS JÁ EXISTENTES...
+
+
+
+Ex: 
+
+
+se eu escrever 
+
+'this.setState({persons: blablabla})' ----------> ISSO 
+
+
+VAI AFETAR ___SOMENTE ____ O ARRAY 'persons' NO NOSSO STATE... ---> 
+
+
+isso quer dizer que 
+
+SE NÓS TIVERMOS UMA OUTRA PROPRIEDADE/COISA DENTRO 
+
+DO 'state', como por exemplo 
+
+
+uma propriedade 'otherState: someOtherValue', 
+
+ESSA PROPRIEDADE 
+
+__NÃO SERÁ AFETADA___ PELA MUDANÇA NO __ 'state'....
+
+
+
+ex:
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+  state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ],
+    otherState: 'some other value' ////////ISSO NÃO SERÁ AFETADO PELA NOSSA MUDANÇA NO 'state' mais abaixo, POIS APENAS PASSAMOS O ARRAY DE 'persons' AO OBJETO-PARÂMETRO DE 'setState()'....
+  }
+
+
+
+switchNameHandler = () => {
+  //console.log('Was clicked!');
+  this.setState({persons: xxxxxx}); ////////////EIS O CÓDIGO EM QUESTÃO. 
+}
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={}>Switch Name</button> /////////
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+
+
+-----------------------------------------------------------
+
+
+
+
+PROFESSOR 
+
+
+MOSTRA UM EXEMPLO PARA DEIXAR AS COISAS MAIS CLARAS...
+
+
+
+Ele vai lá 
+
+
+e basicamente 
+
+COPIA O CONTEÚDO 
+
+
+DO ARRAY 
+
+'persons'
+
+
+para dentro daquele objeto passado como parâmetro 
+
+ao 
+
+'setState()'...
+
+
+
+ex:
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+  state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ],
+    otherState: 'some other value' 
+  }
+
+
+
+switchNameHandler = () => {
+  //console.log('Was clicked!');
+  this.setState({persons:
+  
+   [ ///////EIS O CÓDIGO EM QUESTÃO.
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ]
+  
+  
+   }); 
+}
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={}>Switch Name</button> /////////
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+-------------------------------------------------------------
+
+
+
+
+
+
+
+Ou seja, ele basicamente 
+
+
+ADICIONA 
+
+
+O ARRAY DE 'persons' 
+
+
+
+COMO
+
+
+__PROPRIEDADE____ no objeto ({}) que 
+
+
+ele passa ao 
+
+'setState()'....
+
+
+
+
+---> certo, 
+
+
+nesse objeto vou querer UPDATAR MEU ARRAY DE 'persons'....
+
+
+VOU QUERER UPDATAR __APENAS __ O PRIMEIRO VALOR 
+
+DA PROPRIEDADE 
+
+'name'.... vou querer trocar 'Max' por 'Maximillian'...
+
+
+
+
+
+O PROFESSOR TAMBÉM DECIDE MUDAR O VALOR DA 'age' de 
+
+
+'stephanie'... ---> talvez mudar de '30' para '22', ou algo do gênero.
+
+
+-------------------------
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+  state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ],
+    otherState: 'some other value' 
+  }
+
+
+
+switchNameHandler = () => {
+  //console.log('Was clicked!');
+  this.setState({persons:
+  
+   [ ///////EIS O CÓDIGO EM QUESTÃO.
+      { name: 'Maximillian', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+  
+  
+   }); 
+}
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={}>Switch Name</button> /////////
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+--------------------------------
+
+
+
+
+CERTO...
+
+FEITO ISSO, O QUE VAI 
+
+
+ACONTECER AGORA É:
+
+
+
+
+O REACT 
+
+
+__ VAI OLHAR ___ O CÓDIGO, PROCURAR PELAS PARTES QUE FORAM ALTERADAS/UPDATADAS 
+
+E ___ NÃO VAI DESCARTAR ___ 'otherState'... --> isso significa 
+
+
+QUE ELE VAI 
+
+BASICAMENTE 
+
+
+
+'MERGE' O VELHO STATE com o novo state (introduzido por 'setState()'....) ---> ele vai 
+
+
+OVERWRITAR 'persons', esse array, MAS 
+
+VAI DEIXAR 
+
+
+
+'otherState()' ___INTACTO___, pois 
+
+nós não HAVÍAMOS DITO NADA SOBRE ELE ----> o que é uma boa coisa, 
+
+
+POIS NÓS NÃO VAMOS QUERER 
+
+TER QUE UPDATAR 
+
+TUDO DO DOM SEMPRE QUE O STATE É ATUALIZADO....  (vamos trocar só 1 pequeno pedaço, e nada 
+
+mais...)
+
+
+
+
+
+--> SE AGORA 
+
+EU RECARREGAR O CÓDIGO 
+
+
+E CLICAR 
+
+
+NO BOTÃO,
+ 
+
+
+a string mudará
+
+para 
+
+'Maxillian' 
+
+
+
+e o number para 
+
+'22'  ----> ISSO VAI ACONTECER 
+
+PQ O REACT VAI 
+
+ENTENDER ___ QUE O __ 'STATE'__ DE NOSSO 
+
+APLICATIVO MUDOU --->  E ISSO REALMENTE 
+
+É ___UMA COISA ESPECIAL__ ... ---> NÃO 
+
+EXISTEM 
+
+MTAS COISAS QUE LEVAM O REACT A ___ATUALIZAR ___ O DOM___ .... ---> 
+
+NA VERDADE, 
+
+
+SÓ HÁ 
+
+2 COISAS QUE FAZEM ESSE UPDATE DO DOM PELO REACT... --> 
+
+
+
+
+1) A MUDANÇA DE 'STATE' (com 'setState()') 
+
+
+
+
+2) MUDANÇA DE 'PROPS'...
+
+
+
+
+----------------------------------------------------
+
+
+MAS pq 'props'?
+
+
+
+
+
+Ué, pq O QUE NÓS REALMENTE OUTPUTTAMOS PARA 
+
+CADA 
+
+PESSOA __NA VERDADE __ É DEFINIDO __NAQUELE 
+
+COMPONENTE 
+
+'person'.... ----> E LÁ, na definição do componente 'Person' (
+
+
+
+
+const person = (props) => { 
+  
+  
+  
+  
+  return (
+    
+  
+  <div>
+  <p>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  </div>
+
+
+
+  )
+};
+
+
+),
+
+
+
+NÓS 
+
+
+
+
+___NÃO USAMOS ___ A PROPRIEDADE 
+
+'state'...  -------------> NA VERDADE, 
+
+
+PODERÍAMOS TER USADO/USAR 
+
+'state' 
+
+com a feature 
+
+DOS __REACT HOOKS___,
+ 
+
+
+ E O PROFESSOR VAI NOS INTRODUZIR A ESSA FEATURE,
+
+
+
+ MAS POR ENQUANTO NÓS 
+
+ NÃO USAMOS 
+
+
+ 'state' na definição 'FUNCTIONAL' de nosso component, 
+
+ e sim 
+
+
+ apenas 
+
+ no 
+
+ NOSSO 'CLASS-BASED COMPONENT' de 'App'..
+
+
+
+ Em 'Person',
+
+
+ NÓS USAMOS __PROPS__,
+
+
+E ESSA É A OUTRA COISA NA QUAL 
+
+O REACT PRESTA ATENÇÃO.... -------------> 
+
+
+
+SE 
+
+
+OS PROPS OU OS STATES __MUDAM__, o react basicamente __ANALISA___  O CÓDIGO 
+
+QUE ELE JÁ RENDERIZOU NO DOM e __ O CÓDIGO QUE ELE TERIA AGORA DE RENDERIZAR, CASO ele 
+tivesse que re-renderizar tudo... ---> ELE ENTÃO 
+
+UPDATA O DOM JÁ EXISTENTE ('existing dom') EM TODAS 
+
+AS PARTES QUE PRECISAM SER UPDATADAS... --> tudo isso para REFLETIR O SEU NOVO 'STATE'... ( seu novo 'props', se você o tiver....)
+
+
+
+
+
+
+
+
+
+
+
+
+NOVO STATE ===== EM 'APP.js',
+
+
+
+
+
+NOVO PROPS === EM 'Person.js'...

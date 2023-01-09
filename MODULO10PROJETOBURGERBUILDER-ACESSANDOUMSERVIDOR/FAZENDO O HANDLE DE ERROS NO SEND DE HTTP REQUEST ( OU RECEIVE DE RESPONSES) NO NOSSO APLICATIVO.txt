@@ -1,0 +1,4168 @@
+
+
+
+
+
+---> na última lição,
+
+FIZEMOS UM
+
+SPINNER 
+
+
+ APARECER, UM 
+
+
+ SPINNER QUE APARECE ENQUANTO 
+
+
+ O REQUEST 
+
+
+ DO USUÁRIO 
+
+
+ ESTÁ SENDO ENVIADO AO NOSSO SERVIDOR... ---> e isso é algo bom de se fazer, é sempre uma 
+
+
+ good practice. ---> melhora 
+
+
+ a nossa USER EXPERIENCE,
+
+ pois o user 
+
+ claramente 
+
+ PERCEBE QUE __ALGUMA COISA __ ESTÁ ACONTECENDO, 
+
+
+ SEU REQUEST 
+
+ ESTÁ SENDO ENVIADO.
+
+
+
+
+ ----------------------------
+
+
+ OUTRA MELHORIA 
+
+
+ DE USER EXPERIENCE __É O SHOW __ DE ERROR MESSAGES NO CASO 
+
+
+
+ DE ___ FAILURES ___ DE ALGUMA COISA... -------> 
+
+ FAILURE 
+
+
+
+ DE 
+
+
+ SEND DE HTTP REQUESTS,
+
+ POR EXEMPLO....
+
+
+
+
+
+
+
+
+
+ É evidente que 
+
+ você pode outputtar 
+
+ mensagens de erro de diferentes maneiras, 
+
+ em diferentes lugares do seu código... ---> o professor, por sua vez, 
+
+
+
+ VAI QUERER 
+
+ TER UM 
+
+
+ 'GLOBAL ERROR HANDLER' , que 
+
+
+ MOSTRARÁ __UM ___ MODAL COM A 'ERROR MESSAGE' -----> 
+
+
+
+
+ CONTUDO, 
+
+
+ ESSE 
+
+
+ 'MODAL DE ERRORS '
+
+
+
+ NÃO SERÁ/NÃO USARÁ 
+
+ O MESMO 
+
+
+ COMPONENT 
+
+ 'MODAL'
+
+ que 
+
+
+ temos 
+
+ no 
+
+
+
+ nosso código; ----> PROFESSOR NÃO QUER ISSO 
+
+ PQ 
+
+
+ __ELE NÃO VAI QUERER ___ QUE 
+
+
+
+ O ERRO/MENSAGEM 
+
+ DE ERRO 
+
+
+ FIQUE 
+
+ 'STUCK'
+
+
+
+  AO CONTAINER DE 
+
+  'burgerBuilder'; não, 
+
+
+  ELE VAI 
+
+  QUERER 
+
+  QUE 
+
+  ESSE 
+
+
+
+OUTPUT DE MENSAGEM DE ERRO POSSA SER USADO __em 
+
+QUALQUER LUGAR DO NOSSO PROJETO/CÓDIGO.
+
+
+
+
+
+
+
+
+
+----> PROFESSOR QUER TER UMA 
+
+'FLEXIBLE WAY OF SHOWING AN ERROR',
+
+não importando 
+
+
+
+QUAL COMPONENT, QUAL CONTAINER,
+
+
+esse erro ocorrerá... 
+
+
+
+
+
+
+--> para CODAR 
+
+
+UM 
+
+'FLEXIBLE ERROR MODAL',
+
+
+o professor 
+
+explica que 
+
+
+ele 
+
+vai 
+ter que 
+
+
+
+
+
+
+
+criar um modal 
+
+
+QUE SERÁ UM HIGHER ORDER COMPONENT... -----> 
+
+OK, 
+
+
+MAS ONDE ELE 
+
+SETTARÁ 
+
+
+ESSE NEGÓCIO, 
+
+EM QUE LUGAR?
+
+
+
+
+---> ELE 
+
+
+SIMPLESMENTE QUER CRIAR UM HIGHER ORDER COMPONENT QUE 
+
+
+___FARÁ __WRAP__ DO BURGERBUILDER..... (ou então 
+
+usar o higher order component por meio daquela maneira, daquele segundo approach 
+que 
+ele nos mostrou... ) ---------> 
+
+
+
+ELE QUER 
+
+FAZER ISSO, DEFINIR ESSE MODAL ESPECIAL 'HIGHER ORDER COMPONENT'
+ 
+
+ PARA 
+
+ QUE POSSAMOS 
+
+ WRAPPAR 
+
+
+ SIMPLESMENTE __qUALQUER__ COMPONENT QUE 
+
+
+
+
+ TERÁ O 'error modal', 
+
+ e então 
+
+
+ CONVENIENTEMENTE ADICIONAR/REMOVER 
+
+ A FUNCIONALIDADE 
+
+
+ DE 
+
+
+ 'ERROR HANDLING' 
+
+
+ DE ACORDO COM NOSSAS NECESSIDADES, 
+
+
+ POR MEIO DO HIGHER ORDER COMPONENT...
+
+
+
+ ---------------------------
+
+
+ PARA ISSO ,
+
+ PARA ESSA FINALIDADE ESPECÍFICA, 
+
+ O PROFESSOR 
+
+ VAI CRIAR UM 
+
+
+ NOVO HOC (higher order component) ---> 
+
+
+
+
+ ESSE HOC 
+
+ ficará 
+
+ na pasta 'hoc', 
+
+
+ mas 
+
+ ele 
+
+ ficará em sua própria pasta (E diferente de 'Aux' e 'Layout', os 
+ 2 outros 
+ 
+ 
+ HIGHER ORDER COMPONENTS) ------> 
+
+
+
+E ELE CHAMARÁ
+
+
+ESSE 
+
+
+'HOC'
+
+
+de 
+
+'WithErrorHandler'
+
+
+-----------------------------
+
+
+
+
+
+
+UÉ, mas pq diabos ele 
+
+escreveu/usou essa sintaxe bizarra, 
+
+'withErrorHandler'... (que nem mesmo tem A INICIAL MAIÚSCULA)? -----> 
+
+
+
+
+É PQ ELE VAI USAR 
+
+AQUELE SEGUNDO APPROACH DE ADICIONAR 
+
+
+HIGHER order components...
+
+
+
+
+
+--> EU ___ACHO___ QUE 
+
+ A SEGUNDA 
+
+ MANEIRA/APPROACH 
+
+
+ DE 
+
+
+ ADICIONAR UM HIGHER ORDER COMPONENT 
+
+
+ AOS COMPONENTS DE NOSSO CÓDIGO É TIPO FAZER ISTO:
+
+
+
+ ' export withErrorHandler(nomeDeSeuComponent)' -------------------> 
+
+
+
+
+OU SEJA,
+
+
+
+NÓS ENFIAMOS O HOC/WRAPPAMOS NOSSO 
+
+
+COMPONENT 
+
+COM O 
+
+HOC 
+
+__LÁ NA SINTAXE DE EXPORT__ DO NOSSO COMPONENT (algo bem 
+
+diferente 
+
+
+de 
+
+
+fazer wrap 
+
+lá no nosso código jsx, como visto 
+
+com códigos como 
+
+'<Aux>
+    <NomeDoComponentWrappado/>
+</Aux>')
+
+
+
+
+
+---------------> 
+
+
+
+CERTO, 
+
+
+O PROFESSOR CRIA UM 
+
+'withErrorHandler'...  ----------> 
+
+
+
+ E DENTRO 
+
+ DESSE ARQUIVO , 
+
+
+
+ TEREMOS O SEGUINTE CÓDIGO:
+
+
+
+
+
+
+
+ 'const withErrorHandler....' --------> SERÁ UM __FUNCTIONAL COMPONENT____...
+
+
+
+
+
+ ---------------------------------
+
+
+ sua sintaxe 
+
+ será:
+
+
+
+
+'''
+const withErrorHandler = (wrappedComponent) => {
+    ...
+}
+
+''''
+
+
+
+--------------------------------
+
+
+
+
+OU SEJA,
+
+
+ELE 
+
+
+___RECEBERÁ O 
+
+'WRAPPED COMPONENT' (qualquer component, o component que você wrappar ele ao redor)...
+
+
+como INPUT... ----------->
+
+
+
+
+
+
+E, NO FUNCTION BODY,
+
+
+
+ESSE HOC VAI 
+
+
+___RETORNAR ___ UMA FUNÇÃO 
+
+__ QUE 
+
+RECEBE 
+
+'props' 
+
+
+E QUE 
+
+ENTÃO 
+
+
+RETORNA 
+
+JSX CODE.... (um jsx code que 
+
+INCLUIRÁ 
+
+O 
+'WRAPPED COMPONENT'...)
+
+
+
+ex:
+
+
+
+
+const withErrorHandler = (wrappedComponent) => {
+    return (props) => {
+        return ();
+    }
+}
+
+
+
+------------------------------------------
+
+
+
+COMO IREMOS 
+
+
+RETORNAR CÓDIGO JSX,
+
+PRECISAMOS 
+
+IMPORTAR 
+
+
+O REACT NESSE HOC, obviamente...
+
+
+
+ex:
+
+
+
+
+import React from 'react';
+
+
+
+
+const withErrorHandler = (wrappedComponent) => {
+    return (props) => {
+        return ();
+    }
+};
+
+
+
+
+
+export default withErrorHandler;
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+CERTO....
+
+
+
+E AÍ,
+
+
+NAQUELE 
+
+'return' de código jsx,
+ 
+ O PROFESSOR
+
+
+ VAI  
+
+
+ QUERER 
+
+
+
+
+ __RETORNAR 
+
+ O 
+
+ 'WRAPPEDCOMPONENT' (quase como um return de 'props.children', mas 
+ 
+ dessa vez com O NOSSO WRAPPED COMPONENT... apesar de ser quase a mesma coisa)....
+
+
+
+
+
+ ----------------------------------------------
+
+
+ ex:
+
+
+
+
+
+
+
+ import React from 'react';
+
+
+
+
+const withErrorHandler = (wrappedComponent) => {
+    return (props) => {
+        return (
+            <WrappedComponent />
+        );
+    }
+};
+
+
+
+
+
+export default withErrorHandler;
+
+
+
+-------------------------------------
+
+
+
+CERTO, 
+
+
+MAS OBVIAMENTE 
+
+NÃO RETORNAREMOS APENAS ISSO... não, 
+
+pq 
+
+O COMPONENT É WRAPPADO COM ESSE CÓDIGO ,
+
+
+MAS 
+
+OS PROPS SERÃO IGNORADOS... ---> para que 
+
+
+
+
+O WRAPPEDCOMPONENT 
+
+FIQUE 
+
+COM 
+
+
+
+OS SEUS PROPS QUE ELE HAVIA ANTES,
+
+vocÊ precisa 
+
+
+
+passar um código de 
+
+'{...props}' PARA ELE....         (Esse '...', o spread operator, VAI __ESPALHAR__ TODOS OS PROPS ANTIGOS DO COMPONENTE WRAPPADO dentro do novo 'WrappedComponent' (que é o MESMO COMPONENT, no final das contas, mas '''reproduzido/re-produzido'''''...))
+
+
+
+
+
+
+
+OK... isso evitará a 'LOSS' dos props...
+
+
+
+
+
+
+
+---------------------------------------
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+ import React from 'react';
+
+
+
+
+const withErrorHandler = (WrappedComponent) => {
+    return (props) => {
+        return (
+            <WrappedComponent {...props}/>
+        );
+    }
+};
+
+
+
+
+
+export default withErrorHandler;
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+CERTO,
+
+
+
+
+COM ISSO TEREMOS UM 
+
+
+
+
+'HOC DE SINTAXE ALTERNATIVA' (segundo approach, approach do 'export default withxxxx(nomeDoComponentXXXXX)')
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+CERTO... MAS É EVIDENTE QUE O PROFESSOR NÃO CRIOU 
+
+ESSE 
+
+
+
+'withErrorHandler' para nada, ele 
+
+NÃO FOI CRIADO 
+
+APENAS 
+
+PARA 
+
+
+
+REPRODUZIR/REPLICAR 
+
+
+O COMPONENT QUE ELE WRAPPA... ------> NÃO, 
+seu 
+
+propósito verdadeiro 
+
+é __ADICIONAR__ UM 'ERROR MODAL'___ NESSE 
+
+
+Component que foi wrappado,
+ 
+ E ENTÃO 
+
+ __aTIVAR/DESATIVAR__ ESSE MODAL DE ERRO 
+
+ de acordo com as nossas necessidades.
+
+
+
+
+ ----------------------------------------
+
+
+
+ O professor explica que 
+
+ NÓS ___NÃO VAMOS CRIAR UM NOVO MODAL___... não, isso seria 
+
+ muito trabalhoso (e feio)... ----> o que 
+
+ vamos 
+
+
+ fazer 
+
+ é __rEUTILIZAR___ o modal, o component modal, que JÁ 
+
+ EXISTE.... --> 
+
+
+
+ importamos 
+
+ ele 
+
+ com 
+ 
+
+ 'import Modal from '../../components/UI/Modal/Modal'... 
+
+
+
+ ----------------------------------------------
+
+
+
+
+ E COMO O PROFESSOR PRETENDE 
+
+
+ USAR O MODAL __DO LADO__ DO COMPONENT 'WrappedComponent',
+
+
+ ELE 
+
+
+VAI PRECISAR 
+
+DE OUTRO COMPONENT, O HIGHER-ORDER COMPONENT 'Aux'... (ou seja, 
+
+vamos usar um HOC DENTRO DE UM HOC...)
+
+
+
+
+-----------------------------
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+ import React from 'react';
+
+
+
+ import Modal from '../../components/UI/Modal/Modal'
+
+
+ import Aux from '../Auxiliary/Auxiliary';
+
+
+ const withErrorHandler = (WrappedComponent) => {
+     return (props) => {
+         return (
+             <Aux>
+                 <Modal></Modal>
+             <WrappedComponent {...props}/>
+             </Aux>
+         );
+     }
+ };
+ 
+ 
+ 
+ 
+ 
+ export default withErrorHandler;
+
+
+
+
+
+
+
+ -----------------------------------
+
+
+
+ MAS NÃO ACABAMOS... DENTRO 
+
+ DO 
+
+ MODAl,
+
+
+
+O PROFESSOR VAI QUERER OUTPUTTAR UM NEGÓCIO.... ---> por enquanto, 
+
+ele vai 
+
+SÓ 
+
+
+FAZER UM SIMPLES 
+
+OUTPUT 
+
+de 
+
+um 
+
+'Something didn't work!'...
+
+
+
+EX:
+
+
+
+
+
+
+
+ import React from 'react';
+
+
+
+ import Modal from '../../components/UI/Modal/Modal'
+
+
+ import Aux from '../Auxiliary/Auxiliary';
+
+
+ const withErrorHandler = (WrappedComponent) => {
+     return (props) => {
+         return (
+             <Aux>
+                 <Modal>
+                 Something didn't work!
+                 </Modal>
+             <WrappedComponent {...props}/>
+             </Aux>
+         );
+     }
+ };
+ 
+ 
+ 
+ 
+ 
+ export default withErrorHandler;
+
+
+
+
+
+
+-------------------------------------
+
+ISSO É PROVISÓRIO, É CLARO.
+
+
+
+
+PROFESSOR 
+
+SALVA ESSE CÓDIGO.... -------> 
+
+ELE VAI UTILIZÁ-LO NO 
+
+
+BURGERBUILDER...
+
+
+
+
+
+
+
+
+
+--> ele vai lá no burgerBuilder E IMPORTA 
+
+
+ESSE NOSSO HOC especial (2o approach)
+
+
+POR MEIO 
+
+
+DA 
+
+SINTAXE 
+
+
+'import withErrorHandler from '../../........'
+
+
+
+
+
+
+
+
+
+
+(SIM, VAMOS IMPORTAR COM A INICIAL MINÚSCULA, 
+
+pois não VAMOS USAR A SINTAXE 
+
+DE JSX 
+
+PARA 
+
+
+INCORPORAR ESSE 
+
+
+HOC ao nosso component... --> não, 
+
+em vez disso vamos usar a ''''sintaxe de export'''', 
+
+aquela 
+
+
+que 
+
+
+
+ENGLOBA o nosso component com 'withxxxx(Component)'....)
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+CERTO...
+
+
+
+
+
+
+
+
+CÓDIGO FICARÁ ASSIM:
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Aux from '../../hoc/Auxiliary/Auxiliary';
+
+
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+
+
+import Burger from '../../components/Burger/Burger';
+
+
+
+import Modal from '../../../src/components/UI/Modal/Modal';
+
+
+import OrderSummary from '../../../src/components/Burger/OrderSummary/OrderSummary';
+
+import Spinner from '../../../src/components/UI/Spinner/Spinner'
+
+import axiosOrder from '../../axios-orders';
+
+
+
+import withErrorHandler from '../../../src/hoc/withErrorHandler/withErrorHandler';
+
+
+// const INGREDIENT_PRICES = {
+
+// }
+
+
+
+const INGREDIENT_PRICES = {
+  salad: 0.5,
+  bacon: 0.7,
+  cheese: 0.4,
+  meat: 1.3
+}
+
+
+
+
+
+
+// import TypeContext from '../../context/type-context';
+
+
+
+
+
+
+ class BurgerBuilder extends Component {
+
+  // constructor(props) { ///SINTAXE MAIS ANTIGA, é a mesma coisa que escrever 'state = {}' ....
+  //   super(props);
+  //   this.state = {...}
+  // }
+
+
+  // static contextType = TypeContext;
+
+
+
+
+
+
+
+
+  // state = {
+  //   ingredients: {
+  //     salad: 1,
+  //     bacon: 1,
+  //     cheese: 2,
+  //     meat: 2
+  //   }
+  // };
+
+
+  state = {
+    ingredients: {
+      salad: 0,
+      bacon: 0,
+      cheese: 0,
+      meat: 0
+    }, 
+    totalPrice: 4, //valor INICIAL do BUrger... sempre será '4'.
+    purchasing: false,
+    loading: false
+  };
+
+
+
+
+
+
+
+
+ 
+  addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceAddition = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.totalPrice;
+    const newPrice = oldPrice + priceAddition;
+    this.setState(
+      {
+        totalPrice: newPrice, 
+        ingredients: updatedIngredients
+      }
+    )
+
+    
+
+
+
+
+  }
+
+
+
+
+
+
+
+purchaseHandler = () => {
+  this.setState(
+    {
+      purchasing: true
+    }
+  )
+
+}
+
+
+
+
+purchaseContinueHandler = () => { ///////OBS::: colocar '.json' DO LADO DO PATH/NODE a que você está querendo enviar o HTTP REQUEST  ___ É ALGO QUE __ SÓ É OBRIGATÓRIO PARA SERVIDORES __fIREBASE; EM OUTROS TIPOS DE SERVIDORES, ESSE '.json' AO FINAL __NÃO É NECESSÁRIO___... ---> pq isso? PQ ESSE É O ___eNDPOINT QUE ___ O FIREBASE__ PRECISA TARGETTAR PARA QUE A FEATURE DO FIREBASE DE 'AUTOMATIC CREATION' DOS NODES/PATHS CONSIGA FUNCIONAR CORRETAMENTE.
+    
+    this.setState({
+      loading: true
+    })
+  
+  
+  const orderData = {
+      
+      ingredients: this.state.ingredients,
+    price: this.state.totalPrice,
+      customer: {
+        name: 'Max schwarzmuller',
+        address: {
+          street: 'Teststreet 1',
+          zipCode: '41351',
+          country: 'Germany'
+        },
+        email: 'test@test.com'
+      },
+
+      deliveryMethod: 'fastest'
+  
+  
+  
+  }
+  
+  
+  
+  axiosOrder.post('/orders.json', orderData).then(
+
+    (response) => {
+      this.setState({
+        loading: false,
+        purchasing: false
+      });
+    }
+  )
+  .catch(error => {
+    this.setState(
+      {
+        loading: false,
+        purchasing: false
+      }
+    )
+  }
+  )
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+  removeIngredientHandler = (type) => {
+
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount - 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceDeduction = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.totalPrice;
+    const newPrice = oldPrice - priceDeduction;
+
+    // if(oldCount <= 0) { ////////CÓDIGO DEPRECADO, É UMA VERSÃO MAIS RUDIMENTAR DA FEATURE DE 'IMPEDIR QUE O USUÁRIO CRASHE O CÓDIGO POR MEIO DA REMOÇÃO DE UM NÚMERO DE INGREDIENTS QUE JÁ NÃO EXISTE NO HAMBURGUER' (reduzir o número de ingredients de '0' para '-1') --> para isso, o professor USOU o prop de 'disabled', e a const de 'disabledInfo', DEFINIDA EM BURGERBUILDER...
+    //   return (
+    //     <p>{alert("You can't remove any more of that ingredient")}</p>
+    //   );
+    // } 
+
+      this.setState(
+        {
+          totalPrice: newPrice, 
+          ingredients: updatedIngredients
+        }
+      )
+    
+  
+
+    
+
+  }
+
+
+
+  purchaseCancelHandler = () => {
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+
+
+  }
+
+
+
+
+
+
+
+
+  render() {
+
+
+
+
+
+    const ingredientCount = Object.values(this.state.ingredients);
+
+      let modalContent = (<OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice} clicked={this.purchaseCancelHandler} success={this.purchaseContinueHandler}></OrderSummary>)
+
+    let ingredientCountSum = ingredientCount.reduce(
+        (oldNumber, newNumber) => {
+          return oldNumber + newNumber;
+        }
+    )
+  
+
+    if(!ingredientCountSum) {
+      ingredientCountSum = true;
+    } else {
+      ingredientCountSum = false;
+    }
+
+    
+
+
+
+
+
+
+
+
+
+    const disabledInfo = {
+      ...this.state.ingredients
+    };
+
+    for (let key in disabledInfo) {
+      disabledInfo[key] = disabledInfo[key] <= 0; //parte da direita: CHECK BEM IMPORTANTE. RETORNA ou o valor 'true', ou 'false' para AQUELA DETERMINADA KEY (disabledInfo[key]) definida na direita... (que será 'cheese: true', 'meat: false', etc, dependendo desse check da direita...)
+    }
+
+
+
+    if (this.state.loading) {
+       modalContent = <Spinner />
+    }
+
+
+
+
+
+
+
+    return (
+      <Aux>
+        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+        {modalContent}   
+        </Modal>
+        {/* <div>Burger</div> */}
+        <Burger ingredients={this.state.ingredients}/>
+        {/* <div>Build Controls</div> */}
+        <BuildControls 
+        disabled={disabledInfo} //'disabledInfo' será uma constante que terá aquele objeto com a 'CÓPIA DO STATE DE INGREDIENTS', mas aquela cópia tem uma alteração no INGREDIENT que será/não será removido, que estará tipo assim: 'cheese: false', ou 'bacon: true', etc.....
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}
+         ordered={this.purchaseHandler}
+      
+         />
+        
+      </Aux>
+    );
+  }
+}
+
+
+
+export default withErrorHandler(BurgerBuilder);
+
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+
+
+ok..... 
+
+
+
+
+COM ISSO,
+
+podemos 
+
+
+voltar 
+
+
+
+A NOSSA 
+
+
+função 
+
+'withErrorHandler'
+
+
+ E ENTÃO 
+
+
+
+ DEFINIR/escrever 
+
+ um prop 
+
+
+ 'show'
+
+
+
+
+ no MODAL... (só escrever 'show', sem mais nada... )
+ 
+ 
+ 
+ 
+ ex:
+
+
+
+
+ 
+  const withErrorHandler = (WrappedComponent) => {
+     return (props) => {
+         return (
+             <Aux>
+                 <Modal show>Something went wrong!</Modal> ///////EIS O CÓDIGO EM QUESTÃO.
+             <WrappedComponent {...props}/>
+             </Aux>
+         );
+     }
+ };
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ --> (pq isso, conforme professor nos ensinou, 
+ 
+ é basicamente dizer 'show = true'..... DEIXAR SOLTO O NOME DE UM PROP 
+ 
+ NO CALL DE UM COMPONENT É BASICAMENTE Escrever isso aí, 
+ 
+ escrever 'nomeDoProp = true'... ---------> E COMO 
+ 
+ 
+ NÓS CONFIGURAMOS O NOSSO COMPONENT MODAL PARA __ SER __MOSTRADO ___ QUANDO 
+ 
+RECEBE UM PROP 'show' com valor de 'true',
+
+
+
+ELE VAI SIMPLESMENTE 
+
+
+SER MOSTRADO NA NOSSA PÁGINA, SEM 
+
+FAZERMOS NADA...) ---------------------------------->
+
+
+
+
+
+E é exatamente por isso que 
+
+vamos ver O NOSSO MODAL 
+
+com os dizeres 
+
+'something went wrong!' 
+
+NA FRENTE DA NOSSA PÁGINA...
+
+
+--------------------------------------
+
+
+
+
+
+
+
+VAMOS 
+
+VER ISSO AÍ.... ---> MAS É EVIDENTE QUE 
+
+ISSO 
+NÃO É O QUE DESEJAMOS,
+
+SÓ QUEREMOS 
+
+QUE 
+
+ESSA MENSAGEM/MODAL COM 
+ESSA MENSAGEM 
+
+
+SEJA 
+
+__MOSTRADA__ QUANDO REALMENTE ____ TIVERMOS 
+
+UM ERRO ___ NO NOSSO CÓDIGO/PROJETO... ---------> 
+
+
+
+E É EXATAMENTE 
+
+POR ISSO 
+
+
+QUE 
+
+DEVEMOS 
+
+
+SETTAR 
+
+
+ESSE PROP 
+
+'show' 
+
+em 
+
+'withErrorHandler' 
+
+
+
+VINCULADO A 
+
+UMA  CONDIÇÃO... e essa condição  DEVERÁ 
+
+__ VIR ___ DO 
+
+
+WRAPPEDCOMPONENT, É CLARO.... ----------->
+
+
+
+
+O
+
+WRAPPEDCOMPONENT 
+
+
+precisa 
+
+nos dar 
+
+a INFORMAÇÃO 
+
+
+SE AQUELE PROCEDIMENTO/HTTP REQUEST__ REALMENTE ___ FALHOU OU NÃO__...
+
+
+
+-------------------------------------------------------
+
+
+PARA CONSEGUIRMOS ESSA INFORMAÇÃO CRUCIAL, 
+
+ESSA INFORMAÇÃO QUE DETERMINA 
+
+
+SE 
+
+O NOSSO 
+
+MODAL 
+DE 
+'ERROR'
+ 
+É MOSTRADO OU NÃO,
+ 
+
+
+PRECISAMOS 
+
+DEFINIR UM SEGUND PARÂMETRO/ARGUMENTO 
+
+
+ESPERADO (expected) 
+
+NESSE 
+
+'withErrorHandler'... -----------------------> 
+
+
+
+
+
+E ESSA INFORMAÇÃO __SERÁ FORNECIDA _________PELO AXIOS___....
+
+
+
+
+
+professor vai escrever:
+
+
+
+
+
+const withErrorHandler = (WrappedComponent, axios) => {
+    ...
+}
+
+
+
+--------------------------------------------
+
+
+
+
+
+UÉ, 
+
+MAS PQ ESSE 
+
+ARGUMENTO AÍ? -----> PROFESSOR EXPLICA QUE AQUI 
+
+
+USAREMOS 
+
+
+__ A ___ INSTÂNCIA AXIOS __ QUE FOI USADA 
+
+
+
+___PARA AQUELA PARTE DO NOSSO CÓDIGO/PARA AQUELE 
+
+WRAPPED COMPONENT, component que foi wrappado pelo 'withErrorHandler'...
+
+
+
+
+
+
+
+---> O professor vai definir essa INSTÂNCIA DE AXIOS (na verdade, é ___QUALQUER INSTÂNCIA DE AXIOS.... QUALQUER 
+
+UMA PODERÁ SER ENFIADA NESSE HIGHER ORDER COMPONENT, 
+não será 
+
+
+só aquela instance 
+
+de nome 
+
+'axios-orders' que criamos mais cedo...) ------------> 
+
+
+
+
+CERTO, 
+
+
+
+MAS PARA 
+
+PODER USAR ESSA INSTANCE/ESSAS INSTANCES 
+
+
+
+NESSE 
+
+'withErrorHandler', 
+
+
+
+
+o PROFESSOR EXPLICA QUE 
+
+
+
+___ELE VAI TER DE ___MUDAR __ A ESTRUTURA DESSE COMPONENT, DESSE NOSSO HOC... -------> 
+
+
+
+
+Ele explica que 
+
+vai ter que 
+
+mudá-lo, transformá-lo de um FUNCTIONAL COMPONENT 
+
+PARA 
+
+UM 
+
+
+__cLASS BASED COMPONENT__...
+
+
+
+------------------------------------
+
+
+UÉ, MAS PQ ISSO? -------> BEM SIMPLES,
+
+
+ELE VAI QUERER 
+
+
+USAR 
+
+
+
+O LIFECYCLE 
+
+DO 
+
+'componentDidMount', 
+
+
+
+
+QUE 
+
+
+SERÁ 
+
+USADO 
+
+PARA 
+
+
+SETTAR 
+
+
+
+__ UM AXIOS INTERCEPTOR/OS 'AXIOS  INTERCEPTORS'... 
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+TEORICAMENTE, É CLARO, VOCÊ PODERIA 
+
+MANTER 
+
+
+ESSE COMPONENT COMO UM 'FUNCTIONAL COMPONENT'
+
+e então 
+
+
+usar 
+
+
+os REACTHOOKS, como 'useEffect'.... (que deixa vocÊ usar 'componentDidMount', mas com sua 
+
+própria sintaxe ) ... ---> e nós 
+
+DE FATO VEREMOS 
+
+ISSO,
+
+QUANDO 
+O PROFESSOR 
+
+
+TIVER AQUELE MÓDULO 
+
+
+EM QUE 
+
+ELE VAI 
+
+CONVERTER 
+
+
+TODO O NOSSO PROJETO EM UMA VERSÃO REACTHOOKS...
+
+
+
+---------------------------------------------------------------
+
+
+
+
+CERTO,
+
+
+ENTÃO DEVEMOS CONVERTER 
+
+a
+
+
+FUNÇÃO RETORNADA PELO 'withErrorHandler' (MAS NÃO O WithErrorHandler EM SI...)
+
+
+EM 
+
+UM CLASS-BASED COMPONENT... -----> E O PROFESSOR DEFINIRÁ 
+
+
+UMA 
+
+__CLASSE ANÔNIMA__ ( sem nome),
+ 
+ PQ 
+
+
+ ELE NUNCA MAIS VAI USAR ESSA CLASSE DEFINIDA ALI NO INTERIOR DE 
+
+ 'withErrorHandler'...
+
+
+
+
+ -----------------------------
+
+
+ FICARÁ ASSIM:
+
+
+
+  const withErrorHandler = (WrappedComponent, axios) => {
+     return class extends Component {
+         render() {
+                return (
+                    <Aux>
+                    <Modal show>Something went wrong!</Modal>
+                <WrappedComponent {...this.props}/>
+                </Aux>
+                )
+         }
+     }
+ };
+ 
+
+
+
+ -----------------------------
+
+
+
+
+
+
+
+ ----> O PROFESSOR FEZ ESSA CONVERSÃO PARA QUE ELE 
+
+
+ CONSEGUISSE USAR 
+
+ 'componentDidMount()'...
+
+
+
+
+ ------------------------------
+
+
+
+
+ Certo.. lembrando: 
+
+
+ o 
+
+ 'componentDidMount' 
+
+ É SEMPRE __O ÚLTIMO PASSO/ETAPA 
+
+ DO CICLO DE VIDA DE UM CLASS-BASED COMPONENT... --> e 
+
+ é 
+
+ NELE 
+
+ QUE 
+
+ ATIVAMOS
+
+ 'SIDE-EFFECTS'
+
+ NO NOSSO CÓDIGO...
+
+
+
+ EX:
+
+
+
+
+
+   const withErrorHandler = (WrappedComponent, axios) => {
+     return class extends Component {
+
+       componentDidMount() {
+          
+       }
+
+         render() {
+                return (
+                    <Aux>
+                    <Modal show>Something went wrong!</Modal>
+                <WrappedComponent {...this.props}/>
+                </Aux>
+                )
+         }
+     }
+ };
+
+
+
+-------------------------------------
+
+
+
+BELEZA.
+
+
+E NESSE 
+
+
+'componentDidMount' 
+
+
+
+PODEMOS FINALMENTE SETTAR 
+
+NOSSO 
+
+
+'LISTENER DE AXIOS'/axios listener...   ---------------> 
+
+
+
+
+ISSO 
+
+
+
+QUER 
+
+
+DIZER QUE 
+
+AÍ, 
+
+NESSA INSTÂNCIA 
+
+DE AXIOS 
+
+
+'axios' 
+
+PODEMOS 
+
+
+___SETTAR__ NOSSO 
+
+
+INTERCEPTOR GLOBAL.... ----> SIM, 
+
+
+PODEMOS 
+
+
+DEFINIR 
+
+
+NOSSO 
+
+
+'INTERCEPTOR GLOBAL'
+
+
+nesse 
+
+'withErrorHandler'... ---> com isso,
+
+
+todos os 
+
+
+COMPONENTS 
+
+
+QUE WRAPPARMOS 
+
+COM 
+
+ESSE 
+'withErrorHandler' 
+
+
+TERÃO 
+
+
+ESSE 
+
+'interceptor/interceptors'
+
+ATUANDO SOBRE ELES....
+
+
+
+
+
+
+
+
+---> professor
+
+escreve
+
+
+'axios.interceptors.response.use(...)' 
+
+
+
+
+
+PARA 
+
+
+___ENTÃO DEFINIR 
+
+O CÓDIGO ___ QUE 
+
+O INTERCEPTOR ___ VAI 
+
+
+RODAR __ SEMPRE QUE ___ UMA 
+
+RESPONSE ___ 
+
+
+FOR RECEBIDA
+ 
+
+ EM ALGUM 
+
+ COMPONENT WRAPPADO 
+
+ POR NOSSO  HOC 'withErrorHandler'...
+
+
+
+ ex:
+
+
+
+
+
+
+ 
+   const withErrorHandler = (WrappedComponent, axios) => {
+     return class extends Component {
+
+       componentDidMount() {
+          axios.interceptors.response.use();
+       }
+
+         render() {
+                return (
+                    <Aux>
+                    <Modal show>Something went wrong!</Modal>
+                <WrappedComponent {...this.props}/>
+                </Aux>
+                )
+         }
+     }
+ };
+
+
+---------------------------------------
+
+
+
+
+EU PRESUMO QUE 
+
+ESSA FUNÇÃO AÍ VAI 
+
+
+
+
+1) receber a 'RESPONSE' como parâmetro/input...
+
+
+
+
+
+2) VAI ___RETORNAR ___ A RESPONSE, EM SEU FUNCTION BODY INTERNO (pois isso é necessário para que 
+A RESPONSE __NÃO SEJA_ ___ BARRADA NATIVAMENTE PELO INTERCEPTOR...)
+
+
+
+
+
+
+
+
+
+----> ENTRETANTO, PROFESSOR ATIRA TODAS AS CONVENÇÕES PELA JANELA... ---> 
+
+
+ELE DIZ QUE 
+
+ __NÃO ESTÁ__, NESSE CASO, INTERESSADO NO PRIMEIRO PARâMETRO (o receive do 
+ 
+ 
+ PRIMEIRO ARGUMENTO).... ----------------> 
+
+
+ NESSE CASO ESPECÍFICO, 
+
+
+ ELE APONTA QUE 
+
+ COMO 
+
+ NÃO ESTÁ INTERESSADO NO PRIMEIRO ARGUMENTO, 
+
+ VAI PASSAR 
+
+ UM SIMPLES 
+
+ 'null' como seu valor...
+
+
+
+ ex:
+
+
+
+
+  
+   const withErrorHandler = (WrappedComponent, axios) => {
+     return class extends Component {
+
+       componentDidMount() {
+          axios.interceptors.response.use(null,  )
+       }
+
+         render() {
+                return (
+                    <Aux>
+                    <Modal show>Something went wrong!</Modal>
+                <WrappedComponent {...this.props}/>
+                </Aux>
+                )
+         }
+     }
+ };
+
+
+
+
+------------------------------------------------
+
+
+
+
+ELE EXPLICA QUE 
+
+O SEGUNDO PARÂMETRO 
+
+É A COISA QUE 
+LHE INTERESSA.... ---------> o segundo parâmetro 
+
+interessa 
+
+
+pq 
+
+
+
+O SEGUNDO PARÂMETRO É O 'ERROR CASE', 
+
+É 
+
+
+
+A PARTE 
+
+
+
+DO MÉTODO 
+
+'.use()' dos interceptors QUE 
+
+
+LIDA/FAZ HANDLE DE __eRRORS__...
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+----> E, NO CASO DO NOSSO PROJETO, 
+AO 
+
+
+RECEBER UMA RESPONSE DO NOSSO SERVIDOR, 
+
+O PROFESSOR 
+
+__________NÃO VAI QUERER____ FAZER___ RENDER ___ dO 
+
+NOSSO 
+
+MODAL 
+
+
+DE ERRO... (aquele modal com 'Something went wrong!') ---------> PARA ISSO,
+
+
+
+PARA 
+
+FAZER 
+
+ESSE SHOW/NÃO SHOW 
+
+DO 
+
+
+
+MODAL COM A ERROR MESSAGE,
+
+O PROFESSOR EXPLICA QUE 
+
+
+ELE ___vAI ADICIONAR UM STATE___ A ESSE 
+
+'withErrorHandler'....
+
+
+
+
+------------------------------
+
+
+
+TALVEZ ESCREVER ALGO ASSIM:
+
+
+
+
+
+const withErrorHandler = (WrappedComponent, axios) => {
+
+
+    
+
+
+
+
+
+
+
+
+
+  return class extends Component {
+
+
+    state = {
+            errorOcurred: false
+    }
+
+
+
+
+
+
+    componentDidMount() {
+      axios.interceptors.response.use(null, (error) => {
+
+
+        if(error) {
+            this.setState(
+                {
+                    errorOcurred: true
+                }
+            )
+        }
+  
+
+
+
+      });
+    }
+
+    render() {
+      return (
+
+        this.state.errorOcurred 
+
+        ? 
+
+        <Aux>
+        <Modal show>Something went wrong!</Modal>
+        <WrappedComponent {...this.props} />
+      </Aux>
+
+
+
+        :
+
+
+        <Aux>
+        <WrappedComponent {...this.props} />
+      </Aux>
+
+
+
+
+
+       
+      );
+    }
+  };
+};
+
+export default withErrorHandler;
+
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+acho que isso funcionará... ---> quando ocorrer um erro, 
+
+
+o 
+
+
+MODAL COM A MENSAGEM DE ERRO SERÁ MOSTRADO,
+ teoricamente...
+
+
+
+
+ -----------------------------------
+
+
+ ENTRETANTO, 
+
+
+ SURGE UM PROBLEMA/ERRO:
+
+
+
+ ×
+TypeError: Cannot read property 'interceptors' of undefined ---------> 
+
+
+
+
+E QUANDO OBSERVO O CÓDIGO DO PROFESSOR,
+ 
+ PERCEBO 
+
+ QUE 
+
+ ELE 
+
+ FEZ COISAS DIFERENTES... -----> é por isso que 
+
+
+
+ nosso código não funciona/não está funcionando/não funcionará.
+
+
+
+
+
+
+
+
+
+ ---> A PRIMEIRA COISA DIFERENTE QUE 
+
+
+ ELE FAZ É 
+
+ ___SETTAR__ O VALOR 
+
+ DE 'errorOccurred' 
+
+ como 
+ ___'NULL'___ .... essa propriedade também 
+
+
+ terá 
+
+ um nome de 
+
+ 'error',
+
+ e não 
+
+ 'errorOccurred'....
+
+ --------------------------------
+
+
+
+
+
+ -------> certo... ---> aí 
+
+
+ O PROFESSOR EXPLICA QUE 
+
+ DENTRO DE 
+
+ 'componentDidMount',
+
+
+
+ dentro do 
+
+
+ 'null, error => {
+
+ }' 
+
+
+
+
+
+ NÓS VAMOS FAZER UM STATE CHANGE POR MEIO DE 'setState()', 
+
+ SIM,
+
+
+ MAS 
+ 
+
+ O VALOR QUE VAMOS DEFINIR 
+
+ NAQUELE 
+
+ 'state', o valor de 'error' 
+
+ será 
+
+ 'error' (o argumento error recebido nessa função interna de '(null, error => {...}',   --------> ESSE ARGUMENTO 'error' É O ERROR __ QUE ESTAMOS RECEBENDO/RECEBEREMOS__ DO FIREBASE EM SI...
+ 
+ em outras palavras)):
+
+
+
+ TIPO ASSIM:
+
+''''
+ .use(
+   null, error => {
+     this.setState(
+       {
+         error: error ///////EIS O CÓDIGO EM QUESTÃO
+       }
+     )
+   }
+ )
+
+
+ ''''
+
+
+
+
+------------------------------- 
+
+
+
+Complementando, o professor 
+
+explica que 
+
+
+esse OBJETO
+
+'error' aí, recebido pelo firebase,
+
+TAMBÉM __ CONTÉM UMA __ PROPRIEDADE 
+
+'message',
+
+
+que podemos utilizar... -------> PROFESSOR DIZ QUE PODEMOS CONSOLE.LOGGAR 
+
+
+'error' 
+
+PARA VER 
+
+COMO 
+
+ESSA 'message' 
+
+SE PARECE...
+
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Modal from '../../components/UI/Modal/Modal';
+
+import Aux from '../Auxiliary/Auxiliary';
+
+
+const withErrorHandler = (WrappedComponent, axios) => {
+
+
+    
+
+
+
+
+
+
+
+
+
+  return class extends Component {
+
+
+    state = {
+            error: null
+    }
+
+
+
+
+
+
+    componentDidMount() {
+      axios.interceptors.response.use(null, (error) => {
+
+
+        if(error) {
+            this.setState(
+                {
+                    error:error
+                }
+            )
+        }
+  
+
+
+
+      });
+    }
+
+    render() {
+      return (
+
+        this.state.errorOcurred 
+
+        ? 
+
+        <Aux>
+        <Modal show>Something went wrong!</Modal>
+        <WrappedComponent {...this.props} />
+      </Aux>
+
+
+
+        :
+
+
+        <Aux>
+        <WrappedComponent {...this.props} />
+      </Aux>
+
+
+
+
+
+       
+      );
+    }
+  };
+};
+
+export default withErrorHandler;
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------
+
+
+
+CERTO....
+
+
+ALÉM DE 
+
+
+DEFINIR 
+
+ESSE SET STATE AÍ DA PROPRIEDADE 
+'error',
+
+
+professor explica que 
+
+
+OUTRA COISA QUE 
+
+ELE VAI FAZER AQUI 
+
+É ____DEFINIR___ OUTRO INTERCEPTOR 
+
+da instância 'axios',
+
+
+DESSA VEZ 
+
+PARA __oS NOSSOS ___ REQUESTS___...
+
+(
+
+  com 
+  a sintaxe 
+
+
+  'axios.interceptors.request.use()'....
+)
+
+-----------------------------------------
+
+
+
+
+CERTO...
+
+
+
+
+
+aí ele vai escrever 
+
+
+'axios.interceptors.request.use(
+  request => {...}
+)' 
+
+
+
+
+
+
+
+
+
+ELE NOS EXPLICA QUE 
+
+ELE NÃO ESTÁ REALMENTE INTERESSADO NO REQUEST POR SI SÓ,
+
+e sim que possui interesse no 
+
+
+
+
+_____CALL ____ DO 'this.setState' PARA 
+
+
+ENTÃO '''''________LIMPAR____ '''''' quaisquer 
+
+
+'errors'/a presença da EXISTÊNCIA de um 'error' (error: error) 
+
+
+NO NOSSO APLICATIVO... ---> ele fará isso para que 
+
+QUE 
+
+
+
+O 
+
+MODAL 
+
+
+DE 
+'SOMETHING WENT WRONG' NÃO 
+
+APAREÇA 
+
+QUANDO 
+
+NOSSO 
+
+REQUEST FOR ENVIADO/REQUEST FOR ENVIADO E RETORNA ERROS, 
+
+
+E SIM PARA 
+
+
+QUE 
+
+APENAS 
+
+
+CONSIGAMOS UM 
+
+
+MODAL 
+
+de 'something went wrong'
+
+
+SE 
+
+
+O ___RECEIVE____ DO RESPONSE DO SERVIDOR 
+
+
+retornar um erro...
+
+
+
+
+
+CÓDIGO FICARÁ ASSIM:
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Modal from '../../components/UI/Modal/Modal';
+
+import Aux from '../Auxiliary/Auxiliary';
+
+
+const withErrorHandler = (WrappedComponent, axios) => {
+
+
+    
+
+
+
+
+
+
+
+
+
+  return class extends Component {
+
+
+    state = {
+            error: null
+    }
+
+
+
+
+
+
+    componentDidMount() {
+
+      axios.interceptors.request.use(
+        request => {
+          this.setState({
+            error: null ///////////EIS O CÓDIGO EM QUESTÃO.
+          })
+        }
+      );
+
+
+
+
+      axios.interceptors.response.use(null, (error) => {
+
+
+        if(error) {
+            this.setState(
+                {
+                    error:error
+                }
+            )
+        }
+  
+
+
+
+      });
+    }
+
+    render() {
+      return (
+
+        this.state.errorOcurred 
+
+        ? 
+
+        <Aux>
+        <Modal show>Something went wrong!</Modal>
+        <WrappedComponent {...this.props} />
+      </Aux>
+
+
+
+        :
+
+
+        <Aux>
+        <WrappedComponent {...this.props} />
+      </Aux>
+
+
+
+
+
+       
+      );
+    }
+  };
+};
+
+export default withErrorHandler;
+
+
+
+
+------------------------------------------------
+
+
+
+Certo, 
+
+
+isso fará 
+
+
+com que 
+
+
+O 'error '
+
+NÃO EXISTA NO MOMENTO EM QUE 
+
+O REQUEST É ENVIADO... ---> ele só PODERÁ __passar a existir (''PODERÁ'' PQ NÃO 
+É CERTO QUE 
+
+UM ERROR SERÁ PRODUZIDO PELO NOSSO APLICATIVO, PELO COMPONENT 'BURGERBUILDER'...) 
+
+QUANDO 
+
+NOSSA RESPONSE ESTIVER SENDO RECEBIDA...
+
+
+----------------------------------------
+
+
+
+FEITAS 
+
+
+
+TODAS ESSAS ALTERAÇÕES, Professor faz uma simples troca,
+
+ele vai 
+
+
+no 
+
+call do modal reutilizado 
+
+no 
+
+'withErrorHandler' 
+
+e troca 
+
+o valor de 
+
+'show' (que estava como um simples 'show') 
+
+
+
+por 
+
+
+'this.state.error'... ---> ou seja, quando 
+
+
+'this.state.error' ESTIVER COMO 'TRUE', 
+
+
+
+O 
+
+MODAL DE ERROS SERÁ EXIBIDO...
+
+
+
+ex:
+
+
+
+return (
+  <Aux>
+    <Modal show={this.state.error}>
+      Something didn't work!
+      </Modal>
+    </Aux>
+)
+
+
+
+
+
+-------------------------------
+
+
+CÓDIGO COMPLETO FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Modal from '../../components/UI/Modal/Modal';
+
+import Aux from '../Auxiliary/Auxiliary';
+
+//  const withErrorHandler = (WrappedComponent, axios) => {
+//      return (props) => {
+//          return (
+//              <Aux>
+//                  <Modal show>Something went wrong!</Modal>
+//              <WrappedComponent {...props}/>
+//              </Aux>
+//          );
+//      }
+//  };
+
+const withErrorHandler = (WrappedComponent, axios) => {
+
+
+    
+
+
+
+
+
+
+
+
+
+  return class extends Component {
+
+
+    state = {
+            error: null
+    }
+
+
+
+
+
+
+    componentDidMount() {
+
+        axios.interceptors.request.use(
+            request => {
+                this.setState(
+                    {error: null}
+                )
+            }
+        )
+
+
+    
+      axios.interceptors.response.use(null, (error) => {
+
+        this.setState(
+            {
+                error: error
+            }
+        )
+
+        
+        
+  
+
+
+
+      });
+    }
+
+    render() {
+      return (
+
+        <Aux>
+        <Modal show={this.state.error}>Something went wrong!</Modal>
+        <WrappedComponent {...this.props} />
+      </Aux>
+
+
+
+       
+      );
+    }
+  };
+};
+
+export default withErrorHandler;
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+Certo... outra mudança que 
+
+o professor 
+
+faz 
+
+
+é 
+
+__tROCAR___ AQUELE PLACEHOLDER 
+
+de 
+
+'something went wrong!' 
+
+
+
+POR 
+
+AQUELA 
+COISA 
+
+
+QUE ELE MENCIONOU ANTERIORMENTE,
+
+
+
+ELE VAI TROCAR 
+
+
+__PELO __ VALOR DA PROPRIEDADE __ 'message' __ 
+
+EXISTENTE 
+
+___DENTRO 
+
+DO OBJETO 'error' QUE NOS É RETORNADO 
+
+PELO 
+
+FIREBASE (E repassado pelo 'axios', actually).
+
+
+
+
+----------------------------
+
+
+ex:
+
+
+ return (
+
+        <Aux>
+        <Modal show={this.state.error}>{this.state.error.message</Modal> /////////EIS O CÓDIGO EM QUESTÃO.
+        <WrappedComponent {...this.props} />
+      </Aux>
+
+
+
+       
+      );
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+
+OK.
+
+
+
+
+
+
+
+
+
+
+---> CONTUDO, HÁ MAIS UMA COISA QUE DEVEMOS FAZER... --------> 
+
+
+O COMPONENTE 
+
+'MODAL' 
+
+QUE CRIAMOS há tempos, 
+
+aquele 
+
+
+component 
+
+'modal' que já foi reutilizado
+
+
+nesse 
+hoc de 
+
+
+'withErrorHandler',
+
+
+
+
+ESSE MODAL AÍ ____TAMBÉM___ EXPÕE 
+
+
+
+UMA PROPRIEDADE/PROP 
+
+'clicked',
+
+
+QUE 
+
+É UMA PROPRIEDADE 
+
+QUE 
+
+FAZ __ NOSSO __ MODAL E O BACKDROP (que fica dentro do modal) 
+
+
+SEREM 
+
+FECHADOS 
+
+QUANDO CLICAMOS 
+
+NO BACKDROP.... -------->  E QUEREMOS QUE ISSO ACONTEÇA 
+
+COM NOSSA MENSAGEM DE ERRO TAMBÉM; 
+
+QUEREMOS 
+
+QUE 
+ELA (o modal + backdrop)
+
+POSSA SER 
+
+
+'DISMISSADA' 
+
+
+
+COM UM CLIQUE 
+
+NO BACKDROp...
+
+
+
+
+
+--> para REPLICAR ESSE COMPORTAMENTO DO APLICATIVO/DO BACKDROP,
+
+
+PROFESSOR EXPLICA QUE 
+
+
+ELE PRECISA __cRIAR UM NOVO __ MÉTODO ___
+
+
+EM 
+
+'withErrorHandler' (pq esse negócio é um 
+CLASS BASED COMPONENT COM STATE,
+
+ele nos deixa adicionar métodos a ele..., isso é verdade....) -------->  
+
+
+
+ELE VAI CHAMAR 
+
+
+ESSE NEGÓCIO 
+
+DE 
+
+'errorConfirmedHandler'.... --------> ISSO SIMPLESMENTE SERÁ 
+
+
+UM MÉTODO 
+
+
+que 
+
+definirá 
+
+'this.setState', 
+
+UM
+
+
+
+setState que definirá 
+
+
+'error' COMO 'NULL',
+
+TAMBÉM.... ------------> 
+
+
+O PROFESSOR ENTÃO 
+
+
+
+VINCULARÁ/PASSARÁ 
+
+
+esse 
+
+'this.errorConfirmedHandler' 
+
+
+
+A UM PROP 
+
+de 
+
+'clicked' (pq 'onClick={props.clicked}' EXISTE LÁ NO 'Modal', é um prop usado lá em UM LISTENER DE CLICK)...
+
+
+
+
+E FICARÁ ASSIM:
+
+
+
+'<Modal 
+  clicked={this.errorConfirmedHandler}
+  />'
+
+
+
+
+-------------------------------------------------
+
+
+EXEMPLO DO CÓDIGO:
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Modal from '../../components/UI/Modal/Modal';
+
+import Aux from '../Auxiliary/Auxiliary';
+
+//  const withErrorHandler = (WrappedComponent, axios) => {
+//      return (props) => {
+//          return (
+//              <Aux>
+//                  <Modal show>Something went wrong!</Modal>
+//              <WrappedComponent {...props}/>
+//              </Aux>
+//          );
+//      }
+//  };
+
+const withErrorHandler = (WrappedComponent, axios) => {
+
+
+    
+
+    
+
+
+
+
+
+
+
+  return class extends Component {
+
+
+    state = {
+            error: null
+    }
+
+
+
+
+    errorConfirmedHandler = () => {
+        this.setState(
+            {
+                error: null
+            }
+        )
+    }
+
+
+
+    componentDidMount() {
+
+        axios.interceptors.request.use(
+            request => {
+                this.setState(
+                    {error: null}
+                )
+            }
+        )
+
+
+    
+      axios.interceptors.response.use(null, (error) => {
+
+        this.setState(
+            {
+                error: error
+            }
+        )
+
+        
+        
+  
+
+
+
+      });
+    }
+
+    render() {
+      return ( //obs: aquela propriedade 'message' É ALGO QUE EXISTE NATIVAMENTE NO OBJETO 'error' QUE NOS É RETORNADO/CONCEDIDO PELO firebase EM SI (e repassado pelo axios), QUANDO ALGUM ERRO OCORRE DURANTE O RUNTIME DO NOSSO APLICATIVO...
+
+        <Aux>
+        <Modal show={this.state.error} clicked={this.errorConfirmedHandler}>{this.state.error.message}</Modal>
+        <WrappedComponent {...this.props} />
+      </Aux>
+
+
+
+       
+      );
+    }
+  };
+};
+
+export default withErrorHandler;
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+CERTO, 
+
+
+COM TUDO ISSO DEFINIDO... professor 
+
+
+admite que 
+
+existe ainda 
+
+algo que 
+
+ele quer fazer... -----------> ELE EXPLICA 
+
+
+QUE 
+
+ESSE OUTPUT 
+
+dinâmico de 
+
+
+'{this.state.error.message}' 
+
+
+está 
+
+
+
+IRREGULAR,
+
+PQ ___ SE NÓS O OUTPUTTARMOS AÍ, 
+
+
+ELE ___VAI FAZER O 'THROW' DE UM 
+
+___ERROR___ INICIALMENTE__... (antes 
+
+de ser outputtado ali...) ----------> ISSO ACONTECE 
+
+
+PQ O ___COMPONENT 
+
+
+'<MODAL>' 
+
+
+SEMPRE __eSTÁ PRESENTE NO NOSSO PROJETO/NO NOSSO RUNTIME, 
+
+MESMO 
+
+QUE 
+
+ELE NÃO 
+
+ESTEJA 
+
+MOSTRADO (show/shown) TODO O TEMPO/EM TODAS AS HIPÓTESES -------> 
+
+
+
+
+PARA 
+
+FAZER COM 
+
+QUE 
+
+ESSE 
+
+
+'this.state.error.message' 
+
+
+NÃO SEJA 
+
+
+MOSTRADO INICIALMENTE,
+
+
+PROFESSOR 
+
+EXPLICA QUE 
+
+
+DEVEMOS 
+
+___USAR___ UMA TERNARY EXPRESSION___ ------> 
+
+
+escrever 
+
+'{this.state.error ? this.state.error.message : null}' --------> ISSO 
+
+
+BASICAMENTE 
+
+
+VAI DIZER: 
+
+
+'só quero outputtar 
+
+a mensagem de erro 
+
+do nosso erro se 
+
+O 
+
+VALOR DA PROPRIEDADE 'error' NO STATE for 'true'; caso esse não seja o seu valor, 
+
+vou querer que seja 'null'... (nada)''''...
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+PROFESSOR EXPLICA QUE 
+
+SE NÓS VOLTARMOS 
+
+AO APLICATIVO,
+
+VAMOS 
+
+RECEBER 
+
+AQUELE 
+
+ERRO 
+
+DE 
+'cannot read property 'interceptors' of undefined'... ------> 
+
+
+
+
+ELE DIZ QUE ISSO FAZ SENTIDO, POIS NÓS TENTAMOS/HAVÍAMOS TENTADO ___RODAR__ 
+
+
+
+
+
+ESSES 'setStates'
+
+
+A PARTIR 
+
+DOS RESPONSES/REQUESTS DE 
+
+'axios',
+
+
+MAS 
+
+
+ESSE 'axios' usado 
+
+em 
+
+'withErrorHandler = (WrappedComponent, axios) => {...}' 
+
+
+NÃO FOI RECEBIDO NESSA FUNÇÃO... NÃO FOI PASSADO.... ----------> 
+
+
+
+
+ISSO ACONTECE/ACONTECEU 
+
+
+PQ 
+
+
+
+___LÁ NO BURGERBUILDER__, 
+
+em 
+que 
+
+eu escrevi 
+
+'export default withErrorHandler(BurgerBuilder)',
+
+
+
+
+
+EU ACABEI APENAS PASSANDO O COMPONENT 'BurgerBuilder' 
+
+AO __'WithErrorHandler',
+
+
+
+e acabei 
+
+
+__dEIXANDO __ DE PASSAR __ A 'AXIOS INSTANCE' (que é a instance 
+criada em 'axios-orders.js') __ QUE VOU QUERER UTILIZAR... -------> 
+
+
+
+PARA SOLUCIONAR ESSE PROBLEMA,
+
+
+ACHO QUE 
+
+A SINTAXE CORRETA 
+
+SERIA 
+
+
+PASSAR TAMBÉM O PARÂMETRO/OBJETO DE 'axiosOrder' IMPORTADO NESSE 
+
+COMPONENT 'BurgerBuilder' (e que também 
+
+PODE SER USADO EM __QUALQUER__ UM DOS NOSSOS COMPONENTS, ESSE 'axiosOrder'...)
+
+
+'export default withErrorHandler(BurgerBuilder, axios)'..
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------> CERTO, ISSO ___FUNCIONOU___... 
+
+
+
+
+
+
+---> ENTRETANTO, 
+
+'funcionou mais ou menos'.... -----> quando clicamos 
+
+em 
+
+
+'Continue', 
+
+
+depois de pedir 
+
+algum burger,
+
+
+recebemos 
+
+
+
+um modal com 
+
+a mensagem 
+
+'Cannot read property 'cancelToken' of undefined'...
+
+
+
+
+
+ ---> para consertar um problema, professor 
+
+ diz para 
+
+
+
+fazer o return 
+
+do request, 
+
+senão o nosso 
+
+
+
+interceptor VAI __BLOQUEAR__ O REQUEST,
+
+
+como expliquei antes...
+
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+''''''''''''''
+
+    componentDidMount() {
+
+        axios.interceptors.request.use(
+            request => {
+                this.setState(
+                    {error: null}
+                )
+                return request; ////////EIS O CÓDIGO EM QUESTÃO.
+            }
+        )
+
+
+'''''''''''''' 
+
+
+
+ISSO AÍ VAI CONSERTAR O PROBLEMA DO REQUEST...
+
+
+
+
+----------------------------
+
+
+
+
+
+
+QUANTO 
+
+AO 'RESPONSE',
+
+O PROFESSOR EXPLICA QUE 
+
+DEVEMOS 
+
+
+COMPLEMENTAR 
+
+AQUELE 
+
+config 
+
+do interceptor da response... ------> 
+
+
+devemos colocar o primeiro parâmetro (pq nós 
+
+não definimos 
+
+o primeiro, se lembra? colocamos 'null'... -----> esse null deverá 
+
+ser 
+
+substituído
+ 
+ 
+ 
+ por 
+ 
+ 
+ 'resp => {resp}' ) -------------> 
+
+
+
+
+
+ PROFESSOR EXPLICA QUE 
+
+
+ A SINTAXE MAIS CURTA POSSÍVEL 
+
+ PARA 
+
+ ESSA PARTE 
+
+ DO CÓDIGO É 
+
+
+ 'res => res'...
+
+
+
+
+ ex (CÓDIGO AJUSTADO):
+
+
+
+
+
+
+
+
+ componentDidMount() {
+
+        axios.interceptors.request.use(
+            request => {
+                this.setState(
+                    {error: null}
+                )
+                return request; /////////EIS O CÓDIGO EM QUESTÃO. 
+            }
+        )
+
+
+    
+      axios.interceptors.response.use(res => res, (error) => { //////////EIS O CÓDIGO EM QUESTÃO.
+
+        this.setState(
+            {
+                error: error
+            }
+        )
+
+        
+        
+  
+
+
+
+      });
+    }
+
+
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+COM ISSO, SALVAMOS 
+
+TUDO E VOLTAMOS AO APLICATIVO... ----->  adicionamos um 
+
+burger 
+
+
+e testamos tudo... --> 
+
+
+o negócio vai funcionar como antes, 
+
+mas 
+
+
+agora teremos 
+
+essa feature 
+
+
+de 
+
+__ERROR __ HANDLING__, POR MEIO DO 
+
+NOSSO 
+
+'Hoc' 
+
+
+DE 
+
+'withErrorHandler'...
+
+
+
+
+
+
+
+
+----> agora devemos __cAGAR__ ALGUMA COISA NO CÓDIGO E ENTÃO CHECAR SE O MODAL DE ERRO FUNCIONA.
+
+
+
+
+
+
+
+
+
+---> professor vai até o container 'burgerBuilder'... ------> 
+
+
+aí ele vai no código/método 
+
+'post' do axios,
+
+
+ele 
+
+
+vai 
+
+
+em 
+
+
+'axios.post('/orders.json', order) ' 
+
+
+
+
+E ENTÃO 
+
+MUDA 
+
+O 
+
+
+'/orders.json' para 
+
+
+'/orders'  (PQ ELE MENCIONOU QUE A SIMPLES AUSÊNCIA DE '.json' JÁ CAGA TUDO, 
+
+quando se trata do FIREBASE SENDO USADO COM O AXIOS....) ---------> 
+
+
+
+SE FIZERMOS 
+
+ESSA ALTERAÇÃO,
+
+CERTAMENTE VEREMOS NOSSO MODAL DE ERRO EM AÇÃO... ---------> E, DE FATO, 
+
+
+
+
+PERCEBEMOS UM RESULTADO: 
+
+
+
+
+
+o modal de erro surge com uma mensagem de 
+
+
+'
+Network Error'....  -------> ISSO SIGNIFICA QUE 
+
+
+
+NOSSOS ESFORÇOS TIVERAM RESULTADOS, 
+
+
+
+temos um MODAL DE ERRO 
+
+que 
+
+nos diz 
+
+quando algo dá errado no nosso código... 
+
+
+
+
+-------------------------------
+
+
+
+
+--> ENTRETANTO, 
+
+AINDA TEMOS UM LEVE PROBLEMA:
+
+
+
+o click no backdrop NÃO ESTÁ TRIGGANDO 
+
+O ___cLOSE____ DO MODAL DE ERRO... ---------> 
+
+
+PARA SOLUCIONAR ISSO, 
+
+DEVEMOS 
+
+
+USAR 
+
+
+O PROP 
+
+de 
+'modalClosed' (já definido) em 
+
+vez 
+
+
+
+de 
+
+'clicked', pois 
+
+é isso que está configurado lá em 'Modal' e no 'Backdrop'...
+
+
+
+
+
+---------------------------
+
+
+
+
+CERTO, ISSO FUNCIONOU... ---------> 
+
+
+
+
+
+agora nosso erro pode ser dismissado com clicks no backdrop... ---> e agora 
+
+
+ESTAMOS 
+
+
+MOSTRANDO UM SUCCESS E UM ERROR CASE A PARTIR 
+
+DO SEND DE REQUESTS/RECEIVE DE RESPONSES,
+
+
+
+
+
+COM UM LOADING SPINNER FUNCIONAL,
+ 
+ 
+
+
+ e com uso 
+
+
+ DE UM HIGHER ORDER COMPONENT REUTILIZÁVEL 
+
+ QUE 
+
+ PODEMOS WRAPPAR 
+
+
+ AO REDOR DE QUALQUER COMPONENT que usa 'axios', para então 
+
+ GERENCIAR/HANDLAR SEUS ERROS....
+
+
+ ---------------------------
+
+
+
+
+
+ 

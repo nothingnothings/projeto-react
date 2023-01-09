@@ -1,0 +1,476 @@
+
+
+
+
+
+
+
+--> PARA CRIAR NOSSO 
+
+
+
+WORKFLOW CUSTOMIZADO,
+
+
+
+
+PROFESSOR 
+DIZ QUE 
+
+DEVEMOS COMEÇAR DO 0....
+
+
+
+
+
+------------------------
+
+
+
+
+
+
+PRIMEIRA COISA:
+
+
+
+USAR 
+
+
+NPM
+ 
+ para 
+
+ gerenciar (manage) 
+
+ todas 
+
+ as nossas 
+
+ dependencies... --> todos os arquivos 
+
+ e ferramentas 
+
+
+ ficarão 
+
+
+ sob o controle 
+
+ do npm,
+
+
+
+
+ ele que fará o workflow funcionar... ---> fazemos 
+
+ isso 
+
+ por meio 
+
+
+ do run 
+
+ de um comando 
+
+
+ 'npm init' 
+
+
+ dentro 
+
+
+ do 
+
+ folder desejado...
+
+
+
+ (como faremos aqui...).
+
+
+
+
+
+
+
+ responda sim para todas as perguntas....
+
+
+
+
+
+
+ coloque 'ok',
+
+
+ e aí 
+
+
+ UM ARQUIVO 
+
+
+ 'package.json'
+
+
+ SERÁ 
+
+ ADICIONADO 
+
+
+
+ NO SEU FOLDER... --> 
+
+
+
+ esse é o arquivo que utilizaremos 
+
+ PARA 
+
+
+ CONFIGURAR OS SCRIPTS 
+
+ RODADOS 
+
+ NO NOSSO TERMINAL...
+
+
+
+
+
+--> também é usado para gerenciar 
+
+nossas 
+
+
+dependencies importantes...
+
+ ----------------------------------------------------
+
+
+
+
+dependencies importantes --> 
+
+
+
+
+devemos 
+
+
+
+
+
+instalar novas dependencies e as marcar 
+
+como 
+
+'development only dependencies',
+
+
+
+
+pq isso 
+
+nos 
+
+ajuda 
+
+a entender quais 
+
+dependencies 
+
+
+settamos apenas 
+
+para 
+
+melhorar o build workflow, e quais 
+
+
+terão
+ 
+ realmente um IMPACTO de verade na running application (são agrupadas de forma diferente, no package.json)
+
+
+
+
+
+
+
+
+
+--save 
+
+e 
+
+-dev ------> AMBOS ADICIONAM UMA ENTRY NO 'package.json', tudo para que 
+
+CONSIGAMOS CONTABILIZAR/SABER QUAIS PACKAGES FORAM INSTALADAS NO NOSSO PROEJTO... ----> isso nos ajuda 
+
+A __COMPARTILHAR __ NOSSO PROJETO___ SEM TER QUE 
+
+___ COMPARTILHAR AQUELE __ GRANDÍSSIMO FOLDER DE 
+
+'node_modules' junto com ele... (só a informação de quais packages já é suficiente, não precisamos compartilhar 
+
+nosso folder 'node_modules' com outros desenvolvedores, isso é cumbersome e inútil.)
+
+
+
+
+
+
+ --> ok,
+
+
+
+
+ rodamos 
+
+
+
+ 
+
+
+
+ 'npm install --save-dev webpack'...
+
+
+
+ e 
+
+ também 
+
+
+ 'npm install --save-dev webpack-dev-server';   (mas acho que esse código mudou com o tempo... acho que hoje em dia é 'webpack-serve'..., ou algo assim...)
+
+
+
+
+
+
+
+ não, não, era realmente esse aí...
+
+
+
+ ex:
+
+
+
+ "webpack-dev-server": "^3.11.2"
+
+
+
+ -------------------------------------
+
+
+
+
+ OK,
+
+
+
+
+ INSTALAMOS ESSES 2 NEGÓCIOS...
+
+
+
+
+
+
+ --> webpack é basicamente a build tool em si,
+
+
+ o webpack dev server 
+
+ WRAPPA 
+
+ essa build tool;
+
+
+ ambas
+
+
+tools são da mesma equipe...
+
+
+
+
+
+
+
+
+
+--->ok, um folder 'node_modules' é criado....
+
+
+
+
+
+
+
+
+-----------------------
+
+
+
+
+teremos um 
+
+
+node 
+de 
+
+'nevDependencies' lá em 
+
+'package.json'...
+
+
+
+
+-------------------
+
+OK,
+
+
+AGORA 
+
+PODEMOS 
+
+COMPARTILHAR 
+
+ESSE 
+
+
+PROJETO___
+
+
+
+SEM 
+
+O 
+
+
+
+'node_modules',
+
+basta compartilhar 
+
+
+esse 
+
+
+package.json ---------> BASTA 
+
+
+RODAR 
+
+
+'npm install' 
+
+
+para 
+
+
+ter todas as dependencies 
+
+listadas 
+
+
+em 
+
+'dependencies' 
+
+e 
+
+'devDependencies'
+ sejam 
+
+ baixadas.....
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ---> webpack e webpack-dev-server usam um monte de dependencies,
+
+ e é por isso que ficamos com tantas pastas 
+
+
+ dentro 
+
+ de 
+
+ 'node_modules'...
+
+
+
+
+ -----------------------------------------
+
+
+
+
+
+--> PROFESSOR QUER SETTAR 
+
+UMA 
+
+
+
+
+FOLDER STRUCTURE BÁSICA,
+
+
+E UM 
+
+
+REACT APP BÁSICOO,
+
+
+para 
+
+ver 
+
+
+
+a estrutura 
+
+
+'geral' 
+
+
+
+de um 
+
+aplicativo construído com 'webpack' (o que já fizemos 1 vez...)
+
+
+
+
+
+
+---> Construído um react app básico,
+
+
+podemos 
+
+ajustar 
+
+
+a 
+webpack configuration
+
+A 
+
+ESSE AMBIENTE...

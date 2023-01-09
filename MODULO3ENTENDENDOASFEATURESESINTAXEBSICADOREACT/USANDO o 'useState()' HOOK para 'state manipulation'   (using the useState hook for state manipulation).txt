@@ -1,0 +1,3501 @@
+
+
+
+
+
+---> na última lição, 
+
+
+aprendemos 
+
+sobre 
+
+'state' (Essa propriedade especial) 
+
+
+
+E SOBRE 
+
+
+COMO A manipular 
+
+
+
+POR MEIO DE 
+
+'setState'...    
+
+
+
+
+
+
+---> 'state' e 'setState'  ---> FEATURES 
+
+APENAS DISPONÍVEIS 
+
+
+EM 
+
+
+'class-BASED react components' ---> ou seja, react components com sintaxe tipo 'class App extends Component {...}'...
+
+
+
+OU SEJA, COMPONENTS QUE VOCÊ CONSTRÓI POR MEIO DA 
+
+KEYWORD 'class' e que 'extendem' 'Component' (o objeto 'Component' introduzido pela library do REACT...)
+------------------------------------------------
+
+
+
+
+
+
+
+---> ANTES 
+
+DO REACT VERSÃO 16.8, 
+
+
+
+
+ESSA ERA __ A ÚNICA MANEIRA DE ATUALIZAR O STATE EM REACT APPLICATIONS___ ----> E ESSA SERÁ 
+
+A 'MAIN WAY' pela qual ATUALIZAREMOS STATES no nosso curso... ---> e o professor 
+
+LOGO NOS EXPLICARÁ A RAZÃO PARA TAL....
+
+
+
+
+
+Depois do 
+
+16.8, 
+
+surgiu UMA 
+
+MANEIRA DE ATUALIZAR 
+
+
+STATE 
+
+
+
+TAMBÉM 
+
+EM 'FUNCTIONAL COMPONENTS'   (components definidos com a sintaxe 'const coisaAleatoria = (props) => {...}'  )
+
+
+
+
+
+
+
+NÓS FAZEMOS ISSO 
+
+POR MEIO 
+
+DA FEATURE 
+
+CHAMADA 
+
+
+DE 
+
+'REACT HOOKS'... --> o professor VAI NOS MOSTRAR ESSA FEATURE AGORA....
+
+
+
+
+
+--> E NO NOSSO CURSO HÁ 2 MÓDULOS COMPLETOS ACERCA DESSA FEATURE....
+
+
+
+
+
+---> 1 DOS MÓDULOS MOSTRA COMO USAR 'REACT HOOKS' 'from the ground up', 
+
+enquanto QUE O OUTRO NOS MOSTRA COMO PODEMOS FAZER PARA __CONVERTER __ O PROJETO __ DE NOSSO 
+CURSO EM UMA VERSÃO  que usa 'react hooks'...
+
+
+
+--------------------------------
+
+
+
+
+--> MAS PARA ESSE CURSO, O PROFESSOR VAI USAR AINDA 
+
+UM SETUP EM QUE USAMOS 
+
+'CLASS-BASED COMPONENTS' PARA GERENCIAR 
+
+OS STATES... ---> apesar de QUE AGORA, DEPOIS DESSA VERSÃO 16.8, PODERÍAMOS 
+
+
+USAR 'REACT HOOKS' PARA GERENCIAR OS STATES, para fazer tudo.... (e aí apenas usaríamos FUNCTIONAL COMPONENTS....)
+
+
+
+
+
+---> MAS PQ DIABOS O PROFESSOR CONTINUA COM ESSE SETUP, ENTÃO? --> bem, 
+
+
+pq no passado ESSA ERA A ÚNICA MANEIRA DE 
+
+CONSTRUIR REACT APPS...  ----------------> e se você 
+
+
+SE JUNTAR A UMA COMPANHIA 
+
+
+CONSTRUINDO APLICATIVOS COM REACT,
+
+vocÊ 
+TRABALHARÁ COM ESSA SINTAXE.... ------> PQ ESSA É 
+
+
+A SINTAXE ESTABELECIDA, 
+
+E TODOS OS PROJETOS SERÃO CONSTRUÍDOS COM ELA...
+
+
+
+
+---> essa nova maneira, 
+
+na qual CONSTRUÍMOS 
+
+O APLICATIVO 
+
+COM REACT HOOKS, 
+
+
+
+É __TOTALMENTE __ OPCIONAL, e não é garantido 
+
+que ela 
+
+se torne 
+
+a MANEIRA 'MAIN' pela qual 
+
+construíremos esse tipo de aplicativo no futuro ---> 
+
+É POR ISSO 
+
+QUE NESSE CURSO VAMOS 
+
+
+___APRENDER AS 2 MANEIRAS___...
+
+
+
+
+---------------> VAMOS USAR 
+
+ESSA MANEIRA 'ESTABLISHED', que é A MANEIRA DEFAULT DE CRIAR COMPONENTS NO REACT...
+
+
+
+
+
+---> contudo, o professor vai introduzir REACT HOOKS __PQ ELES FAZEM SENTIDO__.... 
+
+
+
+
+
+---> aí teremos aqueles 2 módulos sobre react hooks .....
+
+
+
+
+
+-----> COM ISSO, 
+
+AGORA DEVEMOS 
+
+
+VER COMO ESSA FEATURE 'REACT HOOKS' se parece....  --------> 
+
+
+
+
+ESSA FEATURE NÃO PASSA DE UMA 'COLEÇÃO DE FUNÇÕES' EXPOSTAS A NÓS 
+
+PELO REACT, FUNÇÕES QUE VOCÊ PODE USAR/DEVE USAR 
+
+em 
+
+'FUNCTIONAL COMPONENTS'... ---------> PORTANTO,
+
+
+TEREMOS QUE 
+
+CONVERTER 
+
+
+NOSSO 
+
+COMPONENTE CLASS-BASED
+
+
+'class App extends Component {...}'
+
+
+
+
+EM UM 'FUNCTIONAL COMPONENT'... ---> 
+
+
+
+
+fazemos 
+
+
+isso por meio 
+
+
+da sintaxe 
+
+
+
+
+'const app = (props) => {
+    ...
+}'
+
+
+
+
+OU SEJA,
+
+
+COPIAMOS 
+
+A ESTRUTURA 
+
+
+DO COMPONENTE 
+
+
+'Person' 
+
+em 
+
+'Person.js'...
+
+
+------------------------
+
+
+
+
+CERTO...
+
+
+
+DENTRO DESSE 
+
+novo componente 
+
+'app', 
+
+
+nós 
+
+NÃO TEMOS 
+
+MAIS 
+
+
+'state' 
+
+
+ou 
+
+a função 
+
+
+
+'switchNameHandler()',
+
+
+por isso 
+
+
+O PROFESSOR 
+
+VAI os cortar 
+
+
+
+e temporariamente 
+
+
+COLAR NO FINAL DO NOSSO CÓDIGO..
+
+
+
+O PROFESSOR TAMBÉM MUDA o 'exports default App' para 'exports default app', pois agora NOSSO COMPONENTE É UM 'FUNCTIONAL COMPONENT', com uma LETRA INICIAL MINÚSCULA...
+
+
+
+EX:
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+
+const app = (props) => {
+
+render() {
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button> /////////
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+}
+
+}
+
+
+
+state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ]
+  }
+
+
+
+switchNameHandler = () => {
+  console.log('Was clicked!');
+  this.setState(
+      
+      {persons: [ {name: 'Maximillian', age: 28 },
+                { name: 'Manu', age: 29 },
+                { name: 'Stephanie', age: 22 }
+  
+      ]
+  
+
+}
+  )
+}
+
+
+
+
+export default app;
+
+
+
+------------------------------
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+FEITO ISSO, 
+
+
+
+
+
+NO SEU 'FUNCTION body'
+
+
+desse componente 
+
+'app'
+
+
+VOCê 
+
+NÃO TERÁ 
+
+MAIS UM 
+
+MÉTODO 
+
+'render()'...
+
+
+
+VOCÊ REMOVE O 'render()',
+
+
+
+POIS 
+
+
+AGORA 
+
+ESSE SEU FUNCTION BODY 
+
+
+___VAI APENAS RETORNAR CÓDIGO  JSX___...  ('return (...);') ----> OU SEJA, 
+
+BASICAMENTE VOCÊ VAI REPLICAR A ESTRUTURA DOS FUNCTIONAL COMPONENTS QUE 
+
+VOCÊ APRENDEU LÁ NO INÍCIO....
+
+
+
+ex:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+
+const app = (props) => {
+
+  return ( ///só isso fica no lugar...
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+}
+
+
+
+
+
+state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ]
+  }
+
+
+
+switchNameHandler = () => {
+  console.log('Was clicked!');
+  this.setState(
+      
+      {persons: [ {name: 'Maximillian', age: 28 },
+                { name: 'Manu', age: 29 },
+                { name: 'Stephanie', age: 22 }
+  
+      ]
+  
+
+}
+  )
+}
+
+
+
+
+
+
+export default app;
+
+
+
+
+---------------------------------
+
+
+
+
+
+CERTO... não precisamos 
+
+do 
+
+'render()', 
+
+POIS 
+
+VAMOS RETORNAR APENAS 'JSX'... ----> 
+
+
+PQ ESSE É UM 'FUNCTIONAL COMPONENT', no final das contas.... 
+
+
+--> MAS , AGORA, VOCê PODE USAR 
+
+
+ ESSA FEATURE 'REACTHOOKS' (ou UM DOS REACT HOOKS)....
+
+
+
+
+
+
+ REACT 16.8 ---> Devemos checar nosso package.json --> devemos 
+
+ ver se nosso projeto roda essa versão --> nosso projeto 
+
+ USA 'REACT HOOKS'... ---------> E OS HOOKS 
+
+ PODEM/SÃO IMPORTADOS 
+
+ DO 'REACT'... são 
+
+ importados 
+
+ da library 'React'...
+
+
+
+ NÓS FAZEMOS 
+
+ O IMPORT 
+
+ DELES POR MEIO 
+
+
+ DA SINTAXE 
+
+
+ import React, { useState } from 'react';
+
+
+
+
+
+
+
+
+ OU SEJA,
+
+
+ o objeto 
+
+ ' { useState }' 
+
+
+
+
+
+
+ OBS:::: EXISTEM __VÁRIOS REACTHOOKS___.... TODOS 
+
+ OS HOOKS, SEUS NOMES, COMEÇAM COM a keyword 'use'... --> ESSE 
+
+ 'useState' É APENAS 1 DOS VÁRIOS REACTHOOKS EXISTENTES...
+
+
+
+
+
+ ---->OBS::: SE USAMOS 
+
+ 'useState', não precisamos importar 'Component'... se importamos 
+
+ um, NÃO IMPORTAMOS O OUTRO...
+
+
+
+
+
+
+
+
+ ----> 'useState'- ---> é o 
+
+
+ _REACT HOOK MAIS IMPORTANTE___.... --> nós usaremos 
+
+ outros hooks ao longo do curso, mas esse é o mais importante.
+
+
+
+ 'useState' --> É O HOOK QUE NOS 
+
+ __PERMITE ___ GERENCIAR 
+
+
+ O 'state'
+
+ EM UM 'FUNCTIONAL COMPONENT'... ---> CERTO, 
+
+
+ E COMO O UTILIZAMOS?
+
+
+
+
+ Bem, 
+
+
+
+ nós o CHAMAMOS 
+
+
+ COMO UMA FUNÇÃO,
+  
+
+  tipo assim:
+
+
+
+  'useState()'.... --------->  chamamos isso dentro do FUNCTIONAL COMPONENT 'app'...
+
+
+  DEPOIS QUE VOCÊ FAZ ISSO, 
+
+  VOCê 
+
+
+  PASSA A ELE 
+
+
+  SEU 'INITIAL state'... ---------> ISSO QUER 
+
+
+  DIZER QUE 
+
+  NÓS TEMOS 
+
+  QUE PASSAR 
+
+
+  NOSSO OBJETO dentro de 'state' que temos lá embaixo no nosso código... devemos 
+
+  colocá-lo em um OBJETO dentro do parâmetro de 'useState()'...
+
+
+
+
+
+
+
+  ex:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+
+const app = (props) => {
+
+    useState({
+        persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ], 
+    otherState: 'some other value'
+    })
+
+
+
+
+  return ( ///só isso fica no lugar...
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+}
+
+
+
+
+
+state = { /////////////////////////AÍ NÓS DELETAMOS ESSE CÓDIGO....
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ]
+  }
+
+
+
+switchNameHandler = () => {
+  console.log('Was clicked!');
+  this.setState(
+      
+      {persons: [ {name: 'Maximillian', age: 28 },
+                { name: 'Manu', age: 29 },
+                { name: 'Stephanie', age: 22 }
+  
+      ]
+  
+
+}
+  )
+}
+
+
+
+
+
+
+export default app;
+
+
+
+
+-----------------------------------
+
+
+
+---->
+
+
+
+certo.... 
+
+
+
+o 
+
+'useState'  
+
+usa 
+
+esse hook aí do react, 
+
+
+MAS O QUE DIABOS ELE FAZ?
+
+
+
+
+
+----> 'useState'  
+
+
+
+___NOS RETORNA __ UM ARRAY___ COM __EXATAMENTE ___ 
+
+
+2 ELEMENTOS... (e SEMPRE __ dois elementos... )...
+
+
+
+
+
+-----> professor diz que podemos/devemos 
+
+
+armazenar 
+
+a função 
+
+
+'useState()' 
+
+
+em uma CONSTANTE, talvez uma constante chamada 
+
+
+de 'stateArr'  (state array....)...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+
+const app = (props) => {
+
+    const stateArr = useState({  ///////armazenamos 'useState' nessa constante aí....
+        persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ], 
+    otherState: 'some other value'
+    })
+
+
+
+
+  return ( ///só isso fica no lugar...
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+}
+
+
+
+switchNameHandler = () => {
+  console.log('Was clicked!');
+  this.setState(
+      
+      {persons: [ {name: 'Maximillian', age: 28 },
+                { name: 'Manu', age: 29 },
+                { name: 'Stephanie', age: 22 }
+  
+      ]
+  
+
+}
+  )
+}
+
+
+
+
+
+
+export default app;
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+
+BEM, 
+
+
+O PRIMEIRO 
+
+ELEMENTO QUE 
+
+VAMOS RECEBER 
+
+POR MEIO 
+
+
+DE 
+
+'useState()'
+
+
+
+É __ O PRIMEIRO __ STATE  (é o 'currentState' do nosso aplicativo)
+
+
+DE NOSSO APLICATIVO... ------->  ou seja,
+
+
+
+aqui é 
+
+
+
+'{persons: [
+    { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+]}' .......
+
+
+---------------------------------
+
+
+
+
+
+
+
+JÁ O SEGUNDO __ARGUMENTO____ EM 'stateArr' 
+
+
+
+
+SERÁ SEMPRE ___A FUNÇÃO/UMA FUNÇÃO_ ___ QUE FARÁ/PERMITIRÁ 
+
+
+__ O UPDATE____ DESSE PRIMEIRO STATE...         ---------->   é uma função 
+
+
+QUE CONSCIENTIZA O 'react' da mudança no 'state', e que efetivamente 
+
+PROVOCA 
+
+
+O RE-RENDERING DOS COMPONENTES QUE PRECISAM 
+
+
+SER RE-RENDERIZADOS....
+
+
+
+---------------------------------
+
+
+
+É POR ISSO, EXPLICA O PROFESSOR,
+
+ QUE PODEMOS 
+
+ USAR, NO LUGAR DA 'constante', 
+
+
+
+ UMA FEATURE MAIS MODERNA DE JAVASCRIPT, 
+
+
+ O 'ARRAY DESTRUCTURING', 
+
+
+
+ que é aquele negócio que funciona 
+
+
+ com a sintaxe 
+
+
+ 'const [xxx, yyy] = [zzz, www];'  ----------> ISSO VAI ENFIAR OS VALORES DO ARRAY NA DIREITA EM NOVAS CONSTANTES, tipo 'const xxx = zzzz' e 'const yyy = www'....
+
+
+
+
+
+
+
+
+
+
+NO NOSSO CÓDIGO, FICARIA/FICARÁ ASSIM:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+
+const app = (props) => {
+
+    const [] = useState({  ////USAREMOS ARRAY DESTRUCTURING AQUI...
+        persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ], 
+    otherState: 'some other value'
+    })
+
+
+
+
+  return ( ///só isso fica no lugar...
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+}
+
+
+
+switchNameHandler = () => {
+  console.log('Was clicked!');
+  this.setState(
+      
+      {persons: [ {name: 'Maximillian', age: 28 },
+                { name: 'Manu', age: 29 },
+                { name: 'Stephanie', age: 22 }
+  
+      ]
+  
+
+}
+  )
+}
+
+
+
+
+-------------------------------
+
+
+
+
+O 
+
+
+
+array 
+
+
+destructuring nessa 
+
+parte 
+
+
+'const [] = useState({})' 
+
+
+
+VAI PUXAR ELEMENTOS PARA FORA DESSE ARRRAY, ELEMENTOS COM VALORES 
+
+CORRESPONDENTES AOS VALORES EXTRAÍDOS DO LADO DIREITO DO '='... (ou seja, extraídos do function call...)
+
+
+
+
+
+dentro 
+
+
+
+de 
+
+
+'const [] ', 
+
+
+nós 
+
+
+podemos nomear essas consts/elementos 
+
+
+
+
+COMO QUISERMOS.... o professor  coloca 
+
+o nome 
+
+de 
+
+
+
+'personsState' para o primeiro elemento, 
+
+
+e o 
+
+
+nome do segundo 
+
+
+argumento 
+
+será 
+
+
+'setPersons'  (ELE CHAMA DISSO ___PQ O SEGUNDO ___ ARGUMENTO SEMPRE SERÁ ___UMA FUNÇÃO___ QUE TE POSSIBILITARÁ __DEFINIR ___ ESSE STATE/STATES...   )
+
+
+
+
+
+
+
+
+RESULTADO:
+
+
+'
+
+const [ personsState, setPersons ] = useState({
+  persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ]
+})
+
+'
+
+
+-----------------------------------------------------------
+
+
+
+
+
+
+RESULTADO NO NOSSO CÓDIGO COMPLETO:
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+
+const app = (props) => {
+
+    const [personsState, setPersonsState ] = useState({  ////USAREMOS ARRAY DESTRUCTURING AQUI...
+        persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ], 
+    otherState: 'some other value'
+    })
+
+
+
+
+  return ( ///só isso fica no lugar...
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+}
+
+
+
+switchNameHandler = () => {
+  console.log('Was clicked!');
+  this.setState(
+      
+      {persons: [ {name: 'Maximillian', age: 28 },
+                { name: 'Manu', age: 29 },
+                { name: 'Stephanie', age: 22 }
+  
+      ]
+  
+
+}
+  )
+}
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+CERTO, AGORA 
+
+
+TEMOS 
+
+ESSAS 2 COISAS/OBJETOS/CONSTANTES... 'personsState' e 'setPersonsState'...
+
+
+
+
+personsState --->  ___ TE DÁ __ ACESSO AO OBJETO ___ 
+
+
+'{
+
+persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ], 
+    otherState: 'some other value'
+    }
+
+
+}',
+
+
+
+PORTANTO, PODEMOS 
+
+
+SUBSTITUIR 
+
+
+
+TODAS AS OCORRÊNCIAS 
+
+
+DE 
+
+'
+{
+persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ], 
+    otherState: 'some other value'
+    }
+' 
+
+
+
+NO NOSSO CÓDIGO, 
+
+todas as ocorrências desse STATE, por 'personsState'.... ---> 
+
+
+isso quer 
+
+dizer que em todos 
+
+lugares 
+
+
+do código em que 
+
+havia 
+
+
+'this.state' nós VAMOS COLOCAR 'personsState', que é a mesma coisa, 
+
+mas com sintaxe diferente (com a sintaxe da deestruturaçõa.)
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+
+const app = (props) => {
+
+    const [personsState, setPersonsState ] = useState({  ////USAREMOS ARRAY DESTRUCTURING AQUI...
+        persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ], 
+    otherState: 'some other value'
+    })
+
+
+
+
+  return ( ///só isso fica no lugar...
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(personsState.persons[0])[0]} age={personsState.values(personsState.persons[0])[1]} />
+        <Person name={Object.values(personsState.persons[1])[0]} age={personsState.values(personsState.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(personsState.persons[2])[0]} age={personsState.values(personsState.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+}
+
+
+
+switchNameHandler = () => {
+  console.log('Was clicked!');
+  this.setState(
+      
+      {persons: [ {name: 'Maximillian', age: 28 },
+                { name: 'Manu', age: 29 },
+                { name: 'Stephanie', age: 22 }
+  
+      ]
+  
+
+}
+  )
+}
+
+
+
+--------------------------------------------
+
+
+
+
+
+CERTO.... FIZEMOS A ALTERAÇÃO. -----------> tínhamos que trocar 
+
+esse 'this.state' pq 'this.state' NÃO EXISTE MAIS.... ('this.state' SÓ ___EXISTE ___ EM CLASS-BASED COMPONENTS, e nós __NÃO TEMOS MAIS ___ UM 'CLASS-BASED react COMPONENT' no nosso código, apenas temos um FUNCTIONAL component... )
+
+
+
+
+
+
+
+Ok...
+
+
+
+
+personsState ---> acessa a 'DATA' de 'persons'...
+
+
+
+já 
+
+
+'setPersonsState' ---> NOS DEIXA DEFINIR __ UM NOVO STATE__....
+
+
+
+------------------------------------------------------------------
+
+
+
+
+
+PARA USARMOS EFETIVAMENTE 
+
+O 
+
+'setPersonsState', 
+
+
+PODEMOS 
+
+PEGAR O CÓDIGO 
+
+
+
+de 
+
+
+'switchNameHandler = () =>{
+  this.setState(
+    {
+      persons: [
+        { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+      ]
+    }
+  )
+}
+
+'
+
+
+
+E COLOCÁ-LO 
+
+
+
+dentro 
+
+do código de nosso FUNCTIONAL COMPONENT, para que funcione como 
+
+'setPersonsState()'....
+
+
+
+
+
+
+---> certo, mas a pergunta é: 
+
+
+
+COMO DIABOS ADICIONAMOS UM 
+
+__MÉTODO___ (pq isso antigamente era um MÉTODO) 
+
+a um functional component? ----------->
+
+
+
+BEM, 
+
+
+O PROFESSOR EXPLICA QUE, NO FINAL DAS CONTAS (no javascript GERAL), 
+
+FUNÇÕES 
+
+___ PODEM SER ADICIONADAS __ DENTRO DE FUNÇÕES.... --> e é por 
+
+
+isso que 
+
+PODEMOS 
+
+
+ENFIAR ESSA FUNÇÃO 'switchNameHandler()' DENTRO 
+
+
+DO NOSSO FUNCTIONAL COMPONENT de 
+
+'app'...
+
+
+
+
+---> é por isso que vou criar uma nova função 
+
+
+
+em 'app', 
+
+uma função 
+
+
+criada com uma constante....
+
+
+
+será:
+
+
+
+'const switchNameHandler = () => {
+  ...
+}'
+
+
+
+
+e ela segurará 
+
+
+O MESMO CÓDIGO DE ANTES...
+
+
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+
+const app = (props) => {
+
+    const [personsState, setPersonsState ] = useState({  ////USAREMOS ARRAY DESTRUCTURING AQUI...
+        persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ], 
+    otherState: 'some other value'
+    })
+
+
+
+
+
+const switchNameHandler = () => { ///////EIS O CÓDIGO EM QUESTÃO.
+  console.log('Was clicked!');
+  this.setState(
+      
+      {persons: [ {name: 'Maximillian', age: 28 },
+                { name: 'Manu', age: 29 },
+                { name: 'Stephanie', age: 22 }
+  
+      ]
+  
+
+}
+  )
+}
+
+
+
+
+
+
+
+
+
+
+  return ( ///só isso fica no lugar...
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={this.switchNameHandler}>Switch Name</button>
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(personsState.persons[0])[0]} age={personsState.values(personsState.persons[0])[1]} />
+        <Person name={Object.values(personsState.persons[1])[0]} age={personsState.values(personsState.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(personsState.persons[2])[0]} age={personsState.values(personsState.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+}
+
+
+
+
+---------------------------------
+
+
+
+
+E 
+
+
+esse 'switchNameHandler' AINDA 
+
+
+
+TEM AQUELE 
+
+FUnction body lá... 
+
+
+
+aquele function body 
+
+
+de 
+
+'this.setState(
+  {...} (objeto 'persons')...
+)'
+
+
+
+
+.... E O PROFESSOR EXPLICA QUE ESSE CÓDIGO DA FUNCTION BODY É 
+
+'PERFECTLY FINE JAVASCRIPT CODE'...  ----> VOCÊ __PODE __ TER UMA FUNÇÃO DENTRO DE OUTRA FUNÇÃO ___ ---> 
+
+
+isso fica com uma aparência estranha, e você não usa essa sintaxe tão frequentemente, 
+
+MAS COM 
+
+__REACTHOOKS___ VOCÊ A UTILIZA, e não há problemas em a utilizar... --> pq 
+
+
+se vocÊ a utilizar, 
+
+AGORA VOCÊ 
+
+
+TERÁ UM 
+
+
+FUNCTIONAL COMPONENT QUE 
+
+
+PODE ADMINISTRAR 'STATE' ('handle state') E QUE 
+
+PODE TAMBÉM 
+
+
+___TER __ OUTRAS FUNÇÕES QUE FAZEM ALGO, como POR EXEMPLO __REALIZAR ___ ALGUMA AÇÃO __ A PARTIR 
+
+DE UM __CLICK___ (como essa função 'switchNameHandler' que temos aqui, que é ativada a partir 
+de um CLICk...) ---------->
+
+
+------> e é EXATAMENTE ISSO QUE OCORRE AQUI: por meio de 
+
+'onClick', nós previamente 
+
+
+CHAMÁVAMOS 
+
+A FUNÇÃO 
+
+
+'this.switchNameHandler'... BEM, 
+
+
+AGORA NÓS VAMOS TIRAR A KEYWORD 'this', pois 
+
+aGORA NÓS 
+
+
+ESTAMOS DENTRO DE UMA ___ FUNÇÃO___ (e não mais dentro de uma CLASSE, como antes)... --> 
+
+agora, portanto, 
+
+é 
+
+
+APENAS
+
+'switchNameHandler'...
+
+
+
+
+ex(vamos em frente e substituímos todas as ocorrências de 'this.switchNameHandler' por 'switchNameHandler'...):
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+
+const app = (props) => {
+
+    const [personsState, setPersonsState ] = useState({  ////USAREMOS ARRAY DESTRUCTURING AQUI...
+        persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ], 
+    otherState: 'some other value'
+    })
+
+
+
+
+
+const switchNameHandler = () => { ///////EIS O CÓDIGO EM QUESTÃO.
+  console.log('Was clicked!');
+  this.setState(
+      
+      {persons: [ {name: 'Maximillian', age: 28 },
+                { name: 'Manu', age: 29 },
+                { name: 'Stephanie', age: 22 }
+  
+      ]
+  
+
+}
+  )
+}
+
+
+
+
+
+
+
+
+
+
+  return ( ///só isso fica no lugar...
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={switchNameHandler}>Switch Name</button>
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(personsState.persons[0])[0]} age={personsState.values(personsState.persons[0])[1]} />
+        <Person name={Object.values(personsState.persons[1])[0]} age={personsState.values(personsState.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(personsState.persons[2])[0]} age={personsState.values(personsState.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+}
+
+
+
+---------------------------------
+
+
+
+OBS: 
+
+
+ainda deixamos 
+
+'switchNameHandler', e não 'switchNameHandler()', POIS 
+
+
+__NÃO QUEREMOS__ EXECUTAR ESSE NEGÓCIO IMEDIATAMENTE (ele está atrelado a um 'EVENTLISTENER', aquele eventListener trazido ao código pela introdução do 'atributo' de 'onClick' no botão) ---> 
+
+isso quer dizer que NÓS SÓ VAMOS QUE ESSE NEGÓCIO SEJA EXECUTADO QUANDO O BOTÃO A ELE VINCULADO FOR APERTADO(
+
+  código 
+
+  'button onClick={switchNameHandler}'...
+)
+
+
+-------------------------------------------
+
+
+
+
+
+QUANDO ESSE BOTÃO FOR CLICADO,
+
+
+a função 
+
+
+
+'switchNameHandler' SERÁ 
+
+
+EXECUTADA....
+
+
+
+
+
+CÓDIGO DA FUNÇÃO 'switchNameHandler':
+
+
+
+
+
+const switchNameHandler = () => {
+  console.log('Was clicked!');
+  this.setState(
+      
+      {persons: [ {name: 'Maximillian', age: 28 },
+                { name: 'Manu', age: 29 },
+                { name: 'Stephanie', age: 22 }
+  
+      ]
+  
+
+}
+  )
+}
+
+
+
+
+-------------------------
+
+
+
+nessa função aí, nós não vamos 
+
+mais 
+
+chamar 
+
+
+'this.setState()', pois: 
+
+
+1) NÓS NÃO ESTAMOS MAIS USANDO UM 'CLASS-BASED REACT COMPONENT' (e o 'this' é usado com essa espécie de react components)...
+
+
+
+
+2) NÓS __NÃO TEMOS MAIS __ A FUNÇÃO 'setState', ESSA É UMA FUNÇÃO ____EXCLUSIVA___ AOS 'CLASS-BASED REACT COMPONENTS'...
+
+
+
+
+-------------------------------------------
+
+
+
+EM VEZ DE USARMOS 
+
+
+'this.setState()', aqui, NÓS 
+
+___USAREMOS_____ 
+
+
+
+'setPersonsState'...
+
+
+
+
+
+
+EX(trocamos 'setState' por 'setPersonsState'...):
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+
+const app = (props) => {
+
+    const [personsState, setPersonsState ] = useState({  ////USAREMOS ARRAY DESTRUCTURING AQUI...
+        persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ], 
+    otherState: 'some other value'
+    })
+
+
+
+const switchNameHandler = () => { 
+  console.log('Was clicked!');
+  setPersonsState( ///////EIS O CÓDIGO EM QUESTÃO. Usa-se a função definida mais acima, criada A PARTIR DO ARRAY DEESTRUCTURING...
+      
+      {persons: [ {name: 'Maximillian', age: 28 },
+                { name: 'Manu', age: 29 },
+                { name: 'Stephanie', age: 22 }
+  
+      ]
+  
+
+}
+  )
+}
+
+
+
+
+  return ( 
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={switchNameHandler}>Switch Name</button>
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(personsState.persons[0])[0]} age={personsState.values(personsState.persons[0])[1]} />
+        <Person name={Object.values(personsState.persons[1])[0]} age={personsState.values(personsState.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(personsState.persons[2])[0]} age={personsState.values(personsState.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+}
+
+
+
+-------------------
+
+
+
+com isso, se vocÊ salvar esse código... ----> recebemos um ERRO. (o professor, não...) --> 
+
+
+devemos consertar esse erro..
+
+
+
+--> certo, consertei o erro ---> eram 
+
+
+os imports incorretos no arquivo, 
+
+
+
+além do 'exports default App', que deveria ser 'exports default app' (minúsculo, pois é UM FUNCTIONAL REACT COMPONENT.)
+
+
+
+ISSO ESTÁ FUNCIONANDO....
+
+
+
+---> isso significa que 
+
+
+O 
+
+
+
+'useState' ___FUNCIONA EM UM GERAL___. .... --> caso contrário, 
+
+
+NÃO SERÍAMOS CAPAZES 
+
+DE EXTRAIR DADOS 
+
+DO NOSSO 
+
+
+
+STATE DE 'persons'
+
+
+
+DEFINIDO 
+
+
+em 
+
+
+'setPersonsState'....
+
+----------------------------
+
+
+
+
+
+
+
+---> se agora eu apertar 
+
+
+'switch name', eu acabo 
+
+
+
+MUDANDO 'MAX' PARA MAXIMILLIAn...
+
+
+
+
+
+---------> PORTANTO, o 'extract' do 'state', o 'update' do state E 
+
+
+__ O __ RE-RENDERING___ DO COMPONENT A PARTIR de um 
+
+'state change'... TUDO ISSO FUNCIONA.... ----------> 
+
+
+
+ENTRETANTO, 
+
+HÁ 
+
+
+UMA IMPORTANTE 
+
+DIFERENÇA 
+
+
+ENTRE O 'STATE' de 
+
+
+'FUNCTIONAL COMPONENTS'  E 'CLASS-BASED COMPONENTS' ----->   eles, 
+
+esses approaches/tipos de component
+
+
+
+podem 
+
+SE PARECER, MAS O FUNCIONAMENTO DOS 2 ___É DIFERENTE, um em relação 
+ao outro....___.... DEVEMOS 
+
+SEMPRE 
+
+PREFERIR 
+
+
+OS 
+
+'FUNCTIONAL COMPONENTS'
+
+
+
+----------------------------------
+
+
+
+
+PARA VER A DIFERENÇA 
+
+
+
+ENTRE OS DOIS, 
+
+O PROFESSOR 
+
+FAZ UM 
+
+
+CONSOLE.LOG 
+
+
+
+de 
+
+'personsState'...
+
+
+ele faz esse console.log 
+
+DENTRO 
+
+
+DO componente 
+
+'app'...
+
+
+-------------------------------
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const app = (props) => {
+  const [personsState, setPersonsState] = useState(
+    {
+      persons: [
+        { name: 'Max', age: 28 },
+        { name: 'Manu', age: 29 },
+        { name: 'Stephanie', age: 30 }
+      ],
+      otherState: 'some other value'
+    }
+  );
+
+
+console.log(personsState);
+
+  const switchNameHandler = () =>{
+    setPersonsState(
+      {
+        persons: [
+          { name: 'Maximillian', age: 28 },
+          { name: 'Manu', age: 29 },
+          { name: 'Stephanie', age: 22 }
+        ]
+      }
+    )
+  }
+
+
+
+
+
+
+
+  
+  return ( 
+    <div className="App">
+      <h1>Hi, I'm a React App</h1>
+      <p>This is really working!</p>
+      <button onClick={switchNameHandler}>Switch Name</button>
+      {/*<Person name="Max" age="28" />
+      <Person name="Manu" age="29">My Hobbies: Racing</Person>
+  <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+      <Person name={personsState.persons[0].name} age={personsState.persons[0].age} />
+      <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Racing</Person>
+      <Person name={personsState.persons[2].name} age={personsState.persons[2].age}/>
+
+  
+    </div>
+  );
+
+
+
+
+
+
+}
+
+
+
+
+--------------------------------
+
+
+
+PROFESSOR SALVA ESSE CÓDIGO E RECARREGA A PÁGINA...
+
+
+
+
+no console, 
+
+
+vemos que 
+
+
+no nosso 'state'
+
+
+é mostrado 
+
+
+um OBJETO ('{}')
+
+
+
+COM 
+
+
+'otherState' (pq definimos esse negócio...)
+
+
+
+E
+
+'persons'... (aquele array de objetos...)
+
+
+
+
+---> e se 
+
+
+apertarmos 
+
+
+em 
+
+
+
+'switchName', naquele botão, 
+
+
+
+NÓS VAMOS VER 
+
+
+
+QUE AQUELE 
+
+
+OBJETO/PROPRIEDADE 
+
+
+
+'otherState' (com o valor 'some other value')
+
+
+__ESTARÁ__ SUMIDA... -------> ____E ISSO É SUPER IMPORTANTE___...
+
+
+
+
+
+
+SUPER IMPORTANTE --> QUANDO VOCê
+
+USA 
+
+
+
+'REACTHOOKS', esse approach de usar 
+
+
+
+UM 'FUNCTIONAL REACT COMPONENT' de usar 
+
+'useState()', 
+
+
+SUA FUNÇÃO 
+
+QUE VOCÊ 
+
+
+GANHA COMO 
+
+
+SEGUNDO ARGUMENTO 
+
+DAQUELE 
+
+
+ARRAY (nesse caso concreto, 'setPersonsState'), 
+
+
+
+
+A FUNÇÃO QUE VOCÊ GANHA COMO SEGUNDO PARÂMETRO DAQUELE  ARRAY, 
+
+
+
+
+ESSA FUNÇÃO 
+
+
+_______NÃO FAZ MERGE_____ DE QUALQUER COISA QUE VOCÊ PASSA 
+
+A ELA COM AS COISAS DO STATE ANTIGO.... (essa é a grande diferença 
+
+entre 
+
+usar o reacthooks e não usar o reacthooks, 
+
+
+entre 
+
+
+USAR 
+
+OS 'FUNCTIONAL COMPONENTS' e usar os 'CLASS-BASED COMPONENTS'....)
+
+
+
+
+
+
+
+
+RESUMO:
+
+
+
+
+CLASS-BASED COMPONENTS ----> métodos de 'state' FAZEM ___MERGE___ DO STATE NOVO COM O STATE VELHO... (coisas que existem APENAS NO ARRAY NOVO serão adicionadas AO ARRAY VELHO, mas tudo que o array velho tinha que não foi substituído/overwritten SERÁ __MANTIDO___....)
+
+
+FUNCTIONAL REACT COMPONENTS ---> MÉTODO 'useState' ____NÃO FAZ MERGE DE COISA ALGUMA__, O NOVO STATE ACABA __SUBSTITUINDO ___ COMPLETAMENTE O STATE VELHO, O STATE DEFINIDO ANTERIORMENTE... (o initial state)...
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+ESSA É A CARACTERÍSTICA MAIS 
+
+
+___IMPORTANTE__ dos reacthooks.... ---> 
+
+
+
+isso significa que 
+
+QUANDO VOCÊ 
+
+
+ESTÁ ATUALIZANDO O STATE POR MEIO DO REACTHOOKS, 
+
+se você quiser usar os dados do STATE ANTIGO, 
+
+VOCÊ É OBRIGADO 
+
+A REPLICÁ-LO ___MANUALMENTE___ NO NOVO STATE.... ('we must manually copy all old state data, if we wanna keep it'...)
+
+--------------------------------------
+
+
+
+OK, nesse nosso exemplo, como faríamos 
+
+para ficar com o 
+
+
+'otherState' também no novo state? Bem, poderíamos 
+
+simplesmente 
+
+chamar 
+
+
+'otherState: personsState.otherState' --> essa referência vai basicamente copiar os dados/criar uma réplica dos dados do 'old state' no 'new state' (criado a partir de 'setPersonsState'...).
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+const app = (props) => {
+  const [personsState, setPersonsState] = useState(
+    {
+      persons: [
+        { name: 'Max', age: 28 },
+        { name: 'Manu', age: 29 },
+        { name: 'Stephanie', age: 30 }
+      ],
+      otherState: 'some other value'
+    }
+  );
+
+
+console.log(personsState);
+
+  const switchNameHandler = () =>{
+    setPersonsState(
+      {
+        persons: [
+          { name: 'Maximillian', age: 28 },
+          { name: 'Manu', age: 29 },
+          { name: 'Stephanie', age: 22 }
+        ],
+        otherState: personsState.otherState; ///////////EIS AQUI O CÓDIGO EM QUESTÃO (precisamos escrever isso manualmente, se quisermos TER O CÓDIGO DO ANTIGO 'STATE' no 'NOVO STATE', definido por essa mesma função 'setPersonsState'...)
+      }
+    )
+  }
+
+
+
+
+
+
+
+  
+  return ( 
+    <div className="App">
+      <h1>Hi, I'm a React App</h1>
+      <p>This is really working!</p>
+      <button onClick={switchNameHandler}>Switch Name</button>
+      {/*<Person name="Max" age="28" />
+      <Person name="Manu" age="29">My Hobbies: Racing</Person>
+  <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+      <Person name={personsState.persons[0].name} age={personsState.persons[0].age} />
+      <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Racing</Person>
+      <Person name={personsState.persons[2].name} age={personsState.persons[2].age}/>
+
+  
+    </div>
+  );
+
+
+
+
+
+
+}
+
+
+
+
+------------------------------------
+
+
+
+
+sE FIZERMOS 
+
+
+essa alteração,
+
+
+veremos 
+
+QUE O CONSOLE.LOG 
+
+
+
+NOS MOSTRARÁ 
+
+
+QUE O 
+
+
+'personsState' 
+
+
+TERÁ 
+
+
+a propriedade 
+
+
+de 
+
+'otherState', POIS NÓS, DESSA VEZ, 
+
+UPDATAMOS MANUALMENTE OS 
+
+
+DADOS do 'novo state'( copiamos e colamos 
+o 'otherState' que estava no 'velho state'...).
+
+
+
+-----------------------------------------------
+
+
+
+
+
+ESSA É UMA DAS MANEIRAS DE FAZER ISSO, DE ___MANTER OS DADOS ___ DO 
+
+STATE ANTIGO ___ no STATE NOVO ____....
+
+
+
+
+
+---> mas professor 
+
+explica QUE 
+
+
+EXISTE UMA MANEIRA MAIS ELEGANTE 
+
+
+De 
+
+
+'NÃO MANUALMENTE MERGAR seus states'... (ou seja, evitar o MERGE MANUAL DE STATES, que é uma PORCARIA trabalhosa)...
+
+
+
+--> essa maneira mais elegante 
+
+
+ENVOLVE O USO 
+
+DE 
+
+'useState' 
+
+
+__MÚLTIPLAS VEZES___....
+
+
+
+
+--> como assim? ---> 
+
+
+bem, 
+
+
+em 
+
+'class-based components', nós só temos 
+
+UMA ÚNICA PROPRIEDADE 
+
+'state', 
+
+e então 
+
+
+temos a propriedade 
+
+'this.setState()',
+
+
+que é um método 
+
+
+QUE __AUTOMATICAMENTE __ MERGA (merges) AS MUDANÇAS 
+
+
+DO NOVO STATE COM 
+
+O VELHO STATE (ele faz isso para 
+NÃO DISCARTAR 
+
+QUALQUER 'state'...) ----------> 
+
+
+
+
+JÁ AQUI, NOS 'FUNCTIONAL REACT COMPONENTS', 
+
+
+nós 
+
+
+PODEMOS (e devemos )
+
+
+TER ___MÚLTIPLOS __ 
+
+
+
+CALLS DE 'useState()'... --->
+
+
+
+
+Isso quer dizer que 
+
+PODEMOS 
+
+CHAMAR 
+
+'useState()' DE NOVO, LOGO DEPOIS 
+
+
+
+DO CHAMADO/DEFINIÇÃO do primeiro state....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const app = (props) => {
+  const [personsState, setPersonsState] = useState(
+    {
+      persons: [
+        { name: 'Max', age: 28 },
+        { name: 'Manu', age: 29 },
+        { name: 'Stephanie', age: 30 }
+      ],
+      otherState: 'some other value'
+    }
+  );
+
+
+
+useState(); ///////////EIS AQUI O CÓDIGO EM QUESTÃO. Esse código VAI DEFINIR UM NOVO STATE( eu acho)....
+
+
+
+
+
+
+console.log(personsState);
+
+  const switchNameHandler = () =>{
+    setPersonsState(
+      {
+        persons: [
+          { name: 'Maximillian', age: 28 },
+          { name: 'Manu', age: 29 },
+          { name: 'Stephanie', age: 22 }
+        ],
+        otherState: personsState.otherState;
+
+      }
+    )
+  }
+
+
+
+
+
+
+
+  
+  return ( 
+    <div className="App">
+      <h1>Hi, I'm a React App</h1>
+      <p>This is really working!</p>
+      <button onClick={switchNameHandler}>Switch Name</button>
+      {/*<Person name="Max" age="28" />
+      <Person name="Manu" age="29">My Hobbies: Racing</Person>
+  <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+      <Person name={personsState.persons[0].name} age={personsState.persons[0].age} />
+      <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Racing</Person>
+      <Person name={personsState.persons[2].name} age={personsState.persons[2].age}/>
+
+  
+    </div>
+  );
+
+
+
+
+
+
+}
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+
+dentro desse segundo 
+
+
+'useState()', 
+
+
+
+se quisermos 
+
+GERENCIAR/MANAGE 
+
+esse 
+
+'otherState', essa propriedade específica,
+
+
+
+
+
+PODEMOS/DEVEMOS PASSAR 
+
+UM OBJETO ('{}') 
+
+
+com 
+
+
+
+'otherState: 'some other value';'
+
+
+
+ex:
+
+
+
+'useState({otherState: 'some other value'})'...
+
+
+
+-------------------------------------
+
+
+
+
+
+ex:
+
+
+
+
+
+
+const app = (props) => {
+  const [personsState, setPersonsState] = useState(
+    {
+      persons: [
+        { name: 'Max', age: 28 },
+        { name: 'Manu', age: 29 },
+        { name: 'Stephanie', age: 30 }
+      ],
+      otherState: 'some other value'
+    }
+  );
+
+
+
+useState({
+  otherState: 'some other value'
+}); ///////////EIS AQUI O CÓDIGO EM QUESTÃO. Esse código VAI DEFINIR UM NOVO STATE( eu acho)....
+
+
+
+
+
+
+console.log(personsState);
+
+  const switchNameHandler = () =>{
+    setPersonsState(
+      {
+        persons: [
+          { name: 'Maximillian', age: 28 },
+          { name: 'Manu', age: 29 },
+          { name: 'Stephanie', age: 22 }
+        ],
+        otherState: personsState.otherState;
+
+      }
+    )
+  }
+
+
+
+
+
+
+
+  
+  return ( 
+    <div className="App">
+      <h1>Hi, I'm a React App</h1>
+      <p>This is really working!</p>
+      <button onClick={switchNameHandler}>Switch Name</button>
+      {/*<Person name="Max" age="28" />
+      <Person name="Manu" age="29">My Hobbies: Racing</Person>
+  <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+      <Person name={personsState.persons[0].name} age={personsState.persons[0].age} />
+      <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Racing</Person>
+      <Person name={personsState.persons[2].name} age={personsState.persons[2].age}/>
+
+  
+    </div>
+  );
+
+
+
+
+
+
+}
+
+
+
+
+------------------------------------------------------
+
+
+
+
+
+AGORA, SE TUDO QUE QUEREMOS 'MANAGE'/ADMINISTRAR 
+
+É uma 
+
+
+
+STRING, 
+
+
+PODEMOS 
+
+
+simplesmente passar 
+
+
+
+'some other value' como string (isso quer dizer que 
+
+A COISA QUE PASSAMOS 
+
+AO 'useState', ao novo state de nosso aplicativo,
+
+NÃO 
+
+
+PRECISA OBRIGATORIAMENTE SER UM OBJETO...)
+
+
+
+ex:
+
+
+'useState('some other value') ' 
+
+
+
+
+
+ISSO QUER 
+
+
+DIZER QUE A COISA 
+
+
+QUE PASSAMOS AQUI 
+
+
+NÃO PRECISA SER UM OBJETO,
+
+
+pode ser um número, uma string, um boolean, qualquer coisa... --> qualquer coisa de que nosso app precisa...
+
+
+
+
+
+
+--> E VOCÊ PODE TER TANTOS calls de 'useState()'
+
+
+QUANTO VOCÊ PRECISAR/QUISER....
+
+
+
+
+---> para mostrar o uso desses outros 
+
+'useState', o professor console.logga todos eles (primeiro ele os armazena em constantes, 
+para depois os utilizar no console.log)....
+
+
+
+
+Depois disso, o professor vai 
+
+ALÉM.... ---> ele usa 
+
+o 
+
+
+ARRAY DESTRUCTURING 
+
+nesse segundo 
+
+'useState'...
+
+
+ele então 
+
+
+
+
+escreve 
+
+
+
+'const [otherState, setOtherState] = useState('some other value');'
+
+
+
+
+depois disso,
+
+
+ele faz 
+
+
+um console.log 
+
+
+de 
+
+'console.log(personsState, otherState);' --> ou seja,
+
+
+UM CONSOLE LOG 
+
+
+TANTO DE 
+
+NOSSO ___PRIMEIRO__ STATE ___ 
+
+como do 
+
+SEGUNDO STATE (independente do primeiro) 
+
+DEFINIDO NO NOSSO CÓDIGO (que é 'otherState')...
+
+
+
+
+EX (nosso código, completo):
+
+
+
+
+
+const app = (props) => {
+  const [personsState, setPersonsState] = useState(
+    {
+      persons: [
+        { name: 'Max', age: 28 },
+        { name: 'Manu', age: 29 },
+        { name: 'Stephanie', age: 30 }
+      ],
+      otherState: 'some other value'
+    }
+  );
+
+
+
+
+  const switchNameHandler = () =>{
+    setPersonsState(
+      {
+        persons: [
+          { name: 'Maximillian', age: 28 },
+          { name: 'Manu', age: 29 },
+          { name: 'Stephanie', age: 22 }
+        ]
+      }
+    )
+  }
+
+
+
+ const [otherState, setOtherState] = useState(
+    {otherState: 'some other value'}
+  
+  );
+
+ const exemploTexto = useState(
+    'string que mostra que esse negócio funciona COM SIMPLES STRINGS'
+  )
+
+  const exemploNumero = useState(
+    120854015
+  )
+
+
+
+
+console.log(personsState, otherState); ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+console.log(exemploTexto, exemploNumero);
+
+  
+
+    // useState('some other value'); 
+
+
+  
+  return ( 
+    <div className="App">
+      <h1>Hi, I'm a React App</h1>
+      <p>This is really working!</p>
+      <button onClick={switchNameHandler}>Switch Name</button>
+      {/*<Person name="Max" age="28" />
+      <Person name="Manu" age="29">My Hobbies: Racing</Person>
+  <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+      <Person name={personsState.persons[0].name} age={personsState.persons[0].age} />
+      <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Racing</Person>
+      <Person name={personsState.persons[2].name} age={personsState.persons[2].age}/>
+
+  
+    </div>
+  );
+
+
+
+
+
+
+}
+
+
+
+-----------------------------------------
+
+
+
+
+O professor 
+
+então 
+
+remove 
+
+'otherState' 
+
+
+de nosso 'MAIN STATE'/state originário (aquele state com todos os 'person'...)
+
+
+
+ELE FAZ ISSO PARA QUE POSSAMOS 
+
+VER MELHOR A RELAÇÃO ENTRE OS 2 STATES (independentes) QUE PODEM EXISTIR EM UM MESMO 
+
+REACT COMPONENT...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+const app = (props) => {
+  const [personsState, setPersonsState] = useState(
+    {
+      persons: [
+        { name: 'Max', age: 28 },
+        { name: 'Manu', age: 29 },
+        { name: 'Stephanie', age: 30 }
+      ],
+    }
+  );
+
+
+
+
+  const switchNameHandler = () =>{
+    setPersonsState(
+      {
+        persons: [
+          { name: 'Maximillian', age: 28 },
+          { name: 'Manu', age: 29 },
+          { name: 'Stephanie', age: 22 }
+        ]
+      }
+    )
+  }
+
+
+
+ const [otherState, setOtherState] = useState(
+    {otherState: 'some other value'}
+  
+  );
+
+ const exemploTexto = useState(
+    'string que mostra que esse negócio funciona COM SIMPLES STRINGS'
+  )
+
+  const exemploNumero = useState(
+    120854015
+  )
+
+
+
+
+console.log(personsState, otherState); ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+console.log(exemploTexto, exemploNumero);
+
+  
+
+    // useState('some other value'); 
+
+
+  
+  return ( 
+    <div className="App">
+      <h1>Hi, I'm a React App</h1>
+      <p>This is really working!</p>
+      <button onClick={switchNameHandler}>Switch Name</button>
+      {/*<Person name="Max" age="28" />
+      <Person name="Manu" age="29">My Hobbies: Racing</Person>
+  <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+      <Person name={personsState.persons[0].name} age={personsState.persons[0].age} />
+      <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Racing</Person>
+      <Person name={personsState.persons[2].name} age={personsState.persons[2].age}/>
+
+  
+    </div>
+  );
+
+
+
+
+
+
+}
+
+
+
+----------------------------------
+
+
+
+ISSO FEITO,
+
+
+observamos 
+
+
+o 
+
+
+console.log(personsState, otherState);
+
+
+
+RENDENDO
+
+
+
+
+O 
+
+
+
+'PERSONSSTATE' (que é aquele objeto com as persons)
+
+
+E ENTÃO 
+
+
+O 
+
+'otherState'  (que é mostrado pela string 'some other value'...)
+
+
+-----------------------------------------
+
+
+
+
+
+E SE AGORA O PROFESSOR CLICAR EM 'switch name', 
+
+NÓS AINDA 
+
+
+TEREMOS 
+
+
+A MESMA COISA, O ARRAY DE 
+
+
+'personsState' 
+
+
+ E 
+
+
+ a string 
+
+ do state de 
+
+ 'otherState'... ----------> MAS 
+
+
+
+AGORA O ARRAY DE 
+
+PERSONS TAMBÉM TERÁ 
+
+
+'otherState: 'some other value', 
+
+
+MAS ESSA PROPRIEDADE 
+
+___SERÁ INDEPENDENTE___ DA PROPRIEDADE E VALOR 
+
+DEFINIDOS 
+
+NAQUELE 
+
+
+STATE 'otherState' ------------> ISSO SIGNIFICA QUE 
+
+NÓS 
+
+VAMOS TER 2 PROPRIEDADES 
+
+'otherState', uma no 
+
+'MAIN STATE' (eu que dei esse nome) 
+
+
+E OUTRO 
+
+
+NO 'STATE SECUNDÁRIO' (o state que tem a propriedade 'otherState' ISOLADA) ----> 
+
+
+
+ISSO SIGNIFICA QUE 
+
+OS ___MÚLTIPLOS ___ STATES___ QUE 
+
+
+CRÍAMOS 
+
+
+DENTRO DE UM FUNCTIONAL REACT COMPONENT 
+
+__SÃO TOTALMENTE INDEPENDENTES____.... --> 
+
+em outras palavras, 
+
+
+o state 'otherState'
+
+
+
+
+
+__NÃO É TOCADO___ PELO 
+
+call de 
+
+'setPersonsState' SOBRE O 'personsState'... (são independentes esses 2 states...) ---> 
+
+
+
+essa call 
+
+
+de 'setPersonsState' vai interagir
+ 
+
+ APENAS COM 
+
+
+ O ___RESULTADO DO ___ PRIMEIRO __ DOS CALLS DE 
+
+ 'useState()'...
+
+
+ ------------------------
+
+
+
+ Isso quer dizer 
+
+ que aqui temos 
+
+
+ __MÚLTIPLOS 'useStates()', com diferentes
+
+
+ 'SLICES DE STATES', você poderia dizer... ('state slices'...) ---> É ASSIM, PORTANTO, 
+
+
+ QUE VOCÊ 
+
+
+ ___gERENCIA___ OS STATES/STATE DE SEU APLICATIVO 
+
+
+
+ EM UM REACT COMPONENT quando você trabalha com REACTHOOKS --> ou seja, 
+
+
+ o reacthooks 
+
+
+ afasta aquela ideia de um 
+
+ 'GRANDE OBJETO STATE' E A 
+
+
+ SUBSTITUI PELA 
+
+ 
+
+ IDEIA ___ DE VÁRIOS STATES, independentes entre si, 
+
+ relativos a coisas DIFERENTES DO SEU COMPONENT... --> você acaba com MÚLTIPLOS 'STATE SLICES' SEPARADOS 
+ E INDEPENDENTES, em outras palavras... ---> esse é o hook de 'useState', e uM 
+
+ BREVE 
+
+
+PREVIEW DOS REACTHOOKS em geral... ---> e também é o REACT HOOK MAIS IMPORTANTE DE TODOS...
+
+
+
+
+
+
+
+REACTHOOKS --> É 'ALL ABOUT' ESSAS FUNÇÕES 
+
+
+com 'usexxxx', 
+
+QUE TE 
+PERMITEM 
+
+
+___ADICIONAR ___ FUNCIONALIDADE A 'functional components' (como vimos com 'useState', que nos deixa 
+
+ADICIONAR 'STATE MANAGEMENT' AOS FUNCTIONAL COMPONENTS...) --> isso 
+
+quer dizer que 
+
+SE VOCÊ ESTIVER USANDO __SÓ REACTHOOKS__(e, de novo, o professor vai nos mostrar os diferentes 
+hooks ao longo do curso),
+
+
+VOCÊ __NÃO PRECISA___ USAR NEM UM POUCO OS 'class-based COMPONENTS', 
+
+pois 
+
+essa feature do 'useState' te permite gerenciar 
+
+state/states sem OS UTILIZAR ----> ainda assim,
+
+
+O PROFESSOR VAI USAR CLASS-BASED COMPONENTS no 
+
+nosso curso, pois os JOBS que 
+
+trabalham com 
+
+REACT sempre 
+
+__PEDEM___ A SINTAXE 
+
+
+'class-based components'...   ---------> bem, mas é legal conhecer essa 
+
+sintaxe 
+
+
+'reacthooks'...
+
+
+
+
+
+ANEXADO A ESSA LIÇÃO, VOCÊ 
+
+
+TEM UNS ARQUIVOS COM O MESMO CÓDIGO DESSA LIÇÃO, mas na forma 
+
+'class-based components'... (ou seja, é uM ROLLBACK para a versão 'padrão' do nosso código...)
+
+
+
+
+Devemos pegar a versão 'rollback' para continuar com as lições de nosso curso...

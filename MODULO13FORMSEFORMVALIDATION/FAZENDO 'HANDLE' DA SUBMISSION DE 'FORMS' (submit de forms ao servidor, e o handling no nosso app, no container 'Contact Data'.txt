@@ -1,0 +1,857 @@
+
+
+
+
+
+
+
+
+
+--> NÓS CRIAMOS UMA 'FORM',
+
+
+uma form a qual nós 
+
+SIMPLESMENTE SETTAMOS 
+
+
+NO JAVASCRIPT... ---> e essa form passou a ser HANDLADA __DINAMICAMENTE__ POR MEIO 
+
+DO NOSSO 
+
+
+PRÓPRIO 
+
+COMPONENT 
+
+
+'Input'... -----> 
+
+
+
+
+
+e nosso
+
+
+'InputChangedHandler()',
+
+lá 
+
+em 
+'ContactData',
+
+
+
+
+EM QUE 
+
+NÓS 
+
+
+__IMUTAVELMENTE__ UPDATAMOS QUAISQUER 
+
+
+'FORM ELEMENTS' AFETADOS PELA AÇÃO/inputs do usuário...
+
+
+
+---------------------------------
+
+
+
+AGORA DEVEMOS GARANTIR QUE 
+
+ESSA FORM TBM CONSIGA SER __SUBMITTADA__...
+
+
+
+
+
+
+
+
+
+--> para isso, explica o professor,
+ temos 
+
+
+ AQUELE BOTÃO 
+
+
+ '<Button />'
+ ,
+
+
+ com 
+
+ o nosso 
+
+ CLICKHANDLER ('clicked={this.orderHandler}'...),
+
+ lá em 
+
+ 'ContactData'...
+
+
+
+
+
+
+
+ -> CERTO.... E O PROFESSOR NOS DIZ QUE __NÃO QUER USAR ESSE 'CLICK HANDLER'...... 
+
+
+
+
+
+ ELE DIZ QUE 
+
+
+
+ VAI QUERER USAR A ALTERNATIVA A ISSO, QUE É 
+
+
+ UM HANDLER ESPECIAL, 
+
+
+ O HANDLER 
+
+
+ de 
+
+ 
+
+ 'onSubmit' (é disparado quando ocorre um evento SUBMIT naquele elemento em que está inserido... --> no caso, esse elemento será uma '<form />', a nossa FORM EM QUE ESTÃO INSERIDOS 
+ 
+ 
+ NOSSOS ELEMENTOS '<Input />' .... )
+
+
+
+
+
+
+
+
+
+ ---> ok, mas como deve ser posicionado esse 
+
+ handler 
+
+ 'onSubmit'? ----------->
+
+
+
+
+ deve 
+
+ ser posicionado assim:
+
+
+
+
+     let form = (
+      <div className={ContactDataStyle.ContactData}>
+        <h4>Enter your Contact Data</h4>
+        <form onSubmit={}> //////////EIS O CÓDIGO EM QUESTÃO (sim, você simplesmente o coloca dentro da tag de 'form'...)
+              {
+                formElementsArray.map(
+                  (formElement) => {
+                        console.log(formElement);
+                        return (
+                          <Input 
+                          changed={(event) => {this.inputChangedHandler(event, formElement.id)}}
+                          key={formElement.id}
+                          elementType={formElement.config.elementType} 
+                          value={formElement.value} 
+                          elementConfig={formElement.config.elementConfig} />
+                        )
+                  }
+                )
+              }
+            <Button btnType=xxxxx>ORDER</Button>
+
+        
+
+-------------------------------------
+
+
+
+
+
+
+E É NESSE 
+
+'onSubmit' QUE 
+
+VAMOS QUERER INSERIR 
+
+
+AQUELE NOSSO MÉTODO, 
+
+o 
+
+
+'orderHandler'... 
+
+
+
+
+
+
+(OU SEJA, VAMOS TER O MESMO FUNCIONAMENTO DE ANTES, MAS DESSA VEZ 
+
+O 
+
+
+
+MÉTODO 'orderHandler' vai ser disparado __QUANDO OCORRER O EVENTO 
+
+'SUBMIT' NESSA NOSSA FORM, E NÃO QUANDO 
+
+
+
+O BOTÃO 'ORDER' for clicado... o que é um pouco diferente, na verdade... ------> 
+
+
+mas acho que os efeitos práticos são os mesmos: a order será enviada, a order com todas nossas informações..)
+
+
+
+
+(e o código continua funcionando como antes, sem problemas...) --> não, espere, há um problema, sim:
+
+nosso código agora está sendo enviado MESMO QUANDO NÃO TEMOS NENHUM INGREDIENT NO BURGER ( o que mostra que nossos if check NÃO ESTÁ FUNCIONANDO.)
+
+
+(o problema é JUSTAMENTE ESSE 
+
+HANDLER DE 
+
+'onSubmit'.... -----> tenho que colocar o ifcheck DENTRO DELE, NA VERDADE... isso vai resolver.)
+
+
+
+(não resolveu. Esses meus 'if checks' se tornaram completamente inúteis.... --> tenho 
+
+que encontrar um jeito de 
+
+barrar o usuário quando ele deixa 
+
+os ingredients do burger/as informações de contato em BRANCO.)
+
+
+
+(Ok, acho que consegui barrar o usuário de outra maneira, por meio do 'price', se o valor 
+
+de 'price' for 0, será mostrada uma mensagem dizendo que o usuário deve retornar 
+
+à página 'burgerBuilder' para então criar um burger adequadamente.)
+
+
+
+(
+
+
+    agora só falta colocar um if check em 
+
+    'orderHandler'/na form para __BARRAR__ O USUÁRIO CASO SEJA CONSTATADO QUE 
+
+    __ELE NÃO PREENCHEU __ NENHUMA DAS INFORMAÇÕES DE 'billing'....
+)
+
+
+
+
+
+
+---> certo.... e o código de 'orderHandler' é :
+
+
+
+
+orderHandler = (event) => {
+    event.preventDefault(); ///VAI PREVENIR O RELOAD DA PÁGINA.(e sim, precisamos do parâmetro 'event' para acessar esse método especial, método que PREVINE O COMPORTAMENTO DEFAULT DO BROWSER DE __RECARREGAR___ PÁGINAS QUANDO UM 'SUBMIT' OCORRE DENTRO DE UMA FORM...)
+    console.log(this.props.ingredients);
+
+
+      // if(this.props.ingredients.bacon === 0 && this.props.ingredients.cheese === 0 && this.props.ingredients.meat === 0 && this.props.ingredients.salad === 0) {
+      //   alert('Please build a burger before making an order!');
+      //   return;
+      // }
+
+
+      // if(!this.state.orderForm.name.value ||
+      //    !this.state.orderForm.street.value || 
+      //    !this.state.orderForm.zipCode.value ||
+      //    !this.state.orderForm.email.value ||
+      //    !this.state.orderForm.country.value ) {
+
+      //     alert('Please enter your contact information!');
+      //     return;
+      //    }
+
+
+
+
+    this.setState({
+      loading: true,
+    });
+
+    const orderData = {
+      ingredients: this.props.ingredients,
+      price: this.props.price,
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+    };
+
+    axiosOrder
+      .post('/orders.json', orderData)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          loading: false,
+        });
+      });
+  };
+
+
+
+
+
+  ---------------------
+
+
+
+  BEM, AGORA EU CONSEGUI FAZER FUNCIONAR... (não sei a razão, mas funcionou...)
+
+
+
+
+
+
+  EIS O CÓDIGO NAQUELE 'onSubmit' handler:
+
+
+
+   let form = (
+      <div className={ContactDataStyle.ContactData}>
+        <h4>Enter your Contact Data</h4>
+        <form onSubmit={(event) => { 
+          
+              
+      if(!this.state.orderForm.name.value ||
+        !this.state.orderForm.street.value || 
+        !this.state.orderForm.zipCode.value ||
+        !this.state.orderForm.email.value ||
+        !this.state.orderForm.country.value ) {
+
+         alert('Please enter your contact information!');
+         return;
+        }
+          
+          
+          
+          
+          this.orderHandler(event)}}>
+              {
+                formElementsArray.map(
+                  (formElement) => {
+                        console.log(formElement);
+
+                        // if(formElement.config.elementType === 'select') {
+                        //   <Input elementType={formElement.config.elementType} elementConfig />
+                        // }
+                        return (
+                          <Input 
+                          changed={(event) => {this.inputChangedHandler(event, formElement.id)}}
+                          key={formElement.id}
+                          elementType={formElement.config.elementType} 
+                          value={formElement.value} 
+                          elementConfig={formElement.config.elementConfig} />
+                        )
+                  }
+                )
+              }
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+
+--> certo, professor continua... --> ele nos esclarece que 
+
+ele ainda 
+
+vai 
+
+querer 
+
+aquela 
+
+sintaxe 
+
+
+
+'orderHandler = (event) => {
+
+    event.preventDefault();
+}',
+
+
+pq 
+
+
+O 
+
+RECEIVE DESSE OBJETO 'event' é JUSTAMENTE 
+
+A COISA 
+
+QUE 
+
+VAI 
+
+
+EVITAR 
+
+
+QUE 
+
+NOSSA PÁGINA SEJA
+
+
+RECARREGADA QUANDO UM EVENTO 'SUBMIT' OCORRER NA NOSSA PÁGINA...
+
+
+
+
+
+
+--> professor então nos diz que 
+
+ELE PRECISA EXTRAIR A DATA QUE 
+
+ELE VAI QUERER ENVIAR
+ 
+
+ AO 
+
+
+
+
+NOSSO BACKEND (a 'order' propriamente dita...)
+
+
+
+
+
+
+
+--> bem, mas eu JÁ FIZ TUDO ISSO.... --> já fiz isso pq toda 
+
+nossa data JÁ ERA 
+
+
+ADMINISTRADA 
+
+
+NO OBJETO 'state'...
+
+
+
+
+
+
+
+
+
+A DATA ERA/É ENVIADA POR MEIO DESTAS LINHAS DE CÓDIGO (dentro de 'orderHandler'):
+
+
+
+
+
+
+ this.setState({
+      loading: true,
+    });
+
+    const orderData = {
+      ingredients: this.props.ingredients,
+      price: this.props.price,
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+    };
+
+    axiosOrder
+      .post('/orders.json', orderData)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          loading: false,
+        });
+      });
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+Mas acho que o professor 
+
+vai querer escrever 
+
+
+esse nosso código aí de uma forma diferente...
+
+
+
+
+
+
+ele vai escrever...:
+
+
+
+
+orderHandler = (event) => {
+    event.preventDefault();
+    this.setState( {loading: true} );
+
+    const formData = {};
+    for (let formElementIdentifier in this.state.orderForm) {
+        formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value
+    }
+
+
+
+}
+
+
+
+
+
+
+
+------------------------
+
+
+
+
+como você pode confirmar, 
+
+realmente é um código BEM DIFERENTE... --> ele vai querer 
+
+LOOPAR 
+
+
+por dentro de cada 'objeto' (como 'name', 'email', 'street', 'country') dentro 
+
+da 
+
+ORDERFORM no state, para 
+
+então 
+
+
+definir 
+
+
+propriedades dentro do objeto 'formData' que 
+
+serão
+
+
+
+
+'formData[formElementIdentifier]'      É IGUAL A 'this.state.orderForm[formElementIdentifier].value'... (valor que temos NO PRESENTE no slot 'value' naquele determinado 'formElementIdentifier'...)
+            (ex: 'name')
+
+
+            ex:  name: { ..., ..., value: 'Max'}
+
+
+
+
+
+
+---> 'formData[formElementIdentifier]'  ----> isso vai CRIAR UMA NOVA PROPRIEDADE,
+
+propriedade 
+
+dinâmica, que terá aquela variável 
+
+'formElementIdentifier' criada pelo loop (que é 'name', 'street', 'country', etc...)
+
+
+
+
+
+
+
+
+
+--> ou seja,
+esse 
+
+código do professor 
+
+
+É 
+
+
+
+____A MESMA COISA QUE ESCREVEMOS COM 'orderData', mas 
+
+COM __UM LOOP___ ('for in loop') PASSANDO POR DENTRO DOS ELEMENTOS do array...
+
+
+
+
+
+
+
+
+
+
+
+---> o professor nos mostra mais uma diferença entre o código dele e o nosso:
+
+
+
+ele vai escrever, em uma constante 'order' (Que é a coisa que é enviada ao servidor dele):
+
+
+
+
+
+'const order = {
+
+    ingredients: this.props.ingredients,
+    price: this.props.price,
+    orderData: formData //////EIS O CÓDIGO EM QUESTÃO
+}
+'
+
+
+
+
+
+
+isso feito, 
+
+
+ele então simplesmente 
+
+envia 
+esse negócio 
+
+
+por meio do código 
+
+
+'axios.post('/orders.json', order)', 
+
+
+
+DENTRO 
+
+DE 
+
+
+'orderHandler'...
+
+
+
+----------------------------
+
+
+O PROFESSOR TESTA O CÓDIGO DELE...
+
+
+
+
+
+ --> ok, o submit de dados está funcionando...
+
+
+
+ (
+
+     a única coisa com a qual não estou inteiramente satisfeito 
+
+     é 
+
+
+     o handle daquele input do 'DROPDOWN'... ---> aquele approach 
+
+     de 
+
+     settar um valor inicial no state e então depois usar 
+
+     'currentValue' é 
+
+     meio hacky....
+ )
+
+
+
+
+
+
+ --> a vantagem desse approach do professor (com esse LOOP no final, esse for in loop 
+ 
+ que adiciona 
+
+ propriedades correspondentes aos 'objetos' no nosso state ao 
+
+ objeto 
+
+ 'formData', que é bem conveniente
+ 
+ ) é 
+
+
+ que 
+
+ ele é extremamente conveniente: 
+
+
+
+ nós podemos 
+
+ simplesmente 
+
+ adicionar 
+
+ uma 
+
+ nova 
+
+ propriedade/input field 
+
+
+ àquele 'state' de 
+ 
+
+ 'ContactData', simplesmente escrever qualquer coisa, como 'city', por exemplo,
+
+ e então 
+
+ preencher 
+
+ aqueles 
+
+ 'elementType', 
+
+
+ 'elementConfig',
+
+
+ 'type'
+
+ e 
+
+ 'placeholder',
+
+
+ QUE 
+
+ AÍ 
+
+ UM 
+
+ NOVO 
+
+ ELEMENTO 
+
+ 'INPUT'
+
+
+ será 
+
+ criado
+  
+na nossa página... ----------> E MAIS:
+
+
+
+
+
+como 
+
+
+__ISSO ESTÁ NO 'STATE'_, você pode 
+
+
+MANIPULAR 
+
+
+ESSA 'orderForm', de maneira 'IMMUTABLE' (com os spread operators),
+
+
+
+
+DURANTE ___ O RUNTIME___... ----> e isso quer dizer 
+
+que vocÊ 
+
+
+PODE 
+
+ADICIONAR E REMOVER
+
+NOVAS PROPRIEDADES (e, consequentemente, novos inputs) (e também é possível MUDAR SUA CONFIGURAÇÃO DURANTE O RUNTIME...)
+
+
+DURANTE 
+
+O RUNTIME .... --> é por isso 
+
+que 
+
+
+essa 
+
+
+MANEIRA __DINÂMICA__ DE CRIAR UMA 'FORM' 
+
+é tão incrível...

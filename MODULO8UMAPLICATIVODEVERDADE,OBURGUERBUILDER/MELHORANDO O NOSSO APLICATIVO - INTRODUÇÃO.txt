@@ -1,0 +1,137 @@
+
+
+
+
+
+
+------> AGORA JÁ TEMOS UM APP BONITO.... ---> adicionamos muitas funcionalidades...
+
+
+
+
+
+
+
+
+
+
+
+--> entretanto, nós queremos ter um 
+
+
+aplicativo muito bom, não só em aparência, mas também em performance.
+
+
+
+
+
+
+
+
+
+
+---> AO LONGO DO BUILD DESSE APLICATIVO, O PROFESSOR JÁ NOS MOSTROU 
+
+MUITAS 
+
+DAS 
+
+'MELHORES PRÁTICAS'
+ 
+
+ PARA CONSTRUIR 
+
+
+
+APLICATIVOS.... ------> ele nos mostrou muito do seu 'thought proccess' sobre 
+
+
+como 
+
+ESTRUTURAR E PLANEJAR 
+
+NOSSO APLICATIVO... ----> 
+
+ELE TAMBÉM 
+
+nos deu 
+
+várias ideias 
+
+de como splittar 
+
+
+e organizar nosso aplicativo...   -------> nosso aplicativo tem uma estrutura 
+
+
+BEM _____GRANULAR____... ----> você poderia, é claro,
+ 
+
+ COMBINAR ALGUNS DOS COMPONENTS 
+
+ QUE CRIAMOS... 
+
+
+
+
+
+ ---> entretanto, é evidente que ___ALGUMAS COISAS PODEM SER ___ MELHORADAS___...
+
+
+
+
+
+
+
+
+
+ ---> DEVEMOS 'DIVAR' EM 2 COISAS 
+
+ AS QUAIS 
+
+ EXAMINAMOS 
+
+
+
+ ANTES... ---> 
+
+
+
+ 1) PROPTYPES
+
+
+
+
+
+
+
+ 2) PURECOMPONENTS  (ou seja, a matéria de 'shouldComponentUpdate')...
+
+
+
+
+
+
+
+ ----------------------------------------------------
+
+
+
+ TAMBÉM VAMOS DAR UMA OLHADA EM TODOS AQUELES 'LIFECYCLE HOOKS' 
+
+
+ QUE ESTUDAMOS ANTES... ------> a pergunta é:
+
+
+
+
+ NÓS USAMOS ELES DENTRO DOS NOSSOS COMPONENTS...? por que não estamos os utilizando agora, neste momento?
+
+
+
+
+
+
+
+
+ --> EM QUE LUGAR DEVEMOS OS UTILIZAR?

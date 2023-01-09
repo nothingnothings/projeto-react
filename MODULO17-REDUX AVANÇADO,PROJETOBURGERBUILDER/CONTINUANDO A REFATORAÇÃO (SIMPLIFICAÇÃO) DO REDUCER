@@ -1,0 +1,190 @@
+
+
+
+Nessa lição, o professor só fez o que já sabemos/já fizemos: 
+
+
+ele 
+
+extraiu 
+
+a lógica 
+
+que 
+
+estava 
+
+
+dentro 
+
+de 
+
+cada 
+
+um 
+
+dos 
+
+CASES 
+
+no reducer 
+
+
+em 
+
+
+'FUNÇÕES AUXILIARES', funções como esta, em 'burgerBuilderReducer':
+
+
+
+
+
+
+const ingredientRemove = (state, action) => {
+  const updatedBurger = {
+    ...state.burger
+  }
+  const updatedBurgerIngredients = {
+    ...updatedBurger
+  }
+
+  const insideUpdatedBurgerIngredients = updatedBurgerIngredients.ingredients;
+  return updateObject(state, {
+    burger: {totalPrice: state.burger.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+      ingredients: {
+        ...insideUpdatedBurgerIngredients,
+        [action.ingredientName]: state.burger.ingredients[action.ingredientName] - 1
+      }
+    }
+  }
+  )
+}
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+ISSO FAZ COM QUE NOSSOS 'SWITCH CASE STATEMENTS',
+ 
+ no reducer,
+
+ FIQUEM 
+
+ BEM 
+
+
+ MENORES...
+
+
+
+
+POR FIM, NOSSOS REDUCERS VÃO FICAR BASICAMENTE ASSIM:
+
+
+
+
+
+const reducer = (state = initalState, action) => {
+    switch (action.type) {
+        case actionTypes.ADD_INGREDIENT: return addIngredient( state, action);
+        case actionTypes.REMOVE_INGREDIENT: return removeIngredient( state, action);
+        case actionTypes.SET_INGREDIENTS: return setIngredients( state, action);
+        case actionTypes.FETCH_INGREDIENTS_FAILED: return fetchIngredientsFailed( state, action);
+        default: return state;
+    }
+}
+
+
+export default reducer;
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+ISSO FAZ COM QUE ELES FIQUEM BEM MAIS FÁCEIS DE SEREM LIDOS,
+
+
+o que é muito bom... 
+
+
+
+
+
+
+
+
+
+
+
+--> OBS: O PROFESSOR TAMBÉM FAZ A MESMA COISA COM O 'ORDER REDUCER', simplifica tudo....
+
+
+
+
+
+
+
+
+--> só não se esqueça, é claro, 
+
+do 
+
+'default: return state;'
+
+
+
+
+------------------------------
+
+USAMOS 
+
+O BURGER BUILDER MAIS 1 VEZ...
+
+
+
+
+
+---> vemos todas nossas orders, tudo legal...
+
+
+
+
+
+COM ISSO, IMPLEMENTAMOS ALGUMAS 
+
+'ADVANCED REDUX TECHNIQUES'
+
+no nosso projeto... -------> VOCÊ PODE 
+
+
+MELHORAR 
+
+
+UM POUCO ESSE APP... 
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+com isso, podemos ver mais coisas, features extras, como AUTHENTICATION.... (veremos isso no próximo módulo...)

@@ -1,0 +1,622 @@
+
+
+
+
+
+
+---> NA ÚLTIMA LIÇÃO, O PROFESSOR NOS EXPLICOU A ESTRUTURA DOS FOLDERS DO NOSSO PROJETO...
+
+
+
+
+
+---> AGORA VAMOS ANALISAR A ESTRUTURA DE 'App.js', 
+
+
+
+e DO REACT COMPONENT que reside no seu interior...
+
+
+
+-----------------------------------------
+
+
+CÓDIGO DE 
+
+
+
+'App.js':
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+
+class App extends Component {
+  render() {
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+      </div>
+    );
+
+
+
+
+  }
+}
+
+export default App;
+
+
+
+
+---------------------------------
+
+
+
+CERTO....
+
+
+
+O QUE NÓS VEMOS AQUI, 
+
+BASICAMENTE,
+ 
+
+ É um react component...
+
+
+
+
+
+ ---> components = SÃO CUSTOM HTML ELEMENTS, VOCÊ PODERIA DIZER... você os utiliza para construir seu aplicativo....
+
+
+
+
+ --------------------------------
+
+
+
+ ESSE COMPONENTE 
+
+ 'App' 
+
+
+ É USADO 
+
+
+ EM 
+
+ 'index.js', 
+
+
+ é renderizado 
+
+
+ naquele 
+
+ espaço 
+
+ da 
+
+ div de id 'root'....
+
+
+ EX:
+
+
+ ReactDOM.render(<App />, document.getElementById('root');)
+
+
+
+ ----------------------------------------
+
+
+
+
+
+
+E NÓS PODERÍAMOS 
+
+RENDERIZAR 
+
+UM 'CÓDIGO HTML NORMAL' 
+
+
+nesse parâmetro 
+
+'.render()'....  como, por exemplo, uma tag <H1> DE 'Test'...
+
+
+ex:
+
+
+ ReactDOM.render(<h1>Test</h1>, document.getElementById('root');)
+
+
+
+ ---------------------------------------
+
+
+
+
+ SE FIZERMOS ISSO,
+  
+
+  ESSA TAG DE H1 
+
+  REALMENTE APARECERÁ 
+
+  NA NOSSA PÁGINA...
+
+
+
+
+
+  __MAS ISSO É MEIO INÚTIL___...
+
+
+------------------------------------------------------
+
+
+
+É MEIO INÚTIL PQ AÍ NÃO TERÍAMOS UM APLICATIVO 
+
+
+REACT DE VERDADE.... 
+
+
+
+
+
+
+
+
+
+---> vamos sempre querer renderizar NOSSOS REACT COMPONENTS...
+
+
+
+
+
+
+----> é evidente que você PODERIA USAR MÚLTIPLOS CALLS 
+
+DE '.render()' 
+
+
+PARA RENDERIZAR 
+
+SUA PÁGINA HTML DE FORMA BIZARRA, PEDAÇO 
+
+
+POR PEDAÇO, POR MEIO DO REACT (e sem o uso de react components... ) -----> 
+
+
+
+MAS ESSA NÃO É A MANEIRA PELA QUAL 
+
+VOCÊ VAI QUERER 
+
+USAR 
+
+
+O REACT...
+
+
+
+
+--> TIPICAMENTE, O QUE VOCÊ FAZ É ___RENDERIZAR___ APENAS 1 ÚNICO 
+
+
+'COMPONENTE ROOT' (root component), 
+
+
+POR MEIO DE 
+
+1 ÚNICO CALL DE 
+
+'.render()'...
+
+
+
+
+
+Geralmente 
+
+esse componente é chamado de 
+
+'App', mas você pode CHAMÁ-LO DO QUE VOCÊ QUISER...
+
+
+
+-----------------------------------
+
+
+
+
+1 ÚNICO ROOT COMPONENT... DENTRO 
+
+
+DESSE ROOT COMPONENT, DE SEU CÓDIGO, VOCê 
+
+
+VAI 
+
+NESTEAR ___TODOS OS OUTROS COMPONENTES__ DE QUE SEU APLICATIVO 
+
+
+PRECISA....  e 
+
+
+esses componentes, todos eles, PODEM TAMBÉM 
+SER 
+
+NESTEADOS 1 DENTRO DO OUTRO....
+
+
+
+
+
+MAS DESPONTANDO NO TOPO, você sempre terá apenas 
+1 ÚNICO COMPONENTE.... (que geralmente é chamado de 'App'...),  o 'ROOT COMPONENT'...
+
+
+
+
+----> 
+
+
+
+você poderia, é claro, 
+
+
+REACH OUT a MÚLTIPLOS NODES NO SEU ARQUIVO HTML  e então 
+
+
+fazer 'mount' DE DIFERENTES ROOT COMPONENTS, DIFERENTES ROOT COMPONENTS PARA 
+
+DIFERENTES REACT APPS, isso seria/é possível ,
+
+
+MAS NÃO É ISSO que vamos fazer aqui.... 
+
+
+
+(mas isso é possível, apesar de bizarro e pouco recomendado...)
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+MAS DEVEMOS VER O USO PADRÃO DE 
+
+'REACT'...
+
+
+
+Temos esse 'react component' 
+
+de 'App',
+
+
+encontrado 
+
+
+no arquivo 
+
+'App.js'...
+
+
+
+
+
+
+
+---> AQUI, NESSE ARQUIVO, NÓS 
+
+ENCONTRAMOS 1 DAS 2 MANEIRAS 
+
+DE CRIAR/DEFINIR  UM REACT COMPONENT... -------------->
+
+
+
+
+Para criar um react component, nós:
+
+
+
+
+1) CRÍAMOS UMA CLASSE JAVASCRIPT, por meio da keyword 'class'...
+
+
+
+
+2) DEPOIS NÓS ___EXTENDEMOS____ (herdamos) por meio da keyword 'extend' o OBJETO 'Component'.... (objeto/classe 'Component'...) ----> esse objeto/classe é IMPORTADO LOGO ACIMA, POR MEIO DA SINTAXE    'import React, { Component } from 'react'; ---> OU SEJA, ESSE 'COMPONENT' é importado da LIBRARY 'react' (a library do react...)
+        --> na verdade, naquele import statement nós herdamos 2 coisas: o 'REACT' em si e a classe/objeto 'Component' em si...
+
+
+
+
+
+'React' ----> esse objeto/função É RESPONSÁVEL PELO ___RENDERING__ DE QUALQUER COISA NO DOM... sempre DEVEMOS IMPORTAR ESSE NEGÓCIO NOS ARQUIVOS EM QUE DEFINIMOS/CRÍAMOS  um  COMPONENT/COMPONENTS...
+'Component' ---> A CLASSE 'COMPONENT' EM SI, onde há vários dos métodos/funções do react...
+
+
+-----------------------------------------
+
+
+
+
+O PROFESSOR LOGO NOS MOSTRARÁ __OUTRA FORMA___ DE CRIAR COMPONENTS...
+
+
+
+----------------------------------------
+
+
+
+ESSA CLASSE 'App' possui 
+
+
+1 ÚNICO MÉTODO,
+
+
+O MÉTODO 
+
+'render()'... ---> nós 
+
+
+PRECISAMOS 
+
+
+ter esse método pq 
+
+
+
+O ____REACT____  
+
+
+VAI CHAMAR ESSE MÉTODO PARA CONSEGUIR 
+
+RENDERIZAR ALGO NA TELA... ---->    todo 
+
+e qualquer 
+
+
+REACT COMPONENT TEM UM IMPORTANTE TRABALHO... ('one job to do'...) ---> esse trabalho 
+
+É __RETORNAR/RENDERIZAR (é a mesma coisa) 
+
+UM 'CÓDIGO HTML' que pode/vai ser renderizado 
+
+NO DOM/NA TELA...
+
+
+
+
+----> É EVIDENTE QUE PODEMOS FAZER ___OUTRAS COISAS___ dentro 
+
+de react components; coisas como 'REACH OUT  TO THE INTERNET', 
+
+FAZER CÁLCULOS, fazer 'listen to' a eventos, etc etc (ou seja, AS COISAS 
+QUE PRECISAMOS 
+FAZER NO NOSSO PROJETO/NOS NOSSOS CÓDIGOS, TUDO DEPENDE DO PROJETO EM QUE 
+
+ESTAMOS TRABALHANDO... e os react components VÃO CONSEGUIR suprir essa demanda... ) ---> 
+
+
+VAMOS VER TUDO ISSO NOS REACT COMPONENTS, mas os react COMPONENTS 
+
+
+___SEMPRE___ __PRECISAM___ (sempre VÃO, na verdade) RENDERIZAR 
+
+
+ALGUM HTML NO DOM...  ---> ISSO É 
+
+__MUITO IMPORTANTE___ de ter em mente...
+
+
+
+
+
+certo, continuando:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+
+class App extends Component {
+  render() {
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+      </div>
+    );
+
+
+
+
+  }
+}
+
+export default App;
+
+
+
+
+---------------------------------------
+
+
+
+
+você pode ver, no final desse arquivo, 
+
+que 
+
+'App' é exportado COMO EXPORT DEFAULT 
+
+
+desse 
+
+arquivo 'App.js'...
+
+
+
+
+--->essa, explica o professor, é uma FEATURE ES6, e simplesmente 
+
+
+SIGNIFICA QUE:  SE VOCÊ IMPORTAR 
+
+ESSE ARQUIVO INTEIRO 
+
+'App.js' em outro arquivo, A ÚNICA 
+
+COISA QUE 
+
+SERÁ EFETIVAMENTE 
+
+IMPORTADA
+ 
+
+ SERÁ 
+
+ ESSA FUNÇÃO/OBJETO/CLASSE/REACT COMPONENT '<App />'....   ---> pq esse é o DEFAULT EXPORT desse arquivo.... 
+
+
+
+
+
+
+
+
+---> nós usamos/vemos isso em 
+
+'index.js', 
+
+
+em que 
+
+observamos 
+
+a sintaxe 
+
+
+'import App from './App'    (se não fosse o export default, teria de ser escrito assim: 'import { App } from './App'; )
+
+--------------------------------
+
+
+
+TIPICAMENTE, VOCê USA COMO NOME DO IMPORT O MESMO NOME DO COMPONENTE DO ARQUIVO DE ORIGEM... (como 'App', aqui nesse modelo...)
+
+
+
+------------------------------------------------------------
+
+
+
+SIDENOTE: 
+
+VOCÊ 
+
+TAMBÉM PODERÁ 
+
+ENCONTRAR 
+
+
+ESSES ARQUIVOS 
+
+'App.js' e etc 
+
+
+como 
+
+'App.jsx'....
+
+
+(File extension DIFERENTE)... --> a razão 
+
+
+PARA ISSO É AQUELE CÓDIGO 
+
+
+DE 
+
+'return (
+  <div className="App>
+  <h1>Hi, I'm a React App</h1>
+  </div>
+)'
+
+
+------------------------------------
+
+
+
+
+
+O PROFESSOR DISSE 'É CÓDIGO HTML QUE É RETORNADO PELO MÉTODO RENDER DOS REACT COMPONENTS...' --> 
+
+mas, NA VERDADE, 
+
+O QUE 
+
+É RETORNADO PELOS REACT COMPONENTS É ___CÓDIGO __ JSX..... (javascript enhanced) ____ ESSE CÓDIGO 
+
+JSX É ENTÃO 
+
+__LIDO__E PARSEADO  PELA __ENGINE___ DO REACT__, que então 
+
+REALMENTE O CONVERTE EM CÓDIGO HTML E RENDERIZA ALGO NA PÁGINA...
+
+
+
+
+
+JSX --> É AÇÚCAR SINTÁTICO... ---> O REACT VAI AUTOMATICAMENTE O TRANSPILAR 
+
+PARA CÓDIGO JAVASCRIPT VÁLIDo... 
+
+
+
+
+
+---> entretanto, a convenção 
+
+hoje em dia
+ 
+
+ é sempre usar '.js', e nunca '.jsx' nas extensões dos arquivos...
+
+
+
+
+ JSX ---> SINTAXE USADA PARA ESCREVER '''''HTML''''' SEM ESCREVER HTML, na verdade (isso pode parecer confuso...)

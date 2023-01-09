@@ -1,0 +1,1503 @@
+
+
+
+Trabalhamos
+
+bastante...
+
+
+
+
+
+
+
+
+
+---> há mais 2 coisas que 
+
+o professor 
+quer 
+
+
+fazer 
+
+
+
+neste 
+módulo....
+
+
+
+
+
+
+
+
+--> 1a ==== ELE QUER TAMBÉM 
+
+
+ARMAZENAR O 
+
+
+'userId'
+
+
+
+
+___EM QUALQUER 
+
+
+'ORDER' que fazemos no nosso app... -----> faremos 
+
+isso 
+
+
+PARA 
+
+QUE 
+
+
+LÁ 
+
+
+NO BACKEND,
+
+NÓS 
+
+
+
+CONSIGAMOS 
+
+
+
+
+RESTRINGIR 
+
+O ACESSO 
+
+
+DO 
+
+
+USUÁRIO 
+
+
+ÀPENAS 
+
+
+
+
+ÀS 'orders' que 
+
+possuem 
+
+
+seu 
+
+
+'userId' 
+
+
+no meio...
+
+
+
+
+ficaria tipo
+
+
+
+
+------------------------------------
+
+orderAleatória: {
+        ingredients: {
+
+        },
+        orderData: {
+            country, 
+            etc,
+            etc..
+        }, 
+        userId: asojsaaaisjasoinklxznlknzx
+}
+
+
+------------------------------------
+
+
+
+
+Certo... e para isso, provavelmente
+vamos ter que 
+
+editar 
+
+
+
+
+alguns de nossos códigos do 'axios'...
+
+
+
+
+
+
+-------------------------
+
+
+edite o código de 'orderData',
+
+que ficou assim:
+
+
+
+
+
+
+    const orderData = {
+
+      ingredients: this.props.ingr, //código que agora está usando o REDUX.
+      price: this.props.price, //código que agora está usando o REDUX.
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+      userId: localStorage.getItem('userId') ////EIS A MUDANÇA EM QUESTÃO.
+    };
+
+
+
+-----------------------
+
+OK... AGORA BASTA DEFINIRMOS ALGUMAS 'GUARDS' 
+
+
+PARA 
+
+
+
+
+
+
+AS NOSSAS ORDERS,
+
+fazer com que cada usuário POSSA APENAS ACESSAR 
+
+A 
+
+ORDER 
+QUE 
+
+TENHA 
+
+um 'userId'
+
+CORRESPONDENTE AO SEU...
+
+
+-------------------------
+
+
+
+certo... 
+
+e também há um bug que quero consertar.... ---> quando eu crio um burger e depois 
+
+
+tento 
+
+criar outro, na mesma 'session', sem recarregar a página,
+
+
+quando clico em 'continue',
+
+ele 
+
+ME REDIRECIONA PARA 
+
+O 
+
+'HOME'/BURGERBUILDER.... (suspeito que seja alguma daquelas propriedades 'redirectToHome'/'redirectToOrders'...)
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+Eu tentei criar um userId nos 
+
+
+
+meus 
+
+
+objetos 'order'... ---> acho que consegui,
+
+
+é 
+
+realmente
+ 
+ um 
+
+
+ userId... --> e esse userId é constante,
+
+
+
+
+
+ o que é ideal....
+
+
+
+
+ ----------------------------------------
+
+
+
+
+ AGORA SÓ FALTA CODAR 
+
+
+
+ A PARTE DO CÓDIGO QUE 
+
+ FAZ 
+
+
+ COM 
+
+ QUE 
+
+ APENAS 
+
+
+
+ AS 
+
+ ORDERS 
+
+
+ COM 
+
+ AQUELE 
+
+ 'given userId' 
+
+
+
+ possam ser vistas por nosso usuário....
+
+
+
+
+
+
+ --------------------------------------------
+
+
+
+
+ Para fazer isso, o processo é bem mais complicado do que eu pensava...
+
+
+
+ Devo assistir Às aulas do professor...
+
+
+
+
+
+
+ -----------------------------------------
+
+
+
+
+
+
+
+
+
+ --> MAS A OUTRA COISA QUE 
+
+ O PROFESSOR QUER FAZER É APENAS __GARANTIR__ QUE 
+
+
+ O 
+
+ USUÁRIO__ POSSA 
+
+
+ ACESSAR 
+
+
+ AS PÁGINAS 
+
+
+ DE 
+
+
+
+ 'Orders' e 
+
+
+ 'Checkout' __APENAS ___ SE ELE ESTIVER 'LOGGED IN'...
+
+
+
+
+
+
+ -----------------------------------------
+
+
+
+ CONSERTEI O PROBLEMA DO REDIRECT PARA 'BURGER BUILDER' por causa do 'redirectToHome' no state do redux ---> usei a action 'redirectToHomeResetter'....
+
+
+
+
+
+ -------------------------------------------
+
+
+
+
+
+
+
+
+ ---> queremos 
+
+
+implementar a seguinte feature:
+
+
+
+
+se 
+
+
+o 
+
+usuário 
+
+
+
+digitar 
+
+'localhost:3000/orders'
+
+
+
+na 
+
+sua
+
+
+barra de endereços,
+
+
+ELE 
+
+VAI SER AUTOMATICAMENTE ____REDIRECIONADO __ PARA 
+
+
+
+'BurgerBuilder' 
+
+SE NÃO 
+
+
+TIVER 
+
+
+'LOGGED IN' (se não tiver o token e o userId....)...  --> QUEREMOS 
+
+
+a
+ 
+
+ MESMA 
+
+ COISA 
+
+ PARA 
+
+
+ 'CHECKOUT' E 
+
+
+ 'CONTACT DATA'...
+
+
+
+----------------------------------
+
+
+
+---> de fato, nós REMOVEMOS ANTERIROMENTE O 
+
+'NAVLINK' 
+
+de 
+
+'Orders' quando 
+
+CONSTATADO QUE 
+
+NÃO HÁ UM 'TOKEN' 
+
+
+NO BROWSER DO USUÁRIO.... -------> 
+
+
+
+
+entretanto,
+
+agora 
+
+queremos 
+
+
+__IMPOSSIBILITAR O USUÁRIO__ DE ACESSAR 
+
+
+ESSE LINK __ MANUALMENTE, TAMBÉM... (impedi-lo de digitar 'localhost:3000/orders' na barra de endereços...)
+
+
+
+
+----------------------------------
+
+
+
+
+
+---> VAMOS COMEÇAR PELO 
+
+
+'GUARD' 
+
+
+DA PÁGINA 
+
+DE 
+
+'ORDERS'... -----> O PROFESSOR 
+
+
+
+NOS 
+
+ENSINOU 
+
+
+
+A FAZER ISSO 
+
+LÁ NO 
+
+MÓDULO SOBRE ROUTING... ---> E PROFESSOR 
+
+
+NOS EXPLICA QUE É SUPER SIMPLES, É SUPER SIMPLES 
+
+
+___EM RAZÃO __ DA MANEIRA PELA QUAL 
+
+
+O 
+
+REACT ROUTING FUNCIONA...
+
+
+
+---------------------------
+
+
+
+
+
+---> UM GUARD TIPICAMENTE É USADO 
+
+
+
+ ___QUANDO VOCÊ __NÃO SABE SE O USUÁRIO___ ESTÁ/É AUTENTICADO 
+
+ OU NÃO... ----> E HÁ ALGUMAS 
+
+
+ ROUTES 
+
+ NO SEU CÓDIGO 
+
+
+
+ __QUE VOCÊ ___ SÓ VAI QUERER __ DEIXAR __ O USUÁRIO ___ VISITAR__ SE 
+
+ ELE 
+
+ __ ESTIVER AUTENTICADO... -----------------> E COM O REACT ROUTER,
+
+
+
+
+ VOCê 
+
+
+
+ TALVEZ TENHA QUE PENSAR SOBRE ESSES 'guards'
+
+
+
+
+
+DE UMA FORMA COMPLETAMENTE NOVA... --> por exemplo,
+
+
+
+
+NO COMPONENT/CONTAINER 'BLOG',
+
+
+
+
+EM QUE 
+
+
+SETTAMOS O ROUTING PARA 
+
+
+O 
+
+'NEWPOST' e assim por diante...
+
+
+ex:
+
+
+     <Switch>
+                <Route path="/new-post" component={NewPost}  />
+                <Route path="/cartas" component={Posts} />
+                <Route path="/posts" component={Posts} /> */}
+                <Redirect from="/posts" to="/" />
+                <Route path="/" component={Posts} />
+    </Switch>
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+COMO, NO FINAL DAS CONTAS, TUDO O QUE ESTAMOS FAZENDO AQUI É ___O  RENDER __ DE ALGUNS COMPONENTS__, 
+
+
+
+como  o 
+
+component 
+
+'Route', 
+
+component 
+
+
+'Switch' e 
+
+assim por diante,
+ 
+
+
+
+ SE NÓS __ QUISERMOS ASSEGURAR __ QUE 
+
+
+ ''''<Route path="/new-post" component={NewPost} />''''
+
+
+
+ NÃO __POSSA SER ALCANÇADO__, 
+
+
+
+
+NÓS PODEMOS 
+
+_______sIMPLESMENTE ____ RENDERIZAR ESSA ROTA AÍ (a rote de '/new-post') 
+
+
+
+____CONDICIONALMENTE___...
+
+
+
+
+
+
+
+
+
+---> para isso, professor diz que 
+
+
+
+DEVEMOS 
+
+
+TER UM 
+
+
+STATE DE 
+
+
+
+'auth' 
+
+
+no nosso código... (no código de 'Blog.js')... ---------> E ESSA PROPRIEDADE SERÁ INICIALMENTE DE VALOR 'false'...
+
+
+
+
+ex:
+
+
+
+
+state = {
+
+
+        auth: false
+
+}
+
+
+-----------------------------
+
+
+
+
+CERTO... O QUE O PROFESSOR PODE FAZER, AGORA, é claro,
+
+
+É __
+
+
+DESCER ATÉ O 'RENDER STATEMENT' 
+
+
+de 
+
+'Blog.js'
+
+
+e então fazer aquela velha 
+
+
+
+mandinga 
+
+da 
+
+VARIÁVEL com valor de null lá no início, que depois é alterada 
+
+para ser a 'route'...
+
+
+
+
+
+
+
+
+
+
+--> MAS ELE DIZ QUE TAMBÉM É POSSÍVEL USAR A SOLUÇÃO 'QUICK AND DIRTY', A SOLUÇÃO 
+
+
+__'''INLINE'''___ (ou seja, usar uma TERNARY EXPRESSION BEM EM CIMA 
+
+DA NOSSA ROUTE...)
+
+
+
+
+ex:
+
+
+
+state = {
+        
+        auth: false
+
+}
+
+
+
+
+render() {
+
+
+
+   this.state.auth 
+   
+   ?
+   
+   
+    <Route path="/new-post" component={NewPost} />
+    
+    
+    : null 
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+tipo assim, basicamente...
+
+
+
+
+
+
+SE EU FIZER ISSO, 
+
+
+NÃO EXISTIRÁ __NENHUMA MANEIRA___ DE O USUÁRIO ACESSAR 
+
+
+'/new-post' (essa rota, agora __eSPECIAL__/'RESTRITA A AUTORIZADOS') 
+
+
+
+SEM ESTAR 
+
+EFETIVAMENTE AUTENTICADO ('this.state.auth = true'....) -------------> 
+
+
+
+
+
+SE VOCÊ ESCREVER 
+
+ESSA ROTA CONDICIONALMENTE, DESSA FORMA AÍ,
+
+
+essa 
+
+
+___ROUTE___ ESTARÁ/FICARÁ __ EFETIVAMENTE 
+
+
+'unknown' AO USUÁRIO, unknown 
+
+
+
+PQ __ELA NÃO SERÁ RENDERIZADA____... (se ele não estiver autorizado)...
+ 
+
+
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+
+ALGO TIPO ISTO AQUI FUNCIONARÁ:
+(em 'App.js')
+
+
+
+
+
+
+ { this.props.token ? <Route path="/orders" component={Orders} /> : null }
+
+
+
+
+
+
+ -----------------------------------
+
+
+
+ ESSE CÓDIGO CONDICIONAL AÍ __FUNCIONA___...
+
+
+ --> é claro que o professor vai querer algo mais __FANCY_.... ---> ele 
+
+
+ vai 
+
+ querer 
+
+
+
+
+ BARRAR/GUARDAR TODAS AS ROUTES QUE NÃO 
+
+ SEJAM 
+
+
+ 'BurgerBuilder' 
+
+
+ e 
+
+ 'Authenticate' 
+
+
+
+ ao acesso 
+
+
+ do usuário.... ------> colocará 
+
+ código condicional em TODAS ESSAS ROUTES...
+
+
+
+ ---------------------
+
+
+
+ 
+
+ EU CONTINUO ASSISTINDO A AULA DO PROFESSOR, POIS 
+
+
+ HOUVE BASTANTES MUDANÇAS NO CÓDIGO 
+
+ QUE 
+
+ ELE COLOCOU NO ARQUIVO de representação...
+
+
+
+
+ ----------------------------
+
+
+
+
+ --> no container 
+
+
+ 'App.js',
+
+
+
+
+
+ se não renderizarmos 
+
+ a route 
+
+
+ de 
+
+ 'orders' (ou qualquer outra, não faz diferença),
+
+
+
+ NÓS SIMPLESMENTE 
+
+ __NÃO PODEREMOS IR/ENTRAR__ NESSA ROUTE por meio dos nossos browsers... ----> nós 
+
+ não vamos 
+
+
+ poder 
+
+ alcançar
+  
+  essas routes JUSTAMENTE 
+
+  PQ 
+
+  O 
+
+  'REACT ROUTER' 
+
+  não fica 'aware' dessas routes... - --> e como nunca fica aware,
+
+
+  nunca 
+
+
+  vai 
+
+
+  as carregar....
+
+
+
+
+
+
+
+
+
+
+
+  ---> 
+
+
+
+  é por isso que o professor 
+
+  vai 
+
+  escrever 
+
+
+
+
+
+  const mapStateToProps = state => {
+    return {
+      token: state.auth.token !== null
+    }
+  }
+
+
+
+
+
+  ---------------------------------
+
+
+
+
+  --> Isso feito,
+
+  professor 
+
+  nos 
+
+  diz que 
+
+  ele 
+
+  vai querer 
+
+  usar 
+
+
+  esse 
+
+  'prop' 
+
+  aí 
+
+
+
+
+  para RENDERIZAR CONDICIONALMENTE 
+
+  NOSSAS 
+
+  'ROUTES'...
+
+
+
+
+
+
+
+
+
+  --> as routes de 'checkout' 
+
+  e 
+
+
+  'orders'
+
+  vao 
+
+  ser renderizadas condicionalmente...
+
+
+
+
+
+
+
+
+
+
+
+  PROFESSOR CRIA UMA NOVA VARIÁVEL,
+
+
+  A QUAL CHAMA 
+
+  DE 
+
+
+
+  'let routes'...scenario
+
+
+
+
+
+
+
+
+
+
+
+  --------> 
+
+
+
+
+  aí 
+
+  ele 
+
+  coloca 
+
+
+  um 
+
+  IF STATEMENT,
+
+  checando 
+
+  'se token estiver presente',
+
+
+
+'VOU QUERER QUE ROUTES FIQUEM DE OUTRA FORMA'... -------> 
+
+
+
+
+
+
+
+
+
+
+-----> ok... as 
+
+
+routes 
+
+__NÃO AUTENTICADAS __ deverão 
+
+ser 
+
+'auth' e 
+
+
+'/' (o burgerBuilder em si)...
+
+
+
+
+
+
+
+
+FICARÁ ASSIM o código, inicialmente....
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+render() {
+
+        let routes = (
+          <Route path="/auth" component={Auth} />
+            <Route path="/" exact component={BurgerBuilder} />
+        )
+}
+
+
+
+
+----------------------------------
+
+
+
+E
+ É CLARO QUE 
+
+
+ ESSAS 
+
+
+
+ROUTES TEM QUE SER WRAPPADAS 
+
+POR 
+
+
+1 COMPONENT 'PAI',
+
+
+
+por isso 
+
+vamos 
+
+
+
+
+
+COLOCAR TBM UM SWITCH STATEMENT 
+
+NESSE 
+
+
+'let routes'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+render() {
+
+        let routes = (
+          <Switch>
+          <Route path="/auth" component={Auth} />
+            <Route path="/" exact component={BurgerBuilder} />
+          </Switch>
+        )
+}
+
+
+
+
+
+
+--------------------------------
+
+
+OK, 
+
+ESSE 
+
+SERÁ 
+
+O 'ROUTING SETUP' 
+
+PARA USUÁRIOS NÃO AUTENTICADOS....
+
+
+
+
+
+
+
+--> JÁ O 'SETUP' PARA _USUÁRIOS _ AUTENTICADOS __ VAI SER 
+
+O 
+
+SETUP DE ANTES, AQUELE COM ___TODOS OS LINKS__ organizadinhos...
+
+
+
+(TODAS AS ROUTES MENOS 'AUTH', pq essa route NÃO SERÁ MAIS NECESSÁRIA __qUANDO 
+
+O USUÁRIO__ REALMENTE ESTIVER 'LOGGED IN'... (só a route 'logout' será necessária,
+nessa hipótese....))
+
+
+
+ex:
+
+
+
+
+
+
+render() {
+
+        let routes = (
+          <Switch>
+          <Route path="/auth" component={Auth} />
+            <Route path="/" exact component={BurgerBuilder} />
+          </Switch>
+        )
+
+
+  if (this.props.token) {
+    <Switch>
+      <Route path="/checkout" component={Checkout} />
+      <Route path="/orders" component={Orders} />
+
+      <Route path="/logout" component={Logout} />
+      <Route path="/" exact component={BurgerBuilder} />
+  <Switch />
+  }
+
+
+
+
+}
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+FICOU TIPO ASSIM:
+
+
+
+
+
+
+
+render() {
+
+        let routes = (
+          <Switch>
+          <Route path="/auth" component={Auth} />
+            <Route path="/" exact component={BurgerBuilder} />
+          </Switch>
+        )
+
+
+  if (this.props.token) {
+    <Switch>
+      <Route path="/checkout" component={Checkout} />
+      <Route path="/orders" component={Orders} />
+
+      <Route path="/logout" component={Logout} />
+      <Route path="/" exact component={BurgerBuilder} />
+  <Switch />
+  }
+
+
+
+
+      return (
+      <BrowserRouter>
+        <div>
+          <Layout>
+            {routes} ////eis o código em questão.
+          </Layout>
+        </div>
+      </BrowserRouter>
+      )
+
+
+}
+
+
+
+---------------------------------
+
+
+--> CERTO... MAS 
+
+
+
+EU ESTOU 
+
+COM UM 
+
+
+__PROBLEMA___ NO MEU CÓDIGO.... -----> quando eu faço 
+
+
+
+LOGIN,
+
+
+
+POR ALGUMA RAZÃO 
+
+A PÁGINA 
+
+
+'Burger Builder' __NUNCA MAIS É RENDERIZADA___ (fica em branco...) -------> 
+
+
+
+PARA 
+
+
+QUE 
+
+NÃO ENCONTREMOS APENAS UMA __PÁGINA__ VAZIA__, PROFESSOR 
+
+NOS EXPLICA QUE 
+
+
+DEVEMOS 
+
+
+
+ADICIONAR UM 
+
+'<Redirect/>' 
+
+
+LÁ 
+
+
+
+
+NOS 'CASES' 
+
+TANTO 
+
+
+
+DE USERS SEM TOKENS, QUANTO DE USERS COM TOKENS....
+
+
+
+
+
+---------------------------------
+
+
+
+TIPO
+
+ASSIM:
+
+
+
+      let routes = (
+        
+        <Switch>
+        <Route path="/auth" component={Auth} />
+          <Route path="/" exact component={BurgerBuilder} />
+          <Redirect to="/" /> ///eis o código em questão.
+        </Switch>
+      )
+
+
+
+
+
+      if (this.props.token) {
+        routes = (
+          <Switch>
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/orders" component={Orders} />
+    
+          <Route path="/logout" component={Logout} />
+          <Route path="/" exact component={BurgerBuilder}/>
+          <Redirect to="/" /> ///eis o código em questão.
+          </Switch>
+        )
+      }
+
+
+
+
+------------------------------
+
+
+
+
+
+
+OK, AGORA, COM ESSAS 'GUARDS' NO LUGAR,
+
+
+OS USERS NÃO PODEM ACESSAR PÁGINAS 
+
+
+as quais não estão autorizados/são barradas por tokens...
+
+
+
+
+
+
+--------> OBS::: COMO TUDO ISTO É JAVASCRIPT,
+
+
+OS USUÁRIOS AINDA PODEM, TEORICAMENTE,
+
+
+FUÇAR DENTRO DO SEU SOURCE CODE 
+
+E 
+
+MESMO 
+
+ASSIM manipular e
+
+
+ACESSAR AS 'PROTECTED ROUTES'... -----> E É __eXATAMENTE POR ISSO __ QUE 
+
+TEMOS 
+
+PROTEÇÃO ___ SERVERSIDE_, PROTEÇÕES _ QUE __NÃO RETORNAM DADOS/BARRAM O RETURN DE DADOS 
+
+PARA 
+ 
+ USUÁRIOS NÃO AUTENTICADOS.... --> PQ ESSA É A 'PROPER WAY' de proteger seus dados.... ---> o frontend, por sua vez, É ALL ABOUT 'PROVIDING THE USER WITH USER EXPERIENCE'... ------> e também prevenir o USUÁRIO DE ACESSAR UMA PÁGINA A QUE ELE NÃO DEVERIA TER ACESSO, QUE ELE PODE ACESSAR SEM QUERER, ETC ETC....
+
+
+ ---------------------

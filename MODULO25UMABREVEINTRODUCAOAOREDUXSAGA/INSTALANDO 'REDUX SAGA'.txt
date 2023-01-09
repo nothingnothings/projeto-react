@@ -1,0 +1,362 @@
+
+
+
+
+
+
+
+
+
+
+
+--> DE VOLTA AO PROJETO BURGER BUILDER COMPLETO,
+
+
+
+
+
+EXECUTAMOS NOSSO PROJETO... --> 
+
+temos 
+
+
+nosso burger,
+
+
+podeoms 
+
+autenticar,
+
+e aí 
+
+construímos o burger.... --> nada 
+
+de novo....
+
+
+
+
+
+
+
+
+
+
+
+---> SE DERMOS UMA OLHADA NO CÓDIGO DO BURGER,
+
+
+
+vamos perceber 
+
+que 
+
+
+
+FAZEMOS 
+
+'HANDLE' DE TODAS 
+AS 
+
+
+
+'ASYNCHRONOUS TASKS' .... E TAMBÉM 
+
+
+DAS 
+
+
+SYNCHRONOUS TASKS,
+
+
+tudo no mesmo lugar,
+
+TUDO 
+
+
+NAQUELES ARQUIVOS COM OS ACTION CREATORS,
+
+como 
+
+'auth.js',
+
+
+'order.js',
+
+etc etc...
+
+
+
+
+
+----> ISSO SIGNIFICA QUE NÓS ESTAMOS FAZENDO HANDLE DE ACTIONS ___ QUE NÃO POSSUEM RELAÇÃO ESTRITA COM 
+
+O 'CHANGE' DE NOSSO REDUX __ STORE__ NO MESMO LUGAR DAQUELAS QUE EFETIVAMENTE O FAZEM...
+
+
+
+
+
+
+-----> TODAS ESSAS COISAS SÃO HANDLADAS EM 'action creators', nesse nosso projeto...
+ 
+
+
+
+ ---> NÓS TEMOS COISAS 
+
+
+
+ COMO ACTION CREATORS SÍNCRONOS,
+
+
+
+ e coisas como 
+
+ 'localStorage.removeItem()',
+
+
+
+ QUE 
+
+
+ É __ UMA SYNCHRONOUS ACTION, de fato,
+
+ MAS QUE __ VOCÊ PODE __ ARGUMENTAR__ QUE ESSE ACESSO 
+
+
+ DO 'localStorage' NÃO É __ ACTUALLY RELACIONADO AO ATO DE 
+
+ __FAZER DISPATCH DE UMA ACTION___...  --------> 
+
+
+
+
+ E É POR ISSO QUE 
+
+ VOCÊ TALVEZ NÃO QUEIRA TER 
+
+ ESSA LÓGICA DE 
+
+
+ 'localStorage'
+
+ NESSE ARQUIVO DE auth.js,
+
+ nesta linha de código aqui:
+
+
+
+
+export const authLogout = () => {
+  localStorage.removeItem('token'); //CÓDIGO __ NÃO RELACIONADO __ AO DISPATCH DE UMA ACTION, BASICAMENTE...
+  localStorage.removeItem('expirationDate');
+  localStorage.removeItem('email');
+  localStorage.removeItem('userId');
+  return {
+    type: authActionTypes.AUTH_LOGOUT,
+  };
+};
+
+
+
+
+
+
+
+
+ ------------------------
+
+
+ E NÓS DE FATO TEMOS ALGUNS ACTION CREATORS QUE SÃO ASSÍNCRONOS,
+
+ como 
+
+ 'checkAuthTimeout',
+
+ que 
+
+ tem o seguinte código:
+
+
+
+
+
+export const checkAuthTimeout = (expirationTime) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(authLogout());
+    }, expirationTime * 1000);
+  };
+};
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+--> NESSE 'checkAuthTimeout' 
+
+NÓS SETTAMOS 
+
+UM 
+
+
+TIMER 
+que 
+
+VAI DISPARAR UMA ACTION ('logout')
+
+DEPOIS 
+
+
+DE TRANSCORRIDO UM CERTO PERÍODO...
+
+
+---------------
+
+
+
+
+
+E EM 
+
+'authAttempt'
+
+
+NÓS FAZMOS 
+
+'REACH OUT' 
+
+à web,
+
+
+FAZEMOS POST REQUESTS,
+
+E AÍ TEMOS 
+
+
+que 
+
+
+esperar 
+
+eles terminarem....
+
+ex:
+
+
+
+
+
+
+export const authAttempt = (email, password, isSignup) => {
+  return (dispatch) => {
+    dispatch(authStart());
+    const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true, ///propriedade obrigatória para FUNCIONAMENTO DO 'REST API' do firebase... ---> deve sempre estar settada como 'true'...
+    };
+    let url =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; /// url usada para SIGNUP/CADASTRO....
+    if (!isSignup) {
+      url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; ///url/endpoint usado para ___SIGNIN/LOGIN...
+    }
+    axios
+      .post(url, authData) ///ESSA 'key' ([API_KEY]) FOI OBTIDA LÁ DO SITE DO GOOGLE FIREBASE, na engrenagem, e depois em 'Configurações do Projeto' > 'Chave de API da web'...
+      .then((response) => {
+        const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); ////lembre-se de adicionar '* 1000', pois o JAVASCRIPT SEMPRE CONSIDERA 'TEMPO' EM MILISSEGUNDOS, E NÃO EM SEGUNDOS.... (só o 'expiresIn' que é mostrado em segundos....)
+        localStorage.setItem('token', response.data.idToken);
+        localStorage.setItem('expirationDate', expirationDate);
+        localStorage.setItem('userId', response.data.localId);
+        localStorage.setItem('email', response.data.email )
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkAuthTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        
+        dispatch(authFail(error.response.data.error));
+      });
+  };
+}; 
+
+
+
+
+-----------------------------------------
+
+
+
+
+CERTO,
+
+E TODAS 
+
+ESSAS SÃO COISAS QUE __ NÓS TEMOS ___ NOS NOSSOS ACTION CREATORS __ QUE 
+
+NÃO POSSUEM ___ RELAÇÃO ESTRITA COM O DISPATCH DE ACTIONS...
+
+(e isso não é necessariamente RUIM) --> entretanto,
+
+você 
+pode 
+
+argumentar 
+
+QUE 
+
+
+VOCÊ QUER 'ACTION CREATORS', ou A IDEIA __ DE DISPATCHAR__ ACTIONS,
+
+
+_SEJA SUPER '''CLEAN''', que 
+você 
+NÃO QUER 
+
+TER 
+
+
+NENHUM OUTRO CÓDIGO ALI DENTRO QUE 
+
+NÃO TENHA RELAÇAO 
+
+
+COM O DISPATCH DE UMA ACTION...
+
+
+
+
+
+
+
+
+--> para ver como o REDUX SAGA FUNCIONA,
+
+devemos 
+
+o instalar.... --> rodamos 
+
+
+'npm install --save redux-saga'...
+
+
+
+-------------------------------------
+
+
+
+
+
+AGORA PODEMOS VOLTAR AO PROJETO BURGER BUILDER,
+
+DESSA VEZ COM O REDUX SAGA....
+
+
+

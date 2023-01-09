@@ -1,0 +1,423 @@
+
+
+
+
+A BOA NOTÍCIA É QUE 
+
+NOSSA 
+
+'ORDER' já está sendo enviada 
+
+por meio daquela form,
+
+e isso com 
+
+a ajuda 
+
+
+DO 
+
+REDUX 
+
+
+
+E 
+
+
+DO 
+
+DISPATCH ASSÍNCRONO DE ACTIONS POR MEIO DE ACTION CREATORS 
+
+
+
+e 
+
+o 
+
+
+'redux-thunk'...
+
+
+
+
+------------------------------
+
+
+
+PROFESSOR 
+
+DIZ QUE 
+
+DEVEMOS 
+
+COMEÇAR 
+
+PELO 
+
+
+SET 
+
+
+
+
+DE 
+
+'loading: true'
+
+QUANDO 
+
+COMEÇARMOS A REALMENTE ENVIAR O BURGER....
+
+
+
+
+
+
+
+
+
+--> PARA ISSO, PROFESSOR EXPLICA QUE 
+
+VAMOS 
+
+PRECISAR DE UM __NOVO 'actionType',
+
+
+O QUAL 
+
+
+CHAMAREMOS 
+
+
+
+
+DE 
+
+
+'export const PURCHASE_BURGER_LOADING'...  ------> E EU JÁ FIZ ISSO....
+
+
+
+----------------------------------
+
+
+
+
+
+---> o professor então cria um ACTION CREATOR para o create da ação que terá esse type... --> já fiz isso...
+
+
+
+
+
+
+
+
+
+
+
+
+--> CERTO... MAS O __lOCAL__ EM QUE 
+
+ELE 
+
+CHAMA 
+
+
+ESSA 
+
+ACTION 
+
+
+
+de 
+
+'PURCHASE_BURGER_LOADING' 
+
+
+É 
+
+DIFERENTE 
+
+
+
+DO NOSSO... --------> 
+
+
+nós 
+
+havíamos chamado 
+
+
+em 
+
+
+'orderHandler',
+
+
+
+
+MAS 
+
+
+O PROFESSOR VAI QUERER CHAMAR 
+
+
+
+
+DENTRO 
+
+
+DO 
+
+
+'purchaseBurgerAttempt' --------> 
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+export const purchaseBurgerLoading = () => {
+        return {
+                type: actionTypes.PURCHASE_BURGER_LOADING
+        }
+}
+
+
+export const purchaseBurgerAttempt = (orderData) => {
+        return (dispatch) => {
+                            dispatch(   purchaseBurgerloading() ); ///////////EIS O CÓDIGO EM QUESTÃO.
+                        axiosOrder.post(
+                                '/orders.json', orderData
+                        )
+                        .then(
+                                response => {
+                                        console.log(response);
+                                        dispatch(purchaseBurgerSuccess(response.data, orderData));
+                                }
+                        )
+                        .catch(
+                                error => {
+                                        dispatch(purchaseBurgerSuccess(error.message));
+                                }
+                        )
+        }
+}
+
+
+
+-----------------------------------
+
+
+
+
+
+E, REALMENTE, ACHO QUE ESSA VERSÃO DO PROFESSOR É SUPERIOR A NOSSA,
+
+
+pois 
+
+
+deixamos 
+
+mais livre 
+
+a lógica de 
+
+'orderHandler', lá no 
+
+container de 'ContactData'...
+
+
+
+
+
+-----------------------------
+
+
+
+
+CERTO,
+
+
+E ESSE NEGÓCIO FUNCIONOU IGUAL,
+
+mas 
+
+agora 
+
+
+com 
+
+
+esse DISPATCH 
+
+SENDO EXECUTADO/mandado DENTRO DE OUTRA ACTIOn...
+
+
+
+
+----------------------------------
+
+
+
+---> professor adiciona o case 
+
+de 
+
+
+'actionTypes.PURCHASE_BURGER_LOADING' 
+
+
+
+NO reducer de 
+
+'order'... ----> E 
+
+ISSO 
+
+AÍ, 
+
+
+ESSA CONDIÇÃO,
+
+
+VAI 
+SETTAR 
+
+o 
+
+'loading' 
+
+como 
+
+
+'true'... -----> VAI FICAR 'TRUE' até o 'PURCHASE_BURGER_SUCCESS'/PURCHASE_BURGER_FAIL' 
+
+TERMINAR SEU PROCEDIMENTO, pq o término de seus procedimentos vai 
+
+fazer com 
+
+que 
+
+
+'loading' fique como 'false', como 
+
+visto 
+
+
+em sua lógica(
+ex:
+
+
+
+        case orderActionTypes.PURCHASE_BURGER_FAIL:
+                return {
+                    ...state,
+                    loading: false
+                };
+
+
+
+
+)
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+
+POR FIM, 
+
+PROFESSOR CONECTA 
+
+
+o 
+
+state 'loading' AOS PROPS 
+
+DO 
+
+
+'ContactData',
+
+por meio deste código:
+
+
+const mapStateToProps = state => {
+  return {
+      ingr: state.burger.burger.ingredients,
+      price: state.burger.burger.totalPrice,
+      loading: state.order.loading
+  }
+}
+
+-------------------------------
+
+
+
+
+COM ISSO, 
+
+FINALMENTE PODEMOS NOS LIVRAR 
+
+DA 
+
+PROPRIEDADE 
+
+'loading' no STATE LOCAL 
+
+DE 
+
+'ContactData'...
+
+
+
+
+
+
+
+--> professor também 
+
+altera 
+
+
+
+'if (this.state.loading) {
+    form = <Spinner />/
+}'
+
+
+PARA FICAR 
+
+
+
+'if (this.props.loading) {
+    form = <Spinner />/
+}'
+
+
+
+---------------------------------------
+
+
+
+
+
+COM TUDO ISSO SALVADO... -----> veremos um erro pq __NÃO COMBINAMOS REDUCERS__ (mas eu já combinei, por isso não recebi esse erro...)

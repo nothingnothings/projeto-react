@@ -1,0 +1,1524 @@
+
+
+
+
+
+NA ÚLTIMA LIÇÃO,
+
+NÓS ADICIONAMOS 
+
+A LÓGICA PARA 
+
+
+__ADICIONAR INGREDIENTS__... ---> AGORA O PROFESSOR QUER FAZER O CONTRÁRIO, 
+
+QUER 
+
+
+ESCREVER UMA LÓGICA PARA __OS REMOVER__... --------> 
+
+
+
+
+NÓS JÁ TEMOS 
+
+
+
+O MÉTODO 
+
+
+'removeIngredientHandler = (type) => {
+    ...
+}' 
+
+,
+
+
+no container 'BurgerBuilder',
+
+PARA ISSO....
+
+
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+A LÓGICA DESSE removeIngredientHandler' 
+
+
+É BEM SIMILAR À LÓGICA DO 
+
+'addIngredientHandler'..  ----->
+
+
+
+
+VAMOS ESCREVER (copiar o código de 'addIngredientHandler'...):
+
+
+
+
+removeIngredientHandler = (type) => {
+
+
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceAddition = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.oldPrice;
+    const newPrice = oldPrice + priceAddition;
+    this.setState(
+      {
+        totalPrice: newPrice, 
+        ingredients: updatedIngredients
+      }
+    )
+
+
+    this.setState({
+     totalPrice: newPrice,
+     ingredients: updatedIngredients
+    })
+
+    
+
+}
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+É LÓGICO QUE VAMOS TER QUE ADAPTAR ESSA LÓGICA DO 'addIngredientHandler'...
+
+
+professor vai alterar o 'updatedCount' para ser 'oldCount - 1'...
+
+
+
+ex:
+
+
+
+
+
+removeIngredientHandler = (type) => {
+
+
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount - 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceAddition = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.oldPrice;
+    const newPrice = oldPrice + priceAddition;
+    this.setState(
+      {
+        totalPrice: newPrice, 
+        ingredients: updatedIngredients
+      }
+    )
+
+
+    this.setState({
+     totalPrice: newPrice,
+     ingredients: updatedIngredients
+    })
+
+    
+
+}
+
+
+
+-------------------------
+
+
+
+o updatedIngredients continuará igual....
+
+
+
+SÓ 
+
+o 'priceAddition' 
+
+
+vai mudar, vai virar 'priceDeduction'....
+
+
+
+EX:
+
+
+
+removeIngredientHandler = (type) => {
+
+
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount - 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceDeduction = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.oldPrice;
+    const newPrice = oldPrice + priceAddition;
+    this.setState(
+      {
+        totalPrice: newPrice, 
+        ingredients: updatedIngredients
+      }
+    )
+    
+
+}
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+Por fim, no 
+
+
+'const newPrice = oldPrice + priceDeduction',
+ 
+ É EVIDENTE QUE VAMOS SUBSTITUIR '+' por '-', POIS __QUEREMOS QUE ESSE VALOR __ SEJA _____DEDUZIDO___ DO VALOR ANTERIOR...
+
+
+
+
+ ex:
+
+
+
+
+ removeIngredientHandler = (type) => {
+
+
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount - 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceDeduction = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.oldPrice;
+    const newPrice = oldPrice - priceAddition;
+    this.setState(
+      {
+        totalPrice: newPrice, 
+        ingredients: updatedIngredients
+      }
+    )
+
+
+    
+
+}
+
+
+
+-----------------------
+
+
+
+
+E ISSO É TUDO, NA VERDADE. -> 
+
+
+
+ou seja, a única alteração aqui é 
+
+QUE O 
+
+
+__PROFESSOR VAI REDUZIR__ O 'COUNT' DE INGREDIENTS  POR 1 UNIDADE,
+
+e também
+
+QUE ELE VAI __dEDUZIR O 'OLDPRICE' PELO 'priceDeduction' (que será exatamente do item que desejamos, por 1 unidade....)
+
+
+-----------------------------------------
+
+
+
+
+
+Certo, com isso estaremos updatando os INGREDIENTS 
+
+e o PRICE também...      ----------> AGORA 
+
+
+
+VAMOS TER QUE PASSAR ESSE 'METHOD HANDLER' DE 'removeIngredientHandler' 
+
+
+
+AO 
+
+
+
+BUTTON EM 
+
+
+'BuildControl'...
+
+
+
+--------------------------------------
+
+
+
+Ok... fizemos esse 'Pass' do prop de 
+
+
+'ingredientRemoved' --> (usamos o mesmo procedimento de 'added'/ingredientAdded...)
+
+
+
+----------------------------------------
+
+
+
+--> com isso, devemos testar nosso código, ver se ele FUNCIONOU...
+
+
+
+
+
+
+
+--> SIM, DE FATO, ESTÁ FUNCIONANDO... --> os botões de 'more' e 'less' 
+
+ESTÃO FUNCIONANDO... --------> 
+
+
+ENTRETANTO, EXISTE UM __PROBLEMA DE LÓGICA NO NOSSO CÓDIGO___: 
+
+
+
+se TENTARMOS REMOVER UM INGREDIENT QUANDO __NÃO HÁ MAIS DAQUELE INGREDIENT NO BURGER__,
+ 
+
+ NÓS RECEBEREMOS UM 
+
+
+ ERRO BEM FEIO:
+
+
+ ''''RangeError: Invalid array length'''''''
+
+
+
+
+
+
+ ---> provavelmente vamos ter que adicionar um IF CHECK em algum lugar do nosso 
+
+ código para __IMPEDIR__ QUE 
+
+
+ ESSE run de 'removeIngredientHandler' seja executado... ---> tentei colocar 
+
+ um if check em um lugar específico do código (em 'Burger.js'),
+
+ mas isso não deu certo (ainda ganho o mesmo erro).
+ --------------------------------------------------------
+
+
+
+
+
+
+ PROFESSOR DIZ QUE ESSE ERRO FAZ TOTAL SENTIDO: 
+
+
+
+
+ NÓS ESTAMOS TENTANDO REMOVER UM COMPONENT/COMPONENTS ___QUE 
+
+ NÃO ESTÃO MAIS ALI__.... -----> isso significa que 
+
+
+ o 
+
+
+ STATE DO NOSSO BURGER BUILDER SE TORNA 
+
+ NEGATIVO...
+
+ (
+
+     fica assim:
+
+
+
+    state = {
+
+        ingredients: {
+            salad: -1, 
+            bacon: 0,
+            cheese: 0,
+            meat: 0
+        }
+    }
+
+
+
+
+
+
+
+
+ )
+
+
+
+
+
+E O PROBLEMA, AQUI, É QUE __NÓS NÃO PODEMOS CRIAR ARRAYS __ COM VALORES 
+
+NEGATIVOS.... (pq a função/objeto/constructor 'Array(3)' NÃO FUNCIONA COM 'Array(-1)', 'Array(-2)', etc etc... --> não há como criar arrays vazios de determinado número de slots A PARTIR DE NÚMEROS NEGATIVOS SENDO PASSADOS COMO PARÂMETRO...)
+
+
+
+
+
+
+
+-----> É POR ISSO QUE DEVEMOS 
+
+FAZER 
+
+
+'FINETUNE'
+
+
+
+do nosso 
+
+
+método 
+
+'removeIngredientHandler' ----> devemos fazer com que 
+
+
+
+ELE CHEQUE SE NÓS TEMOS INGREDIENTS PARA INÍCIO DE CONVERSA... (ou seja,
+
+devemos colocar 'if checks' no removeIngredientHandler...)
+
+
+
+
+
+
+
+
+
+------> CERTO. CONSERTEI ESSE PROBLEMA... ---> coloquei um 
+
+if Check lá no burger builder que mostra um AVISO quando 
+
+não é mais possível remover 
+
+
+ingredients... -----> ficou assim (mas a versão do professor usou 'oldCount <= 0', em vez do 'updatedCount < 0' que eu havia escrito... mas o efeito ainda é o mesmo, por enquanto.):
+
+
+
+
+EX:
+
+
+
+
+  removeIngredientHandler = (type) => {
+
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount - 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceDeduction = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.oldPrice;
+    const newPrice = oldPrice - priceDeduction;
+
+    if(oldCount <= 0) { /////////EIS O CÓDIGO EM QUESTÃO.
+      return (
+        <p>{alert("You can't remove any more of that ingredient")}</p>
+      );
+    } else {
+
+      this.setState(
+        {
+          totalPrice: newPrice, 
+          ingredients: updatedIngredients
+        }
+      )
+    }
+  
+
+    
+
+  }
+
+
+----------------------------------------------
+
+
+
+
+MAS O PROFESSOR QUER 
+
+ALGO ALÉM, ALGO 
+
+MAIS INTERATIVO DO QUE ISSO... ---> ele quer que o botão 
+
+
+FIQUE '''DISABLED'' (desabilitado) 
+
+QUANDO 
+
+O NÚMERO 
+
+
+
+NAQUELA PROPRIEDADE (naquele 'ingredient') NO 
+
+'STATE' FOR 
+
+de 0... ------->  PARA   IMPLEMENTAR 
+
+
+
+ESSA FUNCIONALIDADE,
+
+
+DEVEMOS INTRODUZIR ESSA LÓGICA AO NOSSO CÓDIGO... --> 
+
+
+devemos 
+
+
+
+adicionar uma lógica que 
+
+comunica 
+
+
+'QUAL BOTÃO DEVERÁ 
+
+ESTAR 
+
+
+'ENABLED', E QUAL DEVERÁ ESTAR 'DISABLED'... ' ------------> 
+
+
+
+
+PARA ISSO,
+
+
+
+DEVEMOS SCROLLAR ATÉ 
+
+
+o
+
+
+
+método 'RENDER()' 
+
+LÁ 
+
+
+EM 
+
+
+
+'BurgerBuilder' (que é um STATEFUL COMPONENT, lembre-se)....
+
+
+
+
+
+nesse lugar,
+
+
+o professor vai escrever, POUCO __ANTES___ DO 
+
+
+'return statement' daqueles components jsx,
+
+
+
+
+UMA 
+
+CONSTANTE 
+
+
+
+de 
+nome 
+
+
+'disabledInfo'... ----> nessa constante, ele simplesmente 
+
+
+
+vai querer criar um NOVO OBJETO...
+
+
+
+ex(REPRESENTAÇÃO):
+
+
+
+
+
+
+
+
+
+
+
+
+
+  render() {
+
+        const disabledInfo = {
+
+        }
+
+
+
+    return (
+      <Aux>
+        {/* <div>Burger</div> */}
+        <Burger ingredients={this.state.ingredients}/>
+        {/* <div>Build Controls</div> */}
+        <BuildControls ingredientAdded={this.addIngredientHandler} BuildControls ingredientRemoved={this.removeIngredientHandler} />
+      </Aux>
+    );
+  }
+}
+
+
+
+--------------------------------------------
+
+
+
+DENTRO DESSE OBJETO, O PROFESSOR VAI __DISTRIBUIR__ (por meio do SPREAD OPERATOR) AS 
+
+PROPRIEDADES 
+
+
+de 
+
+
+
+'this.state.ingredients' (dessa propriedade/objeto do state de 'BurgerBuilder')...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+  render() {
+
+        const disabledInfo = {
+                ...this.state.ingredients //////EIS O CÓDIGO EM QUESTÃO
+        }
+
+
+
+    return (
+      <Aux>
+        {/* <div>Burger</div> */}
+        <Burger ingredients={this.state.ingredients}/>
+        {/* <div>Build Controls</div> */}
+        <BuildControls ingredientAdded={this.addIngredientHandler} BuildControls ingredientRemoved={this.removeIngredientHandler} />
+      </Aux>
+    );
+  }
+}
+
+---------------------------------------
+
+
+
+
+(ISSO VAI BASICAMENTE COPIAR AQUELE OBJETO 'ingredients' dentro do 'state' 
+
+
+NESSE OBJETO armazenado em 'disabledInfo'...) ----> e isso vai COPIAR esse state 
+
+
+DE UMA MANEIRA 'IMMUTABLE'... (o que é bom)....
+
+
+
+
+
+
+---------> É CLARO QUE SÓ 
+
+ESSE OBJETO 
+
+
+'disabledInfo' 
+
+
+NÃO SERÁ SUFICIENTE__, ELE NÃO CONTERÁ TODOS 
+
+OS DADOS 
+
+
+
+DE QUE PRECISAMOS... ------>  O PROFESSOR VAI TER DE 
+
+
+
+RECORRER 
+
+
+A UM 
+
+
+
+'FOR IN LOOP'     (  ou seja,   'for (let xxx in yyyyy)' ),
+
+
+
+
+
+PARA CONSEGUIR ESSES DADOS...
+
+
+
+ele 
+
+
+vai 
+
+
+escrever 
+
+
+
+
+
+'for (let key in disabledInfo)' 
+
+
+
+
+
+
+
+
+
+E PARA 
+
+
+CADA 'KEY' em 'disabledInfo', 
+
+
+
+
+ELE VAI CHECAR  
+
+'ESSA KEY PELA QUAL ESTOU PASSANDO, ELA 
+
+É DE VALOR '0' OU MENOR?' -----> e para isso,
+
+
+
+ele vai escrever um 
+
+
+
+CÓDIGO INSANO/MALUCO...
+
+
+
+o código completo 
+
+é 
+
+
+
+'for (let key in disabledInfo) {
+    disabledInfo[key] = disabledInfo[key] <= 0
+}' 
+
+
+
+
+
+
+
+
+temos que DISSECAR 
+
+
+esse for in loop... --> 
+
+
+
+1) ELE ESTÁ __LOOPANDO__ PELAS ''''KEYS'''' DENTRO DE disabledInfo ( ou seja, ele está loopando pelas KEYS.... --> keys são 'cheese', 'salad', 'meat', 'bacon')....
+
+
+
+2) ELE ESTÁ LOOPANDO, SIM... e ___EM CADA___ 'KEY' ele está ___eXECUTANDO O CÓDIGO 
+
+'disabledInfo[key] = disabledInfo[key] <= 0' --------> OK, MAS O QUE É ESSE CÓDIGO?
+
+
+
+
+
+3)  ''''''''' disabledInfo[key] = disabledInfo[key] <= 0  '''''''' -------> isso significa, basicamente:
+
+
+
+'''disabledInfo[key]'''' --> isso é A 
+
+
+
+_______KEY________ (bacon, cheese, meat, salad) que 
+
+
+
+ESTÁ NAQUELE 'OBJETO CÓPIA' do state de BurgerBuilder.... ------>
+
+
+
+CLARO QUE AQUI ESTAMOS FALANDO DO 
+
+___'disabledInfo[key]' 
+
+NA ___ESQUERDA___....
+
+
+certo.... 
+
+
+
+
+4) '=   disabledInfo[key] <= 0' -------------> ISSO É UMA 
+
+
+GAMBIARRA USADA 
+
+PELO PROFESSOR... --> o 'disabledInfo[key]' 
+
+
+NA __DIREITA___ REPRESENTA__ O VALOR daquela key... (pode ser o '1' do cheese, o '2' do bacon, o '5' da salad...).... 
+
+
+
+ENTÃO ELE BASICAMENTE ESTÁ 
+
+EXECUTANDO 
+
+UM CÓDIGO 
+
+
+
+DE 
+
+
+(0, 1 , 3 , 6, ''qualquernúmero'')
+        disabledInfo[key]             <=          0 
+
+
+
+
+
+
+
+
+OU SEJA,
+
+ESSE NÚMERO AÍ, DESSA KEY ESPECÍFICA,  QUE ESSA KEY ESPECÍFICA REPRESENTA,
+
+ELE É IGUAL OU MENOR 
+
+
+DO QUE 
+
+'0'.... ? -------->
+
+
+
+
+5) SE SIM, SE ELE FOR REALMENTE ___IGUAL OU MENOR DO QUE '0'___, 
+
+ESSE "LADO DIREITO DO '=' " 
+
+
+RETORNARÁ 'TRUE' (será de valor boolean 'TRUE')... --> caso não, caso não seja igual,
+
+esse lado do statement vai retornar 
+
+'FALSE'...
+
+
+
+
+resumindo,
+
+
+o 
+
+
+
+'for (let key in disabledInfo) {
+    disabledInfo[key] = disabledInfo[key] <= 0
+}' 
+
+
+
+
+
+vai RESULTAR 
+
+
+
+em UM 
+
+FINAL DE 
+
+
+
+
+'''disabledInfo[key] = true'''''  (no caso do número ser menor/igual a zero).
+
+
+
+
+__OU 
+
+
+''''disabledInfo[key] = false''''' (no caso do número ser MAIOR do que zero)....
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+E ERA __eSSA__A INFORMAÇÃO QUE O PROFESSOR QUERIA,
+
+
+A INFORMAÇÃO QUE FOI EXTRÁIDA __POR MEIO __ 
+
+DESSE ___ 
+
+BIZARRO FOR IN LOOP__....
+
+
+
+
+
+---------------------------------------------------
+
+
+
+Bem confusa essa equação, mas funciona.
+
+
+
+
+----------------------------------------------------
+
+
+
+
+certo... NÓS PROVAVELMENTE VAMOS USAR 
+
+
+ESSA CONST 'disabledInfo' (que pode ser TRUE OU FALSE, dependendo do número/valor 
+da key/ingredient específico)...
+
+
+
+
+---> agora, portanto,
+
+PODEMOS 
+
+__PASSAR___ ESSE OBJETO 'disabledInfo' (que tem essa MUDANÇA AÍ NO OBJETO, 
+
+que 
+
+tem uma estrutura de objeto assim:
+
+
+
+''''''''''''''''''''''''
+
+
+
+
+'''''state/disabledInfo'''' = {
+
+    salad: true, 
+    meat: false,
+    cheese: true,
+    bacon: true
+}
+
+
+
+'''
+
+
+
+
+)
+
+
+
+
+
+DEVEMOS PASSAR ESSE OBJETO AÍ 
+
+
+AO __COMPONENT 'BuildControls',
+
+NA FORMA 
+
+
+DE UM __PROP__.... -----------> É POR ISSO QUE 
+
+
+O PROFESSOR 
+
+VAI ESCREVER:
+
+
+
+
+
+  render() {
+    return (
+      <Aux>
+        {/* <div>Burger</div> */}
+        <Burger ingredients={this.state.ingredients}/>
+        {/* <div>Build Controls</div> */}
+        <BuildControls
+        
+         ingredientAdded={this.addIngredientHandler} 
+         
+         ingredientRemoved={this.removeIngredientHandler}
+         
+         disabled={disabledInfo} //////////EIS O CÓDIGO EM QUESTÃO.
+          />
+      </Aux>
+    );
+  }
+
+
+
+
+-------------------------
+
+
+
+
+
+COM ISSO,
+
+
+PODEMOS USAR ESSE NEGÓCIO EM 
+
+
+'BuildControls'... -----> LÁ, NÓS VAMOS PASSAR 
+
+
+ESSE 
+
+'disabledInfo'
+ 
+
+ COMO PROP (mais uma vez ) 
+
+ AO 
+
+
+
+ COMPONENTE/COMPONENTS INDIVIDUAIS
+
+
+ 'BuildControl'...
+
+
+
+
+
+ -----------------------------------
+
+
+
+
+ CERTO... 
+
+
+ O CÓDIGO 
+
+
+ DE 'pass' do prop de 'disabledInfo' está assim, em buildCOntrols:
+
+
+    return(
+
+        <div className={BuildControlsStyle.BuildControls}>
+             {
+             controls.map(ctrl => (
+                     <BuildControl key={ctrl.label} //sim, vamos usar o 'label' como ID, também. Isso é só um detalhe.
+                      label={ctrl.label} 
+                      removed={() => {props.ingredientRemoved(ctrl.type)}}
+                      added={() => {props.ingredientAdded(ctrl.type)}} ///CÓDIGO __BEM IMPORTANTE___... ---> esse parâmetro 'ctrl.type' É PASSADO AO MÉTODO 'addIngredientHandler', lá em 'BurgerBuilder'...
+                      disabled={props.disabled}
+                      /> 
+                 )
+
+
+
+                 )
+             }
+
+        </div>
+
+
+    );
+
+
+
+------------------------------------------
+
+
+
+
+
+CERTO.
+
+
+
+mas esse pass aí não 
+
+
+será um 
+
+
+simples pass 
+
+
+de 
+
+'props.disabled'.... não, isso pq __ o 'disabledInfo' INTEIRO __NÃO NOS INTERESSA__... --> 
+
+
+não nos interessa pq 
+
+ELE É A 'CÓPIA INTEGRAL' DO STATE 
+
+de
+
+'burgerBuilder'... --> e nós NÃO PRECISAMOS DESSA CÓPIA INTEIRA,
+
+
+o que nós queremos, na verdade, 
+
+É APENAS _____ 
+
+A PROPRIEDADE/KEY/INGREDIENT ESPECÍFICO 
+
+que 
+
+
+está sofrendo os efeitos do 'removeIngredientHandler'.... -------> 
+
+
+
+É POR ISSO QUE O PROFESSOR VAI ESCREVER
+
+
+'[ctrl.type]' 
+
+do lado desse 'props.disabled', justamente PARA ESPECIFICAR QUE 
+
+ELE VAI QUERER 
+
+PASSAR 
+
+
+ESSA INFORMAÇÃO BEM ESPECÍFICA, o STATUS/ valor 'true' ou 'false' 
+
+
+DAQUELA PROPRIEDADE/INGREDIENT/KEY 
+
+específica... 
+
+
+
+
+ex:
+
+
+
+
+
+    return(
+
+        <div className={BuildControlsStyle.BuildControls}>
+             {
+             controls.map(ctrl => (
+                     <BuildControl key={ctrl.label} //sim, vamos usar o 'label' como ID, também. Isso é só um detalhe.
+                      label={ctrl.label} 
+                      removed={() => {props.ingredientRemoved(ctrl.type)}}
+                      added={() => {props.ingredientAdded(ctrl.type)}} ///CÓDIGO __BEM IMPORTANTE___... ---> esse parâmetro 'ctrl.type' É PASSADO AO MÉTODO 'addIngredientHandler', lá em 'BurgerBuilder'...
+                      disabled={props.disabled[ctrl.type]}
+                      /> 
+                 )
+
+
+
+                 )
+             }
+
+        </div>
+
+
+    );
+
+
+
+----------------------------------------------------------
+
+
+mas pq diabos 
+
+'ctrl.type' é igual à key/propriedade 'disabledInfo[Key]'? -----> é pq 
+
+
+
+'disabledInfo[key]' SÓ PODE SER 
+
+
+'cheese', 'meat', 'bacon' ou 'salad'... (dependendo do elemento que está sendo removido).
+
+
+
+
+JÁ 
+
+
+'ctrl.type' é um código DINÂMICO DE '.map()', mas que É SEMPRE __ A PROPRIEDADE 'type'_ no objeto 
+
+'controls' (que, por sua vez, 
+
+é um 
+
+OBJETO que tem NA PROPRIEDADE 'type' 
+
+AS MESMAS 'keys' de disabledInfo, os mesmos keynames:
+
+
+
+''''''''''''''''''''''''''
+
+
+STATE DE BURGERBUILDER:
+
+  state = {
+    ingredients: {
+      salad: 0,
+      bacon: 0,
+      cheese: 0,
+      meat: 0
+    }, 
+    totalPrice: 4 //valor INICIAL do BUrger... sempre será '4'.
+  };
+
+
+
+
+
+
+CONST CONTROLS:
+
+
+
+const controls = [
+    { label: 'Salad', type: 'salad' }, //////// O 'type' É O QUE INTERESSA.
+    { label: 'Bacon', type: 'bacon' },
+    { label: 'Cheese', type: 'cheese' },
+    { label: 'Meat', type: 'meat' }
+  
+]
+
+
+
+
+
+'''''''''''''''''''''''''''
+
+
+)
+
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+COM ISSO, PODEMOS USAR A PROPRIEDADE/PROP 
+
+'disabled' 
+
+NOS 
+
+
+BUILDCONTROLS INDIVIDUAIS 
+
+
+
+___PARA ___ DESABILITAR O BOTÃO 'Less' quando 
+
+
+
+
+não existirem mais ingredientes a serem removidos...
+
+
+
+
+CÓDIGO DE 
+
+'BuildControl':
+
+
+
+
+
+import React from 'react';
+
+
+import BuildControlStyle from './BuildControl.module.css';
+
+
+
+
+
+const buildControl = (props) => {
+    
+   return <div className={BuildControlStyle.BuildControl}>
+        <div className={BuildControlStyle.Label}>{props.label}</div>
+        <button className={BuildControlStyle.Less} onClick={() => {props.removed()}}>Less</button>
+        <button className={BuildControlStyle.More} onClick={() => {props.added()}}>More</button>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+export default buildControl;
+
+
+
+
+
+
+
+
+---------------------------
+
+
+PROFESSOR EXPLICA 
+
+QUE 
+
+
+NO BOTÃO 
+
+
+
+'Less' 
+
+
+nós podemos 
+
+COLOCAR A PROPRIEDADE 
+
+
+
+DEFAULT DE 
+
+'disabled'... ------> e ele explica que essa é uma propriedade DEFAULT QUE PODE 
+
+SER COLOCADA EM UM ELEMENTO HTML 
+
+BUTTON COMUM... ------>  
+
+
+
+E SE NÓS SIMPLESMENTE 
+
+
+ESCREVERMOS 
+
+
+
+
+'disabled={props.disabled}' 
+
+
+
+ISSO __JÁ FARÁ__ O SERVIÇO, JÁ SERÁ SUFICIENTE,
+ 
+
+ pois 
+
+
+
+ 'props.disabled' SEMPRE VAI NOS RETORNAR ___ OU ___ 
+
+
+ 'TRUE' ou 'FALSE', por causa de sua lógica.... --> 
+
+
+ e aí 
+
+ o 
+
+ disabled ficará ou 
+
+
+
+
+ 'disabled= "true" 
+
+
+
+ ou 
+
+
+ 'disabled= "false".
+
+
+
+
+
+ -------------------------------------------------------------
+
+
+
+
+
+ CERTO.
+
+
+
+ AGORA 
+
+
+ ESSA FEATURE ESTÁ FUNCIONANDO... NOSSOS BOTÕES FICAM DESABILITADOS 
+
+
+ QUANDO 
+
+
+
+NÃO HÁ COMO REMOVER MAIS ELEMENTOS, e um cursor de 
+
+
+'not-allowed' 
+
+
+APARECE QUANDO PASSAMOS O MOUSE POR CIMA DO TAL BOTÃO/BOTÕES...
+
+
+
+
+
+
+
+
+
+---> A LÓGICA É CLARA: O 
+
+
+BOTÃO 
+
+FICA DESABILITADO 
+
+SE O INGREDIENT ATRIBUÍDO A ELE 
+
+
+FICA COM NÚMERO IGUAL OU MENOR DO QUE 0....
+
+
+
+
+
+
+
+
+
+--> CERTO, ESSA PARTE ESTÁ PRONTA. AGORA DEVEMOS FAZER OUTPUT 
+
+DO NOSSO 'BURGER PRICE'...

@@ -1,0 +1,1014 @@
+
+
+
+
+
+
+
+--> a primeira coisa que o professor quer é 
+
+QUE 
+
+
+A 
+
+
+PÁGINA 
+
+'Orders'
+
+NÃO APAREÇA/SUMA 
+
+quando 
+
+o usuário NÃO TIVER UMA TOKEN EM SEU BROWSER...
+
+
+
+
+
+
+---> isso é relativamente simples de se fazer, 
+
+por isso tentarei sozinho...
+
+
+
+
+
+
+--------------------------
+
+
+
+
+
+
+CONSEGUI 
+
+
+
+FAZER O 'ORDERS' SUMIR QUANDO 
+
+O 
+
+USUÁRIO 
+
+NÃO ESTÁ AUTENTICADO... -----> usei este código aqui:
+
+
+
+
+const navigationItems = (props) => {
+     let authenticate = (
+      <NavigationItem link={'/auth'} closed={props.closed}>Authenticate</NavigationItem>
+    )
+
+
+      if (props.logout) {
+        authenticate = (<NavigationItem link={'/logout'} closed={props.closed} 
+        
+        style={
+          {
+            backgroundColor: '#8F5C2C',
+            borderBottom: '4px solid #40A4C8',
+            color: 'white'
+          }
+        }
+        
+        
+        
+        >Log out</NavigationItem>)
+      }
+
+
+
+  return (<ul className={NavigationItemsStyle.NavigationItems}>
+          
+          <NavigationItem closed={props.closed} link={'/'}  >Burger Builder</NavigationItem>
+
+         {props.logout ? <NavigationItem link={'/orders'} closed={props.closed}>Orders</NavigationItem>: null } //////////EIS O CÓDIGO EM QUESTÃO.
+          
+          {authenticate}
+  </ul>
+  )
+};
+
+
+
+
+------------------------------------------
+
+
+
+
+
+CERTO, FUNCIONOU....
+
+
+
+
+
+
+--> qual é o próximo passo?
+
+
+
+
+---------------------------------
+
+
+
+OK... professor diz que devemos TRABALHAR NA NAVIGATION DO NOSSO APLICATIVO...
+
+
+
+
+
+nos 'NavItems'...
+
+
+
+
+
+
+
+
+
+--> ok, o professor fez EXATAMENTE A MESMA COISA QUE NÓS FIZEMOS 
+
+PARA 
+
+
+
+FAZER 'HIDE' 
+
+daquela 
+
+opção 
+
+de 
+
+'Orders' (na verdade, isso nem mesmo é renderizado, por meio do approach do professor, quando não temos o 'token'...)
+
+
+
+------------------------------------
+
+
+
+QUANDO ESTAMOS LOGGADOS,
+
+AS 
+
+
+
+ORDERS SÃO MOSTRADAS... -----> 
+
+
+
+
+
+OUTRA COISA:
+
+
+QUANDO 
+
+
+ESTIVERMOS 
+
+
+__AUTENTICADOS__, O PROFESSOR VAI QUERER 
+
+QUE 
+
+
+O USUÁRIO__ SEJA __ REDIRECIONADO ___ PARA LONGE 
+
+
+DESSA 
+
+PÁGINA/CONTAINER 
+
+COM 
+
+A FORM, PARA LONGE DESSA PÁGINA DE 'AUTHENTICATION',
+
+que __NÃO É MAIS NECESSÁRIA__, BASICAMENTE...
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+PARA ISSO,
+
+PROFESSOR 
+
+USAR 
+
+JUSTAMENTE 
+
+AQUELA 
+
+
+PROPRIEDADE 
+
+DE 
+
+
+'TOKEN'
+
+lá 
+
+
+no nosso 
+
+
+'SLICE' DE 'AUTH' 
+
+
+DO NOSSO APLICATIVO.... -------> 
+
+
+
+
+ELE VAI VINCULAR 'TOKEN' AO 
+
+STATE 
+
+
+DE 
+
+
+
+'Auth.js',
+
+PARA 
+
+QUE 
+ENTÃO 
+
+POSSA 
+
+RENDERIZAR 
+
+CONDICIONALMENTE 
+
+AQUELE 
+
+COMPONENT '<Redirect />', LÁ EM 'Auth'....
+
+
+
+
+
+
+
+-------------------------------
+
+
+CERTO, CONSEGUI FAZER ISSO FUNCIONAR...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      let redirectAuthenticated = null;
+
+
+
+  if (this.props.token) {
+      redirectAuthenticated = (<Redirect to="/" />)
+  }
+
+
+
+
+
+    return (
+      <div className={AuthStyle.Auth}>
+        {/* <div className="Auth"> */}
+        <form onSubmit={this.submitHandler}>
+          {form}
+          <Button btnType="Success">SUBMIT</Button>
+        </form>
+        <Button btnType="Danger" clicked={this.switchAuthModeHandler}>
+          SWITCH TO {switchMessage}
+        </Button>
+        {this.state.isSignup ? (
+          <p>Already have an account? Switch to Sign-in and enter with your account! </p>
+        ) : null}
+        {errorMessage}
+        {redirectAuthenticated}
+      </div>
+    );
+  }
+}
+
+
+
+
+
+
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error,
+    token: state.auth.token !== null
+  };
+};
+
+
+
+
+
+
+
+--------------------------------
+
+OK...
+
+
+
+
+
+
+
+
+---> NOSSO APP ESTÁ REDIRECIONANDO O USUÁRIO QUANDO ELE ESTÁ 'LOGGED IN'...
+
+
+
+
+
+
+
+
+
+
+
+---> O PRÓXIMO PASSO, AGORA, É 
+
+FAZER COM QUE 
+
+
+
+O 
+
+
+
+
+
+
+'ORDER NOW' lá na página do burger builder fique 
+
+
+COMO 
+
+'SIGN UP TO CONTINUE' 
+
+
+
+(e não usar esse button especial de 'ORDER NOW' até que o usuário realmente 
+
+esteja loggado...)
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+PARA ISSO,
+
+
+O PROFESSOR VAI ATÉ O BURGERBUILDER,
+
+
+lá 
+
+no lugar em que 
+
+temos os 
+
+BUILD CONTROLS... -----> E É O COMPONENT 'BUILD CONTROLS' 
+
+
+
+que 
+
+
+SEGURA O BUTTON 'Order Now'.... ---------> E 
+
+
+ESSE 
+
+
+COMPONENT 
+
+
+AÍ ___PRECISA__ SABER_ __ SE EU ESTOU 'AUTHENTICATED' (se estou com a token) 
+
+OU NÃO... (isso significa que vou ter que passar 'token', láááá do store do redux,
+
+
+para o BURGER BUILDER, e aí do BURGER BUILDER para o 
+
+
+'BuildControls'...)
+
+
+
+
+
+
+------------------------
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+      this.props.token
+
+
+          ?
+
+          <button
+            className={BuildControlsStyle.OrderButton}
+            // disabled={this.props.purchasable}
+            disabled={!this.props.purchasable}
+            onClick={() => {
+              this.props.ordered();
+            }}
+          >
+            ORDER NOW
+          </button>
+
+
+            :
+
+
+ALGUMA COISA... (provavelmente outro BUTTON, mas um button diferente....)
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> Esse botão 'Order now', lá 
+
+
+
+no burgerbuilder,
+
+
+
+
+realiza a tarefa de 
+
+executar o 
+
+'purchaseHandler', que é um 
+
+handler 
+
+
+que 
+
+
+setta 
+
+o state 
+
+de 
+
+'purchasing' 
+
+como 
+
+sendo 
+
+TRUE,
+
+
+o que 
+
+faz com que 
+
+nosso modal desça.... ----> (show do modal, etc etc)...
+
+
+
+
+
+
+
+
+
+
+
+
+---> A IDEIA AQUI É ___fAZER EXATAMENTE A MESMA COISA, AQUELA COISA 
+
+DE FAZER 
+
+
+COM QUE 
+MOSTRE UM MODAL,
+
+
+MAS 
+
+
+NO CASO 
+
+__SERÁ UM ___ MODAL para 'signup'...
+
+
+
+
+
+----------------------------
+
+
+(ou seja,
+
+não vamos 
+
+seguir 
+
+o flow 
+
+que tem 
+
+códigos 
+
+como 
+
+'
+purchaseContinueHandler = () => {
+    this.props.onInitPurchase();
+    this.props.history.push('/checkout');
+}
+''
+
+
+)
+
+
+
+
+
+
+--> VAMOS QUERER EXECUTAR ESSES  CÓDIGOS AÍ __APENAS__ SE 
+
+O USUÁRIO REALMENTE __ FEZ 'SIGNUP' E SE ELE ESTÁ AUTENTICADO....
+
+
+
+
+
+
+
+
+
+
+
+
+
+PROFESSOR 
+
+EXPLICA QUE O BUTTON DE 
+
+
+'''
+
+         <button
+            className={BuildControlsStyle.OrderButton}
+            // disabled={this.props.purchasable}
+            disabled={!this.props.purchasable}
+            onClick={() => {
+              this.props.ordered();
+            }}
+          >
+            ORDER NOW
+          </button>
+
+
+          }
+
+
+
+
+'''''''''''
+
+
+
+
+DEVE 
+
+SE 
+
+COMPORTAR DE FORMA DIFERENTE, QUANDO NÃO ESTAMOS AUTENTICADOS...
+
+
+
+
+
+
+
+
+
+--> entretanto,
+
+a maior parte da lógica para MUDAR 
+
+esse 
+
+button aí 
+
+VAI 
+
+FICAR 
+LÁ 
+
+EM BURGER BUILDER MESMO.... ----> já 
+
+nesse 
+
+'button' aí, o professor 
+
+SÓ VAI 
+
+QUERER 
+
+DEIXAR 
+
+A LÓGICA 
+
+
+
+__PARA __ MUDAR A CAPTION 
+
+
+
+NESSE 
+
+COMPONENT 
+
+'BuildCOntrols'...:
+
+
+ex:
+
+
+
+
+         <button
+            className={BuildControlsStyle.OrderButton}
+            // disabled={this.props.purchasable}
+            disabled={!this.props.purchasable}
+            onClick={() => {
+              this.props.ordered();
+            }}
+          >
+            {props.token ? 'ORDER NOW' : 'SIGN UP TO ORDER' }  //////EIS O CÓDIGO EM QUESTÃO.
+          </button>
+
+
+          }
+
+
+
+
+--------------------------
+
+
+
+
+
+CERTO, ESSE CÓDIGO AÍ É __rEALMENTE__ _ MELHOR__, melhor para mudar a caption 
+
+
+do 
+
+
+'Order now' do button, que vai ficar 'Sign up to order' quando o usuário 
+
+não estiver 
+
+loggado...
+
+
+
+
+------------------------
+
+
+OK.... AGORA SÓ PRECISAMOS 
+
+
+
+MANDAR 
+
+O USUÁRIO 
+
+
+__PARA __ A PÁGINA __ DE SIGNUP, A PARTIR DO CLIQUE 
+
+
+EM 
+
+
+
+'SIGN UP TO ORDER'...
+
+
+
+
+
+
+
+
+
+OBS:: A PARTE IMPORTANTE, NESSE BUTTON AÍ, QUE FAZ O SHOW DO MODAL E TALS,
+
+É 
+
+
+'            onClick={() => {
+              this.props.ordered();
+            }}
+
+
+''''''
+
+
+
+
+
+--> precisamos encontrar 
+o 
+
+método 
+
+
+que é executado com esse 'ordered()'...
+
+
+
+
+
+
+
+
+
+É ISTO AQUI:
+
+
+ordered={this.purchaseHandler}
+
+
+
+-----------------------------
+
+
+NOSSO CÓDIGO FICOU ASSIM:
+
+
+
+
+
+  purchaseHandler = () => {
+        if (!this.props.token) {
+            this.props.history.push('/auth');
+        }
+
+
+    this.setState({
+      purchasing: true,
+    });
+  };
+
+
+----------------------------
+
+
+
+
+E O CÓDIGO DO PROFESSOR FICOU BEM PARECIDO, PRATICAMENTE A MESMA COISA... (mas no caminho inverso).
+
+
+
+
+
+
+  purchaseHandler = () => {
+        if (this.props.token) {
+            this.setState({purchasing: true})
+        } else {
+            this.props.history.push('/auth');
+        }
+  };
+
+
+
+
+  -----------------------------------
+
+
+
+
+
+
+
+-----> OK, AGORA ESSE BOTÃO VAI NOS REDIRECIONAR à PÁGINA DE 'SIGNUP'/auth/authenticate,
+
+
+SE NÃO 
+
+TIVERMOS UMA TOKEN (se não tivermos autorização/a token...) -------> 
+
+
+
+
+
+ok.... ----> mas um problema, aqui, é _QUE PERDEMOS__ AS INFORMAÇÕES/STATE___ DO BURGER 
+
+QUANDO 
+
+
+___SOMOS REDIRECIONADOS ___ 
+
+
+À PÁGINA 'Authenticate'...
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+--------> SERIA BEM MAIS LEGAL SE O FLOW DE NOSSO BURGER FOSSE ASSIM:
+
+
+
+
+BURGER > (FIZ O BURGER) > SIGN UP > ME AUTENTICO NA PÁGINA 'AUTH' > SOU REDIRECIONADO 
+À PÁGINA DE 'Checkout', onde posso clicar 'Continue' para __REALMENTE __COMPRAR MEU BURGER___...
+
+
+
+
+
+--> nossos burger INGREDIENTS DE __ANTERIORMENTE___ SÃO __OVERWRITTADOS __ PELA 
+
+ORDER 
+
+
+
+
+
+DE NOME 
+
+'INITIAL_INGREDIENTS_GET' ---> isso está fazendo RETRIEVE 
+
+DOS 
+
+INGREDIENTS ''default'' lá no meu redux store...
+
+
+ 
+
+----------------------------
+
+
+O ideal é REALMENTE_ _ REDIRECIONAR O __ USUÁRIO__ PARA 
+
+A PÁGINA 
+
+
+
+'Checkout' no nosso aplicativo, 
+
+pq 
+
+AÍ 
+
+A PÁGINA 'BURGERBUILDER' NÃO SERÁ TRIGGADA,
+
+E AÍ 
+
+
+OS 
+
+INGREDIENTS DO BURGER NÃO VÃO SER JOGADOS FORA EM RAZÃO DE 'INITIAL_INGREDIENTS_GET'...
+
+
+
+
+
+
+----------------------------------
+
+MAS O PROBLEMA AQUI, É CLARO,
+É MAIS 
+
+
+
+__COMPLEXO___ --> é complexo pq 
+
+NÓS 
+
+
+SÓ VAMOS QUERER __REDIRECIONAR __ O USUÁRIO __ NESSE CENÁRIO/HIPÓTESE ESPECÍFICA (cenário em que ele FAZ O SEU BURGER, CLICA EM 'Sign up to order', e aí é redirecionado para a página de authenticate....)
+
+
+
+
+
+
+--> ISSO QUER DIZER QUE __ NÓS __ NÃO VAMOS QUERER QUE 
+
+O USUÁRIO __ SEJA 
+REDIRECIONADO
+
+à 
+PÁGINA 
+
+DE 
+
+'CHECKOUT'
+
+quando 
+
+ele 
+
+CLICAR DIRETO EM 'authenticate', ao entrar no site...
+
+
+
+
+
+
+
+
+
+ok, então temos 2 hipóteses 
+
+
+diferentes...
+
+
+
+1) usuário CRIA o burger, aí clica em 'Sign up to order'... --> ele vai querer ser REDIRECIONADO PARA 'Checkout', onde poderá finalizar sua compra 
+
+
+2) usuário CLICA DIRETO EM 'AUTHENTICATE' ---> quando ele LOGGAR, ele vai querer SER REDIRECIONADO AO BURGER BUILDER... (e não a 'checkout')
+
+
+
+
+
+
+
+
+
+
+--> PRECISO PENSAR UM POUCO SOBRE A SOLUÇÃO PARA ESSE PROBLEMA...

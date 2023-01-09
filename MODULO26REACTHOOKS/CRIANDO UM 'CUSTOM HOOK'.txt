@@ -1,0 +1,1778 @@
+
+
+
+
+
+
+
+--> AGORA QUE 
+
+VIMOS 
+
+
+QUE 
+
+É POSSÍVEL TER BASTANTE LÓGICA EM UM FUNCTIONAL COMPONENT,
+
+
+
+É 
+
+
+
+HORA DE APRENDERMOS UMA PARTE 
+
+SUPER IMPORTANTE 
+
+DO 
+
+SUPER HOOKS: 
+
+
+
+VOCÊ 
+
+
+PODE 
+
+
+
+__cRIAR SEUS PRÓPRIOS HOOKS... --->  
+
+
+
+
+
+
+
+
+
+E CRIAR SEUS 
+
+PRÓPRIOS HOOKS É SUPER SIMPLES,
+
+E 
+ISSO 
+
+
+TE 
+DEIXA 
+
+EXTRAIR 
+
+FUNCIONALIDADE 
+
+ 
+
+ PARA 
+
+ FORA 
+
+ DE UM COMPONENT,
+
+ E 
+
+ AÍ 
+
+
+ COMPARTILHAR/REUTILIZAR 
+
+ ESSA 
+
+ FUNCIONALIDADE 
+
+ AO LONGO 
+
+
+ DE OUTROS COMPONENTS 
+ DO SEU APP... (quase como um 'mix-in', diz o professor...)
+
+
+
+
+
+
+ In JavaScript we can only inherit from a single object. There can be only one [[Prototype]] for an object. And a class may extend only one other class.
+
+But sometimes that feels limiting. For instance, we have a class StreetSweeper and a class Bicycle, and want to make their mix: a StreetSweepingBicycle.
+
+Or we have a class User and a class EventEmitter that implements event generation, and we’d like to add the functionality of EventEmitter to User, so that our users can emit events.
+
+There’s a concept that can help here, called “mixins”.
+
+As defined in Wikipedia, a mixin is a class containing methods that can be used by other classes without a need to inherit from it.
+
+In other words, a mixin provides methods that implement a certain behavior, but we do not use it alone, we use it to add the behavior to other classes.
+
+
+
+
+
+
+// mixin
+let sayHiMixin = {
+  sayHi() {
+    alert(`Hello ${this.name}`);
+  },
+  sayBye() {
+    alert(`Bye ${this.name}`);
+  }
+};
+
+// usage:
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+// copy the methods
+Object.assign(User.prototype, sayHiMixin);
+
+// now User can say hi
+new User("Dude").sayHi(); // Hello Dude!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+DIGAMOS QUE 
+
+AQUI 
+
+NÓS QUEREMOS 
+
+
+CRIAR 
+
+NOSSO PRÓPRIO HOOK,
+
+UM HOOK 
+
+QUE 
+LIDA
+ 
+
+ COM 
+
+ 'INPUT VALIDATION'... -----> 
+
+
+
+
+
+ PARA ISSO,
+
+ PROFESSOR CRIA UM FOLDER CHAMADO 
+
+ DE 
+
+ 'hooks'... (dentro de 'src').... --> 
+
+
+
+
+ AÍ 
+
+ ELE 
+
+
+
+
+
+ ESCREVE, 
+
+ DE UM ARQUIVO 
+ CHAMADO 
+
+ 'forms.js',
+
+
+ 
+
+
+ UM EXPORT 
+
+ assim:
+
+
+
+
+
+
+ 'export const useFormInput'...
+
+
+
+
+
+ ---------------------------------
+
+
+
+
+
+
+ --> VOCÊ PODE NOMEAR ESSE IMPORT COMO VOCÊ QUISER... ---> 
+
+
+ MAS 
+
+ A PARTE IMPORTANTE, AQUI, 
+
+ É QUE 
+
+ TODOS OS HOOKS QUE 
+
+ VOCÊ INVENTAR 
+
+
+ SEMPRE 
+
+
+ DEVEM 
+
+ COMEÇAR 
+
+ COM 
+
+ A KEYWORD 
+ de 
+ 
+
+
+ 'use'...
+
+
+ ex:
+
+
+
+
+ useFormInput...
+
+
+
+
+
+
+--> É A CONVENÇÃO DE NOMES DO REACT, BASICAMENTE...
+
+ -----------------------
+
+
+
+
+
+
+
+
+ex: 
+
+
+export const useFormInput = () => {
+
+}
+
+
+
+
+
+-------------------------------
+
+
+
+
+--> E ISSO É IMPORTANTE PQ PARA OS SEUS PRÓPRIOS HOOKS,
+
+
+
+
+AS MESMAS REGRAS 
+
+
+
+DOS REACT HOOKS SE APLICAM... -------> QUALQUER UM QUE USAR 
+
+SEU 
+
+PROJETO
+ 
+ VAI 
+
+ SABER QUE 
+
+ VOCê 
+
+ DEVE 
+
+ USAR 
+
+
+
+ essa sua função/hook 
+
+
+ 'AT THE TOPMOST LEVEL' 
+
+ DE UM COMPONENT,
+
+ A PESSOA 
+
+ VAI 
+
+ SABER QUE 
+
+ ___ESSE HOOK __ NÃO PODERÁ 
+
+ SER USADO DENTRO 
+ DE IF STATEMENTS,
+
+
+ NEM DENTRO DE CÓDIGO JSX,
+
+
+ NEM 
+
+ DENTRO 
+
+ DE 
+
+ MÉTODOS... (vai sber que 
+ 
+ 
+ o negócio vai ter de ser definido _ NA _ROOT__ dos components...)
+
+
+
+
+ -------------------------------
+
+
+
+
+
+ OS HOOKS CUSTOM 
+
+ SÃO IMPORTANTES 
+ PQ 
+ ELES 
+
+ NOS 
+
+ DÃO UMA 
+
+ MANEIRA 
+ DE 
+
+ 'COMPOSE'
+
+
+
+
+ NOSSA PRÓPRIA FUNCIONALIDADE 
+
+
+NO NOSSO HOOK,
+
+QUE PODE 
+
+SER ENTÃO 
+
+
+IMPLEMENTADO EM QUALQUER 
+
+COMPONENT 
+
+
+QUE O NECESSITA...
+
+
+----------------------------
+
+
+
+PARA DEMONSTRAR ISSO,
+
+
+
+professor 
+
+diz que 
+
+DEVEMOS 
+
+
+ESCREVER 
+
+ESSE HOOK AÍ,
+
+HOOK 
+
+QUE 
+
+VAI 
+
+FAZER o MANAGE DO __STATE__ DE UMA FORM INPUT.... --> isso significa que 
+
+
+ESSE HOOK __ VAI FAZER MANAGE DO VALOR DESSE INPUT VALUE,
+
+E 
+
+TAMBÉM 
+
+O MANAGE DO STATE DE SUA __ VALIDITY___....
+
+
+
+
+
+
+
+
+
+
+--> para isso,
+
+professor 
+
+importa 
+
+
+
+'useState' 
+
+
+__LÁ DO 'REACT'...
+
+
+
+--> E AÍ ELE CRIA O PRIMEIRO 'STATE' DESSE HOOK CUSTOM, justamente com 
+a ajjuda 
+
+de 
+
+'useState()'....
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+export const useFormInput = () => {
+    const [] = useState();
+}
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+DENTRO DESSE USESTATE,
+
+VAMOS QUERER DEFINIR O VALOR DO STATE INICIAL COMO SENDO 
+
+O __ INPUT VALUE___ em si.... ----> PROFESSOR DECIDE COMEÇAR COM UMA 
+
+EMPTY STRING...
+
+
+
+
+
+
+--> aí ele faz array destructuring,
+
+
+para 
+
+definir 
+as consts 
+
+de 
+
+'value' e 'setValue'...
+
+
+
+ex:
+
+
+
+
+import { useState } from 'react';
+
+
+
+export const useFormInput = () => {
+    const [value, setValue] = useState();
+}
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+MAS 
+
+É EVIDENTE QUE O 
+
+
+PROFESSOR 
+
+TAMBÉM 
+
+VAI QUERER 
+
+FAZER 
+
+MANAGE 
+
+
+DA VALIDITY,
+
+POR ISSO 
+
+ELE 
+
+VAI 
+
+CRIAR UM 
+
+STATE 
+
+DE 
+
+'validity'...
+
+
+
+
+
+
+
+
+--> ele escreve 
+
+
+'const [] = useState(false)' 
+
+
+
+
+
+
+
+será o state de 'validity', e seu VALOR INICIAL SERÁ DE 'FALSE'....
+
+
+
+ex:
+
+
+
+import { useState } from 'react';
+
+
+
+export const useFormInput = () => {
+    const [value, setValue] = useState('');
+    const [validity, setValidity] = useState(false);
+}
+
+
+---------------------------------------
+
+
+
+
+
+CERTO,
+
+
+
+E DENTRO 
+
+
+DESSE HOOK, VAMOS 
+
+QUERER 
+
+FAZER 
+
+O 
+
+__RETURN __ DE UM OBJETO ({}) ---> 
+
+
+E SIM, 
+
+HOOKS 
+
+_PODEM FAZER RETURN DE COISAS__, não é algo impossível... -----------> 
+
+
+
+
+
+VOCÊ PODE, EM UM HOOK,
+FAZER O RETURN 
+
+DE UM __ARRAY_, de um número sozinho,
+
+
+
+OU ENTÃO UM OBJETO... (também booleans e strings...) -----> PROFESSOR 
+
+
+
+VAI RETORNAR UM 
+
+OBJETO 
+
+
+COM 
+
+
+UM 
+
+FIELD 
+
+de 
+'value',
+
+que 
+
+terá um valor 
+
+
+
+
+
+de 'value' (qUE É O VALOR DO NOSSO STATE, NA VERDADE)....
+
+
+
+-----------------------------------------------
+
+ex:
+
+
+
+
+
+import { useState } from 'react';
+
+
+
+export const useFormInput = () => {
+    const [value, setValue] = useState('');
+    const [validity, setValidity] = useState(false);
+
+
+
+
+
+
+    return { value: value}
+}
+
+
+
+
+
+------------------------------------
+
+
+NÓS TAMBÉM 
+
+
+TEREMOS 
+
+
+
+
+UM FIELD 
+
+
+de 
+
+'onChange',
+
+QUE 
+
+
+VAI 
+
+__ACABAR__ CHAMANDO 
+
+'setValue'...  -----> para isso, VAMOS CRIAR UMA CONSTANTE QUE 
+
+VAI 
+
+SEGURAR 
+
+UM 
+
+CALL 
+
+
+DE 
+
+'setValue'... (e também vai executar outras lógicas...)
+
+
+
+
+ex:
+
+
+
+
+
+import { useState } from 'react';
+
+
+
+export const useFormInput = () => {
+    const [value, setValue] = useState('');
+    const [validity, setValidity] = useState(false);
+
+
+    const inputChangedHandler = event => {
+
+    }
+
+
+
+
+
+    return { value: value, onChange: inputChangedHandler}
+}
+
+
+-------------------------------------------------------
+
+
+
+
+
+CERTO... POR FIM,
+
+
+DENTRO 
+
+DESSE 
+
+
+OBJETO VAMOS FAZER 'EXPOSE' DA 'validity'... ( isso pq QUALQUER UM QUE USAR ESSE HOOK VAI QUERER SABER _ SE O __ INPUT __ É VÁLIDO OU NÃO/VAI QUERER QUE SEJA CHECADA A VALIDITY DE SEU INPUT....)
+
+                        (do STATE/valor de 'validity', na verdade...)
+
+
+
+
+
+
+
+FICA ASSIM:
+
+
+
+
+import { useState } from 'react';
+
+
+
+export const useFormInput = () => {
+    const [value, setValue] = useState('');
+    const [validity, setValidity] = useState(false);
+
+
+    const inputChangedHandler = event => {
+
+    }
+
+
+
+
+
+    return { value: value, onChange: inputChangedHandler, validity}
+
+
+
+}
+
+
+--------------------------------------
+
+
+
+
+ISSO FEITO,
+
+
+VAMOS QUERER 
+
+ESCREVER 
+
+A LÓGICA 
+
+DO 
+
+'inputChangedHandler'.... --> primeiramente,
+
+
+O PROFESSOR 
+
+VAI querer 
+
+CHAMAR 
+
+'setValue()',
+
+
+E AÍ 
+
+
+
+VAI QUERER 
+
+PASSAR 
+
+'event.target.value'....
+
+
+
+
+
+
+
+--> ALÉM DISSO,
+
+ELE TAMBÉM VAI QUERER CHECAR A 'VALIDITY' do input do usuário ---> 
+
+
+E 
+
+
+
+ENTÃO VAI QUERER 
+
+
+
+__UPDATAR__ O STATE 
+
+DE 
+'validity' CORRETAMENTE,
+
+A PARTIR 
+
+DESSE CHECK/lógica de check...
+
+
+
+
+
+
+
+
+--> para isso,
+
+
+ELE VAI ESCREVER UM _SIMPLES__ CHECK DE VALIDITY (mas vocÊ pode/poderia escrever aqui um CHECK DE QUALQUER COMPLEXIDADE DESEJADA POR VOCÊ...),
+
+UM 
+IF CHECK
+
+de 
+
+
+'if(event.target.value.trim() === '' ) {
+    setValue(false)
+}' ---------> ISSO 
+
+VAI SIGNIFICAR QUE 
+
+O INPUT 
+
+SERÁ 
+
+__INVÁLIDO__, 
+
+se esse trim ocorrer e realmente for uma string vazia o resultado... --> O ELSE CASE EXECUTARÁ 'setValidity(true)'...
+
+
+
+ex:
+
+
+
+
+
+
+import { useState } from 'react';
+
+
+
+export const useFormInput = () => {
+    const [value, setValue] = useState('');
+    const [validity, setValidity] = useState(false);
+
+
+    const inputChangedHandler = event => {
+            setValue(event.target.value);
+            if(event.target.value.trim() === '') {
+                setValidity(false);
+            } else {
+                setValidity(true);
+            }
+    }
+
+
+
+
+
+    return { value: value, onChange: inputChangedHandler, validity}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+------------------------
+
+
+
+
+CERTO....  ----> AGORA ESTAMOS USANDO 
+
+
+
+
+'STATE' DENTRO DE NOSSO PRÓPRIO HOOK...  --------> ENTRETANTO,
+
+
+IMPORTANTE!!!! --> VOCÊ 
+
+DEVE 
+
+SABER 
+
+QUE 
+
+
+___sÓ EXISTE 1 ÚNICO 'STATE MANAGEMENT CONTAINER' (1 'CENTRO DE DADOS') 
+
+
+DO 
+
+REACT AO LONGO DE TODO UM DETERMINADO APLICATIVO,
+
+
+
+
+POR ISSO PODEMOS 
+
+HOOKAR/passar ___ A ESSE STATE_ 
+
+
+
+
+
+
+DE ''''QUALQUER LUGAR DE NOSSO APLICATIVO'''' ... --> 
+
+
+porém, 
+
+
+'qualquer lugar' é uma mentira:
+
+
+SÓ PODEMOS 
+
+HOOKAR/passar
+
+A 
+
+ESSE 
+
+STATE
+
+
+
+___ LÁ DE 'class-based components',
+
+'functional components com hooks',
+
+
+
+__OU NOSSOS PRÓPRIOS HOOKS... ---> 
+
+
+
+
+
+o primeiro pode acessar isso pq ELE USA STATE NATIVAMENTE,
+
+JÁ 
+
+OS 
+
+2 ÚLTIMOS PODEM ACESSAR 
+
+state (o 'global state' do react) 
+
+PORQUE 
+
+POSSUEM 
+
+O HOOK 
+
+DE 
+
+'useState'....  
+
+
+
+
+
+
+
+-----> E, COM ISSO, PODEMOS 
+
+FAZER 
+MANAGE 
+
+DO STATE de nosso 
+
+hook 
+
+
+LÁ 
+
+DENTRO 
+
+DESSA 
+
+LÓGICA 
+
+DE 
+
+'useFormInput',
+
+
+E AÍ 
+
+RETORNAMOS 
+
+
+
+
+NOSSA PRÓPRIA INFORMAÇÃO,
+
+EXTRÁIDA DE NOSSO PRÓPRIO HOOk,
+
+
+
+por meio daquele código de 
+
+
+
+''''
+
+    return { value: value, onChange: inputChangedHandler, validity}
+
+''''
+
+
+
+
+---------------------------------
+
+
+
+
+E AGORA PODEMOS 
+
+COMEÇAR A USAR NOSSO HOOK... --> 
+
+
+
+
+
+PARA DEMONSTRAR ISSO,
+
+O UTILIZAMOS 
+EM 
+
+
+
+'Todo.js'... --> 
+
+
+
+PROFESSOR 
+
+ESCREVE 
+
+
+
+'import { useFormInput } from '../hooks/forms';
+
+
+
+
+-------------------------
+
+
+
+
+
+
+
+ISSO FEITO,
+
+devemos recordar
+ 
+ que 
+
+ ESSE HOOK 
+
+ VAI 
+
+ RETORNAR UM OBJETO 
+
+ DESTES:
+
+
+
+
+
+ return { value: value, onChange: inputChangedHandler, validity}
+
+
+
+
+
+
+ ----------------------------------------------
+
+
+
+
+
+
+
+
+
+ --> ISSO FEITO,
+
+
+ PODEMOS INICIALIZAR 
+
+
+ ESSE 
+
+ HOOK NO ROOT DO COMPONENT 'Todo',
+
+ e ENTÃO 
+
+ ARMAZENAR SEU 
+
+ VALOR 
+
+ EM UMA CONSTANTE....
+
+
+
+
+
+ ex:
+
+
+
+
+ const todoInput = useFormInput();
+
+
+
+
+
+
+
+ -------------------------------------
+
+
+
+
+ --> TEREMOS, POR MEIO DESSA CONSTANTE,
+
+ AQUELE OBJETO, 
+
+
+ OBJETO 
+
+ QUE 
+ TEM 
+
+ 'TODA A LÓGICA DE QUE PRECISAMOS PARA __ FAZER 
+ HANDLE DO VALOR DO INPUT E DE SUA VALIDITY'.... ( OU SEJA,
+ 
+ é quase 
+ 
+ 
+ 
+ 100% IGUAL A UM MIX-IN.... --------->
+ 
+ 
+ 
+ MIX-INS:
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ In JavaScript we can only inherit from a single object. There can be only one [[Prototype]] for an object. And a class may extend only one other class.
+
+But sometimes that feels limiting. For instance, we have a class StreetSweeper and a class Bicycle, and want to make their mix: a StreetSweepingBicycle.
+
+Or we have a class User and a class EventEmitter that implements event generation, and we’d like to add the functionality of EventEmitter to User, so that our users can emit events.
+
+There’s a concept that can help here, called “mixins”.
+
+As defined in Wikipedia, a mixin is a class containing methods that can be used by other classes without a need to inherit from it.
+
+In other words, a mixin provides methods that implement a certain behavior, but we do not use it alone, we use it to add the behavior to other classes.
+
+
+
+
+
+
+// mixin
+let sayHiMixin = {
+  sayHi() {
+    alert(`Hello ${this.name}`);
+  },
+  sayBye() {
+    alert(`Bye ${this.name}`);
+  }
+};
+
+// usage:
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+// copy the methods
+Object.assign(User.prototype, sayHiMixin);
+
+// now User can say hi
+new User("Dude").sayHi(); // Hello Dude!
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ )
+
+
+ -------------------------------------------
+
+
+
+
+
+
+ --> AGORA SÓ PRECISO __'CONECTAR' __ 
+
+
+ ESSE 
+
+
+ 'todoInput',
+
+
+ essa constante,
+
+ AOS LUGARES DE MEU APLICATIVO... ---> 
+
+
+ VOU 
+
+ ATÉ 
+
+
+
+
+
+ 
+ '
+
+    <input
+        type="text"
+        placeholder="Todo"
+        ref={todoInputRef}
+        onChange={inputValidationHandler}
+
+        style={
+          {
+            backgroundColor: !inputIsValid ? 'red' : 'transparent'
+            // backgroundColor: color
+          }
+        }
+      />
+
+      '
+
+''''''''''
+
+
+LÁ,
+
+
+VOU SIMPLESMENTE 
+
+TROCAR 
+
+
+
+
+
+'inputIsValid' por 
+
+'todoInput.validity',
+
+
+
+E AÍ 
+
+
+VOU REFERENCIAR/TROCAR 
+
+
+'inputValidationHandler' 
+
+POR 
+
+'todoInput.onChange'...
+
+
+
+
+
+E 
+
+
+
+'todoInputRef'
+
+POR 
+
+
+
+'todoInput.value'....
+
+
+
+-------------------------
+
+
+
+EX:
+
+
+
+
+    <input
+        type="text"
+        placeholder="Todo"
+        ref={todoInput.value}
+        onChange={todoInput.onChange}
+
+        style={
+          {
+            backgroundColor: todoInput.validity ? 'red' : 'transparent'
+            // backgroundColor: color
+          }
+        }
+      />
+
+
+---------------------------------------------------
+
+
+
+
+
+SÓ QUE PARECE QUE 
+EU __ ERREI___ -->  
+
+
+O 
+
+PROFESSOR REMOVE 
+
+
+TANTO 
+
+'ref' como 'onChange'... ------>
+
+
+
+AÍ 
+
+ELE 
+
+VAI 
+LÁ 
+
+
+E
+ 
+ ESCREVE 
+
+ um 
+
+ 'onChange={todoInput.onChange}',
+
+
+ E AÍ 
+
+ VAI SETTAR
+
+ O 
+
+ 'VALUE'
+
+
+ como sendo 
+
+ igual 
+
+ a 
+
+
+ 'todoInput.value'....
+
+
+
+
+E o 
+
+
+
+'inputIsValid' SERÁ 
+
+TROCADO POR 'VALIDITY' mesmo...
+
+
+
+ ex:
+
+
+
+
+
+
+    <input
+        type="text"
+        placeholder="Todo"
+        value={todoInput.value}
+        onChange={todoInput.onChange}
+        style={
+          {
+            backgroundColor: todoInput.validity ? 'red' : 'transparent'
+            // backgroundColor: color
+          }
+        }
+      />
+
+
+
+
+-------------------------
+FICOU TIPO ASSIM:
+
+
+
+
+
+
+
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        // ref={todoInputRef}
+        value={todoInput} //exemplo de utilização de CUSTOM HOOKS...
+        // onChange={inputValidationHandler}
+        onChange={todoInput.onChange}
+        // className={inputClasses.join(' ')}
+        style={
+          {
+            // backgroundColor: !inputIsValid ? 'red' : 'transparent'
+            backgroundColor: todoInput.validity ? 'red' : 'transparent'
+            // backgroundColor: color
+          }
+        }
+      />
+
+
+
+
+----------------------------------
+
+
+
+
+COM ISSO,
+
+ESTAREMOS 
+
+'MOVING AWAY',
+
+PARA 
+LONGE 
+
+DA 
+
+'REF APPROACH' (useRef),
+
+PARA 
+
+ENTÃO 
+
+USAR 
+
+UM 
+
+CUSTOM HOOK... -----> E ISSO SIGNIFICA, EM OUTRAS PALAVRAS,
+
+QUE 
+
+TODOS 
+OS LUGARES EM QUE 
+
+EU 
+
+USAVA
+ 
+ 
+
+ 'todoInputRef' (que é a constante QUE ___sEGURA__ O CALL 
+ 
+ 
+ de 
+ 
+ 'useRef()'....)
+
+
+ DEVERÃO 
+
+
+ TROCAR 'todoInputRef' por 'todoInput'...
+
+
+
+ -----------------------
+
+
+ EX:
+
+
+
+
+''''''''''''' const todoName = todoInput.current.value;'''''''''''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> PROFESSOR FAZ A ALTERAÇÃO DA TERNARY EXPRESSION COM VALIDITY,
+
+
+
+E AÍ 
+
+
+
+
+
+TESTA O LOGIN DA PÁGINA... --> tudo continua FUNCIONANDO NORMALMENTE.... 
+
+
+
+
+
+
+
+
+
+
+--> A DIFERENÇA AGORA É QUE ESTAMOS 
+
+
+FAZENDO TODO O MANGE DESSE CÓDIGO _ POR MEIO __ de um 
+
+CUSTOM HOOK...  ------> A VANTAGEM DISSO 
+É 
+
+QUE 
+
+SE EU TIVER UM OUTRO LUGAR,
+
+
+
+
+LUGAR COMO UM COMPONNET 
+
+'Auth'
+
+EM QUE 
+
+
+EU TAMBÉM VOU QUERER UM INPUT,
+
+UM INPUT QUE 
+
+
+VOU QUERER __ VALIDAR__ E ASSIM POR DIANTE... --> NESSE COMPONENT AÍ,
+
+CERTAMENTE __PODEREI __ REUTILIZAR MEU HOOK_.... ---> 
+
+
+E VOCÊ/NÓS PODEMOS 
+
+__CONSTRUIR __NOSSOS HOOKS __ PARA QUALQUER COISA,
+
+
+
+
+para 
+
+
+*LOGGING
+ 
+
+ * ANALYTICS 
+
+
+ * HTTP REQUESTS 
+
+
+
+* FORM HANDLING 
+
+* FORM HANDLING 
+
+
+
+
+
+
+REALMENTE, QUALQUER COISA QUE IMAGINARMOS... 
+
+
+
+
+
+
+
+
+--> E ESSA REUSABILIDADE, ESSA FEATURE DE SER CAPAZ DE CONSTRUIR SEUS PRÓPRIOS 
+
+HOOKS,
+
+DE CONSTRUIR SEUS PRÓPRIOS HOOKS COM O REACT HOOKS,
+
+essa 
+
+é uma 
+
+PARTE __MUITO BOA__ 
+
+
+DO 
+
+REACT HOOKS.... -----> PQ AGORA VOCÊ TEM UMA 
+
+MANEIRA MUITO FÁCIL DE COMPARTILHAR 
+
+FUNCIONALIDADE 
+
+AO LONGO 
+
+
+DE COMPONENTS... ----> 'FUNCIONALIDADES' QUE 
+USAM 
+
+'CORE REACT FEATURES', como 
+
+
+STATE SETTING...
+

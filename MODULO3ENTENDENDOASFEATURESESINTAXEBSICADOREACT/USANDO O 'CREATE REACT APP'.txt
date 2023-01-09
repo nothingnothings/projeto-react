@@ -1,0 +1,349 @@
+
+
+
+
+
+
+
+
+---> CREATE REACT APP ---> é uma ferramenta 
+
+
+que setta 
+
+
+um projeto do react 
+
+
+
+AUTOMATICAMENTE PARA NÓS... ---> ele é 'maintained' pelo facebook e suas comunidades...
+
+
+
+
+vamos para a página 
+
+
+do github 
+
+
+
+do create react app... ---> 
+
+
+
+
+
+
+TEMOS OS DOCS...
+
+
+
+
+ali na 
+
+página, 
+
+eles nos falam da instalação...
+
+
+
+
+para criar um projeto do 'create react app',
+
+
+devemos 
+
+usar npm..
+
+
+npm e o comando 
+
+
+'npm install -g create-react app'... (isso vai instalar GLOBALMENTE o react...) --> mas vamos querer instalar globalmente o 'react'? ---> professor diz que sim...
+
+
+
+
+---------------------------------
+
+
+
+CERTO.... 
+
+
+
+
+instalado isso, o create react app deve estar instalado.
+
+
+
+
+
+
+
+----> VOCÊ PODE USAR UM COMANDO PARA  ___CRIAR UM NOVO PROJETO____....
+
+
+
+
+
+
+
+
+---> você faz isso por meio do comando 
+
+
+'create-react-app'....  no terminal...
+
+
+
+
+--> IMPORTANTE: ANTES DE RODAR ESSE COMANDO, VOCÊ DEVE NAVEGAR
+ 
+ ATÉ O FOLDER NO SEU SISTEMA EM QUE VOCê 
+
+ VAI QUERER CRIAR O SEU PROJETO....
+
+
+
+
+
+
+OBS:
+
+
+se você escrever 
+
+
+
+'create-react-app projetoreact', UM ___NOVO FOLDER__ CHAMADO 'projetoreact' será criado nessa nossa pasta do módulo....
+
+ ----------------------
+
+
+ INSTALAMOS EM 
+
+
+
+'projetoreact', essa pasta que temos aqui....
+
+
+
+
+---> o negócio vai dizer, no terminal:
+
+"
+Installing packages. This might take a couple of minutes.
+Installing react, react-dom, and react-scripts with cra-template..."
+
+
+--------------------------------------------------------------------------
+
+
+
+
+
+CERTO... mas nós erramos em um detalhe... PARA CONSEGUIRMOS O __EXATO__ setup que 
+
+
+o professor quer para esse projeto específico (projeto exemplo), 
+
+ele diz 
+
+
+QUE AINDA DEVEMOS COLOCAR MAIS 1 COMANDO NESSA LINHA DE CÓDIGO...
+
+
+
+devemos adicionar um ESPAÇO  
+
+
+ e então 
+
+
+ '--scripts-version 1.1.5'...
+
+
+
+ ou seja:
+
+
+ 'create-react-app projetoreact --scripts-version 1.1.5'
+
+
+
+
+ ---------------------------------------------------
+
+
+
+ PROFESSOR EXPLICA QUE ESSE COMANDO __NÃO VAI IMPACTAR___ A VERSÃO 
+
+ DO REACT QUE VOCê USARÁ/ESTÁ USANDO... (você sempre estará usando 
+ a versão mais atualizada do react ) ----> 
+
+
+ o que esse comando '--scripts-version 1.1.5' faz É SIMPLESMENTE 
+
+ __aFETAR___ A ESTRUTURA DO PROJETO... -----------> NÓS 
+
+
+ VAMOS MUDAR ESSA ESTRUTURA AO LONGO DO PROJETO, É CLARO,
+  
+  mas queremos, é óbvio, começar com o mesmo modelo do professor...
+
+
+  (
+      Create React App uses a package called react-scripts to do a lot of the work in the background.
+
+This argument sets the version of react-scripts to use
+  )
+
+
+
+
+  ----------------------------------------------------------
+
+
+
+  APERTE 'ENTER' e um novo projeto será criado para você
+
+
+  ----------------------------------------------------
+
+
+
+
+
+feito isso, podemos 
+
+
+então rodar 
+
+
+'npm start' 
+
+
+'npm build'
+ 
+
+
+ 'npm test'
+
+
+ 'npm eject'
+
+
+
+
+ -------------------------
+
+
+
+
+o terminal nos informa:
+
+
+'We suggest that you begin by typing:
+
+
+cd folder 
+npm start'...
+
+
+
+
+
+-------------------------
+
+
+
+
+E fazemos exatamente isso, navegamos até o folder onde está nosso projeto e rodamos 
+
+
+'npm start'...
+
+
+
+'npm start' ---> é um script que executa 'react-scripts start'....
+
+
+
+------------------------
+
+
+
+O TERMINAL VAI NOS INFORMAR:
+
+
+
+
+Compiled successfully!
+
+You can now view projetoreact in the browser.    
+
+  Local:            http://localhost:3000/       
+  On Your Network:  http://192.168.0.12:3000/    
+
+Note that the development build is not optimized.
+To create a production build, use npm run build. 
+
+
+
+
+--------------------------------------------------
+
+
+ISSO VAI ABRIR UM DEV SERVER... e também UMA NOVA ABA NO BROWSEr...
+
+
+
+
+será 
+
+visitado 
+
+
+o endereço 
+
+'localhost:3000'...
+
+
+
+
+É uma página 
+
+com 
+
+'Welcome to React'...
+
+
+
+
+Podemos editar essa página e tudo do nosso projeto...
+
+
+
+--> você deve deixar o processo do servidor rodando... --> esse script/o react
+
+
+VAI SEMPRE FICAR FAZENDO 'WATCH' DE SEUS ARQUIVOS.... --> desde que vocÊ 
+
+não 
+
+cancele a execução 
+
+
+por meio de 
+
+'control + c'...
+
+
+
+----------------------------
+
+
+
+AGORA DEVEMOS EXAMINAR O FOLDER QUE FOI CRIADO E TODOS OS ARQUIVOS NO SEU INTERIOR...

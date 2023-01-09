@@ -1,0 +1,235 @@
+
+
+
+
+
+
+
+
+
+-----> NA ÚLTIMA LIÇÃO, MELHORAMOS NOSSO APLICATIVO POR MEIO DA ADIÇÃO 
+
+
+
+
+DE 
+
+
+'shouldComponentUpdate' AO NOSSO MODAL ---> isso fez/faz com que 
+
+
+NEM TODAS AS MUDANÇAS 
+
+
+DE PROPS 
+
+
+DE NOSSO CÓDIGO __tRIGGUEM____ O RE-RENDER de 'modal' e de 'orderSummary' (component WRAPPADO pelo modal)... --------> 
+
+
+COM O shouldComponentUpdate, SÓ AS MUDANÇAS NO PROP DE 'show' (props.show) 
+REALMENTE TRIGGARÃO O RE-RENDER 
+
+
+DO COMPONENT 'MODAL' E DO COMPONENT 'ORDERSUMMARY' (filho de 'modal')....
+
+
+--------------------------------
+
+
+
+
+
+
+CERTO, MAS 
+
+
+ 
+
+ E QUANTO 
+
+
+ A OUTROS LIFECYCLE METHODS, 
+
+ COMO __''COMPONENTDIDMOUNT'',
+
+
+
+ e 
+
+ 'ComponentDidUpdate', 
+ etc etc... --------------------> PQ DIABOS 
+
+
+
+ NÃO UTILIZAMOS MAIS NENHUM DELES? E ONDE OS UTILIZARÍAMOS? -------> bem, na verdade,
+
+
+
+ DIZ O PROFESSOR, 
+
+
+ ___NÓS OS VEREMOS __ EM USO __ QUANDO __NÓS COMEÇARMOS A ADICIONAR 
+
+
+
+ HTTP REQUESTS___ NO NOSSO SITE.... --------> E COMO VOCÊ VIU NOS SLIDES,
+  
+  NOS ÚLTIMOS MÓDULOS,
+
+  o 
+
+  'componentDidMount' 
+
+  e 
+  o 
+
+  'ComponentDidUpdate' 
+
+
+  SÃO USADOS
+   
+
+
+   ___PARA EXECUTAR __CÓDIGO ASSÍNCRONO___... ------------> ELES SÃO 
+
+
+
+   EXTREMAMENTE IMPORTANTES PARA ___CAUSAR SIDE EFFECTS NO NOSSO APLICATIVO___ (http requests, timers, todas essas coisas __ASSÍNCRONAs___)...
+
+
+
+
+
+
+EXEMPLOS DE SIDE EFFECTS:
+
+
+
+
+1) FAZER 'REACH OUT' A UM WEBSERVER 
+
+
+E FAZER FETCH DE DADOS DESSE SERVER... 
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+---> CERTO, MAS NÓS AINDA NÃO ESTAMOS FAZENDO NADA DISSO NO NOSSO APLICATIVO... -->
+ 
+
+ ainda não temos nada de 'inicialização' nos nossos components, isso quer dizer 
+
+ que eles não 'demoram para iniciar', eles NÃO RODAM CÓDIGO ASSÍNCRONO, NEM NADA DISSO.
+
+
+
+
+
+
+
+
+
+
+
+
+ -----> E É POR ISSO QUE NÃO PRECISAMOS DE NENHUM LIFECYCLE HOOK, AINDA.... --> (pq 
+ 
+ eles estão relacionados com 
+ 
+ a NECESSIDADE DE TER CÓDIGO ASSÍNCRONO/COISAS QUE 'INICIALIZAM'/DEMORAM.)
+
+
+
+
+
+
+
+
+ ---> OUTROS LIFECYCLE HOOKS, HOOKS QUE NÃO USAMOS (só usamos para console.loggar coisas),
+  
+
+  VOCê TIPICAMENTE
+
+
+
+__não usa __TÃO FREQUENTEMENTE__....  ---------> ainda assim ,
+
+
+
+existem alguns 
+
+
+casos 
+
+nicho 
+
+
+em que 
+
+vocÊ 
+
+
+vai precisar/vai querer
+
+
+AJUSTAR 
+
+
+
+O STATE DO SEU COMPONENT COM BASE/a partir 
+
+
+de 
+
+
+ALGUNS PROPS QUE VOCÊ RECEBE DE FORA... (from outside)... ---> e isso 
+
+
+CERTAMENTE PODE ACONTECER, EM REACT APPS MAIORES...  ------> MAS É BEM 
+
+
+COMUM 
+
+
+TER REACT APPS EM QUE VOCÊ NÃO USA 
+
+LIFECYCLE ALGUM, COM A EXCEÇÃO 
+
+DE 
+
+
+'componentDidUpdate'/'componentDidMount'   (pq eles são __MUITO IMPORTANTES__ PARA CAUSAR SIDE EFFECTS NO SEU APP...)
+
+
+
+
+
+---------------------------- 
+
+
+
+
+
+
+ESSA É A RAZÃO DE NÃO VERMOS MUITOS DELES, NO PRESENTE, NO NOSSO APLICATIVO.
+
+
+
+
+
+
+
+
+--> quando adicionarmos http requests, 
+
+
+vamos ver mais deles aplicados no nosso projeto...

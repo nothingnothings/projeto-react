@@ -1,0 +1,848 @@
+
+
+
+
+
+
+
+ANTES DE DARMOS UMA OLHADA NO 'INTERNAL RE-RENDERING PROCCESS',
+
+
+
+DEVEMOS 
+
+
+VER MANEIRAS 
+
+
+
+DE OPTIMIZAR PERFORMANCE 
+
+NOS 
+
+
+
+
+
+'FUNCTIONAL COMPONENTS'... --------------------> ISSO 
+
+
+PQ 
+
+
+'shouldComponentUpdate'
+
+ 
+
+
+ É UMA 
+
+ EXCELENTE FERRAMENTA, 
+
+
+
+ MAS ELA SÓ EXISTE/É DISPONÍVEL EM 
+
+
+ 'CLASS-BASED COMPONENTS'... -------> CERTO, MAS E QUANTO 
+
+ A 
+
+ FUNCTIONAL COMPONENTS? Há algo equivalente a isso neles? --------->
+
+
+
+ E QUANTO AO COMPONENTE 
+
+ 'COCKPIT' (que é 'FUNCTIONAL') ? Podemos 
+
+ optimizar sua performance?
+
+
+
+
+
+ -------------> SE EXAMINARMOS O CONSOLE, sabendo
+
+  
+  que o cockpit 
+
+
+  nunca é tocado quando 
+
+
+  digitamos algo nos input fields,
+
+
+
+  nós podemos ver 
+
+  QUE 
+
+  __ELE AINDA ASSIM____
+
+
+
+  EXECUTA O SEU CÓDIGO  (aquele código de 'useEffect' que tem o CONSOLE.LOG)
+
+  QUANDO DIGITAMOS ALGO ALI... -------> ok... como podemos 
+
+
+  __IMPEDIR ISSO__, COMO PODEMOS IMPEDIR O RE-RENDER/UPDATE/O CHECK DO RE-RENDER 
+
+
+
+
+
+  do 
+
+
+  componente 
+
+  'cockpit' 
+
+  QUANDO 
+  
+
+  ALTERAMOS 
+
+  ALGO 
+
+
+  NOs components 'person/persons'? (pq queremos que ele só RE-RENDERIZE/ATUALIZE QUANDO 
+  
+  __ELE REALMENTE SOFRER UMA ALTERAÇÃO__...)
+
+
+  ------------------------------------
+
+
+
+
+
+
+
+PARA ISSO,
+
+
+
+DEVEMOS ANALISAR O 'COCKPIT'... ---> bem, 
+
+a ÚNICA COISA QUE 
+
+O COCKPIT USA 
+
+
+INTERNAMENTE ___, A ÚNICA COISA QUE 
+
+
+ELE USA QUE __PODERÁ__/PODE TRIGGAR UM 
+
+RE-RENDER DE SI MESMO,
+
+
+é 
+
+
+'props'.......... os props que ele recebe, mas, MAIS ESPECIFICAMENTE, 
+
+
+O ARRAY 'persons' (a LENGTH de persons ) E O 
+
+
+'TITLE'... (props.title)...           (e também 'showPersons', mas só o 'showPersons', e não OS ELEMENTOS DENTRO DO ARRAY 'persons'...)
+
+
+(observe o código de 'cockpit':
+
+
+
+
+const cockpit = (props) => {
+
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+        </div>
+    );
+    
+
+}
+
+
+
+)
+
+
+
+
+
+
+
+
+
+isso pq 
+
+
+
+coisas como 
+
+'persons.name', 'persons.age' 
+
+SÃO 
+
+
+____COMPLETAMENTE IRRELEVANTES __ PARA O 'cockpit'...
+
+
+
+
+OK, ENTÃO O QUE PODEMOS FAZER  AGORA, PARA 
+
+
+PREVENIR 
+
+ESSE RE-RENDERING DENECESSÁRIO?
+
+
+
+
+
+
+
+---->bem, o react 
+
+TAMBÉM 
+
+TEM UMA 
+FERRAMENTA
+ 
+DESSE TIPO 
+
+
+
+
+PARA __FUNCTIONAL COMPONENTS___... ---------> PARA USAR ESSA FERRAMENTA, VOCÊ 
+
+
+
+DEVE 
+
+__WRAPPAR__ SEU COMPONENTE EXPORTADO  
+
+
+
+COM 
+
+
+
+
+UM OBJETO/MÉTODO 
+
+chamado 
+
+
+
+'React.memo()'....
+
+
+
+
+ex:
+
+
+
+
+
+export default React.memo(cockpit); 
+
+
+
+
+
+
+
+
+-------------------------------------------
+
+
+Certo, wrappamos nosso component cockpit com esse método/objeto...
+
+
+
+
+
+---> isso basicamente usa 
+
+
+"MEMOIZATION" -------> É UMA TÉCNICA em que 
+
+o react 
+
+
+vai 
+
+"MEMOIZE" ( ou seja, BASICAMENTE __aRMAZENAR_ UMA SNAPSHOT DESSE COMPONENT...  ) --> 
+
+
+
+criado esse 'memo' desse COMPONENT 'cockpit',
+
+
+
+O REACT __sÓ VAI___ __RE-RENDERIZAR___ ESSE COMPONENT 
+
+
+___SE O SEU 'INPUT' __ MUDAR... (caso contrário, caso o input 
+desse component não MUDAR, e aí um outro component tentar o updatar (por ter 'cockpit' inserido no meio do seu método 'render()'),
+
+O REACT VAI SIMPLESMENTE ENTREGAR O 'MEMO' QUE ELE ARMAZENOU, aquele snapshot do
+
+component que ele armazenou, e não vai updatar...)
+
+
+
+-------------------------------------
+
+
+
+---> o professor salva o código e recarrega a página... ---> inicialmente, 
+
+nós 
+
+já vemos 
+
+
+
+'[Cockpit.js] useEffect' 
+
+'[Cockpit.js] 2nd useEffect' 
+
+
+
+
+NO CONSOLE... -----> isso é mostrado, é claro, 
+
+
+
+
+PQ AINDA NÃO HÁ NENHUM 'MEMO', NÃO HÁ NENHUMA 'DATA STORED'...
+
+
+
+
+
+Certo... mas quando o professor clica 
+
+
+
+
+em 
+
+'
+toggle persons', 
+
+
+
+
+
+ELE DIZ QUE NÓS VEMOS 
+
+O COCKPIT SENDO EXECUTADO 
+
+
+DE NOVO 
+
+(por causa 
+
+do código 
+
+
+'[Cockpit.js] cleanup work in 2nd useEffect' 
+
+e 
+
+
+'[Cockpit.js] 2nd useEffect'...
+
+
+
+
+
+
+
+
+) --------> CERTO, MAS PQ ELE FOI EXECUTADO DE NOVO?  --> bem, o cockpit component 
+
+SÓ É RE-RENDERIZADO QUANDO 
+
+
+__SEUS PROPS MUDAM____... e um dos props dos quais nós DEPENDEMOS  é 
+
+
+'persons' (o cockpit depende dele)... ------> é evidente que nós 
+
+apenas dependemos da 
+
+LENGTH 
+
+do 
+
+'persons' (
+
+    ex:
+
+
+    'if (props.persons.length <= 2) {
+        ...
+    }'
+
+
+),
+
+
+
+MAS É CLARO QUE ISSO 
+
+
+NÃO 
+
+É ALGO QUE O REACT VAI ENTENDER, AQUI (ele não é tão inteligente assim)... ---> PARA CONSERTAR ISSO, 
+
+PODEMOS, NO ENTANTO,
+ 
+ OPTIMIZAR __a MANEIRA PELA QUAL PASSAMOS 
+
+ DADOS (props) 
+
+
+ AO 'cockpit'...
+
+
+
+Mas como fazemos isso?
+
+
+
+
+BEm,
+
+
+lá em 
+
+
+
+'App.js',
+
+temos este código:
+
+
+
+
+
+
+
+'
+if(this.state.showCockpit) {
+
+ cockpit =  <Cockpit //4
+  title={this.props.appTitle} //sim, ESSE CÓDIGO É VÁLIDO. ESTAMOS ACESSANDO UM __PROP__ QUE FOI REPASSADO POR 'index.js' A ESSE ELEMENTO 'APP', E QUE SERÁ AGORA REPASSADO AO COMPONENT 'Cockpit' POR MEIO DESSE PROP 'title'...
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+  </Cockpit>
+  
+}
+'
+
+---------------------------------------------
+
+
+
+
+aquele 
+
+prop 
+
+
+'persons' que passamos 
+
+
+
+a 'cockpit' 
+
+
+
+PODE SER ALGO DIFERENTE,
+
+NÃO PRECISA OBRIGATORIAMENTE SER AQUELE 
+
+'this.state.persons'... -----------> PODEMOS PASSAR 
+
+
+OUTRA COISA, ALGO MAIS ESPECÍFICO, como 
+
+'this.state.persons.length'  ( ou seja, a LENGTH ESPECÍFICA DO NOSSO COMPONENT...) ----------> ou sejA,
+
+
+
+AGORA EM VEZ 
+
+
+DE DETERMINARMOS O 'LENGTH' DO ARRAY DE PERSONS __DENTRO__ DO COCKPIT, 
+
+podemos simplesmente passá-lo como 
+
+PROP DIRETAMENTE AO 
+
+
+'cockpit', FORA DO COCKPIT...
+
+
+
+
+
+
+
+Por isso o professor 
+
+
+vai trocar 
+
+'persons={this.state.persons}'
+
+
+por 
+
+
+'personsLength={this.state.persons.length}'
+
+
+
+
+
+
+
+
+Mas por que passar 'length' do array de persons, em vez do array de persons em si? ---> 
+
+PORQUE AGORA O NOSSO COCKPIT __VAI MUDAR__ APENAS SE __ A 'LENGTH' ___ DO ARRAY 
+
+
+DE PERSONS mudar (e não o ARRAY em si...)
+
+
+
+
+
+---> EM DECORRêNCIA DESSA ALTERAÇÃO, O PROFESSOR VAI TROCAR 
+
+
+
+    'if (props.persons.length <= 2) {
+        ...
+    }'
+
+
+
+POR 
+
+
+'if (props.personsLength <= 2) {
+
+}' ...
+
+-------------------------------
+
+
+
+
+
+----> agora, com isso,
+
+
+nós fazemos um OUTSOURCE DAQUELE 'CÁLCULO' da length de persons e 
+
+a referenciamos 
+
+
+em 'Cockpit'... (e isso faz o react realmente ''pensar'' sobre a condição que havíamos 
+imposto a ele..) ---> com isso ,
+
+
+agora TEMOS UM COCKPIT 
+
+
+QUE 
+
+
+__NÃO É UPDATADO__ PARA CADA 'KEYSTROKE'
+
+
+
+NOS NOSSOS
+
+
+
+COMPONENTS 'Person'... (podemos ver isso no console, nós não encontramos NENHUM '[Cockpit.js] shouldComponentUpdate' sendo outputtado....) ---------> O 'shouldComponentUpdate' AGORA __sÓ SERÁ MOSTRADO__ no console ___ QUANDO REALMENTE FIZERMOS ALGO QUE AFETA/AFETARÁ O COCKPIT como o 'remove' dele por meio do botão 'remove cockpit'....
+
+
+
+
+
+
+
+
+Certo... mas algo aqui não está certo, pois ainda conseguimos 
+
+
+identificar 
+
+
+
+Cockpit.js:153 [Cockpit.js] cleanup work in 2nd useEffect
+17:27:32.006 Cockpit.js:149 [Cockpit.js] 2nd useEffect
+
+
+
+
+
+
+A PARTIR DE UM 'TYPE'(typing no input field) nos 
+
+
+nossos componentes 'person'...
+
+
+
+
+
+
+
+(
+
+
+    DESCOBRI O PROBLEMA:
+
+
+
+    Era um problema COM A FORMA QUE EU ESTAVA
+
+
+    ESCREVENDO O CÓDIGO CONDICIONAL DO COMPONENT 
+
+
+    'cockpit' 
+
+
+
+    com 
+
+
+    o 
+
+
+    'showCockpit'... --------> 
+
+
+
+    O PROFESSOR USOU UMA TERNARY EXPRESSION PARA USAR 
+
+    O VALOR DESSE 'showCockpit'... ex:
+
+--------------------------------------------
+
+return (
+      <div className={classes.App}>
+        <button
+          onClick={() => {
+            this.setState({ showCockpit: false });
+          }}
+        >
+          Remove Cockpit
+        </button>
+        {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+          />
+        ) : null}
+        {persons}
+      </div>
+    );
+
+------------------------------------------
+
+
+
+EU, NO ENTANTO, ESTAVA TENTANDO USAR AQUELE APPROACH 
+
+de definir 
+
+
+'cockpit = null' lá no início, 
+
+depois 
+
+
+um 
+
+'
+
+if(this.state.showCockpit) {
+
+ cockpit =  <Cockpit 
+  title={this.props.appTitle}
+  showPersons={this.state.showPersons}
+  personsLength={this.state.persons.length}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+  </Cockpit>
+  
+}
+
+
+
+
+
+
+'
+
+
+E ENTÃO 
+
+
+UM pass 
+
+DA REFERÊNCIA 
+
+DESSE VALOR 
+
+'cockpit' dinamicamente 
+
+
+em 
+
+
+'{cockpit}', lá no final do RETURN() do RENDER() do 
+
+component 'App.js'.... ---> (
+    tipo assim:
+
+
+
+return (
+
+  <div className={classes.App}>
+    <button onClick={() => {this.setState({showCockpit: false})}} >Remove Cockpit</button>
+ {cockpit} ////EIS O CÓDIGO EM QUESTÃO.
+ {persons} 
+ </div>
+
+
+
+
+
+
+) 
+
+
+
+
+
+
+) -----------> E ESSE APPROACH AÍ 
+
+
+__NÃO FUNCIONOU__, ELE __ NÃO FUNCIONA__ COM 
+
+
+'React.memo(nomeDoSeuComponent)' ----> pelo menos NÃO FUNCIONA NESSE 
+
+EXEMPLO QUE O PROFESSOR ESTÁ NOS MOSTRANDo....
+
+
+
+
+
+
+
+--------------------------------------------
+
+
+OK, AGORA QUANDO 
+
+
+
+DIGITAMOS ALGO NOS INPUT FIELDS,
+
+O COCKPIT __NÃO É EXECUTADO__ --> seus 
+
+
+
+PROCESSOS/MÉTODOS SÓ SÃO EXECUTADOS 
+
+QUANDO EFETIVAMENTE 
+
+
+O REMOVEMOS POR MEIO DO BOTÃO 'remove cockpit'... 
+
+
+
+
+
+
+------> REACT.MEMO(), portanto, 
+
+
+É UMA EXCELENTE MANEIRA 
+
+DE CONSEGUIR OPTIMIZAÇÕES 
+
+PARA SEUS FUNCTIONAL COMPONENTS, e 
+
+
+por isso é uma boa ideia 
+
+__wRAPPAR___ FUNCTIONAL COMPONENTS 
+
+Em 
+
+
+'React.memo()'... --------> PQ 
+
+'
+shouldComponentUpdate()', coisa própria dos CLASS-BASED COMPONENTS, 
+
+
+__ NÃO EXISTE/NÃO PODE SER UTILIZADO NOS 
+
+
+SEUS FUNCTIONAL COMPONENTS___... -----------> É por isso 
+
+
+
+que devemos 
+
+
+
+sempre wrappar functional components com 'React.memo' QUANDO 
+
+
+___PENSAMOS___ "BEM, ESSE COMPONENT ESPECÍFICO AQUI __NÃO PRECISA__ SER 
+
+ATUALIZADO/UPDATADO/RE-RENDERIZADO PARA CADA MUDANÇA  NO PARENT COMPONENT 
+
+QUE O ENGLOBA..."
+
+
+ 

@@ -1,0 +1,513 @@
+
+
+
+
+
+
+
+
+
+
+
+----> AGORA QUEREMOS SETTAR NOSSO PROJETO- ---> antes de mais nada,
+
+
+
+
+professor 
+
+
+vai criar a estrutura básica de um projeto webpack....
+
+
+
+
+
+
+
+
+---> professor diz que 
+
+não vai querer replicar a ESTRUTURA __eXATA_ DE  
+
+um aplicativo criado com 
+
+
+'create-react-app',
+
+
+
+mas 
+
+que 
+vai 
+
+
+CRIAR UMA BEM PARECIDA...
+
+
+
+
+
+
+
+
+---> ele cria um folder de 
+
+
+'src' na nossa ROOT,
+
+
+
+e aí 
+
+dentro 
+
+
+desse 
+
+folder 
+
+
+ele cria um 
+
+
+arquivo 
+
+
+'index.html'... ------> dentro desse arquivo, se você digitar 
+
+
+'html:5',
+
+O VISUAL STUDIO CODE JÁ TE DÁ UM 
+
+TEMPLATE 
+
+PRONTO, template que pode ser usado 
+
+
+em react apps....
+
+
+
+
+
+ex:
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REACT APP EXAMPLE</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+
+
+--------------------------
+
+
+
+OK, CONSIGO UM BOILERPLATE 'OUT OF THE BOX'...
+
+
+
+
+
+
+
+
+--> ESSE É O ARQUIVO HTML 'STARTER' COM O QUAL COMEÇAMOS... 
+
+
+
+
+
+
+--> SE VOCÊ TIVER QUAISQUER 'CDNS',
+
+como 
+
+FONTS ou styles especiais (css),
+
+
+VOCÊ 
+
+
+DEVE OS ADICIONAR NA SEÇÃO 
+
+
+
+'<head></head>'...
+
+
+
+
+
+
+
+
+
+
+----> OS SCRIPTS E QUAISQUER OUTRAS COISAS PRODUZIDAS PELO 
+
+WORKFLOW (do webpack)
+
+
+VÃO 
+
+SER 
+
+INJETADOS ___NA PARTE DO __ BODY... --> E SERÃO __ INJETADOS__ AUTOMATICAMENTE 
+
+POR ELES... --------> FAREMOS 
+
+ISSO 
+
+
+POR MEIO 
+
+DE UMA CONFIGURAÇÃO QUE 
+
+
+EDITAREMOS 
+
+NO NOSSO SETUP.... ---------> COM ISSO,
+
+
+
+O PROFESSOR 
+
+
+VAI ADICIONAR UMA 
+
+
+'<div>' 
+
+nesse body,
+
+
+
+CUJO ID SERÁ DE 
+
+'root' ---------> 
+
+
+
+
+OU SEJA,
+
+É EXATAMENTE O QUE FAZEMOS 
+
+
+EM UM REACT APP NORMAL, criado com 'create-react-app',
+
+
+
+TEMOS 
+
+UMA 
+
+
+ÚNICA div com id de root, 
+que 
+
+será 
+
+o local
+ 
+
+ ONDE SERÁ 
+
+ MONTADO O REACT APP INTEIRO...
+
+
+
+ ex:
+
+
+
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REACT APP EXAMPLE</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+COM ISSO,
+
+
+NOSSO 
+
+INDEX.HTML ESTÁ ACABADO...
+
+
+
+
+devemos 
+
+settar 
+
+
+as outras partes 
+
+
+do 
+
+nosso projeto...
+
+
+
+
+
+
+---> professor cria um folder de 
+
+'assets', que é onde colocaremos IMAGES e outros resources usados 
+
+por nosso aplicativo...
+
+
+
+
+
+--> também cria um folder de 'components',
+
+
+e outro de 
+
+'containers'...
+
+
+
+
+
+
+
+
+-----> ok... É O MESMO SETUP QUE USAMOS NO BURGERBUILDER...
+
+
+
+
+
+------------------------
+
+
+
+OK,
+
+AGORA 
+
+
+QUEREMOS 
+
+CRIAR UMA
+ 
+ 'REACT APPLICATIOn' de forma __MANUAL__... ---> para isso,
+
+
+ professor 
+
+
+
+ vai 
+
+
+ criar um 
+
+ arquivo 
+
+
+ 'index.js'
+
+ NO 
+
+ _ROOT__ DO folder 'src'... ---> 
+
+
+
+
+ e 
+
+ dentro 
+
+ desse index.js,
+
+
+ colocaremos aquele 
+
+ código de imports que já conhecemos bem...
+
+
+
+
+
+ELE TAMBÉM 
+
+VAI USAR 
+
+
+'index.css', para 
+
+realizar um pouco de GLOBAL STYLING...  ---> e aí ele já vai lá e IMPORTA 
+
+
+esse 
+
+
+
+'index.css' para 
+
+DENTRO 
+
+DO 
+
+'index.js'...
+
+
+
+
+ -----------------------------------
+
+
+
+
+
+ ELE ENTÃO COLOCA REGRAS BÁSICAS DE STYLING,
+
+ como 
+
+
+  
+
+  O REMOVE DE MARGIN E PADDING 
+
+  DO 
+
+  BODY,
+
+
+
+  e para settar a font-family como 
+
+  sendo 
+
+
+  'sans-serif;'...
+
+
+
+
+  ex:
+
+
+  body{
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+  }
+
+
+
+
+
+  -------------------------------
+
+
+
+  PROFESSOR DIZ QUE TAMBÉM 
+
+  VAI CRIAR UM APP.JS,
+
+
+
+
+
+  que deverá ser o ROOT COMPONENT... ---> E AÍ, 
+
+
+  PARA 
+
+  NOS MOSTRAR 
+
+  BEM COMO 
+
+
+  TODO 
+
+
+  O 
+
+  BUILD WORFLOW FUNCIONA,
+
+
+  ELE DIZ QUE 
+
+  VAI SETTAR UM 'BASIC REACT PROJECT', algo que não 
+
+
+  será 
+
+  SUPER AMAZING,
+
+  mas que 
+
+  usará
+   
+   ROUTING E LAZY LOADING... --> só para ver se isso aí realmente funciona...
+
+
+
+
+
+ESSE PROJETO 'DUMMY' VAI SERVIR PARA NOS 
+
+
+MOSTRAR COMO SÃO USADAS/SERÃO USADAS VÁRIAS DAS FEATURES APRENDIDAS POR NÓS,
+
+EM UM APLICATIVO DE VERDADE...
+
+
+
+
+
+
+
+--> por exemplo,
+
+esse aplicativo DEVERÁ __INCORPORAR__ ('incorporate') uMA IMAGEM....
+------------------------------------------------------
+
+
+
+
+
+

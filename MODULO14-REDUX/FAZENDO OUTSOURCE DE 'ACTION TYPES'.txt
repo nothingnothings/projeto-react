@@ -1,0 +1,718 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> PROFESSOR PEDE PARA DARMOS UMA OLHADA NO NOSSO 'reducer', em 'reducer.js'...
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+No nosso reducer,
+
+podemos 
+
+perceber 
+
+QUE 
+
+
+TEMOS 
+
+
+TODOS 
+
+
+ESSES 
+
+DIFERENTES 
+
+
+'cases',
+
+
+
+'cases' 
+
+
+
+
+
+de 
+
+
+'INCREMENT',
+
+'DECREMENT',
+
+
+
+'ADD' 
+
+e 
+
+
+assim por diante....
+(também 'STORE_RESULT' e 'DELETE_RESULT')...
+
+
+
+-------------------------------------------------------
+
+
+
+---> é claro, diz o professor, que ELE ENFATIZA 
+
+
+QUE 
+
+
+OS 
+
+IDENTIFICADORES
+
+
+PELOS QUAIS ESTAMOS PROCURANDO
+
+
+aqui, no reducer,
+
+
+SÃO 
+
+OS 
+
+__IDENTIFIERS___
+
+
+QUE 
+
+
+
+DEVEMOS 
+
+
+USAR 
+
+
+
+NOS 
+
+NOSSOS 
+
+
+
+COMPONENTS 'CONTAINERS'... (Que é o lugar, no nosso aplicativo,
+
+EM QUE 
+
+
+FAZEMOS O __dISPATCH __ DE ACTIONS, que são lidas pelo reducer...) --------> 
+
+
+E 
+
+NÓS 
+
+
+
+__rEALMENTE
+
+ESCREVEMOS 
+
+
+NOSSO CÓDIGO 
+
+DESSE JEITO ATÉ AGORA,
+
+
+nós 
+
+
+
+digitamos 
+
+
+as 'actions' lá em 
+
+
+
+'Counter.js',
+
+
+actions como 
+
+
+''''dispatch({type: 'INCREMENT'})'''' 
+
+
+e 
+
+assim por diante......... -------> MAS 
+
+
+PROFESSOR ENTÃO NOS LANÇA UMA PERGUNTA:
+
+
+E 
+
+SE NÓS 
+
+COMETERMOS ALGUM 'TYPO'?  ------> imagine que isso acontece,
+e aí 
+
+
+NÓS PROCURAMOS POR ESSE 
+
+TYPO ___POR HORAS__ (pq esse TYPO não mostra nenhuma mensagem de erro 
+no nosso app; o código vai '''FALHAR SILENCIOSAMENTE'''',
+
+não vai nos 
+
+MOSTRAR
+ 
+ 
+ EXATAMENTE QUAL 'type' de uma action, digitado DE FORMA ERRADA, resultou no 
+ nosso erro...) ----------------> 
+
+
+
+ É 
+
+ EXATAMENTE 
+
+
+ POR 
+
+
+ ESSA 
+
+ RAZÃO, ESSE PROBLEMA DOS TYPOS,
+
+ QUE 
+
+ É 
+
+
+ __UMA BOA __ IDEIA _______OUTSOURCEAR____ SEUS 
+
+ 'action Types'
+
+
+ EM 
+
+  
+______cONSTANTES___ que vocÊ pode ir usando ao longo do seu app... -----> 
+
+isso 
+
+
+te deixa basicamente SEMPRE PODER USAR UMA CONSTANTE NO LUGAR DA STRING,
+
+o que 
+
+elimina essa possibilidade de cagada/confusão com typos...
+
+
+
+
+A ÚNICA QUESTÃO É:
+
+
+__ONDE__ DEFINIR ESSAS CONSTANTES? -----> 
+
+
+
+creio 
+
+que 
+
+globalmente, no arquivo do nosso 'container'...?
+
+
+
+
+
+
+
+
+--> professor nos explica que 
+
+O USO DESSAS CONSTANTES substituindo as strings nos 'type' das actions 
+
+
+É ALGO QUE PASSA A SER EXTREMAMENTE ÚTIL à MEDIDA QUE 
+
+NOSSO APLICATIVO VAI CRESCENDO...
+
+
+
+
+
+
+
+
+
+--> se você só tem 2 simples tipos de actions que você faz dispatch,
+
+essas constantes tvz não sejam necessárias, mas se você tiver muitas actions, são úteis...
+
+
+
+
+
+
+
+----> PARA DEFINIR ESSAS CONSTANTES, O PROFESSOR VAI ADICIONAR UM NOVO 
+
+ARQUIVO 
+
+AO 
+
+
+NOSSO FOLDER DE 'store'; esse arquivo vai 
+
+
+ARMAZENAR
+
+
+
+NOSSAS CONSTANTES GLOBAIS DE 'action'...
+
+
+
+PROFESSOR VAI CHAMAR ESSE ARQUIVO DE 'actions.js'...
+
+
+
+
+
+---> DENTRO 
+
+DESSE ARQUIVO, PODEMOS SIMPLESMENTE 
+
+
+
+
+
+___eXPORTAr____ 
+
+
+
+UMA CONSTANTE... ---> uma constante QUE __tIPICAMENTE TERÁ O MESMO __ NOME 
+QUE 
+
+O 
+
+IDENTIFIER TERÁ...
+
+
+
+
+ex:
+
+
+
+
+export const INCREMENT = 'INCREMENT';
+
+
+
+
+
+
+----------------------------------
+
+
+
+É UMA CONSTANTE/VARIÁVEL BEM SIMPLES___, que vai ser definida desse jeito, 
+
+
+e então 
+
+IMPORTADA 
+
+
+E UTILIZADA 
+
+NOS CONTAINERS 
+
+
+
+EM QUE 
+
+PRECISAMOS DELA...
+
+
+
+
+--------------------
+
+
+
+cERTO, exportamos nossos 6 
+
+'action types'...:
+
+
+-------------------------------------------------
+
+
+export const INC_COUNTER = 'INC_COUNTER';
+
+
+
+
+export const DEC_COUNTER = 'DEC_COUNTER';
+
+
+
+export const ADD_COUNTER = 'ADD_COUNTER';
+
+
+
+export const SUB_COUNTER = 'SUB_COUNTER';
+
+
+
+export const RESULT_STORE = 'RESULT_STORE';
+
+
+
+export const DELETE_RESULT = 'DELETE_RESULT';
+
+
+-----------------------------------------------
+
+
+
+AGORA 
+
+SÓ 
+
+
+RESTA 
+
+IMPORTAR 
+
+ESSAS CONSTANTES,
+
+LÁ 
+
+
+EM 
+
+
+'Counter.js', nosso container... (ou em qualquer outra parte do código em que precisamos os utilizar)...
+
+
+fazemos isso com a sintaxe 
+
+
+
+'import * as actionTypes from '../../store/action.js'
+
+
+
+
+
+
+
+----> LEMBRE-SE: VOCÊ PODE escolher outro nome, não precisa ser obrigatoriamente 
+'actionTypes'... (é para isso que serve o ''''as...''''..)
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+const mapDispatchToProps = dispatch => { ///////////DEVE SER SEGUIDO ESTE FORMATO.... -------> (sempre usar 'dispatch' como PARÂMETRO DESSA FUNÇÃO... ex: 'const mapDispatchToProps = dispatch => { return ...}' ...)
+  return {
+      onIncrementCounter: () => {
+        
+        dispatch(
+        {
+            type: actionTypes.INC_COUNTER
+        }
+      )
+      },
+      onDecrementCounter: () => {
+        dispatch({
+          type: actionTypes.DEC_COUNTER
+        })
+      },
+      onAddCounter: () => {
+        dispatch({
+          type: actionTypes.ADD_COUNTER,
+          value: 10
+        })
+      },
+      onSubtractCounter: () => {
+        dispatch({
+          type: actionTypes.SUB_COUNTER,
+          value: 10
+        })
+      },
+      onResultStored: () => {
+        dispatch(
+          {
+            type: actionTypes.RESULT_STORE
+
+          }
+        )
+      },
+      onDeleteResult: (id) => {
+        dispatch(
+          {
+            type: actionTypes.DELETE_RESULT,
+            resultId: id
+          }
+        )
+      }
+  }
+}
+
+
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+
+
+------> NÓS TAMBÉM __VAMOS IMPORTAR___ E USAR 
+
+ESSAS CONSTANTES 
+
+LÁ 
+
+
+EM 
+
+'reducer',
+
+
+
+
+NO SWITCH-CASE STATEMENT...
+
+
+
+------------------------------
+
+
+
+
+ESSA MARACUTAIA/GAMBIARRA ENSINADA PELO PROFESSOR É MT BOA,
+
+POIS 
+
+O IDE 
+
+VAI 
+
+NOS DAR AUTO-SUGGEST 
+
+
+
+SOBRE A 
+
+
+
+
+CONSTANTE QUE DEVEMOS USAR...
+
+
+
+ex (reducer):
+
+
+
+
+
+
+import * as actionTypes from '../store/actions'
+
+
+
+
+
+
+const initialState = {
+  counter: 0,
+  results: []
+};
+
+const reducer = (state = initialState, action) => {
+  ///////devemos sempre definir o parâmetro 'state' dessa forma, dessa forma/formato de 'default parameter value', esse negócio de '= initialState' ----------> ISSO VAI FAZER COM QUE, QUANDO O parâmetro 'state'  '''''inicial''''' (primeira execução) estiver como 'undefined', SERÁ __aDOTADO ___ O VALOR DE 'initialState', aquela CONSTANTE QUE DEFINIMOS LOGO ACIMA, que então entrará como valor de 'state' (e por isso é considerado um 'PARÂMETRO DEFAULT' dessa função 'reducer', nesse caso... (e em todos os outros)) ------> é LÓGICO QUE NAS FUTURAS EXECUÇÕES DE 'reducer', será adotado o VALOR 'value' mesmo, e não esse 'initialState', que SÓ SERVE PARA A PRIMEIRA EXECUÇÃO (mesmo assim, ele é crucial, pois precisamos dessa primeira execução)...
+
+  //     if(action.type === 'INC_COUNTER') {
+  //                 return {
+  //                     ...state,
+  //                         counter: state.counter + 1
+  //                 }
+  //     }
+
+  //     if(action.type === 'DEC_COUNTER') {
+  //         return {
+  //             ...state,
+  //                 counter: state.counter - 1
+  //         }
+  // }
+
+  //     if(action.type === 'ADD_COUNTER') {
+  //         return {
+  //             ...state,
+  //                 counter: state.counter + action.value
+  //         }
+  // }
+
+  //     if(action.type === 'SUB_COUNTER') {
+  //     return {
+  //         ...state,
+  //             counter: state.counter - action.value
+  //     }
+  // }
+
+  //     return state;
+
+  switch (action.type) {  ////faz a mesma coisa que o código acima (com if statements), mas com SWITCH-CASE STATEMENTS...
+    case actionTypes.INC_COUNTER:
+      return {
+        ...state,
+        counter: state.counter + 1,
+      };
+      break;
+    case actionTypes.DEC_COUNTER:
+      return {
+        ...state,
+        counter: state.counter - 1,
+      };
+      break;
+      case actionTypes.ADD_COUNTER:
+        return {
+          ...state,
+          counter: state.counter + action.value,
+        };
+        break;
+        case actionTypes.SUB_COUNTER:
+          return {
+            ...state,
+            counter: state.counter - action.value,
+          };
+        break;
+        case actionTypes.RESULT_STORE: 
+        return {
+            ...state, 
+            results: state.results.concat({
+
+
+              value: state.counter,
+            resultId: new Date() * Math.random() //////////USADO PARA CONSEGUIR UM 'ID' __REALMENTE ___ 'UNIQUE'__, único, nunca teremos um ELEMENTO ARMAZENADO COM A MESMA DATA QUE O OUTRO, PQ AS DATAS SEMPRE VÃO SER DIFERENTES (tempos diferentes)...
+              // id: state.counter * Math.random()
+            }
+            )      /////////UMA ALTERNATIVA A ESSE ID, CRIADA POR MIM, SERIA ESCREVER 'id: state.counter * Math.random();'
+            
+        };
+        break;
+        case actionTypes.DELETE_RESULT:
+//////////////APPROACH Nº 1  de COMO __REMOVER UM ELEMENTO/OBJETO DE UM ARRAY __ NO STATE__ DE FORMA ____iMMUTABLE____ (este approach usa o método 'splice' JUNTO DE 'indexOf'... )
+            // const resultToBeDeleted = state.results.find((result) => {return result.resultId === action.resultId})
+            // const indexOfResult = state.results.indexOf(resultToBeDeleted)
+            // const newArray = [...state.results];
+            // newArray.splice(indexOfResult, 1);
+            // return {
+            //   ...state,
+            //   results: newArray
+            // }
+/////////////////////APPROACH Nº2 (usa o método 'filter'):
+          const updatedArray = state.results.filter(
+            (result) => {
+                return result.resultId !== action.resultId; /////////////EIS O CÓDIGO IMPORTANTE PARA O 'FILTER'...
+            }
+            )
+            return {
+                ...state,
+                results: updatedArray
+            }
+
+
+
+
+
+        break;
+    default:
+      return state;
+  }
+};
+
+export default reducer;
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+O NOSSO CÓDIGO VAI FUNCIONAR EXATAMENTE COMO ANTES, 
+
+MAS 
+
+AGORA 
+
+COM ESSA CONVENIÊNCIA LEGAL... (eliminamos uma potencial fonte de erros, os 'action types'... )
+
+
+
+
+

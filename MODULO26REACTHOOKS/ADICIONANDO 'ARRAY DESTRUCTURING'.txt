@@ -1,0 +1,616 @@
+
+
+
+
+
+
+--> NOSSO CÓDIGO, com o 'useState' hook, ATÉ AGORA ESTÁ ASSIM:
+
+
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+  const inputState = useState('');
+
+  const inputChangedHandler = (event) => {
+    inputState[1](event.target.value);
+  };
+
+  ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        value={inputState[0]}
+        onChange={inputChangedHandler}
+      />
+      <button type="button">Add</button>
+      <ul>{inputState[0]}</ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+
+----------------------------
+
+
+
+
+CERTO...
+
+
+
+E OS HOOKS 
+
+SÃO 
+
+
+
+__UM CONCEITO SUPER NOVO DO JAVASCRIPT, E TALVEZ SEJA UM POUCO DIFÍCIL OS ENTENDER NO INÍCIO...
+
+
+
+
+
+
+
+
+----> PRIMEIRO DE TUDO,
+
+DEVEMOS 
+
+
+ESCREVER 
+
+ESSE CÓDIGO 
+
+DE UMA 
+MANEIRA MAIS BONITA,
+
+que vai deixar tudo mais fácil...
+
+
+
+
+
+
+
+
+--> professor começa pelo 
+
+'inputState'...
+
+
+
+
+
+
+
+
+--> 'inputState',
+
+OU QUALQUER COISA QUE 
+
+ARMAZENAMOS DENTRO 
+
+DESSA CONSTANTE,
+
+
+É __ 'RETURNED' por meio 
+
+DO 
+USO 
+
+DE 
+
+'useState()',
+
+É CLARO... ----------> ISSO PQ O PROFESSOR 
+ESTÁ 
+APENAS 
+
+SIMPLESMENTE 
+
+CHAMANDO 
+
+UMA FUNÇÃO 
+
+AQUi, no final das contas (a função 'useState()')...
+
+
+
+
+
+
+--> É UMA FUNÇÃO PROVIDENCIADA PELO REACT.... -----> COMO 
+
+
+ESSE 
+
+'inputState' __NO FINAL DAS CONTAS___ SÓ 
+
+FAZ 
+HOLD 
+
+DE 
+UM 
+
+'ARRAY',
+
+
+NÓS PODEMOS USAR 
+
+UMA FEATURE 
+
+DO JAVASCRIPT 
+MODERNO 
+
+
+CHAMADA 
+
+DE 
+
+'ARRAY DESTRUCTURING'...
+
+
+
+------------------------
+
+
+
+
+
+---> certo... o array destructuring nos 
+
+deixa 
+
+
+
+'PULL OUT' os 
+
+
+elementos DENTRO DAQUELE ARRAY DE 
+
+'inputState' BEM NO MOMENTO EM QUE ELES SÃO OBTIDOS/ELE É OBTIDO... ----> e aí,
+
+nós 
+
+
+
+ARMAZENAMOS 
+
+ESSES 
+
+ELEMENTOS 
+
+EM __CONSTANTES/VARIÁVEIS __ SEPARADAS__...
+
+
+
+
+
+
+
+
+
+---> para fazer isso,
+
+precisamos 
+
+usar aquela sintaxe estranha que 
+
+COLOCA 
+
+'[]' DO LADO __eSQUERDO__ 
+
+do '='....
+
+
+
+ex:
+
+
+
+
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+  const inputState = useState('');
+
+
+  const [] = useState(''); ///////EIS O CÓDIGO EM QUESTÃO.
+
+};
+
+export default Todo;
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+Certo....
+
+
+'const [] = useState('') ' -------> 
+
+
+
+E 
+
+DENTRO 
+
+DESSE NEGÓCIO 
+
+NÓS 
+
+
+VAMOS 
+
+ESCREVER 
+
+OS 
+
+NOMES 
+
+DAS CONSTANTES QUE 
+
+VAMOS QUERER QUE 
+
+SEJAM
+ 
+
+ 'inputState[0]' e 'inputState[1]',
+
+ respectivamente.... --> SIM,
+
+ PROFESSOR 
+
+ DEVRÁ 
+
+
+ ESCREVER/ADICIONAR EXATAMENTE 
+
+ 2 ELEMENTOS DENTRO 
+ DESSE 
+
+ ''array'' da esquerda: 
+
+
+ 1 elemento para o 'latestState/oldState',
+
+
+ e 
+ outro para o SEGUNDO ARGUMENTO NO ARRAY QUE 
+
+ 'useState()' produz,
+
+ QUE É 
+
+ AQUELA FUNÇÃO QUE 
+
+ ALTERA 
+
+ O 
+
+ 'OLDSTATE/latestState'...
+
+
+
+
+OBS:: PODEMOS DAR A ESSES ELEMENTOS/NEGÓCIOS __ QUALQUER 
+
+
+NOME DE NOSSA ESCOLHA...
+
+
+
+--> professor os 
+
+nomeará 
+
+
+
+'todoName' e 'setTodoName'....
+
+
+
+
+
+
+
+ex:
+
+
+
+ 
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+  const inputState = useState('');
+
+
+  const [todoName, setTodoName] = useState(''); ///////EIS O CÓDIGO EM QUESTÃO.
+
+};
+
+export default Todo;
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+OK, 
+
+'todoName' (agora uma CONSTANTE),
+
+essa constnate 
+
+AÍ,
+
+__ SERÁ __ O 'OLDSTATE/CURRENTSTATE',
+
+enquanto 
+
+o 
+
+'setTodoName' SERÁ __ A FUNÇÃO QUE VAI ALTERAR ESSE STATE QUANDO CHAMADA...
+
+
+--------------------------------------
+
+
+
+
+ISSO FEITO,
+
+PROFESSOR 
+PODE SUBSTITUIR 
+
+
+AQUELA 
+
+LINHA DE 
+
+
+'value={inputState[0]}' 
+
+
+
+POR 
+
+'value={todoName}',
+
+
+
+
+E AQUELA 
+
+OUTRA, EM inputChangedHandler,
+
+
+de 
+
+'inputState[1]'
+
+POR 
+
+
+'setTodoName'....
+
+
+
+EX:
+
+
+
+
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+  ////////////const inputState = useState('');
+
+
+
+  const [ todoName, setTodoName ] = useState('');
+
+  const inputChangedHandler = (event) => {
+    ////////inputState[1](event.target.value);
+
+      setTodoName(event.target.value); ////////////////EIS O CÓDIGO EM QUESTÃO.
+  };
+
+  ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        /////value={inputState[0]}
+        value={todoName}   ////////EIS O CÓDIGO EM QUESTÃO.
+        onChange={inputChangedHandler}
+      />
+      <button type="button">Add</button>
+      <ul>{inputState[0]}</ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+EX:
+
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+  // const inputState = useState(''); //versão FEIA de escrever o HOOK de 'useState'... (não usa array destructuring)...
+
+    const [todoName, setTodoName] = useState(''); ////versão __BONITA__ de escrever o hook de 'useState()' (usa ARRAY DESTRUCTURING...)
+
+
+  const inputChangedHandler = (event) => {
+    // inputState[1](event.target.value);
+      setTodoName(event.target.value);
+  };
+
+  ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        // value={inputState[0]}
+        value={todoName}
+        //   onChange={inputState[1]}
+        onChange={inputChangedHandler}
+      />
+      <button type="button">Add</button>
+      {/* <ul>{inputState[0]}</ul> */}
+      <ul>{setTodoName}</ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+ESSA 
+
+É 
+
+
+SÓ UMA 
+
+
+MUDANÇA SEMÂNTICA, MAS É SUPER IMPORTANTE,
+
+PQ FAZ MUITO MAIS SENTIDO 
+
+SE FORMOS 
+
+LER 
+
+NOSSO NEGÓCIO ASSIM...
+
+
+
+--------------------
+
+--> não mudamos a maneira 
+pela qual 
+
+
+o 
+
+'reacthooks' 
+
+funciona,
+
+SÓ 
+
+_MUDAMOS __a MANEIRA PELA QUAL É LIDO POR NÓS... --> e 
+
+essa 
+
+é 
+
+a 
+NOTAÇÃO 
+
+OFICIAL 
+
+QUE 
+VOCÊ 
+
+TIPICAMENTE 
+UTILIZARÁ 
+
+QUANDO 
+
+VOCÊ 
+
+LIDAR 
+
+COM O HOOK 
+
+DE 
+USESTATE...
+
+
+
+
+---------------------
+
+
+
+AGORA DEVEMOS VER OUTROS EXEMPLOS DE 
+
+'useState',
+
+E TAMBÉM 
+
+VER COMO __PROCEDER__ QUANDO TIVERMOS 'MÚLTIPLOS STATES' (múltiplas PROPRIEDADES 
+
+DENTRO 
+DO 
+
+'STATE' do functional component...)

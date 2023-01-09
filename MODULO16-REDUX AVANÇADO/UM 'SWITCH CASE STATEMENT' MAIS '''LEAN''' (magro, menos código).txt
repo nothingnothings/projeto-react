@@ -1,0 +1,856 @@
+
+
+
+
+
+---> NA NOSSA ÚLTIMA AULA ,
+
+NÓS JÁ HAVÍAMOS FEITO USO 
+
+DAQUELA
+
+
+
+utility function criada em 
+
+'utility.js',
+
+e importada 
+
+
+no nosso reducer 
+
+por meio 
+
+de 
+
+
+'import { updateObject } from '../utility.js';  -----> ISSO DEIXOU NOSSO CÓDIGO DOS REDUCERS MAIS __LEAN____.... (Evitamos repetição de código)...
+
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+->MAS NOSSOS 'REDUCER CASES'
+ 
+
+
+
+AGORA 
+
+ESTÃO 
+
+
+BEM LEAN, REALMENTE....
+
+
+
+----------------------------------
+
+
+
+
+O ÚNICO CASE 
+
+
+QUE É UM POUCO MAIOR, QUE TEM MAIS UMA ETAPA ADICIONAL (has an 'extra step', when compared to the other cases...),
+
+
+é 
+
+
+AQUELE 
+
+
+
+CASE 
+
+
+
+em 
+
+
+'result.js',
+
+
+O CASE 
+
+
+
+DO 
+
+
+
+'actionTypes.DELETE_rESULT'...
+
+
+
+O
+ CÓDIGO DELE É ESTE:
+
+
+
+
+
+
+
+
+    case actionTypes.DELETE_RESULT:
+
+  const updatedArray = state.results.filter((result) => { ///1ª ETAPA.
+        return result.resultId !== action.resultId; 
+      });
+      return updateObject(state, {results: updatedArray}); /// 2ª ETAPA.
+
+
+
+--------------------------------------
+
+
+
+
+
+--------------->  MAS ALGUNS __dESENVOLVEDORES (nem todos, na verdade)
+
+
+
+
+GOSTAM __ DE TER CASES DE REDUCERS________sUPER________ LEAN___, SUPER curtos... ----> 
+
+
+
+ou seja,
+
+
+
+
+ELES 
+
+PREFEREM 
+
+UMA 
+
+
+ESTRUTURA 
+
+
+assim:
+
+
+
+'case:
+UtilityFunctionQueVocêQuerChamar(parâmetroDessaCall)'...
+
+
+
+
+
+
+---------------------------------------------------------------
+
+
+
+
+É EVIDENTE QUE 
+
+
+NÓS 
+
+
+
+AINDA TEMOS DE TER NOSSA LÓGICA,
+
+
+precisamos 
+
+ter 
+
+essa 
+
+
+linha 
+
+de 
+
+
+'const updatedArray = state.results.filter(result => result !== action.resultId);' ,
+
+
+
+MAS 
+
+
+A QUESTÃO 
+
+É 
+
+
+QUE 
+
+OS DESENVOLVEDORES 
+
+
+
+__gERALMENTE__ GOSTAM DE OUTSOURCEAR
+
+
+esse código _AÍ, essas linhas soltas,
+
+
+
+___EM 
+
+UMA FUNCTION PRÓPRIA... --> isso 
+
+
+
+
+gera aquela VANTAGEM DE QUE 
+
+O 
+
+
+CASE 
+
+DO REDUCER 
+FICA 
+
+BEM ___LEAN___....
+
+
+
+
+
+--> OUTRA VANTAGEM DESSE APPROACH, DE ESSE APPROACH DO OUTSOURCE DA LÓGICA,
+
+
+É QUE 
+
+todos 
+
+OS 
+
+___CASES__ NOS REDUCERS FICAM _bEM PARECIDOS__... ---> e aí fica BEM FÁCIL 
+
+ENTENDER 
+
+O QUE 
+
+CADA 
+
+REDUCER FAZ, só de encostar o olho em cima...
+
+
+
+ex:
+
+
+
+          case actionTypes.INC_COUNTER:
+            return updateObject(state, {counter: state.counter + 1});
+          case actionTypes.DEC_COUNTER:
+            return updateObject(state, {counter: state.counter - 1});
+            case actionTypes.ADD_COUNTER:
+              return updateObject(state, {counter: state.counter + action.value});
+      
+              case actionTypes.SUB_COUNTER:
+                return updateObject(state, {counter: state.counter - action.value});
+
+
+
+
+
+
+
+VIU, BEM FÁCIL...
+
+
+
+
+------------------------
+
+
+
+
+A VANTAGEM DISSO É QUE 
+
+VEMOS 
+
+
+'TODOS OS CASES EM 1 PÁGINA SÓ'...  --> mais fácil leitura... 
+
+
+
+
+
+
+
+
+
+------> NO NOSSO CASO,
+
+
+
+NAQUELE 
+
+ARQUIVO 
+
+DE 
+
+'result.js',
+
+
+
+ISSO SIGNIFICA QUE 
+
+NÓS 
+
+
+PODERÍAMOS/PODEMOS 
+
+
+
+
+___OUTSOURCEAR__ AQUELA LÓGICA DE 
+
+
+
+'''const updatedArray = state.results.filter(result => result !== action.resultId);''
+
+
+
+
+
+EM UMA FUNÇÃO PRÓPRIA, função própria dela..
+
+
+
+
+
+
+
+---> E ESSA FUNÇÃO que é um OUTSOURCE dessa 'lógica específica', dentro do reducer,
+
+
+__GERALMENTE__ É ESCRITA ___ NO MESMO __ ARQUIVO 
+
+
+DO REDUCER EM QUE 
+
+ESTÁ ESSA 'LÓGICA ESPECÍFICA'... -----> isso significa que 
+
+
+NÓS 
+
+VAMOS 
+
+
+CRIAR 
+
+ESSA FUNÇÃO AÍ 
+
+
+____NO CONTEXTO GLOBAL DE 
+
+'result.js'...
+
+
+
+
+
+--> no caso de 'delete_result',
+
+
+
+VAMOS 
+
+
+
+CRIAR 
+
+
+uma constante 
+
+
+de nome 
+
+
+'deleteResult' ------> VAMOS FAZER ISSO PQ __ A CONVENÇÃO É __ SEMPRE USAR O 
+
+
+'ACTIONTYPE' COMO __NAME___  (e o actiontype aqui, no caso, é 'deleteresult/resultdelete'...).
+
+
+
+
+
+-------> E A CONVENÇÃO É ESCREVER 
+
+
+ESSE 
+
+nome do actionType MAS 
+
+
+__EM 'LOWERCASE', sem caps...
+
+
+
+
+ex:
+
+
+
+
+
+
+import * as actionTypes from '../actions/actions (DEPRECADO)';
+
+import { updateObject } from '../utility';
+
+const initialState = {
+  results: [],
+};
+
+
+const deleteResult = () => { //////////EIS O CÓDIGO EM QUESTÃO.
+
+}
+
+
+
+const resultReducer = (state = initialState, action) => { //reducer em si...
+    ...
+}
+
+
+
+------------------------------------------------------
+
+
+
+
+
+
+DENTRO 
+
+DE ESSE 
+
+'deleteResult',
+
+A MORAL 
+
+É QUE 
+
+EU 
+
+VOU ESPERAR (expect) 
+
+
+
+RECEBER 
+
+
+O 
+
+'STATE'
+
+
+E TAMBÉM 
+
+
+A 
+
+'action'...  (ou seja, nele vou ESSENCIALMENTE __eSPERAR (expect) RECEBER OS MESMOS DADOS/DATAS QUE 
+
+SÃO RECEBIDOS 
+
+NO 
+
+REDUCER....)
+
+
+
+
+
+
+
+
+
+---> E DENTRO DESSA 'FUNÇÃO AUXILIAR', ENTÃO,
+
+O PROFESSOR 
+
+
+VAI QUERER 
+
+BASICAMENTE EXECUTAR 
+
+__ O MESMO CÓDIGO ___ QUE ESTAVA SENDO RODADO NO NOSSO CASE STATEMENT DE 'DELETE_RESULT' anteriormente,
+
+MAS 
+
+
+DESSA VEZ DENTRO DESSA FUNÇÃO AUXILIAR...
+
+
+
+
+
+
+--> ou seja,
+
+vai ficar assim:
+
+
+
+
+
+
+import * as actionTypes from '../actions/actions (DEPRECADO)';
+
+import { updateObject } from '../utility';
+
+const initialState = {
+  results: [],
+};
+
+
+const deleteResult = (state, action) => { 
+    const updatedArray = state.results.filter(result => result !== action.resultId) //////////EIS O CÓDIGO EM QUESTÃO.
+}
+
+
+const resultReducer = (state = initialState, action) => { //reducer em si...
+    ...
+}
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+CERTO.... ISSO FEITO,
+
+
+TUDO 
+
+
+QUE PRECISAMOS FAZER, DENTRO DO REDUCER,
+
+
+é ir 
+
+
+até 
+
+O 
+
+CASE 
+
+de 'deleteResult'
+
+
+E ENTÃO 
+
+
+
+
+
+
+escrever um CALL DESSA FUNÇÃO, com o pass dos parâmetros adequados... --> 
+
+
+
+tipo assim:
+
+
+
+
+                case actionTypes.DELETE_RESULT:
+                deleteResult(state, action);                ///1ª ETAPA.
+      return updateObject(state, {results: updatedArray}); /// 2ª ETAPA.
+
+
+
+
+
+
+------------------------------------------
+
+
+
+CERTO,
+
+
+E ISSO 
+
+VAI 
+
+
+__REALMENTE___ DEIXAR NOSSO CÓDIGO BEM MAIS CONCISO/'LEAN'...
+
+
+
+
+
+
+ex(padrão do código INTEIRO -- e isso está errado, BTW):
+
+
+
+
+
+import * as actionTypes from '../actions/actions (DEPRECADO)';
+
+import { updateObject } from '../utility';
+
+const initialState = {
+  results: [],
+};
+
+
+const deleteResult = (state, action) => { 
+    const updatedArray = state.results.filter(result => result !== action.resultId) //////////EIS O CÓDIGO EM QUESTÃO.
+}
+
+
+const resultReducer = (state = initialState, action) => { //reducer em si...
+    ...
+
+                   case actionTypes.DELETE_RESULT:
+                deleteResult(state, action);                ///1ª ETAPA.
+      return updateObject(state, {results: updatedArray}); /// 2ª ETAPA.
+}
+
+
+
+
+----------------------------------------------
+
+
+
+
+CERTO, 
+
+
+MAS 
+
+ISSO AÍ ESTÁ __ERRADO... --> o que o professor fez/escreveu, 
+
+
+
+NO CASO ,
+
+
+
+
+FOI UMA FUNÇÃO 
+
+'deleteResult'
+
+
+
+QUE 
+
+
+__TEM AS 2 ETAPAS NO SEU INTERIOR... ---> (sim, também terá a etapa de 'updateObject') ----> 
+
+
+ISSO SIGNIFICA 
+
+QUE 
+'updateObject'
+
+
+
+TAMBÉM É/FOI CHAMADO 
+
+DENTRO 
+
+DESSA FUNÇÃO auxiliar 
+
+
+'deleteResult'...
+
+
+
+
+
+
+EM OUTRAS PALAVRAS, FICOU ASSIM:
+
+
+
+
+
+
+
+const deleteResult = (state, action) => { 
+    const updatedArray = state.results.filter(result => result !== action.resultId);
+    return updateObject( state, {results: updatedArray}); ///////EIS O CÓDIGO EM QUESTÃO...
+}
+
+
+
+
+-------------------------------
+
+
+
+
+ESSE OUTSOURCE AÍ É BEM ÚTIL PARA O NOSSO 
+
+
+'REDUCER',
+
+pois lá no case 
+
+de 
+
+'actionTypes.DELETE_RESULT'
+
+
+podemos 
+
+
+só 
+
+escrever/referenciar
+
+
+o código
+
+
+'deleteResult(state, action);',
+QUE 
+
+
+ISSO 
+
+
+JÁ
+
+VAI FAZER COM QUE 
+
+
+AQUELA 
+
+FUNÇÃO AUXILIAR ___SEJA __ EXECUTADA... 
+
+
+
+
+ex (código completo):
+
+
+
+
+
+
+
+import * as actionTypes from '../actions/actions (DEPRECADO)';
+
+import { updateObject } from '../utility';
+
+const initialState = {
+  results: [],
+};
+
+
+const deleteResult = (state, action) => { 
+    const updatedArray = state.results.filter(result => result !== action.resultId);
+    return updateObject( state, {results: updatedArray}); ///////EIS O CÓDIGO EM QUESTÃO.
+}
+
+
+const resultReducer = (state = initialState, action) => { //reducer em si...
+    ...
+
+                   case actionTypes.DELETE_RESULT:
+                deleteResult(state, action); ///////EIS O CÓDIGO EM QUESTÃO.
+}
+
+
+
+---------------------------------
+
+
+
+
+CERTO... E NOSSO CÓDIGO ESTÁ FUNCIONANDO... ---> mas o delete do '<li>' não 
+
+está acontecendo, por alguma razão  ------> o que estava 
+
+faltando era 
+
+o 
+
+'return' 
+
+em 
+
+
+'return deleteResult(state, action)',
+
+LÁ 
+
+
+
+NO 
+
+CASE 
+
+DE 
+
+'delete_result'...
+
+
+
+
+--------------
+
+SALVAMOS TUDO E ENTÃO CONSTATAMOS QUE NOSSO CÓDIGO FUNCIONA... -----> 
+
+
+NOSO CÓDIGO DO REDUCER FICOU BEM MAIS __LEAN__...
+
+
+
+
+
+
+ficou assim, basicamente:
+
+
+
+
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case actionTypes.STORE_RESULT: return updateObject(state, {results: state.results.concat({value: action.result * 2, resultId: new Date() * Math.random(), })}) }
+        case actionTypes.DELETE_RESULT: return deleteResult(state, action);
+
+    return state;
+    }
+    }}
+
+
+
+--------------
+
+
+VOCÊ PODE VER BEM __QUAIS CASES__ ESTÃO SENDO HANDLADOS EM UM REDUCER... -->ESSA É A VANTAGEM DESTE APPROACH...

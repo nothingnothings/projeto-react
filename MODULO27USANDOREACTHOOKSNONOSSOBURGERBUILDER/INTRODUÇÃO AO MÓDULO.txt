@@ -1,0 +1,863 @@
+
+
+
+
+
+
+
+
+
+
+
+--> APRENDEMOS SOBRE REACTHOOKS... --> e reacthooks é uma feature 
+
+QUE 
+
+NOS DEIXA USAR 
+
+SÓ 
+
+___FUNCTIONAL COMPONENTS... ---> 
+
+
+
+
+
+
+
+NOSSO APLICATIVO BURGERBUILDER,
+
+NO PRESENTE,
+
+ESTÁ 
+
+USANDO 
+
+REDUX E UM MONTE DE MELHORIAS.... --> 
+
+
+
+
+
+
+AGORA 
+
+QUEREMOS QUEBRAR ELE EM PEDAÇOS,
+
+E AÍ 
+
+
+
+
+TRANSFORMAR TODAS AS PARTES 
+
+DELE,
+
+
+TRANSFORMAR 
+
+EM UM MODELO 
+
+QUE 
+USA 
+
+FUNCTIONAL COMPONENTS...
+
+
+
+
+DEVEMOS TENTAR FAZER ISSO POR CONTA PRÓPRIA...
+
+
+
+
+
+
+
+
+
+--> lembre-se dos hooks:
+
+
+
+useState,
+
+
+
+useEffect.....
+
+
+,
+
+useReducer,
+
+
+
+
+useRef...........
+
+
+
+'useMemo'
+
+
+e 
+
+'useContext'...
+
+
+
+
+
+
+
+
+https://stackoverflow.com/questions/56297351/how-to-use-shouldcomponentupdate-with-react-hooks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->Hooks for React-Redux:
+Redux hook API can replace the higher-order component, “connect()”, with hooks like “useSelector” and “useDispatch”. Currently, React-Redux provides 3 hooks:
+useSelector(): useSelector hook is a replacement of the mapStateToProps. It runs whenever function component renders. Its purpose is to extract data from the Redux store state.
+useDispatch(): It acts as a replacement for mapDispatchToProps. It returns to the reference to the dispatch object.
+useStore(): This returns the reference of the Redux store that was wrapped in the <provider>. It is not recommended for frequent use but can be used in scenarios like replacing reducers.
+A sample application will help you to understand these concepts better.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> OBS: O PROFESSOR VAI COMEÇAR PELO COMPONENT DE 
+
+'App.js'...
+
+
+
+
+
+
+
+
+--> estou fazendo as coisas,
+
+mas 
+
+o problema é o REDUX... --> como posso 
+
+pegar 
+
+a 
+
+data/state 
+
+do 
+
+REDUX
+
+DENTRO 
+
+do 
+MEU 
+
+FUNCTIONAL COMPONENT?
+
+
+
+
+
+O 'componentDidMount() {}'
+
+VAI 
+
+VIRAR 
+
+
+'useEffect()', um useEffect customizado, assim:
+
+
+
+
+
+
+    useEffect(() => {
+            props.onTryAutoSignIn();
+
+
+
+    }, [])
+
+
+-------------------------------
+
+
+
+
+
+OK... AS ROUTES CONTINUAM SETTADAS COMO ANTES (com o react router....) --> não há nada de errado com isso,
+
+e isso FUNCIONA COM FUNCTIONAL COMPONEnts...
+
+
+
+
+
+------->
+
+
+
+E O REDUX CONTINUA SENDO USADO COMO ANTES (não há nada de errado com isso...)
+
+
+
+
+
+
+
+
+
+
+
+--> __ACHO QUE __ TERMINEI DE CONVERTER __ OS 
+
+
+CONTAINERS/CLASS-BASED COMPONENTS 
+
+EM FUNCTIONAL COMPONENTS.... (mas 
+
+não tenho certeza se tudo está correto.)
+
+
+
+
+
+
+
+
+
+->ok, conseguimos um __ERRO___ --> 
+
+
+
+'×
+TypeError: Cannot read property 'onTryAutoSignIn' of undefined' --> 
+
+
+
+consertei o erro...
+
+
+
+O problema era este:
+
+
+
+    useEffect((props) => {
+            props.onTryAutoSignIn();
+
+
+
+    }, []);
+
+
+
+
+
+ISSO ESTAVA ERRADO,
+
+O CORRETO É ASSIm:
+
+
+
+
+
+    useEffect(() => {
+            props.onTryAutoSignIn();
+
+
+
+    }, []);
+
+
+
+
+
+
+(ou seja,
+
+ANTES 
+
+a variável 'props' estava sendo passada de forma errada...)
+
+
+
+
+
+----
+
+
+Certo... --> devo 
+
+dar uma testada no app,
+
+
+ver 
+
+
+se 
+
+as coisas 
+
+estão funcionando...
+
+
+
+
+--> já vi o PRIMEIRO PROBLEMA:
+
+
+OS 
+
+
+'BUILDCONTROLS' (acho que é esse component)... --> se eu clico 
+
+
+em 
+
+'more',
+
+
+O NEGÓCIO ___ IMEDIATAMENTE__ volta para 0,
+
+
+0 ingredients... muito estranho.
+
+
+
+
+
+--> mas até agora, parece ser o ÚNICO ERRO...
+
+
+
+
+--> acho que entendi/entendo a origem do erro.... --> a página está 
+
+
+CONSTANTEMENTE 
+
+DANDO RELOAD... --------> 
+
+
+
+SETTAMOS ALGO ERRADO EM 
+
+ALGUM 
+
+'useEffect'/useMemo....
+
+
+
+
+
+
+
+
+PROBLEMA ESTÁ NESTE CÓDIGO AQUI:
+
+
+
+
+ERRADO,
+
+não era aquele código ali....
+
+
+
+
+
+
+
+O problema 
+
+é 
+
+
+
+que 
+
+há algum código que 
+
+está constantemente disparando requests 
+
+
+
+de 
+tipo get ao axios, que está retornando 'ingredients.json'....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> CONSERTEI O PROBLEMA... --> problema era uma falta do SEGUNDO PARÂMETRO 
+
+
+
+
+DESTE CÓDIGO AQUI:
+
+
+------------------------------
+
+    useEffect(
+      () => {
+        props.onIngredientGet();
+        props.onRedirectToHomeReset();
+      },
+      []
+    ),
+
+--------------------------------
+
+    LÁ EM 
+
+    'burgerBuilder'...
+
+
+
+
+
+
+
+
+--------------------
+
+
+
+OUTRO PROBLEMA:
+
+QUANDO CONSTRUÍMOS TODO NOSSO BURGER E CLICAMOS 
+
+EM 
+
+'Order',
+
+LÁ EM 
+
+
+'
+Contact-data',
+
+
+NOSSO CÓDIGO IMEDIATAMENTE NOS DÁ THROW DE UM __ERROR__...
+
+
+
+
+
+
+
+TypeError: Cannot read property 'props' of undefined
+
+
+
+
+
+
+      userId: props.userId,
+  789 |    };
+  790 | 
+> 791 |    this.props.onOrderAttempt(orderData, props.token);
+      | ^  792 |  };
+  793 | 
+  794 |  // const validInputChecker = (formElement) => {
+
+
+
+
+
+
+
+      (esqueci de tirar esse 'this', aparentemente...)
+
+
+
+
+
+
+---------------------------
+
+
+
+
+CERTO... FUNCIONOU_____...
+
+
+Parece 
+
+que 
+
+A ÚLTIMA COISA 
+
+QUE 
+ESTÁ 
+
+FALTANDO 
+
+PARA 
+
+COMPLETAR
+ 
+ ESSA NOSSA CONVERSÃo (até agora)
+
+
+ É 
+
+ AQUELE 
+
+
+ __rEDIRECT__ AUTOMÁTICO_ _DA  
+
+
+ PÁGINA 
+
+ DE 
+
+ 'Auth' 
+
+ PARA 
+
+
+A PÁGINA 'CHECKOUT',
+
+
+
+quando usuário já começou a construir um burger...
+
+
+
+
+
+
+
+
+
+
+--> mas também há OUTROS PROBLEMAS... (não vejo aquela mensagem de 'user logged out, redirecting...', 
+
+e algumas coisas estão estranhas...)
+
+
+
+
+
+--> sideDRAWER TAMBÉM ESTÁ QUEBRADo.... -->
+
+
+o 
+
+LAYOUT,
+
+na verdade,
+
+está quebrado...
+
+
+
+
+É ESTE CÓDIGO AQUI:
+
+
+   const sideDrawerToggleHandler = () => {
+      this.setState((prevState) => {
+        return { showSideDrawer: !prevState.showSideDrawer };
+      });
+    };
+
+
+---------------------
+
+
+
+
+CÓDIGO CONSERTADO FICOU ASSIM:
+
+
+   const sideDrawerToggleHandler = () => {
+  
+
+      setShowSideDrawer(
+         !showSideDrawer
+      )
+
+
+    };
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+
+
+
+CERTO.... MAS O REDIRECT __ AINDA ESTÁ ERRADO...__ (e meu código original NÃO TINHA ESSE PROBLEMA....)
+
+
+
+
+
+
+
+
+
+
+
+O PROBLEMA ESTÁ NESTE CÓDIGO:
+
+
+  // componentDidMount() {
+  
+  //   if (!props.createdBurger && props.authRedirectPath !== '/') {
+  //     console.log('test');
+  //     props.onSetAuthRedirectPath('/');
+  //   }
+  // }
+
+
+
+
+
+
+  tenho que adaptar isso direito,
+
+  usar 'useEffect'
+
+
+  direito...
+
+
+  (isso lá em 'Auth.js'...)
+
+
+
+
+
+
+
+  ---------------------
+
+
+
+  While this is great in many cases when you need to perform a specific task when one of the dependencies changes, there are times when the reference update in itself does not mean the task in hand is needed. These are the cases when you add a condition to the function passed as the first argument. For example, when you want to update the state when a query is running. You want to run the effect when the query is running, but you do not need to run it when the state is already set to the correct value.
+
+
+
+const { loading } = useQuery(query, { /*... */ })
+const [state, setState] = useState('initial');
+
+useEffect(() => {
+  if (loading && state !== 'loading') setState('loading')
+})
+You cannot conditionally call useEffect or any other hook for that matter. In these cases, you add the condition in the function performing the side effect itself, while the variables checked in the condition go into the dependency array.
+
+
+
+
+
+useEffect(() => {
+  if (loading && state !== 'loading') setState('loading')
+}, [loading, state])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> HMMMM MEU CÓDIGO NÃO DEU CERTO.
+
+
+
+
+
+
+
+
+CONSEGUI.
+
+
+FICOU ASSIM:
+
+
+
+
+
+
+  useEffect(
+    () => {
+      
+      if (!props.createdBurger && props.authRedirectPath !== '/') 
+      { console.log('test)');
+         props.onSetAuthRedirectPath(''); }
+    }, [props.createdBurger, props.authRedirectPath]
+  )
+
+
+
+
+
+----------------
+
+
+
+
+estou só tentando me lembrar a razão para esse redirect funcionar....
+
+
+
+
+É um mecanismo composto, agora me lembro.... --> 
+
+esse código 
+
+aqui, em 'BurgerBuilder',
+
+
+é que 
+
+dá início à coisa toda:
+
+
+const purchaseHandler = () => {
+    if (!props.token) {  //isto
+      props.onSetAuthRedirectPath('/checkout'); e //isto...
+      props.history.push('/auth');
+    }
+
+
+
+---------------------------
+
+
+
+
+
+Certo... está tudo + ou - funcionando...
+
+
+
+--> devo assistir a aula do professor...
+
+
+
+
+
+
+
+
+--> estou vendo as aulas do professor... --> a conversão do Layout fizemos de maneira correta.
+
+
+
+
+
+
+
+
+
+
+
+--> entretanto, há um negócio que EU NÃO FIZ... --> é o 'React Lazy',
+
+QUE 
+
+NOS DEIXA 
+
+
+FAZER LAZY LOADING DOS NOSSOS COMPONENTS....
+
+
+
+
+--> TAMBÉM __NÃO CONVERTI O HOC DE 'withErrorHandler' (terei de fazer isso)...
+
+
+
+
+
+
+
+--> o contactdata converti como o professor queria...
+
+
+
+
+
+
+--> o Burgerbuilder, também.
+
+
+
+
+
+
+
+--> o Auth e o Logout, também.
+
+
+
+

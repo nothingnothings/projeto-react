@@ -1,0 +1,307 @@
+
+
+
+
+
+
+
+
+
+
+---> VOLTAMOS AO BURGER BUILDER... --> NOSSO BURGER BUILDER 
+
+JÁ 
+
+É BEM LEGAL, 
+
+
+ELE JÁ CRIA BURGERS 
+
+PARA NÓS.... ---> entretanto, 
+
+quando 
+
+clicamos 
+
+
+em 
+
+'order now' 
+
+
+
+E DEPOIS 
+
+
+EM 
+
+'continue' (no modal),
+
+
+__ NADA ACONTECE__, 
+
+
+
+só é feito um ALERT de 
+
+'You continue' 
+
+
+ NA NOSSA PÁGINA, 
+
+ MAS NENHUM CÓDIGO EM SI, 
+
+ NENHUMA 
+
+ LÓGICA 
+
+
+ É EXECUTADA 
+
+ SOBRE 
+
+ ESSA DECISÃO DO USUÁRIO DE 
+
+ 'PROSSEGUIR'...
+
+
+---------------------------------
+
+
+
+
+
+--> BEM, NO ÚLTIMO MÓDULO NÓS APRENDEMOS SOBRE ___COMO ENVIAR __ HTTP REQUEST__ POR MEIO 
+
+DO USO 
+
+
+DO AXIOS NO REACT..... ----------> 
+
+
+
+OU SEJA, 
+
+
+
+ESSA É UMA ÓTIMA OPORTUNIDADE 
+
+PARA 
+
+
+
+TENTAR 
+
+__aRMAZENAR AQUELA 'ORDER'__ feita pelo usuário 
+
+___ EM UM SERVIDOR REMOTO__, com a ajuda do axios (axios.post() ) ...
+
+
+
+-------------------------------------
+
+
+
+
+
+
+---> CERTO... NÓS DEPOIS VAMOS FAZER 'FINE-TUNE' 
+
+DESSE APLICATIVO MAIS TARDE... 
+
+
+
+"Mais tarde" quando? -------> QUANDO APRENDERMOS 
+
+
+A ESCREVER 
+
+
+
+
+__dIFERENTES 'PAGES' ___ NO NOSSO 
+
+
+'SINGLE PAGE APP' (SPA)... ------->  
+
+
+
+nesse modelo do burger 
+builder 
+
+
+com 
+
+MÚLTIPLAS 'PAGES',
+
+VAMOS QUERER 
+
+MOSTRAR 
+
+UM FORM e assim por diante....
+
+
+
+
+--> porém, por enquanto vamos 
+
+QUERER 
+
+
+ARMAZENAR 
+
+
+
+AS ORDERS.... -----> se pudermos 
+
+
+
+ARMAZENAR AS ORDERS 
+
+
+e depois FAZER __rETRIEVE__ delas por meio do acesso ao servidor, 
+
+isso já 
+
+
+será um GRANDE AVANÇO... ---------------> 
+
+ 
+
+
+ E ESSE SERÁ 
+
+ O NOSSO MÓDULO:
+
+
+
+VAMOS QUERER CODAR UM 'BACKEND'... -----> IMPLEMENTAR UM BACKEND PARA 
+
+
+QUE CONSIGAMOS ARMAZENAR NOSSAS 'ORDERS', tudo para que 
+
+POSSAMOS FAZER 
+
+__RETRIEVE__ 
+
+DESSAS ORDERS (mesmo nos casos em que 
+
+___rECARREGAMOS A NOSSA PÁGINA ----> vamos querer 
+
+que 
+
+a 'data' das orders fique 
+
+NO SERVIDOR MESMO 
+
+
+COM 
+
+NOSSA PÁGINA SENDO RECARREGADA....)
+
+
+
+--------------------------------------
+
+
+
+
+
+
+PARA ISSO, 
+
+
+PARA 
+
+
+
+___fAZER O STORE ___ DE 
+
+
+
+DADOS 
+
+EM UM ___bACKEND__, 
+
+
+PROFESSOR EXPLICA QUE 
+
+ELE VAI 
+
+USAR 
+
+O 
+
+
+'FIREBASE'... ------> FIREBASE --> SERVIÇO OFERECIDO PELO GOOGLE ---> é essencialmente 
+
+
+
+
+
+
+
+UM 
+
+'OUT OF THE BOX'  WORKING BACKEND que 
+
+
+INCLUI UM 
+
+'DATABASE'... ---------> a coisa legal dele é que 
+
+
+PODEMOS 
+
+O __UTILIZAR___ DE ___GRAÇA____... (só é pago se nós usarmos features mais avançadas... )
+
+
+
+
+
+
+
+
+
+
+
+
+--> ok, minha pergunta: 
+
+
+esse 
+
+nosso 
+
+REACT APP, o backend dele... será 
+
+um 
+
+DYNAMIC PAGE HOSTING (heroku), 
+
+OU UM 
+
+
+'STATIC PAGE HOSTING'... (firebase)?
+
+
+
+
+
+
+
+
+------> Talvez o professor nos responda, nas próximas aulas...
+
+
+
+
+
+
+
+
+
+
+--> PROFESSOR APONTA QUE DEVEMOS 
+
+CRIAR NOSSO BACKEND NO FIREBASE, NA PRÓXIMA LIÇÃO...

@@ -1,0 +1,1448 @@
+
+
+
+
+
+
+
+
+
+---> O PROFESSOR MENCIONOU QUE 
+
+'Action creators'
+
+
+PODEM 
+
+NOS AJUDAR 
+
+COM 
+
+A CRIAÇÃO/ESCRITA 
+
+
+DE 
+
+CÓDIGO ASSÍNCRONO (http requests, timers, etc)... ----------> 
+
+
+
+
+
+PARA 
+
+ISSO,
+
+
+PARA 
+
+NOS DEMONSTRAR SEU USO,
+
+professor 
+
+
+
+CRIA UM NOVO SUBFOLDER 
+
+
+
+EM 
+
+'store',
+
+
+
+
+
+O QUAL ELE CHAMARÁ 
+
+DE 
+
+'actions'... --------> E actions
+vai 
+
+segurar 
+
+
+'actions.js'... (Que tem as constantes/variáveis 
+
+COM AS STRINGS QUE QUEREMOS QUE SEJAM PASSADAS AO NOSSO REDUCER...)
+
+
+
+----------------------------------------------
+
+
+
+--> PROFESSOR DIZ QUE 
+
+ADICIONOU 'actions' 
+
+
+NO FOLDER DE 'actions' PQ 
+
+NAS PRÓXIMAS AULAS 
+
+
+___vAMOS ADICIONAR/CRIAR __ MÚLTIPLOS ARQUIVOS 'action'...
+
+
+
+
+
+
+
+
+
+
+
+DENTRO DE 'actions.js',
+
+
+TEMOS ESTE CÓDIGO:
+
+
+
+
+export const INC_COUNTER = 'INC_COUNTER';
+
+
+
+
+export const DEC_COUNTER = 'DEC_COUNTER';
+
+
+
+export const ADD_COUNTER = 'ADD_COUNTER';
+
+
+
+export const SUB_COUNTER = 'SUB_COUNTER';
+
+
+
+export const RESULT_STORE = 'RESULT_STORE';
+
+
+
+export const DELETE_RESULT = 'DELETE_RESULT';
+
+
+
+
+---------------------------------------------
+
+
+
+ESSE CÓDIGO ESTÁ EXPORTANDO TODOS NOSSOS 'ACTION IDENTIFERS', o que é ótimo...
+
+
+
+
+
+
+----------------------
+ISSO FUNCIONA,
+
+
+MAS AGORA PROFESSOR QUER NOS MOSTRAR 
+
+
+UMA NOVA 
+
+
+MANEIRA DE __cRIAR ACTIONS,
+
+
+o approach 
+
+
+DOS 
+
+
+
+'action creators'...
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> mas como se parece um 'ACTION CREATOR'? O que é isso?
+
+
+
+
+
+
+
+
+
+
+
+
+--> UM ACTION CREATOR __ É SIMPLESMNETE__ UMA __ FUNCTION __ QUE RETORNA 
+
+UMA  
+
+
+'action',
+
+
+
+OU QUE 
+
+
+__CRIA _ UMA ACTION, e é por isso que tem esse nome....
+
+
+
+------------------------------------------------------------------
+
+
+
+PROFESSOR NOS EXPLICA QUE, ATÉ AGORA,
+
+
+NOSSAS 
+
+ACTIONS SÃO CRIADAS DE FORMA 'HARDCODED' no nosso código....
+
+
+
+ex:
+
+
+
+
+
+export const INC_COUNTER = 'INC_COUNTER';
+
+
+
+
+export const DEC_COUNTER = 'DEC_COUNTER';
+
+
+
+export const ADD_COUNTER = 'ADD_COUNTER';
+
+
+
+export const SUB_COUNTER = 'SUB_COUNTER';
+
+
+
+export const RESULT_STORE = 'RESULT_STORE';
+
+
+
+export const DELETE_RESULT = 'DELETE_RESULT';
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+OU SEJA,
+
+ELAS ATUALMENTE SÃO HARDCODADAS,
+OU ENTÃO __USADAS__ QUANDO PRECISAMOS DE SEU USO/EXISTÊNCIA...
+
+
+
+
+
+
+
+
+POR EXEMPLO,
+
+
+
+
+em 
+
+'mapDispatchToProps',
+
+
+temos este código:
+
+
+
+
+
+
+const mapDispatchToProps = dispatch => { 
+  return {
+      onIncrementCounter: () => {
+        
+        dispatch(
+        {
+            type: actionTypes.INC_COUNTER
+        }
+      )
+      },
+      onDecrementCounter: () => {
+        dispatch({
+          type: actionTypes.DEC_COUNTER
+        })
+      },
+      onAddCounter: () => {
+        dispatch({
+          type: actionTypes.ADD_COUNTER,
+          value: 10
+        })
+      },
+      onSubtractCounter: () => {
+        dispatch({
+          type: actionTypes.SUB_COUNTER,
+          value: 10
+        })
+      },
+      onResultStored: (result) => {
+        dispatch(
+          {
+            type: actionTypes.RESULT_STORE,
+            result: result
+
+          }
+        )
+      },
+      onDeleteResult: (id) => {
+        dispatch(
+          {
+            type: actionTypes.DELETE_RESULT,
+            resultId: id
+          }
+        )
+      }
+  }
+}
+
+
+
+
+---------------------------------
+
+
+
+CERTO... e esses negócios aí SÃO SIMPLES OBJETOS JAVASCRIPT, NÃO?
+
+
+
+
+
+
+
+
+------> E NÓS CRIAMOS AS 'actions', até agora, JUSTAMENTE NESSE LUGAR,
+
+
+dentro do 
+
+'()" DA FUNÇÃO/MÉTODO DISPATCh()
+
+
+-------------------------------------------
+
+ 
+
+
+ UM ACTION CREATOR, NO CASO, 
+
+ FAZ 
+
+ __EXATAMENTE ISSO, ELE RETORNA UM OBJETO 
+
+ COMO 
+
+
+
+ '
+
+         {
+            type: actionTypes.INC_COUNTER
+        }
+
+'
+
+
+
+,
+
+
+UM OBJETO 
+
+QUE 
+__É UMA AÇÃO__...
+
+
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+MAS O BENEFÍCIO __DOS 'ACTION CREATORS' SÓ __ É VISTO QUANDO NÓS DE FATO__ EXECUTAMOS 
+
+CÓDIGO ASSÍNCRONO 
+
+
+COM O REDUX.... ----------> 
+
+
+
+para demonstrar sua funcionalidade,
+
+
+
+
+professor 
+
+vai 
+
+
+até 
+
+
+'actions.js',  ONDE DIZ 
+
+
+QUE __vAI CRIAR UM 'ACTION CREATOR', mas um AC __justamente 
+
+
+para 
+
+
+o CÓDIGO SÍNCRONO (em vze de assíncrono).... --> nosso exemplo INICIAL 
+
+
+
+SERÁ COM CÓDIGO SÍNCRONO...
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+PARA ISSO, PROFESSOR CRIA UMA CONSTANTE, 
+
+
+
+DE 
+
+
+NOME 
+
+'increment'...,
+
+
+
+EM 
+
+
+'actions.js'... --------> 
+
+
+ELE 
+
+
+VAI 
+
+
+CHAMÁ-LA DE 
+ 
+'increment'...    ----> A CONVENÇÃO, PARA OS 'ACTION CREATORS', 
+
+É 
+
+
+__SEMPRE USAR ___ O MESMO NOME 
+
+DE 
+
+SEUS 
+
+'IDENTIFIERS' (como 'INC_COUNTER'),
+
+
+
+
+mas 
+
+
+
+
+
+COM 
+
+OS NOMES 
+
+
+
+
+
+EM LETRA MINÚSCULA EM VEZ DE MAIUSCÚLA... (camelCase Clássico...).
+
+
+
+
+
+
+ex:
+
+
+
+
+export const INC_COUNTER = 'INC_COUNTER';
+
+export const DEC_COUNTER = 'DEC_COUNTER';
+
+export const ADD_COUNTER = 'ADD_COUNTER';
+
+export const SUB_COUNTER = 'SUB_COUNTER';
+
+export const RESULT_STORE = 'RESULT_STORE';
+
+export const DELETE_RESULT = 'DELETE_RESULT';
+
+
+const inc_counter = ..... ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+------------------------------------------------------
+
+
+
+
+CERTO.... ---> 
+
+
+
+
+esse 
+
+'inc_counter'
+
+
+
+SERÁ 
+
+UMA ARROW FUNCTION.... ---> e ela vai RETORNAR ALGO, EVENTUALMENTE...  
+
+
+
+
+
+
+
+
+
+
+---> E ESSA ARROW FUNCTION VAI __rECEBER UMA COISA__....
+
+
+(NA VERDADE, ELA PODE/PROVAVELMENTE VAI RECEBER UMA COISA.... não é obrigatório, no caso.)
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+export const INC_COUNTER = 'INC_COUNTER';
+
+export const DEC_COUNTER = 'DEC_COUNTER';
+
+export const ADD_COUNTER = 'ADD_COUNTER';
+
+export const SUB_COUNTER = 'SUB_COUNTER';
+
+export const RESULT_STORE = 'RESULT_STORE';
+
+export const DELETE_RESULT = 'DELETE_RESULT';
+
+
+const inc_counter = () => {
+
+}
+
+
+
+
+--------------------------------------
+
+
+
+
+
+A COISA QUE 
+
+
+
+ESSA ARROW FUNCTION/ACTION CREATOR 
+
+
+recebe 
+
+
+É 
+
+
+
+
+__QUAISQUER PAYLOADS ____ QUE VOCê QUER PASSAR COM 
+
+
+
+ESSA 
+
+
+'ACTION'... (com essa action que vai ser criada por meio desse 
+
+'action creator'...) 
+
+
+
+
+
+
+
+
+---> como em 'inc_counter' o PROFESSOR NÃO VAI QUERER PASSAR __NENHUM PAYLOAD,
+
+
+ELE VAI DEIXAR ESSE CAMPO '()' EM BRANCO...  --------> 
+
+
+
+
+
+ex:
+
+
+const inc_counter = () => {
+
+}
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+CERTO... ----> MAS DENTRO 
+
+DO BODY 
+
+
+DESSE 
+
+'inc_counter',
+
+O PROFESSOR VAI RETORNAR UM NEGÓCIO... E ESSE NEGÓCIO VAI SER ___JUSTAMENTE___ 
+
+A 
+
+
+___ACTION__ em si... --------> 
+
+
+OU SEJA,
+
+
+
+VAI FICAR ASSIm:
+
+
+
+
+
+
+
+
+
+export const INC_COUNTER = 'INC_COUNTER';
+
+
+
+
+const inc_counter = () => {
+        return {
+            type: INC_COUNTER
+        }
+};
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+OU SEJA,
+
+
+ISSO VAI SE REFERIR 
+
+AO NOSSO 
+
+IDENTIFIER 
+
+
+de action que tínhamos antes...
+
+
+
+-----------------------------------------------
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+export const INC_COUNTER = 'INC_COUNTER';
+
+
+
+
+const inc_counter = () => {
+        return {
+            type: INC_COUNTER
+        }
+};
+
+
+
+-----------------------------------------------
+
+
+
+Certo, mas esse código aí VAI PROVOCAR MUDANÇAS 
+
+
+NO NOSSO PROJETO... ---> observe o código de 'Counter.js':
+
+
+
+
+
+
+
+''''''''''''''''''''''''''''''''''''''''''''
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onIncrementCounter: () => {
+        
+        dispatch(
+        {
+            type: actionTypes.INC_COUNTER
+        }
+      )
+      },
+      onDecrementCounter: () => {
+        dispatch({
+          type: actionTypes.DEC_COUNTER
+        })
+      },
+      onAddCounter: () => {
+        dispatch({
+          type: actionTypes.ADD_COUNTER,
+          value: 10
+        })
+      },
+      onSubtractCounter: () => {
+        dispatch({
+          type: actionTypes.SUB_COUNTER,
+          value: 10
+        })
+      },
+      onResultStored: (result) => {
+        dispatch(
+          {
+            type: actionTypes.RESULT_STORE,
+            result: result
+
+          }
+        )
+      },
+      onDeleteResult: (id) => {
+        dispatch(
+          {
+            type: actionTypes.DELETE_RESULT,
+            resultId: id
+          }
+        )
+      }
+  }
+}
+
+
+
+
+
+''''''''''''''''''''''''''''''''''''''''''
+
+
+
+
+
+DENTRO DAQUELES 
+
+'dispatches' 
+
+
+NÓS 
+
+
+__NÃO VAMOS MAIS ___ COLOCAR 
+
+
+AS  ___''ACTIONS'''___ DE MANEIRA  '''INLINE'''___ (ou seja,
+
+não 
+
+
+vamos 
+
+escrever 
+
+'{
+  PAYLOAD: xxx,
+    type: xxxx
+}
+',
+
+
+QUE É PROPRIAMENTE A ACTION EM QUESTÃO,
+
+
+e sim 
+
+VAMOS 
+
+APENAS 
+
+
+PASSAR 
+
+UMA 
+
+
+___REFERÊNCIA__ À CONSTANTE QUE 
+
+SEGURA 
+
+UMA ACTION, lá em 
+
+'actions.js'... -------> que, nesse nosso caso, é AQUELA CONSTANTE 'action creator' de 
+
+'const inc_counter'...
+
+
+
+
+)
+
+
+------------------------------
+
+
+
+
+
+
+OK, MAS COMO DEVE SER ESCRITO TUDO ISSO?
+
+
+
+
+
+
+
+
+
+---> tipo assim:
+
+
+
+
+
+VAMOS EXPORTAR 'inc_counter' COM A KEYWORD 'export'... 
+
+
+
+ex:
+
+export const inc_counter = () => { ///////ESTE É UM __aCTION CREATOR____ --> seu formato é assim:  'const nomeDoIdentifierDaAction = (payloadQueVocêQuer) => { return { actionEmSi... } };'
+        return {
+            
+            type: INC_COUNTER  //sim, esse é o IDENTIFIER QUE TEMOS LOGO ACIMA...
+        }
+}
+
+
+---------------------------------------
+
+
+
+
+
+
+
+ISSO FEITO,
+ 
+
+
+ VAMOS 
+
+ REMOVER 
+
+ O IMPORT DISTO:
+
+
+ // import * as actionTypes from '../../store/actions'   
+
+
+
+
+
+ (PQ AGORA VAMOS USAR OS 'ACTION CREATORS', que já possuem esses identifiers referidos no seu interior...).
+
+
+
+ ----------------------------------------------------
+
+
+
+ ESTA É A SINTAXE PARA IMPORTAR 
+
+
+ ESSE 'action creator' 
+
+
+
+ DE 
+
+
+ 'inc_counter'
+
+
+ EM 
+
+ 'Counter.js':
+
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+
+ import { inc_counter } from '../../store/actions';
+
+
+
+
+ '''''''''''''''''''''''''''''''''''''''''''''
+
+
+
+
+ ISSO FEITO,
+
+
+ VAMOS SIMPLESMENTE SUBSTITUIR O CÓDIGO DE 
+
+'''''''''''''''''''''
+
+onIncrementCounter: () => {
+        
+        dispatch( 
+         {
+            type: actionTypes.INC_COUNTER
+        }
+       )
+}
+
+
+''''''''''''''''''''''''''
+
+
+
+
+POR 
+
+
+
+
+onIncrementCounter: () => {
+        
+        dispatch( 
+         {
+            inc_counter
+        }
+       )
+
+}
+
+-------------------------------------------------
+
+
+
+
+E AGORA, É CLARO, VAMOS REPETIR O MESMO PROCESSO, MAS EM TODAS 
+
+
+
+AS 
+
+
+'ACTIONS' de nosso projeto...
+
+
+
+
+
+---------------------------------------
+
+
+
+RESULTADO:
+
+
+
+
+
+
+
+
+
+export const inc_counter = () => { ///////ESTE É UM __aCTION CREATOR____ --> seu formato é assim:  'const nomeDoIdentifierDaAction = (payloadQueVocêQuer) => { return { actionEmSi... } };'
+        return {
+            
+            type: INC_COUNTER  //sim, esse é o IDENTIFIER QUE TEMOS LOGO ACIMA...
+        }
+}
+
+
+
+export const dec_counter = () => { 
+    return {
+        
+        type: DEC_COUNTER  
+    }
+}
+
+export const add_counter = () => { 
+    return {
+        
+        type: ADD_COUNTER, 
+        value: 10 
+    }
+}
+
+export const sub_counter = () => { 
+    return {
+        
+        type: SUB_COUNTER,
+        value: 10 
+    }
+}
+
+export const result_store = () => { 
+    return {
+        
+        type: RESULT_STORE,
+        result: result
+    }
+}
+
+export const delete_result = () => { 
+    return {
+        
+        type: DELETE_RESULT,
+        resultId: id
+    }
+}
+
+
+
+
+
+
+
+
+
+
+E, em 'Counter.js':
+
+
+
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onIncrementCounter: () => { 
+        
+        dispatch(  
+        
+            inc_counter ///EIS AQUI A DIFERENÇA.
+        
+      )
+      },
+      onDecrementCounter: () => {
+        dispatch(
+          dec_counter
+        )
+      },
+      onAddCounter: () => {
+        dispatch(
+          add_counter
+         )
+      },
+      onSubtractCounter: () => {
+        dispatch(
+          sub_counter
+        )
+      },
+      onResultStored: (result) => {
+        dispatch(
+            result_store
+        )
+      },
+      onDeleteResult: (id) => {
+        dispatch(
+          delete_result
+        )
+      }
+  }
+}
+
+
+
+---------------------------------
+
+
+
+
+
+
+CERTO.... MAS HÁ ALGO QUE NÓS NÃO FIZEMOS CERTO... ---> 
+
+
+
+
+
+
+DEVEMOS NOS LEMBRAR QUE 
+
+
+'inc_counter', 'sub_counter', 
+
+E
+ 
+
+ TODOS 
+
+ ESSES NEGÓCIOS, 
+
+
+ SÃO __ACTION CREATORS...___ ---> como eles são 
+
+
+
+ CREATORS, 
+
+
+ ELES __PRECISAM _________ SER _____ EXECUTADOSSS__ PARA 
+
+ QUE 
+
+
+ CONSIGAM RETORNAR (criar) AS SUAS 
+
+ 'ACTION'.... --> E PARA 
+
+
+ QUE ELES SEJAM EXECUTADOS, DEVEM SER 
+
+ ESCRITOS 
+
+ ASSIM:
+
+ 'inc_counter()',
+
+
+
+ E NÃO 
+
+
+ASSIM:
+
+
+'inc_counter'...
+
+
+
+
+
+
+
+
+---> DEVE SER ADICIONADO O '()', BASICAMENTE....
+
+
+
+
+
+
+eis o código ERRADO:
+
+
+
+  onIncrementCounter: () => { 
+        
+        dispatch(  
+        
+            inc_counter 
+        
+      )
+      }
+
+
+
+
+
+
+
+EIS O CÓDIGO __cERTO:
+
+
+
+
+
+
+  onIncrementCounter: () => { 
+        
+        dispatch(  
+        
+            inc_counter() //////AQUI, EIS O CÓDIGO EM QUESTÃO.
+        
+      )
+      }
+
+
+
+------------------------------
+
+
+OK, ISSO SIGNIFICA QUE 
+
+
+
+AGORA 
+
+
+
+'inc_counter' 
+
+
+
+ESTÁ NOS DANDO UMA ACTION, a ser utilizada/dispatchada em 'Counter.js',
+
+
+E ISSO É MUITO BOM... (e todos os outros action creators '_counter' estão 
+
+NOS DANDO ACTIONS, também)
+
+
+
+
+-------------------------
+
+
+
+
+
+
+
+--> PROFESSOR NOS FALA BREVEMENTE QUE 
+
+
+AS 
+
+ACTIONS QUE PRECISAM DE um 'payload' são um pouco especiais... --> 
+
+
+devemos descobrir o que ele quer dizer com isso POR CONTA PRÓPRIA...
+
+
+
+---------------------------
+
+
+
+
+
+
+
+
+JÁ É POSSÍVEL OBSERVAR UM __eRRO__ NO TERMINAL:
+
+
+
+'result is not defined' 
+'id is not defined' ---------> SÃO ERROS 
+
+
+
+DESCREVENDO 
+
+PROBLEMAS ___ NO PASS___ DE 'payloads' 
+
+AS NOSSAS ACTIONS... (lá em 'actions.js')...
+
+
+
+
+
+
+
+
+
+
+--> E EU RESOLVI ESSE PROBLEMA INSTANTANEAMENTE:
+
+
+
+O CÓDIGO ANTES ESTAVA ASSIM:
+
+
+
+
+
+
+
+
+export const result_store = () => { 
+    return {
+        
+        type: RESULT_STORE,
+        result: result
+    }
+}
+
+export const delete_result = () => { 
+    return {
+        
+        type: DELETE_RESULT,
+        resultId: id
+    }
+}
+
+
+-------------------------------
+
+
+
+
+eu SÓ FUI LÁ E EDITEI 
+
+OS CAMPOS 
+
+'payload' DESSES 'ACTION CREATORS'... ---------> 
+
+
+ISSO 
+
+
+PQ 
+
+
+O PROFESSOR 
+
+NOS EXPLICOU, ANTERIORMENTE,
+
+
+QUE 
+
+CADA
+
+
+'ACTION CREATOR' 
+
+
+
+tem a seguinte estrutura:
+
+
+''''''''''''''''''''''''''''''''
+
+
+
+export const random_action_creator = (optionalActionPayload) => {
+    return {  ///action em si.
+        type: RANDOM_ACTION,
+        payload: optionalActionPayload
+    }
+}
+
+'''''''''''''''''''''''''''''''
+
+
+
+CERTO, PROBLEMA RESOLVIDO.

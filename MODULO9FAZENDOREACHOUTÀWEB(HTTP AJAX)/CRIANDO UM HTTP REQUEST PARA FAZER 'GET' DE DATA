@@ -1,0 +1,1319 @@
+
+temos anotações de aulas passadas... ------> 
+
+
+
+
+
+async function fetchPosts() {
+
+
+
+  try{
+    const responseData = await axios.get('https://jsonplaceholder.typicode.com/posts');
+  const listOfPosts = responseData;  
+      for (const post of listOfPosts) {
+      const postEl = document.importNode(postTemplate.content, true);
+      postEl.querySelector('h2').textContent = post.title.toUpperCase();
+      postEl.querySelector('p').textContent = post.body;
+      postEl.querySelector('li').id = post.id;
+      listElement.append(postEl);
+    }
+  } catch(error) {
+    console.log('Something went wrong...');
+  }
+
+
+
+
+
+--------------------------------------------------
+
+
+
+
+--> NA ÚLTIMA LIÇÃO,
+
+
+PROFESSOR NOS (RE) INTRODUZIU O AXIOS....
+
+
+
+
+
+
+
+
+
+-----> 
+
+
+PARA O DUMMY BACKEND,
+
+vamos usar 
+
+
+o 
+
+
+
+
+'https://jsonplaceholder.typicode.com/posts'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> PROFESSOR VAI QUERER 
+
+
+RENDERIZAR 
+
+
+O ARRAY 
+
+DE POSTS 
+
+DESSA PÁGINA 
+
+
+
+LÁ NO 
+
+NOSSO 
+
+CONTAINER 
+
+'BLOG'... (blog component)...
+
+
+
+-------------------------------------------------
+
+
+EIS O CÓDIGO DO NOSSO USO DE 'AXIOS' LÁ NO PROJETO ANTIGO...:
+
+
+
+
+
+const listElement = document.querySelector('.posts');
+const postTemplate = document.getElementById('single-post');
+const form = document.querySelector('#new-post form');
+const fetchButton = document.querySelector('#available-posts button');
+const postList = document.querySelector('ul');
+
+function sendHttpRequest(method, url, data) {
+  return fetch(url, {
+    method: method,
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      console.log('clicked');
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      } else {
+        return response.json().then((errData) => {
+          console.log(errData);
+          throw new Error('Something went wrong - server-side.');
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      throw new Error('Something went wrong!');
+    });
+}
+
+async function fetchPosts() {
+  try {
+    const response = await axios.get(
+      'https://jsonplaceholder.typicode.com/pos'
+    );
+    console.log(response);
+    const listOfPosts = response.data;
+    for (const post of listOfPosts) {
+      const postEl = document.importNode(postTemplate.content, true);
+      postEl.querySelector('h2').textContent = post.title.toUpperCase();
+      postEl.querySelector('p').textContent = post.body;
+      postEl.querySelector('li').id = post.id;
+      listElement.append(postEl);
+    }
+  } catch (error) {
+    alert(error.message);
+    console.log(error.response);
+  }
+}
+
+async function createPost(title, content) {
+  const userId = Math.random();
+  const post = {
+    title: title,
+    body: content,
+    userId: userId,
+  };
+
+  const response = await axios.post(
+    'https://jsonplaceholder.typicode.com/posts',
+    post
+  );
+  console.log(response);
+}
+
+createPost('DUMMY', 'A dummy post!');
+
+fetchButton.addEventListener('click', fetchPosts);
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const enteredTitle = event.currentTarget.querySelector('#title').value;
+  const enteredContent = event.currentTarget.querySelector('#content').value;
+
+  createPost(enteredTitle, enteredContent);
+});
+
+postList.addEventListener('click', (event) => {
+  if (event.target.tagName === 'BUTTON') {
+    console.log('Clicked on Button!');
+    const postId = event.target.closest('li').id;
+    const visualPost = event.target.closest('li');
+    console.log(postId);
+    axios(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+    visualPost.remove(); ////////////ISSO VAI REMOVER O 'LI' DE NOSSO DOM E DA INTERFACE VISUAL DO USUÁRIO...
+  }
+});
+
+
+
+
+
+
+------------------------------------------------------
+
+
+
+
+
+
+
+
+
+EIS O NOSSO CÓDIGO DE 'BLOG.JS':
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+import Post from '../../components/Post/Post';
+
+import FullPost from '../../components/FullPost/FullPost';
+import NewPost from '../../components/NewPost/NewPost';
+
+
+import BlogStyle from './Blog.module.css';
+
+
+
+
+
+
+
+class Blog extends Component {
+    render () {
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    <Post />
+                    <Post />
+                    <Post /> 
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+export default Blog;
+
+
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+QUEREMOS 
+
+
+
+QUE 
+
+OS POSTS 
+
+
+DA PÁGINA 
+
+
+do jsonplaceholder 
+
+SEJAM 
+
+DINAMICAMENTE 
+
+
+RENDERIZADOS 
+
+
+
+NAQUELES 
+
+SLOTS 
+
+'Post'... 
+
+
+------------------------------------
+
+
+
+
+
+Certo, mas em que lugar do código faremos esse http request? 
+
+
+
+
+
+
+----> DEVEMOS DAR UMA OLHADA NOS SLIDES 
+
+
+DO LIFECYCLEHOOKS de novo, para entender... --------> 
+
+
+
+
+
+o COMPONENT ____IMPORTANTE, ___ AQUI,__ É 
+
+
+O 
+
+
+'componentDidMount()'  (O ÚLTIMO 
+
+
+COMPONENT DA CADEIA DE 'LIFECYCLE - CREATION')......
+
+
+
+
+
+
+
+OLHE A CADEIA DE 
+
+'LIFECYCLE - creation':
+
+
+
+
+
+
+
+
+
+
+constructor(props)
+
+componentWillMount()
+
+render()
+
+
+render child components 
+
+
+ComponentDidMount() -----------> ÚLTIMA ETAPA/MÉTODO/PASSO. --> usado para CAUSAR SIDE EFFECTS NO NOSSO CÓDIGO (e não para updatar o state, isso nunca, não.)
+
+
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+---> certo... e HTTP REQUESTS SÃO 'SIDE EFFECTS' ------> É UM SIDE EFFECT PQ 
+
+__ O HTTP REQUEST___ NÃO AFETA SUA 
+
+LÓGICA DO REACT OU COISA DO GÊNERO, 
+
+
+MAS AINDA ASSIM ELE TEM O SIDE-EFFECT ___dE FAZER ___ O FETCH DE NOVOS DADOS (new data)... 
+---> E SE O SEU REACT APP ESTÁ/VAI FAZER O OUTPUT DINÂMICO DE ALGUNS DADOS/DATA (o que geralmente 
+acontece), O FATO DA 'DATA' MUDAR É OBVIAMENTE UM SIDE EFFECT 
+OCORRENDO NO SEU APLICATIVO...
+
+
+
+
+
+
+
+
+----> devemos:
+
+
+1) CAUSAR SIDE-EFFECTS EM 'ComponentDidMount', como ENVIAR HTTP REQUESTS... (para FAZER FETCH DE DADOS/ENVIO DE DADOS)
+
+
+
+2) NÃO DEVEMOS __CAUSAR__ MUDANÇAS NO STATE (pq isso triggará __RE-RENDERS)...
+
+----------------------------------------------
+
+
+
+
+
+OBS: O STATE __ AINDA SERÁ ___ ATUALIZADO, SIM, 
+
+MAS SÓ ___aPÓS ___ O 
+
+HTTP 
+REQUEST 
+
+
+TER TERMINADO, 
+
+
+SÓ DEPOIS 
+
+QUE 
+
+ELE TERMINOU SUA OPERAÇÃO (assíncrona). --> 'terminou sua operação' ==== enviou novos dados/recebeu novos dados do servidor.
+
+
+
+----------------------------------------------------------
+
+
+--> PQ NÓS VAMOS QUERER updatar 
+
+ A PÁGINA A PARTIR 
+
+ DE UM 
+
+ STATE, 
+
+ mas apenas depois que 
+
+ ACABADO 
+
+
+ O SEND DO HTTP REQUEST...
+
+
+ ------------------------------------------------
+
+
+
+
+ CERTO --> DEVEMOS 
+
+
+ ADICIONAR 
+
+
+ 'componentDidMount()' 
+
+
+ DENTRO 
+
+ DO 
+
+COMPONENT 
+
+'Blog'....
+
+
+
+
+ex:
+
+
+
+
+
+class Blog extends Component {
+
+    componentDidMount() {
+
+    }
+
+
+
+
+    render () {
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    <Post />
+                    <Post />
+                    <Post /> 
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+export default Blog;
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+CERTO,
+
+
+
+E AGORA PRECISAMOS 
+
+
+DE AXIOS PARA QUE SEJA POSSÍVEL ___ ENVIARMOS UM REQUEST__ NESSE 
+
+
+'componentDidMount' __SEM __  QUE SEJA NECESSÁRIO UTILIZAR 
+
+'XMLHttpRequest'.... ----------> PARA ISSO,
+
+
+
+IMPORTAMOS AXIOS COM 
+
+
+'import axios from 'axios' ....
+
+
+
+
+ex:
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+import Post from '../../components/Post/Post';
+
+import FullPost from '../../components/FullPost/FullPost';
+import NewPost from '../../components/NewPost/NewPost';
+
+
+import BlogStyle from './Blog.module.css';
+
+
+
+
+
+import axios from 'axios';
+
+
+
+class Blog extends Component {
+
+    componentDidMount() {
+
+    }
+
+
+
+
+    render () {
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    <Post />
+                    <Post />
+                    <Post /> 
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+export default Blog;
+
+
+
+-------------------------------------
+
+
+CERTO, COM O AXIOS IMPORTADO, 
+
+
+PODEMOS ESCREVER 
+
+CÓDIGOS
+
+
+
+COM SEU OBJETO 'axios'...... 
+
+
+
+
+(EXAMINAMOS NOSSO CÓDIGO DO CURSO ANTERIOR, 
+
+e descobrimos 
+
+'const response = await axios.get(
+      'https://jsonplaceholder.typicode.com/pos'
+    );' 
+
+    
+    
+    
+    
+    
+    ) ----> será que podemos utilizar 
+
+    esse código/sintaxe?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EX (talvez assim?):
+
+
+
+
+
+class Blog extends Component {
+
+
+    componentDidMount() {
+        const fetchPosts = async () => {
+            const response = await axios.get(
+                'https://jsonplaceholder.typicode.com/post'
+              );
+
+              
+        }
+       
+     
+    }
+
+
+
+
+
+
+    render () {
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    <Post />
+                    <Post />
+                    <Post /> 
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+EU ESCREVI ALGO ASSIM( MAS ESTE CÓDIGO NÃO FUNCIONA... EU TAMBÉM 
+
+NÃO SEI O QUE O PROFESSOR QUER DIREITO...):
+
+
+
+
+
+
+
+
+class Blog extends Component {
+
+
+        state={
+            posts: [
+
+            ]
+        }
+
+
+
+
+    async componentDidMount() {
+        
+            const response = await axios.get(
+                'https://jsonplaceholder.typicode.com/posts'
+              );
+                const listOfPosts = response.data;
+                console.log(listOfPosts);
+        
+
+        }
+       
+     
+    
+
+
+
+
+
+
+
+    render () {
+
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    <Post title={this.state.posts} content={this.state.posts}/>
+                    <Post />
+                    <Post /> 
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+export default Blog;
+
+
+
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+Ok, agora o código do professor....
+
+
+ele escreve 
+
+
+
+
+componentDidMount() {
+    axios.get() 
+} 
+
+
+
+
+---------------------------------------
+
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+O MÉTODO 
+
+'.get()' 
+
+
+EXIGE PELO MENOS 
+
+
+1 ARGUMENTO... -----> que será 
+
+a string 
+
+
+A QUE 
+
+QUEREMOS ENVIAR 
+
+
+NOSSO HTTP REQUEST... -----------> o segundo argumento É USADO PARA ___CONFIGURAR__ ESSE REQUEST (mas isso é opcional)...
+
+
+
+
+
+
+--------------------------------------------------------------
+
+
+
+
+temos que ler os docs do axios....
+
+
+
+
+
+
+
+
+-----> certo,
+
+
+
+
+ele escreve 
+
+
+
+
+componentDidMount() {
+    axios.get('https://jsonplaceholder.typicode.com/posts') 
+} 
+
+
+
+
+-------------------------------------
+
+
+
+
+O DETALHE, AQUI,
+ 
+
+ DIZ O PROFESSOR,
+
+
+ É QUE 
+
+
+ ESSE 
+
+
+
+
+
+ 'axios.get' DEVE 
+
+ NOS 
+
+
+ ___rETORNAR___ ALGUNS POSTS (é a response), SIM... --------> 
+
+
+
+
+
+ ENTRETANTO,
+  
+tentar 
+
+
+
+ARMAZENAR 
+
+
+ESSE NEGÓCIO, 
+
+ESSA 
+
+RESPONSE 
+
+
+
+EM CONSTANTES ALEATÓRIAS, COMO ESTÁVAMOS FAZENDO, 
+
+COMO POR EXEMPLO
+
+
+
+'const posts = axios.get('www......')' ...
+
+
+
+
+
+
+
+ISSO __NÃO FUNCIONARÁ__... ------> ISSO NÃO FUNCIONARÁ 
+
+
+
+______pQ AQUELE 'GET REQUEST'___  (request de tipo GET) 
+
+
+vai acontecer 
+
+
+
+
+____dE FORMA ASSÍNCRONA___... -----> OU SEJA, 
+
+
+
+ELE NÃO 
+
+
+VAI EXECUTAR
+ 
+
+
+ IMEDIATAMENTE. ELE 'DEMORA'... --> ELE PRECISA 
+
+
+ DE ALGUM TEMPO PARA FINALIZAR SUA OPERAÇÃO... (tempo para ir 
+ 
+ ATÉ O SERVER E PEGAR OS DADOS).... --------> 
+
+
+
+
+ PARA RESOLVER 
+
+
+ ESSA QUESTÃO,
+
+ o javascript 
+
+
+ nos 
+
+ dá 
+
+ 2 
+
+ opções 
+
+ de sintaxe:
+
+
+
+
+ 1) PROMISES E OS '.then() blocks' 
+
+
+
+ 2) ASYNC AWAIT...
+
+
+ ------------------------------------------------
+
+
+
+
+
+
+
+
+
+ ---> isso pq o javascript é UMA LINGUAGEM DE EXECUÇÃO 
+
+ __SÍNCRONA__... depois que uma linha é executada, a próxima é executada IMEDIATAMENTE. (ele não PAUSA por default, ele não espera até os 
+ processos terminarem por default)... --> esse é o comportamento default PQ __NÃO QUEREMOS___ QUE UMA SIMPLES LINHA DE CÓDIGO (1 simples execução, de muitas) 
+ACABE PAUSANDO A EXECUÇÃO DO RESTO DO CÓDIGO DA NOSSA PÁGINA...
+
+
+
+
+
+
+
+
+
+
+ ---> PARA 
+ CONTORNAR ISSO,
+  
+
+
+  O AXIOS USA ''PROMISES'' ---> promises foram introduzidas com o 
+
+  ES6....
+
+
+  -------------------------------------------
+
+
+
+
+
+  --> AXIOS USA PROMISES,
+
+
+  e o 'get' RETORNA UMA PROMISE --> devemos usar ou '.then()' 
+
+
+  OU 
+
+
+  ENTÃO 
+
+
+  ASYNC AWAIT... 
+
+
+
+
+
+  --> o professor usa o approach do '.THEN()'...
+
+
+
+
+
+EX:
+
+
+
+componentDidMount() {
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+    .then(
+    
+    )
+} 
+
+
+
+-----------------------------------------------------
+
+
+
+
+'.THEN()'
+ 
+ é simplesmente 
+
+ um método 
+
+ que
+
+
+ ACEITA/EXIGE UMA 
+
+ __FUNÇÃO__ COMO O INPUT... essa função SERÁ EXECUTADA 
+
+
+ SOBRE 
+
+
+ A 
+ 'RESOLVED PROMISE' 
+
+ do 
+
+ 'axios.get()' ( ou seja, será executada 
+ 
+ SOBRE OS DADOS do servidor OBTIDOS 
+ 
+ PELO AXIOS EM 'axios.get'.. (quando ele os conseguir... não importa a demora).
+
+
+ -------------------------------------
+
+
+
+EX:
+
+
+
+ componentDidMount() {
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+    .then(
+        response => 
+        console.log(response);
+        const listOfPosts = response.data;
+    )
+} 
+
+
+
+
+
+
+
+(EU ACHO QUE É ASSIM QUE SE FAZ...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+'console.log(response)' -----> isso vai nos mostrar 
+
+
+UM MONTE 
+
+
+DE PROPRIEDADES 
+
+
+DENTRO DE 
+ 
+'response' -------> essas propriedades aí, todas elas SÃO 
+
+PROVIDENCIADAS PELA PACKAGE DO 'AXIOS'...
+
+
+
+
+temos propriedades 
+
+
+como 
+
+
+'status' (nos diz o status code... aqui lemos '200', ou seja, o RESPONSE FOI SUCCESSFUL...)
+
+
+
+'request' ---> nos MOSTRA O REQUEST QUE FORA ENVIADO, antes do recebimento DA RESPONSE
+
+
+
+'headers' --> nos mostra os HEADERs nessa response....
+
+
+
+
+----------------------------------------------
+
+
+MAS A PROPRIEDADE 
+
+MAIS IMPORTANTE 
+
+É 
+
+
+'data',
+
+
+que 
+
+é um objeto que 
+
+CONTÉM
+ 
+
+ A 
+
+ 'DATA' 
+
+
+
+ DO SERVIDOR AO QUAL ENVIAMOS 
+
+ ESSE REQUEST... (aquele site 'jsonplaceholdertypicode', aquela página com os posts aleatórios.)
+
+
+
+
+
+
+
+
+---> E A RESPONSE DESSA PÁGINA AÍ SERÁ, NESSE CASO, 
+
+
+UM 
+
+
+____ARRAY___ DE 
+
+OBJETOS JAVASCRIPT....   -----> e cada 
+
+
+
+OBJETO 
+
+REPRESENTA/REPRESENTARÁ UM 
+
+'POST'... 
+
+
+
+
+estrutura de cada 
+
+'post':
+
+
+
+
+0:
+
+body: 
+
+id: 
+
+title:
+
+
+userId:
+
+
+
+--------------------------------------------------
+
+
+CERTO... PODEMOS TRABALHAR COM ESSES DADOS.... --> vamos os utilizar 
+
+
+PARA 
+
+RENDERIZAR DADOS DINAMICAMENTE 
+
+NA PARTE SUPERIOR 
+
+DA TELA 
+
+(lá naqueles components 
+
+
+'Post' de 
+
+
+'Title 
+Author'...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -------------------------------------------------------------
+
+
+

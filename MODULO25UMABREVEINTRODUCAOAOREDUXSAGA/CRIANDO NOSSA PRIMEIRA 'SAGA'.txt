@@ -1,0 +1,1362 @@
+
+
+-> O PROFESSOR FALOU BASTANTE SOBRE 
+
+
+COMO NÓS PODEMOS USAR 
+
+'REDUX-SAGA'...
+
+
+
+
+--> AGORA DEVEMOS VER COMO ELE REALMENTE FUNCIONA.... 
+
+
+
+
+
+
+
+
+
+
+
+
+--> com 'redux saga',
+
+
+VOCÊ 
+
+CRIA 
+
+
+'SAGAS'...
+
+
+
+
+
+
+
+
+SAGAS --> SÃO ESSENCIALMENTE __ FUNÇÕES__ QUE 
+
+VOCÊ RODA 
+ 
+
+
+ __ A PARTIR DE CERTAS 'ACTIONS', 
+
+ E QUE 
+
+
+
+RODAM/FAZEM MANAGE DE TODA A SUA 'SIDE-EFFECT LOGIC'...
+
+
+
+
+
+
+
+
+
+
+
+--> SIDE-EFFECT ---> É ALGO COMO 'ACESSAR O LOCALSTORAGE', reach out to the server, 
+CHANGING THE ROUTE, ou executar um timer....' --> são 
+todos 
+
+
+SIDE-EFFECTS PQ __ NÃO MANIPULAM DIRETAMENTE ___ O SEU 'REDUX STORE'... --> o máximo que 
+
+eles podem fazer é MANIPULAR ALGO QUE ENTÃO, INDIRETAMENTE,
+ ACABA gerando/resultando em um DIFERENTE STATE, que por sua vez pode acabar 
+
+
+ ALTERANDO O REDUX STORE... ------------>  MAS 
+
+ 
+
+ TUDO ISSO, 
+
+ ESSES SIDE EFFECTS,
+
+ __NÃO SÃO DIRETAMENTE 'CONSUMED BY THE REDUCER'...  (os side effects NÃO ENTRAM EM CONTATO 
+ 
+ DIRETO COM O REDUCER DE NOSSO APLICATIVO... )
+
+
+
+
+
+
+
+
+
+ ---> PARA MOSTRAR O FUNCIONAMENTO DO 'saga',
+
+
+VAMOS 
+
+
+CRIAR UM SUBFOLDER 
+
+DE 
+
+'sagas',
+
+
+DENTRO 
+
+
+DO 
+
+
+'store' no nosso projeot...
+
+
+
+
+
+
+
+
+---> DENTRO DE 'sagas',
+
+O PROFESSOR 
+
+VAI 
+
+CRIAR 
+
+DIFERENTES ARQUIVOS PARA OS DIFERENTES TIPOS DE 'SAGAS'...
+
+
+
+
+
+
+
+--> professor diz que vai começar pela 'saga' 
+
+DO 
+
+'auth'.... --> ele cria um 
+
+
+NOVO ARQUIVO,
+
+'auth.js',
+
+
+dentro do folder 'sagas'.... --> 
+
+
+
+
+
+AÍ ELE VAI QUERER CRIAR UM  'SAGA' DENTRO 
+
+
+
+DO 
+
+'auth.js'....
+
+
+
+
+
+----------------
+
+OK, MAS COMO CRIAMOS ISSO?  ---> O QUE É UM 'SAGA'?
+
+
+
+
+
+
+
+
+
+-> professor nos explica que, 'AT ITS CORE', 
+
+um 
+
+
+'saga' é 
+
+'KINDOF A FUNCTION'... 
+
+
+
+
+
+
+
+
+
+
+--> PROFESSOR DIZ 'KINDOF' 
+
+pq 
+
+
+
+
+
+HÁ UM PEQUENO TWIST 
+
+
+
+nessa função...
+
+
+
+
+
+
+
+---> DEVEMOS CRIAR UMA FUNÇÃO... 
+
+
+
+
+
+
+
+
+--> professor CRIA UMA FUNÇÃO COM 
+
+
+A 
+
+
+KEYWORD
+ 
+ de 
+ 'function'...
+
+
+ ex:
+
+
+
+
+ function () {
+
+ }
+
+
+
+
+
+
+
+ ----------------------------
+
+ E AÍ 
+
+ ELE 
+
+ VAI QUERER 
+
+
+ CRIAR 
+
+ UM 
+ 'SAGA'
+
+
+ PARA 
+
+ FAZER 'REPLACE' 
+
+
+
+ de 'logout'... ------> OU SEJA,
+  
+  VAMOS QUERER 
+
+
+
+  FAZER UM SAGA PARA ISSO, 
+  PARA 
+
+
+  FAZER 'CLEAR DO LOCALSTORAGE'... (em razão do funcionamento de 'authLogout'..)
+
+
+
+
+
+
+
+
+
+
+
+
+  ok...
+
+  professor 
+
+
+  vai 
+
+  nomear 
+
+  essa 
+
+  'SAGA' 
+
+
+
+
+
+
+como 
+
+
+
+'function logout() {
+
+}'
+
+
+
+
+
+
+
+
+
+
+--> NESSA FUNÇÃO, VAMOS ACEITAR/EXIGIR UM ARGUMENTO, ARGUMENTO QUE 
+
+__vaMOS RECEBER__ AUTOMATICAMENTE___... --> professor VAI NOS MOSTRAR 
+
+COMO 
+
+'WIRE UP' 
+
+esse argumento aí....
+
+
+
+
+
+
+--> o argumento das 'sagas',
+
+EM QUESTÃO,
+
+É 
+
+SEMPRE 
+
+'action',
+
+
+É __ SEMPRE __ a ACTION __ QUE FOI DISPATCHEADA...
+
+
+
+
+
+
+
+
+
+
+
+isso é assim pq __SAGAS__ POSSUEM RELAÇÃO ___ESTRITA__ COM 
+
+
+'ACTIONS'___... (professor depois vai explicar isso melhor)...
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> PROFESSOR DISSE QUE 
+
+
+AS 'SAGAS' 
+
+SÃO 
+
+'KINDOF' a function....
+
+
+
+
+
+
+
+--> por 'kindof',
+
+ele quer dizer que 
+
+HÁ DIFERENÇAS.... --> em 
+
+sagas,,
+
+VOCê 
+
+
+COLOCA 
+
+
+UMA ESTRELA ("*") 
+
+DEPOIS 
+
+
+DA KEYWORD
+
+'FUNCTION'....
+
+
+
+tipo assim:
+
+
+
+
+''''''''''''''''''''''''
+
+
+function* logout(action) {
+
+}
+
+
+''''''
+
+
+
+
+
+
+
+
+
+E ESSA __eSTRELA__ AÍ __ É VITAL, É IMPORTANTE__... ---> ESSA 
+ESTRELA 
+
+
+
+
+_______NÃO FAZ PARTE DO FUNCTION NAME____ ----> o que 
+
+esse 
+
+
+'function*' faz é 
+
+
+TRANSFORMAR 
+
+
+__eSSA ''FUNÇÃO'''
+
+
+EM AQUILO 
+
+QUE 
+
+CHAMAMOS 
+
+DE 
+
+'GENERATOR'.... -----> 
+
+
+
+
+
+GENERATORS (acho que já estudei isso) 
+
+
+SÃO ___FEATURES ___  
+
+
+JAVASCRIPT __ NEXT-GEN,
+
+
+
+QUE 
+
+SÃO ___ FUNÇÕES ___ QUE PODEM 
+
+SER __ EXECUTADAS___ 
+
+
+''INCREMENTALMENTE'' (incrementally)
+
+
+
+
+
+
+EX:
+
+
+('5. Generators & Iterable Objects', lá no PRIMEIRO CURSO DE JAVASCRIPT)....
+
+
+(GENERATORS SÃO UM TIPO ESPECIAL DE FUNÇÃO JAVASCRIPT QUE 
+
+__GERAM ITERATORS AUTOMATICAMENTE PARA NÓS___....) --> e ITERATORS __ SÃO OBJETOS QUE __ POSSUEM UM MÉTODO 'next()'...
+
+-----------------------------------------------------
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+VOCê PODE CHAMAR 
+
+ESSES GENERATORS,
+
+
+E QUANDO 
+
+VOCê 
+OS CHAMA,
+
+
+ELES 
+
+NÃO 
+
+RODAM 
+
+
+'COMEÇO-FIM' IMEDIATAMENTE,
+
+
+
+PQ _PODEM__ (têm a opção) 
+
+
+DE 
+
+__PAUSAR__/PARAR_ __ DURANTE 
+
+
+
+A EXECUÇÃO DA FUNÇÃO (function execution) 
+
+para, POR EXEMPLO,
+
+
+__ESPERAR__ PELO TÉRMINO DE OPERAÇÕES COM ASYNC CODE__... --> E É 
+
+
+EXATAMENTE 
+
+
+DISSO QUE 
+
+O 
+
+'REDUX SAGA' SE APROVEITA... 
+
+
+
+
+
+
+
+
+--> E SE VOCÊ TEM 
+
+
+SYNC CODE, CÓDIGO NORMAL,
+
+VOCÊ 
+
+PODE 
+
+SIMPLESMENTE
+ USAR 
+
+ OS 'generators' 
+
+ DE FORMA NORMAL,
+
+ que 
+
+ eles 
+
+ VÃO SIMPLESMENTE EXECUTAR 
+
+ O CÓDIGO 
+
+ DO INÍCIO AO FIM __ IMEDIATAMENTE...
+
+
+
+
+ ------------------------------- 
+
+
+--> E O PROFESSOR VAI NOS MOSTRAR 
+
+
+COMO 
+
+
+AMBAS EXECUÇÕES (execução de código sync e async)
+
+FUNCIONAM 
+
+
+NESTE MÓDULO...
+
+
+
+
+
+
+
+
+
+
+--> OK, 
+
+TEMOS 
+
+ESSA 'GENERATOR FUNCTION' de 'logout'.... --> nele,
+
+EU OBVIAMENTE 
+
+QUERO 
+
+
+
+
+____ FAZER A MESMA COISA QUE EU FAZIA 
+
+
+NO ACTION CREATOR 
+
+de 
+
+'authLogout', lá em 'auth.js'...
+
+
+
+
+
+
+--> POR ISSO O PROFESSOR 
+VAI COPIAR
+ 
+ AS 
+
+ 3 LINHAS 
+
+ DE 
+
+ 'localStorage.remove()"
+
+
+ E ENTÃO 
+
+ COLAR 
+
+
+ dentro 
+
+ do generator 
+
+ do 
+
+ 'function* logout(action) {
+
+ }',
+
+ QUE 
+ É 
+
+ A MINHA 
+
+ 'saga'...
+
+
+
+
+
+
+
+
+ EX:
+
+
+
+ function* logout(action) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationDate');
+    localStorage.removeItem('userId');
+}
+
+
+
+
+
+-------------------------------------
+
+
+
+OK, MAS IMEDIATAMENTE O IDE NÃO VAI GOSTAR DISSO....
+
+
+
+
+
+--> O IDE ESTÁ DIZENDO 
+
+QUE 
+
+ESTE GENERATOR __ NÃO POSSUI UMA FUNÇão/keyword de 
+
+'yield'...
+
+
+
+
+
+
+
+
+YIELD --> é basicamente 'return', mas usado 
+
+EM 
+
+
+__GENERATORS___...
+
+
+
+
+
+
+
+--> CERTO... MAS COM ESSES 
+
+
+3 NEGÓCIOS aí, essas 3 linhas, 
+
+
+
+__ESTAMOS 
+
+'CLEARING THE LOCAL STORAGE'...
+
+
+
+
+
+
+
+
+--> CERTO...  ---> e com o localStorage REMOVENDO ITEMS,
+
+
+PODEMOS 
+
+
+
+DAR UMA OLHADA 
+
+
+NO ACTION CREATOR 
+
+de 
+
+'logout'...:
+
+
+
+
+export const authLogout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('expirationDate');
+  localStorage.removeItem('email');
+  localStorage.removeItem('userId');
+  return {
+    type: authActionTypes.AUTH_LOGOUT,
+  };
+};
+
+
+
+
+
+---------------------------------
+
+
+PERCEBEMOS QUE 
+LÁ EM BAIXO 
+
+NÓS FAZEMOS 
+
+RETURN 
+
+
+
+__DA ACTION PROPRIAMENTE DITA___...
+
+
+
+-----------------------------
+
+ESSE RETURN AÍ 
+
+__É EFETIVAMENTE __ O QUE LEVA AO DISPATCH DE NOSSA 
+
+ACTION 
+de 
+
+'logout'... ---------> 
+
+
+
+
+
+E NÓS 
+
+VAMOS QUERER 
+
+
+FAZER EFETIVAMENTE 
+
+A MESMA COISA 
+
+LÁ 
+
+NO NOSSO OBJETO 
+
+'saga' 
+
+
+d
+e 
+
+'logout'.... --------> MAS 
+
+
+PARA 
+
+
+__fAZER/ESCREVER __ O DISPATCH DE UMA ACTION __ COM 
+
+
+O 
+
+REDUX-SAGA,
+
+nós 
+
+
+
+NA VERDADE (actually)
+ 
+ PRECISAMOS 
+
+
+
+FAZER ISSO 
+
+COM UMA 
+
+FUNÇÃO 
+
+especial
+
+QUE 
+
+EXTRÁIMOS 
+
+__dA PACKAGE __ de 
+
+'redux-saga' 
+
+QUE RECÉM INSTALAMOS...
+
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+--> vamos escrever, lá no folder de 'sagas', em 'auth.js',
+
+um 
+
+código 
+
+de 
+
+
+
+
+
+'import { put } from 'redux-saga/effects';
+
+
+
+
+
+
+
+
+
+OU SEJA,
+
+VAMOS QUERER 
+
+IMPORTAR
+ 
+
+ A FUNÇÃO 
+
+ 'put',
+
+ LÁ DO SUBFOLDER de 'effects', no package do REDUX-SAGA...  
+
+
+
+
+
+
+
+
+
+ CERTO.... --> E 'PUT', no final das contas,
+
+
+
+
+ SÓ VAI __fAZER __ O DISPATCH _de UMA NOVA AÇÃO (essa é sua única atribuição...)
+
+
+
+
+
+
+
+ E ELE 
+
+
+ É 
+ ESCRITO/POSTO NO NOSSO CÓDIGO ASSIM:
+
+
+
+
+--------------------------------------
+
+
+import { put } from 'redux-saga/effects';
+
+
+ function* logout(action) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationDate');
+    localStorage.removeItem('email');
+    localStorage.removeItem('userId');
+    put()
+}
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+--> EXECUTADO O 
+
+'put()',
+
+
+
+
+O PROFESSOR 
+
+VAI SIMPLESMENTE 
+
+USAR 
+A 
+
+MESMA 
+
+
+
+
+'''ACTION DEFINITION''' USADA 
+LÁ 
+
+NO ACTION 
+
+CREATOR 
+
+de 
+
+'auth.js',
+
+em 'authLogout'...
+
+
+
+ex:
+
+
+
+put(
+    {
+        type: actionTypes.AUTH_LOGOUT
+    }
+)
+ 
+
+ ------------------------
+
+
+
+ É CLARO QUE 
+
+ ISSO 
+
+ NOS 
+
+ OBRIGA 
+
+ A IMPORTAR 
+
+
+
+
+
+O 
+
+'actionTypes'
+
+NESTE 
+
+ARQUIVO 
+
+DE 
+'auth.js',
+
+PARA PODER USAR AQUELE 
+
+'type' 
+
+DA ACTIOn COM SUCESSO...
+
+
+ex:
+
+
+
+
+
+import { put } from 'react-saga/effects'; //USADO PARA FAZER _dISPATCH__ DE ACTIONS com o 'sagas', nesse arquivo nosso....
+
+
+import * as authActionTypes from '../actions/authActionTypes';
+
+
+
+
+
+function* logout(action) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationDate');
+    localStorage.removeItem('email');
+    localStorage.removeItem('userId');
+    put(
+        {
+            type: authActionTypes.AUTH_LOGOUT
+        }
+    );
+}
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+CERTO....
+
+
+
+
+AGORA NÓS ESTAMOS 
+
+
+
+
+COLOCANDO ISSO 
+
+
+DENTRO DESSA FUNÇÃO... e estamos recebendo UM MONTE DE ERROS NO IDE....
+
+
+
+
+
+
+
+--> ESTAMOS RECEBENDO ERROS __JUSTAMENTE__ PQ 
+
+ESSA FUNÇÃO NÃO É COMUM; É UM __ GENERATOR___...
+
+
+
+
+
+
+
+--> E EM UM GENERATOR,
+
+
+__DEVEMOS ___ 
+
+
+
+'PREPEND' (prefixar) __CADA___ 'STEP'/'EXPRESSÃO' EXECUTADA 
+
+
+COM 
+
+
+A KEYWORD 
+
+DE 
+
+'yield'...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+function* logout(action) {
+    yield localStorage.removeItem('token');
+    yield localStorage.removeItem('expirationDate');
+    yield localStorage.removeItem('email');
+     yield localStorage.removeItem('userId');
+   yield put(
+        {
+            type: authActionTypes.AUTH_LOGOUT
+        }
+    );
+}
+
+
+
+------------------------------
+
+
+
+OK,
+
+MAS 
+
+OQ DIABOS
+ 
+ FAZ 
+
+ 'yield'? -----> YIELD 
+
+
+
+ SIMPLESMENTE 
+
+
+ DETERMINA QUE 
+
+ ESSA 
+ 'STEP' DEVERÁ __ SER EXECUTADA_, E QUE 
+
+ NOSSO 
+
+ CÓDIGO/ENGINE __DEVERÁ __ _ESPERAR PELO 'FINISH' 
+
+
+ DESSE 'STEP'/EXPRESSÃO... antes de continuar ------> isso existe para que,
+
+
+SE NOSSA 'STEP' FOSSE UMA ___AÇÃO ASSÍNCRONA,
+
+NOSSA 
+
+
+SAGA/função __NÃO CONTINUARIA/NÃO CONTINUA 
+
+SUA 
+
+EXECUÇÃO ___ SE __ A 'STEP ASSÍNCRONA' que 
+
+o antecede 
+
+ainda não tiver ACABADO.... ------> 
+
+
+
+
+
+
+
+
+
+OU SEJA,
+
+FAZEMOS 
+
+YIELD 
+DE TODAS ESSAS STEPS Aí,
+
+e aí 
+finalmente 
+
+yieldar/chamar 
+
+'put()'
+
+
+com aquele parâmetro objeto (que é a nossa action),
+
+
+
+QUE 
+
+
+__FARÁ EFETIVAMENTE o DISPATCH _ DE NOSSA ACTIOn___...
+
+
+
+
+
+
+
+
+
+
+--> ISSO É UM REDUX SAGA...  ------> OLHANDO DE RELANCE,
+
+PARECE UMA 
+
+
+
+
+___MANEIRA__ MAIS COMPLICADA __ DE CRIAR UM 
+
+ACTION CREATOR__.... ------> BEM,
+
+
+A 
+IDEIA 
+
+
+
+É __JUSTAMENTE___ TER UMA 
+
+'ÁREA SEPARADA' 
+
+NO NOSSO APLICATIVO 
+
+
+PARA 
+
+LIDAR 
+
+
+COM 
+
+
+
+O SEND DE ACTIONS... essa é a ideia do REDUX-SAGAS... ----> 
+
+
+
+NÓS TEMOS NOSSO GENERATOR de 
+
+'logout',
+
+E AGORA 
+
+A ÚNICA 
+
+COISA QUE 
+
+
+PRECISAMOS 
+
+FAZER 
+É 
+
+'HOOK IT UP' 
+
+
+ao __sTORE__ DE NOSSO REDUX,
+PARA 
+
+QUE 
+
+ENTÃO 
+
+CONSIGAMOS O UTILIZAR...
+
+
+
+
+
+
+
+Redux-Thunk	                                        Redux-Saga
+Less boilerplate code	                            More boilerplate code
+Easy to understand as compared to redux-saga	    Difficult to understand as there are multiple concepts to learn like generator functions and redux-saga effects
+May be difficult to scale up	                    Easy to scale as compared to redux-thunk
+Action creators may hold too much async logic	     Action creators stay pure
+May get difficult to test	                        Comparatively easy to test as all your async logic remains together
+
+

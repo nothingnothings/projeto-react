@@ -1,0 +1,950 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------> NA ULTIMA LICAO, SETTAMOS OS LINKS.
+
+
+AGORA DEVEMOS 
+
+
+SETTAR 
+
+A PACKAGE 
+
+'ROUTER'... -------> para isso,
+
+
+o professor 
+
+
+vai QUITAR 
+
+O SERVIDOR DE DESENVOLVIMENTO E ENTÃO VAI INSTALAR 
+
+
+O 
+
+
+'router'...
+
+
+
+
+
+
+
+
+
+
+
+
+---> ELE VAI USAR 'NPM INSTALL' para 
+
+
+INSTALAR A PACKAGE DO NEG´COIO..
+
+
+
+
+
+sera 
+
+'npm install --save react-router'.... ---------> MAS 
+
+
+NAO 
+
+
+SERÁ SÓ ISSO... só 'react-router' 
+
+
+NAO É O SUFICIENTE... A UNICA COISA QUE 
+
+ELE FAZ 
+
+É 
+
+NOS 
+
+ENTREGAR A LÓGICA DOS ROUTER,
+
+
+
+MAS PARA QUE 
+
+NOS TORNEMOS CAPAZES 
+
+
+DE RENDERIZAR 
+
+
+
+ALGUMA COISA AO DOM (ou seja,
+
+PARA 
+
+__QUE SEJAMOS___ CAPAZES ___ DE DIZER __ AO REACT, COMUNICAR O REACT DE QUE 
+
+ELE DEVE 
+
+RENDERIZAR UMA CERTA COISA),
+
+
+NÓS PRECISAREMOS 
+
+
+
+DE 
+
+'react-router-dom'...
+
+
+
+é por isso que 
+
+
+vamos 
+
+instalar 
+
+
+
+'npm install --save react-router react-router-dom'...
+
+
+
+
+
+------------------------------------------------------
+
+
+
+---> como o professor mencionou antes, 
+
+
+
+A PACKAGE 
+
+DO 'ROUTING' 
+
+é uma 
+
+package 
+
+
+
+que NAO FOI CRIADA/DESENVOLVIDA 
+
+PELO 
+
+
+FACEBOOK, MAS QUE 
+
+AINDA 
+
+
+ASSIM É USADA 
+
+PARA O ROUTING, 
+
+
+É 
+
+O 'STANDARD' DE ROUTING...
+
+
+
+
+
+
+
+
+
+
+---> com 'npm start' 
+
+PODEMOS INICIAR O DEV SERVER DENOVO...
+
+
+
+
+
+
+
+
+--> AGORA, É CLARO, QUEREMOS COMEÇAR A USAR 
+
+AQUELE PACKAGE... ---------> 
+
+
+
+
+
+PARA INÍCIO DE CONVERSA,
+ 
+ PARA 
+
+
+ TESTAR O ROUTING,
+
+
+ o PROFESSOR VAI QUERER ASSEGURAR 
+QUE 
+
+
+___aPENAS___ O COMPONENT 
+
+
+'pOST'/'Posts' 
+
+
+
+SEJA 
+
+
+RENDERIZADO/CARREGADO INICIALMENTE,
+
+
+
+ele quer que 
+
+isso 
+
+seja 
+
+CARREGADO 
+
+PARA 
+
+A NOSSA ROUTE 'ROOT'... (a route com apenas 1 '/' no seu 'a href', no seu LINK)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------
+
+
+
+
+
+
+--> PARA FAZER ISSO, 
+
+
+DEVE-SE IR ATÉ O CONTAINER DE 'blog'... --> lá, 
+
+
+estamos 
+
+
+renderizando 
+
+
+'FullPost',
+
+
+
+'NewPost' 
+
+
+e 
+
+'{posts}' -----------> PROFESSOR VAI QUERER QUEBRAR ISSO AÍ, 
+
+
+
+DIVIDIR EM PARTES... -----> 
+
+
+
+
+
+PROFESSOR VAI DEIXAR SÓ '{posts}'... -----> 
+
+
+
+
+MAS ESSES POSTS AÍ NAO SERAO 'CARREGADOS DINAMICAMENTE'
+
+
+COMO OS OUTROS COMPONENTS, 'fullpost' e 'newpost'; não,
+
+o 
+
+'posts' será carregado TODO O TEMPO... ------> 
+
+
+A IDEIA AGORA, PORTANTO, 
+
+
+É SÓ 
+
+CARREGAAR 
+
+FULLPOST/NewPost 
+
+quando 
+
+
+eu estiver 
+
+
+em 
+
+'domain/xxxxx'...
+
+
+
+--> 
+
+
+
+e os 'posts '
+
+
+serao 
+
+carregados 
+
+quando estivermos 
+
+
+em 
+
+'root'.... ('/'.)
+
+
+
+
+
+
+
+--> CERTO... 
+
+
+E COMO FAZER ISSO
+
+
+
+
+
+
+ 
+ PRIMEIRAMENTE PRECISAMOS HABILITAR O ROUTING NO NOSSO APLICATIVO REACT... 
+
+
+
+
+
+
+
+
+
+
+ --> FAZEMOS ISSO OU EM 'APP.JS'
+
+
+
+ OU 
+
+
+
+ EM 
+
+
+ 'INDEX.JS'....
+
+
+
+ --> o professor vai ate 
+
+
+ o 'app.js'...  -----------> 
+
+
+
+
+ DENTRO 
+
+
+
+ DE 
+
+ 'APP',
+
+ DEVEMOS 
+
+
+ WRAPPAR 
+
+
+ A PARTE DO NOSSO CÓDIGO QUE 
+
+ DEVERÁ 
+
+
+ SER CAPAZ DE 'RENDERIZAR ROUTES' 
+
+ E DE 
+
+ 'LER ROUTES'... ------> VOCE PRECISA 
+
+
+
+ IMPORTAR 
+
+ ESSA 
+
+
+ PARTE 
+
+
+ DO SEU 
+
+ APP 
+
+
+
+ COM UM COMPONENT 
+
+ QUE VAMOS EXTRAIR LA DA PACKAGE 
+
+
+ DE 
+
+ 'react-router-dom'...
+
+
+
+
+
+
+
+
+
+ --> CONFORME O PROFESSOR HAVIA MENCIONADO, VOCE PODE 
+
+ FAZER ESSE WRAP AÍ DA PARTE PERTINENTE DO SEU CÓDIGO TANTO 
+
+
+ EM 
+
+ 'index.js'
+ como em 
+
+
+ 'App.js'....
+
+
+
+
+
+
+
+
+ ---> O PROFESSOR FARÁ ISSO EM 'app.js'...
+
+
+
+
+
+
+
+
+
+
+ --> la dentro, ele vai 
+
+ escrever  (COM A SINTAXE DO 'NAMED EXPORT/IMPORT')
+
+
+ 'import { BrowserRouter } from 'react-router-dom'...
+
+
+
+
+
+
+
+
+
+
+
+
+ --> REALMENTE, PRECISAMOS 
+
+
+ DESSE 
+
+
+OBJETO 
+
+'BrowserRouter'...sao
+
+
+
+
+
+
+
+
+
+ex:
+
+
+import React, { Component } from 'react';
+
+import { BrowserRouter } from 'react-router-dom';
+
+
+import Blog from './containers/Blog/Blog';
+
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+CERTO... 
+
+
+VOCE DEVE, ENTAO, WRAPPAR TODAS AS PARTES DO SEU APP QUE 
+
+
+DEVERAO SER CAPAZES DE USAR A FEATURE DO ROUTING 
+
+COM 
+
+ESSE 
+
+'BrowserRouter'...
+
+
+
+
+
+
+--> O QUE O PROFESSOR VAI FAZER É O WRAP DE TODA 
+
+A DIV 
+
+
+de 'App'
+
+
+COM 
+
+ESSE OBJETO AÍ...
+
+
+EX:
+
+
+
+
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+      <div className="App">
+        <Blog />
+      </div>
+      </BrowserRouter>
+    );
+  }
+}
+
+export default App;
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+--> certo,
+
+ESSE OBJETO AÍ SERÁ AGORA O 'ROUTER' 
+
+DESSE APLICATIVO... -----------> 
+
+
+
+E AGORA 
+
+NÓS PODEMOS USAR 
+
+
+
+'ROUTING FEATURES'  DAQUELA __PACKAGE __ DE ROUTERS (react-router-dom)
+
+
+
+EM QUALQUER
+ 
+
+ LUGAR 
+
+ DENTRO 
+
+ DESSE APLICATIVO (em qualquer lugar, em qualquer component)... --> ou seja,
+
+ poderemos 
+
+
+ o utilizar 
+
+
+ EM QUALQUER 
+
+ SUBCOMPONENT 
+
+ DE 
+
+ 'App'...  (qualquer component que 'embeddamos' no APP... ) ---> 
+
+
+ isso inclui, é claro, 
+
+
+O COMPONENT 'BLOG'... -----------------> 
+
+
+
+
+
+E DENTRO 
+
+
+DO COMPONENT 
+
+
+'BLOG'
+
+
+EU VOU QUERER USAR ROUTING, SIM... ---------> PROFESSOR VAI QUERER 
+
+USAR 
+
+ROUTING 
+
+
+NESTE TRECHO DO CÓDIGO:
+
+'''''''''''''''''''''''''''
+<section className="Posts">
+    {posts}
+    </section>
+''''''''''''''''''''''''''''''''''''''
+
+
+
+
+
+
+
+
+ESSA PARTE 
+
+de 
+
+'SECTION', 'section = posts',
+
+
+
+
+DEVERÁ 
+
+
+
+SER AGORA 
+
+
+
+UM 
+
+''''CUSTOM COMPONENT''''' QUE CARREGAMOS, que é carregado,
+
+
+QUANDO SE VISITA AQUELA URL do 'home' (que é '/'....) ---------> 
+
+
+
+PARA ISSO, 
+
+
+O PROFESSOR 
+
+CRIARÁ 
+
+UM NOVO COMPONENT (para esse 'posts').... ---> 
+
+
+e o professor explica que vocÊ poderia 
+
+FAZER 
+
+ISSO 
+
+
+COM 
+
+TODOS 
+
+OS COMPONENTS ---------> Ele explica que actually 
+
+VOCê PODERIA 
+
+TRANSFORMAR 
+
+
+TODOS 
+
+
+ESSES COMPONENTS, 'newPost', 'FullPost', etc 
+
+
+
+EM 
+
+
+
+__cONTAINERS__ (pq por enquanto eles sao components dumb),
+ 
+
+
+ PQ 
+
+
+
+ NO FUTURO ELES SERAO __PAGINAS DISTINTAS___ COM 
+
+ SUBCOMPONENTS ESPECÍFICOS, 
+
+ 
+
+ QUE TERÃO OS STATES DESSES CONTAINERS 
+
+ DISTRIBUÍDOS 
+
+ A ELES... ----> para isso, 
+
+
+ professor 
+
+
+ vai 
+
+ reestruturar 
+
+ toda 
+
+ a arvore de components... -------. 
+
+
+ ELE 
+
+
+ VAI 
+
+
+ TIRAR 
+
+
+'FullPost'
+
+
+
+e 
+
+'NewPost'
+
+daquele 
+
+
+
+FOLDER 
+
+
+DE 
+'components' 
+
+E VAI 
+
+ENTAO 
+
+OS 
+
+
+ENFIAR 
+
+DENTRO 
+
+DE 'BLOG', DENTRO DO FOLDER DE 'CONTAINERS'... (  ou seja,
+
+
+eles 
+
+se tornarão 
+
+CONTAINERS, SUBCONTAINERS 
+
+DE 
+
+'Blog', que é o container maior....) 
+
+
+
+
+
+
+--> ELE TAMBÉM VAI CRIAR UM OUTRO FOLDER DENTRO DE 'Blog', 
+
+que 
+
+será 
+chamado 
+
+de 
+
+'Posts' (e governará, que governará 
+
+
+OS POSTS MENORES, que por sua vez serão DUMB COMPONENTS).....
+
+
+
+
+
+
+
+
+--> no final das contas,
+
+
+
+SÓ
+
+O COMPONENT 'post', o POST INDIVIDUAL,
+
+continuará
+
+
+COMO PRESENTATIONAL... --> o professor vai lá e ajusta todos os imports
+
+
+de nossos containers/components.
+
+
+
+
+
+Certo, ajustei tudo.
+
+
+
+
+--> ainda precisamos CRIAR O COMPONENTE 'Posts' EM SI...  --> 
+
+
+para isso 
+
+
+vamos 
+
+
+dentro do folder de blog e criamos 
+
+
+
+'posts.js' 
+
+
+dentro do folder 'posts'.... 
+
+
+
+
+-->DEPOIS DISSO, PROFESSOR EXPLICA QUE EM 
+
+'BLOG' 
+
+PODEMOS 
+
+SIMPLESMENTE NOS LIVRAR 
+
+DOS IMPORTS 
+
+
+
+DE 
+
+'FullPost' 
+
+e 
+
+'NewPost',
+ 
+
+ PQ __NENHUM DELES ___ SERÁ USADO NO '''''HOME''''' DO NOSSO APLICATIVO... ----------> 
+
+
+
+
+
+
+ ELE TAMBÉM AFIRMA QUE O IMPORT DE 'Post' 
+
+ NAO É MAIS NECESSÁRIO 
+
+ EM 
+
+ 'Blog', PQ 
+
+
+ AGORA 
+
+
+ ELE VAI CRIAR UM COMPONENT 
+
+ 'POSTS' QUE VAI SEGURAR esse component 'post' (no plural, pq existirão varios deles dentro de 'posts')...
+
+
+
+
+
+
+
+
+ --> NA PRÓXIMA LIÇAO VAMOS COMPLEMENTAR ESSA ESTRUTURACAO, 
+
+
+ E AÍ VAMOS USAR 'ROUTING'...

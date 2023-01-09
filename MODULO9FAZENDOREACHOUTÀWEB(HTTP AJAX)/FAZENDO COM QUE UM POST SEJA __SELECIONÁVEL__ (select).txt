@@ -1,0 +1,1128 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+------> AGORA QUE VOCÊ APRENDEU O BÁSICO SOBRE O 'SEND' DE REQUESTS
+
+
+com o AXIOS,
+
+
+ 
+
+ DEVEMOS 
+
+
+
+ AVANÇAR
+  
+  E VER 
+
+
+  COMO 
+
+  PODEMOS___ 
+
+
+
+
+  'MAKE SURE' que 
+
+
+  UM DESSES POSTS AÍ 
+
+  POSSA 
+
+  SER __CLICADO__... ----------> 
+
+
+
+
+  E AO SER CLICADO, UM DESSES 
+
+  POSTS 
+
+  DE CIMA 
+
+
+
+  DEVERÁ _ FAZER COM QUE 
+
+  SUA 
+
+  'DATA' ___ SEJA 
+
+  CARREGADA __NAQUELE 
+
+  ESPAÇO 
+
+  'FullPost' 
+
+  QUE FICA LOGO ABAIXO 
+
+
+  (aquele espaço 
+  
+  com 
+  
+  'Title' 
+  
+  e 
+  
+  'Content' 
+  
+  e 
+  
+  'Delete') --------------> OU SEJA,
+
+
+  QUEREMOS 
+
+
+  QUE ___ A DATA __ PARA O POST SELECIONADO__ SEJA ___ 'FETCHEADA' ___ QUANDO 
+
+
+  NÓS O SELECIONAMOS ( e apenas NA HIPÓTESE DE O SELECIONARMOS... --> só quando ele realmente é clicado...)
+
+
+
+
+
+
+
+
+  ---> isso parece ser um pouco mais complicado...
+
+
+
+
+
+  ------------------------------------------------------------------
+
+
+
+
+
+
+  Eu vou em frente e escrevo um simples código de teste.... ('postDataRetriever') :
+
+
+
+
+
+
+
+  
+        postDataRetriever = () => {
+            console.log('test');
+        }
+
+
+
+
+
+
+        
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+
+            (response) => {
+                    const posts = response.data.slice(0, 4);
+                    const updatedPosts = posts.map(post => {
+                        return {
+                            ...post,
+                            author: 'Max' //propriedade EDITADA/ADICIONADA ao nosso 'response'/post OBTIDO PELO USO DO 'AXIOS'...
+                        }
+                    })
+                // this.setState({
+                //     posts: response.data
+                // })
+                    
+                 this.setState({
+                    posts: updatedPosts
+                })
+            
+            }
+        )
+
+        
+    }
+    
+
+
+
+
+
+
+
+    render () {
+            const posts = this.state.posts.map( 
+                (post) => {
+                    return <Post title={post.title} body={post.body} key={post.id} author={post.author} clicked={this.postDataRetriever} />
+                }
+            )
+
+    
+
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    {/* <Post />
+                    <Post />
+                    <Post /> */}
+                    {posts}
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+Certo, por meio desse nosso pequeno teste,
+
+
+garantimos 
+
+
+
+QUE 
+
+NOSSOS 
+
+
+
+'SINGLE POSTS'
+
+podem 
+
+
+ser clicados... ('postDataRetriever' no 'onClick' de 'Post.js'...)
+
+
+
+-----------------------------------------------------
+
+
+
+
+OBS: professor usou um método chamado 
+
+
+'postSelectedHandler', e não 
+
+'postDataRetriever'....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> nesse método 
+
+
+'postSelectedHandler',
+
+
+
+O PROFESSOR VAI ESPERAR (expect) um 
+
+
+ARGUMENTO, 
+
+
+QUE 
+
+SERÁ ___ O ID___ DO 
+
+
+POST ___ QUE 
+
+FOI CLICADO....
+
+
+
+
+ex:
+
+
+
+
+postSelectedHandler = (id) => {
+
+}
+
+
+
+----------------------------------------
+
+
+
+CERTO...
+
+
+
+
+o código inteiro ficará assim (ver o prop de 'clicked'):
+
+
+
+
+
+
+
+postSelectedHandler = (id) => {
+
+}
+
+
+
+
+    render () {
+            const posts = this.state.posts.map( 
+                (post) => {
+                    return <Post title={post.title} 
+                    body={post.body}
+                     key={post.id} 
+                     author={post.author} 
+                     
+                     clicked={this.postDataRetriever(post.id)} /> ////////ISSO FUNCIONARÁ, SIM....
+                }
+            )
+
+    
+
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    {/* <Post />
+                    <Post />
+                    <Post /> */}
+                    {posts}
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+------------------------------------
+
+
+
+
+ENTRETANTO, UMA MUDANÇA QUE O PROFESSOR 
+
+
+FAZ 
+
+É __aDICIONAR __ A SINTAXE 
+
+DE 
+
+'ES6 ARROW FUNCTION'
+
+
+nesse 
+
+pass do método 
+
+
+
+'postSelectedHandler(id)' 
+
+
+AO 
+
+
+PROP DE 'CLICKED'...
+
+
+
+ex:
+
+
+
+
+
+
+postSelectedHandler = (id) => {
+
+}
+
+
+
+
+    render () {
+            const posts = this.state.posts.map( 
+                (post) => {
+                    return <Post title={post.title} 
+                    body={post.body}
+                     key={post.id} 
+                     author={post.author} 
+                     
+                     clicked={() => {this.postDataRetriever(post.id)}} /> ////////ISSO FUNCIONARÁ, SIM....
+                }
+            )
+
+    
+
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    {/* <Post />
+                    <Post />
+                    <Post /> */}
+                    {posts}
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+---------------------------------------------
+
+
+
+CERTO... ATÉ AGORA, TUDO BEM. O professor provavelmente vai usar 
+
+
+aquele parâmetro de 
+
+'post.id'
+ 
+
+
+
+ PARA SELECIONAR O POST QUE VAMOS QUERER RETRIEVAR
+  
+
+  DO ARRAY 
+
+  DE POSTS... 
+
+
+
+
+--------> ESSE ID, ALÉM DISSO, DEVERÁ 
+
+
+SER PASSADO
+
+
+PARA AQUELE COMPONENT 
+
+
+'FullPost', PQ 
+
+
+
+É 
+__NELE___ EM QUE 
+
+VAMOS 
+
+QUERER 
+
+QUE 
+
+SEJA 
+
+MOSTRADO O POST 
+
+EM QUE CLICAMOS... (vamos querer:
+
+1) retrievar a DATA do servidor relativa Àquele post específico e 
+
+
+2) OUTPUTTAR ESSA DATA 
+
+
+no local/área/component 'FullPost'...
+
+
+
+
+
+)
+
+
+
+é por isso que 
+
+
+o professor 
+
+vai 
+
+escrever 
+
+
+
+<FullPost id={}  />
+
+
+
+
+-------------------------------
+
+
+
+PARA PASSAR 
+
+
+ESSE 'ID' ao 
+
+
+'FullPost' (esse component aí),
+
+O PROFESSOR 
+
+
+EXPLICA QUE 
+
+
+UMA IDEIA MELHOR É __ ARMAZENAR __ O ID 
+
+DO NOSSO 
+
+
+COMPONENT __ LÁ NO NOSSO STATE DE 'Blog.js'... ------------>
+
+
+
+TALVEZ CRIAR 
+
+
+UMA 
+
+PROPRIEDADE 
+
+
+NO 
+
+STATE 
+
+CHAMADA 
+
+
+DE 
+
+
+'SelectedPostId: ...''
+
+
+
+
+
+-----------------------------
+
+
+
+
+(TALVEZ) FIQUE ASSIM:
+
+
+
+
+
+
+
+
+
+
+class Blog extends Component {
+
+
+        state = {
+            posts: [
+
+            ],
+            selectedPostId: null
+        }
+
+
+        postSelectedHandler = (id) => {
+            this.setState(
+                {
+                    selectedPostId: id /////////ISSO VAI ALTERAR O VALOR DA PROPRIEDADE 'selectedPostId' lá no 'state'... 
+                }
+            )
+        }
+
+
+
+
+
+
+        
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+
+            (response) => {
+                    const posts = response.data.slice(0, 4);
+                    const updatedPosts = posts.map(post => {
+                        return {
+                            ...post,
+                            author: 'Max' //propriedade EDITADA/ADICIONADA ao nosso 'response'/post OBTIDO PELO USO DO 'AXIOS'...
+                        }
+                    })
+                // this.setState({
+                //     posts: response.data
+                // })
+                    
+                 this.setState({
+                    posts: updatedPosts
+                })
+            
+            }
+        )
+
+        
+    }
+    
+
+
+
+
+
+
+
+    render () {
+            const posts = this.state.posts.map( 
+                (post) => {
+                    return <Post title={post.title} 
+                    body={post.body} 
+                    key={post.id} 
+                    author={post.author} 
+                    clicked={this.postSelectedHandler(post.id)} />
+                }
+            )
+
+    
+
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    {/* <Post />
+                    <Post />
+                    <Post /> */}
+                    {posts}
+                </section>
+                <section>
+                    <FullPost id={this.state.selectedPostId} />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+export default Blog;
+
+
+
+
+
+
+
+
+--------------------
+
+
+Certo,
+
+
+mas ainda assim, 
+
+
+
+temos que 
+
+usar 
+
+
+esse 
+prop 
+
+de 
+
+'id'
+
+lá no FullPost (e eu não sei exatamente o que fazer)... ------> 
+
+
+
+
+
+PROFESSOR DIZ QUE TIVEMOS 
+
+
+DE CRIAR UMA PROPRIEDADE 
+
+
+'selectedPostId' para 
+
+
+
+que pudéssemos,
+
+LÁ 
+
+
+
+DENTRO 
+
+
+DE 
+
+'FULLPOST',
+
+
+
+FAZER O __LISTEN___ TO DE __ UM 
+
+
+'Get' de um __NOVO POST ID___, para então 
+
+
+
+
+FETCHEAR DADOS PARA ESSE ID ESPECÍFICO.... ----> professor fez 
+
+
+EXATAMENTE A MESMA COISA QUE EU FIZ, ESCREVEU 
+
+A MESMA COISA... (Até mesmo o valor inicial de 
+
+'selectedPostId' como 'null' foi igual...)
+
+
+
+--------------------------------------------------
+
+
+
+
+
+-->  CERTO,
+
+
+
+AGORA PRECISAMOS 
+
+
+IR ATÉ 
+
+O COMPONENT 
+
+
+'FullPost'
+
+
+e então 
+
+
+
+___fAZER ALGUMA COISA__ A PARTIR DAQUELE ID...
+
+
+
+
+
+
+CÓDIGO DE 'FULLPOST':
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+import FullPostStyle from './FullPost.module.css';
+
+
+
+
+
+class FullPost extends Component {
+    render () {
+        let post = <p>Please select a post!</p>;
+        post = (
+            <div className={FullPostStyle.FullPost}>
+                <h1>Title</h1> 
+                <p>Content</p>
+                <div className={FullPostStyle.Edit}>
+                    <button className={FullPostStyle.Delete}>Delete</button>
+                </div>
+            </div>
+
+        )
+        return post;
+    }
+}
+
+
+
+
+
+export default FullPost;
+
+
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+PROVAVELMENTE O PROFESSOR VAI QUERER 
+
+
+
+USAR O ID 
+
+naqueles spots 
+
+
+'Title' 
+
+
+'Content' 
+
+
+e 
+
+'Delete'... ------> 
+
+
+
+
+
+a questão é: 
+
+
+QUAL CÓDIGO ELE UTILIZARÁ 
+
+PARA FAZER ISSO?
+
+
+---------------------------------------
+
+
+
+PROFESSOR DIZ QUE PODEMOS __USAR__ O ID __ PARA 
+
+OUTPUTTAR OU A MENSAGEM 
+
+
+'<p>Please select a Post!</p>' 
+
+
+
+
+OU 
+
+PARA 
+
+OUTPUTTAR 
+
+
+
+O CÓDIGO 
+
+
+DE 
+
+
+        post = (
+            <div className={FullPostStyle.FullPost}>
+                <h1>Title</h1> 
+                <p>Content</p>
+                <div className={FullPostStyle.Edit}>
+                    <button className={FullPostStyle.Delete}>Delete</button>
+                </div>
+            </div>
+
+        )
+
+
+
+
+------------------------------------
+
+
+  let post = <p>Please select a post!</p>;
+        post = (
+            <div className={FullPostStyle.FullPost}>
+                <h1>Title</h1> 
+                <p>Content</p>
+                <div className={FullPostStyle.Edit}>
+                    <button className={FullPostStyle.Delete}>Delete</button>
+                </div>
+            </div>
+
+        )
+
+-----------------------------------
+
+
+
+
+OU SEJA,
+
+
+AQUI VAMOS TER QUE ESCREVER UM CÓDIGO ___CONDICIONAL__ ---> 
+
+
+
+
+se um ID realmente for RECEBIDO,
+
+vamos querer 
+
+
+QUE 
+
+
+
+O 'post' (a const) QUE FAZ RETURN DAQUELE 
+
+
+'<div className={FullPostStyle.Edit} />' SEJA 
+
+OUTPUTTADO...  caso não seja recebido pelo 
+
+component 
+'FullPost' esse id, 
+
+vamos outputtar 
+
+'<p> Please Select a Post!</p>'
+
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+EU ESCREVI UMA TERNARY EXPRESSION (mas poderia escrever um if then statement, é claro):
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+import FullPostStyle from './FullPost.module.css';
+
+
+
+
+
+class FullPost extends Component {
+    render () {
+
+
+        return this.props.id 
+
+            ?
+
+            (
+                <div className={FullPostStyle.FullPost}>
+                    <h1>{}</h1> 
+                    <p>{}</p>
+                    <div className={FullPostStyle.Edit}>
+                        <button className={FullPostStyle.Delete}>Delete</button>
+                    </div>
+                </div>
+    
+            )
+
+            : 
+
+        <p>Please select a Post!</p>
+        
+    }
+}
+
+
+//title 
+
+//content
+
+
+
+
+export default FullPost;
+
+
+
+
+-----------------------------------
+
+
+
+CERTO....
+
+
+AGORA 
+
+ESSA PARTE DO CÓDIGO ESTÁ FUNCIONANDO (O 
+
+
+
+TEXTO DE 
+
+
+'PLEASE SELECT A POST' 
+
+
+é 
+
+SUBSTITUÍDO 
+
+
+PELO ___PRÓPRIO__ POST (em um espaço próprio, com 'title', 'content' e 'delete'),
+
+
+QUANDO 
+
+
+ALGUM POST É SELECIONADO...
+
+
+
+--------------------------
+
+
+NA PRÓXIMA 
+LIÇÃO, 
+
+
+VAMOS MODIFICAR ESSE CÓDIGO,
+
+
+GARANTIR 
+
+
+QUE 
+
+___ A DATA __ PARA/DAQUELE __ POST ESPECÍFICO É 
+
+__fETCHEADA/SERÁ FETCHEADA __ POR MEIO 
+
+
+DO 
+
+
+CLICK NO POST, 
+
+E AÍ 
+
+OUTPUTTADA 
+NAQUELE ESPAÇO 'FULLPOST'....
+

@@ -1,0 +1,1970 @@
+
+
+
+
+--> AQUI, NO NOSSO APLICATIVO,
+
+
+DEVEMOS 
+
+COMEÇAR 
+
+
+PELO 'App.js' E SEU 
+
+
+COMPONENTE CLASS-BASEd.... -------> por ser 
+
+
+
+CLASS-BASED,
+ 
+
+AQUI NÓS TEMOS 
+
+
+ACESSO AOS LIFECYCLE HOOKS... -------> COMO MENCIONADO,
+
+
+
+
+
+A PRIMEIRA COISA QUE PODEMOS ESCREVER/EXECUTAR (na verdade, a primeira coisa executada/lida/escrita 
+em um class-based component) EM 
+
+UM CLASS-BASED COMPONENT É 
+
+'constructor()" --------> ESSE COMANDO/MÉTODO __SEMPRE SERÁ LIDO __ ANTES DOS OUTROS 
+
+
+MÉTODOS/coisas do component...
+
+
+
+
+Esse constructor __SEMPRE___ VAI RECEBER UNS 'PROPS'....
+
+-----------------------------
+
+
+
+Ex:
+
+
+
+
+
+
+class App extends Component {
+    constructor(props) {
+
+    }
+
+
+    ........
+
+}
+
+
+
+--------------------------------------------------
+
+
+
+
+E QUANDO VOCê USA/DEFINE/ESCREVE UM CONSTRUCTOR 
+
+dentro 
+
+
+de um 
+
+CLASS-BASED COMPONENT,
+
+
+você 
+
+
+__SEMPRE___ DEVE 
+
+
+CHAMAR 
+
+'super(props)' 
+
+
+NO INÍCIO DO SEU BODY...
+
+
+
+ex:
+
+
+
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+
+    ........
+    
+}
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+Mas pq chamar 
+
+
+'super(props)'? ---------> BEM, PQ ISSO
+
+
+VAI ESSENCIALMENTE 
+
+
+
+_____eXECUTAR____ O __cONSTRUCTOR __ DO OBJETO 'Component' QUE 
+ESTAMOS 
+
+
+'EXTENDENDO' ('class App extends Component') NESSA CLASSE/component 'App'... 
+
+
+
+
+
+---> e esse constructor de 'Component' SEMPRE DEVE SER CHAMADO em 'constructor(props)' dos 
+
+nossos components, 
+
+POIS É ELE QUE GARANTE A 
+
+
+CORRETA INICIALIZAÇÃO DE TODAS AS COISAS.... ---> (por exemplo, sem 'super(props)' dentro 
+
+desse constructor, 
+
+NÃO PODEMOS INVOCAR COISAS COMO 
+
+'this.setState()', métodos BÁSICOS do react...)
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+CERTO... DENTRO DESSE CONSTRUCTOR,
+
+O PROFESSOR VAI QUERER FAZER O SIMPLES CONSOLE.LOG 
+
+
+de 
+
+"[App.js] constructor", essa SIMPLES STRING.
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+        console.log('[App.js] constructor');
+    }
+
+
+    ........
+    
+}
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+Professor escreveu 
+
+
+'[App.js]' no início dessa string SIMPLESMENTE PQ ELE QUER VER, NO CONSOLE,
+
+DE QUAL FILE ESSE console.log estará emanando..
+
+
+
+
+EX:
+
+
+
+
+
+  constructor(props) {
+    super(props);
+    console.log('[App.js] constructor');
+  }
+
+
+
+
+  --------------------------------------------------------
+
+
+
+  O PROFESSOR TAMBÉM EXPLICA, A TÍTULO DE EXEMPLO, 
+  
+
+  QUE PODERÍAMOS 
+
+
+  CHAMAR 
+
+  'this.state' dentro do body desse constructor, tudo pq 
+
+  nós 
+
+  JÁ CHAMAMOS 'super(props)' ANTES.... --------> OU SEJA, DIZ ELE, 
+
+  NÓS PODERÍAMOS 
+
+  JÁ 
+
+
+  INICIALIZAR NOSSO STATE DENTRO DESSE CONSTRUCTOR (Em vez de o inicializar no lado de fora, como fizemos 
+  no início do curso...)
+
+
+
+  Ex(como fazemos/fazíamos no início do curso):
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+  constructor(props) { /CONSTRUCTOR sem 'state' no seu interior, sem INICIALIZAR 'state'.
+    super(props);
+    console.log('[App.js] constructor');
+  }
+
+
+
+  state = {  /STATE NO LADO  DE FORA.
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+
+
+
+}
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+EX (do que o professor está nos mostrando agora):
+
+
+
+
+
+class App extends Component {
+
+
+
+  constructor(props) { 
+
+    super(props);
+    console.log('[App.js] constructor');
+    
+  this.state = {  /STATE NO LADO  DE DENTRO. DEVEMOS ADICIONAR 'this' ao início dele (para que a classe 'App' seja referenciada, e não 'Component')...
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+  }
+
+
+
+
+
+
+}
+
+
+
+--------------------------------------------------
+
+
+
+
+Ou seja, nessa forma de agora, 
+
+de definir 
+
+
+'STATE' DENTRO 
+
+
+DO 
+
+'constructor' de um component,
+
+
+DEVEMOS 
+
+
+SEMPRE 
+
+usar 
+
+
+
+'this.state'
+
+
+EM VEZ DE 
+
+
+'state'...
+
+
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+CERTO, CONTINUANDO... ----------> PROFESSOR 
+
+
+
+EXPLICA QUE 
+
+
+
+
+INICIALIZAR O 'state' 
+
+
+NO LADO DE _________FORA____________DO CONSTRUCTOR É 
+
+APENAS 
+
+A SINTAXE MAIS 
+
+_____MODERNA____ de inicializar um state... (pq tradicionalmente a definição/inicialização 
+
+do STATE __REALMENTE ___ ERA REALIZADA DENTRO DO constructor do component que extende 'Component'...)
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+Essa sintaxe mais moderna 
+
+de simplesmente 
+
+escrever 
+
+
+
+'state = {
+    ....
+}' 
+
+
+NO LADO 
+
+
+DE __FORA___ de um 'constructor(props)' 
+
+
+É SIMPLESMENTE 
+
+
+
+
+UMA SINTAXE QUE 
+
+___ESCREVE TUDO ISSO____, 
+
+
+TODAS 
+
+ESSAS 
+
+
+LINHAS 
+
+
+'constructor(props) {
+    super(props);
+    this.state = {
+        ...
+    }
+}'
+
+
+IMPLICITAMENTE,
+
+POR TRÁS DAS CENAS... ( ou seja, a sintaxe moderna faz a mesma coisa que a sintaxe antiga, 
+ela chama 'constructor(props)' e dentro desse constructor ela chama 'super(props)' e então 
+
+depois disso escreve 'this.state = stateQueVocêDefiniu' )
+
+
+--------------------------------------------------------
+
+
+
+
+
+
+
+
+----> SE VOCÊ QUISER USÁ-LA, ESSA SINTAXE MAIS ANTIGA de definir/inicializar state,
+
+VOCÊ PODE USAR.
+
+
+
+
+--> você também vai recorrer à sintaxe ANTIGA quando VOCê ESTIVER 
+
+TRABALHANDO EM PROJETOS QUE NÃO SUPORTAM A SINTAXE MAIS MODERNA...
+
+
+
+
+
+----------> A única coisa que vocÊ deve ter em mente é que 
+
+DENTRO 
+
+
+DESSE CONSTRUCTOR você deve sempre chamar 'this.state'
+
+
+
+e nunca 'state'....
+
+
+
+
+(e, BTW, 'setState()' NÃO DEVE SER USADO DENTRO DESSE CONSTRUCTOR... ---> ver aula passada.) ---> não devemos causar SIDE EFFECTS por meio da ALTERAÇÃO DO STATE DO COMPOnent... (sem http requests, sem código síncrono, sem NADA QUE AFETE O STATE DIRETAMENTE, NESSE TRECHO AQUI)
+
+--------------------------------------
+
+
+
+
+
+
+
+CERTO. 
+
+
+
+NÓS APRENDEMOS, SEGUNDO 
+
+AS 5 FASES/ETAPAS/MÉTODOS,
+
+
+
+que 
+
+
+
+a coisa que 
+
+RODA 
+
+DEPOIS 
+
+
+
+DE 
+
+CONSTRUCTOR(props) 
+
+é 
+
+
+
+
+
+'getDerivedStateFromProps()'.....
+
+
+
+
+
+(
+
+
+
+    VEJA O ESQUEMA:
+
+
+
+
+
+1) constructor(props) 
+
+
+
+
+2) getDerivedStateFromProps(props, state)
+
+
+
+3) render()
+
+
+
+''4'')  RENDER CHILD COMPONENTS (of the component rendered by 'render()') 
+
+
+
+5) componentDidMount()
+
+
+
+
+)
+
+
+
+
+------------------------------------------
+
+
+
+
+
+cERTO...
+
+
+esse getDerivedStateFromProps RODA..
+
+
+
+MAS O QUE ELE FAZ?
+
+
+
+
+Bem, o professor 
+
+ADICIONA 
+
+
+
+ESSE MÉTODO AO NOSO CÓDIGO...
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+   constructor(props) {  
+     super(props);
+     console.log('[App.js] constructor');
+   }
+
+
+  state = { 
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+
+
+
+
+
+getDerivedStateFromProps();
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+CERTO. MAS O PROFESSOR LOGO NOS EXPLICA QUE 
+
+esse método 
+
+É __SEMPRE ___ UM MÉTODO DO TIPO 'ESTÁTICO' (static),
+
+
+POR ISSO DEVEMOS 
+
+
+
+ADICIONAR 
+
+
+'static' na frente do seu chamado....
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+   constructor(props) {  
+     super(props);
+     console.log('[App.js] constructor');
+   }
+
+
+  state = { 
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+
+
+
+
+
+static getDerivedStateFromProps(); ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+}
+
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+Mas pq 'static' na frente? --> professor explica que isso só é importante 
+
+pq o REACT precisa 
+
+dessa keyword na frente 
+
+PARA EXECUTAR ESSE MÉTODO ADEQUADAMENTE....
+
+
+
+
+
+
+E a forma completa 
+
+desse método 
+
+
+é 
+
+
+
+'static getDerivedStateFromProps(props, state) {
+
+}'
+
+--------------------------------------------
+
+
+
+
+
+DENTRO DESSE MÉTODO,
+
+
+VOCê 
+
+
+DEVE 
+
+
+FAZER RETURN 
+
+
+
+
+
+_______DO SEU 'UPDATED STATE'______ (do seu STATE _________UPDATADO________ )....
+
+
+
+
+
+--> aqui, o professor vai simplesmente RETORNAR O VELHO STATE ('return state'), mas antes 
+
+disso 
+
+ele vai querer 
+
+
+
+CONSOLE.LOGGAR 
+
+
+'[App.js] getDerivedStateFromProps' e também 
+
+OS __PROPS____ dentro desse método/passados a esse método... (e sem a keyword 'this', pois ela CAGA TUDO, no caso desse MÉTODO 'getDerivedStateFromProps'...)
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+   constructor(props) {  
+     super(props);
+     console.log('[App.js] constructor');
+   }
+
+
+  state = { 
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+
+
+
+
+
+static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps', props); ///////EIS O CÓDIGO EM QUESTÃO.
+    return state;
+}
+
+
+
+
+
+
+
+}
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+
+O PROFESSOR VAI COLOCANDO CONSOLE.LOGs em cada ETAPA/MÉTODO 
+
+DO 'creation lifecycle' DO NOSSO COMPONENT....
+
+
+
+Os próximos a receber console.logs são 
+
+
+'render()' 
+
+
+
+
+e os 
+
+
+CHILD COMPONENTS RENDERIZADOS POR ELE....
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+   constructor(props) {   ///////////1
+     super(props);
+     console.log('[App.js] constructor');
+   }
+
+
+  state = {  ///////////''''1.5'''''''
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+
+
+
+
+
+static getDerivedStateFromProps(props, state) { ////////////2
+    console.log('[App.js] getDerivedStateFromProps', props); 
+    return state;
+}
+
+
+
+
+
+
+render() { /////////////3 
+    console.log('[App.js] render');
+
+
+
+    ......
+
+
+    <Persons  ///////////4 
+        persons={this.state.persons}
+    
+    />
+
+
+
+    <Cockpit ////4
+
+
+    />
+
+
+}
+
+
+
+
+}
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+PROFESSOR EXPLICA QUE 
+
+SE ESSES 'CHILD COMPONENTS' (como 'Persons' e 'Cockpit' ) FOSSEM 
+
+
+
+__CLASS-BASED COMPONENTS__ (como 'App'),
+
+
+NÓS 
+
+
+
+__TAMBÉM ___ PODERÍAMOS ESCREVER ESSAS FUNÇÕES DO 'LIFECYCLE' 
+
+
+
+DENTRO DELES.... (em 'persons', por exemplo, poderíamos ver o funcionamento desse lifecycle DENTRO DE CADA UMA DELAS....)
+
+
+
+
+
+--------------------------------------------------------------
+
+
+
+
+
+
+Certo.
+
+
+
+O professor também vai lá e faz outra coisa:
+
+
+lá no código
+do component 
+
+'Persons',
+
+
+
+ELE VAI ADICIONAR UM CONSOLE.LOG
+
+
+
+de 
+
+'[Persons.js] rendering...'
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+import React from 'react';
+import Person from './Person/Person';
+
+
+
+const persons = (props) =>  {
+
+        console.log('[Persons.js] rendering...'); ////////EIS O CÓDIGO EM QUESTÃO.
+    return props.persons.map( (person, index) => {
+        
+      
+         
+
+        return (<Person 
+        click={() => props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => props.changed(event, person.id)}/>  
+        );
+    
+      }
+
+
+
+);
+
+
+}
+
+
+
+
+
+
+export default persons;
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+OK, MAS PQ ESCREVER ISSO? e pq 'rendering...'? -------> 
+
+
+
+PQ QUANDO O 
+
+
+COMPONENTE É __RENDERIZADO___, AINDA QUE ELE SEJA UM FUNCTIONAL COMPONENT,
+ 
+
+
+ É EVIDENTE QUE O CÓDIGO 
+
+
+
+
+DE 
+
+'.map()' ACABA SENDO EXECUTADO...  (e nosso console.log está ANTES do .map()...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> PROFESSOR DIZ QUE PODEMOS COLOCAR AQUELE CONSOLE.LOG ali 
+
+
+PQ 
+
+
+ESSE FUNCTION BODY INTEIRO 
+
+
+de 
+
+'persons'
+
+
+
+SERÁ EXECUTADO 
+
+
+
+QUANDO O COMPONENTE 'App' FOR RENDERIZADO.. (por meio de 'render()'...) --> e é isso que fará o console.log PRINTAR aquela string....
+
+
+
+----------------------------------------------
+
+
+
+
+E NO COMPONENTE 
+
+
+'PERSON.JS',
+
+QUE É __CHILD___ do componente 
+
+'Persons', 
+
+
+O PROFESSOR 
+
+VAI ADICIONAR OUTRO 
+
+
+CONSOLE.LOg...
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+import React from 'react'; 
+
+
+import Pessoa from './Person.module.css';
+
+
+
+
+
+const person = (props) => {
+
+    console.log('[Person.js] rendering'); /////////EIS O CÓDIGO EM QUESTÃO.
+  return (
+    
+  
+  <div className={Pessoa.Person}>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+
+export default person;
+
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+cERTO
+
+, COM TUDO 
+
+ISSO ADICIONADO,
+
+
+
+AGORA 
+
+O 
+
+'App.js' vai ser executado, e O 
+
+
+'render()' SERÁ EXECUTADO.... -----> dentro do render, 
+
+
+O COMPONENTE 
+
+'Persons' será executado E RENDERIZADO.... 'Persons', por sua vez, vai 
+
+
+EXECUTAR E RENDERIZAR 
+
+O CÓDIGO 
+
+
+DE 
+
+'person'... -----> E ASSIM QUE 
+
+
+TUDO ISSO TIVER TERMINADO,
+ 
+
+
+
+
+ O MÉTODO/ETAPA 
+
+
+ 'componentDidMount()' VAI SER EXECUTADO...
+
+
+
+ (e o professor adiciona esse método no nosso 'App.js'...)
+
+
+
+
+
+ LEMBRE-SE DAS ETAPAS/MÉTODOS DO 'CREATION LIFECYCLE' dos COMPONENTS:
+
+
+
+
+
+
+
+
+
+ 1) constructor(props) 
+
+
+
+
+
+
+2) getDerivedStateFromProps(props, state)
+
+
+
+3) render()
+
+
+
+''4'')  RENDER CHILD COMPONENTS (of the component rendered by 'render()') 
+
+
+
+
+
+
+5) componentDidMount() --------> ESTE É O __ÚLTIMO____...
+
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+   constructor(props) {   ///////////1
+     super(props);
+     console.log('[App.js] constructor');
+   }
+
+
+  state = {  ///////////''''1.5'''''''
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+
+
+
+
+
+static getDerivedStateFromProps(props, state) { ////////////2
+    console.log('[App.js] getDerivedStateFromProps', props); 
+    return state;
+}
+
+
+
+componentDidMount() ////////5 ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+render() { /////////////3 
+    console.log('[App.js] render');
+
+
+
+    ......
+
+
+    <Persons  ///////////4 
+        persons={this.state.persons}
+    
+    />
+
+
+
+    <Cockpit ////4
+
+
+    />
+
+
+}
+
+
+
+
+}
+
+
+----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+LEMBRE-SE: 
+
+
+
+'componentDidMount' 
+
+É O LUGAR/MÉTODO 
+
+
+
+EM QUE 
+
+FAREMOS 
+
+
+COISAS QUE 'CAUSAM SIDE-EFFECTS',
+
+
+
+como 
+
+
+__ENVIAR HTTP REQUESTS___ E DEFINIR 'setTimeOut()'.... -----> depois vamos ver como fazer isso...
+
+
+
+
+
+---> por enquanto, vamos apenas definir 
+
+
+
+'console.log('[App.js] componentDidMount()') '
+
+
+
+DENTRO DESSE NEGÓCIO
+
+
+
+
+ex:
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+   constructor(props) {   ///////////1
+     super(props);
+     console.log('[App.js] constructor');
+   }
+
+
+  state = {  ///////////''''1.5'''''''
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+
+
+
+
+
+static getDerivedStateFromProps(props, state) { ////////////2
+    console.log('[App.js] getDerivedStateFromProps', props); 
+    return state;
+}
+
+
+
+componentDidMount(
+    console.log('[App.js] componentDidMount');
+) ////////5 ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+render() { /////////////3 
+    console.log('[App.js] render');
+
+
+
+    ......
+
+
+    <Persons  ///////////4 
+        persons={this.state.persons}
+    
+    />
+
+
+
+    <Cockpit ////4
+
+
+    />
+
+
+}
+
+
+
+
+}
+
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+AGORA, COM TUDO ISSO NO LUGAR,
+
+DEVEMOS 
+
+
+
+EXECUTAR NOSSO CÓDIGO POR MEIO DE 
+
+'npm start'....
+
+
+
+-------------------------------
+
+
+
+
+CERTO... O QUE VEREMOS, NO CONSOLE,
+ 
+ É 
+
+
+
+
+ 'constructor' 
+
+
+
+ 'getDerivedStateFromProps' (e também os PROPS no console.log; os props/prop será aquele 'appTitle' de valor 'Person manager' QUE usamos o INDEX.JS para passar...)
+
+
+'render' 
+
+
+
+'componentDidMount'
+
+
+
+---------------------------------------
+
+
+
+
+
+CONTUDO, AQUI NÓS 
+
+______NÃO VEMOS OS OUTPUTS___ DOS CONSOLE.LOGS DEFINIDOS 
+
+
+NOS COMPONENTS 'Persons' e 'Person'... ------> NÃO VEMOS ELES PQ __ELES AINDA NÃO RENDERIZARAM__, CERTO?
+
+
+
+
+
+
+
+
+----> se eu apertar NO BOTÃO 'toggle',
+
+AÍ EU CONSEGUIREI 
+
+
+VER ESSES 'rendering' do PERSONS e doS components 'PERSON'...
+
+
+
+---------------------------------------
+
+
+
+
+MAS O IMPORTANTE AQUI É PERCEBER QUE 
+
+___CADA VEZ____ QUE APERTAMOS 
+
+
+EM 'TOGGLE', NÓS NÃO TRIGGAMOS APENAS O 'render()' do component 'App.js' e de seus filhos,
+
+
+MAS TAMBÉM 
+O 
+
+
+MÉTODO 'getDerivedStateFromProps'.... (e só depois ENXERGAMOS OS 'rendering' dos filhos, pois esse rendering dos filhos é A __PENÚLTIMA FASE__ no 'creation lifecycle' dos components)
+
+
+
+
+
+-----------------------
+
+
+
+E É ASSIM QUE OS 'LIFECYCLE HOOKS'   __FUNCIONAM__.... ---> é assim 
+
+
+QUE PODEMOS PENSAR OS LIFE CYCLE HOOKS,
+
+com esses métodos aí. ----> 
+
+
+É ASSIM 
+
+
+QUE PODEMOS 'IR POR DENTRO DOS LIFECYCLE HOOKS' 
+
+
+
+sempre que um component é criado.... (e podemos manipular 
+
+cada UMA DESSAS ETAPAS/MÉTODOS.)
+
+
+
+------------------------------
+
+
+
+
+
+
+
+--> ENTRETANTO, 
+
+É IMPORTANTE DESTACAR QUE, HISTORICAMENTE, 
+
+
+EXISTIAM OUTROS HOOKS TAMBÉM... -----> e esses 'ANTIGOS HOOKS' 
+
+
+AINDA ___SÃO SUPORTADOS__... ---------> E O PROFESSOR 
+
+
+VAI USAR UM DELES MAIS TARDE NO CURSO, AINDA QUE 
+
+ELE SEJA VELHO.
+
+
+-------------------------------------------------------------------
+
+
+
+
+OK, MAS QUAIS SÃO ELES?
+
+
+
+
+
+
+Acho que devem ser estes:
+
+
+
+------------------------------------------
+
+
+getSnapshotBeforeUpdate()
+
+
+
+componentDidCatch()
+
+
+
+componentWillMount()
+
+
+shouldComponentUpdate()
+
+
+componentDidUpdate()
+
+
+-----------------------------
+
+
+
+
+
+
+
+O professor 
+
+destaca 
+
+
+o 
+
+
+'componentWillMount()'... ------> esse MÉTODO 
+
+AINDA 
+
+
+EXISTE, E É UTILIZADO, mas é antigo. -------->  E ELE NÃO É INSEGURO... NÃO É QUESTÃO 
+
+DE SER INSEGURO, 
+E SIM 
+
+
+QUE ELE ___ERA RARAMENTE USADO JÁ NO PASSADO__, HOJE EM DIA ELE É UM DINOSSAURO, quase 
+
+ninguém usa para nada... (e antigamente ELE PODIA SER USADO INCORRETAMENTE, e é por isso que 
+
+ele será REMOVIDO NO FUTURO.) 
+
+
+
+
+
+-------> AINDA ASSIM, 
+
+VOCÊ 
+
+PODE USAR 
+
+
+ESSES LIFECYCLE HOOKS; não trazem nada de ruim no geral, 
+
+
+MAS não são recomendados.
+
+
+
+
+ex:
+
+
+
+
+componentWillMount() {
+  console.log('[App.js] componentWillMount');
+}
+
+
+---------------------------------
+
+
+
+
+
+
+O 'componentWillMount()', por exemplo, 
+
+É 
+
+
+_________SEMPRE EXECUTADO_____ POUCO ANTES DO ___ 
+
+'COMPONENTDIDMOUNT()' (que é a ÚLTIMA '''ETAPA'''' dos lifecycle hooks, responsável por 
+HTTP REQUESTS, SIDE EFFECTS, setTimeOut e outros códigos...)
+
+
+
+
+
+
+
+
+componentWillMount --------> E, DE FATO, É DIFÍCIL EXPLICAR O QUE 
+
+DIABOS VOCê PODERIA/DEVE FAZER COM ELE... ---------> geralmente, 
+
+
+
+será/seria algo como ___PREPARAR____ SEU STATE DE FORMA CORRETA..... (contudo, 
+
+ISSO, HOJE EM DIA, É ALGO QUE VOCÊ FAZ/JÁ FAZ EM 'getDerivedStateFromProps', por isso 
+
+esse 'componentWillMount' é meio overkill...)
+
+
+
+
+
+
+
+
+----> static getDerivedStateFromProps e componentWillMount ============ NA VERDADE,
+ 
+ AMBOS OS MÉTODOS SÃO RARAMENTE USADOS... (o getDerivedStateFromProps até que é usado às vezes, mas o 'componentWillMount' QUASE NUNCA É USADO).
+
+
+
+
+
+
+ '''Or, if you just want to set some INITIAL STATE based on props, USE THE 
+ CONSTRUCTOR!'''' (em vez de usar 'getDerivedStateFromProps')
+
+
+
+ ---------------------------
+
+
+
+
+ CERTO... ALÉM de 
+
+ 'componentWillMount', que é meio inútil,
+  
+
+  TEMOS ALGUNS OUTROS 
+
+  HOOKS, 
+
+  como 
+
+
+
+----------------------------------
+
+  shouldComponentUpdate()
+
+
+componentDidUpdate()
+
+
+
+getSnapshotBeforeUpdate()
+
+
+
+componentDidCatch()
+
+
+
+--------------------------------
+
+
+
+
+
+ESSES UPDATES SE TORNARÃO IMPORTANTES ASSIM QUE NÓS APRENDERMOS 
+
+SOBRE 
+
+
+O 'UPDATING LIFECYCLE' para os components/dos components...
+
+
+
+--------------------------------------------------------------
+
+
+---> BTW, ACESSAR O MÉTODO 'RENDER()' NÃO SIGNIFICA QUE O DOM DE VERDADE É RE-RENDERIZADO,
+
+E SIM APENAS SIGNIFICA QUE 'REACT' vai agora ______RE-RENDERIZAR________ O SEU 
+
+DOM INTERNO VIRTUAL ('internal DOM') E ENTÃO CHECAR 
+
+SE O DOM DE VERDADE REALMENTE PRECISA SER UPDATADO...
+
+
+
+
+
+
+
+render() ----> 1) FAZ O REACT RE-RENDERIZAR SEU DOM INTERNO, VIRTUAL ------> 2) CHECA SE O DOM DE VERDADE REALMENTE PRECISA SER UPDATADO, a partir da comparação do DOM REAL com o DOM VIRTUAL.
+
+
+
+
+
+
+
+
+
+VEREMOS ISSO NESTE MÓDULO, 
+
+
+EM QUE 
+
+O PROFESSOR NOS MOSTRARÁ 
+
+
+COMO ACTUALLY É FEITO 
+
+
+o update do DOM por meio do REACT.

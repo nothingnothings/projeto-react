@@ -1,0 +1,191 @@
+
+
+DE VOLTA AO NOSSO PROJETO DO BURGER...
+
+
+
+
+
+
+
+
+--> devemos adicionar um pouco de ROUTING 
+
+
+a esse projeto...
+
+
+
+
+
+
+
+
+
+
+
+--> Professor pede para pausar
+ 
+ o vídeo para fazer as coisas, caso necessário...
+
+
+
+
+
+
+
+
+
+ ---> O PROFESSOR QUER COMEÇAR PELO ___ADD__ de uma página/component 
+
+ QUE 
+
+ ACTUALLY
+  
+
+
+  NOS 
+
+  DEIXE 
+
+
+  'check our burgerout'... (ou seja, uma página que aparece quando 
+  
+  'Continue' é clicado...) --------> pq, por enquanto, 
+
+
+
+  a única coisa 
+
+
+  QUE 
+
+
+  O CLICK 
+
+  em 
+
+  'Continue'
+
+
+
+  FAZ 
+
+  é __ENVIAR __ UM REQUEST ___ 
+
+
+
+  AO BACKEND, para submittar 
+
+  o 
+
+  BURGER
+
+
+  e 
+
+  o 
+
+  salvar lá no servidor.... ------> E O PROFESSOR QUER ___MUDAR ISSO__, 
+
+
+
+  ELE QUER 
+
+  QUE 
+
+
+  O SISTEMA PEÇA PARA O USUÁRIO PREENCHER UMAS INFORMAÇÕES 
+
+
+  EM 
+  UMA 
+
+
+  'CHECKOUT FORM',
+
+
+
+isso antes de o BURGER SER __rEALMENTE ___ SALVO...
+
+
+
+
+
+
+
+certo, portanto precisamos:
+
+
+
+1) DE UMA 'CHECKOUT PAGE'....
+
+
+
+
+-------------------------
+
+
+
+
+O PROFESSOR EXPLICA QUE 
+
+
+ELE/NÓS 
+
+
+TAMBÉM 
+
+
+TEREMOS 
+
+
+
+UM LINK ALI NO TOPO,
+
+
+'Checkout' (provavelmente um NAVLINK),
+
+que 
+
+
+vai 
+
+nos 
+deixar
+ 
+
+ NAVEGAR À PÁGINA 
+
+
+ DE 
+
+ 'checkout',
+
+
+ embora esse botão/link provavelmente 
+
+
+ seja 
+
+
+ ___SUBSTITUÍDO__, AO LONGO DESTE MÓDULO,
+
+ POR UMA 
+
+ PÁGINA/LINK 
+
+
+ 'My Orders'... (pq isso faz mais sentido...)
+
+
+
+
+
+ --> MAS DEVEMOS COMEÇAR PELO COMPONENT DO 'CHECKOUT FORM'.... ---> vamos 
+
+ começar a construção desse negócio na PRÓXIMA LIÇÃO. ---> há muitas maneiras de criar 
+
+ esse 
+
+ 'checkout component'...

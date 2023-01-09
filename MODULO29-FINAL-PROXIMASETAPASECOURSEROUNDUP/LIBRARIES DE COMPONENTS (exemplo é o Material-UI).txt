@@ -1,0 +1,318 @@
+
+
+
+
+
+
+
+
+
+
+---> NA ÚLTIMA LIÇÃO,
+
+DEMOS 
+UMA OLHADA 
+
+EM 
+
+
+'React native'... --> professor recomenda dar uma olhada nisso...
+
+
+
+
+
+
+
+
+
+
+
+
+--> de volta ao react.js,
+
+
+
+
+DEVEMOS 
+DAR UMA OLHADA 
+
+
+
+EM 
+
+'Material-UI'... --> 
+É 
+
+UMA LIBRARY 
+
+USADA COM 
+
+O REACT,
+
+
+MAS 
+
+É 
+
+UMA 
+
+
+LIBRARY QUE 
+
+NÃO 
+
+
+FAZ 'BUILD UP' 
+
+a partir 
+
+do react (como Next.js e Gatsby),
+
+
+
+
+
+
+
+E SIM 
+
+
+__É UMA _ COMPONENT LIBRARY__ --->  
+
+E 
+
+NÃO 
+
+É 
+
+A ÚNICA.... ---> isso pq 
+
+EXISTEM 
+
+
+UM MONTE 
+
+DE 
+
+
+
+COMPONENT LIBRARIES 
+
+
+
+__ QUE __ VOCÊ PODE IMPORTAR __ NO SEU PROJETO REACT... --> e como o nome sugere,
+
+
+'Component libraries'
+ 
+ são 
+
+ libraries que 
+ te dão 
+
+
+ components pré-estilizados e PRE-BUILT... ---> 
+
+
+
+
+
+
+
+
+ OBS:: VOCÊ AINDA PODE CONSTRUIR OS SEUS PRÓPRIOS COMPONENTS,
+
+ MAS 
+
+ 'Material-UI' 
+
+
+ TE 
+
+ DÁ 
+
+
+ ___ COMPONENTES LINDOS,
+  
+
+
+  'material design' (é o design do google, basicamente)...
+
+
+
+
+
+
+  --> SE VOCÊ IR ATÉ O WEBSITE DELES,
+
+
+
+  VOCê 
+
+  PODE 
+
+
+  ENCONTRAR 
+
+  'COMPONENT 
+  DEMOS' 
+
+
+
+  e 
+
+  ver 
+
+  os __MUITOS __ COMPONENTS__ 
+
+  QUE VOCÊ 
+
+  PODE IMPORTAR__ E UTILIZAR NOS SEUS PROJETOS... -------> 
+
+
+
+  também 
+
+  podemos 
+
+
+  ver o source code para cada um dos demos,
+
+
+
+  e aí veremos O QUE PRECISAMOS IMPORTAR 
+
+
+  DAQUELA 
+
+
+  LIBRARY (precisamos instalá-la antes),
+
+
+
+
+  E AÍ 
+
+
+  NÓS PODEMOS 
+
+
+  ADICIONAR/IMPLEMNTAR 
+
+
+  COMPONENTS 
+
+
+  LINDOS E BEM ESTILIZADOS,
+
+
+  sem precisar 
+
+
+  OS CONSTRUIR 
+
+  POR CONTA PRÓPRIA... --->  OU SEJA:
+
+
+
+
+  MATERIAL-UI 
+
+  É UMA 
+
+  FEATURE 
+
+  MT BOA __ DE SE USAR__ QUANDO VOCÊ TEM 
+
+  UM APLICATIVO 
+
+
+  BEM GRANDE,
+
+  APLICATIVO QUE PRECISA 
+
+
+  TER UM 
+
+  'LOOK UNIFORME'..... -------->  VOCÊ PODE CONSTRUIR OS CORE COMPONENTS 
+
+
+
+  POR CONTA PRÓPRIA,
+
+
+  MAS SE VOCê PENsar '''hmmm, acho que o look do material-UI seria bom, é bem consistente''',
+
+  você 
+
+  pode dar uma olhada nos seus docs...
+
+
+
+
+
+
+  ----->  E SE VOCÊ QUER TER OUTRO LOOK,
+
+  VOCÊ PODE DAR UMA OLHADA EM 
+  OUTRAS 
+
+
+  COMPONENT LIBRARIES,
+
+
+  como 
+  '
+  REACT BOOTSTRAP' ... ----> 
+
+
+
+
+  ISSO AÍ TE DÁ 
+
+
+
+  COMPONENTS QUE  
+
+
+SE UTILIZAM DO STYLING DO BOOTSTRAP,
+
+
+mas que 
+
+
+
+
+FUNCIONAM BEM COM REACT,
+
+E QUE 
+
+SÃO FACILMENTE INTEGRADOS A REACT APPS...
+
+
+
+
+
+
+
+
+
+
+--> DEVEMOS 
+
+
+CONSIDERAR OS 
+
+
+COMPONENT LIBRARIES 
+
+NOS NOSSOS PROJETOS SE PRECISAMOS DE UNIFORM STYLING,
+
+e se não queremos 
+
+estilizar 
+
+todos 
+
+components do negócio por conta própria...

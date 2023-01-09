@@ -1,0 +1,1170 @@
+
+
+NA ÚLTIMA LIÇÃO O PROFESSOR FALOU SOBRE 
+
+
+'GUARDS', aqueles negócios que 
+
+PROTEGEM/BLOQUEIAM 
+
+PARTES/PÁGINAS/CONTAINERS 
+
+
+DE SEU CÓDIGO 
+
+
+POR MEIO __ DA INDISPONIBILIDADE DE ROUTES ... (routes que são tornadas indisponíveis 
+
+
+por meio de 
+
+
+
+
+TERNARY EXPRESSIONS/IF STATEMENTS e 
+
+
+algo como uma propriedade 'auth: false' lá no state de seu component (component onde estão/está a route/as routes)....
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
+---> MAS AGORA O PROFESSOR QUER FALAR/TRATAR 
+
+
+DE UM 
+
+
+
+
+'CASO 404'... ------> ou seja,
+
+
+vamos 
+
+
+tentar acessar 
+
+
+uma 
+
+
+'ROUTE' QUE 
+
+É ____'''UNKNOWN'''____... 
+
+
+
+
+
+
+
+
+---> na verdade, nós JÁ VIMOS, ATÉ AGORA,
+
+UMA MANEIRA___
+
+
+
+DE FAZER 
+
+'HANDLE'
+
+
+
+DESSAS 'UNKNOWN ROUTES'... -----> esse approach/maneira 
+
+
+é 
+
+
+o 
+
+__rEDIRECT__ CLÁSSICO (incondicionado).... ---> o redirect clássico 
+
+é 
+
+algo como 
+
+
+
+escrever 
+
+
+'<Redirect from="/" to="/posts" />'
+
+
+
+
+
+POR __ÚLTIMO__, NA ORDEM DE EXECUÇÃO/ESCRITA DE SUAS ROUTES.... (isso fará com que 
+
+QUALQUER 
+
+
+URL IMBECIL QUE NÃO ENCAIXE NOS PRIMEIROS CASOS SEJA AUTOMATICAMENTE ENCAIXADA NESSE REDIRECT AÍ,
+
+
+PQ __tODAS AS URLS__ COMEÇAM COM '/'... --> e isso fará com que a url/path imbecil seja redirecionado 
+para 
+
+o endereço correto de nosso site.)
+
+
+
+
+EX(criei agora):
+
+
+
+<Route path="/posts" component={Posts} />
+<Route path="/new-post" component={NewPost} />
+<Route path="/cartas" component={Posts} />
+
+<Redirect from "/" to="/posts" />   ////////////ISSO VAI REDIRECIONAR TODOS OS PATHS ''''INVÁLIDOS/unknown'''' ao PATH DE 'posts'....
+
+
+
+
+
+
+
+
+---> ué, isso é estranho... testando em outros sites, eles não tem essa 'feature' de redirecionar ao home 
+
+quando escrevemos merda (quando escrevemos um path INVÁLIDO/INEXISTENTE)
+
+
+
+
+--> mas ainda assim, muitos desses sites têm isto:
+
+
+
+
+404. That’s an error.
+
+The requested URL /cccc was not found on this server. That’s all we know. 
+
+
+
+
+(ESSE É UM EXEMPLO DO GOOGLE...).
+
+
+
+
+
+
+
+
+
+Talvez seja essa a coisa que o professor quer nos mostrar; quer nos 
+
+mostrar como DEFINIR UMA PÁGINA 
+
+DE 
+
+'ERRO 404', 
+
+que deverá ser mostrada ao usuário quando ele inputtar um path inválido no nosso app...
+
+
+-------------------------
+
+
+
+
+
+
+Ok.... mas agora o professor falará propriamente das 
+
+
+
+'unknown  routes'... -------> ELE EXPLICA QUE 
+
+
+
+SE NÓS 
+
+
+
+__TENTARMOS ___ ACESSAR 
+
+AQUELA 
+
+ROUTE DE CÓDIGo 
+
+
+
+{ this.state.auth     ?        <Route path="/new-post" component={NewPost}  /> : null   } 
+
+
+
+
+
+QUANDO 
+
+
+ESTIVERMOS ''NÃO AUTENTICADOS'' (unauthenticated, ou seja 'auth: false', no state),
+
+
+
+
+ESSA 
+
+
+ROUTE DE 
+
+
+'<Route path="/new-post" component={NewPost} /> : null > '
+
+
+
+
+VAI ESTAR COMO 
+
+'UNKNOWN'... ----> OK, MAS 
+
+PQ 
+
+
+'UNKNOWN?'
+ 
+
+ pq será uma 'route desconhecida'? ------> será 
+
+ desconhecida 
+
+ PQ 
+
+ NÃO TERÁ 
+
+
+ SIDO RENDERIZADA...
+
+
+
+
+
+
+
+ E POR CAUSA DO JEITO QUE NOSSO CÓDIGO EM 'Blog.js'
+
+
+ ESTÁ ESCRITO (
+
+
+           <Switch>
+                  { this.state.auth     ?        <Route path="/new-post" component={NewPost}  /> : null   } 
+                <Route path="/posts" component={Posts} />
+                <Redirect from="/" to="/posts" />
+                </Switch>
+
+
+
+ ),
+
+
+ 
+
+ VAMOS SER __AUTOMATICAMENTE __ REDIRECIONADOS ___ para 
+
+
+ A ROUTE DE 
+
+
+ '/posts'.... 
+
+
+
+
+
+
+
+
+
+
+
+
+ --------------> e essa é a __PRIMEIRA MANEIRA/APPROACH__ DE 'HANDLAR'/HANDLE _'404 REQUESTS''..... (   404 requests ========== REQUESTS ENVIADOS A PATHS/URLS DESCONHECIDAS, INVÁLIDAS...)
+
+
+
+
+ RESUMINDO:
+
+
+
+
+
+ Maneiras de fazer handle de 404 requests:
+
+
+
+
+1ª maneira)   FAZER REDIRECT DO '''PATH INVÁLIDO''/URL COM PATH INVÁLIDO __PARA __ OUTRA ROUTE, por meio de: a) component '<Redirect />'; b) 'this.props.history.push()';  c)'this.props.history.replace();'....
+
+
+
+
+
+
+
+
+
+
+
+OK... MAS EXISTE UMA __SEGUNDA MANEIRA____...
+
+
+
+
+
+
+
+
+2ª maneira)  ----> SE VOCÊ QUISER OS 'HANDLAR'/HANDLE de forma diferente, 
+
+esses 404 requests,
+
+
+
+
+PROFESSOR COMEÇA DIZENDO QUE 
+
+DEVE 
+
+__COMENTAR __ PARA FORA DO CÓDIGO 
+
+__ O CALL DAQUELE OBJETO/COMPONENT 
+
+
+'''<Redirect from="/" to="/posts" />''''..... (pq vamos ver o OUTRO APPROACH DE HANDLING DOS 404 REQUESTS...)
+
+
+
+
+
+
+ELE tem que 
+
+tirar esse objeto 'redirect '
+
+
+PQ __ELE VAI 'CATCHAR'__ QUAISQUER 'UNKNOWN REQUESTS', e não é isso que queremos;
+
+queremos 
+
+que 
+
+
+os requests 404 sejam handlados 
+
+
+
+PELA COISA QUE O PROFESSOR NOS MOSTRARÁ AGORA...
+
+
+
+
+
+--> no SEGUNDO APPROACH,
+
+vamos 
+
+
+
+ESPECIFICAR 
+
+
+
+UM COMPONENT '<Route />' 
+embaixo dos 
+
+
+outros,  coisa normal...
+
+
+
+
+MAS A NORMALIDADE ACABA POR AÍ: 
+
+
+
+vamos 
+
+
+DEIXAR 
+
+
+DE FORA 
+
+
+O PROP DE 
+
+
+'path'...
+
+
+ex:
+
+
+
+
+
+<Route />
+
+
+-----------------------------
+
+
+
+
+DEPOIS DISSO,
+
+
+DEVEMOS 
+
+
+SIMPLESMENTE 
+
+ESPECIFICAR UM ___COMPONENT___ ('component={xxxnomedocomponent}' ), 
+
+
+E DEIXAR ASSIM MESMO, DEIXAR
+
+ESSE 
+
+
+COMPONENT 
+
+'Route' 
+
+
+SEM NENHUM 'path' definido...
+
+
+
+
+ex:
+
+
+
+<Route component={} />
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+ALTERNATIVAMENTE, PROFESSOR EXPLICA QUE _PODERÍAMOS/PODEMOS___ USAR 
+
+AQUELE 
+
+
+
+MÉTODO 
+
+'render={}' 
+
+que 
+
+aprendemos no início 
+
+DESTE MÓDULO 
+
+
+(lembre-se: 'render só deve ser utilizado para coisas menores, como mostrar uma mensagem de erro, ou uma pequena informação'....).
+
+
+
+
+
+
+
+
+
+
+O PROFESSOR, NESSE NOSSO EXEMPLO,
+
+VAI 
+
+USAR 
+
+
+'render={}' 
+
+
+em vez 
+
+de 
+
+'component={}'...
+
+
+
+------------------------
+
+
+
+
+
+E 
+
+ESSA PROPRIEDADE 
+
+'render={}' 
+
+
+vai 
+
+exigir/aceitar 
+
+
+UMA FUNÇÃO INTERNA (arrow function)....
+
+
+
+ex:
+
+
+
+
+
+<Route render={
+
+    () => {}
+
+
+} />
+
+
+
+------------------------------------------
+
+
+
+
+
+AQUI O PROFESSOR EXPLICA QUE ELE 
+
+
+VAI 
+
+OUTPUTTAR
+ 
+
+ UMA SIMPLES 
+
+
+ MENSAGEM 
+
+ DE 
+
+ 'not found'... (mas ele 
+ 
+ admite que 
+ 
+ poderíamos RENDERIZAR UM COMPONent 
+ 
+ próprio 
+ 
+ 
+ de 
+ 
+ 'component={nomeDoComponent}',
+ 
+ 
+ 
+ 
+ OU SEJA, UM __CONTAINER/PÁGINA__ de erros 
+ 
+ 404,
+ 
+ 
+ se quiséssemos...)
+
+
+
+
+
+
+
+
+
+
+ OU SEJA, É EVIDENTE QUE PODERÍAMOS CRIAR UMA PÁGINA/CONTAINER 
+
+
+ '404 request error'....
+
+
+
+
+
+
+
+
+ Certo, mas essa Route com um 'render' é perfeitamente aceitável, também...
+
+
+
+
+ ex:
+
+
+
+
+ <Route render={
+
+     () => {
+         <h1>Not found</h1>
+     }
+ }
+
+ />
+
+
+
+
+
+ -----------------------
+
+
+
+
+
+
+
+ OU SEJA,
+
+
+
+ ESSA ROUTE 'SUBSIDIÁRIA' 
+
+
+ de '404 request error' 
+
+
+
+ VAI 
+
+
+
+ 'CATCHAR'
+
+ QUAISQUER 
+
+
+ PATHS 
+
+
+ QUE 
+
+ NÃO SE ENCAIXEM 
+
+
+
+ nos 
+
+ 'cases' 
+
+
+ definidos nas linhas acima dele...
+
+
+
+
+
+
+
+
+
+ ex:
+
+
+
+            <Switch>
+                  { this.state.auth     ?        <Route path="/new-post" component={NewPost}  /> : null   } 
+                <Route path="/posts" component={Posts} /> 
+                <Route render={ () => { <h1>Not found</h1>   }} />
+                </Switch>
+
+
+
+------------------------------
+
+
+
+
+
+
+
+Toda e qualquer 'unknown route' 
+
+
+SERÁ ENCAIXADA 
+
+
+nessa 'Route' de handle de 
+
+
+erros de 'request 404'... ----> e aí aquele 
+
+
+<h1> de 
+
+
+'Not Found' será outputtado...
+
+
+
+
+------------------------------
+
+
+
+
+
+CERTO...
+
+
+
+MAS É IMPORTANTE MENCIONAR, AQUI,
+
+
+QUE 
+
+
+
+
+ESSE '''APPROACH''' de definir essa route subsidiária (sem a propriedade/prop de 'path') 
+
+__NÃO FUNCIONA___ SE VOCÊ TIVER_, AO MESMO TEMPO, __ 
+
+O OBJETO/COMPONENT '<Redirect />' PRESENTE NO SEU CÓDIgo... (isso pq o component/objeto 'Redirect' também vai fazer CATCH __DE TODOS OS __ ERROS/REQUESTS 404 que o usuário escrever...)
+
+
+
+
+
+
+se você usar os 2 ao mesmo tempo, com a 
+
+ideia de usar o objeto '<Redirect />' para 
+
+REDIRECIONAR PARA A 'ROOT ROUTE' (como '/posts'),
+
+ 1 deles sempre vai ganhar, e o outro não fará nada... (o que for 'derrotado')...
+
+
+
+
+--> CONTUDO, PARA/EM OUTROS 'USE-CASES',
+
+
+
+use-cases em que você 
+
+__NÃO REDIRECIONA__ OS 'PATHS INVÁLIDOS', passados 
+
+pelo usuário, 
+
+AO 
+
+PATH __DO SEU 'HOME'__ (root route),
+
+
+
+VOCÊ PODE 
+
+_, SIM, __ USAR 
+
+
+'<Redirect />' 
+
+
+
+
+e 
+
+
+sua 
+
+
+'ROUTE SUBSIDIÁRIA' (route sem propriedade/prop 'path')
+
+
+
+JUNTOS...
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+A SEMELHANÇA ENTRE OS 2 
+
+
+__É QUE AMBOS__ DEVEM ___sER CHAMADOS/ESCRITOS 
+
+
+
+POR ÚLTIMO 
+
+
+nos blocos de suas 
+
+'Routes'...
+
+
+----------------------------------
+
+
+O PROFESSOR NOS DEMONSTRA ISSO... --------> 
+
+
+
+
+ELE 
+
+
+CLICA 
+
+
+NO LINK (navLink) 
+
+de 
+
+
+'NewPost'... ----> isso 
+
+
+vai retornar 
+aquela 
+
+
+mensagem 
+
+
+de 
+
+'Not Found'... -----> esse 
+
+'Not Found' 
+
+vai aparecer 
+
+PQ ___ NÓS __ NÃO ESTAMOS, NO PRESENTE,
+
+AUTENTICADOS... (nossa propriedade 'auth:', no state, está como valor 'false'... ) -------> 
+
+
+
+ISSO SIGNIFICA QUE 
+
+ESSA ROUTE DE 'New Post' 
+
+
+ESTÁ _COMO ''UNKNOWN'' PARA NÓS, 
+
+
+e é por isso que 
+
+vamos receber 
+
+esse render 
+
+
+de h1 indicando 'not found'.... -----------> 
+
+
+
+
+CERTO....
+
+
+
+MAS 
+
+
+
+AÍ VAMOS ENCONTRAR UM OUTRO GRANDE PROBLEMA 
+
+NO NOSSO CÓDIGO... --------> 
+
+
+
+
+SE NÓS ENTÃO DIGITARMOS 
+
+
+
+'localhost:3000/',
+
+
+
+
+
+VAMOS VER QUE 
+
+
+O 
+
+RENDER 
+
+de 
+
+'Not Found' 
+
+
+
+
+
+AINDA ACONTECERÁ... (o que é bem ruim). -----> isso ACONTECERÁ 
+
+
+
+
+
+__PQ___ 
+
+
+
+
+UMA ROUTE DE 
+
+
+'/' NÃO ESTÁ DEFINIDA, no momento, no nosso código... --------> 
+
+
+
+A ÚNICA ROUTE DE 'posts' (página/component 'posts')
+
+
+
+
+QUE ESTÁ DEFINIDA 
+
+É 
+
+
+A ROUTE 
+
+
+
+de 
+
+
+'localhost:3000/posts/'...
+
+
+
+
+
+
+
+(E ISSO NÃO DEIXA DE SER NOSSO EFEITO DESEJADO, PQ É ISSO QUE 
+
+ESTÁ NO NOSSO CÓDIGO: caso ele entenda que 
+
+a url/path não teve uma route definida para si,
+
+ELE 
+
+
+VAI 
+
+
+EXECUTAR/RENDERIZAR O COMPONENT/RENDER 
+
+definido 
+
+naquela 
+
+
+'Route subsidiária', aquela route __SEM ____ 
+
+'path', QUE DEFINIMOS 
+
+AO FINAL DO NOSSO BLOCK DE 
+
+
+'Routes'...)
+--------------------------
+
+
+
+
+
+
+
+
+---> CERTO... E ESSE ÚLTIMO TIPO DE ROUTE 
+
+QUE VIMOS AQUI é chamado de 
+
+
+'CATCH-ALL ROUTE'... (route sem propriedade/prop de 'path') ------> e ela é importante 
+
+
+
+
+
+______PRINCIPALMENTE__ PARA CASOS DE HANDLING 
+
+DE 'CASOS 404' (request 404...)... -----> isso pq 
+
+
+ESSA 
+
+'CATCH-ALL ROUTE' 
+
+vai sempre 
+
+PEGAR/CATCH 
+
+AS 
+
+'unknown routes'... -------> MAS, DE NOVO, 
+
+ISSO
+ 
+
+
+
+ ___NÃO VAI FUNCIONAR__ EM CONJUNTO COM O O OBJETO '<Redirect />'... --------> 
+
+
+
+
+
+ MAS 
+
+ OS 
+
+ 2 SÓ NÃO FUNCIONARÃO EM CONJUNTO 
+
+ SE VOCÊ 
+
+
+ ESCREVER/DEFINIR ESSE 
+
+
+
+ REDIRECT 
+
+
+ com um parâmetro 
+
+
+ 'from' de '/'...  (ou seja, SE VOCê __REDIRECIONAR __ DE TODAS AS PÁGINAS/TODOS OS PATHS POSSÍVEIS/EXISTENTES QUE NÃO SÃO OS DEFINIDOS NOS 'CASES' das Routes definidas mais acima.... (ou seja, "from='/'" É __eXATAMENTE ISSO....))
+
+
+
+ ex (de caso/combinação QUE NÃO FUNCIONARÁ):
+
+
+<Route ... />
+<Route ... />
+<Redirect from="/" to="/posts/" />
+<Route render={ () => { <h1>Not found</h1>   }} />
+
+
+
+-----------------------------------
+
+
+
+( se você escrever esse código aí de cima,
+
+
+
+
+O COMPORTAMENTO DE 'PREFIX' DO 'react-router-dom' estragará tudo:
+
+ele fará com que 
+
+aquele objeto 'Redirect' FAÇA __CATCH___ DE __tODAS AS ROUTES __ QUE NÃO SE ENCAIXAREM 
+
+NOS 
+
+'CASES' das routes que foram definidas acima dele...)
+
+
+
+
+
+
+
+
+
+
+--> ainda assim, professor queria nos mostrar esse 'worst case scenario' 
+
+
+em que 
+
+
+essas 2 'Routes' (na verdade, é um 'Redirect' e uma 'Route') colidem...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> CERTO, AGORA TEMOS UMA MANEIRA PODEROSA
+
+
+DE 
+
+FAZER HANDLE DE ERROS '404' (404 requests),
+
+
+
+
+QUE É ESCRITA COM UM 
+
+
+<Route /> 
+
+
+SEM 
+
+UM PROP DE 
+
+'path={}'....   (mas esse 'Route' aí ainda tem o component/render, que será a PÁGINA DE 'request 404' QUE VAMOS QUERER RENDERIZAR... --> algo como "whoops, I guess you typed something wrong...")

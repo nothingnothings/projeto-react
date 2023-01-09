@@ -1,0 +1,1447 @@
+
+
+
+
+
+---> Aparentemente,
+
+AQUELE 
+__PRIMEIRO 
+
+
+'submit' 
+
+
+era 
+
+o 
+
+SUBMIT 
+
+
+DE 
+
+'SIGNUP'.... --------> entretanto, 
+
+
+
+antes 
+
+
+de podermos 'signup'/'login', 
+
+
+NÓS 
+
+PRECISAMOS 
+
+
+ESTABELECER ALGUMA 
+
+maneira 
+
+
+de 
+
+o usuário poder 
+
+'signin' (ou seja, cadastrar uma conta....)
+
+
+
+
+
+
+
+
+
+
+
+----> para iniciar a implementação dessa feature,
+
+
+Professor vai adicionar OUTRO COMPONENT 
+
+'<Button />'
+
+
+em 
+
+
+
+'Auth.js'.... ---> esse component será colocado 
+
+
+DEBAIXO 
+
+DE 
+
+NOSSA 
+
+'form' ,
+
+
+dentro 
+
+daquele 
+
+return ....
+
+
+
+
+
+ex:
+
+
+
+
+
+    return (
+      <div className={AuthStyle.Auth}>
+      {/* <div className="Auth"> */}
+        <form onSubmit={this.submitHandler}>
+          {form}
+          <Button btnType="Success">SUBMIT</Button>
+        </form>
+            <Button>SIGN-IN</Button> ////EIS O CÓDIGO EM QUESTÃO.
+      </div>
+    );
+
+
+
+--------------------------------
+
+
+
+
+
+O PROFESSOR VAI DEIXAR O BOTÃO COMO 'DANGER' (não sei porque diabos ele faria isso, mas ok....) ----> 
+
+
+ele vai querer o estilo VERMELHO do botão...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+    return (
+      <div className={AuthStyle.Auth}>
+      {/* <div className="Auth"> */}
+        <form onSubmit={this.submitHandler}>
+          {form}
+          <Button btnType="Success">SUBMIT</Button>
+        </form>
+            <Button btnType="Danger">SIGN-IN</Button> ////EIS O CÓDIGO EM QUESTÃO.
+      </div>
+    );
+
+
+
+
+-----------------------------------------
+
+
+---------> Isso feito, professor diz que 
+
+VAI QUERER 
+
+
+FAZER 
+
+MANAGE 
+
+DO STATE 
+
+
+DE 
+
+'Auth.js'...  ------------> 
+
+
+
+
+ele vai criar uma nova propriedade no state, chamada de 
+
+'isSignup', definida INICIALMENTE COMO 'TRUE'....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+class Auth extends Component {
+  state = {
+    controls: {
+      //////////MESMO FORMATO DE 'CRIAÇÃO DE INPUT FIELDS' usado em 'ContactData', mas dessa vez nessa 'página especial' de 'Auth.js'... --->  e, como em 'Auth.js', USAREMOS O __STATE__ LOCAL DE  UM CONTAINER ('Auth.js', nesse caso) PARA ___cRIAR___ E EDITAR/CUSTOMIZAR NOSSOS INPUT FIELDS...
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail Address',
+        },
+        value: '',
+        validation: {
+          required: true,
+          isEmail: true,
+        },
+        valid: false,
+        touched: false,
+      },
+
+      password: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'password',
+          placeholder: 'Your Password',
+        },
+        value: '',
+        validation: {
+          required: true,
+          //isPassword: true,
+          minLength: 6
+        },
+        valid: false,
+        touched: false,
+      },
+    },
+    isSignup: true ///////eis o código em questão.
+  };
+
+
+  ----------------------------------
+
+
+
+
+  OK, MAS PQ INICIALMENTE essa propriedade 
+
+  '
+  isSignup' 
+
+  DEVERÁ ESTAR COMO 'true'? ----> bem, é PQ __iNICIALMENTE __ NOSSO 
+
+
+  CÓDIGO/PÁGINA REALMENTE ESTARÁ NESSE 'MODO SIGNUP'.... (modo de CRIAÇÃO DE CONTA, ESSENCIALMENTE....) -------> 
+
+
+
+  e a 
+
+  atribuição/tarefa DO BOTÃo 
+
+
+
+  'signin/switch to signin' 
+
+  É 
+
+  ___LITERALMENTE ___ TROCAR 
+
+  ESSE 
+
+  'isSignup' 
+
+  PARA 
+
+  ___'FALSE'...
+
+-----------------------------
+
+
+
+
+
+
+
+----> para conseguir trocar esse 'isSignup' para __FALSE__,
+
+
+VAMOS PRECISAR DE UM HANDLER ESPECÍFICO... --> usaremos 
+
+
+um 
+
+criado agora,
+
+chamado 
+
+de 
+
+
+'switchAuthModeHandler'....
+
+
+
+ex:
+
+
+
+
+switchAuthModeHandler = () => {
+
+}
+
+
+------------------------------------------
+
+
+
+
+
+
+
+--------------> POR MEIO DESSE HANDLER, O PROFESSOR SIMPLESMENTE VAI QUERER EXECUTAR 
+
+um
+
+
+
+'this.setState()'... ----> MAS NÃO SERÁ 
+
+O 
+
+'this.setState()' 
+
+SIMPLES, 
+
+
+
+E SIM 
+
+
+__AQUELE 'setState()'
+
+MAIS ELABORADO,
+
+
+
+que 
+
+recebe 
+
+
+'prevState, prevProps'
+
+
+COMO 
+
+PARÂMETRO,
+
+
+E QUE ENTÃO 
+
+MANIPULA
+
+
+
+ESSE 
+
+'prevState' 
+
+PARA ___FAZER ___ TOGGLE__ ENTRE 'true' e 'false',
+
+nessa propriedade aí...
+
+
+
+ex:
+
+
+
+
+
+switchAuthModeHandler = () => {
+            this.setState(
+                    prevState => {
+                       return { isSignup: !prevState.isSignup } 
+                    }
+            )
+}
+
+
+
+
+
+
+-------------------------------------
+
+
+
+ou seja,
+
+para 
+
+conseguir a 'VERSÃO EXTENDIDA' 
+
+do 
+
+'this.setState()',
+
+
+
+
+PROFESSOR PRECISA PASSAR AQUELA FUNÇÃO INTERNA,
+
+função interna que 
+
+vai 
+
+1) RECEBER 'prevState' como parâmetro 
+
+
+2) retornar __ O OBJETO QUE SERÁ 'MERGED' COM __ O STATE ATUAL ('oldState') DO NOSSO APP...
+
+
+
+
+
+
+---> e nós vamos querer que esse state seja 
+
+
+justamente 
+
+O 
+
+CONTRÁRIO DO VALOR DO STATE ANTERIOR (por isso '!prevState.isSignup')....
+
+
+-----------------------------------------
+
+
+
+-----> isso vai basicamente mudarmos de 'signup mode' para 'signin mode'... 
+
+
+
+
+
+
+
+
+
+
+------> NÓS TAMBÉM VAMOS QUERER QUE __ A INTERFACE DO USUÁRIO ___ REFLITA ESSA MUDANÇA... ___ 
+
+
+
+
+
+podemos colocar um
+
+
+código condicional,
+
+
+COMO
+
+
+{this.state.isSignup ? xxxxxx : null}, 
+
+DENTRO 
+
+
+DO 
+
+
+RENDER 
+
+
+de 
+
+'Auth.js'...
+
+
+--------------------------------------
+
+
+
+
+
+ESCREVI UM CÓDIGO BEM BASTANTÃO,
+ 
+ ESTE AQUI,
+  
+
+  SÓ PARA SINALIZAR 
+
+
+  QUE 
+
+
+  ALTERAMOS 
+  O 'MODE':
+
+
+
+      return (
+      <div className={AuthStyle.Auth}>
+        <form onSubmit={this.submitHandler}>
+          {form}
+          <Button btnType="Success">SIGN-UP</Button>
+        </form>
+            <Button btnType="Danger" clicked={this.switchAuthModeHandler}>SIGN-IN</Button>
+            {!this.state.isSignup ? <hr/> : null}  /////////EIS O CÓDIGO EM QUESTÃO.  ---> faz aparecer uma HR se o 'mode' muda, se o valor de 'isSignup' muda para FALSE...
+      </div>
+    );
+
+
+-----------------------
+
+
+
+
+
+
+
+essa propriedade 'clicked', registrada lá no 
+
+
+component 
+
+'Button', é muito útil....
+
+
+
+----------------------------------------
+
+
+
+
+
+
+É CLARO QUE 
+
+
+ESSE 
+
+'SWITCH', 
+
+essa troca 
+
+de valor 
+
+
+de 
+
+'isSignup' 
+
+NÃO FAZ NADA POR SI SÓ.... ----> para que 
+
+algo 
+
+
+realmente 
+
+aconteça 
+
+no nosso 
+
+
+código,
+
+PRECISAMOS 
+
+
+
+FAZER ALGUMA COISA NO 
+
+
+'submitHandler', que está com este código:
+
+
+
+
+
+submitHandler = (event) => { 
+    event.preventDefault(); 
+    this.props.onAuthAttempt(this.state.controls.email.value, this.state.controls.password.value); //pass desses valores como PARÂMETROS da action 'authAttempt()', lá em 'auth.js'...
+}
+
+
+
+-------------------------------------------------
+
+
+
+
+
+---> a partir desse 'submitHandler',
+
+
+NÓS 
+
+
+__SEMPRE ___ EXECUTAMOS 
+
+AQUELE 
+
+'onAuthAttempt',
+
+que 
+
+acaba FAZENDO 
+
+
+__dISPATCH___ DE NOSSA ACTION __ QUE 
+
+faz 'post' (cria o usuário no servidor, basicamente...)...  --------> 
+
+
+
+
+
+
+PARA 
+
+FAZER COM QUE 
+
+__ESSE 'onAuthAttempt' 
+
+
+SÓ 
+
+___eXISTA NO MODO ___ 
+
+
+
+'Signup' (cadastro),
+
+
+O PROFESSOR 
+
+VAI ADICIONAR 
+
+
+UM 
+
+__tERCEIRO___ ARGUMENTO (fazer expect de um terceiro argumento)
+
+
+LÁ 
+
+
+EM 
+
+'authAttempt', um argumento distinto de 'email' e 'password'... ---------> 
+
+
+
+
+
+ESSE PARÂMETRO SERÁ 
+
+
+'method' (pq 'method' quer dizer o MÉTODO que o usuário está querendo... se ele está querendo 'SIGNUP' ou 'SIGNIN', essencialmente....)..
+
+
+
+
+eX:
+
+
+
+
+
+
+
+
+export const authAttempt = (email, password, method) => { ///////EIS O CÓDIGO EM QUESTÃO...
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password, 
+            returnSecureToken: true  ///propriedade obrigatória para FUNCIONAMENTO DO 'REST API' do firebase... ---> deve sempre estar settada como 'true'...
+        }
+        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4', authData) ///ESSA 'key' ([API_KEY]) FOI OBTIDA LÁ DO SITE DO GOOGLE FIREBASE, na engrenagem, e depois em 'Configurações do Projeto' > 'Chave de API da web'...
+        .then(
+            response => {
+                console.log(response);
+                dispatch(authSuccess(response.data))
+            }
+
+        )
+        .catch(error => {
+            console.log(error);
+            dispatch(authFail(error));
+        })
+    }
+}
+
+
+
+
+
+
+------------------------------------
+
+
+
+ESSE 
+
+
+'method'
+
+
+VAI 
+
+SER MT IMPORTANTE,
+
+PQ 
+
+O 
+
+PROFESSOR 
+
+VAI QUERER 
+
+
+__ENVIAR ___ O REQUEST __ DO USUÁRIO (a partir de 'AuthAttempt') 
+
+
+
+A __dIFERENTES URLS, DEPENDENDO DO METHOD/parâmetro QUE FOI recebido por este parâmetro/slot....
+
+
+
+
+
+
+
+
+----> para isso, professor diz que vai settar uma 
+
+'DEFAULT URL', por meio de uma VARIÁVEL, 
+dentro 
+
+de esse 
+
+
+'authAttempt'...
+
+
+
+no caso ,
+
+
+a 
+
+DEFAULT URL, segurada por uma 'let',
+
+
+
+VAI SER JUSTAMENTE 
+
+NOSSA __URL___ DE 'SIGNUP', de cadastro...
+
+
+
+ex:
+
+
+
+
+
+export const authAttempt = (email, password, method) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password, 
+            returnSecureToken: true  ///propriedade obrigatória para FUNCIONAMENTO DO 'REST API' do firebase... ---> deve sempre estar settada como 'true'...
+        }
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4' /////EIS O CÓDIGO EM QUESTÃO....
+        axios.post(url, authData) ///ESSA 'key' ([API_KEY]) FOI OBTIDA LÁ DO SITE DO GOOGLE FIREBASE, na engrenagem, e depois em 'Configurações do Projeto' > 'Chave de API da web'...
+        .then(
+            response => {
+                console.log(response);
+                dispatch(authSuccess(response.data))
+            }
+
+        )
+        .catch(error => {
+            console.log(error);
+            dispatch(authFail(error));
+        })
+    }
+}
+
+
+
+
+----------------------------------------
+
+
+
+
+Certo... 
+
+
+isso feito,
+ 
+ ELE __PROVAVELMENTE __ VAI USAR UM IF CHECK 
+
+ para 
+
+ MUDAR 
+
+ a nossa url, 
+
+ caso 
+
+ algum 'METHOD' diferente (ou seja, caso o METHOD seja o method de 'signin'/login mesmo....).
+
+
+
+
+
+
+
+professor troca o nome de 'method'; coloca 'isSignup'... ---> pq esse parâmetro AÍ VAI ___sINALIZAR __ 
+
+
+SE O APP ESTÁ NO MODO 'SIGNUP' OU NÃO (false)...
+
+
+
+
+
+
+
+
+por isso ele escreverá:
+
+
+
+
+
+let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4' /////EIS O CÓDIGO EM QUESTÃO....
+
+
+if (!isSignup) {
+    url = 
+}
+
+
+
+--------------------
+
+OK, 
+
+
+A URL VAI TER DE SER DIFERENTE, QUANDO ESSE IF CASE FOR SATISFEITO.... ----> ok, mas qual url 
+
+é 
+
+essa? ------> podemos 
+
+
+
+descobrir isso na DOCUMENTAÇÃO DO GOOGLE... ----> 
+
+
+
+
+
+Sign in with email / password
+You can sign in a user with an email and password by issuing an HTTP POST request to the Auth verifyPassword endpoint.
+
+Method: POST
+
+Content-Type: application/json
+
+Endpoint
+
+https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]
+
+
+
+
+
+
+OU SEJA,
+
+
+é naquele endpoint de 
+
+
+
+
+'''
+
+https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]
+
+'''
+
+
+
+--------------------
+
+Para que isso funcione, precisamos inserir nossa 
+
+API_KEY
+
+
+do nosso aplicativo/server firebase
+
+no 
+
+espaço 
+
+
+'API_KEY' (
+
+    basicamente, 
+
+    é só 
+
+    usar 
+
+    a mesma key que usamos para o signup...
+)
+
+
+EX:
+
+
+
+
+'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'
+
+
+
+
+
+----------------------------------
+
+
+
+FICOU ISSO AQUI:
+
+
+export const authAttempt = (email, password, isSignup) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password, 
+            returnSecureToken: true  ///propriedade obrigatória para FUNCIONAMENTO DO 'REST API' do firebase... ---> deve sempre estar settada como 'true'...
+        }
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';/// url usada para SIGNUP/CADASTRO....
+        if (!isSignup) {
+            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; ///url/endpoint usado para ___SIGNIN/LOGIN...
+        };
+        axios.post(url, authData) ///ESSA 'key' ([API_KEY]) FOI OBTIDA LÁ DO SITE DO GOOGLE FIREBASE, na engrenagem, e depois em 'Configurações do Projeto' > 'Chave de API da web'...
+        .then(
+            response => {
+                console.log(response);
+                dispatch(authSuccess(response.data))
+            }
+
+        )
+        .catch(error => {
+            console.log(error);
+            dispatch(authFail(error));
+        })
+    }
+}
+
+
+-------------------------------------------
+
+
+ Com isso, agora temos 
+
+ a URL AJUSTADA AO NOSSO 'MODE'... (nosso mode criado de forma RÚSTICA...)
+
+
+
+
+
+
+
+ --> o último passo, agora,
+
+
+ é 
+
+
+ FAZER O PASS de 'isSignup' (ou seja, um valor FALSE ou TRUE) 
+
+
+
+ a essa nossa action/action creator de 'authAttempt'....
+
+
+
+
+
+
+
+
+
+
+
+ ---> eu pensei um pouco, talvez o código correto seria este: 
+
+
+
+
+
+ submitHandler = (event) => { ////'event' será passado JUSTAMENTE para __CONSEGUIR ___ executar 'event.preventDefault()'... (o que vai prevenir o RELOAD DE NOSSA PÁGINA QUANDO CLICAMOS EM 'submit', no BOTÃO/BUTTON de 'submit' DENTRO DE 'form'...)
+    event.preventDefault();
+    this.props.onAuthAttempt(this.state.controls.email.value, this.state.controls.password.value, true); //pass desses valores como PARÂMETROS da action 'authAttempt()', lá em 'auth.js'...  --> o 'true' é USADO COMO VALOR DO PARÂMETRO 'isSignup'.... (terceiro parâmetro).
+}
+
+
+
+
+
+switchAuthModeHandler = () => {
+  this.setState(prevState => {
+    return {isSignup: !prevState.isSignup}
+  })
+  this.props.onAuthAttempt(this.state.controls.email.value, this.state.controls.password.value, false); //pass desses valores como PARÂMETROS da action 'authAttempt()', lá em 'auth.js'...  --> o 'false' é USADO COMO VALOR DO PARÂMETRO 'isSignup'.... (terceiro parâmetro).
+}
+
+
+
+--------------------------------------------------
+
+
+
+
+
+-------> certo, mas FALTOU UM DETALHE.... ---> 
+
+
+o detalhe que faltou está em 
+
+
+
+
+'mapDispatchToProps', que 
+
+está com este 
+
+código:
+
+
+
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAuthAttempt: (email, password) => {dispatch(actions.authAttempt(email, password))}
+    }
+}
+
+
+
+
+-------------------------------------------
+
+
+
+
+bem, aí JUSTAMENTE ESTÁ FALTANDO O PARÂMETRO 
+
+
+'isSignup', nos 2 espaços...
+
+
+
+eX:
+
+
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAuthAttempt: (email, password, isSignup) => {dispatch(actions.authAttempt(email, password, isSignup))}
+    }
+}
+
+
+-----------------------------------------------
+
+
+
+
+---> nosso código, __ DE FATO___, ESTAVA CORRETO, MAS 
+
+
+
+
+O PROFESSOR QUER SEMPRE SER __MAIS CORRETO___.. -------> em vez de passar um hardcode de 
+
+'true',
+
+
+o que 
+
+o professor passa, 
+
+em 
+
+'submitHandler',
+
+
+naquele 'this.props.onAuthAttempt',
+
+
+
+é 
+
+UM 
+
+'this.state.isSignup' (que estará como 'TRUE', nesse caso, é claro... ------> mas true é exatamente o que eu havia escrito, por isso não há mudança em usar 'this.state.isSignup' ou hardcodar 'true'...).
+
+
+
+
+
+
+
+ex(código 'corrigido' pelo professor):
+
+
+
+
+
+ submitHandler = (event) => { ////'event' será passado JUSTAMENTE para __CONSEGUIR ___ executar 'event.preventDefault()'... (o que vai prevenir o RELOAD DE NOSSA PÁGINA QUANDO CLICAMOS EM 'submit', no BOTÃO/BUTTON de 'submit' DENTRO DE 'form'...)
+    event.preventDefault();
+    this.props.onAuthAttempt(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup); //pass desses valores como PARÂMETROS da action 'authAttempt()', lá em 'auth.js'...  --> o 'true'/this.state.isSignup é USADO COMO VALOR DO PARÂMETRO 'isSignup' em 'authAttempt'.... (terceiro parâmetro).
+}
+
+
+
+
+
+switchAuthModeHandler = () => {
+  this.setState(prevState => {
+    return {isSignup: !prevState.isSignup}
+  })
+  this.props.onAuthAttempt(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup); //pass desses valores como PARÂMETROS da action 'authAttempt()', lá em 'auth.js'...  --> o 'false' é USADO COMO VALOR DO PARÂMETRO 'isSignup'.... (terceiro parâmetro).
+}
+
+
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+
+
+---------------> CERTO... salvamos tudo isso e voltamos ao nosso app... ----> 
+
+
+AGORA,
+ 
+
+ SE USARMOS 
+
+ O __MESMO EMAIL DE ANTES, E TENTARMOS LOGGAR__ SEM TER 'conta' 
+
+
+
+ no negócio, no modo de 'signin',
+
+
+
+VAMOS RECEBER UM __ERRO__....
+
+
+
+
+
+
+
+
+--------> mas se eu ESCREVER O MESMO 'email' e o 'PASSWORD' de 
+
+um usuário 
+
+QUE 
+
+JÁ 
+
+EXISTE 
+NO NOSSO 
+
+SERVER,
+
+
+
+
+
+eu vou receber, no console, um 'AUTH_SUCCESS'... -----> isso significa que 
+
+
+
+NOSSO CÓDIGO JÁ TEM VÁRIOS 'PEDAÇOS' FUNCIONANDO....
+
+
+
+
+
+
+ele:
+
+
+
+1) JÁ CONSEGUE __cRIAR __ ''ACOUNTS'' (com emails e passwords, lá no nosso DATABASe do firebase...)
+
+
+
+
+2) JÁ CONSEGUE NOS DIZER SE AS ACCOUNTS REALMENTE FORAM CRIADAS A PARTIR DOS DADOS INPUTTADOS PELO USUÁRIO ('AUTH_SUCCESS' e 'AUTH_FAIL', no console...)
+
+
+
+3) JÁ CONSEGUE TER UMA 'FUNÇÃO DE VERIFY DE CONTA', uma função de autenticação básica, QUE CHECA 
+SE O EMAIL E PASSWORD INPUTTADOS POR VOCÊ JÁ EXISTIAM NO SERVIDOR... (e aí responde com 'AUTH_SUCCESS' ou 'AUTH_FAIL', 
+dependendo disso....)
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+PROBLEMAS:
+
+
+1) nossa página está FEIA 
+
+
+
+2) esse botão de 'switch to signin'/'signin' 
+
+
+ESTÁ __MUITO CHINELO___.... --> em sites 'legit',
+
+nós 
+
+NÃO TEMOS 
+
+que 
+
+'trocar para signin' para 
+
+conseguir 
+
+fazer login nos seus aplicativos.... ------> quando isso acontece,
+
+geralmente é 
+
+carregada 
+
+UMA PÁGINA EXTRA 
+
+com requerimentos de dados para o login... (páginas com múltiplos index.html, ou então  
+páginas com modais... bem comum.)
+
+
+
+
+
+
+3) quando clicamos em 'SIGNIN'/'switchtosignin', UMA 
+
+
+REQUEST TAMBÉM É ENVIADA AO NOSSO SERVER.... ---> e essa request sempre acaba com 'EMAIL_EXISTS', se colocamos um 
+
+email que já existe.... (pq ele vai tentar ENVIAR ESSE REQUEST com o email-password que JÁ EXISTE 
+
+ao ENDPOINT dos cadastros, que não é o que queremos...) -----------> 
+
+
+
+DESCOBRI A RAZÃO DISSO: 
+
+
+
+UM REQUEST SEMPRE É ENVIADO QUANDO CLICAMOS EM 'signin'/'login'/'switchToSignin' __JUSTAMENTE___ 
+
+PQ 
+
+
+NÓS 
+
+
+TEMOS 
+
+'onAuthAttempt', uma execução call disso aí,
+
+DENTRO DO CÓDIGO DE 
+
+'switchAuthModeHandler'... 
+
+ex:
+
+
+switchAuthModeHandler = () => {
+  this.setState(prevState => {
+    return {isSignup: !prevState.isSignup}
+  })
+  this.props.onAuthAttempt(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup); ////////ISSO AQUI ESTÁ FUDENDO TUDO...
+}
+
+
+---------> CONSERTEI O PROBLEMA....
+
+
+
+
+eu escrevi um if statement especial,
+
+dessa forma aqui:
+
+
+
+switchAuthModeHandler = () => {
+  this.setState(prevState => {
+    return {isSignup: !prevState.isSignup}
+  })
+  if (this.state.isSignup) { ////isso vai EVITAR que um request seja enviado NA PRIMEIRA VEZ em que o usuário clica em 'SIGN-IN'/SWITCH TO SIGN-IN
+    return;
+  }
+  this.props.onAuthAttempt(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup);
+}
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+Se vocÊ ___TENTA__ CRIAR UM ___ EMAIL-PASSWORD QUE JÁ EXISTE NO SERVIDOR (um usuário, basicamente)
+
+POR MEIO 
+
+DO 
+
+
+'SIGNUP',
+
+você TAMBÉM 
+
+RECEBE 
+
+
+'AUTH_FAIL', o que é o certo... ---> você verá na 'message' do error 
+produzido 
+
+pelo server:
+
+
+'EMAIL_EXISTS'...
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+Agora a única coisa que está me tiltando é que 
+
+o usuário 
+tem que 
+
+
+clicar 
+
+2X em 'SIGNIN' para poder loggar:
+
+
+uma vez 
+
+
+para _tROCAR__ O 'MODE' DA PÁGINA PARA 'SIGNIN',
+
+
+e OUTRA 
+
+VEZ 
+
+
+__PARA __ ENTÃO 
+
+
+REALMENTE FAZER O 'LOGIN'...
+
+
+
+--> esse é um detalhe que veremos nas próximas aulas... --> mas o importante 
+
+é 
+
+
+que agora,
+
+quando NÓS EFETIVAMENTE ___'SIGNIN'/login__ na nossa página,
+
+
+NÓS 
+
+__REALMENTE___ CONSEGUIMOS 
+
+
+
+UM 
+
+'TOKEN', enviado pelo servidor... (sinal que O FLOW__ DE DADOS DE AUTENTICAÇÃO, DO NOSSO SERVIDOR-APLICATIVO,
+
+ESTÁ FUNCIONANDO...)
+
+
+
+--------------------------------------------
+
+
+
+
+--> A PRÓXIMA ETAPA, DIZ O PROFESSOR,
+
+
+É ____ARMAZENAR___ ESSA TOKEN AÍ ('tokenId'),
+
+
+
+PARA __ QUE ELA POSSA SER USADA NO FUTURO.... (só não sei em que lugar ele vai armazenar... 'localStorage', talvez?)

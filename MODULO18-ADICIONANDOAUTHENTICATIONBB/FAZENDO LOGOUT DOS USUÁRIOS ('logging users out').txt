@@ -1,0 +1,1798 @@
+ 
+
+
+ANTES DE CONTINUARMOS 
+
+USANDO 
+
+
+AQUELA
+ 
+
+
+ TOKEN 
+
+ __ QUE NÓS __ARMAZENAMOS 
+
+ NO NOSSO 
+
+ 'REDUX STORE'... ----> vOCÊ 
+
+
+
+ DEVE 
+
+
+ SE 
+
+ LEMBRAR 
+
+
+ QUE 
+
+ QUANDO 
+
+
+ __NÓS __ DE FATO __ FAZEMOS 'SIGNIN' (login)
+
+
+ E ENTÃO 
+
+
+ __INSPECIONAMOS A 'DATA' QUE 
+
+ CONSEGUIMOS 
+
+ DE VOLTA 
+
+ DO 
+
+ SERVIDOR,
+
+
+
+NÓS __VEMOS__ QUE ALI, 
+
+DENTRO DO OBJETO 
+
+'RESPONSE',
+
+NÓS 
+
+
+TAMBÉM 
+
+RECEBEMOS 
+
+AQUELA PROPRIEDADE/OBJETO 
+
+'expiresIn',
+
+
+QUE 
+
+TEM UM VALOR 
+
+DE 
+
+'3600'... ------> ISSO SIGNIFICA QUE 
+
+ A __tOKEN __ SÓ FICA VÁLIDA POR 
+
+ 60 MINUTOS... ----> passado 
+
+
+ esse 
+
+ período,
+
+
+ SE TENTARMOS 
+
+ ENVIAR 
+
+
+UM REQUEST 
+
+A QUALQUER 
+
+ 'RESOURCE' que requer essa tal token,
+
+ O 
+
+
+ __REQUEST__ VAI __fALHAR__, vai falhar ______COMO SE NÓS 
+
+ NÃO TIVÉSSEMOS ENVIADO ___ TOKEN __ ALGUMA AO SERVIDOR.... ------> e isso 
+
+
+ NÃO É A MELHOR 'USER EXPERIENCE'; --------> NÓS NUNCA VAMOS QUERER 
+
+ 'FAIL SILENTLY'... ---> 
+
+
+ o objetivo 
+
+ É JUSTAMENTE ___ AVISAR O USUÁRIO DE QUE HOUVE TAL PROBLEMA... --> ou seja,
+
+ NÓS 
+
+
+ ________pROVAVELMENTE___ VAMOS QUERER ___'LOGOUT' O USUÁRIO __ DEPOIS 
+
+ DE TRANSCORRIDO ESSE TEMPO...
+
+
+
+
+
+
+ SIDENOTE: ----> SE O USUÁRIO _________RECARREGA___ O APLICATIVO (ou seja, se clica em 'reload', se realmente 
+ 
+ FAZ COM QUE 
+ 
+ A PÁGINA RECARREGUE; RECARREGA O HTML,
+ 
+
+ NOSSO 
+
+ 'STATE' É __PERDIDO DE QUALQUER FORMA___..... ---> isso vai limpar 
+
+ TANTO 
+
+ O ___LOCAL ___ STATE __ COMO 
+
+ O
+  
+
+  STATE 
+
+  NA 
+
+  'REDUX STORE'... ------> OS RELOADS 
+
+
+  DA 
+
+  'ENTIRE APPLICATION' SEMPRE VAO FAZER COM QUE 
+
+  O 
+
+  STATE 
+
+  DO 
+
+  REDUX/STATE TRADICIONAL 
+
+
+  DO 
+
+  REACT 
+
+  SEJA 
+
+  PERDIDO....
+ ) ---------------->  É por isso 
+
+
+ que 
+
+
+ vamos 
+
+
+ FAZER/CODAR 
+
+
+ UMA ALTERAÇÃO NA UI, NO FUTURO, 
+
+ PARA 
+ MOSTRAR 
+
+ QUE 
+
+ ESTAMOS/NÃO ESTAMOS 'logged in'... (talvez um retrato, uma fotinho de 'perfil'...).
+
+
+
+
+
+ --------------> MAS AQUI ESTAMOS FALANDO DE OUTRA SITUAÇÃO... --> estamos 
+
+ falando 
+
+ de uma situação 
+
+ EM QUE 
+ O USUÁRIO 
+
+
+ __NÃO RECARREGA A PÁGINA POR 1 HORA INTEIRA,
+ MAS 
+
+ DEIXA 
+
+
+ A PÁGINA/O APP NO MESMO LUGAR,
+
+
+ com aquela 
+
+ token 
+
+ 'counting down'.... -----> e quando 
+
+ a 
+ TOKEN 
+
+ FICAR
+  
+
+
+  __________iNVÁLIDA/EXPIRADA__, O USUÁRIO __NÃO VAI CONSEGUIR __ ENXERGAR 
+
+  ISSO 
+
+
+  DE CARA,
+   
+   não terá um elemento visual AUTOMÁTICO, na página,
+
+   QUE 
+
+   O INFORME 
+
+   DESSE EXPIRE.... -------> POR ISSO,
+    
+    POR ESSA RAZÃO,
+
+
+    O QUE 
+
+    O PROFESSOR 
+
+    QUER 
+
+    FAZER 
+
+    É 
+
+
+    ___ADICIONAR __ UM CÓDIGO PARA ____INVALIDAr__ AQUELA 
+
+    TOKEN 
+
+
+
+
+    _____DEPOIS __de PASSADA 1 HORA... ----> ele vai querer isso para que 
+
+    NÓS 
+    POSSAMOS TAMBÉM
+
+
+    __UPDATAR NOSSA UI___ quando a token não estiver mais 'ali' (não estiver mais 
+    
+    armazenada/já ter expirado...)
+
+
+
+
+
+
+
+
+--> para fazer isso,
+
+professor 
+
+vai 
+
+
+
+ir 
+
+
+até o arquivo de action creators 
+
+de 
+
+'auth.js'
+
+
+E ENTÃO 
+
+
+ADICIONARÁ 
+
+
+
+UMA 
+
+
+NOVA CONSTANTE,
+
+UMA 
+
+
+CONSTANTE QUE VAI SEGURAR UMA FUNÇÃO, ESSENCIALMENTE,
+
+o qual 
+
+
+ele 
+
+
+chamará 
+
+de 
+
+
+'checkAuthTimeout'
+
+
+
+
+------------------------------
+
+
+
+
+DENTRO DESSE NEGÓCIO, PROFESSOR VAI 'EXPECT' 
+
+
+O ARGUMENTO 
+
+
+'expirationTime' -------> o tempo até que aquela token EXPIRE...
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+export const checkAuthTimeout = (expirationTime) => {
+    return 
+}
+
+
+
+
+
+-------------------------------
+
+
+
+ISSO FEITO,
+
+PROFESSOR 
+
+
+VAI QUERER 
+
+
+__rETORNAR___ UMA FUNÇÃO, UMA FUNÇÃO QUE VAI RECEBER 'dispatch' 
+
+COMO ARGUMENTO....  (acho que provavelmente essa função 'checkAuthTimeout' vai rodar código assíncrono....)
+
+
+
+
+
+ex:
+
+
+
+
+
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+
+    }
+}
+
+------------------------------------
+
+
+PROFESSOR 
+
+NOS 
+
+EXPLICA QUE 
+
+VAI QUERER 
+
+rodar 
+UM CÓDIGO ASSÍNCRONO 
+
+DENTRO 
+
+DESSA FUNÇÃO... ----> ele vai fazer DISPATCh 
+
+
+
+dessa 
+
+action 
+
+
+'checkAuthTimeout'
+
+QUANDO 
+
+NÓS 
+
+
+___CONSEGUIRMOS UMA 'SUCCESS RESPONSe' de volta, por meio da execução de 
+
+
+
+'authAttempt' 
+
+
+e 
+
+o dispatch de 
+
+'authSuccess'...
+
+
+
+
+
+--> isso significa que, NOS MESMO LUGAR EM QUE O PROFESSOR FAZ O DISPATCH 
+
+DE 
+
+'authSuccess()',
+
+
+
+ele vai QUERER 
+
+
+FAZER 
+
+O 
+
+DISPATCH 
+
+
+DE 
+
+'checkAuthTimeout',
+
+
+ESSE OUTRO ACTION CREATOR ASSÍNCRONO...
+
+
+
+
+
+
+
+
+---->
+
+
+
+
+ex:
+
+
+
+
+
+
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+
+    }
+}
+
+
+export const authAttempt = (email, password, isSignup) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password, 
+            returnSecureToken: true  
+        }
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';
+        if (!isSignup) {
+            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; 
+        };
+        axios.post(url, authData) 
+        .then(
+            response => {
+                console.log(response);
+                dispatch(authSuccess(response.data.idToken, response.data.localId));
+                dispatch(checkAuthTimeout());  /////////EIS O CÓDIGO EM QUESTÃO....
+            }
+
+        )
+        .catch(error => {
+            console.log(error);
+            dispatch(authFail(error.response.data.error));
+        })
+    }
+}
+
+
+
+
+
+--------------------------------
+
+
+
+CERTO,
+
+MAS 
+
+
+COMO 
+
+
+ESSE 
+
+'checkAuthTimeout()'
+
+
+'EXPECTA' 
+
+
+um 
+
+
+parâmetro de 
+
+
+'expirationTime',
+
+É 
+
+NECESSÁRIO 
+
+PASSAR 
+
+
+
+'response.data.expiresIn'  (propriedade que existe DENTRO DE CADA OBJETO 'RESPONSE'.. ---> essa propriedade nos DIZ QUANTO TEMPO UMA DETERMINADA 'TOKEN' VAI DURAR, no browser do usuário...)
+
+
+COMO 
+
+
+PARÂMETRO/VALOR DE SEU PARÂMETRO, NESSA CALL AÍ...
+
+
+
+
+eX:
+
+
+
+
+
+
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+
+    }
+}
+
+
+export const authAttempt = (email, password, isSignup) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password, 
+            returnSecureToken: true  
+        }
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';
+        if (!isSignup) {
+            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; 
+        };
+        axios.post(url, authData) 
+        .then(
+            response => {
+                console.log(response);
+                dispatch(authSuccess(response.data.idToken, response.data.localId));
+                dispatch(checkAuthTimeout(response.data.expiresIn));  /////////EIS O CÓDIGO EM QUESTÃO....
+            }
+
+        )
+        .catch(error => {
+            console.log(error);
+            dispatch(authFail(error.response.data.error));
+        })
+    }
+}
+
+
+
+---------------------------------
+
+
+
+
+--------------------------------
+
+
+
+CERTO... AGORA QUANDO 
+
+NOSSA 
+
+
+
+'AUTHENTICATION' der __SUCCESS____ (ou seja,
+
+
+um objeto RESPONSE válido for recebido),
+
+
+
+NÓS 
+
+
+VAMOS 
+
+DISPATCHAR
+ 
+ TNATO 
+
+
+
+
+ A AÇÃO 
+
+ 'authSuccess'
+
+ COMO 
+
+ A 
+ 
+
+ AÇÃO 
+
+
+ 'checkAuthTimeout()'... ----> e esse 'checkAuthTimeout' CONTABILIZA/CONTABILIZARÁ 
+
+
+ __QUANTO TEMPO ___ O USUÁRIO AINDA __ TEM NA NOSSA PÁGINA, LOGGADO COM AQUELE TOKEN...
+
+
+
+ ------------------------------------------------------------------------------------
+
+
+
+
+
+ ok, MAS FALTA A LÓGICA DE 
+
+
+ 'checkAuthTimeout'...
+
+
+
+
+ --------------------------------
+
+
+
+
+
+
+ ---------> dentro 
+
+ do código de 'checkAuthTimeout',
+
+
+ O PROFESSOR 
+
+
+ VAI 
+
+ QUERER 
+
+
+ DEFINIR 
+
+ UM 
+
+ 'setTimeout',
+
+ QUE 
+
+ 
+
+
+ __vAI EXECUTAR__ UM CÓDIGO ESPECÍFICO... ---> 
+
+ vai 
+
+ executar 
+
+ PROVAVELMENTE 
+
+
+
+ UM 
+
+ 'alert('xxxx')',
+
+ SUBMETIDO 
+
+ A UM 
+
+ TIMER 
+
+ DE 
+
+
+ 'expirationTime' (que é a variável que passamos no parâmetro 
+ 
+ de 
+ 
+ 'checkAuthTimeout'...)
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+ 
+
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(
+            () => {
+                alert('Access timed out. Please sign-in once more.')
+            },
+            expirationTime
+
+        )
+    }
+}
+
+
+------------------------
+
+
+CERTO... 
+
+ISSO 
+
+
+PROVAVELMENTE FUNCIONARÁ... (o expirationTime 
+
+será 
+
+de 
+3600 segundos, vulgo uma hora....
+ )
+
+
+
+
+
+
+
+ --> certo, mas 
+
+ DENTRO DO CÓDIGO DAQUELA FUNÇÃO INTERNA,
+
+ O PROFESSOR 
+
+ PROVAVELMENTE 
+
+ VAI QUERER 
+
+ FAZER 
+
+ OUTRA 
+
+ COISA;
+
+ PROVAVELMENTE 
+
+ VAI 
+
+ QUERER 
+
+
+ FAZER 
+
+ O 
+
+ DISPATCH 
+
+
+ DE UM 
+
+ ACTION CREATOR SÍNCRONO...
+
+
+
+
+
+
+
+
+
+
+ --> PARA ISSO,
+  
+  PROFESSOR 
+  CRIARÁ 
+
+  UMA NOVA ACTION/ACTION CREATOR,
+
+
+   a 
+
+   action 
+
+que 
+
+
+chamará 
+
+
+'log out'/'logged out'... -----------> 
+
+
+
+
+
+
+
+
+
+ele vai 
+
+
+escrever 
+
+
+
+
+'export const logout = () => {
+
+}
+'
+
+
+
+
+-----------------------------
+
+
+
+SERÁ 
+
+UMA 
+
+
+ACTION/ACTION CREATOR síncrono QUE NÃO EXIGIRÁ INPUT ALGUM,
+
+
+e 
+que 
+
+retornará 
+
+um
+
+
+ACTION TYPE 
+
+DE 
+
+
+
+'AUTH_LOGOUT'...  (e ele cria uma constante/identifier de mesmo nome, lá em 'authActionTypes'... )
+
+
+
+
+-----------------------------
+
+
+
+
+FICOU ASSIM:
+
+
+
+export const authLogout = () => {
+    return {
+        type: authActionTypes.AUTH_LOGOUT,
+    }
+}
+
+
+
+export const checkTimeout = (expirationTime) => {
+    return (dispatch) => {
+        setTimeout(
+            () => {
+                dispatch(authLogout())
+            },
+            expirationTime
+        )
+    }
+}
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+--> ok,
+
+AGORA 
+
+
+TEMOS 
+
+UM ACTION CREATOR ASSÍNCRONO 
+
+QUE 
+
+VAI 
+
+DISPARAR O ACTION CREATOR SÍNCRONO 
+
+'logout', que VAI DIZER AO USUÁRIO 
+
+QUE 
+
+ESTAMOS 
+
+'LOGGED OUT' (que 
+
+o token dele já expirou, basicamente...) -------->
+
+
+OK,
+ 
+
+ MAS 
+
+ PRECISAMOS 
+
+
+ DE ALGUMA 
+ LÓGICA 
+
+ NO NOSSO 
+
+
+ 'authReducer'
+
+
+ QUE 
+
+ EFETIVAMENTE 
+
+
+ __ REAJA 
+
+ A ESSA ACTION DE 
+
+ 'authLogout()'...
+
+
+ ------------------------------------
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+----> COM ISSO,
+
+
+ADICIONO UM 
+
+case 
+
+'logout'
+
+
+LÁ 
+
+NO 
+
+REDUCER 
+
+'authReducer'...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+ const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+                    case authActionTypes.AUTH_START:
+                        return authStart(state, action);
+                    case authActionTypes.AUTH_SUCCESS: 
+                        return authSuccess(state, action);
+                        case authActionTypes.AUTH_FAIL:
+                            return authFail(state, action);
+                        default: return state;
+                    case authActionTypes.AUTH_LOGOUT:  //////EIS O CÓDIGO EM QUESTÃO.
+                            return 
+              
+        }
+}
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+
+
+--> É CLARO QUE O PROFESSOR VAI QUERER ADICIONAR UMA __NOVA FUNÇÃO__ AUXILIAR DENTRO 
+
+DE
+
+'authReducer.js',
+
+uma função que 
+
+se chamará 
+
+
+de 
+
+
+'authLogout'...
+
+
+
+ex:
+
+
+
+
+
+
+const authLogout = (state, action) => {
+        return updateObject (state, {
+
+        })
+}
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+NESSA FUNÇÃO AUXILIAR,
+
+O QUE 
+
+O 
+PROFESSOR 
+
+VAI 
+
+FAZER,
+
+
+PARA 
+
+__eFETIVAMENTE ___ 'expirar' 
+
+O TOKEN 
+
+DO USUÁRIO,
+
+
+
+É 
+
+DEFINIR 
+
+
+'{ token: null}' NO 
+
+
+SEGUNDO 
+
+PARÂMETRO 
+
+
+DAQUELE 
+
+'updateObject' (objeto customizado, criado pelo professor).... ------> 
+
+
+
+ISSO 
+
+
+FARÁ 
+
+COM 
+
+QUE 
+
+
+
+A TOKEN DO USUÁRIO 
+
+REALMENTE __EXPIRE___ DEPOIS 
+
+
+__ DE TRANSCORRIDA 1 HORA INTEIRA.... ('expirationTime', que é basicamente o valor da propriedade 'isExpire' contida DENTRO DA RESPONSE RECEBIDA PELO SERVIDOR/DATABASE DO FIREBASE...)
+
+
+
+
+
+--> MAS O PROFESSOR 
+
+TAMBÉM 
+
+VAI QUERER 
+
+
+DEIXAR O 'userId' como NULL,
+
+não 
+será 
+
+apenas 
+
+a token 
+
+o objeto afetado por isso...
+
+
+
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+const authLogout = (state, action) => {
+        return updateObject (state, {
+            token: null,
+            userId: null
+        })
+}
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+COM ESSAS 2 COISAS DEFINIDAS COMO 'null', a 'token' e o 'userId',
+
+O 
+
+USUÁRIO 
+
+ESTARÁ 
+
+
+__ESSENCIALMENTE 'LOGGED OUT' 
+
+
+de verdade, 
+
+POIS 
+
+
+
+TODA ESSA 'CORE INFORMATION' QUE FORMAVA um 'logged in user',
+
+
+AGORA ESTARÁ 
+
+__REMOVIDA/EXPURGADA___/perdida...
+
+
+
+
+
+
+
+FICA ASSIM:
+
+
+
+
+
+
+
+
+const authLogout = (state, action) => {
+        return updateObject (state, {
+            token: null,
+            userId: null
+        })
+}
+
+
+
+
+ const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+                    case authActionTypes.AUTH_START:
+                        return authStart(state, action);
+                    case authActionTypes.AUTH_SUCCESS: 
+                        return authSuccess(state, action);
+                        case authActionTypes.AUTH_FAIL:
+                            return authFail(state, action);
+                        default: return state;
+                    case authActionTypes.AUTH_LOGOUT:  
+                            return authLogout(state, action); //////EIS O CÓDIGO EM QUESTÃO.
+              
+        }
+}
+
+
+--------------------------------------
+
+
+
+
+
+
+COM ISSO, 
+
+
+AGORA 
+TEMOS 
+
+ESSE 
+
+TIMER 
+
+NO LUGAR,
+
+ESSE 
+
+
+TIMER 
+
+QUE 
+
+VAI 
+
+
+FAZER 
+
+'LOGOUT' DO NOSSO USUÁRIO, APÓS 
+
+ter 
+
+
+SE PASSADO 1 HORA INTEIRA (com o browser ligado, no nosso app....)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OK, MAS O QUE DIABOS O 'LOGOUT' FAZ, NO NOSSO APLICATIVO, POR ENQUANTO? -------> 
+
+
+a única coisa que ele faz, por enquanto,
+ 
+ É 
+
+
+ ___LIMPAR__ NOSSO REDUX STORE (o que não é muita coisa...) -----> isso significa que 
+
+
+
+ AINDA NÃO MOSTRAMOS NENHUM FEEDBACK VISUAL 
+
+ A PARTIR
+  
+  DESSE 
+
+  'LOGOUT' 
+
+  e dessa action 
+
+  de 
+
+  'authLogout()'... --------> MAS 
+
+  VAMOS 
+
+
+
+  IMPLEMENTAR ALGUM CÓDIGO QUE ___ VAI INFORMAR __ O USUÁRIO QUANDO ELE FOR 'LOGGED OUT'... ------> 
+
+
+  inclusive, 
+
+  vamos 
+
+  diferenciar, no código,
+   
+   a mensagem que 
+
+   é mostrada 
+
+   QUANDO 
+
+
+   ELE 
+
+   1) é logged out por INATIVIDADE (caso comum)
+
+
+   2) FAZ LOG OUT POR __ESCOLHA PRÓPRIA, DELIBERADA, POR MEIO DE UM BOTÃO...
+
+
+   ------------------------
+
+
+
+   E 
+
+   essa 
+
+   mensagem aí serve para 'give the user a clue'
+
+   QUE 
+
+
+   ELE 
+
+
+
+__NÃO ESTÁ MAIS LOGGADO__...
+
+
+
+
+---------------------------------
+
+
+
+Professor faz um breve teste com o nosso aplicativo... -----> 
+
+
+
+
+ele 
+
+
+
+clica em 'switch to signin' 
+
+E ENTÃO 
+
+
+
+FAZ 'LOGIN' na nossa página ---> ele nos mostra 
+
+
+o console 
+
+do 
+
+
+redux dev tools,
+
+
+que 
+
+nos 
+
+mostra 
+
+
+que 
+
+
+2 
+
+ACTIONS FORAM DISPATCHEADAS 
+
+
+'AUTH_SUCCESS' 
+
+
+e 
+
+'AUTH_LOGOUT' -----> e isso é um problema,
+ 
+ pois 
+
+ quer 
+
+ dizer que 
+
+ o usuário 
+
+ FOI 
+
+ __iMEDIATAMENTE___ 'LOGGED OUT' 
+
+
+ de nossa página, por alguma razão.
+
+
+
+
+
+
+
+
+
+
+ OK.... --> MAS ISSO NÃO __aCONTECEU__ COMIGO... --> 
+
+ parece 
+
+ que 
+
+ esse 
+
+ é um erro que 
+
+ SÓ ACONTECEU 
+
+ COM O 
+
+ PROFESSOR...
+
+
+
+
+ --> não aconteceu conosco PQ ESQUECEMOS 
+
+ DE 
+
+
+
+CHAMAR 
+
+'''dispatch(checkTimeout(response.data.expiresIn))'''' LÁ 
+
+
+NAQUELE 
+
+
+
+'.then()' 
+
+
+block
+ 
+ NO ACTION CREATOR 
+
+ DE 
+
+
+
+ 'authAttempt'....
+
+
+
+-----------------
+
+
+
+COM 
+
+ESSA 
+
+ALTERAÇÃO FEITA,
+
+
+NOSSO 
+
+CÓDIGO VAI TER ___ O MESMO PROBLEMA__ DO PROFESSOR... ----> 
+
+
+
+
+O 
+
+ACTION CREATOR/ACTION DE 
+
+
+'AUTH_LOGOUT' vai 
+
+SER QUASE 
+
+QUE 
+
+IMEDIATAMENTE 
+
+DISPATCHEADO 
+
+DEPOIS 
+
+
+DE 
+
+'AUTH_SUCCESS',
+
+provando que 
+
+há algo de errado com nosso código... ---> 
+
+a 
+
+
+
+razão do problema é bem simples:
+
+
+
+
+
+
+'expiresIn' pensa que '3600' se refere a SEGUNDOS,
+
+
+
+
+
+enquanto que 
+
+
+'setTimeout' 
+
+
+considera OS NÚMEROS NO SEU SEGUNDO PARÂMETRO ____ EM MILISSEGUNDOS___... (isso significa 
+
+que 
+
+'1000' = 1 segundo... ) ---------> PARA 
+
+
+RESOLVER
+ 
+
+
+ O PROBLEMA,
+
+
+ PARA 
+
+ FAZER COM QUE 
+
+ 'setTimeout' considere 
+
+
+ '3600' como 
+
+ REALMENTE 3600 segundos,
+
+ BASTA QUE 
+
+
+ MULTIPLIQUEMOS 
+
+
+
+ 'expirationTime' POR 1000....
+
+
+
+
+ ex
+
+
+ 'expirationTime * 1000'....
+
+
+ -------------------------------
+
+
+
+
+ --> OU SEJA,
+
+ O CÓDIGO 
+
+
+
+
+ COM ESSE PROBLEMA SOLUCIONADO FICA ASSIM:
+
+
+
+ export const checkTimeout = (expirationTime) => {
+    return (dispatch) => {
+        setTimeout(
+            () => {
+                dispatch(authLogout())
+            },
+            expirationTime * 1000 ////////EIS O CÓDIGO EM QUESTÃO.
+        )
+    }
+}
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+--> AGORA NÃO VEREMOS 'AUTH_LOGOUT',
+
+
+
+pq
+
+
+o timer ESTARÁ SETTADO CORRETAMENTE....  ---------> PARECE 
+
+QUE 
+
+NÃO 
+
+HÁ 
+
+COMO REALMENTE ACELERAR O TEMPO NO BROWSER PARA TESTAR ESSA FUNÇÃO...
+
+
+
+
+
+
+
+--------> MAS AGORA DEVEMOS REALMENTE __TIRAR VANTAGEM/UTILIZAR NOSSA TOKEN___, 
+
+PARA 
+
+ENTÃO 
+
+
+__PROTEGER __ ALGUNS DOS 'RESOURCES' QUE TEMOS NA NOSSA PÁGINA... (no caso, 
+as 
+
+ORDERS 
+
+de cada usuário,
+
+que 
+
+serão 
+
+protegidas 
+
+por uma guard que 
+
+VAI CONSIDERAR AS 'CONTAS' (os tokens e email/password do usuário...))
+
+
+
+--------------------------------------------
+
+
+
+
+
+--> VAMOS PROTEGER ALGUNS DOS RESOURCES NA NOSSA DATABASE
+
+por meio 
+
+dessas tokens... ---> os 
+
+resources 
+serão 
+
+ALCANÇADOS POR MEIO DESSAS TOKENS,
+
+e isso aí 
+
+vai 
+
+
+essencialmente __UPDATAR__ A NOSSA UI... ---> quando 
+
+usuário
+estiver 
+
+loggado,
+ele poderá 
+
+
+1) VER AS SUAS ORDERS EM 'Orders' 
+
+
+2) FAZER 'LOGOUT', POR MEIO DE UM __bOTÃO DE LOGOUT__..
+
+
+-------------------------------------------
+
+
+
+
+
+
+--> VEREMOS ISSO NA PRÓXIMA AULA...

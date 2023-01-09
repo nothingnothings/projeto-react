@@ -1,0 +1,604 @@
+
+
+
+
+
+---> APRENDEMOS 
+
+BASTANTE 
+
+SOBRE 
+
+
+ESSE COMPONENT 
+
+'Transition' 
+
+AO LONGO 
+
+
+DAS 
+
+
+ÚLTIMAS LIÇÕES...
+
+
+
+
+
+
+--> é claro que 
+
+uma coisa 
+
+IMPORTANTE 
+
+DE 
+SE 
+
+SABER 
+
+
+
+É QUE 
+
+
+___VOCÊ __ PODE_ (é possível)
+
+
+NESTEAR 
+
+
+
+ESSE 
+
+
+
+
+COMPONENT 
+
+'Transition' 
+
+
+___DENTRO __ DE QUALQUER 
+
+
+COMPONENT 
+
+QUE 
+
+
+VOCÊ QUISER... -----> ISSO QUER 
+
+DIZER QUE 
+
+PODERÍAMOS 
+
+MOVER 
+
+ESTE BLOCO DE 
+
+'Transition':
+
+
+
+------------------
+
+  <Transition in={this.state.modalIsOpen} 
+  timeout={300} 
+  mountOnEnter 
+  unmountOnExit>
+
+-----------------
+
+,
+
+PODERÍAMOS 
+
+O TIRAR 
+
+
+do 
+
+arquivo 
+
+'App.js' e então 
+
+
+O COLOCAR 
+
+
+NO NOSSO 
+
+ARQUIVO 
+
+'Modal.js',
+
+
+E AÍ 
+
+SIMPLESMENTE 
+
+WRAPPAR 
+
+
+
+nosso __MODAL__ INTEIRO__ COM 
+
+ESSE 
+
+COMPONENT 
+
+'Transition'....
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+import ModalStyle from './Modal.module.css';
+
+
+
+const modal = (props) => {
+
+    const cssClasses = [ModalStyle.Modal, props.show === "entering" ? ModalStyle.ModalOpen : props.show === "exiting" ? ModalStyle.ModalClosed : null];
+
+   return (
+       
+<Transition in={this.state.modalIsOpen} timeout={300} mountOnEnter unmountOnExit> ////////EIS O CÓDIGO EM QUESTÃO.
+<div className={cssClasses.join(' ')}>
+        <h1>A Modal</h1>
+        <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+    </div>)
+</Transition> ////////EIS O CÓDIGO EM QUESTÃO..
+}
+
+
+
+export default modal;
+
+
+
+--------------------------
+
+
+
+SIM,
+
+
+REALMENTE,
+
+UM WRAP DESSA FORMA:
+
+
+
+
+   return (
+       
+<Transition in={this.state.modalIsOpen} timeout={300} mountOnEnter unmountOnExit> ////////EIS O CÓDIGO EM QUESTÃO.
+<div className={cssClasses.join(' ')}>
+        <h1>A Modal</h1>
+        <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+    </div>)
+
+
+
+-----------------------------------------
+
+
+
+
+MAS É EVIDENTE QUE 
+ISSO 
+
+
+AÍ 
+
+TAMBÉM 
+
+REQUER 
+QUE 
+IMPORTEMOS
+
+
+
+O PACOTE 
+
+'Transition'
+
+LÁ 
+
+DE 
+
+'react-transition-group/Transition'...
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+import Transition from 'react-transition-group';
+
+import ModalStyle from './Modal.module.css';
+
+
+
+const modal = (props) => {
+
+    const cssClasses = [ModalStyle.Modal, props.show === "entering" ? ModalStyle.ModalOpen : props.show === "exiting" ? ModalStyle.ModalClosed : null];
+
+   return (
+       
+<Transition in={this.state.modalIsOpen} timeout={300} mountOnEnter unmountOnExit> ////////EIS O CÓDIGO EM QUESTÃO.
+<div className={cssClasses.join(' ')}>
+        <h1>A Modal</h1>
+        <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+    </div>)
+</Transition> ////////EIS O CÓDIGO EM QUESTÃO..
+}
+
+
+
+export default modal;
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+
+MAS 
+
+
+SE 
+
+FIZERMOS 
+
+ESSA 
+ALTERAÇÃO/OUTSOURCE/TRANSLOCAÇÃO 
+
+DE 
+
+'Transition' para wrappar 
+
+O 
+
+'Modal' lá em seu arquivo 
+
+'Modal.js',
+
+
+NÓS 
+
+TEREMOS 
+
+
+
+DE FAZER MAIS ALGUMAS ALTERAÇÕES 
+
+
+naquele código de 
+
+'Modal' em 'App.js' (particularmente, no valor 'state', no prop de 'show', que deverá SER ALTERADO NOVAMENTE ___ PARA __ SER 'this.state.modalIsOpen')....
+
+
+
+
+ex(código atual/antigo):
+
+
+
+
+
+    <Transition in={this.state.modalIsOpen} timeout={300} mountOnEnter unmountOnExit>
+{(state) => {return (<Modal show={state} closed={this.closeModalHandler} />) }} //eis a linha em questão.
+    </Transition>
+
+
+----------------------
+
+
+
+ex(código DEPOIS/com esse wrap lá em 'Modal.js'):
+
+
+
+
+
+
+<Modal show={this.state.modalIsOpen} closed={this.closeModalHandler} /> //eis a linha em questão.
+
+
+---------------------------
+
+
+
+
+
+
+FICOU TIPO ASSIM:
+
+
+
+
+return (
+    
+    <Transition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        timeout={300}
+    >
+    <div className={cssClasses.join(' ')}>
+            <h1>A Modal</h1>
+            <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+        </div>
+        </Transition>
+    )
+
+
+
+
+----------------------------
+
+
+
+
+FEITA ESSA MUDANÇA,
+
+QUANDO NÓS CONTROLARMOS 
+
+NOSSAS 
+
+'CSS CLASSES' 
+
+nesse 
+
+component 
+
+'Modal.js',
+
+
+
+
+
+NÓS DEVEMOS ___aDICIONAR TAMBÉM __ UMA FUNÇÃO (dentro de curly braces, dinâmicos)
+
+
+LOGO 
+
+ABAIXO DA OPENING TAG de 
+
+
+
+'<Transition>'... ---> E DENTRO 
+
+
+DO 
+
+RETURN 
+
+DESSA FUNÇÃO NO CURLY BRACES,
+
+VAMOS 
+FAZER 
+
+
+A MESMA COISA DE ANTES (na verdade, vamos fazer ALGO PARECIDO, mas não 
+
+exatamente a mesma coisa),
+
+VAMOS QUERER 
+
+
+INSERIR 
+
+O 
+
+
+MODAL ALI,
+
+MODAL QUE SERÁ 
+
+RETORNADO 
+
+
+PELO CÓDIGO 
+
+DENTRO DO 
+
+'{}'...
+
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+return (
+    
+    <Transition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        timeout={300}
+    >
+    {state => (
+                    <div className={cssClasses.join(' ')}>
+            <h1>A Modal</h1>
+            <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+        </div>
+    ) }
+
+        </Transition>
+    )
+
+
+
+------------------------------------------
+
+
+
+
+
+
+CERTO.... MAS É EVIDENTE QUE 
+
+
+
+__NÓS __ NÃO VAMOS MAIS ANEXAR 
+
+
+'ModalStyle.ModalOpen'
+
+e 
+
+'ModalStyle.ModalClosed' 
+
+
+POR MEIO 
+
+
+
+daquele código velho 
+
+de 
+
+
+'''
+
+
+
+ const cssClasses = [ModalStyle.Modal, props.show === "entering" ? ModalStyle.ModalOpen : props.show === "exiting" ? ModalStyle.ModalClosed : null];
+
+
+
+ ''',
+
+
+QUE FICAVA/fica __FORA__ DO RETURN desse 'Modal.js',
+
+
+
+ MAS SIM 
+
+
+
+
+
+ FAREMOS 
+
+ ISSO 
+
+ DENTRO 
+
+ DESSE 
+
+
+ return 
+
+
+ do código jsx do Modal,
+
+dentro 
+
+de 
+
+'Transition'... (e com um código PARECIDÍSSIMO com esse de 'cssClasses', do array de estilos que são anexados por meio de uma ternary expression....)
+
+
+
+EX:
+
+
+
+
+
+
+
+
+return (
+    
+    <Transition
+        mountOnEnter
+        unmountOnExit
+        in={props.show}
+        timeout={300}
+    >
+    {state => {
+
+                
+            const cssClasses = [ModalStyle.Modal,
+
+state === "entering" ? ModalStyle.ModalOpen : state === "exiting" ? ModalStyle.ModalClosed : null]; ///EIS O CÓDIGO EM QUESTÃO.
+
+            return(
+                    <div className={cssClasses.join(' ')}>
+            <h1>A Modal</h1>
+            <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+        </div>
+    ) 
+    }
+        </Transition>
+        )
+    
+    )
+
+
+
+----------------------------
+
+
+
+
+OK, FUNCIONOU COMO ANTES, (mesma lógica de antes)...
+
+
+MAS 
+
+A VANTAGEM, AGORA,
+
+É QUE 
+
+O 
+
+
+COMPONENT 
+
+DE 
+
+'App.js'
+
+FICOU __MENOS AFOGADO___...

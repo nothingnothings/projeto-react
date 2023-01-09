@@ -1,0 +1,705 @@
+
+
+
+
+
+
+
+
+NAS ÚLTIMAS LIÇÕES,
+
+
+APRENDEMOS 
+
+
+
+A __PASSAR__ E EXTRAIR___ 'DYNAMIC ROUTE PARAMETERS'.... -
+
+
+
+
+
+
+
+
+
+
+
+---> Entretanto, agora 
+
+
+
+nós também 
+
+podemos 
+
+
+constatar 
+
+QUE 
+
+
+
+
+
+
+ISSO, ESSE 'ROUTING',
+
+
+TAMBÉM 
+
+
+___LEVA A ALGUNS PROBLEMAS__ QUANDO 
+
+
+
+'TROCAMOS DE PÁGINA' (trocamos de containers)...
+
+
+
+
+
+
+
+
+--> isso é visto QUANDO ______RENDERIZAMOS UM COMPONENT 
+'FULLPOST'
+
+
+na nossa página 
+
+
+e então 
+
+
+decidimos 
+
+trocar
+ 
+
+ para 
+
+ a página 
+
+
+ 'New Post'...  -----------> o que acaba acontecendo é que 
+
+
+ o 
+
+
+ 'New Post' 
+
+ acaba 
+
+
+
+ SENDO RENDERIZADO 
+
+
+ NA MESMA 'PÁGINA'/LAYOUT 
+
+
+ do 
+
+
+ component 'FullPost', logo acima dele...
+
+
+
+  
+
+
+
+
+
+
+O PROBLEMA ESTÁ NESTE TRECHO DE CÓDIGO, 
+LÁ EM 
+
+
+'Blog.js':
+
+
+
+
+
+
+           <Route exact path="/" component={Posts} />
+                <Route path="/new-post" component={NewPost}  />
+                <Route path="/:postId" exact component={FullPost}   />
+----------------------------------------------------
+
+
+
+
+AQUI NÓS TEMOS 
+
+
+NOSSAS ___ 3 'ROUTES'____...
+
+
+
+
+--> temos:
+
+
+1) a route 'new-post'... ----> ESSA ROUTE ___CARREGA__ O COMPONENT 'NewPost'...
+
+
+
+
+2) aquela route de 'FLEXIBLE ID' que criamos há pouco, a route de 'FullPost'...
+
+
+
+
+
+
+
+
+
+---> devemos lembrar o que o professor disse em uma aula anterior:
+
+
+
+
+'''vou mover a route do parameter dinâmico lá para o final, isso para que 
+
+ela não acabe CAPTURANDO as routes/as paths dos routes mais simples, definidos logo acima... (routes 
+de path '/' e '/new-post'... )'''''
+
+
+
+
+
+---> ele fez isso, é claro, para que 
+aquela 
+
+
+parte 
+
+'flexible id' ( '/:postId') NÃO INTERPRETASSE 
+
+o path/url de 'new-post' como 
+
+
+SENDO UM DESSES IDs, um desses IDs 'encaixados' no ID dinâmico... ----> E, DE FATO,
+
+
+essa última route NÃO VAI CAPTURAR 
+
+
+essas routes mais de cima...  ------------> ENTRETANTO, 
+
+
+
+
+DEVEMOS 
+
+
+
+NOS TOCAR QUE ________TODAS AS ROUTES___ AQUI DEFINIDAS _____ SÃO RENDERIZADAS__, 
+
+
+SE 
+
+ELAS 
+
+'MATCHAM' ('if they match') 
+
+
+O PATH 
+
+em que 
+
+nosso usuário está....
+
+
+
+
+
+
+
+
+
+
+--> e isso, é claro, é um problema, pq 
+
+
+nossa 'parte flexível/dinâmica' de 
+
+
+':id' 
+
+
+SEMPRE 
+
+SERÁ 
+
+
+RENDERIZADA 
+
+
+QUANDO 
+
+'NewPost' 
+
+
+for renderizado (se esse problema persistir... mas logo vamos consertá-lo...)
+
+
+
+
+
+
+
+
+----> e o professor diz que é claro que poderíamos consertar isso por meio de um approach hacky,
+
+
+como 
+
+
+
+trocar o path de 
+
+'/:postId' 
+
+por 
+
+
+
+'/posts/:id'.... -----> se fizéssemos isso, teríamos de trocar o 'to' em 'Link', lá em 'Posts', de valor... (ele está '/' + post.id', nós deixaríamos, agora, '/posts/' + post.id' ) -------> 
+
+
+E SE FIZERMOS ISSO, O CÓDIGO FUNCIONA, É CLARO; 
+
+
+
+------------------------------------------
+
+entretanto, 
+
+esse approach é meio bosta, pq às vezes 
+
+a 
+URL vai ficar com uma aparência DIFERENTE DEMAIS.... (por isso não podemos o utilizar sempre, em todos use-cases)...
+
+
+
+
+
+
+
+OK, MAS COMO PODEMOS SOLUCIONAR ISSO, ENTÃO?
+
+
+
+
+
+
+
+
+
+So, i'm trying to understand why 2 routes are rendered at the same time in this case :
+
+import React, { Component } from 'react';
+import { Route, NavLink, Switch } from 'react-router-dom';
+
+import './Blog.css';
+import Posts from './Posts/Posts';
+import NewPost from './NewPost/NewPost';
+import FullPost from './FullPost/FullPost'
+
+class Blog extends Component {
+    render () {
+        return (
+            <div className="Blog">
+                <header>
+                    <nav>
+                        <ul>
+                            <li><NavLink to="/" exact>Home</NavLink></li> 
+                            <li><NavLink to= "/new-post">New Post</NavLink></li>
+                        </ul>
+                    </nav>
+                </header>
+                <Route path="/" exact component={Posts} />
+                <Route path="/new-post" exact  component={NewPost} />
+                <Route path="/:id" exact component={FullPost} />
+            </div>
+        );
+    }
+}
+export default Blog;
+
+When i click on New Post instead of seeing just NewPost component i also see in addition FullPost component. I can not understand how /newpost path and /:id path are the same in this case. I know that this problem can be solved with Switch , however i'd like to understand why is this happening at all.
+
+
+
+
+
+
+
+
+
+Its because, when you are navigating to /new-post, two route paths are getting matched. When you write: path="/:id", id (an optional route param) can be anything, a number, string etc, so id will become /new-post, and it will render FullPost also, That's why.
+
+ -----------> Solution is, use Switch (it will always render the component with first matched path) from react-router to avoid the matching of multiple paths, so that only one component will get rendered on route path match. Like this:
+
+<Switch>
+  <Route path="/" exact component={Posts} />
+  <Route path="/new-post" exact  component={NewPost} />
+  <Route path="/:id" exact component={FullPost} />
+</Switch>
+
+
+-----------------------------
+
+
+
+
+
+
+
+
+
+SWITCH = É QUE NEM UM CANAL DE ÁGUAS, VAI REDIRECIONAR (ou 'canalizar')
+
+
+O 'FLOW' DE NOSSO CÓDIGO, VAI FAZER COM QUE 
+
+
+APENAS __ O PRIMEIRO ELEMENTO que de 'match' com  AQUELE 
+
+
+'Path' SEJA 
+
+__RENDERIZADO___ (os outros SERÃO __IGNORADOS... --> os '''outros''' tipicamente serão ROUTES COM PARÂMETROS DINÂMICOS, como esse '/:id' que criamos...)
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+----------------------> PARA SOLUCIONAR ISSO, PORTANTO, DEVEMOS USAR 
+
+
+
+O COMPONENT/OBJETO 
+
+
+'Switch'...  --> é por meio do 
+
+
+
+component/objeto 'Switch' 
+
+
+do 
+
+'react-router-dom' 
+
+
+
+QUE 
+
+PODEMOS 
+
+
+__COMUNICAR __ AO REACT __ ROUTER__ QUE 
+
+
+queremos 
+
+
+
+RENDERIZAR/CARREGAR ___ APENAS 
+
+
+1 __ DAS ROUTES/1 DOS COMPONENTS VINCULADO A UMA ROUTE... -------> 
+
+
+
+PARA FAZER ISSO,
+
+
+temos 
+
+que 
+
+wrappar 
+
+
+NOSSA 
+
+'ROUTE CONFIG' ( ou seja,
+
+
+nossa DISPOSIÇÃO DE ROUTES 
+
+
+NO NOSSO CÓDIGO; no caso, 
+
+
+seriam as linhas 
+
+'''''
+          <Route path="/" exact component={Posts} />
+  <Route path="/new-post" exact  component={NewPost} />
+  <Route path="/:id" exact component={FullPost} />
+
+''''''
+)
+
+
+
+QUE FICAM
+
+
+            <Switch>
+          <Route path="/" exact component={Posts} />
+  <Route path="/new-post" exact  component={NewPost} />
+  <Route path="/:id" exact component={FullPost} />
+    </Switch>
+
+
+
+-> E É __eVIDENTE__ QUE PODEMOS 
+
+
+ter múltiplos blocos de routes em uma página,
+
+
+cada um 
+
+
+com 
+
+um 
+
+component 
+
+'Switch'
+ 
+
+ REGULANDO 
+
+
+
+A INTERAÇÃO ENTRE ELES/ a renderização dos components a partir das routes (tomando cuidado com 
+
+os 
+
+'/:dynamicparameters'...)
+
+
+
+
+
+
+
+
+
+É CLARO QUE PRIMEIRO TEMOS QUE IMPORTAR 'SWITCH' NO NOSSO CÓDIGO, POR MEIO DA SINTAXE 
+
+
+'import { Switch } from 'react-router-dom;'...
+
+
+
+
+
+
+ex:
+
+        <Switch>
+          <Route path="/" exact component={Posts} />
+  <Route path="/new-post" exact  component={NewPost} />
+  <Route path="/:id" exact component={FullPost} />
+    </Switch>
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+CERTO,
+
+
+AGORA 
+
+
+
+SÓ A PRIMEIRA ROUTE QUE MATCHE O 'path' 
+
+VAI SER RENDERIZADA/EXIBIDA... ( o resto das routes não será renderizado.)
+
+
+
+
+
+
+
+
+
+
+
+--> certo, isso resolveu o problema. (não vemos mais 'FullPost' + 'NewPost'...)
+
+
+
+
+
+
+
+
+LEMBRE-SE:
+
+
+
+A 
+
+ORDEM 
+
+DAS 
+
+
+ROUTES _______É IMPORTANTE__, É ESSENCIAL....
+
+
+
+
+
+
+
+
+--> 
+
+
+ISSO NÃO VAI FUNCIONAR:
+
+
+
+
+
+        <Switch>
+          <Route path="/" exact component={Posts} />
+            <Route path="/:id" exact component={FullPost} />
+  <Route path="/new-post" exact  component={NewPost} />
+
+    </Switch>
+
+
+
+-
+
+
+
+
+
+
+E ISSO TAMBÉM NÃO VAI FUNCIONAR:
+
+
+
+
+        <Switch>
+               <Route path="/:id" exact component={FullPost} />
+          <Route path="/" exact component={Posts} />
+  <Route path="/new-post" exact  component={NewPost} />
+
+    </Switch>
+
+
+
+
+
+
+
+SÓ ESSA VERSÃO AQUI (A versão que o professor nos mostrou)
+
+VAI FUNCIONAR:
+
+
+
+
+        <Switch>
+          <Route path="/" exact component={Posts} />
+  <Route path="/new-post" exact  component={NewPost} />
+  <Route path="/:id" exact component={FullPost} />
+    </Switch>
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+SWITCH É IMPORTANTE PARA __ GARANTIR QUE APENAS __ 1 ÚNICA 
+
+
+ROUTE 
+
+
+É RENDERIZADA...
+
+
+
+
+
+
+----> E VOCÊ PODE 'MIX-AND-MATCH'
+
+
+o 
+
+router 
+
+DO JEITO QUE VOCÊ QUISER,
+
+
+vocÊ pode 
+
+definir algumas routes 
+
+___fORA ___ DO SWITCH,
+
+outras dentro....
+
+
+
+é isso que faz ele ser tão incrível, a sua flexibilidade.
+
+
+
+
+
+
+
+
+
+-----> ok...vimos isso aí.

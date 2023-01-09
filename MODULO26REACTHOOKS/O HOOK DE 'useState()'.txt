@@ -1,0 +1,2125 @@
+
+
+
+
+
+
+
+
+
+PARA COMEÇAR A USAR HOOKS,
+
+o professor vai começar pelo 
+
+run de 
+
+'npm start'... -----> 
+
+
+
+
+
+
+-----> vai rodar npm start 
+
+para 
+
+então 
+
+usarmos 
+
+nosso 
+
+app recém criado 
+
+de 
+
+'create-react-app'....
+
+
+
+
+
+
+---> PROFESSOR 
+
+DELETA ALGUNS ARQUIVOS 
+
+
+DEFAULT 
+
+
+DO 
+
+
+
+CREATE-REACT-APP...
+
+
+
+
+
+--> ele nos explica que 
+
+esse 
+
+app será 
+
+UM APP DE DEMONSTRAÇÃO,
+
+NADA MAIS DO QUE ISSO...
+
+
+
+
+
+
+
+
+
+-----> O PROFESSOR SÓ QUER MOSTRAR A FEATURE DOS HOOKS... 
+
+
+
+
+
+
+
+
+
+---------> dentro de 'index.js',
+
+ELE SE LIVRA 
+
+
+dos workers,
+
+e etc etc....
+
+
+
+
+
+--> Se livra de vários códigos...
+
+
+
+
+
+
+
+
+
+
+---> DEPOIS DISSO,
+
+PROFESSOR 
+
+
+DIZ QUE QUER COMEÇAR DE FORMA SIMPLES,
+
+VAI CRIAR UM COMPONENT 
+
+DENTRO 
+
+
+
+DA PASTA 
+
+'components'...
+
+
+
+
+
+-----> ELE CRIA UM ARQUIOV 
+
+chamado 
+
+de 'Todo' ('to do'...) ------> 
+
+
+
+
+AÍ O PROFESSOR 
+
+COMEÇA 
+
+PELO 
+
+IMPORT 
+DE 
+
+'React',
+
+
+
+E AÍ 
+
+
+CRIA 
+UMA CONSTANTE 
+
+CHAMADA 
+
+DE 
+
+'todo',
+
+que retorna props e tudo o mais...
+
+
+
+-----------------------
+
+
+
+
+
+
+
+
+
+-->ok....
+
+
+
+
+código fica assim, em 'App.js':
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+import Todo from './components/Todo';
+
+
+
+
+class App extends Component {
+    render() {
+        return (
+            <div className="App">
+                <Todo />
+            </div>
+        );
+    }
+}
+
+
+
+
+export default App;
+
+
+
+----------------------------
+
+
+
+
+PROFESSOR DIZ QUE 
+PODERÍAMOS 
+PASSAR 
+
+
+PROPS 
+
+A 
+
+ESSE COMPONENT 
+
+de 
+
+'Todo',
+
+MAS QUE 
+
+ELE 
+
+
+
+__NÃO VAI QUERER FOCAR NISSO; QUER 
+
+FOCAR 
+
+
+NA PARTE DOS 'HOOKS'... ---> ok, 
+
+'todo'
+
+é um 
+
+FUNCTIONAL COMPONENT REGULAR.... ---> fazemos um return de código jsx comum...
+
+
+
+
+
+
+
+
+-----------> O CÓDIGO VAI FICANDO ASSIM:
+
+
+import React from 'react';
+
+const todo = props => { ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+    return <React.Fragment> 
+
+
+    </React.Fragment>
+}
+
+export default todo;
+
+
+
+---------------------------
+
+
+
+
+DENTRO 
+
+
+DESSE 'FRAGMENT'/AUX,
+
+o professor 
+
+vai retornar 
+
+UM INPUT FIELD,
+
+
+<input>,
+
+
+NO QUAL 
+
+
+O USUÁRIO 
+
+PODERÁ INPUTTAR
+ 
+ ALGUM TEXT...
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+import React from 'react';
+
+
+
+
+const todo = props => { ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+    return <React.Fragment> 
+            <input type="text" placeholder="Todo" />
+
+    </React.Fragment>
+}
+
+
+
+export default todo;
+
+
+-----------------------------------------
+
+
+
+DEPOIS DISSO,
+
+TEREI UMA 
+
+<ul>
+
+
+EM QUE 
+
+OUTPUTTAREI
+ 
+
+ QUALQUER COISA QUE 
+ O USUÁRIO INPUTTAR....
+
+
+
+
+E TAMBÉM 
+
+TEREMOS UM 
+
+'BUTTON'...
+
+ ex:
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+const todo = props => { ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+    return <React.Fragment> 
+            <input type="text" placeholder="Todo" />
+            <button type="button">Add</button>
+            <ul></ul>
+
+    </React.Fragment>
+}
+
+
+
+export default todo;
+
+
+
+
+
+--------------------------------------
+
+
+
+SERÁ UM APP BEM SIMPLES, 
+
+MAS TERÁ TUDO DE QUE PRECISAMOS 
+
+PARA 
+
+MOSTRAR A FUNCIONALIDADE 
+
+
+DO 
+
+REACT HOOKS...
+
+
+
+
+--------------------------
+
+
+
+
+
+dentro da ul, 
+
+vamos querer 
+
+RENDERIZAR 
+
+QUALQUER COISA QUE O USUÁRIO 
+
+INPUTTAR....
+
+
+
+
+
+
+
+--. agora precisamos CAPTURAR 
+
+ESSE USER INPUT DE ALGUMA MANEIRA...
+
+(antes, fazíamos isso com o STATE,  DE CLASS-BASED COMPONENTS, 
+e com 'event.target.currentValue', etc etc...) --> e aí, 
+
+FAZÍAMOS 
+
+AQUELA
+ 
+ 'TWO-WAY BINDING'... ---------> MAS 
+
+ PARA 
+
+ ISSO, 
+
+
+ PRECISÁVAMOS 
+
+ DE UM CLASS-BASED COMPONENTS... 
+
+
+
+
+
+
+
+
+
+---------> AGORA FAREMOS ISSO COM 
+
+__HOOKS___... ------> 
+
+
+
+
+DEVEMOS 
+
+PENSAR 
+
+
+NO QUE __ QUEREMOS FAZER COM ESSE INPUT.... ---> 
+
+
+
+
+
+
+
+
+
+EM UM CLASS-BASED COMPONENT,
+
+nós escreveríamos um 
+
+listener 
+
+de 
+'onChange'....
+
+ex:
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+const todo = props => { ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+    return <React.Fragment> 
+            <input type="text" placeholder="Todo" onChange={} />
+            <button type="button">Add</button>
+            <ul></ul>
+
+    </React.Fragment>
+}
+
+
+export default todo;
+
+
+
+-----------------------------
+
+
+
+
+NESSE 
+
+LISTENER,
+
+CHAMÁVAMOS UM 
+
+
+HANDLER METHOD, TIPICAMENTE,
+
+QUE 
+
+ENTÃO CHAMARIA/CHAMA 
+
+
+'this.setState()',
+
+
+
+E AÍ 
+
+SETTARÍAMOS O 
+
+
+
+'value' (prop) 
+
+DESSE 
+
+INPUT 
+
+COMO SENDO 
+
+
+'this.state.userInput'.... 
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+import React from 'react';
+
+
+const todo = props => { ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+    return <React.Fragment> 
+            <input type="text" placeholder="Todo" onChange={} value={this.state.userInput} />
+            <button type="button">Add</button>
+            <ul></ul>
+
+    </React.Fragment>
+}
+
+
+export default todo;
+
+
+----------------------------------------
+
+
+
+
+
+
+
+----> CERTO... MAS 
+
+SE 
+
+ESTMAOS 
+
+EM UM 
+
+'CLASS-BASED' component,
+ 
+ não temos 
+
+ STATE,
+
+ e por isso 
+
+
+NÃO PODEMOS O UTILIZAR... ------> 
+
+
+
+
+
+EM VEZ DISSO,
+
+
+PODEMOS USAR 
+
+
+
+OUTRA FEATURE 
+
+ADICIONADA 
+
+POR MEIO 
+
+
+DAQUELA VERSÃO 
+
+'ALPHA' do react.. ----> 
+
+
+
+NÓS 
+
+PRECISAMOS IMPORTAR 
+
+
+UMA FUNÇÃO/MÉTODO/OBJETO ESPECIAL
+ 
+ DO 
+
+ REACT,
+
+ chamado 
+
+ de 
+
+ 'useState'... (A EXISTÊNCIA DA PALAVRA 'use' SINALIZA QUE ESSA É UMA ___HOOK FUNCTION___...)
+
+
+
+
+
+
+
+ 
+import React from 'react';
+
+import { useState } from 'react';
+
+
+const todo = props => { ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+    return <React.Fragment> 
+            <input type="text" placeholder="Todo" onChange={} value={this.state.userInput} />
+            <button type="button">Add</button>
+            <ul></ul>
+
+    </React.Fragment>
+}
+
+
+export default todo;
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+ESSE 'useState' NOS PERMITE, essencialmente,
+
+'HOOK' a CERTA FUNCIONALIDADE 
+
+DO 
+
+
+REACT...
+
+
+
+
+
+
+
+
+---> OK, MAS COMO USAMOS ESSA FUNCTION?
+
+
+
+
+
+--> BEM, PRIMEIRAMENTE,
+
+DEVEMOS 
+
+A CHAMAR 
+DENTRO 
+
+DE 
+
+'todo'...
+
+
+
+ex:
+
+
+
+
+
+import React from 'react';
+
+
+import { useState } from 'react';
+
+const todo = (props) => {
+    useState();/////ASSIM...
+
+
+
+
+  return (
+    <React.Fragment>
+      <input type="text" placeholder="Todo" />
+      <button type="button">Add</button>
+      <ul></ul>
+    </React.Fragment>
+  );
+};
+
+export default todo;
+
+---------------------------
+
+
+
+
+REALMENTE,
+
+NÓS O EXECUTAMOS COMO __ UMA FUNÇÃO__, FORA DO RETURn 
+
+de jsx 
+
+
+desse functional component...
+
+
+ 
+
+
+ --> OK, MAS O QUE ESSA FUNCTION FAZ? 
+
+
+
+
+ ---> bem,
+
+
+ O PRIMEIRO ARGUMENTO QUE ELA ACEITA/EXIGE _ É 
+
+ 
+
+ O 
+
+
+ 'initialState'... ------->  
+
+
+ OK.... --> DIGAMOS QUE QUEREMOS 
+
+ 'MANAGE' o 
+
+
+ userInput (propriedade 'userInput' dentro do state/whatever....)....
+
+
+
+ --> bem,
+
+
+ SE QUISERMOS FAZER MANAGE DO USERINPUT,
+
+ é evidente que 
+
+ INICIALMENTE 
+
+ ESSE STATE/PROPRIEDADE 
+
+ DO 
+
+ STATE 
+
+ DEVERÁ 
+
+ FICAR 
+ 
+
+ 'empty'...  ------> POR ISSO,
+
+ VAMOS PASSAR 
+
+
+
+
+UMA EMPTY STRING COMO PRIMEIRO PARÂMETRO 
+
+DE 
+
+'useState()'... (também poderíamos passar 'null', 'false', qualquer outra coisa que quiséssemos... também poderíamos passar um EMPTY ARRAY, UM EMPTY OBJECT, etc etc...)
+
+
+ex:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+import { useState } from 'react';
+
+const todo = (props) => {
+    useState('');/////ASSIM...
+
+
+
+
+  return (
+    <React.Fragment>
+      <input type="text" placeholder="Todo" />
+      <button type="button">Add</button>
+      <ul></ul>
+    </React.Fragment>
+  );
+};
+
+export default todo;
+
+
+
+
+
+-------------------------
+
+
+
+
+
+
+
+AQUI, PARA 
+
+O 
+
+'USERINPUT',
+
+
+uma 
+
+__EMPTY__ STRING__ FAZ MAIS SENTIDO___.... -----> CERTO,
+
+MAS 
+
+ISSO 
+
+AÍ, POR SI SÓ,
+
+NÃO FAZ MUITA COISA.... ----------> N FAZ MT COISA PQ 
+
+ESSE SIMPLES 
+
+CÓDIGO 
+
+DE 
+
+'useState()'
+
+
+
+NÃO FAZ MAGICAMENTE UMA CONEXÃO 
+
+ENTRE 
+
+o 
+
+'<input />'
+
+
+E O '''''state''''' desse functional component... --> CERTO... MAS 
+
+
+
+
+'useState()'
+
+__NOS RETORNA UM NEGÓCIO___... --> ELE NOS RETORNA UM VALOR __ (value)
+
+
+
+QUE PODERÍAMOS CHAMAR de 
+
+'inputState' (uma constante com esse nome)....
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+
+
+import { useState } from 'react';
+
+const todo = (props) => {
+
+
+
+    const inputState = useState('');/////ASSIM...
+
+
+
+
+  return (
+    <React.Fragment>
+      <input type="text" placeholder="Todo" />
+      <button type="button">Add</button>
+      <ul></ul>
+    </React.Fragment>
+  );
+};
+
+export default todo;
+
+
+
+
+
+
+---------------------------------
+
+
+ESSE VALOR 
+
+AÍ,
+
+
+ARMAZENADO DENTRO 
+
+DE 
+
+
+'inputState', É/SERÁ __ UM __ ARRAY___... -------------> 
+
+
+
+
+
+E 
+
+ESSE 
+
+ARRAY 
+TERÁ 
+
+___eXATAMENTE ___ 2 ELEMENTOS___.... -----> OK, MAS QUAIS ELEMENTOS SERÃO ESSES?
+
+
+
+
+
+
+
+
+
+
+1o elemento --------> É O 'CURRENTSTATE'... (ou o 'oldState', em outras palavras...)
+
+
+
+
+
+
+
+
+PARA CONSEGUIR 
+
+ACESSAR 
+
+
+ESSE VALOR do 'primeiro elemento' em lugares de nosso código,
+
+
+deve ser escrito 
+
+
+'inputState[0]'...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+
+
+import { useState } from 'react';
+
+const todo = (props) => {
+
+
+
+    const inputState = useState('');/////ASSIM...
+
+
+
+
+  return (
+    <React.Fragment>
+      <input type="text" placeholder="Todo" value={inputState[0]} />
+      <button type="button">Add</button>
+      <ul></ul>
+    </React.Fragment>
+  );
+};
+
+export default todo;
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+IMPORTANTE!!!! ---> 
+
+
+'inputState[0]' 
+
+NÃO 
+
+É 
+
+
+
+
+__UM ELEMENTO __ 
+
+
+
+DENTRO 
+
+DO 
+
+STATE QUE 
+
+QUEREMOS MANAGEAR ( ou seja,
+
+não é algo como 
+
+'O PRIMEIRO CARACTER NA NOSSA STRING',
+
+),
+
+E SIM 
+
+É 
+
+UM 'INDEPENDENT ARRAY',
+
+
+retornado por 'useState', criado pelo REACT,
+
+
+
+QUE SIMPLESMENTE 
+
+NOS 
+DÁ 
+NOSSO 
+
+
+
+'FULL STATE' (no nosso caso, NOSSA EMPTY STRING de '')
+
+
+___COMO _____ O PRIMEIRO __ ELEMENTO DESSSE ARRAY...
+
+
+--------------------------------------
+
+
+ 
+
+ (isso significa, em outras palavras, que 
+ 
+ 
+ 'value={inputState[0]}'  SERÁ LITERALMENTE 'value={''}' ....)
+
+
+
+
+
+
+
+
+ ------------------------------
+
+
+
+
+ 
+
+ 2o elemento desse objeto/array 
+
+ 'inputState' criado a partir 
+ do STORE de 'useState('')' 
+
+
+ É 
+
+
+ JUSTAMENTE 
+
+
+ ______UMA FUNÇÃO__ 
+
+
+
+
+ QUE PODEMOS __USAR __ PARA MANIPULAR 
+
+
+ AQUELE STATE ORIGINAL/CURRENTVALUE/OLDVALUE.... (e isso 
+ 
+ nos é dado pelo REACT....) -----------> 
+
+
+ E NÓS, 
+
+ em 
+
+
+ 'onChange',
+
+
+
+ PODERÍAMOS/podemos
+
+
+
+
+
+
+
+
+ESCREVER
+
+
+
+'onChange={inputState[1]}' ------------> 
+
+
+
+E ISSO,
+
+REITERA O PROFESSOR,
+
+_É __ A REFERÊNCIA __ A UMA 
+
+FUNÇÃO (segunda função/argumento de 'inputState') -------> 
+
+
+
+E COMO 
+
+ISSO 
+
+É UMA 
+
+REFERÊNCIA A UMA FUNÇÃO,
+
+
+sempre 
+
+que 
+
+
+O INPUT FOR ALTERADO,
+
+
+
+
+
+
+
+
+
+
+
+---> E COMO NÓS 
+
+VINCULAMOS 
+
+
+ESSE 
+
+
+
+'inputState[1]'  (que é a função que vai MANIPULAR/ALTERAR O 'STATE GERAL' contido em 'inputState[0]') 
+
+
+
+AO 
+
+
+
+LISTENER DE 
+
+'onChange',
+
+ISSO SIGNIFICA QUE 
+
+______SEMPRE __ QUE 
+
+O ___ 
+
+INPUT (<input />)
+
+
+FOR ALTERADO (ter seu valor alterado),
+
+
+AUTOMATICAMENTE 
+ESSA 
+
+
+FUNÇÃO/inputState[1] 
+
+
+VAI 
+
+__sER EXECUTADA__... ------------> 
+
+
+
+
+
+
+E SE NÓS 
+
+ESCREVESSEMOS 
+
+ESSE 'inputState[1]' com 
+
+()',
+
+tipo ASSIM:
+
+
+
+'inputState[1]()',
+
+
+ISSO 
+
+FARIA
+ 
+
+ COM QUE 
+ ESSE CÓDIGO FOSSE EXECUTADO __ IMEDIATAMETNE,
+
+ SEMPRE QUE 
+
+o 
+
+<input />
+
+EM SI 
+
+
+FOSSE/FOR RENDERIZADO...
+
+
+
+
+
+
+
+--> MAS NÃO QUEREMOS FAZER ISSO,
+
+QUEREMOS APENAS 
+PASSAR a referência sem o '()',
+
+pq 
+
+QUEREMOS 
+
+QUE 
+
+ESSE 
+
+NEGÓCIO  (essa função, representada por 'inputState[1]') 
+
+SEJA __DISPARADA__ APENAS __ QUANDO 
+
+'onChange' FOR TRIGGADO...
+
+
+
+ex:
+
+
+
+
+  return (
+    <React.Fragment>
+      <input
+      
+       type="text" 
+      placeholder="Todo"
+       value={inputState[0]} 
+        onChange={inputState[1]} //EIS O CÓDIGO EM QUESTÃO.
+       
+       />
+      <button type="button">Add</button>
+      <ul></ul>
+    </React.Fragment>
+  );
+};
+
+export default todo;
+
+
+
+
+--------------------------
+
+
+
+CERTO.... MAS ISSO ___AINDA NÃO ESTÁ CORRETO__... ---> 
+
+ainda 
+
+não 
+
+está 
+
+CORRETO 
+PQ 
+
+EU NÃO 
+
+VOU QUERER 
+
+
+
+EXECUTAR 
+ESSA FUNÇÃO 
+
+INTEIRA 
+
+AÍ 
+
+
+
+SEMPRE QUE 
+
+O 
+
+
+'input'
+ 
+ for alterado... --> pq isso nos daria 
+
+ o 
+
+ 'FULL EVENT OBJECT'... ----> EM VEZ DISSO,
+
+
+
+
+ VOU QUERER ___EXECUTAR __ MINHA 
+
+
+ ___PRÓPRIA __ FUNÇÃO (escrita por mim),
+
+
+ QUE 
+
+ POR SUA 
+
+ VEZ 
+
+ VAI __EXECUTAR __ ESSA FUNCTION 
+
+
+ de 
+
+ 'inputState[1]'
+
+
+ COM 
+
+
+ O  
+
+
+ 'UPDATED STATE COMO EU QUERO'...
+
+
+
+
+
+
+
+
+ --> para isso,
+
+ O PROFESSOR 
+
+ VAI 
+
+ ADICIONAR 
+
+ UMA 
+
+
+ NOVA CONSTANTE 
+ NO NOSSO 
+
+
+
+ FUNCTIONAL COMPONENT,
+
+ O QUAL CHAMARÁ 
+
+ DE 
+
+
+ 'inputChangedHandler'...  ----> E ISSO 
+
+
+ SERÁ 
+
+
+ UMA 
+ ARROW FUNCTION NORMAl...
+
+
+
+ ex:
+
+
+
+
+
+const todo = props => {
+
+    const inputState = useState('');
+
+
+    const inputChangedHandler = () => {
+         
+    }
+
+
+ 
+  return (
+    <React.Fragment>
+      <input
+      
+       type="text" 
+      placeholder="Todo"
+       value={inputState[0]} 
+        onChange={inputState[1]} //EIS O CÓDIGO EM QUESTÃO.
+       
+       />
+      <button type="button">Add</button>
+      <ul></ul>
+    </React.Fragment>
+  );
+};
+
+export default todo;
+
+
+
+---------------------------------------
+
+
+
+
+
+CERTO... 
+
+
+
+---> ISSO 
+
+SERÁ 
+UMA FUNÇÃO.... ------> 
+
+
+
+DENTRO 
+
+DESSE 
+
+INPUTCHANGEDHANDLER,
+
+
+
+
+EU 
+
+VOU 
+
+ESPERAR 
+
+UM 
+
+'event' como parâmetro...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+const todo = props => {
+
+    const inputState = useState('');
+
+
+    const inputChangedHandler = (event) => { //EIS O CÓDIGO EM QUESTÃO.
+         
+    }
+
+
+ 
+  return (
+    <React.Fragment>
+      <input
+      
+       type="text" 
+      placeholder="Todo"
+       value={inputState[0]} 
+        onChange={inputState[1]} 
+       
+       />
+      <button type="button">Add</button>
+      <ul></ul>
+    </React.Fragment>
+  );
+};
+
+export default todo;
+
+
+
+
+-------------------------------
+
+
+
+LÁ 
+
+EM 
+
+'onChange',
+
+VOU ___SUBSTITUIR___ AQUELE 
+
+PARÂMETRO 'genérico' 
+
+de 
+
+'inputState[1]'
+POR 
+
+
+
+'inputChangedHandler'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+const todo = props => {
+
+    const inputState = useState('');
+
+
+    const inputChangedHandler = (event) => { //EIS O CÓDIGO EM QUESTÃO.
+         
+    }
+
+
+ 
+  return (
+    <React.Fragment>
+      <input
+      
+       type="text" 
+      placeholder="Todo"
+       value={inputState[0]} 
+        onChange={inputChangedHandler} 
+       
+       />
+      <button type="button">Add</button>
+      <ul></ul>
+    </React.Fragment>
+  );
+};
+
+export default todo;
+
+
+
+---------------------------
+
+
+
+
+ISSO FARÁ
+ 
+ COM QUE 
+
+ 'inputChangedHandler' 
+
+
+ SEJA 
+ CHAMADO 
+
+
+ SEMPRE QUE 
+
+ O 
+
+ 'INPUT VALUE'
+
+
+ for ALTERADO...
+
+
+
+
+
+ ---> E QUANDO 'inputChangedHandler' É CHAMADO,
+
+ NÓS RECEBEMOS ESSE PARÂMETRO 
+
+ 'event',
+
+ QUE 
+ NOS É 
+
+ PASSADO 
+
+ AUTOMATICAMENTE 
+ PELO REACT....
+
+
+
+
+
+
+
+ --> dentro 
+
+ de 
+
+ 'inputChangedHandler',
+
+  
+  O PROFESSOR 
+
+  DIZ QUE 
+
+
+  PODE CHAMAR 
+
+
+  'inputState[1]'
+   
+
+
+   PARA 
+
+
+   CHAMAR/INVOCAR 
+
+   AQUELA 
+
+   'FUNÇÃO QUE ALTERA O OLDSTATE/CURRENTSTATE de nosso component' (segundo parâmetro de 'inputState', no final das contas),
+
+
+
+
+
+E 
+
+
+AGORA 
+O PROFESSOR 
+
+VAI 
+
+QUERER EXECUTAR 
+
+ESSA REFERÊNCIA __COMO UMA FUNÇÃO__ (com "()'...)
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+const todo = props => {
+
+    const inputState = useState('');
+
+
+    const inputChangedHandler = (event) => {
+        inputState[1]();  //EIS O CÓDIGO EM QUESTÃO.
+    }
+
+
+ 
+  return (
+    <React.Fragment>
+      <input
+      
+       type="text" 
+      placeholder="Todo"
+       value={inputState[0]} 
+        onChange={inputChangedHandler} 
+       
+       />
+      <button type="button">Add</button>
+      <ul></ul>
+    </React.Fragment>
+  );
+};
+
+export default todo;
+
+
+
+
+
+
+--------------------------------
+
+
+
+AGORA,
+
+
+DENTRO 
+
+
+DESSE NEGÓCIO,
+
+FINALMENTE,
+
+PROFESSOR 
+VAI QUERER 
+
+CHAMAR 
+
+
+'event.target.value', como fazíamos na versão do código com CLASS-BASED COMPONENT...
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+const todo = props => {
+
+    const inputState = useState('');
+
+
+    const inputChangedHandler = (event) => {
+        inputState[1](event.target.value);  //EIS O CÓDIGO EM QUESTÃO.
+    }
+
+
+ 
+  return (
+    <React.Fragment>
+      <input
+      
+       type="text" 
+      placeholder="Todo"
+       value={inputState[0]} 
+        onChange={inputChangedHandler} 
+       
+       />
+      <button type="button">Add</button>
+      <ul></ul>
+    </React.Fragment>
+  );
+};
+
+export default todo;
+
+
+
+
+
+
+-------------------
+
+
+
+TIPO ASSIM:
+
+
+
+
+import React from 'react';
+
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+
+
+const inputState = useState('');
+
+
+        const inputChangedHandler = (event) => {
+            inputState[1](event.target.value);
+        }
+
+
+
+
+
+
+
+  ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+  return (
+    <React.Fragment>
+      <input 
+      type="text" 
+      placeholder="Todo"
+      value={inputState[0]} 
+      onChange={inputState[1]}
+      />
+      <button type="button">Add</button>
+      <ul></ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+-----------------------------
+
+
+
+SE SALVARMOS ISSO 
+
+DAÍ,
+
+
+veremos nada de diferente visualmente com o site...
+
+
+
+(mas eu escrevi isto:
+
+
+      <ul>{inputState[0]}</ul> ----> ISSO VAI 
+
+
+      ESCREVENDO O QUE NÓS ESCREVEMOS 
+
+      NO INPUT FIELD...
+
+)
+
+
+
+
+
+
+----------->
+
+
+
+ESSA ALTERAÇÃO 
+
+DA UL,
+
+
+por meio 
+
+do código de 
+
+'      <ul>{inputState[0]}</ul>' ,
+
+
+É 
+
+EXATAMENTE 
+
+O QUE 
+FIZEMOS 
+NOS PRIMEIROS 
+
+MÓDULOS DO CURSO,
+
+MAS 
+
+AGORA 
+
+ESTMAOS USANDO REACT HOOKS... ------> ISSO ESTÁ USANDO 
+
+
+
+
+HOOKS,
+
+NÃO ESTAMOS 
+
+USANDO 
+
+'this.setState()'... 
+
+
+
+
+
+
+
+
+---> EM VEZ DISSO,
+ESTMAOS 
+
+USANDO 
+
+
+
+essa função 'useState()',
+que vem 
+
+
+DO 
+REACT,
+
+
+AO QUAL ENVIAMOS NOSSO 
+
+'INITIALSTATE' (no caso, ' "" ') ,
+
+
+E QUE
+
+PARECE
+ 
+ NOS 
+
+ RETORNAR 
+
+
+UM ELEMENTO/DATA 
+
+QUE 
+
+É UM __ARRAY__ COM 
+
+2 VALUES... , sendo o PRIMEIRO 
+
+VALUE 
+
+
+
+O  'LATESTSTATE/OLDSTATE',
+
+
+
+
+E O  
+
+SEGUNDO VALUE É 
+
+__UMA FUNCTION QUE ___ PODEMOS EXECUTAR__ 
+
+ESSE 
+
+STATE 
+
+AÍ _ COM UM NOVO 'VALUE'... ( código de 'inputState[1](...)', VISTO LÁ EM  'inputChangedHandler'...)
+
+
+
+
+
+
+
+
+
+--> É ASSIM como 
+
+
+o 
+
+'useState'
+
+
+
+FUNCIONA , 
+
+E É ASSIM 
+
+COMO 
+ESSE 
+
+
+
+HOOK ESPECÍFICO FUNCIONA...
+
+
+
+
+
+
+
+
+--> AGORA DEVEMOS __ANALISAR__ ESSE CÓDIGO_, DESCOBRIR __ COMO O ESCREVER 
+
+__ DE UMA MANEIRA __ MAIS BONITA, na próxima aula...

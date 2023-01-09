@@ -1,0 +1,1305 @@
+
+
+
+
+
+
+
+
+
+--> NA ÚLTIMA LIÇÃO, ADICIONAMOS O LOGO...
+
+
+
+
+
+
+
+--> AGORA NÓS VAMOS ADICIONAR NOSSOS NAV ITEMS.... -------> 
+
+
+
+
+PROFESSOR FARÁ OUTSOURCE 
+
+DESSES NAVITEMS 
+
+
+EM SEUS 
+
+PRÓPRIOS COMPONENTS,
+
+
+POIS ELE 
+
+
+VAI 
+
+
+MAIS TARDE REUTILIZÁ-LOS 
+
+
+
+NO NOSSO 
+
+'SIDE-DRAWER'... --------> 
+
+
+
+
+
+É POR ISSO QUE 
+
+ELE VAI CRIAR UM NOVO SUBFOLDER no folder 
+
+
+de 
+
+'navigation',
+
+chamado de 
+
+
+'NavigationItems'... --> 
+
+
+AÍ ELE VAI LÁ 
+
+
+E CRIA 
+
+
+UM ARQUIVO 
+
+
+'NavigationItems.js'....(dentro de um folder 'NavigationItems'... )
+
+
+
+
+
+
+
+
+
+
+
+
+---> ESSE NEGÓCIO 
+SERÁ UM FUNCTIONAL COMPONENT.... 
+
+
+
+
+--------------------------
+
+
+
+OK, E COMO DEVE SER A ESTRUTURA 
+
+
+DESSES 
+
+'NAV ITEMS'? --> professor aponta que 
+
+
+ele vai querer 
+
+QUE ESSE 
+
+
+
+NEGÓCIO, ESSE COMPONENT 'NAV ITEMS' 
+
+
+
+seja 
+
+uma 
+
+__UNORDERED LIST (ul).... -------> 
+
+
+
+E ESSA UL 
+
+TERÁ 
+
+
+
+UM MONTE DE <li>... ------> 
+
+
+serão 
+
+
+<li>s 
+
+
+
+COM ___ANCHOR TAGS___ NO SEU INTERIOR.... (anchor tags ---> LINKS.... SÃO SIMPLESMENTE LINKS, strings que seguram LINKS, quando o user clica nelas, vai para outra página...)
+
+
+
+--> anchor tag de 'A Link'... (com um path/address de '/'...)
+
+
+
+ex:
+
+
+
+
+
+import React from 'react';
+
+const navigationItems = (props) => {
+  return <ul>   
+            <li><a href="/">A Link</a></link>
+
+
+
+        </ul>
+};
+
+export default navigationItems;
+
+
+
+-----------------------------------------
+
+
+
+
+PROFESSOR APONTA QUE 
+
+
+SE NÓS FOSSEMOS AINDA MAIS TRYHARDS,
+
+
+PODERÍAMOS 
+
+
+__OUTSOURCEAR___ ESSES 
+
+
+
+<LI>,
+
+que 
+
+serão 
+
+todos iguais,
+
+todos terão 
+
+
+esse 
+
+espaço do link aí, da anchor tag.... -----> poderíamos colocar esses links NOS SEUS PRÓPRIOS COMPONENTS...
+
+
+
+
+
+
+
+
+
+
+
+--> mas o professor diz que isso não é tão necessário; você pode ter apenas 
+
+esse component 
+
+'navigationItems', 
+
+com os links dentro... mais simples. ------> MAS 
+
+
+
+O PROFESSOR EXPLICA QUE 
+
+COMO ELE 
+
+
+VAI ADICIONAR 
+
+___UM MONTE __ DE ESTILOS 
+
+
+A CADA 'INDIVIDUAL LIST ITEM',
+
+
+
+ELE VAI __REALMENTE__ OUTSOURCEAR esses links aí...
+
+
+
+
+
+
+
+
+
+---> É POR ISSO QUE ELE VAI CRIAR UM NOVO FOLDER, DESSA VEZ DENTRO 
+
+DO 
+
+
+
+'NavigationItems',
+
+dessa vez chamado 
+
+de 
+
+
+'NavigationItem.js'  (conterá o código dos LI com as ANCHOR TAGS no seu interior... (que serão invocados várias vezes em 'navigationItems'...))...
+
+
+----------------------------------------
+
+
+
+
+
+--> ESSE SPLIT DE COMPONENTS É OPCIONAL, MAS É BOM...
+
+
+
+
+
+
+
+
+----------------------------------------------
+
+
+
+CERTO... ---> nesse component 
+
+'navigationItem', 
+
+o professor 
+
+
+VAI SIMPLESMENTE 
+
+RETORNAR O CÓDIGO JSX 
+
+
+de 
+
+
+
+'<ul>
+    <li><a href="/">A Link</a></li>
+</ul>'
+
+
+------------------------------------
+
+
+
+
+
+
+ex:
+
+
+
+import React from 'react';
+
+
+
+const navigationItem = (props) => {
+    return <li><a href="/">A Link</a></li>
+
+
+</ul>
+}
+
+export default navigationItem;
+
+
+
+
+
+
+
+-----------------------------------------
+
+
+CERTO, ISSO FEITO,
+
+
+AGORA ELE SÓ PRECISA IMPORTAR ESSE COMPONENT 
+
+LÁ EM 
+
+'NavigationItems' 
+
+
+e então o instanciar várias vezes naquela ul...
+
+
+
+
+
+
+--------------------------------------------------
+
+
+
+CERTO....
+
+
+E ELE VAI PRECISAR 
+
+DE 
+
+
+ARQUIVOS CSS __PARA __ AMBOS OS COMPONENTS__...
+
+
+
+--> PARA O NAVIGATIONITEMS, 
+
+ele vai escrever 
+
+um código 
+
+
+
+de...:
+
+
+
+
+
+
+
+.NavigationItems {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        
+
+
+}
+
+
+---------------------------------
+
+
+
+
+O PROFESSOR ESCLARECE QUE 
+
+ELE NÃO 
+
+ESTÁ DESENVOLVENDO 
+
+ESSE 
+
+'navigationItems' 
+
+
+
+COMO __MOBILE FIRST___ PQ 
+
+NÓS 
+
+__TEMOS ___ AQUELE SIDEDRAWER PARA ISSO... (por isso, devemos 
+
+
+pensar em 'desktop first' nesse trecho do código....)
+
+
+
+
+
+
+
+
+
+--> ELE TAMBÉM USA 
+
+'display: flex;' 
+
+
+
+e 
+
+
+
+'align-items: center;'   ------> ISSO VAI OS CENTRALIZAR VERTICALMENTE...
+
+
+
+
+height: 100% -----------> isso vai fazer com que os navitems ocupem 100% da height da toolbar.
+
+
+
+
+
+
+-------------------
+
+
+
+
+CÓDIGO COMPLETO:
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+import NavigationItem from '../NavigationItems/NavigationItem/NavigationItem';
+
+
+import NavigationItemsStyle from './NavigationItems.module.css';
+
+
+
+
+
+const navigationItems = (props) => {
+  return <ul className={NavigationItemsStyle.NavigationItems}>
+    
+
+
+  </ul>
+};
+
+
+
+
+export default navigationItems;
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OK.... AGORA DEVEMOS IR ATÉ O 
+
+ESTILO DO 
+
+
+'NavigationItem'...
+
+
+
+
+
+
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+.NavigationItem {
+
+
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    align-items: center;
+
+}
+
+
+
+
+.NavigationItem a {
+    color: white;
+    text-decoration: none;
+    height: 100%;
+    padding: 16px 10px;
+    border-bottom: 4px solid transparent;
+    box-sizing: border-box;
+    display: block;
+
+}
+
+
+
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.Navigation a.active {
+    background-color: #8F5C2C;
+    border-bottom: 4px solid #40A4C8;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+SÓ UMA EXPLICAÇÃO:
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.Navigation a.active {
+    background-color: #8F5C2C;
+    border-bottom: 4px solid #40A4C8;
+    color: white;
+}
+
+
+--->
+
+
+
+':hover' ---> links/coisas EM QUE VOCê PASSA O MOUSE EM CIMA... (isso vai ativar o estilo nos {})...
+
+
+'a:active' ---> LINKS EM QUE VOCÊ CLICA (enquanto estiver clicando naquele negócio, o estilo nos '{}' ativará)...
+
+
+
+'a.active' ------> ESSE É __NOVO___!!!! --> eu nunca vi;  ---> talvez esteja relacionado com o PROP de 'active' que professor colocou no meu component 'NavigationItem'? ---> de fato, é EXATAMENTE ISSO. Veja relação do prop 'active' com a ternary expression em 'NavigationItem' e no arquivo de estilo de 'NavigationItem.module.css'...
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+CERTO.
+
+
+AGORA FOMOS EM FRENTE 
+
+E COLOCAMOS 
+
+UM 
+
+
+NAVIGATION ITEM COMPONENT (invocamos ele) 
+
+LÁ 
+
+
+NO COMPONENT 
+
+'NAVIGATION ITEMS'... --------> 
+
+
+
+PROFESSOR JÁ 
+
+VAI MENCIONANDO 
+
+QUE 
+
+___TEMOS ___ QUE ADICIONAR UNS PROPS __ 
+
+
+A ESSE 
+
+'NAVIGATIONITEM',
+
+
+a esse call dele... -------> ISSO 
+
+
+PQ 
+
+__cADA__ LINK TERÁ SEU PRÓPRIO DESTINO,
+
+SEU 
+
+PRÓPRIO 
+
+'TÍTULO' e seu próprio 'path'...
+
+
+
+
+É POR ISSO QUE VAMOS ALTERAR O CÓDIGO 
+
+
+DE 
+
+'NavigationItem.js'...
+
+
+
+CÓDIGO ATUAL:
+
+
+
+
+-------------------------------------------------
+
+
+import React from 'react';
+
+
+
+import NavigationItemStyle from './NavigationItem.module.css';
+
+
+
+const navigationItem = (props) => {
+    return <li className={NavigationItemStyle.NavigationItem}><a href="/">A Link</a></li> 
+}
+
+
+
+export default navigationItem;
+
+
+
+---------------------------------------------------------------
+
+
+
+
+
+
+VAMOS REMOVER AQUELA CAPTION do link, BOTAR UM VALOR DINÂMICO NO SEU LUGAR...
+
+
+
+ex:
+
+
+
+
+import React from 'react';
+
+
+
+import NavigationItemStyle from './NavigationItem.module.css';
+
+
+
+const navigationItem = (props) => {
+    return <li className={NavigationItemStyle.NavigationItem}><a href="/">{}</a></li> 
+}
+
+
+
+export default navigationItem;
+
+
+
+
+
+------------------------------------------------------
+
+
+
+
+DENTRO DAQUELE SLOT DE VALOR DINÂMICO, O PROFESSOR 
+
+SIMPLESMENTE 
+
+VAI 
+
+ENFIAR UMA REFERÊNCIA A 
+
+'props.children',
+
+
+
+POIS 
+
+
+NÓS VAMOS QUERER CONVENIÊNCIA, vamos querer 
+
+QUE A  COISA/TÍTULO 
+
+
+QUE DIGITAMOS/PASSAMOS 
+
+LÁ 
+
+entre as opening e closing tags do '<NavigationItem />', no 
+
+
+'NAVIGATIONITEMS', 
+
+
+SEJA 
+
+TRANSMITIDO/PASSADO
+
+PARA O NAVIGATIONITEM...
+
+
+-------------------------------------
+
+
+
+
+
+---> AQUELE 
+
+
+'a href=...' NÓS TAMBÉM
+
+VAMOS PASSAR DINAMICAMENTE,
+
+PROFESSOR 
+
+
+DIZ QUE 
+
+VAMOS 
+
+SÓ COLOCAR 
+
+
+
+'a href={props.link}'  (vamos ter que INVENTAR ESSE PROP DE 'link'....)
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+CERTO...
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+import NavigationItemStyle from './NavigationItem.module.css';
+
+
+
+const navigationItem = (props) => {
+    return <li className={NavigationItemStyle.NavigationItem}><a href={props.link}>{props.children}</a></li>  ///////////EIS O CÓDIGO EM QUESTÃO.
+}
+
+
+
+
+export default navigationItem;
+
+
+
+
+
+------------------------------------------------------
+
+
+
+
+O PROFESSOR 
+
+
+EXPLICA TAMBÉM 
+
+QUE 
+
+NÓS PODEMOS 
+
+
+
+DEFINIR MAIS COISAS DE __eSTILO___ desse 
+
+
+'navigationItem'... --> ele diz que podemos definir uma 
+
+
+
+___'ACTIVE CLASS'___ 
+
+
+(
+
+    pq, lembre-se, este é o código css:
+
+
+
+
+
+
+    .NavigationItem a {
+    color: white;
+    text-decoration: none;
+    height: 100%;
+    padding: 16px 10px;
+    border-bottom: 4px solid transparent;
+    box-sizing: border-box;
+    display: block;
+
+}
+
+
+
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.Navigation a.active {
+    background-color: #8F5C2C;
+    border-bottom: 4px solid #40A4C8;
+    color: white;
+}
+)
+
+
+
+
+--> PARA ISSO,
+ 
+
+ O PROFESSOR 
+
+ VAI 
+
+
+ESCREVER 
+
+
+um 
+
+'className={}'..... ----------> 
+
+
+
+DENTRO 
+
+DESSE 
+
+'className', o professor 
+
+vai tentar 
+
+enfiar 
+
+
+O __CÓDIGO CONDICIONAL___ DE 'a.active'.... --------> 
+
+
+
+PARA ISSO,
+ELE VAI 
+
+
+TER QUE ESCREVER BASTANTE COISA... ------> PARA QUE 
+
+ESSE CÓDIGO REALMENTE SEJA 
+
+
+APLICADO CONDICIONALMENTE,
+
+
+O PROFESSOR 
+
+
+DIZ QUE TEMOS QUE ESCREVER UMA TERNARY EXPRESSION 
+
+
+
+___DENTRO___ desse slot '{}'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+import NavigationItemStyle from './NavigationItem.module.css';
+
+
+
+const navigationItem = (props) => {
+    return <li className={NavigationItemStyle.NavigationItem}>
+    
+    
+    <a 
+    
+    href={props.link}
+
+
+    className={
+        props.active 
+
+        ?
+
+        NavigationItemStyle.active
+
+        :
+
+          null
+    }
+    
+    
+    
+    >{props.children}</a></li> 
+}
+
+
+
+
+export default navigationItem;
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+OU SEJA:
+
+
+'Se props.active for TRUE (e nós teremos que ADICIONAR ESSE PROP DE 'active') ,
+
+
+EU VOU QUERER QUE 
+
+O ESTILO DESSE CLASSNAME SEJA 'NavigationItemStyle.active'... 
+
+
+CASO SEJA FALSE, não vou querer nada, o className será 'null'   '....
+
+
+
+
+
+--------------------------------------------
+
+
+CERTO.
+
+
+
+
+RESUMINDO... HÁ 
+
+2 PROPS QUE ESPERAMOS 
+
+NESSE COMPONENT 
+
+
+'NavigationItem'... ----> vamos esperar 
+
+
+'link' 
+
+
+e 
+
+'active'....
+
+
+
+
+
+( E TAMBÉM TEMOS QUE PASSAR O 'TEXT' desse link POR MEIO 
+
+
+DAS OPENING E CLOSING TAGS, AQUELA NÓIA DO PROPS.CHILDREn)
+
+
+
+
+------------------------------
+
+
+
+DE VOLTA AO 'NAVIGATIONITEMS', 
+
+
+
+vamos passar/invocar vários 'NavigationItem'. (COMO NÃO TEMOS LINKS AINDA, 
+
+
+VAMOS DEFINIR TODOS OS props  'link' dos 'NavigationItem' COMO 
+
+
+'/', o QUE VAI REDIRECIONAR O USUÁRIO A NOSSA ÚNICA PÁGINA, QUE É 'BurgerBuilder'...)....
+
+
+
+
+
+
+QUANTO AO PROP de 'active', 
+
+
+
+O PROFESSOR EXPLICA QUE ELE PODE SIMPLESMENTE 
+
+
+DIGITAR 'active' (ele não precisa digitar 'active={true}', pq isso é a MESMA COISA QUE ESCREVER SÓ 'active' nesse component ----> é assim que props funcionam com BOOLEANS..)
+
+
+
+------------------------------
+
+
+CÓDIGO 
+
+DE 
+
+'NAVIGATIONITEMS', completo:
+
+----------------------------------------
+
+
+import React from 'react';
+
+
+import NavigationItem from '../NavigationItems/NavigationItem/NavigationItem';
+
+
+import NavigationItemsStyle from './NavigationItems.module.css';
+
+
+
+
+
+const navigationItems = (props) => {
+  return <ul className={NavigationItemsStyle.NavigationItems}>
+          <NavigationItem link="/" active>Burger Builder</NavigationItem>
+          <NavigationItem link="/">Checkout</NavigationItem>
+          <NavigationItem />
+
+
+  </ul>
+};
+
+
+
+
+export default navigationItems;
+
+
+---------------------------------------
+
+
+
+--> agora simplesmente temos que passar esse 'navitems' 
+
+lá na nossa TOOLBAR... (e já fizemos isso)....
+
+
+
+
+
+--> certo, tudo funcionou, MENOS O ___STYLE____ DE 
+
+'FICAR CLICADO' no 'BurgerBuilder' do toolbar (quando o usuário está nessa página)
+
+
+
+
+
+--> consegui, consertei:
+
+
+
+estava assim:
+
+
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.Navigation a.active {
+    background-color: #8F5C2C;
+    border-bottom: 4px solid #40A4C8;
+    color: white;
+}
+
+
+
+
+
+
+ERA PRA FICAR ASSim:
+
+
+
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.NavigationItem a.active {  ///eis o erro.
+    background-color: #8F5C2C;
+    border-bottom: 4px solid #40A4C8;
+    color: white;
+}
+
+
+
+---------------------------------------
+
+
+
+CERTO, NOSSO ESTILO DA TOOLBAR ESTÁ FUNCIONANDO.
+
+
+
+
+
+
+---------------------------------------------
+
+
+I have in a css file this:
+
+#toolbar a.opener:hover,
+#toolbar a.opener:active,
+#toolbar a.opener:focus {
+    something1;
+}
+#toolbar .active a.opener {
+    something2;
+}
+
+
+Questions:
+
+What is the difference between the "first active" and the "second active"?
+When are called the "first active" and the "second active"?
+
+
+
+
+The first rule incorporates "pseudo" classes, which target the element when it's in a certain state. 
+
+
+The :active pseudo-selector applies to the element 
+when the user is clicking on it.
+
+The latter rule is simply a class selector, 
+which applies to an anchor element which has the 
+class "opener" and is a descendand of an element which has the class "active".
+
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+Certo,
+ 
+
+ nossa página está funcionando... ---> claro que todos os links 
+
+
+ da toolbar vão só nos redirecionar para a página inicial,
+
+
+
+ mas isso 
+
+ não é um problema.... ------> VEREMOS O ROUTING MAIS TARDE... --> mas 
+
+
+
+ o legal é que já temos 'navigation' e 
+
+ 'working navigation items', agora....
+
+
+
+
+
+
+ ---> DE NOVO, tudo isso terá que ser ajustado 
+
+
+ 
+ quando mexermos no 'mobile-side'... --> sidedrawer e tals.

@@ -1,0 +1,1555 @@
+
+
+
+
+
+--------> ESTAmos ARMAZENANDO 'todos' NO SERVIDOR.... --> 
+
+
+TIPICAMENTE
+ 
+ NÓS 
+
+
+ TAMBÉM QUEREMOS 
+
+
+ __FETCHEAR___ TODOS.... ----> ok,
+
+
+ digamos que 
+
+ QUEREMOS 
+
+
+ FETCHEAR 
+
+
+ TODOS 
+
+
+
+ ____ quando ___ O NOSSO COMPONENT 'Todo.js'
+
+
+ FOR 
+
+ CARREGADO NA PÁGINA... 
+
+
+
+
+
+
+
+
+ ---> para isso,
+
+
+ VAMOS TER DE USAR 
+
+
+ OUTRO HOOK,
+
+
+ O 
+
+ HOOK 
+
+
+ DE 
+
+ 'useEffect()'...
+
+
+
+
+
+
+
+ ----> O 'useEffect'
+
+
+ TAMBÉM 
+
+ TEM QUE 
+
+ SER IMPORTADO 
+
+ DO 
+
+ REACT...
+
+
+
+
+ import { useEffect } from 'react';
+
+
+
+
+
+
+ --------------------------------
+
+
+
+
+
+ ----> o 'useEffect()'
+
+ TAMBÉM É UMA FUNÇAÕ QUE VOCÊ CHAMA.... ---> e a 
+
+
+ essa FUNÇÃO DE useEffect,
+
+
+
+
+VOCê PASSA __UMA FUNÇÃO QUE DEVERÁ/DEVE __ SER EXECUTADA... ------> 
+
+
+
+
+
+ex:
+
+
+
+
+useEffect(
+    () => {
+
+    }
+)
+
+
+--------------------------------------
+
+
+
+
+
+CERTO....
+
+
+
+
+
+
+
+DENTRO DO NOSSO CÓDIGO, O PROFESSOR ESCREVE ASSIM:
+
+
+
+
+
+
+
+
+const Todo = (props) => {
+
+
+  const [todoName, setTodoName] = useState(''); 
+
+  const [todoList, setTodoList] = useState([]);
+
+
+    useEffect(
+        () => {} ////EIS O CÓDIGO EM QUESTÃO.
+    )
+
+
+
+
+  const inputChangedHandler = (event) => {
+    setTodoName(event.target.value);
+  };
+
+  const todoListAddHandler = () => {
+
+    setTodoList(todoList.concat(todoName));
+
+    console.log(todoName);
+
+    axios.post('https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json', {todoName} ) ///este send realmente funciona. Criei um novo projeto do axios...
+    .then(
+      res => {
+        console.log(res);
+      }
+    )
+    .catch(
+      err => {
+        console.log(err);
+      }
+    )
+  
+  
+  };
+
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+
+        value={todoName}
+        onChange={inputChangedHandler}
+      />
+      <button type="button" onClick={todoListAddHandler}>
+        Add
+      </button>
+
+
+      <ul>
+        {todoList.map((todoItem, index) => {
+          return (
+            <li
+            key={new Date().getTime() * Math.random()}
+              style={{
+                listStyle: 'none',
+              }}
+            >
+              {todoItem}
+            </li>
+          );
+        })}
+      </ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+
+
+
+-------------------------
+
+
+
+
+
+
+DENTRO DESSA FUNÇÃO,
+VOCÊ 
+
+COLOCA 
+
+SEU CÓDIGO 
+
+QUE 
+
+DEVE, POR EXEMPLO,
+
+
+___SER EXECUTADO___ QUANDO 
+
+
+
+ESSE 
+
+SEU COMPONENT 
+
+
+
+_ É CARREGADO___ PELA PRIMEIRA VEZ... ---------> 
+
+
+
+
+
+o professor 
+
+diz 
+
+'POR EXEMPLO'
+ 
+
+
+ pq ___ ESSE 'useEffect()'
+
+
+ PODE SER EXECUTADO TAMBÉM EM OUTROS MOMENTOS/HIPÓTESES,
+
+ MAS 
+
+
+ DEPOIS 
+
+ ELE 
+
+ VAI 
+
+ NOS EXPLICAR O QUE ELE QUER DIZER COM ISSO....
+
+
+
+ ------------------------------------------
+
+
+
+ok, 
+
+essa função aí VAI SER EXECUTADA 
+QUANDO 
+
+O COMPONENT 
+
+
+FOR 
+
+
+EXECUTADO/RENDERIZADO PELA PRIMEIRA VEZ NA NOSSA PÁGINA...
+
+
+
+
+
+
+
+------------------> OK, MAS O QUE NOS IMPEDE DE ESCREVER 
+DIRETAMENTE 
+
+NOSSO 
+
+CÓDIGO 
+
+DE 'axios.get',
+
+largado,
+
+LÁ NO INÍCIO DO FLOW DE NOSSA FUNÇÃO/functional component? 
+
+
+
+
+
+(TIPO ASSIM):
+
+
+
+
+const todo = props => {
+
+
+    axios.get(xxxx).then().catch()
+
+
+
+
+   ....RESTO DO CÓDIGO...
+
+}
+
+
+----------------------------------
+
+
+
+
+ISSO FUNCIONARIA, SIM, 
+
+___MAS É UMA ___ PÉSSIMA IDEIA__... ---> péssima ideia pq 
+
+
+
+
+O PROBLEMA COM CHAMAR 
+
+
+
+
+LÁ EM CIMA, SOLTO NO SEU 'functional component',
+
+É 
+
+QUE 
+
+VOCÊ 
+
+ESTÁ/ESTARIA
+ 
+ CHAMANDO 
+
+
+ ESSE CALL 
+
+ DE 
+ AXIOS ___ NO MEIO __ DO 'RENDER CYCLE' DESSe COMPONENT em que foi escrito... --> E ISSO 
+
+ É RUIM 
+
+
+
+ ___POR RAZÕES__ DE PERFORMANCE__... -------> O REACT 
+
+
+
+ FAZ UM MONTE DE 
+
+ 'MAGIC STUFF'
+
+
+ POR TRÁS DAS CENAS,
+
+ PARA 
+
+RENDERIZAR NOSSOS COMPONENTS __ E UPDATAR O DOM... ---> E QUANDO NÓS FAZEMOS OPERAÇÕES 
+
+COMO ESSA (esse 'get' do axios ),
+
+
+EM QUE 
+
+ALTERAM O STATE QUANDO RECEBEM UMA 'RESPONSE',
+
+quando 
+
+
+NÓS 
+
+AS FAZEMOS 
+
+
+NO MEIO DO RENDER CYCLE,
+
+ISSO 
+
+LEVA 
+
+À
+
+
+PERFORMANCE RUIM,
+
+
+
+
+E UNEXPECTED RESULTS NA INTERFACE DO USUÁRIO... -->  unexpected PQ 
+
+
+NÓS 
+PODEMOS 
+
+RECEBER OS  RESULTADOS
+ 
+
+
+DA 
+
+'RESPONSE' 
+
+DESSE SERVIDOR ___ DEPOIS __ DO REACT__ TER TERMINADO O RENDER CYCLE__, 
+
+E ISSO 
+
+AÍ LEVA/LEVARIA
+ 
+
+ AO FENÔMENO __ DAS MUDANÇAS QUE DEVERIAM
+  
+
+  ACONTECER POR CONTA DO RECEBIMENTO DESSA RESPONSE __não serem __ REFLETIDAS __ NA 
+  PÁGINa... (erro na ordem de execução/flow do código... ) -------> 
+
+
+
+
+OU ENTÃO,
+
+PODEMOS 
+
+CAGAR A PERFORMANCE... ---------> 
+
+
+
+POR ISSO,
+
+
+
+UMA REGRA-__GERAL__ 
+DO 
+
+
+
+REACTHOOKS É:
+
+
+
+
+NUNCA 
+
+
+_GERE/CAUSE 'SIDE-EFFECTS' (ou seja, HTTP REQUESTS, SETTIMEOUT, MANIPULAR DOM POR CONTA PRÓPRIA, ENVIAR ANALYTICS DATA A UM SERVER, ETC ETC. ),
+
+
+
+VOCÊ 
+
+__NUNCA DEVE FAZER ___ ESSAS COISAS 
+
+
+
+DE FORMA 
+
+'SOLTA' no seu component,
+
+no root do 
+
+seu 
+
+
+functional component.... -----> NÃO FAÇA ISSO DENTRO 
+
+
+DA 
+
+'RENDER FUNCTION' de seu functional component (ou seja, no ROOT do seu functional component);
+
+
+
+EM VEZ DISSO,
+
+FAÇA 
+
+ESSAS OPERAÇÕES ___ DENTRO ___ DE UMA ___CALLBACK__ FUNCTION___ PASSADA 
+
+
+como parâmetro 
+
+
+AO 
+
+
+'useEffect()' ---------> ESSE É O APPROACH CORRETO...
+
+
+
+
+
+
+
+
+ISSO É OK/O APPROACH CORRETO,
+
+PQ 
+
+
+ESSE 
+
+HOOK 
+
+de 
+'useEffect'
+
+
+__'HOOKA'_ 
+
+
+AOS 
+
+
+INTERNALS DO REACT,
+
+
+
+
+E AÍ ASSEGURA
+ 
+ QUE 
+
+
+ ESSE CÓDIGO ASSÍNCRONO/axios.get 
+
+
+ __ É EXECUTADO __ NO MOMENTO CERTO (que é 
+ 
+ ____DEPOIS___ DO CYCLE DE RENDER TER ACABADO/ACABAR...) -----> 
+
+
+ ISSO ACONTECE ASSIM PARA QUE 
+
+ ESSE FUNCTIONAL COMPONENT POSSA RODAR 'IN A HIGH PERFORMANCE WAY', 
+
+
+ e para que 
+
+ SUA UI NUNCA SEJA ATUALIZADA DE FORMA INCORRETA.... ----> 
+
+ evita
+  
+  'STRANGE STATE CHANGES BEHIND THE SCENES'...
+
+
+
+----------------------------------
+
+
+
+É POR ISSO QUE O PROFESSOR 
+
+VAI ESCREVER 
+
+O CÓDIGO ASSIM:
+
+
+
+
+
+
+
+
+
+const Todo = (props) => {
+
+
+  const [todoName, setTodoName] = useState(''); 
+
+  const [todoList, setTodoList] = useState([]);
+
+
+    useEffect(
+        () => {
+
+   axios.get('https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json')
+   .then(result => {
+       console.log(result)
+   })                 ////EIS O CÓDIGO EM QUESTÃO.
+
+        } 
+    )
+
+
+
+
+  const inputChangedHandler = (event) => {
+    setTodoName(event.target.value);
+  };
+
+  const todoListAddHandler = () => {
+
+    setTodoList(todoList.concat(todoName));
+
+    console.log(todoName);
+
+    axios.post('https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json', {todoName} ) ///este send realmente funciona. Criei um novo projeto do axios...
+    .then(
+      res => {
+        console.log(res);
+      }
+    )
+    .catch(
+      err => {
+        console.log(err);
+      }
+    )
+  
+  
+  };
+
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+
+        value={todoName}
+        onChange={inputChangedHandler}
+      />
+      <button type="button" onClick={todoListAddHandler}>
+        Add
+      </button>
+
+
+      <ul>
+        {todoList.map((todoItem, index) => {
+          return (
+            <li
+            key={new Date().getTime() * Math.random()}
+              style={{
+                listStyle: 'none',
+              }}
+            >
+              {todoItem}
+            </li>
+          );
+        })}
+      </ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+
+
+-----------------------
+
+
+
+
+
+
+----> CERTO... escrito este código aqui:
+
+
+
+  useEffect(() => { //É EXECUTADO__ BEM NO INÍCIO DO 'LOAD' DESSE COMPONENT 'Todo' NA PÁGINA...
+
+    axios.get(
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+    ).then(
+      result => {
+        console.log(result);
+      }
+    )
+  }),
+
+
+
+
+
+  NÃO VEREMOS 
+
+  COISA ALGUMA 
+
+  NA TELA AINDA,
+
+  pq 
+
+  __NÃO FAZEMOS NADA __ COM A RESPONSE DO SERVIDOR, NO MOMENTO...
+
+
+
+
+  -> entretanto,
+
+
+  lá no console já poderemos 
+
+  ver que 
+
+  temos um objeto 'response'
+
+  com uma 
+
+  prorpiedade 
+
+  de 
+
+
+  'data',
+
+  e que 
+  dentro 
+
+  dela  TEMOS UM ID GERADO AUTOMATICAMENTE,
+
+
+  DENTRO DO QUAL 
+   
+
+
+  temos 
+
+  uma propriedade 
+
+  'name',
+
+  com AQUILO QUE 
+
+  O USUÁRIO INPUTTOU 
+
+
+
+
+no input field.... (objeto 'toDo')...
+
+
+
+
+
+
+
+
+
+
+---> A PARTIR DESSA RESPONSE/essa data da response,
+
+PODEMOS 
+
+
+
+
+CRIAR UMA CONSTANTE 
+
+CHAMADA 
+
+
+'todos',
+
+ E ENTÃO 
+
+ OUTPUTTAR
+  
+
+  esses 
+
+  elementos 
+
+
+  'todo' 
+
+
+
+  RETRIEVADOS POR MEIO DO AXIOS__ DIRETAMENTE___ NA NOSSA PÁGINA....
+
+
+  ex:
+
+  
+  useEffect(() => { //É EXECUTADO__ BEM NO INÍCIO DO 'LOAD' DESSE COMPONENT 'Todo' NA PÁGINA...
+
+    axios.get(
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+    ).then(
+      result => {
+
+        console.log(result);
+        const todos = response.data.
+      }
+    )
+  })
+
+
+
+
+  ---------------------
+
+
+
+  CERTO...
+
+  MAS AQUI ENCONTRAMOS __UM PROBLEMA__... --> o problema 
+
+  é justamente 
+
+
+  que 
+
+
+  ESSE OBJETO RESPONSE que RETRIEVAMOS 
+
+  por meio 
+
+
+  de 
+
+  'axios.get'
+
+
+
+
+TEM UMA _lISTA__ DE OBJETOS ___ EM 'DATA' QUE 
+
+
+
+TEM KEYS DINÂMICAS... --> para contornar isso,
+
+
+seremos obrigados a usar 
+
+'.map()' mais uma vez,
+
+para 
+
+
+converter 
+
+aquela 
+
+LISTA DE OBJETOS com IDS dinâmicos
+ 
+
+ em elementos <li> ou whawtver...
+
+
+
+ ex:
+
+
+
+
+
+ const todos = result.data;
+
+
+
+
+const todoItems = todos.map((todoItem) => {
+
+      return (
+        <li>{todoItem}</li>
+      )
+})
+
+
+
+
+
+
+TIPO ALGO ASSIM...
+
+
+
+
+
+
+
+
+MAS EU ESCREVI ___ ERRADO___.... --> escrevi 
+
+ERRADO __ PQ 
+
+'todos' 
+
+É __ UM OBJETO__, E NÃO UM ___ARRAY... ---> POR SER UM 
+
+
+OBJETO,
+
+
+O MÉTODO 
+
+'.map()'
+
+NÃO VAI FUNCIONAR.... ---> quando você 
+
+precisa 
+
+
+EXECUTAR '.map()'
+
+
+EM OBJETOS,
+
+VOCÊ 
+
+DEVE 
+SEMPRE 
+
+
+USAR 
+
+A SUA 'VERSÃO DE OBJETOS', que 
+
+É 
+
+__UM FOR IN LOOP (for in loops te deixam LOOPAR POR DENTRO DAS KEYS DE UM OBJETO....)
+
+
+
+
+ex:
+
+
+
+const todos = result.data;
+
+for (const key in todos) {
+  return (
+    <li>{key.name}</li>
+  )
+}
+
+
+
+
+
+
+-------------------------
+
+
+
+DE NOVO,
+
+ESTE CÓDIGO ESTÁ ERRADO....
+
+
+
+O formato 
+
+que o professor usou foi ESTE:
+
+
+
+
+
+---------------------------------------
+
+
+
+const todoData = result.data;
+
+const todos = [];
+
+for (const key in todoData) {
+      todos.push(
+        {
+          id: key,
+          name: todoData[key].name
+        }
+      )
+}
+
+
+
+-------------------------------------
+
+
+
+ISSO VAI 
+
+FAZER COM QUE 
+
+
+
+TODOS OS 
+
+
+OBJETOS 'todoItem' 
+
+NO NOSSO 
+
+OBJETO ('{}')
+
+
+LÁ 
+
+
+NO 
+
+SERVER DO FIREBASE 
+
+___SEJAM__ AUTOMATICAMENTE 
+
+'PUSHED' 
+PARA 
+
+DENTRO 
+
+DE UM ARRAY CHAMADO DE 
+
+'todos',
+
+E CADA UM 
+
+DOS OBJETOS 
+
+TERÁ UMA PROPRIEDADE 'id' que será a KEY,
+
+e outra 
+
+
+PROPRIEDADE CHAMADA 
+'name',
+
+que 
+
+será 
+
+justamente 
+
+
+'todoData[key].name' (OU SEJA,
+
+UMA 
+
+ESCRITA __dINâMICA__, que vai selecionar cada elemento 'with a given key' 
+
+DENTRO 
+
+DO NOSSO OBJETO RETORNADO PELO SERVER...
+
+)
+
+
+ex:
+
+
+
+
+
+const todoData = result.data;
+
+const todos = [];
+
+for (const key in todoData) {
+      todos.push(
+        {
+          id: key,
+          name: todoData[key].name
+        }
+      )
+}
+
+
+
+
+----------------------------
+
+
+
+CERTO....
+
+
+AGORA 
+A ÚNICA 
+
+COISA QUE 
+
+RESTA 
+
+É 
+OUTPUTTAR 
+ESSE 
+
+NEGÓCIO 
+
+DE ALGUM JEITO 
+
+
+
+NA NOSSA PÁGINA,
+
+PROVAVELMENTE
+ 
+ POR MEIO 
+
+
+ DE UM 
+
+ CALL 
+
+ de '.map()'
+
+
+ EM CIMA 
+
+
+ DO ARRAY 
+
+ DE 
+
+ 'todos'... ----> DE NOVO,
+
+ EU 
+
+
+
+ ___ERREI____..... ---> 
+
+
+
+ professor 
+
+ diz uqe 
+
+
+
+
+o código CORRETO 
+
+´É 
+
+
+
+
+SIMPLESMENTE 
+
+CHAMAR 
+
+
+'setTodoList()'
+
+
+ E ENTÃO 
+
+
+ PASSAR 
+
+
+ COMO 
+
+ ARGUMENTO/parâmetro 
+
+
+
+ o 
+
+ ARRAY 
+
+
+
+ DE 
+
+
+ 'todos'...
+
+
+
+ ex:
+
+
+
+
+
+
+
+
+const todoData = result.data;
+
+const todos = [];
+
+for (const key in todoData) {
+      todos.push(
+        {
+          id: key,
+          name: todoData[key].name
+        }
+      )
+}
+
+setTodoList(todos);
+
+
+
+-----------------------
+
+
+
+
+
+EX:
+
+
+
+  useEffect(() => { //É EXECUTADO__ BEM NO INÍCIO DO 'LOAD' DESSE COMPONENT 'Todo' NA PÁGINA...
+
+    axios.get(
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+    ).then(
+      result => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+
+
+        for (const key in todoData) {
+          todos.push(
+            {
+              id: key,
+              name: todoData[key].name
+            }
+          )
+        }
+        setTodoList(todos);
+      }
+    )
+
+  })
+
+
+
+
+  ------------------
+
+
+
+
+
+
+  OU ___SEJA___, 
+
+  AGORA 
+
+  O QUE 
+
+
+  SERÁ 
+
+  OUTPUTTADO
+   
+
+
+   POR MEIO DE 
+
+   'setTodoList'
+
+   NÃO 
+   SERÁ 
+   UMA 
+
+   SIMPLES STRING COMO ANTES,
+
+   E SIM 
+
+   __SERÁ __ UM OBJETO ({}) 
+
+
+   COM 
+
+   
+
+   KEYS 
+
+   DE 
+   'id'
+    
+
+    e 
+
+
+    'name'...
+
+
+    -------------------------
+
+
+
+  
+
+  ---> E PARA DEIXAR ISSO BEM CLARO:
+
+
+
+  CHAMAR 
+  'setTodoList()'
+
+
+
+  dentro 
+
+  desse 'useEffect()'
+
+  É 
+
+  ALGO __aBSOLUTELY FINE__... ---> SÓ NÃO SERIA OK/LEGAL
+   
+
+   CHAMAR 
+
+
+   'useState()'  ou 'useEffect()'
+
+
+
+
+   DENTRO 
+
+   DESSE useEffect.... ---> POR CAUSA 
+
+   DAS RULES 
+
+   DOS HOOKS 
+
+   QUE 
+   O PROFESSOR 
+
+   EXPLICOU ANTES,
+
+
+
+   VOCÊ DEVE SEMPRE __ ESCREVER 
+
+   HOOKS __NO 'TOPMOST' LEVEL DE SEU 
+
+FUNCTIONAL COMPONENT,
+
+e nunca 
+
+DENTRO 
+
+
+DE OUTRAS FUNÇÕES/NESTEADO DENTRO DE OUTRAS COISAS... ---> e isso também 
+
+se 
+
+aplica
+ 
+ a 
+
+ 'NESTEAR USESTATE/ USEEFFECT
+
+ DENTRO 
+
+ DE OUTROS 
+
+ USEEFFECT/USESTATE'....
+
+
+
+
+
+
+
+
+
+
+-->OK,
+
+O 
+
+'setTodoList'
+
+É OK....
+
+
+
+
+
+
+
+
+
+
+
+--> COM ISSO,
+
+FINALMENTE PODEMOS ALTERAR O CÓDIGO DE
+
+
+
+'todoList.map()'
+
+QUE TEMOS LÁ EMBAIXO...
+
+ex:
+
+
+
+
+        {todoList.map((todoItem, index) => {
+          return (
+            <li
+            key={new Date().getTime() * Math.random()}
+              style={{
+                listStyle: 'none',
+              }}
+            >
+              {todoItem}
+            </li>
+          );
+        })} 
+
+
+    
+
+
+    ----------------------------
+
+
+    COMO 
+
+    OS 
+
+
+    'todo' 
+
+    AGORA 
+
+    __SÃO OBJETOS_,
+
+    DEVEMOS 
+
+    ALTERAR 
+
+    ESSA SINTAXE 
+
+    de 
+
+    '<li key={todo}>{todo}</li>',
+
+
+    TRANSFORMAR
+     
+     ESSE NEGÓCIO EM 
+
+
+
+     '''<li key={todo.id}>{todo.name}</li>''
+
+
+
+
+
+    
+
+
+    --> SE AGORA SALVARMOS TUDO ISSO,
+
+
+    E RECARREGAR NOSSA PÁGINA,
+
+
+
+    VEREMOS 
+
+    
+
+    QUE 
+
+
+  VAMOS RECEBER CONSOLE.LOGS INFINITOS NO CONSOLE...
+
+
+
+
+  -> VAMOS TER QUE CONSERTAR ESSE PROBLEMA NA PRÓXIMA AULA.... (mas antes disso,
+  
+  tenho que consertar o problema de NÃO ESTAR RECEBENDO 
+  
+  NENHUM 
+  
+  'todoItem' 
+  
+  outputtado na minha página, retrievado do server....) ---> consertei...
+
+
+
+  --> era pq o negócio estava como 'name',
+
+  quando devia estar 
+
+  'todoName' (as propriedades dentro dos meus objetos retrievados do 'firebase' tinham uma 
+  
+  key 
+  
+  
+  de 
+  
+  'todoName',
+  
+   E NÃO 
+   
+   DE 
+   
+   'name'.....)
+
+
+
+
+
+
+-----> CERTO,
+
+MAS O INFINITE LOOP AINDA PERSISTE... --> DEVO CONSERTÁ-LO NA PRÓXIMA AULA... 
+
+
+(é alguma coisa relacionada com 'useEffect()', tenho CERTEZA...)

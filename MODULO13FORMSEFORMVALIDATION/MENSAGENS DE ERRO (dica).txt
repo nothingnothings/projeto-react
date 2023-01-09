@@ -1,0 +1,250 @@
+We're not showing any error messages in our form, but you can of course easily add some.
+
+The form inputs (<Input />  component) already receives the information whether it's invalid or not. You could of course easily add some conditionally rendered element inside of that component.
+
+For example (inside <Input />  component function):
+
+// all the other code from the videos
+
+let validationError = null;
+if (props.invalid && props.touched) {
+    validationError = <p>Please enter a valid value!</p>;
+}
+
+return (
+     <div className={classes.Input}>
+         <label className={classes.Label}>{props.label}</label>
+         {inputElement}
+         {validationError}
+     </div>
+ );
+This could of course be finetuned. You could also pass the value type (e.g. "email address" ) as a prop:
+
+validationError = <p>Please enter a valid {props.valueType}</p>; 
+
+You could also receive the complete error message as a prop:
+
+validationError = <p>{props.errorMessage}</p>; 
+
+And of course, also don't forget to style the messages if you want to do that:
+
+validationError = <p className={classes.ValidationError}>{props.errorMessage}</p>;
+
+In your CSS file, you could have:
+
+.ValidationError {
+    color: red;
+    margin: 5px 0;
+} 
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+Obs... --> eu quero 
+
+
+
+
+TIRAR ESSE COMPORTAMENTO DE RELOAD QUANDO 
+
+
+o negócio diz 'please build a valid burger'... --> consegui, foi só escrever 'event.preventDefault()' dentro do if case....
+
+
+
+
+-----------------------
+
+
+MAS ISTO AQUI:
+
+
+
+This could of course be finetuned. 
+You could also pass the value type (e.g. "email address" ) as a prop:
+
+validationError = <p>Please enter a valid {props.valueType}</p>; 
+
+
+
+
+----------------------
+
+
+EU NÃO SEI FAZER ESPECIFICAMENTE....
+
+
+
+
+
+
+
+
+
+
+-------> Certo... percebi um problema no meu código... ---> o 
+
+estilo de 
+
+'DISABLE' do meu 
+
+'Order BUtton' no burger Builder ESTÁ __ DESCONFIGURADO__.... --> eu fiz alguma coisa que o desconfigurou... (ele não fica mais 'disable' quando tenho 0 items no this.state.ingredients do 'BURGERBUILDER'...)
+
+
+
+
+
+---------------------
+
+
+
+--> finalmente consegui... o problema do botão que não ativava um 
+
+
+estilo/style 
+
+
+de 
+
+'disabled' 
+
+era 
+
+
+
+A AUSÊNCIA DE UMA FUNÇÃO CRUCIAL 
+
+em 
+
+'burgerBuilder', 
+
+o método 
+
+
+'updatePurchaseState',
+
+
+
+
+que era 
+
+EXECUTADO/CHAMADO 
+
+dentro de 
+
+
+
+'addIngredientHandler'.... (outro método de 'BurgerBuilder')...
+
+
+
+
+eis o seu código:
+
+
+
+
+''''''
+updatePurchaseState (ingredients) {
+      const sum = Object.keys (ingredients)
+      .map (igKey => {
+        return ingredients[igKey];
+      })
+      .reduce ( (sum, el) => {
+        return sum + el;
+      }, 0);
+      this.setState(
+        {purchasable: sum > 0} 
+      );
+
+    }
+
+
+'''''
+
+
+
+---------------------------
+
+
+
+AGORA DEVO ANALISAR ESSE CÓDIGO PARA VER COMO O PROFESSOR 
+
+FAZ 
+
+O TOGGLE 
+
+ENTRE 
+
+
+
+O 
+
+ESTILO 
+
+'DISABLED' 
+
+e 
+
+'ENABLED' 
+
+de 
+um botão...
+
+
+(e mesmo assim, 
+
+
+esse código aí tem um problema... ----> 
+
+
+
+no início, ele funciona 10, 
+
+mas 
+
+quando 
+
+retiramos 
+
+os 
+
+ingredients que existiam 
+
+antes,
+
+
+ele VOLTA A DEIXAR O BOTÃO 'ENABLED' para sempre...) ----> o problea era que precisávamos 
+chamar 
+
+'this.updatePurchaseState' 
+LÁ 
+
+NO 
+
+
+'removeIngredientHandler', também....
+
+
+(certo, agora está funcionando)...
+
+
+
+---> devo 
+
+examinar esse código, copiar sua 
+
+estrutura 
+
+
+e A
+incorporar 
+
+naqueles input elements e no botão 'Order'...

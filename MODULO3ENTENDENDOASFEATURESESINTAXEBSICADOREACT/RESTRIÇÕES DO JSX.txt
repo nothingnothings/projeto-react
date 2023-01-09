@@ -1,0 +1,418 @@
+
+
+
+
+
+
+--> NA ÚLTIMA LIÇÃO, O PROFESSOR NOS MOSTROU UM POUCO DO JSX.... --> 
+
+é importante entender o que ele realmente é... 
+
+
+
+
+
+---> NESTE MÓDULO, DEVEMOS VER ALGUMAS RESTRIÇÕES QUE ENCARAMOS 
+
+QUANDO USAMOS O 'JSX'...
+
+
+
+
+CÓDIGO DE 'App.js':
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+
+class App extends Component {
+  render = () => {
+
+
+     return (
+        <div className="App">
+            <h1>Hi, I'm a React App</h1>
+        </div>
+     );
+        
+  }
+}
+
+export default App;
+
+
+
+
+---------------------------------------
+
+
+
+
+
+A PRIMEIRA RESTRIÇÃO QUE ENCONTRAMOS 
+
+
+É 
+
+esse negócio do 
+
+'className'... 
+
+
+
+---> bem, o JSX se parece com HTML, e ele REALMENTE 
+
+DEVE SE PARECER COM HTML.... ---> ele sempre deve se assemelhar 
+
+ao html.. ----> ele deve nos permitir escrever 'html-ish code' 
+
+
+nos nossos arquivos javascript....
+
+
+
+
+
+
+--> ENTRETANTO, COMO O 'JSX' está em um arquivo javascript, e como 
+
+ELE AINDA É JAVASCRIPT,  __ALGUMAS PALAVRAS (KEYWORDS) NÃO PODEM 
+
+SER USADAS... ----> um exemplo 
+
+disso é 
+
+'class'  ----> class PODE SER USADA EM HTMLS, mas NÃO PODE SER USADA EM JAVASCRIPT... ---> 
+
+não pode ser usada pois É UMA __RESERVED WORD___ em javascript...
+
+
+
+
+
+mas pq 'class'? ---> PQ __CLASS__ JA É USADO 
+
+EM JAVASCRIPT,
+ 
+ é USADO 
+
+ PARA CRIAR 'CLASSES', LEMBRA?
+
+
+
+
+aqui mesmo, no nosso código,
+ 
+ já vemos isso:
+
+
+ 'class App extends Component {...}'...
+
+
+  
+
+  -----------------------------
+
+
+  É POR ISSO 
+
+
+  QUE DEVEMOS 
+
+
+  ESCREVER 
+
+  'className'....
+
+
+  --------------------------
+
+
+  Outra observação:
+
+
+
+  todos os 'elementos' que podemos usar aqui, 
+
+as 'tags', como 
+
+'h1' e 'div', 
+
+
+SÃO, NA VERDADE, __GERENCIADOS__/PROVIDENCIADOS___ pela 
+
+
+LIBRARY 'React'...  ---> isso quer dizer QUE NÓS 
+
+NÃO ESTAMOS USANDO OS 
+
+
+ELEMENTOS DE VERDADE, 'html tags' de verdade, quando os chamamos... ----> 
+
+
+RESUMINDO: O REACT QUE CONVERTE ESSE CÓDIGO/ESSAS CALLS no código HTML DE VERDADE,
+por trás 
+
+das cenas.... 
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+e o REACT 
+
+define 
+
+
+os 
+
+""attributes"" que 
+
+podemos definir 
+
+
+EM CADA UM DESSES ELEMENTOS... ----> e nós, por exemplo, 
+
+não temos o attribute 'class' nesses elementos, como temos 
+NO HTML COMUM, e sim 
+
+temos 
+o attribute 'className' (Que faz a mesma coisa)...
+
+
+
+
+className ---> adiciona uma CLASSE CSS àquele elemento....
+
+
+
+
+
+className --> mesmo assim, acaba sendo transformado 
+
+EM 'CLASS' POR MEIO DA ATUAÇÃO DO REACT... (basta examinarmos o html da página, que nos mostra 'class=...' )
+
+
+
+------------------------------------------
+
+
+
+
+OUTRA RESTRIÇÃO 
+
+
+QUE ENFRENTAMOS NO REACT é 
+
+
+que 
+
+
+
+NÓS NÃO PODEMOS RETORNAR __MAIS DE 1 COISA __ (mais de 1 único 'root element') POR 
+
+
+RETURN STATEMENT 
+
+DO 
+
+
+REACT...
+
+
+
+ex(de coisa que não podemos fazer):
+
+
+
+
+
+
+class App extends Component {
+  render = () => {
+     return (
+        <div className="App">
+            <h1>Hi, I'm a React App</h1>
+        </div>
+        <h1>Another Headline</h1> ///////NÓS NÃO PODEMOS ESCREVER ESSE ELEMENTO AQUI.... NÃO PODEMOS PQ ELE É OUTRO __ROOT ELEMENT___....
+     );
+        
+  }
+}
+
+
+----------------------------------------------
+
+
+
+
+
+NÓS NÃO PODEMOS 
+
+COLOCAR 
+
+AQUELE OUTRO '<h1>' logo abaixo 
+
+
+da div... ---> não 
+
+podemos fazer 
+
+isso 
+
+
+PQ NOSSA 
+
+
+JSX EXPRESSION
+
+
+___DEVE ___ TER APENAS 1 ___ ÚNICO ___ 'ROOT ELEMENT'_....
+
+
+
+
+
+
+
+--> entretanto, com o 'react 16', 
+
+essa regra/limitação 
+
+foi 
+
+
+'kindof' loosened... --------> ISSO QUER DIZER 
+
+
+QUE NESSE CURSO NÓS VAMOS VER 
+
+UMA MANEIRA ____ DE ADICIONAR __ MAIS DE 1 ÚNICO 
+
+ROOT ELEMENT ___ PARA UM DETERMINADO RETURN STATEMENT 
+
+de react/de um react component... ---> vamos ver que PODEMOS RETORNAR 'ADJACENT ELEMENTS' no final das contas....
+
+
+
+
+---------------------------------------------
+
+
+
+
+PORÉM,
+
+
+É UMA 'TYPICAL BEST PRACTICE' adicionar 
+
+
+APENAS 1 ÚNICO ROOT ELEMENT por return statement/react component ... ----> 
+
+
+isso pq
+
+
+TIPICAMENTE VOCÊ VAI QUERER ADICIONAR 
+
+___ O STYLING ___ DE UM DETERMINADO REACT COMPONENT ____ AO 'ROOT ELEMENT' DESSE 
+
+COMPONENT... (você faz isso para que O RESTO DOS ELEMENTOS CONSIGA FAZER 'INHERIT' 
+DAS CARACTERÍSTICAS 
+DEFINIDAS 
+NA DIV QUE OS 'WRAPPA'... a div 'parent'/root element parent...)  -----> podemos ver isso já no exemplo do professor, em que o styling da div de classe 'App' é ESTENDIDO à h1 tag nesteada no seu interior...
+
+
+
+
+
+---------------------------------------
+
+
+
+
+----> TIPICAMENTE, VOCÊ NESTEIA TUDO 
+
+DENTRO DO ÚNICO ROOT ELEMENT QUE RETORNAMOS.......
+
+
+
+
+
+----> ok, mas pq precisamos 
+
+
+de '()' depois do return...? ---> precisamos DISSO 
+
+PARA TORNAR POSSÍVEL O WRITE 
+
+
+DE CÓDIGO 'PSEUDOHTML'/CÓDIGO JSX... ---> os () nos permitem 
+
+ESCREVER CÓDIGO MULTI-LINHA...----> ISSO SIGNIFICA QUE PODEMOS ESCREVER 
+NOSSO CÓDIGO HTML EM UM FORMATO BONITO, DE FÁCIL LEITURA, QUE DEPOIS SERÁ 
+COMPILADO E CONVERTIDO EM UMA FITA ÚNICA DE HTML, SEM ESPAÇOS...
+
+
+
+
+
+
+
+O PROFESSOR ADICIONA UM OUTRO CHILDREN àquela div do JSX, um <p>, para 
+
+dizer 
+
+'This is really working'...
+
+
+
+ex:
+
+
+
+
+class App extends Component {
+  render = () => {
+     return (
+        <div className="App">
+            <h1>Hi, I'm a React App</h1>
+            <p>This is really working</p>
+        </div>
+     );
+        
+  }
+}
+
+
+---------------------------------------------------
+
+
+COM ISSO, 
+
+
+AGORA TEMOS ESSE PARAGRAPH 
+
+na nossa página, também...
+
+
+
+
+Vimos algumas das restrições 
+
+e cuidados que devemos ter quando 
+
+escrevemos 
+
+código react/jsx... ---> pq esse código não é HTML, mas às vezes funciona igualzinho 
+a html...

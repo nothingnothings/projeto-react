@@ -1,0 +1,753 @@
+
+
+
+
+
+
+
+
+
+----> na última lição, criamos o componente individual do 'Build Control'....
+
+
+
+
+
+
+
+
+---> AGORA QUEREMOS OUTPUTTAR UM PUNHADO DE 'BUILD CONTROL's  --------> 
+
+
+
+
+PARA ISSO, 
+
+
+O PROFESSOR
+
+
+VAI CRIAR UMA 
+
+CONSTANTE 
+
+
+NO ARQUIVO 
+
+
+'BuildControls'... ---> mas 
+
+
+essa constante não será 
+
+
+
+um STATE, e não será um component a ser exportado... --> não, 
+
+vai ser uma 
+
+CONSTANTE __ PRÓPRIA DO ARQUIVO 
+
+'BuildControls'... -----------> 
+
+
+
+
+O NOME 
+
+DESSE NEGÓCIO SERÁ 
+
+
+
+'const controls'.... ------------->  E ISSO É OPCIONAL, PQ VOCÊ PODERIA, SIM, 
+
+HARDCODAR TODOS OS 'BUILDCONTROL' 
+
+lá 
+
+
+no component 
+
+'BuildControls'...
+
+
+-----------------------
+
+
+
+PROFESSOR VAI COMEÇAR A ESCREVER O CÓDIGO ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+import BuildControlsStyle from './BuildControls.module.css';
+
+
+import BuildControl from '../BuildControls/BuildControl/BuildControl';
+
+
+
+const controls = [ ////////EIS O CÓDIGO EM QUESTÃO.
+
+]
+
+
+
+
+
+
+
+
+const buildControls = (props) => {
+
+
+
+    return(
+
+        <div className={BuildControlsStyle.BuildControls}>
+           
+
+        </div>
+
+
+    );
+}
+
+
+
+
+export default buildControls;
+
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+ESSA CONSTANTE VAI ___SEGURAR __ UM ARRAY__ PELO 
+
+QUAL 
+
+
+O PROFESSOR VAI __LOOPAR__ PARA 
+
+ENTÃO 
+
+
+CONSEGUIR 
+CRIAR 
+
+TODOS ESSES DIFERENTES 
+
+
+'BUILD CONTROL's... (e então os renderizar)....
+
+
+
+
+
+
+É por isso que, dentro desse array,
+
+o professor 
+
+
+vai definir 
+
+
+
+
+
+um 
+
+OBJETO JAVASCRIPT 
+
+
+com 
+
+
+UMA PROPRIEDADE 
+
+'label' de valor 
+
+'Salad'.... e aí esse objeto 
+
+também 
+
+
+terá uma propriedade 
+
+
+'type', de valor 'salad', TAMBÉM (mas lowercase)...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const controls = [
+    { label: 'Salad', type: 'salad' }
+]
+
+
+
+
+
+
+
+
+const buildControls = (props) => {
+
+
+
+    return(
+
+        <div className={BuildControlsStyle.BuildControls}>
+           
+
+        </div>
+
+
+    );
+}
+
+
+
+
+export default buildControls;
+
+
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+PROFESSOR EXPLICA QUE ESSE APPROACH DA 
+
+const de 'CONTROLS' é apenas UM DOS APPROACHES POSSÍVEIS... -----> 
+
+
+
+
+ele vai criar UM OBJETO JAVASCRIPT PARA CADA 
+
+
+'LESS/MORE' de cada ingredient.... ---> ou seja,
+
+
+
+ele vai 
+
+escrever:
+
+
+
+
+const controls = [
+    { label: 'Salad', type: 'salad' },
+    { label: 'Cheese', type: 'cheese' },
+    { label: 'Meat', type: 'Meat' },
+    { label: 'Bacon', type: 'Bacon' }
+  
+]
+
+
+
+
+
+
+
+
+E O CÓDIGO INTEIRO DE 'BUILDcONTROLS'
+
+VAI FICAR ASSIm:
+
+
+
+
+
+import React from 'react';
+
+
+
+
+
+
+const controls = [
+    { label: 'Salad', type: 'salad' },
+    { label: 'Cheese', type: 'cheese' },
+    { label: 'Meat', type: 'Meat' },
+    { label: 'Bacon', type: 'Bacon' }
+  
+]
+
+
+
+
+
+
+
+
+const buildControls = (props) => {
+
+
+
+    return(
+
+        <div className={BuildControlsStyle.BuildControls}>
+           
+
+        </div>
+
+
+    );
+}
+
+
+
+
+export default buildControls;
+
+
+
+
+
+
+
+
+------------------------------
+
+
+
+
+
+OBS: os 'types' DEVERÃO SER OS MESMOS QUE VOCê ESTÁ FAZENDO 'CHECK' LÁ 
+
+
+NO COMPONENT 
+
+'BurgerIngredient'... (no switch statement)... 
+
+
+
+
+
+
+
+
+---> CERTO... AGORA TEMOS UM ARRAY DE 
+
+
+'controls'... ---> e, DE NOVO, ESSA CONSTANTE FOI ADICIONADA ___APENAS__ POR 
+
+CONVENIÊNCIA...
+
+
+
+
+
+
+---> AGORA ELE VAI QUERER USAR ESSE ARRAY DE 'controls' (seus valores/propriedades) 
+
+
+NO 
+
+
+COMPONENT 'BUILDCONTROLS' (no seu render, naquela <div>)...
+
+
+
+
+
+
+
+--> ISSO FEITO, ELE VAI QUERER __IMPORTAR __ 'BUildcONTROL' (o component)
+
+
+DENTRO 
+
+
+
+DO COMPONENT 
+
+'BUILDCONTROLS'...
+
+
+
+
+
+
+-------> ISSO FEITO, REPARE O CÓDIGO DE 
+
+
+'buildControls':
+
+
+
+
+
+------------------------------------------------------------------
+
+
+
+import React from 'react';
+
+
+
+
+import BuildControlsStyle from './BuildControls.module.css';
+
+
+import BuildControl from '../BuildControls/BuildControl/BuildControl';
+
+
+
+
+
+const controls = [
+    { label: 'Salad', type: 'salad' },
+    { label: 'Cheese', type: 'cheese' },
+    { label: 'Meat', type: 'Meat' },
+    { label: 'Bacon', type: 'Bacon' }
+  
+]
+
+
+
+const buildControls = (props) => {
+
+
+
+    return(
+
+        <div className={BuildControlsStyle.BuildControls}>
+            
+
+        </div>
+
+
+    );
+}
+
+
+
+
+export default buildControls;
+
+
+
+------------------------------------------------
+
+
+
+
+
+DENTRO DO 'return' do código jsx DE BUILDCONTROLS,
+
+O PROFESSOR VAI QUERER 
+
+
+__ESCREVER UM LOOP_, DENTRO 
+
+DAQUELA WRAPPING DIV ----> 
+
+
+
+PARA ISSO, ele vai ter que usar um 
+
+
+
+'{}' (curly braces, marcação dinâmica).
+
+
+
+
+---> esse loop SERÁ BEM SIMPLES... --->  SERÁ UM 
+
+
+___LOOP___ CRIADO POR MEIO DO MÉTODO '.map()' -----> QUE 
+
+
+VAI CONVERTER ___AQUELE 
+
+ARRAY DE 'controls' 
+
+
+EM ___ELEMENTOS JSX/EM CALLS DO COMPONENT 'BuildControl', várias vezes...
+
+
+
+
+
+
+
+
+
+
+
+
+VAI FICAR ASSIM:
+
+
+
+
+        <div className={BuildControlsStyle.BuildControls}>
+
+                {controls.map()}
+
+        </div>
+
+
+
+----------------------------
+
+
+
+
+
+SIM, 
+
+
+'control.maps()', pq 
+
+ELE VAI CHAMAR 
+
+ESSE MÉTODO 
+
+'map' (que faz CONVERSÕES de ARRAYS EM __OUTRAS COISAS__) 
+
+
+EM CIMA 
+
+__ DO ARRAY DE 
+
+'controls'...
+
+
+
+
+
+controls.map (
+
+
+() => {
+
+}
+
+
+)
+
+
+
+
+
+--------------------------
+
+
+
+CERTO... ---> E AÍ ELE VAI QUERER MAPPEAR __CADA__ 
+
+
+
+OBJETO 'control' ( ou seja, '{label : xxx, type: xxx }') 
+
+
+
+
+COMO 
+
+SENDO UM CALL DE 
+
+'BuildControl'...
+
+
+
+
+
+EX:
+
+
+
+
+
+const controls = [
+    { label: 'Salad', type: 'salad' },
+    { label: 'Cheese', type: 'cheese' },
+    { label: 'Meat', type: 'Meat' },
+    { label: 'Bacon', type: 'Bacon' }
+  
+]
+
+
+
+
+
+
+
+{controls.map (
+
+
+(ctrl) => (
+    <BuildControl label={ctrl.label} type={ctrl.type} />
+)
+
+
+)
+
+}
+
+
+
+
+
+
+
+-----------------------------
+
+
+
+OU SEJA,
+
+
+
+
+ELE VAI USAR AQUELE ARRAY 
+
+de 'controls' para passar esses valores de props dinamicamente 
+
+ao 
+
+
+component 'BuildControl'....
+
+
+
+
+
+---> Entretanto, esquecemos um detalhe.... --> uma KEY também tinha de ser adicionada... ---> 
+
+a key será SIMPLESMENTE O 'label' mesmo... 
+
+
+
+
+
+EX:
+
+
+
+
+
+const controls = [
+    { label: 'Salad', type: 'salad' },
+    { label: 'Cheese', type: 'cheese' },
+    { label: 'Meat', type: 'Meat' },
+    { label: 'Bacon', type: 'Bacon' }
+  
+]
+
+
+
+
+
+
+
+{controls.map (
+
+
+(ctrl) => (
+    <BuildControl label={ctrl.label} type={ctrl.type} key={ctrl.label} />
+)
+
+
+)
+
+}
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+---> QUANTO AO 'TYPE', O PROFESSOR EXPLICA QUE ELE SÓ __SE TORNARÁ __ IMPORTANTE 
+
+
+MAIS TARDE....  --> por enquanto,
+
+
+devemos apenas 
+
+checar 
+
+
+SE CONSEGUIMOS 
+
+
+ver alguma coisa com esse 'label'...
+
+
+
+
+------------------------------------
+
+
+
+
+CERTO... ISSO ESTÁ FUNCIONANDO... vemos 
+
+'labels' para CADA 'BuildControl'...
+
+
+
+
+------------------------------------------
+
+
+
+
+
+-->   Os build controls ainda não estão funcionando, na verdade.... (E o estilo do BACKGROUND dos 
+
+botões 'more' está faltando... não sei o porquê) --> certo, consertei, era um selector errado.
+
+
+
+
+
+
+---------

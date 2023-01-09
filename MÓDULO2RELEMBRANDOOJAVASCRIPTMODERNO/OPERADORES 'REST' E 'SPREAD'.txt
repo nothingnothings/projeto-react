@@ -1,0 +1,556 @@
+
+
+
+
+APRENDEMOS SOBRE CLASSES, ARROWFUNCTIONS E ES7.... 
+
+
+
+
+
+
+
+--> MAS AGORA DEVEMOS VER NOVOS OPERADORES, OPERADORES DO FUTURO DO JAVASCRIPT, 
+
+
+MAS QUE JÁ PODEMOS USAR 
+
+
+NO NOSSO PROJETO REACT...
+
+
+
+
+
+
+--> SPREAD E REST OPERATORS... ---> na verdade, é apenas um OPERADOR, que é o '...' (sim, 3 pontos)...
+
+
+
+
+
+
+
+---> NÓS CHAMAMOS ELE DE 'SPREAD' OU 'REST' DEPENDENDO DO LOCAL EM QUE O UTILIZAMOS....
+
+
+
+
+
+
+
+
+
+
+
+SPREAD --> 'USED TO SPLIT UP ARRAY ELEMENTS OR OBJECT PROPERTIES'... --> é usado para TIRAR elementos de dentro de um array/objeto E PREENCHER um outro objeto com eles....
+
+            ex:
+
+
+            const newArray = [...oldArray, 1, 2]   --------> isso vai ADICIONAR TODOS OS ELEMENTOS DO ARRAY ANTIGO no novo array... --> todos os elementos do array velho + 1, 2 
+            const newObject = {...oldObject, newProp: 5}  -------> isso vai fazer a mesma coisa, mas com um objeto e com KEY-VALUE PAIRS......  -----> SIDENOTE: se esse novo objeto TIVER UM NOVO VALOR PARA UMA PROPRIEDADE DE MESMO NOME QUE EXISTE NO OBJETO VELHO, o valor da propriedade VELHA SERÁ __OVERWRITADO__ pelo da propriedade nova com o mesmo nome.... 
+
+
+
+
+
+
+REST --------> É O MESMO OPERADOR, MAS USADO DIFERENTEMENTE... ---> "IT'S USED TO MERGE A LIST OF FUNCTION ARGUMENTS INTO AN ARRAY..." --> 
+
+é usado PARA FUNDIR UMA LISTA DE ARGUMENTOS DE UMA FUNÇÃO EM UM ARRAY...  ---> 
+
+
+NÓS SEMPRE O UTILIZAMOS 
+
+EM UMA ''FUNCTION ARGUMENT LIST''...
+
+
+
+
+EXEMPLO:
+
+
+function sortArgs(...args) {
+    return args.sort();
+}
+
+
+
+------------------------------------
+
+
+ESSA FUNÇÃO 
+
+'sortArgs()' 
+
+
+ACEITA __UM NÚMERO ILIMITADO DE FUNÇÕES__ EM RAZÃO 
+
+DO '...args' em seu parâmetro... --> isso quer dizer 
+
+QUE ELA NÃO TEM UM LIMITE DE ARGUMENTOS QUE ESPERA PARA 
+
+EXECUTAR SUA FUNÇÃO... (1, 3, 7, 20000.... não interessa o número.) --> 
+
+
+
+esse '...args' SERÁ __FUNDIDO__ EM ___UM ÚNICO__ ARGUMENTO__ por meio 
+do efeito de '...' na frente do args... e esse argumento ficará como 
+
+'args'... -------> e esse argumento 'args' SERÁ 
+
+__UM ARRAY___.... ------> um array de argumentos, mas tecnicamente 1 argumento 
+só... --> nós podemos 
+
+ENTÃO APLICAR MÉTODOS DE ARRAY NESSE ARRAY-ARGUMENTO.... (como 'sort()'...)
+
+
+
+----------------------------------------
+
+
+
+DEVEMOS VER O USO DESSES 2 OPERADORES NO JSBIN...
+
+
+
+---------------------------
+
+
+COMEÇAMOS PELO SPREAD OPERATOR...
+
+
+
+
+
+O professor cria um array de números....
+
+
+e um outro array, 'newNumbers'...
+
+
+
+EX:
+
+
+
+const numbers = [1, 2, 3];
+
+
+const newNumbers = [];
+
+
+--------------------------
+
+
+
+
+CERTO... como vimos anteriormente, o 
+
+spread é usado como '...'...
+
+
+
+NÓS VAMOS 
+
+
+COLOCAR 
+
+
+'...numbers' e então OUTROS VALORES DE NÚMEROS, NESSE 'newNumbers'...
+
+
+ex:
+
+
+
+
+
+const numbers = [1, 2, 3];
+
+
+const newNumbers = [...numbers, 5, 9];
+
+
+console.log(newNumbers);   ///////ISSO VAI PRINTAR [1, 2, 3, 5, 9]....
+                
+-----------------------------
+
+
+
+
+
+qual é a diferença disso para um código sem uso de '...'?
+
+
+
+
+veja:
+
+
+
+
+
+
+
+
+const numbers = [1, 2, 3];
+
+
+const newNumbers = [numbers, 5, 9];
+
+
+console.log(newNumbers);   ///////ISSO VAI PRINTAR [[1, 2, 3], 5, 9]....
+
+                            //////OU SEJA, 'o array na sua forma normal' + 5 + 9...
+
+----------------------------------------------------------
+
+
+
+
+
+---> isso quer dizer que o 
+
+spread OPERATOR 'puxa' os elementos de fora de um array...
+
+
+
+
+--> esse é o spread operator...
+
+
+
+
+--> vamos ver o professor usar esse operador durante 
+
+o curso, tanto em arrays como em objetos... --> ele 
+
+o usará para 
+
+____CONVENIENTEMENTE___  copiar arrays, 
+
+
+OU ENTÃO PARA adicionar propriedades A UM OBJETO ao mesmo tempo que 
+
+mantemos as propriedades do antigo objeto...
+
+
+----> É EVIDENTE QUE O PROFESSOR SEMPRE 
+
+EXPLICARÁ 
+
+
+O PQ DELE USAR ESSE OPERADOR NAS VEZES EM QUE ELE O UTILIZAR...
+
+
+----------------------------------------------------------------
+
+
+
+
+AGORA DEVEMOS VER A MESMA UTILIZAÇÃO DESSE OPERADOR, MAS EM OBJETOS...
+
+
+
+-----------------------------------------------
+
+
+
+
+vou criar uma const de 'person', 
+
+com uma propriedade 
+
+
+
+
+de 
+
+
+'name'...
+
+
+
+E AÍ VAMOS TRANSPLANTAR ESSE KEY-VALUE PAIR PARA um novo objeto chamado de 
+
+'newPerson'
+
+
+
+
+ex:
+
+
+
+const person = {
+    name: 'Max'
+};
+
+
+
+
+const newPerson {
+    ...person ////////ISSO VAI COPIAR TODOS OS KEY-VALUE PAIRS DO ANTIGO OBJETO...
+}
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+const person = {
+    name: 'Max'
+};
+
+
+
+
+const newPerson {
+    ...person,
+    age: 28
+}
+
+
+
+console.log(newPerson);
+
+-------------------------------------
+
+
+
+
+REST OPERATORS... ---> 
+
+
+
+
+
+SÃO MENOS USADOS... ---> são usados 
+
+
+
+em FUNÇÕES...
+
+
+
+
+
+
+
+
+
+
+Vamos ver isso em um formato ES6...
+
+
+
+
+
+
+DIGAMOS QUE TEMOS 
+
+
+
+uma função chamada 
+
+
+de 'filter'...
+
+
+
+ex:
+
+
+
+
+const filter = (...args) => {
+
+}
+
+
+
+--------------------------
+
+
+
+ISSO VAI ACEITAR INFINITOS ARGUMENTOS, BASICAMENTE...
+
+
+
+
+
+
+ex:
+
+
+
+
+const filter = (...args) => {//////esse é o rest operator...
+    return args;
+}
+
+
+---------------------------------------
+
+
+POR ENQUANTO, ESSA FUNÇÃO VAI RETORNAR TODOS OS VALORES QUE PASSAMOS A ELA....
+
+
+
+
+O PROFESSOR DECIDE USAR o método 'filter()' nesse argumento aí... - -->> (FILTER É UM MÉTODO QUE EXISTE EM TODOS ARRAYS....)
+
+------------------------------
+
+
+
+EX:
+
+
+
+
+const filter = (...args) => {//////esse é o rest operator...
+    return args.filter();
+}
+
+
+-------------------------
+
+
+
+
+O rest operator FUNDE TODOS os argumentos 
+
+
+EM 1 ÚNICO ARRAY... (o array 'args', nesse caso... ) --> e é por isso que podemos executar 
+'filter()' nesse array...
+
+
+
+
+--> FILTER() ---> executa UMA FUNÇÃO EM CADA ELEMENTO DENTRO DO ARRAY QUE PASSAMOS... (devemos passar uma função interna/anônima como parâmetro de 'filter()'...)
+
+
+
+--> nesse exemplo, vamos QUERER QUE O MÉTODO 'FILTER' retorne __TRUE___ (ele sempre faz isso)
+
+SE O 'element' (el) DENTRO 
+
+DELE FOR 
+
+IGUAL A 1....
+( === 1)
+ 
+
+ === --> checa por IGUALDADE DE VALOR E DE TIPO...
+
+
+
+(el === 1) ---> o elemento TERÁ DE SER UM NÚMERO, E TERÁ DE SER O NÚMERO 1...
+
+
+
+
+EX:
+
+
+
+
+const filter = (...args) => {
+    return args.filter(el => {
+        el === 1 
+    });
+}
+
+
+
+---------------------------------------------
+
+
+
+
+professor explica que podemos OMITIR, na função interna, OS '{}' (curly braces... podemos omitir 
+pq só TEMOS 1 ÚNICO STATEMENT ali dentro...):
+
+
+
+
+
+
+const filter = (...args) => {
+    return args.filter(el => el === 1);
+}
+
+
+-----------------------------------------------
+
+
+
+
+
+CERTO...
+
+
+AGORA 
+
+
+ESSA FUNÇÃO 
+
+'filter' 
+
+
+
+VAI RETORNAR 
+
+apenas o número '1' QUANDO UM MONTE DE ARGUMENTOS FOR PASSADO A ELA...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const filter = (...args) => {
+    return args.filter(el => el === 1);
+}
+
+
+console.log(filter(1, 3, 5, 6, 8, 9)); -------> ISSO VAI PRINTAR '[1]', que é o return daquele 'return args.filter(el => el === 1)'
+
+
+
+
+
+-----> a função vai retornar um ARRAY de '1' ([1]) PQ 
+
+BEM... pense: o '...args' no parâmetro da função filter FAZ 
+COM QUE TODOS OS ITEMS/PARÂMETROS PASSADOS A ESSA FUNÇÃO 
+
+SEJAM CONVERTIDOS EM 1 ARRAY... (E é por isso que podemos chamar 
+
+'filter' em 'args', pois ARGS é um array/foi CONVERTIdo 
+em um array por causa do REST OPERATOR, no final 
+das contas, no final das contas...)
+
+
+-----------------------------------
+
+
+
+
+
+
+REST --> é mais situacional.

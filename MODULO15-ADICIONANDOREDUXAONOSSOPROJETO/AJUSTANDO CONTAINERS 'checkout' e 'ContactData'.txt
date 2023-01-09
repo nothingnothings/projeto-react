@@ -1,0 +1,662 @@
+
+
+
+
+
+
+
+
+
+
+
+
+AGORA QUE ESTAMOS FAZENDO 'HANDLE' DE TUDO RELATIVO A INGREDIENTS __POR MEIO DO REDUX__,
+
+
+ É CLARO QUE NÓS DEVEMOS AJUSTAR TAMBÉM NOSSOS OUTROS CONTAINERS... (outras páginas)...
+
+
+
+
+ --> NESSES OUTROS CONTAINERS 
+
+
+ NÓS __TAMBÉM USAMOS ____ A PROPRIEDADE 
+
+ 'ingredients', como você deve lembrar....
+
+
+
+
+
+
+ -----------------------------
+
+
+ AQUI, O REDUX SERÁ MUITO ÚTIL, pois fará com que 
+
+
+
+possamos NOS LIVRAR
+ 
+ daquela 
+ sintaxe/APPROACH __BIZARRO__ E IRRITANTE 
+
+
+
+dos query params... --> ele vai nos deixar 
+
+
+PASSAR 
+
+A INFORMAÇÃO 
+
+
+relativa aos 'ingredients'
+
+DIRETAMENTE 
+
+A 
+
+'checkout' e 'ContactData'...
+
+
+
+--------------------------
+
+
+
+
+
+
+
+--> para isso, PRECISAMOS 
+
+
+VINCULAR ESSES 2 CONTAINERS 
+
+AO NOSSO 'STATE GLOBAL REDUX', por meio 
+
+de 
+
+'connect'...
+
+
+
+
+
+-------
+
+
+Professor começa REMOVENDO O CÓDIGO QUE NÃO VAMOS MAIS USAR... ------> 
+
+
+
+
+
+como 
+
+'purchaseContinueHandler', que tem este 
+
+
+código:
+
+
+
+
+
+
+
+
+purchaseContinueHandler = () => {
+    const queryParams = [];
+    for (let i in this.state.ingredients) {
+      queryParams.push(
+        encodeURIComponent(i) +
+          '=' +
+          encodeURIComponent(this.state.ingredients[i])
+      );
+    }
+
+    queryParams.push('price=' + this.state.totalPrice);
+
+    const queryString = queryParams.join('&');
+
+    console.log(queryParams);
+
+    this.props.history.push({
+      pathname: '/checkout',
+      search: '?' + queryString,
+    });
+  };
+
+
+
+---------------------------------
+
+
+
+_NÃO VAMOS MAIS UTILIZAR
+ 
+
+
+ ESSE 
+
+ 'purchaseContinueHandler'... --> não vamos 
+
+
+ pq 
+
+ NÓS 
+
+ NÃO 
+
+
+ VAMOS MAIS UTILIZAR QUERYPARAMS 
+
+ para 
+
+
+ passar 
+
+ nosso 
+
+ 'ingredient state'... --> esse método pode simplesmente ser REMOVIDO.
+
+
+
+ -----------------------
+
+
+ A ÚNICA COISA QUE 
+
+
+ VAMOS 
+
+ QUERER 
+
+ MANTER,
+  de lógica, 
+
+
+  DESSE 
+
+
+  __MÉTODO__, 
+
+
+
+  é 
+
+
+  o código 
+
+
+
+
+  'this.props.history.push(
+      {
+          pathname: '/checkout',
+          search: '?' + queryString
+      }
+  )' -------> PQ É ISSO QUE 
+
+
+  VAI 
+
+  ___NAVEGAr___ NOSSO USUÁRIO ATÉ 
+
+
+  'CHECKOUT'
+   
+
+   quando 
+
+   o botão 
+
+   'OK/continuar compra'
+
+
+   FOR CLICADO.... ------> ENTRETANTO,
+
+
+
+   AQUELA PROPRIEDADE/PARÂMETRO 
+
+
+
+   DE 
+
+   'search: '?' + queryString' 
+
+
+
+
+   __NÃO É MAIS NECESSÁRIO, POIS NÃO VAMOS MAIS USAR EXTRAÇÃO DE QUERYPARAMS (Em checkout) 
+
+   PARA 
+
+   OBTER OS INGREDIENTS 
+
+
+   do state....
+
+
+
+
+
+   Isso significa 
+
+   que 
+
+   o código 
+
+
+   de 
+
+   'purchaseContinueHandler' vai ficar:
+
+
+
+
+
+   purchaseContinueHandler = () => {
+       this.props.history.push( '/checkout')
+   }
+
+
+
+
+
+   ------------------
+
+
+   PROFESSOR REMOVE _tODO O CÓDIGO _ de 
+
+   dentro 
+
+
+de 
+
+
+'componentWillMount()',
+
+lá em 
+
+
+'Checkout',
+PQ 
+
+
+
+NADA DISSO SERÁ USADO COM ESSE APPROACH DO 'REDUX'...
+
+
+
+-----> o STATE de 'checkout' TAMBÉM É REMOVIDO, pois agora é inútil (state LOCAL --> substituído pelo STATE DO REDUX...)
+
+
+
+---------------------------
+
+
+
+
+
+É CLARO QUE SE QUEREMOS 
+
+
+
+
+
+
+USAR 
+
+
+o STATE GLOBAL DO REDUX em 
+'Checkout'
+
+e 
+
+em 
+
+'ContactData',
+
+
+NÓS PRECISAMOS 
+
+importar 
+
+'{ connect }' LÁ DO 'react-redux'....
+
+
+-------------------------------------------
+
+
+
+
+escrevemos 
+
+
+
+export default connect(mapStateToProps)(Checkout);
+
+-----------------------------
+
+
+
+Já 
+
+em 
+
+
+'const mapStateToProps'
+
+
+
+vamos 
+
+
+escrever 
+
+
+
+mapStateToProps = state => {
+    ingr: state.ingredients,
+    price: state.totalPrice
+}
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+NÃO VAMOS 
+
+DEFINIR UM 
+
+
+'mapDispatchToProps', entretanto,
+
+POIS __NÃO VAMOS DISPATCHAR 
+
+
+NADA 
+
+
+
+POR MEIO DESSE CONTAINER 'Checkout'... --> a única coisa que vamos 
+
+fazer, nesse container,
+
+
+É ___NAVEGAR___ ATÉ O 'Contact-Data',
+
+
+
+
+
+O 'contactData'
+
+
+QUE 
+
+
+PEGARÁ 
+
+OS 
+
+
+DADOS ACERCA DOS 'ingredients' que passaremos a ter nesse 'Checkout'; ingredients
+
+QUE 
+
+AGORA 
+
+FORAM 
+
+EXTRAÍDOS/REFERENCIADOS DO ___STATE ___ GLOBAL__ DO REDUX...
+
+
+
+------------------------------------
+
+
+A OUTRA ALTERAÇÃO 
+
+
+QUE 
+
+
+O PROFESSOR 
+
+DIZ QUE 
+
+FAREMOS 
+
+
+
+
+é 
+
+
+
+aquela em 
+
+
+' <Route
+          path={this.props.match.path + '/contact-data'}
+         
+           render={() => {      //se você quiser essa coisa que explicamos nessa linha de cima, VOCÊ DEVE USAR __ O RENDER() de uma forma gambiarrenta, para então poder renderizar esse component nessa route COM __ALGUNS PROPS __EMBUTIDOS/PASSADOS A ELE..
+                return contactDataWithIngredients;
+           }}                           
+        />
+
+'''
+
+
+
+
+
+
+
+ALI, nesse negócio aí,
+
+
+
+
+PROFESSOR DIZ QUE 
+
+NÃO PRECISAMOS MAIS 
+
+DESSE 
+
+'render' 
+
+especial... --> podemos substituir 
+
+
+ISSO 
+
+
+POR UM 
+
+
+'component={}' COMUM,
+
+pois 
+
+agora 
+
+
+
+
+A 
+
+'DATA'
+
+
+acerca do 'INGREDIENTS' state 
+
+
+JÁ ESTÁ SENDO PASSADA 
+
+NORMALMENTE POR NOSSO component
+
+'Checkout'
+
+
+
+AO 
+
+
+container 
+
+
+'ContactData'...
+
+
+--------------------------------
+
+
+
+
+
+PARA ISSO, O CÓDIGO FICOU ASSIM:
+
+
+
+    return (
+      <div>
+        <CheckoutSummary
+          ingredients={this.props.ingr}
+          checkoutCancelled={this.checkoutCancelledHandler}
+          checkoutContinue={this.checkoutContinueHandler}
+        />
+        <Route
+          path={this.props.match.path + '/contact-data'}      
+           component={     
+            ContactData ////////EIS O CÓDIGO EM QUESTÃO.
+       } 
+        />
+      </div>
+    );
+
+
+--------------------------------------
+
+
+
+
+
+
+CERTO.... MAS AGORA É NECESSÁRIO AJUSTAR O CÓDIGO DE 'ContactData',
+
+TAMBÉM 
+
+O VINCULAR AO 
+
+'GLOBAL REDUX STATE', para poder 
+
+se aproveitar
+ 
+
+
+ do 
+
+ STATE DOS INGREDIENTS (e do price, provavelmente...).
+
+
+
+
+
+ --------------------------------
+
+
+ CONSEGUI:
+
+
+ troquei
+  
+  vários 
+
+  dos 
+
+  'this.props.ingredients'
+
+  para 
+
+  'this.props.ingr'....
+
+
+  (isso em 'ContactData'....)
+
+
+
+
+
+  --------------------------
+
+
+  OBS::: O CÓDIGO DE 'INPUT VALIDATION' vai continaur o mesmo,
+
+  pois 
+
+  ele é 
+  
+
+  __GERENCIADO__ LOCALMENTE__...
+
+
+
+
+
+
+  --> a informação de que precisamos 
+
+
+
+  está toda nesse container 
+
+
+  'ContactData', de fato....
+
+
+  ------------------
+
+
+
+
+
+
+
+
+  NOSSO APP VAI ESTAR FUNCIONANDO COMO ANTES, MAS AGORA 
+
+
+  COM 
+
+
+  REACT-REDUX...
+
+
+
+
+  ----> nossas orders TAMBÉM ESTÃO SENDO ARMAZENADAS NO FIREBASE... sucesso.
+
+
+
+  --> ISSO NOS MOSTRA OS LUGARES EM QUE 'REDUX SHINES'...
+
+
+
+
+  --> COM O REDUX, PASSAMOS A TER UM 'PREDICTABLE DATA FLOW',
+
+  e 
+
+  o PASS DE DATA POR DENTRO DE NOSSO APLICATIVO SE TORNA __sUPER FÁCIL...__

@@ -1,0 +1,364 @@
+
+
+
+CERTO, DEMOS UMA CONFERIDA NAQUELE COMPONENT 'AUX'... ----> nós 
+
+
+VAMOS SEMPRE USAR 
+
+
+ESSE COMPONENT 'Aux'
+
+
+COMO UM WRAPPER NOS CASOS  EM QUE 
+
+
+
+NÓS QUEREMOS TER MÚLTIPLOS ELEMENTOS HTML/JSX RENDERIZADOS  ____ SEM TER ___  UM 
+
+
+ELEMENTO 
+
+
+DOM ADICIONAL SENDO RENDERIZADO AO DOM DE VERDADE (real dom)... ( OU SEJA,
+
+SEM UMA __dIV___ ADICIONAL___ SENDO RENDERIZADA NO NOSSO DOM...)
+
+
+
+
+
+
+
+
+
+
+VAMOS USAR ESSE COMPONENT 
+
+'AUX' AO LONGO DESTE CURSO,
+ 
+
+
+
+ E TAMBÉM AO LONGO DO 'COURSE PROJECT'...
+
+
+
+
+ -----> E DESDE O REACT 16.2,
+
+
+
+ HÁ UM 'BUILT IN AUX COMPONENT'  --> ele é BUILTIN no react...
+
+
+
+
+
+
+
+
+ -------> E SEMPRE QUE USAMOS 
+
+
+
+
+ 'AUX', que 
+
+ é 
+
+
+
+ESSE 
+
+
+'CUSTOM BUILT (built BY US) HIGHER ORDER COMPONENT',
+
+
+ 
+
+
+ VOCÊ/NÓS TAMBÉM 
+
+ PODEMOS 
+
+ USAR AQUELE 
+
+
+
+
+
+'BUILT-IN AUX COMPONENT' 
+
+
+
+DO REACT...
+
+
+
+
+
+----> esse aux component DEFAULT DO ___REACt___ (builtin)
+
+
+NÃO SE CHAMA 
+
+
+DE 'AUX', NO ENTANTO... ---> o 
+
+
+
+nome desse builtin aux 
+
+do 
+
+
+react 
+
+
+é 
+
+
+
+'React.Fragment'... ---------> É UM COMPONENT NAME/COMPONENT 
+
+
+
+QUE VOCÊ 
+
+__aCESSA___ NO PRÓPRIO OBJETO DO 'React'...
+
+
+
+
+
+
+ex (versão do 'Aux'):
+
+
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux> ////////CÓDIGO EM QUESTÃO.
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p
+        key="i2">{this.props.children}</p>,
+
+        <input
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+
+----------------------------------
+
+
+
+
+EX (versão do 'React.Fragment'):
+
+
+
+
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <React.Fragment> ////////CÓDIGO EM QUESTÃO.
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p
+        key="i2">{this.props.children}</p>,
+
+        <input
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </React.Fragment>
+    );
+  }
+}
+
+
+
+
+
+-----------------------------------------
+
+
+
+ISSO PODE PARECER ESTRANHO, ESSA SINTAXE PODE PARECER ESTRANHAM,
+
+
+
+
+MAS ESSA É UMA SINTAXE JSX VÁLIDA,
+
+
+é um COMPONENT VÁLIDO. (empty wrapper component...)
+
+
+
+
+
+
+
+
+
+---> CERTO, NA PACKAGE 'REACT' HÁ ESSE '.Fragment'... ----------> 
+
+
+
+E SE VOCê __NÃO GOSTA DESSA 'DOT NOTATION' usada 
+
+no seu 
+
+return em 'render()',
+
+
+
+VOCÊ 
+
+
+pode simplesmente 
+
+
+
+IMPORTAR 
+
+'Fragment' DIRETAMENTE DE 'react',
+
+
+O QUE DEIXARÁ VOCÊ 
+
+
+USAR 
+
+ESSE 'COMPONENT name' DE 'Fragment' 
+
+DIRETAMENTE 
+
+no seu return() no método 'render()'....
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React, { Component, Fragment } from 'react';
+
+
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Fragment> ////////CÓDIGO EM QUESTÃO.
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p
+        key="i2">{this.props.children}</p>,
+
+        <input
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Fragment> //////EIS O CÓDIGO EM QUESTÃO.
+    );
+  }
+}
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
+
+
+E O 
+
+'FRAGMENT' 
+
+FAZ A EXATA MESMA COISA QUE 
+
+
+O 
+
+NOSSO 
+
+'Aux'/'Auxiliary.js' 
+
+
+
+FAZ.... ---->  OU SEJA,
+
+
+'UNDER THE HOOD', ESSE PACKAGE/COMPONENT 
+
+FAZ A EXATA MESMA COISA.... -------> é por isso que é legal saber 
+
+
+
+SOBRE 
+
+
+___COMO ___ O 'React.Fragment' FUNCIONA 'UNDER THE HOOD'... --> ele funciona exatamente 
+
+como o arquivo/component 'aux' Funciona...
+
+
+
+
+
+----------------------------------
+
+VOCÊ PODE USAR TANTO 
+
+'Fragment' como 'Aux'... ------> O PROFESSOR USA 'Aux'....

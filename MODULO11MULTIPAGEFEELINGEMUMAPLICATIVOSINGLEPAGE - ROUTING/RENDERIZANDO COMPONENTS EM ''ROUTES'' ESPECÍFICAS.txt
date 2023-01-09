@@ -1,0 +1,418 @@
+
+
+--> NA ÚLTIMA LICAO, USAMOS O ROUTER PARA 
+
+RENDERIZAR ALGUM CÓDIGO JSX SIMPLES (aquela tag '<h1/>')
+
+
+
+
+
+
+
+
+
+---> TAMBÉM APRENDEMOS  QUE PODEMOS DEFINIR 
+
+QUANTAS 
+
+
+ROUTES 
+
+QUISERMOS...
+
+
+
+
+
+----> NESSA LECTURE,
+
+O PROFESSOR 
+
+
+VAI AJUSTAR
+
+
+O NOSSO CÓDIGO... -------> 
+
+
+
+ELE VAI ADICIONAR OUTRA ROUTE,
+
+
+em que 
+
+o path também 
+
+será 
+
+'/', e também 
+
+
+terá um 
+
+
+boolean property de 'exact' (o path deverá ser esse aí, exatamente)...
+
+
+
+
+
+AGORA, NO ENTANTO, O PROFESSOR 
+
+
+
+NAO VAI QUERER USAR A PROPRIEDADE 
+
+'render'... ---------> NÃO, 
+
+EM VEZ DISSO, 
+
+
+ELE VAI QUERER USAR 
+
+
+___a PROPRIEDADE ___ 'component=...'...
+
+
+
+
+E COMO DIZ O NOME, 
+
+
+ESSA PROPRIEDADE 
+
+
+
+NOS PERMITE 
+
+PASSAR 
+
+
+
+O ___COMPONENNT__ QUE DEVERÁ 
+
+___ SER RENDERIZADO __ NO LOCAL __ DESSA ROUTE (no local em que 
+
+
+essa route foi escrita... ) 
+
+
+
+
+
+--> certo....
+
+
+
+e esse 
+
+
+'component=...'
+
+
+NÃO SERÁ UMA ___sTRING__... ---> por isso 
+
+
+
+nao vamos escrever algo como "component="Posts" ",
+
+
+pois isso 
+
+
+NAO VAI FUNCIONAR. ---------> 
+
+
+NÃO,
+
+EM VEZ 
+
+
+DISSO,
+
+
+o valor 
+
+de 
+
+'componnet'
+
+
+
+DEVERÁ
+__seR UMA REFERENCIA 
+
+
+
+À FUNÇÃO/CLASSE 
+
+
+QUE 
+
+VAMOS QUERER 
+
+USAR,
+
+
+RENDERIZAR NESTE LUGAR (neste local do router)...
+
+
+
+
+
+--> AQUI, NESSE CASO,
+
+É SIMPLESMENTE 
+
+O COMPONENT 
+
+
+'Posts'... ---------> ESSE 
+
+
+
+COMPONENT 
+
+DEVERÁ 
+
+
+
+SER PASSADO 
+
+
+
+
+COM CURLY BRACES,
+
+coisa normal... (mas não é a sintaxe jsx padrão, não; aqui, no caso, 
+
+VAMOS IMPORTAR A REFERENCIA AO OBJETO 'Posts', que é o component, no final das contas...)
+
+
+
+
+ex:
+
+
+
+
+<Route path="/" exact component={Posts} />
+
+
+
+--------------------------------------------
+
+
+
+
+CERTO,
+
+
+ISSO FEITO, SE AGORA 
+
+SALVARMOS 
+
+ISSO E VOLTARMOS 
+
+A NOSSO APLICATIVO,
+
+
+VEREMOS 
+
+
+NOSSOS 
+
+POSTS 
+
+
+CARREGADOS 
+
+ALI... ----------------> OU SEJA, ISSO 
+
+
+NOS MOSTRA 
+
+
+COMO PODEMOS 
+
+
+CARREGAR 'components' (exatamente como fizemos com RENDER,
+
+mas dessa vez com a propriedade/prop 'COMPONENT') 
+
+
+NAS 
+
+
+'ROUTES'...
+
+
+
+
+
+
+
+---> OK, MAS QUAL É A DIFERENÇA ENTRE USAR 
+
+'render={() => {componentQueVoceQuerRenderizar}}'  vs  'component={objetoDoComponent,ImportadoNoSeuCódigo}' 
+
+
+
+
+
+--> RESPOSTA:
+
+
+
+
+
+if (component)
+  return match ? React.createElement(component, props) : null
+
+if (render)
+  return match ? render(props) : null
+When you use component prop, the component is instantiated per every call of Route#render. It means that, for your component that you pass to component prop of Route, constructor, componentWillMount, and componentDidMount will be executed every time the route is rendered.
+
+For example, if you have
+
+<Route path="/:locale/store" component={Store} />
+and the user navigates to /en/store, then goes elsewhere, and then navigates back to /en/store, the Store component will be mounted, then unmounted, and then mounted again. It is similar to doing
+
+<Route path="/:locale/store">
+  <Store />
+</Route>
+Compared to that, if you use render prop, the component is evaluated on every Route#render. Remember that every component is a function? This function will be executed as is, without any lifecycle methods. So when you have it like
+
+<Route path="/:locale/store" render={Store} />
+you can think of it as
+
+<Route path="/:locale/store">
+  {Store()}
+</Route>
+It saves you runtime because no lifecycle methods are run, but it also has a downside in case Store component has some post-mount lifecycle methods like shouldComponentUpdate that may increase performance as well.
+
+
+
+
+
+
+----------------------------------------------
+*****So the conclusion is,  ****
+
+
+ there is not performance 
+ 
+ different between component and render prop
+ 
+  if you are use component={AppComponent} directly, 
+
+  but
+  
+  if you want to assign some props to AppComponent,
+
+
+   use render={() => <AppComponent {...props}/> } instead of
+   
+    component={() => <AppComponent {...props}/> }
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+O PROFESSOR NOS APONTA QUE 
+
+
+O USE-CASE MAIS COMUM É 
+
+
+O 
+
+DE USAR 
+
+
+O PROP 
+
+'component' para renderizar nossos components.... ------------> 
+
+
+
+
+
+O 
+
+
+'render' é mais importante/UTILIZADO 
+
+
+
+PARA 
+
+
+FAZER 
+
+
+DISPLAY DE PEQUENAS MENSAGENS DE INFORMACAO ('short info messages')...
+
+
+
+
+
+--->  professor diz que NÃO DEVEMOS FAZER O __RENDER___ DE UM COMPONENT INTEIRO,
+
+que isso é inefetivo... (apesar de que voce poderia fazer isso... --> 
+
+
+isso pode ser visto naquela explicacao do stackoverflow, em que 
+
+o cara 
+
+diz que 
+
+
+se voce for passar props ao seu component que 
+
+vai 
+
+ser renderizado com 'component', é mais 
+efetivo usar o RENDER em vez de ' component'...)
+
+
+
+
+
+
+--> ENTRETANTO, O RENDER DE UM COMPONENT DIRETAMENTE 
+
+
+É ALGO QUE VEM COM UM PRECO (mesmo que traga mais performance) :
+
+
+
+
+ISSO 
+
+VAI 
+
+'MESS UP YOUR CODE', VAI DEIXÁ-LO MAIS
+
+DIFÍCIL DE SER 'MANTAINED' (hard to mantain) --> 
+
+
+
+
+o 
+
+
+uso de 'component' é ok,
+
+
+NÃO HÁ NADA DE ERRADO COM ISSO, 
+
+E VAMOS UTILIZAR ESSE APPROACH UM MONTE...

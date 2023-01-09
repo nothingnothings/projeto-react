@@ -1,0 +1,826 @@
+
+
+
+
+
+
+
+
+
+
+
+AGORA QUE VIMOS MUITO SOBRE O REACT,
+
+
+
+
+E AGORA QUE TEMOS O BUILDCONTROL/BUILDCONTROLS SETTADOS,
+
+
+
+devemos 
+
+
+CONSTRUIR 
+
+
+
+AQUELE TAL DE 
+
+'modal', aquele 
+
+MODAL QUE 
+
+
+VAI 
+
+NOS DEIXAR 
+
+
+mostrar 
+
+um 
+
+
+'order summary' ao usuário.... --------> 
+
+
+
+ESSE MODAL 
+
+
+
+__DEVERÁ SER MOSTRADO__ QUANDO O USUÁRIO ___ 
+
+
+
+CLICA 
+
+
+EM UM BOTÃO DE 
+
+
+
+'CHECKOUT' 
+
+
+
+LÁ 
+
+
+NO 
+
+
+COMPONENT 'BurgerBuilder'... -----> vamos colocar esse botão 
+
+NO FINAL DO 
+
+'BUILDCONTROLS'...
+
+
+
+
+
+----------------------------------
+
+
+
+JÁ O 'MODAL' 
+
+
+QUE QUEREMOS 
+
+
+CONSTRUIR 
+
+
+
+VAI TER QUE 
+
+FAZER 'WRAP' EM VOLTA DE 
+
+ALGUM 
+
+
+TIPO DE 'ORDER SUMMARY'...   --> 
+
+
+
+e esse 
+
+'modal' 
+
+
+e 
+
+'order summary' 
+
+
+
+SERÃO INDEPENDENTES,
+
+CADA UM DELES 
+
+FICARÁ 
+
+
+
+EM SEU PRÓPRIO COMPONENT...  --------> vamos fazer tudo isso por 
+
+ETAPAS..
+
+
+
+
+
+NÓS COMEÇAMOS PELO 
+
+
+
+'CHECKOUT BUTTOn'... -------> PARA ISSO,
+ 
+
+
+
+ DEVEMOS IR ATÉ OS BUILDCONTROLS.... ---> PROFESSOR VAI QUERER ADICIONAR ESSE BOTÃO 
+
+
+ LÁ NO FINAL DOS 'BUILD CONTROLS'..... (e não em 'burgerbuilder'...)
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+
+
+const buildControls = (props) => {
+
+    const style = {
+        color: "white"
+    }
+
+
+    return(
+
+        <div className={BuildControlsStyle.BuildControls}>
+            <strong><p style={style}>Current Price: &nbsp; $ {props.price.toFixed(2)}</p></strong>
+             {
+             controls.map(ctrl => (
+                     <BuildControl key={ctrl.label} //sim, vamos usar o 'label' como ID, também. Isso é só um detalhe.
+                      label={ctrl.label} 
+                      
+                      removed={() => {props.ingredientRemoved(ctrl.type)}}
+                      added={() => {props.ingredientAdded(ctrl.type)}} ///CÓDIGO __BEM IMPORTANTE___... ---> esse parâmetro 'ctrl.type' É PASSADO AO MÉTODO 'addIngredientHandler', lá em 'BurgerBuilder'...
+                      disabled={props.disabled[ctrl.type]}
+                      /> 
+                 )
+
+
+
+                 )
+             }
+            <button>ORDER NOW</button> ////EIS O BOTÃO EM QUESTÃO.
+        </div>
+
+
+    );
+}
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+
+-------> Ok, o botão já está no lugar... -------> O BOTÃO, É CLARO,
+
+
+DEVERÁ RECEBER ALGUNS STYLES...
+
+
+
+
+---> é por isso que abrimos o arquivo 
+
+
+de estilos 
+
+
+de 
+
+'BuildControls'
+
+
+E ENTÃO 
+
+
+VAMOS DEFINIR ALGUNS ESTILOS PARA O BUTTOn... -------> 
+
+
+
+Código css do button....
+
+
+
+------------------------------------
+
+
+
+CERTO... ADICIONAMOS ALGUNS ESTILOS.... ---> o estilo 
+
+
+'disabled' ---> É USADO QUANDO __NÃO PODEMOS FAZER 'ORDER' DE UM BURGER, POIS 
+
+NÃO ADICIONAMOS NENHUM INGREDIENT AINDA...
+
+
+
+---------------------------------
+
+
+@KEYFRAMES --> é uma pequena animação, É UMA ANIMAÇÃO QUE É MOSTRADA __QUANDO __ O 
+
+
+BOTÃO SE TORNA ATIVO... (por isso aquele ':not(:disabled)'..., pq ele quer 
+
+EVITAR 
+
+
+QUE ESSE ESTILO SEJA APLICADO QUANDO O BOTÃO ESTIVER INATIVO).....
+
+
+
+-------------------------------------
+
+
+
+COLOCAMOS O CLASSNAME E TUDO MAIS.... 
+
+
+
+------------------------------------------------- 
+
+
+
+
+CERTO,
+
+ESSE ERA O ESTILO DO BUTTON... --> AGORA 
+
+PARA 
+
+
+FAZER O BOTÃO FICAR 'DISABLED', 
+
+
+PRECISAMOS FAZER OUTRO 'CHECK', CHECAR __sE NENHUM INGREDIENT__ ESTÁ 
+
+ATUALMENTE NO STATE do burger... ( ou algo do gênero... devemos checar se todas as 
+
+propriedades do state estão como '0'...)
+
+
+
+
+-------------------------------
+
+
+
+ESSA LÓGICA QUE ''CHECA'' SE ESSE BOTÃO DEVERÁ 
+
+ESTAR 
+
+'ENABLED'
+
+
+
+DEVERÁ 
+
+__SER GERENCIADA__, É CLARO_,
+
+
+
+
+NO CONTAINER 
+
+'BURGERBUILDER'... ------> ISSO PQ 
+
+É NESSE LUGAR EM QUE 
+
+TEMOS O 
+
+
+'STATE',
+
+
+E É 
+
+NESSE LUGAR QUE 
+
+
+
+SABEMOS QUANTO DE CADA INGREDIENT 
+
+
+o usuário quer/vai querer adicionar ao burger... ------> 
+
+
+O QUE 
+
+NÓS PRECISAMOS 
+
+
+SABER, AQUI, 
+
+
+É BASICAMENTE 
+
+O 
+
+
+'TOTAL AMOUNT' 
+
+
+DE TODAS AS PROPRIEDADES 
+
+
+que 
+
+estão 
+
+em 
+
+'state'... 
+
+
+( ou seja, precisamos executar algum método javascript 
+
+QUE 
+
+UNA O VALOR DE TODAS 
+
+
+AS KEYS DO OBJETO 'state' atual...) ---> talvez usar 'Object.values()'....?
+
+
+
+
+
+
+
+
+ex (do que eu ACHO que podemos usar....):
+
+
+
+
+const ingredientCount = Object.values(this.state.ingredients); -------> 
+
+
+ISSO 
+
+
+VAI RETORNAR 
+
+UM 
+
+
+ARRAY
+
+com 
+
+
+
+[0, 0, 0, 0] ,   ou [0, 3, 5, 2]..... ( OU SEJA, O NÚMERO DE INGREDIENTS)...
+
+
+
+
+
+
+
+
+
+E NÓS QUEREMOS 'FLATTEN' esse array, queremos 
+
+FAZER COM QUE TODOS ESSES NÚMEROS VIREM 1 SÓ....
+
+---> PARA ISSO, VAMOS QUERER USAR 
+
+
+'reduce()'...
+
+
+
+ex:
+
+
+
+
+const ingredientCount = Object.values(this.state.ingredients);
+
+
+const ingredientCountSum = ingredientCount.reduce(
+    (oldNumber, newNumber) => {
+        oldNumber + newNumber;
+    }
+)
+
+
+
+--------------------------------------
+
+
+
+
+TALVEZ USAR ESSE CÓDIGO LÁ EM 
+
+'BurgerBuilder'?
+
+
+
+
+
+
+escrevi um monte de código, mas recebi um erro:
+
+
+
+
+
+
+
+
+
+
+
+Error: BurgerBuilder(...): Nothing was returned from render.
+
+ This usually means a return statement is missing. 
+ Or, to render nothing, return null.
+
+
+
+
+------------------------------------------
+
+
+
+
+CERTO.
+
+
+CONSEGUI.
+
+
+ESCREVI BASTANTE LÓGICA...
+
+
+
+
+
+
+
+
+
+
+---------------------- 
+
+
+
+O PROFESSOR USOU UM APPROACH COMPLETAMENTE DIFERENTE,
+
+
+USANDO 
+
+UMA PROPRIEDADE 
+
+NO 'state' 
+
+
+
+de 
+
+
+'purchaseable: false'....
+
+
+
+
+-------------------------
+
+
+
+O MEU APPROACH FOI ESTE:
+
+
+
+
+
+
+(CÓDIGO EM 'Burger BUilder'... usei esse 'Object.values' e então uma FUNÇÃO 'reduce()'...):
+
+
+
+
+    const ingredientCount = Object.values(this.state.ingredients);
+
+
+    let ingredientCountSum = ingredientCount.reduce(
+        (oldNumber, newNumber) => {
+          return oldNumber + newNumber;
+        }
+    ) 
+  
+
+    if(!ingredientCountSum) {
+      ingredientCountSum = true;
+    } else {
+      ingredientCountSum = false;
+    }
+
+    return (
+      <Aux>
+        <Burger ingredients={this.state.ingredients}/>
+        <BuildControls 
+        disabled={disabledInfo} 
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}/> ///código em questão.
+      </Aux>
+    );
+  }
+
+
+
+
+
+(CÓDIGO DE 'BUILDCONTROLS'):
+
+
+
+
+
+
+
+  return(
+
+        <div className={BuildControlsStyle.BuildControls}>
+            <strong><p style={style}>Current Price: &nbsp; $ {props.price.toFixed(2)}</p></strong>
+             {
+             controls.map(ctrl => (
+                     <BuildControl key={ctrl.label} //sim, vamos usar o 'label' como ID, também. Isso é só um detalhe.
+                      label={ctrl.label} 
+                      
+                      removed={() => {props.ingredientRemoved(ctrl.type)}}
+                      added={() => {props.ingredientAdded(ctrl.type)}} ///CÓDIGO __BEM IMPORTANTE___... ---> esse parâmetro 'ctrl.type' É PASSADO AO MÉTODO 'addIngredientHandler', lá em 'BurgerBuilder'...
+                      disabled={props.disabled[ctrl.type]}
+                      /> 
+                 )
+
+
+
+                 )
+             }
+            <button className={BuildControlsStyle.OrderButton}
+            disabled={props.disableButton}
+            
+            >ORDER NOW</button>
+        </div>
+
+
+------------------------------------
+
+
+
+
+
+
+
+--> APPROACH DO PROFESSOR FOI DIFERENTE,
+
+ELE ESCREVEU uma propriedade 
+
+'purchaseable: false' 
+
+lá no state 
+
+de 'burgerbuilder'...
+
+
+ex:
+
+
+  state = {
+    ingredients: {
+      salad: 0,
+      bacon: 0,
+      cheese: 0,
+      meat: 0
+    }, 
+    totalPrice: 4,
+    purchaseable: false
+  };
+
+
+
+---------------------------------------------
+
+
+
+
+A VERSÃO DO PROFESSOR É __BEM__ MAIS COMPLEXA___ DO QUE A MINHA... __ muito mais lógica foi escrita,
+e tem muito mais linhas... -----> 
+
+
+
+PROFESSOR ESCREVEU 
+
+
+UM 'METHOD' em 
+
+burgerbuilder chamado de 'updatePurchaseState()'...
+
+
+
+
+
+seu código foi este:
+
+
+
+
+updatePurchaseState () {
+    const ingredients = {
+        ...this.state.ingredients
+    };
+
+    const sum = Object.keys (ingredients)
+    .map( igKey => {
+        return ingredients[igKey];
+    })
+    .reduce ( (sum, el ) => {
+        return sum + el;
+    }, 0);
+    this.setState(
+        { purchaseable: sum > 0} 
+    );
+}
+
+
+
+----------------------------
+
+
+
+AÍ ELE COLOCOU 
+
+UMA 
+
+EXECUÇÃO DE 'this.updatePurchaseState()' 
+
+DENTRO DO 
+
+MÉTODO 
+
+
+DE 
+'addIngredientHandler', e de 'removeIngredientHandler'...
+
+
+
+EX:
+
+
+addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceAddition = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.totalPrice;
+    const newPrice = oldPrice + priceAddition;
+    this.setState(
+      {
+        totalPrice: newPrice, 
+        ingredients: updatedIngredients
+      }
+    )
+    this.updatePurchaseState(); ////////EIS O CÓDIGO EM QUESTÃO.
+  }
+
+
+  removeIngredientHandler = (type) => {
+
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount - 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceDeduction = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.totalPrice;
+    const newPrice = oldPrice - priceDeduction;
+
+      this.setState(
+        {
+          totalPrice: newPrice, 
+          ingredients: updatedIngredients
+        }
+      )
+    this.updatePurchaseState(); //////EIS O CÓDIGO EM QUESTÃO.
+  }
+
+
+---------------------------
+
+
+
+Aí, ele também 
+
+
+passou um prop de 'purchasable={this.state.purchasable}' 
+
+
+AO 
+
+CALL DO COMPONENT 'BuildControls'...
+
+
+
+ex:
+
+
+   return (
+      <Aux>
+        {/* <div>Burger</div> */}
+        <Burger ingredients={this.state.ingredients}/>
+        {/* <div>Build Controls</div> */}
+        <BuildControls 
+        disabled={disabledInfo} //'disabledInfo' será uma constante que terá aquele objeto com a 'CÓPIA DO STATE DE INGREDIENTS', mas aquela cópia tem uma alteração no INGREDIENT que será/não será removido, que estará tipo assim: 'cheese: false', ou 'bacon: true', etc.....
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         purchasable={this.state.purchasable}
+      </Aux>
+    );
+  }
+}
+
+
+
+
+--------------------------------
+
+
+
+TUDO ISSO 
+
+
+PARA CONSEGUIR O MESMO EFEITO QUE CONSEGUIMOS COM O NOSSO CÓDIGO 
+
+
+E IF CHECKS...
+
+
+
+
+(TALVEZ SEJA NECESSÁRIO IMITAR O CÓDIGO DO PROFESSOR, MAIS TARDE na nossa escrita desse aplicativo...
+
+mas por enquanto vamos manter nossa versão...)
+
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+
+
+
+
+AGORA O PRÓXIMO  PASSO É __aDICIONAR __UM MODAL ___ AO NOSSO CÓDIGO_...

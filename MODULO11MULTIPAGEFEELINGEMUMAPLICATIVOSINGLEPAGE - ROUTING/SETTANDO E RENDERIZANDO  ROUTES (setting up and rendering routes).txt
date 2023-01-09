@@ -1,0 +1,1429 @@
+
+
+
+
+
+
+
+
+
+
+NAS ÚLTIMAS LIÇOES NÓS REESTRUTURAMOS NOSSO PROJETo PARA 
+QUE 
+
+
+ELE 
+
+TIVESSE MÚLTIPLAS '''PÁGINAS'''... ------->   agora, 
+portanto, 
+
+
+o professor 
+
+
+NAO VAI QUERER 
+
+QUE 
+
+OS POSTS 
+
+
+ESTEJAM 
+
+RENDERIZADOS TODA HORA/SEJAM RENDERIZADOS 
+
+TODA 
+
+HORA,
+
+
+
+
+E SIM ELE VAI QUERER ___ QUE 
+
+__ ESSES POSTS SEJAM CARREGADOS (loaded) 
+
+
+
+___DINAMICAMENTE___; DINAMICAMENTE === DEPENDENDO 
+
+DO PATH 
+
+
+QUE NÓS/O USUÁRIO
+ 
+
+ TEM INSERIDO NA URL...  ------>>>>> 
+
+
+
+ E PARA 
+
+
+ 'SLASH NOTHING' (ou seja, '/'), 
+
+
+ESSENCIALMENTE 
+
+NOSSO DOMAIN BASICO, como 'localhost:3000/',
+
+
+
+EU VOU QUERER RENDERIZAR '''SECO''' 
+O  
+
+COMPONENT 
+
+'POSTS'... ----------------> 
+
+
+
+CERTO....
+
+
+
+E O 'ROUTING' JÁ ESTÁ, NA VERDADE, ____aTIVADO__ NO NOSSO APP ---> 
+
+
+O 
+
+
+ROUTING É 'LIGADO''' 
+
+POR MEIO 
+
+DO 
+
+WRAP 
+
+
+DO COMPONENT 
+
+QUE VOCE QUER QUE USE ROUTING (geralmente seu APP INTEIRo) 
+
+
+COM 
+
+
+
+O COMPONENT 'BrowserRouter', importado 
+
+
+da package 
+
+'react-router-dom'.... (
+
+    como em 
+
+    ''''''
+    <BrowserRouter>
+        <div className="App">
+            <Blog />
+            </div>
+        </BrowserRouter>
+    ''''
+
+
+
+) 
+
+
+
+
+
+
+
+---> CERTO.... 
+
+
+
+MAS JÁ 
+
+NAQUELE 
+
+COMPONENT 
+
+'BLOG', LUGAR 
+
+
+EM QUE 
+
+__vOU REALMENTE___ QUERER RENDERIZAR MINHAS DIFERENTES 
+
+PÁGINAS,
+
+
+___EU PRECISO___ IMPORTAR MAIS UMA COISINHA 
+
+DO 
+
+'react-router-dom' 
+
+
+PARA 
+
+___CONSEGUIR ___ USAR/DEFINIR __ ROUTES COM SUCESSO... --------> 
+
+
+
+
+
+ESSA 
+
+
+COISA ainda não conhecemos... É 
+
+UM OBJETO 
+
+ESPECIAL 
+
+
+DO 
+
+'react-router-dom',
+
+
+
+
+É 
+
+
+O OBJETO 
+
+
+
+' { Route }' ---------> 
+
+
+
+É O COMPONENT/OBJETO 
+
+
+'''''Route''''''' ---------> E NÓS 
+
+
+USAMOS 
+
+
+ESSE COMPONENT 
+
+
+COMO QUALQUER OUTRO COMPONENT... ---> 
+
+
+
+ele 
+
+é 
+um tipo de 
+
+'self closing component'... (
+
+    ou seja,
+    escreve-se 
+
+
+    '<Route />'
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'ROUTE', NO ENTANTO, 
+
+EXIGE UMA CERTA CONFIGURACAO... 
+
+
+PRIMEIRAMENTE, ELE EXIGE:
+
+
+
+
+1) UMA PROPRIEDADE/PROP de 'path=...'..
+
+ex:
+
+
+'<Route path= />' 
+
+
+
+
+
+
+
+OBS::::: TODAS AS PROPRIEDADES/PROPS PASSADAS 
+
+ao 
+
+
+COMPONENT 'Route' SAO __'''RESERVED WORDS'''___ DO 
+
+REACT,
+
+ELES NAO PODEM SER USADOS POR VOCE PARA DEFINIR UM ''PROP COMUM'''NO SEU INTERIOR...  ---> 
+
+isso quer dizer, basicamente,
+que 
+esse component 
+
+vai 
+
+ESPERAR VALORES BEM ESPECÍFICOS NESSES 'slots' desses props... (o 'path' sempre será para o 'path' que voce quer settar, e nada mais do que isso.)
+
+
+
+
+
+
+
+
+
+
+
+CERTO.... 
+
+
+E ESSA PROPRIEDADE/PROP 
+
+'path' 
+
+
+SEMPRE SERÁ ___UMA STRING___....
+
+
+
+
+em 'path' definimos 
+
+O 
+
+PATH __ QUE TORNARÁ 
+
+ESSA 
+
+'ROUTE' ATIVA... ('you define the path for which this route should 
+become active'...) -----------> 
+
+
+
+TIPICAMENTE 
+
+
+
+SERÁ 
+
+'/ + alguma coisa'... -------------> ( o professor vai escrever só  ' path="/" ''')
+
+
+
+
+
+
+2) ELE EXIGE __qUE VOCE DEFINA__ O QUE DEVERÁ ACONTECER 
+
+QUANDO ESSA STRING AÍ __'FOR O PATH ATIVO'__... -------> ou SEJA,
+
+VOCE DEVERA/DEVE DEFINIR 
+
+O __QUE DEVERÁ ACONTECER__ QUANDO 
+
+
+O 
+
+'react-router' DESCOBRIR  QUE 
+
+
+ESSA STRING AÍ É __o PATH __ ATUALMENTE ATIVO/visitado 
+pelo usuário... ('in other words, what should happen when react router finds out that 
+this is the active path'...)
+
+
+
+
+--> NA SUA FORMA __MAIS SIMPLES POSSÍVEL__,
+
+
+ESSE 2o PROP/propriedade 
+
+que vocÊ PASSA 
+{}
+
+
+SERÁ UM PROP DE 'render'.... -----------> (ex: 'render={}')
+
+
+
+
+
+E ESSE RENDER AÍ ACTUALLY ___dEVERÁ ___ SEGURAR __ UMA 
+
+
+REFERÊNCIA (variável/const, etc)
+
+
+A UMA 
+
+___FUNCAO__ DE SEU CÓDIGO ___ ( APESAR DE QUE 
+
+VOCE PODE _PASSAR__ UMA FUNCAO 
+
+ANONIMA 
+
+
+DENTRO 
+
+DESSE ESPACO, CASO VOCE QUEIRA QUE 
+
+ESSA FUNCAO/COMPORTAMENTO DE RENDER 
+
+OCORRA SOMENTE NESTE LUGAR, NESTE PATH...) --------> 
+
+
+
+
+
+NO SEU EXEMPLO,
+
+professor escreve 
+
+
+'
+<Route path "/" render={    () => {}    }  />''''
+
+
+
+
+
+
+
+
+OU SEJA,
+
+
+ELE ESCREVE UMA
+
+FUNCAO ANONIMA, UMA ARROW FUNCTION ANONIMA,
+
+DENTRO 
+
+
+DESSE 
+
+PROP 'render' 
+
+
+DESSA 'ROUTE'.... ------> o professor 
+
+Então 
+
+nos explica 
+
+
+QUE 
+
+O BODY 
+
+DESSA ARROW FUNCTION __DEVERÁ__ (isso sempre, obrigatoriamente) 
+
+
+
+__RETORNAR__ CÓDIGO JSX, QUE SERÁ 
+
+ENTAO 
+
+___rENDERIZADO__ POR ESSA ROUTE/PELO REACT...
+
+
+
+
+
+
+
+
+
+
+
+----> isso significa, em outras palavras,
+
+que voce poderia/pode avacalhar
+
+
+
+E RENDERIZAR ALGO SIMPLES,
+
+como um 
+
+código 
+
+JSX
+
+em que 
+
+voce 
+
+
+RENDERIZA 
+
+'<h1>Home</h1>',
+
+
+
+
+e coisas do genero... --------> É EVIDENTE 
+
+
+QUE 
+
+VOCE ___PODE___ (e é recomendado)
+
+
+
+RENDERIZAR 'STRUCTURED JSX CODE' 
+
+neste lugar; em outras palavras,
+
+voce pode 
+
+ESCREVER 
+
+
+CÓDIGO JSX MULTI-LINHA POR MEIO DO 
+
+WRAP EM 
+
+parenteses (  '()' ) ------> OU SEJA, 
+
+
+
+É ESSENCIALMENTE 
+
+
+O MESMO 
+
+APPROACH 
+
+DE 
+
+
+ESCRITA 
+
+DE JSX 
+
+
+EM QUALQUER OUTRA PARTE DO SEU CÓDIGO...
+
+
+
+ex do código do professor:
+
+
+
+<Route path "/" render={    () => {
+
+<h1>Home</h1>
+
+
+
+}    }  />
+
+
+
+
+
+
+
+
+---------------------------------------
+
+
+SE VOCE
+
+
+ENTAO 
+
+SALVAR TODO ESSE CÓDIGO E VOLTAR AO SEU APLICATIVO,
+
+
+
+
+
+
+E SE VOCE TIVER ESTE CÓDIGO AQUI:
+
+   render () {
+    
+
+        return (
+            <div className={BlogStyle.Posts}>
+                <header>
+                    <nav>
+                        <ul  style={{
+                            listStyle: 'none',
+                            margin: '0',
+                            padding: '0', 
+                            display: 'flex row',
+                            justifyContent: 'center'
+                        }}>
+                            <li style={{
+                                    display: "inline-block",
+                                    margin: "20px"
+                            }}><a style={{
+                                textDecoration: 'none', 
+                                color: 'black'
+                            }}    href="/" >Home</a></li>
+                            <li style={{
+                                    display: "inline-block",
+                                    margin: "20px"
+                            }}><a  style={{
+                                textDecoration: 'none', 
+                                color: 'black'
+                            }} href="/new-post">New Post</a></li>
+                     
+                       </ul>
+                    </nav>
+                </header>
+                   {/* <Posts /> */}
+                   <Route path="/"render={() => {
+                       return <h1>Home</h1>
+                   }}/>
+            </div>
+        );
+    }
+}
+
+
+,
+
+
+
+
+vocÊ
+
+
+
+VERÁ
+
+
+
+UMA 
+
+
+
+
+H1 
+
+TAG 
+
+
+DIZENDO 
+
+'Home' 
+
+
+QUANDO VOCE RECARREGAR A PÁGINA (tudo isso graças 
+
+AO ROUTING e aos objetos 
+
+
+'Route' e 'BrowserRouter' EXTRAÍDOS
+
+DA PACKAGE 
+
+'react-router-dom'...)
+
+-------------------------------------------------
+
+
+
+
+
+---> OK...NÓS VEMOS 'HOME',
+
+mas TAMBÉM
+
+
+
+vemos
+
+os
+links
+
+
+'Home' 
+
+e 'New Post' 
+
+naquele 
+
+NAV que codamos em cima da parte 'main'  do nosso código...
+
+
+
+
+
+HMMMMM ESSES LINKS DE CIMA AINDA FORAM RENDERIZADOS PQ ___
+
+A ÚNICA PARTE __ dO CÓDIGO DE 'Blog.js'
+
+
+QUE SUBMETEMOS/VINCULAMOS 
+
+A UMA 
+
+ESPÉCIE 
+
+DE ROUTING 
+
+
+foi O PRÓPRIO ELEMENTO 
+
+'route', 
+
+
+QUE 
+
+
+FOI ATIVADO E RENDERIZOU 
+
+
+o dizer h1 de 'Home'
+
+QUANDO SUA CONDIÇÃO 
+
+
+'path' FOI SATISFEITA...
+
+
+
+
+--------------------------------------------------
+
+
+
+---> CONTUDO, PROFESSOR APONTA UMA PECULIARIDADE/PROBLEMA:
+
+nós 
+
+
+TAMBÉM 
+
+ACABAMOS 
+
+VENDO 
+
+'Home' (h1)
+
+
+
+SE CLICAMOS 
+
+
+EM
+
+
+'NewPost'... --------------------> A RAZÃO PARA ISSO É MEIO BIZARRA.... ----------->
+
+
+
+
+PROFESSOR EXPLICA 
+
+
+
+que 
+
+o react-router,
+
+para determinar 
+
+
+
+O
+
+'CURRENT PATH' em que 
+
+o usuário está, 
+
+sempre 
+
+vai
+
+
+
+VERIFICAR SE
+
+O 
+
+'CURRENT PATH' 
+
+
+
+___COMEÇA___ (e, sim, apenas se ELE ___cOMEÇA___...)  com 
+
+o path 
+
+
+que voce digitou em 'path="""" ' .... ----------> 
+
+
+
+ISSO 
+
+
+
+
+SIGNIFICA QUE 
+
+
+O REACT-ROUTER 
+
+
+vai, por default (isso é o comportamento DEFAULT do react),
+
+
+
+
+APENAS VERIFICAR/CONSTATAR 
+
+
+O 
+
+'PREFIXO' (prefix) 
+
+
+DA SUA URL/PATH.... (parte inicial do seu path) ---------->
+
+
+
+
+
+
+ENTRETANTO, 
+
+
+
+ESSE BEHAVIOR___ PODE SER 'OVERRIDEN' (overwritado) 
+
+
+POR 
+
+
+MEIO 
+
+DO ADD 
+
+
+DE UM PROP __eXTRA___ NESSE ROUTE.... ---------> 
+
+
+
+ESSE PROP EXTRA TEM O NOME DE 
+
+'exact',
+
+
+E É __BEM ÚTIL___.... ----------->
+
+
+
+ESSE 
+
+'exact' 
+
+É UM EXEMPLO DE UM 'BOOLEAN PROP', aquele negócio 
+
+que o professor nos ensinou há bastantes aulas... ('boolean prop' ---> a mera escrita de seu nome/propriedade NO CALL DE UM COMPONENT já basta para o settar, settar esse prop/propriedade como '''TRUE''''...)
+
+
+
+
+
+
+--> ou seja, 
+
+se adicionarmos 
+
+'exact' 
+
+no call/definicao de nossa ROUTE,
+
+ISSO JÁ BASTARÁ 
+
+PARA DEFINIR 
+
+
+o path como 'exact', pois o prop 'exact' 
+
+
+ESTARÁ COMO 'TRUE'... 
+
+
+
+ex( no nosso código):
+
+
+
+
+ <Route  exact path="/"render={() => { ///////////EIS O CÓDIGO EM QUESTÃO.
+                       return <h1>Home</h1>
+                   } }/>
+
+
+
+
+--> isso quer dizer, essencialmente, que 
+
+O COMPORTAMENTO PADRÃO DOS 'PATHs' do routing 
+
+
+
+é 
+
+'exact= false', 
+
+
+e que voce definie essa propriedade/prop como 'true '
+
+quando voce escreve 
+
+'exact' 
+
+
+no call da route/definicao da route...     ---------> E NÓS VAMOS 
+
+
+FAZER EXATAMENTE ISSO NA NOSSA ROUTE... 
+
+
+
+
+
+--> fazemos isso e salvamos o código. Agora, quando recarregarmos 
+
+
+nossa página e clicarmos em 'new Post',
+
+
+
+o 
+
+
+
+'HOme' (h1) VAI SUMIR... ele vai sumir 
+
+
+PQ 
+
+NÓS TEREMOS 
+
+TROCADO de 'rota', 
+
+
+e 
+
+a rota de 
+
+'Home<h1>' só existia na rota de path '/'...
+
+
+
+
+
+
+
+------------------------
+
+
+isso, portanto, 
+
+
+JÁ 
+
+
+É UM 'IMPORTANT TAKEAWAY'... --> VOCE 
+
+
+USA 
+
+O 
+
+'PATH' AQUI para dizer/comunicar ao 
+
+
+'react' a seguinte frase:
+
+
+'POR ACASO MEU PATH COMECA COM ESSA STRING/COISA AQUI'''' -------> 
+
+
+
+ESSA FRASE SÓ N É PERGUNTADA AO REACT SE VOCE DEFINE 'EXACT', que 
+
+é um prop/propriedade que vai o comunicar de que 
+
+VOCE 
+
+VAI QUERER 
+
+AQUELE PATH EXATO... ---> quando voce define 
+
+'exact',
+
+
+a pergunta feita ao react fica 
+
+''''POR ACASO MEU PATH ___cOMPLETO____ É DESSE JEITO AQUI, É ESCRITO ASSIM''''
+
+
+
+
+
+
+
+
+---> e aí, depois disso, o método '''render''' 
+
+vai determinar tudo aquilo que deverá ser 
+
+renderizado 
+
+na tela... -----> TUDO QUE DEVERÁ 
+
+
+SER RENDERIZADO 
+
+
+___NO ___ LUGAR EM QUE 
+
+
+ESSE COMPONENT
+
+
+'<Route />'
+
+
+ESTÁ....  ------>  
+
+
+ISSO QUER 
+
+DIZER QUE 
+
+
+'route' 
+
+
+
+BASICAMENTE 
+
+
+SE SUBSTITUI PELO 
+
+
+
+CONTEÚDO QUE VOCE DEFINE AQUI...  (no 'render')
+
+
+
+
+
+
+
+
+
+
+
+---> e vocÊ pode, é claro, definir MÚLTIPLAS ROTAS... --> 
+
+
+
+voce pode, por exemplo,
+
+
+definir 
+
+
+MÚLTIPLAS ROTAS __PARA O MESMO PATH___ ... ----> para exemplificar isso, 
+
+
+o professor 
+
+duplica 
+
+
+o nosso path 
+
+de '/',
+
+
+e adiciona um novo, 
+
+
+com uma 
+
+
+h1 tag de 'Home 2'.... ------> VEREMOS 'HOME' E 'HOME 2', um 
+
+
+
+em cima do outro...  ---> isso quer dizer que podemos 
+
+
+
+usar 
+
+'route' em qualquer lugar 
+
+
+
+que voce quiser... ----> como, por exemplo,
+
+
+
+1 component 'router' em cima do outro... 
+
+
+
+
+
+
+
+
+
+
+
+
+---> vocÊ também pode, por exemplo, NESTEAR ____ UMA ___ ROUTE DENTRO 
+
+
+
+DE OUTRA ROUTE,
+
+
+e vocÊ pode 
+
+
+
+USAR QUALQUER NÚMERO DE ROUTES EM UMA MESMA PÁGINA... (E a página 
+
+
+será ___UM CONTAINER__, lembre-se disso...) -------> 
+
+
+
+
+O REACT ROUTER VAI CHECAR 
+
+
+
+O CRITÉRIO DO 'path' PARA CADA UMA 
+
+DESSAS ROUTES, 
+
+e então 
+
+renderizar 
+
+
+seu conteúdo de acordo com o path.... ( ''se aquele critério path (se EXACT for definido) 
+
+for satisfeito, vou renderizar o que está dentro da propriedade 'render'...) --->  
+
+
+
+E SE VOCE 
+
+NÃO 
+
+ESPECIFICAR 
+
+
+'exact' 
+
+
+no seu 
+
+component 'router',
+
+
+o que 
+
+
+será 
+
+considerado será O __PREFIXO___ DO 'currentPath' do usuário...
+
+
+
+-------------------------------------------
+
+
+
+
+
+CERTO... ESSA É A 'CORE FUNCTIONALITY' do router, até agora...
+
+
+
+
+
+
+
+--> professor faz um truque: ele remove 'exact'  do 
+
+segundo ROUTE... ----------->
+
+
+
+AGORA,
+
+
+QUANDO/SE ESTIVERMOS NO 'home' (que tem um final de '/'),
+
+
+VEREMOS TANTO 
+
+'home' como 
+
+'home 2',
+
+
+
+
+pq 
+
+
+os 2 ROUTES 
+
+estão configurados com '/'... ------> CERTO,
+
+
+MAS 
+
+
+SE CLICARMOS 
+
+
+EM 
+
+
+'NewPost', 
+
+
+
+VEREMOS APENAS 
+
+
+O 
+
+'HOME 2',
+
+
+E NÃO 
+
+
+O 
+
+'home' (o primeiro route, que 
+
+
+
+tinha um prop/propriedade de 'exact' 
+
+
+NAO TEVE SEU CRITÉRIO 'path' SATISFEITO, 
+
+
+POIS 
+
+
+QUANDO COLOCAMOS 'exact', 
+
+A 
+
+URL/PATH daquele ROUTE DEVERÁ SER 
+
+____EXATAMENTE___ AQUELE ali... -----> e como 
+
+
+nosso 'currentPath' 
+
+PASSOU A SER 
+
+
+'new-post' em vez de '/', ESSE 
+
+ROUTE AÍ N PODE SER 
+
+ATIVADO, pq seu critério é que 
+
+
+O PATH após o domínio TEM DE SER OBRIGATORIAMENTE '/', e ___NADA___ MAIS 
+
+
+DO QUE ISSO__....)
+
+
+
+
+
+
+----------------------------------------------
+
+
+
+O PROFESSOR JÁ NOS CONTOU UM TRUQUE, AQUI:
+
+
+
+
+
+
+como '/' 
+
+EXISTE __EM TODOS OS PATHS____ DE 
+
+
+UM DETERMINADO APLICATIVO (todos paths de um app vao terminar 
+
+com '/', é algo certo, 100%), 
+
+
+
+
+
+SE NÓS 
+
+DEFINIRMOS 
+
+um 
+
+'<Route path="/"   render={() => {}} />' 
+
+
+
+E ENTÃO 
+
+
+__NÃO DEFINIRMOS A PROPRIEDADE 
+
+'exact' 
+
+NO SEU INTERIOR, 
+
+
+
+ESSE ROUTE AÍ __sERÁ __ RENDERIZADO ______eM TODAS ___ 
+
+AS PÁGINAS (containers) 
+
+
+DO NOSSO APLICATIVO....
+
+
+
+----------------------------------------
+
+
+
+CERTO, ESSA, PORTANTO, 
+
+
+É 
+
+
+A FUNCIONALIDADE 
+
+'''CORE'''' DO 
+
+
+ROUTER... -------> vocÊ pode, DE FATO,
+ 
+ renderizar 
+
+
+ JSX 
+
+ por meio 
+
+
+dessa distribuição de PATHS aí... ------->
+
+
+
+MAS É CLARO QUE 
+
+
+NÓS 
+
+NÃO
+
+
+VAMOS QUERER 
+
+
+RENDERIZAR 
+
+JSX, no nosso exemplo... (mas às vezes 
+
+vocÊ vai querer fazer exatamente isso, fazer um 
+
+simples render de jsx, condicionado aos paths...)
+
+
+
+
+
+
+
+--> QUEREMOS RENDERIZAR UM DOS NOSSOS COMPONENTS EM NOSSA PÁGINA... , 
+
+por meio desses PATHS... -----> e para o path 
+
+
+de 
+
+'/', somente vamos querer RENDERIZAR O COMPONENT 'Posts'... --------> 
+
+
+
+
+E É ISSO QUE VAMOS FAZER NA PRÓXIMA LIÇÃO.
+
+
+
+
+
+
+
+---> CERTO, ACHO QUE CONSEGUI... 
+
+
+
+Eu escrevi
+:
+
+
+
+
+
+     <Route exact path="/"render={() => {
+                   
+                    return <Posts />
+                }
+
+
+
+
+E ISSO FUNCIONOU...

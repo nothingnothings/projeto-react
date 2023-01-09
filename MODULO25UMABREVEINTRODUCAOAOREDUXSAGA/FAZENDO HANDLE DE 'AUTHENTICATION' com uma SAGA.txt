@@ -1,0 +1,2077 @@
+ 
+
+
+
+
+
+
+
+
+ --> na última lição,
+
+ continuamos 
+
+
+
+ OUTSOURCEANDO 
+
+
+ CONTEÚDO DE NOSSO ARQUIVO 
+
+ de action creators 
+
+ de 
+
+ 'auth.js'
+
+ PARA DENTRO 
+
+ DE 
+ NOSSAS 
+
+ SAGAS....
+
+
+
+
+
+
+
+
+ ---> agora VAMOS QUERER 
+ TRANSPLANTAR O CÓDIGO DE 
+ 'authAttempt',
+
+ QUE É 
+
+ NOSSO 
+
+
+ 'UTILITY METHOD' EM AUTH.js,
+
+ PQ 
+
+ ELE __ REALMENTE___ FAZ DE TUDO... (é um 'hub')...
+
+
+ ex:
+
+
+
+
+
+
+
+
+
+
+
+ export const authAttempt = (email, password, isSignup) => {
+  return (dispatch) => {
+    dispatch(authStart());
+    const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true, ///propriedade obrigatória para FUNCIONAMENTO DO 'REST API' do firebase... ---> deve sempre estar settada como 'true'...
+    };
+    let url =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; /// url usada para SIGNUP/CADASTRO....
+    if (!isSignup) {
+      url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; ///url/endpoint usado para ___SIGNIN/LOGIN...
+    }
+    axios
+      .post(url, authData) ///ESSA 'key' ([API_KEY]) FOI OBTIDA LÁ DO SITE DO GOOGLE FIREBASE, na engrenagem, e depois em 'Configurações do Projeto' > 'Chave de API da web'...
+      .then((response) => {
+        const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); ////lembre-se de adicionar '* 1000', pois o JAVASCRIPT SEMPRE CONSIDERA 'TEMPO' EM MILISSEGUNDOS, E NÃO EM SEGUNDOS.... (só o 'expiresIn' que é mostrado em segundos....)
+        localStorage.setItem('token', response.data.idToken);
+        localStorage.setItem('expirationDate', expirationDate);
+        localStorage.setItem('userId', response.data.localId);
+        localStorage.setItem('email', response.data.email )
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkAuthTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        
+        dispatch(authFail(error.response.data.error));
+      });
+  };
+};
+
+
+
+--------------------------
+
+
+
+
+NESSE CÓDIGO AÍ,
+ 
+
+ NÓS BASICMAENTE
+
+
+
+TEMOS UM DISPATCH 
+DE 
+
+
+'authStart()'
+
+LÁ NO INÍCIO,
+
+e depois 
+
+
+
+TEMOS 
+
+
+UM 
+
+'AJAX REQUEST' ali embaixo, e em que 
+
+conseguimos 
+
+A AUTHENTICATION,
+
+em que 
+
+
+TENTAMOS FAZER 
+
+'SIGNUP' ou 'SIGNIN'...
+
+
+-------------------------
+
+
+
+
+--> o objetivo, agora, 
+
+é 
+
+FAZER HANDLE 
+
+DESSE 
+
+CÓDIGO 
+
+ASSÍNCRONO (http request do axios)
+
+
+
+COM 
+
+
+
+O 
+
+
+
+SAGAS...
+
+
+
+
+
+
+
+
+---> para fazer isso,
+
+
+
+
+
+
+
+é evidente que 
+
+o professor 
+precisa 
+
+criar uma OUTRA 
+
+SAGa 
+
+em 
+
+'auth.js',
+
+
+
+
+
+que 
+
+
+escreverá 
+
+assim:
+
+
+
+
+export function* authAttemptSaga() {
+
+}
+
+
+
+
+------------------------------------
+
+
+
+
+DENTRO 
+
+
+DESSA 
+
+SAGA,
+
+TAMBÉM VAMOS OBTER NOSSA 'action'....
+
+
+
+ex:
+
+
+
+
+
+export function* authAttemptSaga(action) {
+
+}
+
+
+----------------------------
+
+
+E, DE NOVO, 
+AGORA 
+PODEMOS 
+RODAR 
+CÓDIGO 
+
+
+__DESVINCULADO__ DAS ACTIONS __ aqui dentro... --> 
+
+
+vamos querer 
+
+
+FAZER 
+
+DISPATCH 
+
+DE 
+'authStart()' (primeiro temos que importar 
+
+'authStart()' nesse arquivo 'authSaga.js'..) ------> 
+
+
+
+
+
+DEPOIS DISSO,
+
+TEREMOS 
+
+DE 
+
+FAZER
+
+O 
+
+
+HTTP REQUEST EM SI.... (do axios).
+
+
+
+
+COMEÇAMOS POR ESTE CÓDIGO AQUI:
+
+
+
+
+EX:
+
+
+
+
+export function* authAttemptSaga(action) {
+        yield put(
+                authActions.authStart()
+        )
+        yield
+}
+
+
+
+
+
+---------------------------
+
+
+O RESTO 
+
+DA LÓGICA NO NOSSO ACTION CREATOR ERA ESTA:
+
+
+
+    dispatch(authStart());
+    const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true, ///propriedade obrigatória para FUNCIONAMENTO DO 'REST API' do firebase... ---> deve sempre estar settada como 'true'...
+    };
+    let url =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; /// url usada para SIGNUP/CADASTRO....
+    if (!isSignup) {
+      url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; ///url/endpoint usado para ___SIGNIN/LOGIN...
+    }
+    axios
+      .post(url, authData) ///ESSA 'key' ([API_KEY]) FOI OBTIDA LÁ DO SITE DO GOOGLE FIREBASE, na engrenagem, e depois em 'Configurações do Projeto' > 'Chave de API da web'...
+      .then((response) => {
+        const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); ////lembre-se de adicionar '* 1000', pois o JAVASCRIPT SEMPRE CONSIDERA 'TEMPO' EM MILISSEGUNDOS, E NÃO EM SEGUNDOS.... (só o 'expiresIn' que é mostrado em segundos....)
+        localStorage.setItem('token', response.data.idToken);
+        localStorage.setItem('expirationDate', expirationDate);
+        localStorage.setItem('userId', response.data.localId);
+        localStorage.setItem('email', response.data.email )
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkAuthTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        
+        dispatch(authFail(error.response.data.error));
+      });
+
+
+    ----------------------------
+
+
+
+    VAI FICANDO ASSIm:
+
+
+
+
+
+export function* authAttemptSaga(action) {
+        yield put(
+                authActions.authStart()
+        )
+              const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true, ///propriedade obrigatória para FUNCIONAMENTO DO 'REST API' do firebase... ---> deve sempre estar settada como 'true'...
+    };
+
+
+      let url =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; /// url usada para SIGNUP/CADASTRO....
+    if (!isSignup) {
+      url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; ///url/endpoint usado para ___SIGNIN/LOGIN...
+    }
+}
+
+
+
+
+------------------------------------
+
+
+
+
+CERTO... MAS AQUI JÁ 
+
+VAMOS TER QUE 
+
+REFORMATAR VÁRIAS COISAS.... --> 
+
+
+
+como por exemplo,
+
+'authData'... ----> 
+
+
+
+
+essa constante 
+
+tem o seguinte código:
+
+
+
+   const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true, 
+    };
+
+
+
+---------------------------
+
+
+
+EM VEZ DE 
+
+'email: email',
+
+teremos 
+
+de 
+
+colocar 
+
+
+'action.email',
+
+pq 
+
+a forma de recebimento desse valor aqui, nessa SAGA, é DIFERENTE
+daquele 
+
+
+
+do action creator 
+
+do redux-thunk....
+
+
+
+ex:
+
+
+
+
+
+
+   const authData = {
+      email: action.email, ///ISSO RESOLVE ESTE PROBLEMA...
+      password: action.password, //ISSO RESOLVE ESTE PROBLEMA...
+      returnSecureToken: true, 
+    };
+
+
+-------------------------
+
+
+É CLARO QUE 
+
+AGORA 
+
+PRECISAMOS 
+
+FAZER COM QUE 
+O ACTION CREATOR 
+QUE 
+
+FAZ 
+
+DISPATCH 
+
+do 
+
+
+'authAttemptSaga'
+
+
+__REALMENTE__ CONTENHA 
+
+
+PAYLOADS 
+
+de 
+
+'email' 
+
+
+e 
+
+'password', 
+
+
+PARA QUE 
+
+ESSa 
+
+DATA 
+
+realmente 
+
+seja passada 
+
+ao nosso saga...
+
+
+--------------------------------
+
+
+
+
+NOSSOS CÓDIGOS ESTÃO FICANDO ASSIM:
+
+
+
+
+
+
+
+
+
+
+(código do action creator):
+
+
+
+
+export const authAttempt = (email, password, isSignup) => {
+    return {
+      type: authActionTypes.AUTH_INITIALIZE_ATTEMPT,
+      email: email,
+      password: password,
+      isSignup: isSignup
+    }
+};
+
+
+
+
+
+
+
+
+
+(Saga em 'auth.js')
+
+export function* authAttemptSaga(action) {
+        yield put(
+                authActions.authStart()
+        )
+        const authData = {
+                email: action.email,
+                password: action.password,
+                returnSecureToken: true
+        }
+
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; /// url usada para SIGNUP/CADASTRO....
+        if (!action.isSignup) {
+                url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';
+        }
+        
+}
+
+
+
+
+
+(e, também, o código de 'index.js' acerca dessa saga....):
+
+
+
+
+
+export function* watchAuth() {
+
+  
+  yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+  yield takeEvery(actionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+  yield takeEvery(actionTypes.AUTH_ATTEMPT, authAttemptSaga); ///código que DE FATO FAZ  O LOGIN....
+}
+
+
+
+------------------------------
+
+
+
+É EVIDENTE QUE __ NÃO SEI __ SE ESSE CÓDIGO AÍ ESTÁ CORRETO....
+
+
+
+
+
+
+
+
+----> mas agora,
+
+preciso 
+
+
+
+FOCAR 
+
+
+no 
+
+
+código 
+
+de 
+'axios'.... --> como diabos vou executar 
+
+axios 
+
+DENTRO 
+
+
+
+DE UMA SAGA?
+
+
+
+
+
+
+
+--> devo ver o vídeo do professor...
+
+
+
+
+
+---> PROVAVELMENTE TEREI DE USAR 
+
+
+O MÉTODO/função 'call',
+
+extraída do PACKAGE DO REDUX-SAGA...
+
+
+
+
+
+
+
+
+--> A URL TAMBÉM 
+é determinada 
+
+a 
+partir 
+
+do true/false 
+
+
+de '!action.isSignup',
+
+propriedade/PAYLOAD 
+
+QUE 
+
+JÁ 
+
+CRÍAMOS 
+LÁ 
+
+NO NOSSO ACTION 
+
+CREATOR 
+
+de 
+
+
+'authAttempt'...
+
+
+
+------------------------------
+
+PROFESSOR 
+
+FINALMENTE
+ 
+
+
+ TOCA NO ASSUNTO 
+
+
+
+ DO 
+
+
+ 'axios'...  ---> ele diz que 
+
+ devemos 
+ ir 
+ até 
+
+
+
+
+ o arquvo 
+
+ 'authSaga.js'
+
+  
+  E ENTÃO 
+
+  DEVEMOS 
+
+
+  'import axios from axios'...
+
+
+
+
+
+
+
+
+
+  ------------> QUANDO FIZERMOS ISSO,
+
+  NOSSO 
+
+  'axios.post', escrito lá embaixo,
+
+  VAI DEIXAR
+   
+   DE MOSTRAR UM ERRO... -----> MAS ISSO NÃO QUER DIZER QUE 
+
+   O 
+
+   AXIOS VAI FUNCIONAR IMEDIATAMENTE... --> não,
+
+
+   algo mais precisa ser feito....
+
+
+
+
+
+
+
+
+
+
+   EX:
+
+
+
+
+   export function* authAttemptSaga(action) {
+        yield put(
+                authActions.authStart()
+        )
+        const authData = {
+                email: action.email,
+                password: action.password,
+                returnSecureToken: true
+        }
+
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; /// url usada para SIGNUP/CADASTRO....
+        if (!action.isSignup) {
+                url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';
+        }
+        yield axios.post(url, authData) ///ESSA 'key' ([API_KEY]) FOI OBTIDA LÁ DO SITE DO GOOGLE FIREBASE, na engrenagem, e depois em 'Configurações do Projeto' > 'Chave de API da web'...
+        .then((response) => {
+          const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); ////lembre-se de adicionar '* 1000', pois o JAVASCRIPT SEMPRE CONSIDERA 'TEMPO' EM MILISSEGUNDOS, E NÃO EM SEGUNDOS.... (só o 'expiresIn' que é mostrado em segundos....)
+          localStorage.setItem('token', response.data.idToken);
+          localStorage.setItem('expirationDate', expirationDate);
+          localStorage.setItem('userId', response.data.localId);
+          localStorage.setItem('email', response.data.email );
+        //   dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        //   dispatch(checkAuthTimeout(response.data.expiresIn));
+        })
+        .catch((error) => {
+          
+          dispatch(authFail(error.response.data.error));
+        });
+
+
+}
+
+
+-----------------------------------------
+
+
+
+O PROFESSOR NOS EXPLICA QUE 
+
+__ELE VAI __ MUDAR __ A MANEIRA __ PELA QUAL 
+
+
+USAMOS 
+
+ESSA 'PROMISE '
+
+__RETORNADA___ 
+
+POR 
+
+
+'axios.post'... --------->
+
+
+
+
+ANTIGAMENTE,
+
+
+nós 
+
+
+CONSEGUÍAMOS 
+
+A RESPONSE,
+
+e aí 
+
+FAZÍAMOS ALGO COM ESSA RESPONSE... 
+
+(
+    ex: 
+
+        const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); 
+
+
+
+e 
+
+     localStorage.setItem('token', response.data.idToken);
+          localStorage.setItem('expirationDate', expirationDate);
+          localStorage.setItem('userId', response.data.localId);
+          localStorage.setItem('email', response.data.email );
+
+
+
+
+
+E
+
+
+
+
+
+      .catch((error) => {
+          
+          dispatch(authFail(error.response.data.error));
+        });
+
+
+)
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+PARA ISSO,
+
+O PROFESSOR VAI CRIAR UMA NOVA CONSTANTE,
+
+chamada 
+
+
+de 
+
+'response'...
+
+
+
+
+
+
+
+
+
+----> E ESSA RESPONSE VAI 'ARMAZENAR' 
+
+AXIOS.post...
+
+
+
+ex:
+
+
+
+const response = axios.post(url, authData)
+                            .then(....)
+
+
+    
+    -----------------------------
+
+
+ISSO, NATIVAMENTE,
+
+É CLARO,
+
+____rESULTARIA__ EM UM ERRO__... --> é incorreto PQ 
+
+
+'axios.post' RETORNA UMA __PROMISE.... --> entretanto,
+
+
+
+SE FOR ADICIONADA a KEYWORD 
+
+DE 
+
+'yield'
+
+
+ANTES 
+
+
+do valor 
+de 
+'axios.post',
+
+
+
+TUDO MUDA....
+
+
+ex:
+
+
+
+
+
+const response =  yield axios.post(url, authData)
+                            .then(....)
+
+
+---------------------------------------------------
+
+
+
+
+
+
+--> SE FIZERMOS ISSO,
+
+
+O COMPORTAMENTO 
+
+DESSE 
+'
+axios.post'
+
+VAI __MUDAR__ ---> ele NÃO VAI MAIS FAZER 
+
+O 
+
+RETURN 
+
+DE UMA 
+
+PROMISE __ POR MEIO __ DE 
+seu código... ----------> EM VEZ DISSO,
+
+
+
+O QUE 
+
+
+ELE VAI __ FAZER __ É ESPERAR ___ 
+
+
+por um 'RESOLVE' ou 'REJECT' 
+
+dessa promise.... --------> AÍ, FINALMENTE,
+
+
+ o que 'yield' VAI FAZER __ É ARMAZENAR__ A COISA QUALQUER 
+
+ QUE RECEBEMOS __ DE VOLTA___ DENTRO 
+
+ DESSA 
+
+
+ CONSTANTE de nome 
+ 'response'.... -----> ISSO SIGNIFICA QUE 
+
+
+ NÓS 
+
+
+
+ ___NÃO VAMOS MAIS PRECISAR 
+
+ FAZER UM 
+
+ CHAIN 
+
+ de 
+
+ '.then()' DEPOIS 
+
+ DESSE 
+
+
+ CÓDIGO DE 
+
+ 'yield axios.post(url, authData)'...
+
+
+
+
+
+
+--> ISSO SIGNFICA:
+
+
+1) NÃO PRECISAMOS MAIS DE '.then()' nesse código aí.
+
+
+
+
+2) NÃO PRECISAMOS MAIS DE '.catch()' também...
+
+
+
+
+
+
+
+ex:
+
+
+
+
+ 
+
+
+ 
+   export function* authAttemptSaga(action) {
+        yield put(
+                authActions.authStart()
+        )
+        const authData = {
+                email: action.email,
+                password: action.password,
+                returnSecureToken: true
+        }
+
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; /// url usada para SIGNUP/CADASTRO....
+        if (!action.isSignup) {
+                url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';
+        }
+       yield axios.post(url, authData)
+          const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); ////lembre-se de adicionar '* 1000', pois o JAVASCRIPT SEMPRE CONSIDERA 'TEMPO' EM MILISSEGUNDOS, E NÃO EM SEGUNDOS.... (só o 'expiresIn' que é mostrado em segundos....)
+          localStorage.setItem('token', response.data.idToken);
+          localStorage.setItem('expirationDate', expirationDate);
+          localStorage.setItem('userId', response.data.localId);
+          localStorage.setItem('email', response.data.email );
+        //   dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        //   dispatch(checkAuthTimeout(response.data.expiresIn));
+        
+
+
+        .catch((error) => {
+          
+          dispatch(authFail(error.response.data.error));
+        });
+
+
+}
+
+
+
+
+---------------------------------------
+
+
+TIPO ASSIM... (obs: 'authSuccess' e 'checkAuthTimeout', esses 
+
+2 dispatches de actions, devem ser reformatados também....) 
+
+
+
+
+
+
+
+
+
+
+
+---> ALÉM DISSO,
+
+
+ESSA REMOÇÃO 
+
+DO 
+'.then()' 
+
+e 
+'.catch()' blocks
+
+
+
+SIGNIFICA QUE 
+
+
+TODO __ O CÓDIGO QUE __ DEPENDE __ DAQUELA 'RESPONSE', do return daquela response,
+
+PODERÁ
+ 
+
+ ___SER EXECUTADO 'KINDOF' synchronously... -->  ISSO 
+
+ PQ ___ 
+
+
+ ESSA KEYWORD 
+
+ de 
+
+ 'yield' __VAI PAUSAR__ A NOSSA EXECUÇÃO__ ATÉ QUE 
+
+ A PROMISE __ RETORNADA PELO 'axios.post'
+
+
+ SEJA 
+
+
+ RESOLVED ou REJECTED....
+
+
+ ex:
+
+
+
+
+   export function* authAttemptSaga(action) {
+        yield put(
+                authActions.authStart()
+        )
+        const authData = {
+                email: action.email,
+                password: action.password,
+                returnSecureToken: true
+        }
+
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; /// url usada para SIGNUP/CADASTRO....
+        if (!action.isSignup) {
+                url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';
+        }
+       yield axios.post(url, authData)
+          const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); ////lembre-se de adicionar '* 1000', pois o JAVASCRIPT SEMPRE CONSIDERA 'TEMPO' EM MILISSEGUNDOS, E NÃO EM SEGUNDOS.... (só o 'expiresIn' que é mostrado em segundos....)
+          localStorage.setItem('token', response.data.idToken);
+          localStorage.setItem('expirationDate', expirationDate);
+          localStorage.setItem('userId', response.data.localId);
+          localStorage.setItem('email', response.data.email );
+        //   dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        //   dispatch(checkAuthTimeout(response.data.expiresIn));
+        
+
+
+        .catch((error) => {
+          
+          dispatch(authFail(error.response.data.error));
+        });
+
+
+}
+
+
+
+
+-------------------------------------------
+
+
+A EXPIRATIONDATE VAI CONTINUAR DA MESMA FORMA.... 
+
+
+
+o código que armazena ITEMS 
+
+no localStorage,
+
+TAMBÉM...
+
+
+
+OS DISPATCHES TERÃO DE SER ALTERADOS, NO ENTANTO... --> vamos usar 
+
+
+
+'put',
+
+e aquela sintaxe que usamos antes....
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+
+ESTÁ FICANDO TIPO ASSIM:
+
+
+
+
+
+
+
+export function* authAttemptSaga(action) {
+        yield put(
+                authActions.authStart()
+        )
+        const authData = {
+                email: action.email,
+                password: action.password,
+                returnSecureToken: true
+        }
+
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; /// url usada para SIGNUP/CADASTRO....
+        if (!action.isSignup) {
+                url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';
+        }
+       
+       const response = yield axios.post(url, authData); ////ISTO MUDA TUDO... (SÓ É PERMITIDO armazenar um 'axios.post' (que é um método que RETORNA UMA PROMISE) dentro de uma constante SE VOCê TIVER A KEYWORD 'yield' presente....)
+
+          const expirationDate = yield new Date(new Date().getTime() + response.data.expiresIn * 1000); ////lembre-se de adicionar '* 1000', pois o JAVASCRIPT SEMPRE CONSIDERA 'TEMPO' EM MILISSEGUNDOS, E NÃO EM SEGUNDOS.... (só o 'expiresIn' que é mostrado em segundos....)
+         yield localStorage.setItem('token', response.data.idToken);
+         yield localStorage.setItem('expirationDate', expirationDate);
+         yield localStorage.setItem('userId', response.data.localId);
+          yield localStorage.setItem('email', response.data.email )
+              yield  put(authActions.authSuccess(response.data.idToken, response.data.localId));
+                yield put(authActions.checkAuthTimeout(response.data.expiresIn))
+
+        .catch((error) => {
+          
+        //   dispatch(authFail(error.response.data.error));
+        put(authActions.authFail(error.response.data.error));
+        });
+
+
+}
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+ok...
+
+
+ESTÁ TUDO FUNCIONANDO... (acho eu)
+
+
+
+
+sempre 
+
+coloque 
+
+'yield'
+
+
+
+ANTES DE 
+'put' 
+
+e dos 
+
+calls 
+
+de 
+
+'localStorage.setItem',
+
+
+'localStorage.getItem'....
+
+
+
+
+----------------------------
+
+
+
+
+
+OK, COM ISSO, TEREMOS 
+
+NOSSA 
+
+FUNÇÃO __ QUASE ACABADA___.... -----> 
+
+
+
+MAS 
+
+FALTA 
+
+
+O 
+
+'ERROR CASE',
+
+
+AQUELE CATCH BLOCK LÁ NO FINAL..
+
+
+
+
+
+
+
+
+
+
+
+--> PROFESSOR NOS DIZ QUE 
+
+O CÓDIGO 
+É/FOI PAUSADO NESTE 
+
+
+INSTANTE AQUI:
+
+
+
+
+
+const response = yield axios.post(url, authData) ----------->
+
+
+
+
+ISSO ACONTECE PQ 
+'yield' 
+
+PAUSA a execução 
+
+DE CÓDIGO,
+E QUE 
+
+ELE 
+
+
+___  ESPERA A PROMISE DAR 'RESOLVE' OU 'REJECT'...
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+PARA CONSEGUIR FAZER ISSO,
+
+
+PARA 
+
+FAZER 'ERROR HANDLING',
+
+PROFESSOR 
+
+NOS DIZ QUE 
+
+DEVEMOS USAR 
+
+UMA FEATURE 
+ESPECIAL DO JAVACRIPT MODERNO..
+
+
+
+
+--> PARA OBTER ESSE EFEITO,
+
+
+devemos 
+usar 
+
+'UM DEFAULT JAVASCRIPT CONSTRUCT',
+
+
+
+um 
+
+
+
+'try() block'....
+
+
+
+
+
+EX:
+
+
+
+try {
+
+                const response = yield axios.post(url, authData);
+
+     const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); ////lembre-se de adicionar '* 1000', pois o JAVASCRIPT SEMPRE CONSIDERA 'TEMPO' EM MILISSEGUNDOS, E NÃO EM SEGUNDOS.... (só o 'expiresIn' que é mostrado em segundos....)
+          localStorage.setItem('token', response.data.idToken);
+          localStorage.setItem('expirationDate', expirationDate);
+          localStorage.setItem('userId', response.data.localId);
+          localStorage.setItem('email', response.data.email )
+      put(authActions.authSuccess(response.data.idToken, response.data.localId));
+                put(authActions.checkAuthTimeout(response.data.expiresIn))
+}
+
+
+
+
+
+----------------------
+
+OU SEJA,
+
+VAMOS 
+
+'TRY' 
+
+
+ESSE CÓDIGO AÍ,
+
+TRY 
+
+
+esse código que faz __gET ___ DE NOSSA 'response' DO SERVIDOR,
+
+ e que
+
+ ENTÃO 
+
+
+
+FAZ 'OUR SUCCESS STUFF' 
+
+com 
+
+
+
+ele...  (ou seja, vai executar aquele código de 
+
+'yield put' com authSuccess 
+
+e 
+
+
+'checkAuthTimeout'...) --------> 
+
+
+
+CERTO,
+
+
+E 
+
+SE 
+
+
+
+ESSE 'try' FALHAR,
+
+
+VAMOS QUERER 
+
+USAR 
+
+UM 
+
+CATCH BLOCK LOGO DEPOIS...
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+ISSO BASICAMENTE ESTÁ DIZENDO:
+
+
+
+
+'''ESPERE PELA RESPONSE ('const response = yield axios.post(url, authData)) DO SERVIDOR,
+PQ 
+
+
+AÍ 
+
+NÓS RELAMENTE 
+
+VAMOS FAZER
+ NOSSOS 
+
+'SUCCESS STUFF'
+'''''
+
+
+----------------------------------
+
+ex:
+
+
+
+
+
+
+export function* authAttemptSaga(action) {
+        yield put(
+                authActions.authStart()
+        )
+        const authData = {
+                email: action.email,
+                password: action.password,
+                returnSecureToken: true
+        }
+
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; /// url usada para SIGNUP/CADASTRO....
+        if (!action.isSignup) {
+                url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';
+        }
+       
+       const response = yield axios.post(url, authData); ////ISTO MUDA TUDO... (SÓ É PERMITIDO armazenar um 'axios.post' (que é um método que RETORNA UMA PROMISE) dentro de uma constante SE VOCê TIVER A KEYWORD 'yield' presente....)
+
+          const expirationDate = yield new Date(new Date().getTime() + response.data.expiresIn * 1000); //EIS O CÓDIGO EM QUESTÃO.
+         yield localStorage.setItem('token', response.data.idToken);
+         yield localStorage.setItem('expirationDate', expirationDate);
+         yield localStorage.setItem('userId', response.data.localId);
+          yield localStorage.setItem('email', response.data.email )
+              yield  put(authActions.authSuccess(response.data.idToken, response.data.localId));
+                yield put(authActions.checkAuthTimeout(response.data.expiresIn))
+
+        .catch((error) => {
+          
+        //   dispatch(authFail(error.response.data.error));
+        put(authActions.authFail(error.response.data.error));
+        });
+
+
+}
+--------------------------
+
+
+
+
+
+
+
+
+--> CASO REALMENET HAJA
+ UM
+
+ ERRO, VAMOS QUERER QUE 
+
+
+ELE SEJA 
+
+'MAANGED'....
+
+
+
+é por isso que vamos escrever
+
+
+
+catch(error) {
+    yield put(actions.authFail(error,response.dta.error))
+},
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+try {
+
+                const response = yield axios.post(url, authData);
+
+     const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); ////lembre-se de adicionar '* 1000', pois o JAVASCRIPT SEMPRE CONSIDERA 'TEMPO' EM MILISSEGUNDOS, E NÃO EM SEGUNDOS.... (só o 'expiresIn' que é mostrado em segundos....)
+          localStorage.setItem('token', response.data.idToken);
+          localStorage.setItem('expirationDate', expirationDate);
+          localStorage.setItem('userId', response.data.localId);
+          localStorage.setItem('email', response.data.email )
+      put(authActions.authSuccess(response.data.idToken, response.data.localId));
+                put(authActions.checkAuthTimeout(response.data.expiresIn))
+
+
+
+} catch (error) {
+        put(authActions.authFail(error.response.data.error)); ////////EIS O CÓDIGO EM QUESTÃO. 
+}
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+COM ISSO,
+
+AGORA 
+
+
+
+VAMOS TER 
+
+A 
+
+MANEIRA 
+
+'SAGA'
+
+DE 
+
+FAZER 
+
+HANDLE 
+
+
+DESSE 
+
+AUTHENTICATION,
+
+
+do AUTHENTICATION POR MEIO 
+
+de 
+
+'authAttempt'...
+
+
+
+
+-------------------------------
+
+
+
+
+
+OK.... 
+
+
+
+
+MAS AINDA PRECISAMOS VINCULAR
+ 
+ ESSE NEGÓCIO A UM 'LISTENER'... ----> 
+
+ A 
+
+
+UM LISTENER 
+
+EM 
+
+'index.js' dos sagas... --------->
+
+
+
+
+
+E AGORA PRECISAMOS ASSEGURAR 
+
+QUE 
+
+SEJA 
+
+EXECUTADA 
+
+
+A 
+
+SAGA 
+
+
+de 
+
+'authAttemptSaga'
+
+QUANDO 
+
+
+O USUÁRIO __ REALMENTE__ TENTA FAZER SIGNUP/SIGNIN NA NOSSA PÁGINA...
+
+
+
+
+
+
+
+
+
+
+
+----
+
+PROFESSOR 
+
+VAI ATÉ 
+
+'auth.js',
+
+NAS ACTIONS,
+
+E LÁ 
+
+EXAMINA 
+
+O CÓDIGO 
+
+DE 
+'authAttempt'...
+
+
+
+ELE CONSTATA QUE 
+
+
+O CÓDIGO DISSO VAI FICAR BEM MAIS CURTO, 
+
+VAI FICAR ASSIM:
+
+
+export const authAttempt = (email, password, isSignup) => {
+    return {
+      type: authActionTypes.AUTH_INITIALIZE_ATTEMPT,
+      email: email,
+      password: password,
+      isSignup: isSignup
+    }
+};
+
+
+
+----------------------------------
+
+
+
+
+
+OK... TUDO ISSO ESTÁ CERTO, FIZ A MESMA COISA... ---> A ÚNICA COISA 
+
+QUE 
+
+ESTÁ 
+
+FALTANDO,
+ 
+ DIZ O PROFESSORR,
+
+
+ É 
+
+ HOOKAR 
+
+
+
+ NOSSO 
+
+
+ RECÉM 
+
+ CRIADO
+  
+  'authAttemptSaga'
+
+
+
+  COM UM _WATCHER___ ----------> 
+
+
+  POR 
+
+  ISSO 
+
+
+  ELE 
+  VAI 
+
+  ATÉ 
+
+  O 
+
+  INDEX.js 
+
+
+
+
+  DOS SAGAS 
+
+
+
+
+   E ENTÃO 
+
+
+   ESCREVE 
+
+
+
+
+   __OUTRO __ 'yield takeEvery()' DENTRO 
+
+   DE 
+
+   'watchAuth()'....
+
+
+
+
+   ex:
+
+
+
+
+export function* watchAuth() {
+
+  
+  yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+  yield takeEvery(actionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+  yield takeEvery(actionTypes.AUTH_ATTEMPT, authAttemptSaga); ///código que DE FATO FAZ  O LOGIN....
+}
+
+-------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+CERTO... isso é EXATAMENTE A MESMA COISA QUE EU FIZ..
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+--> ENTRETANTO, O PROFESSOR TAMBÉM 
+É 
+
+'LOGGED OUT' 
+
+rapidamente,
+
+
+passado poucos segundos... ---> ISSO 
+
+OCORREU
+ 
+ PQ 
+
+ O PROFESSOR 
+ HAVIA 
+
+ escrito 
+
+
+
+ 'yield delay(action.expirationTime)',
+
+
+
+ QUANDO 
+
+ 
+
+ DEVIA ESTAR COMO 
+
+ 'yield delay(action.expirationTime * 1000);' 
+
+
+
+
+ (PQ QUEREMOS 
+ 
+ QUE O VALOR FIQUE EM __SEGUNDOS,
+ 
+ E NÃO EM MILISSEGUNDOS...)
+
+
+
+ -------------
+
+
+ OK, TUDO ESTÁ FUNCIONANDO COMO ANTES,
+
+
+ MAS AGORA 
+
+ COM SAGAS...
+
+
+
+MESMO COMPORTAMENTO, MAS AGORA COM SAGAS...
+
+
+
+
+-------------------------------------
+
+
+
+
+
+----> vamos colocar mais um pouco de LÓGICA 
+
+
+
+de nossos action creators 
+em 
+
+'auth.js'
+ 
+
+ DENTRO 
+
+ DE NOSSAS SAGAS...
+
+
+
+
+
+
+
+
+ OK... MAS AGORA TEMOS UM PROBLEMA... --> quando 
+
+ EU 
+
+
+ TENTO LOGGAR NA MINHA PÁGINA,
+
+ O  SPINNER FICA GIRANDO PARA SEMPRE...
+
+
+
+
+
+
+
+
+ --> CERTO.. O PROBLEMA ERA SIMPLES... 
+
+ estava 
+
+ FALTANDO
+
+ 'YIELD' 
+
+
+
+ EM UM MONTE DE LINHAS (estava faltando nos 'puts' dos action creators,
+ 
+ 
+ E TAMBÉM NO CÓDIGO 
+ 
+ DE 
+ 
+ 'localStorage.setItem'...)
+
+
+
+
+ EX(código consertado):
+
+
+
+
+
+ export function* authUserSaga(action) {
+  yield put(actions.authStart());
+  const authData = {
+    email: action.email,
+    password: action.password,
+    returnSecureToken: true
+  };
+  let url =
+    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyB5cHT6x62tTe-g27vBDIqWcwQWBSj3uiY";
+  if (!action.isSignup) {
+    url =
+      "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyB5cHT6x62tTe-g27vBDIqWcwQWBSj3uiY";
+  }
+  try {
+    const response = yield axios.post(url, authData);
+
+    const expirationDate = yield new Date(
+      new Date().getTime() + response.data.expiresIn * 1000
+    );
+    yield localStorage.setItem("token", response.data.idToken); ///////EIS O CÓDIGO EM QUESTÃO.
+    yield localStorage.setItem("expirationDate", expirationDate);
+    yield localStorage.setItem("userId", response.data.localId);
+    yield put(
+      actions.authSuccess(response.data.idToken, response.data.localId)
+    );
+    yield put(actions.checkAuthTimeout(response.data.expiresIn)); ////EIS O CÓDIGO EM QUESTÃO.
+  } catch (error) {
+    yield put(actions.authFail(error.response.data.error));
+  }
+}

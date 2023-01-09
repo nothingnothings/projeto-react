@@ -1,0 +1,2918 @@
+
+
+
+Talvez settar umas actions extras?
+
+
+
+
+
+
+
+
+
+
+
+
+
+CONSEGUI, TUDO COM O SET DE UMA ACTION EXTRA (''''BURGER_CREATED_WITHOUT_AUTH''''')....
+
+
+
+
+
+
+
+
+
+
+AQUI ESTÁ A LISTA DE ALTERAÇÕES E CÓDIGOS QUE ESCREVI:
+
+
+
+
+
+em ('auth.js'): 
+
+
+
+export const burgerCreate = () => {
+          return {
+            type: authActionTypes.BURGER_CREATED_WITHOUT_AUTH
+          }
+}
+
+
+
+
+
+
+
+
+em 'authActionTypes':
+
+
+export const BURGER_CREATED_WITHOUT_AUTH = 'BURGER_CREATED_WITHOUT_AUTH';
+
+
+
+
+
+
+
+em 'index': 
+
+
+
+
+export {
+    authAttempt,
+    authLogout,
+    burgerCreate
+
+} from './auth';
+
+
+
+
+--------------------------------
+
+
+
+
+em 'authReducer':
+
+
+
+
+const initialState = {
+        token: null,
+        userId: null,
+        error: null,
+        loading: false,
+        email: null,
+        createdBurger: false
+}
+
+
+
+const burgerCreate = (state, action) => {
+    return updateObject(state, {
+        createdBurger: true
+    })
+}
+
+
+ const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+                    case authActionTypes.AUTH_START:
+                        return authStart(state, action);
+                    case authActionTypes.AUTH_SUCCESS: 
+                        return authSuccess(state, action);
+                        case authActionTypes.AUTH_FAIL:
+                            return authFail(state, action);
+                        case authActionTypes.AUTH_LOGOUT:
+                            return authLogout(state, action);
+                        default: return state;
+                        case authActionTypes.BURGER_CREATED_WITHOUT_AUTH:
+                            return burgerCreate(state, action);
+              
+        }
+}
+
+
+
+---------------------------
+
+
+
+
+
+em 
+
+
+
+'Auth.js' (Container, essa é a parte tricky/importante...):
+
+
+
+
+
+
+
+ if (this.props.token) {
+      redirectAuthenticated = (<Redirect to="/" />)
+  }
+
+
+
+
+  if (this.props.token && this.props.createdBurger) {
+    console.log('test');
+    redirectAuthenticated = (<Redirect to="/checkout" />)   ///isso vai redirecionar com sucesso o negócio, quando existir aquele 'createdBurger'...
+    
+  }
+
+
+
+
+
+
+
+    return (
+      <div className={AuthStyle.Auth}>
+        {/* <div className="Auth"> */}
+        <form onSubmit={this.submitHandler}>
+          {form}
+          <Button btnType="Success">SUBMIT</Button>
+        </form>
+        <Button btnType="Danger" clicked={this.switchAuthModeHandler}>
+          SWITCH TO {switchMessage}
+        </Button>
+        {this.state.isSignup ? (
+          <p>Already have an account? Switch to Sign-in and enter with your account! </p>
+        ) : null}
+        {errorMessage}
+        {redirectAuthenticated}
+      </div>
+    );
+  }
+}
+
+
+
+  const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error,
+    token: state.auth.token !== null,
+    createdBurger: state.auth.createdBurger
+  };
+};
+
+
+
+
+-------------------------------------
+
+
+
+
+
+(em 'burgerBuilder'):
+
+
+
+
+
+
+
+
+  purchaseHandler = () => {
+        if (!this.props.token) {
+            this.props.onBurgerCreateWithoutAuth();
+            this.props.history.push('/auth');
+        }
+
+
+    this.setState({
+      purchasing: true,
+    });
+  };
+
+const mapDispatchToProps = (dispatch) => {
+            return {
+              onIngredientAdd: (ingredientId) => {
+                dispatch(
+                  actionsCreators.ingredient_add(ingredientId)
+                )
+              },
+              onIngredientRemove: (ingredientId) => {
+                dispatch(
+                    actionsCreators.ingredient_remove(ingredientId)
+                )
+              },
+              onIngredientGet: () => {
+                dispatch(
+                      actionsCreators.asyncOrderInitialIngredientsGet()
+                )
+              },
+              onBurgerCreateWithoutAuth: () => {
+                dispatch(
+                  actionsCreators.burgerCreate()
+                )
+              }
+            }
+}
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+CERTO,
+
+
+E 
+
+TODOS ESSES 
+
+CÓDIGOS 
+
+
+FIZERAM 
+
+
+A 
+
+FEATURE 
+
+
+DE 
+
+
+'REDIRECT CONDICIONAL CONDICIONAL' funcionar... (redirecionamos para 'Checkout' ou para 'home'/burgerbuilder, dependendo da existência DO TOKEN e do 'burgerCreated', existente no STATE DO REDUX...)
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+
+Professor nos diz que há múltiplas maneiras de fazer isso... ----> 
+
+
+
+
+
+
+
+
+
+
+
+1o approach -----> ARMAZENAR A INFORMAÇÃO DE QUE 'WE ARE CURRENTLY BUILDING A BURGER' lá no redux store (foi o approach que eu fiz...).
+                        --> se optarmos por esse approach, vamos querer que O 'burgerCreate' (propriedade no state global do redux) SEJA RESETTADO (colocado de volta a 'false'/'null') quando o USUÁRIO RETORNAR à PÁGINA 'BURGERBUILDER' (ou seja, quando 'INITIAL_INGREDIENTS_GET' for executado, basicamente...)
+
+
+
+                            ---> e eu consegui fazer isso, consegui redefinir o 'createdBurger' como 'FALSE', reiniciando o LOOP do aplicativo... (isso significa que agora o usuário PODE CRIAR ___ VÁRIOS BURGERS__, SEM RECEBER BUGS EM RAZÃO DO 'createdBurger: true', lá no state global do redux...
+
+
+
+
+
+
+---> mas agora encontrei __OUTRO__ BUG... ----> se você JÁ CRIOU UM BURGER e 
+clica 
+
+em 
+
+'Continue', lá na página de 'checkout',
+
+VOCÊ __ É __rEDIRECIONADO___ PARA 
+ 
+
+ A PÁGINA DE 'ORDERS'...
+
+
+
+
+(isso era por causa de 'redirectToHome' e 'redirectToOrders', propriedades 
+
+inventadas por mim lá no 
+
+slice do state de 'order'.... --> mas já SOLUCIONEI ESSE PROBLEMA)...
+
+
+
+
+
+ --------------------------------
+
+
+
+ AGORA VOU FAZER UM BACKUP DESSE ARQUIVO,
+
+
+
+
+ com este formato do código,
+
+ para 
+
+ então 
+
+
+ VER COMO 
+
+  O PROFESSOR RESOLVEU O PROBLEMA DO MODO DELE,
+
+
+
+
+
+  e então aplicar 
+
+
+  em outra cópia do projeto (cópia 19-20)....
+
+
+
+  
+  ---------------------------------
+
+
+
+  Professor nos diz que 
+
+  essa informação de 
+
+
+  'estamos construindo um burger' 
+
+  JÁ 
+
+
+  É ___ARMAZENADA __ QUANDO O USUÁRIO ___ VISITA 
+
+
+  A PÁGINA 
+
+  'BURGER BUILDER' EM SI,
+
+  pq 
+
+  aí 
+
+  A action
+
+
+  '
+  INITIAL_INGREDIENTS_GET'
+
+
+  é DISPARADA IMEDIATAMENTE... --------> e isso __RESETTA___ TODOS OS INGREDIENTS.... ------> 
+
+
+
+
+
+
+  e o professor nos diz que 
+
+
+  seria 
+
+  muito fácil (e é, pq eu ja fiz isso)
+
+
+
+  DEFINIR 
+
+  UMA 
+
+  PROPRIEDADE 
+
+  INICIAL,
+
+
+
+  no state do redux (em qualquer um dos slices, mas professor colocou no 
+  
+  DE 
+  
+  'burgerBuilder')
+
+
+
+
+
+  DIZENDO 
+
+
+  'building: false' (no nosso caso, foi uma propriedade 
+  
+  que 
+  
+  diz 
+  
+  'createdBurger: false'....) --------->
+
+
+
+  entretanto,
+
+  no caso 
+
+
+  do professor,
+
+
+
+  ele diz que 
+
+
+  podemos 
+
+  definir 
+
+  ESSA PROPRIEDADE 
+
+  COMO 
+
+  'FALSE/TRUE'
+
+
+  sempre 
+
+  que 
+
+  __REMOVEMOS/ADICIONAMOS ___ INGREDIENTS__ 
+
+  no nosso burger....
+
+
+
+
+
+
+
+
+
+  --> vamos seguir esse método do professor, pq ele pode ser interessante/melhor do que o nosso...
+
+
+
+
+
+
+  ------> professor vai até o ARQUIVO DE ACTIONS de burgerBuilder ('burgerBuild'),
+
+
+
+  em que 
+
+
+
+  há 
+
+
+
+
+AS ACTIONS EM SI... -----> 
+
+
+lá 
+
+há 
+
+as 
+
+action de 
+
+'add', 'remove', etc...
+
+-----------------------------
+
+
+
+
+
+CERTO, O STATE DESSE 'burgerBuilderReducer' ficou assim:
+
+
+
+
+
+
+
+const initialState = {
+  error: false,
+  burger: {
+
+  ingredients: null,
+  
+
+
+
+
+
+
+  totalPrice: 4,
+  
+},
+sideDrawerClose: false,
+createdBurger: false
+};
+
+
+
+
+--------------------------------
+
+
+
+ok...
+
+
+
+
+
+
+
+
+--> EIS A LÓGICA PARA AS ACTIONS DE 'BurgerBuild', lá em 
+
+'BurgerBuilderReducer':
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+const ingredientAdd = (state, action) => {
+  const updatedBurger = {
+    ...state.burger
+  }
+  const updatedBurgerIngredients = {
+    ...updatedBurger
+  }
+  //console.log(updatedBurgerIngredients)
+  const insideUpdatedBurgerIngredients = updatedBurgerIngredients.ingredients;
+  return updateObject(state, {
+    burger: {totalPrice: state.burger.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+      ingredients: {
+        ...insideUpdatedBurgerIngredients,
+        [action.ingredientName]: state.burger.ingredients[action.ingredientName] + 1
+      }
+    }
+  }
+  )
+  
+
+}
+
+
+
+
+
+
+const ingredientRemove = (state, action) => {
+  const updatedBurger = {
+    ...state.burger
+  }
+  const updatedBurgerIngredients = {
+    ...updatedBurger
+  }
+
+  const insideUpdatedBurgerIngredients = updatedBurgerIngredients.ingredients;
+  return updateObject(state, {
+    burger: {totalPrice: state.burger.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+      ingredients: {
+        ...insideUpdatedBurgerIngredients,
+        [action.ingredientName]: state.burger.ingredients[action.ingredientName] - 1
+      }
+    }
+  }
+  )
+}
+
+
+
+const orderInitialIngredientsGet = (state, action) => {
+
+    return updateObject(state, {
+      burger: { totalPrice: 6.9,
+        error: false,
+      ingredients: {
+        ...action.ingredients
+      }}
+    })
+}
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+Nesse 
+
+'ingredientAdd', por exemplo,
+
+
+TAMBÉM __VAMOS UPDATAR__ O 'BUILDING STATE', aquela propriedade 'createdBurger',
+
+
+QUE 
+
+SERÁ 
+
+DEFINIDA
+ 
+ COMO 
+
+ 'TRUE'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+const ingredientAdd = (state, action) => {
+  const updatedBurger = {
+    ...state.burger
+  }
+  const updatedBurgerIngredients = {
+    ...updatedBurger
+  }
+  //console.log(updatedBurgerIngredients)
+  const insideUpdatedBurgerIngredients = updatedBurgerIngredients.ingredients;
+  return updateObject(state, {
+    burger: {totalPrice: state.burger.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+      ingredients: {
+        ...insideUpdatedBurgerIngredients,
+        [action.ingredientName]: state.burger.ingredients[action.ingredientName] + 1
+      },
+      createdBurger: true ///////////eis o código em questão.
+    }
+  }
+  )
+  
+
+}
+
+
+-----------------------------------
+
+
+
+E AÍ FAZEMOS 
+
+
+A 
+MESMA 
+
+COISA 
+
+NO 
+
+'REMOVE INGREDIENTS'..
+
+
+
+
+
+
+
+
+
+
+---> mas NO CASO DE 'INITIAL_INGREDIENTS_GET', PROFESSOR 
+
+VAI QUERER 
+
+
+
+__deFINIR __ ESSE 'createdBurger' COMO __FALSe__, pq recém
+
+
+COMEÇAMOS, não construímos o burger ainda....
+
+
+ex:
+
+
+
+
+const orderInitialIngredientsGet = (state, action) => {
+
+    return updateObject(state, {
+      burger: { totalPrice: 6.9,
+        error: false,
+      ingredients: {
+        ...action.ingredients
+      },
+      createdBurger: false
+      }
+    })
+}
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+
+---> ok.... --> com isso definido, com esse novo 'prop'/propriedade 
+
+adicionada 
+
+ao 
+
+SLICE 
+
+ do 
+
+
+'burger', do nosso 'state',
+
+
+
+NÓS 
+
+podemos 
+
+
+IR 
+
+
+
+ATÉ 
+
+
+
+
+A PÁGINA 
+
+
+DE 
+
+
+'Auth.js' (o container),
+
+
+
+E LÁ 
+
+
+ONDE 
+
+TEMOS 
+
+
+
+O 
+
+
+
+
+''''     let redirectAuthenticated = null;'''',
+
+
+
+
+
+professor 
+
+diz que 
+
+DEVEMOS 
+
+
+TER 
+
+
+2 
+
+
+
+DIFERENTES 'CASES'.... ------>
+
+
+(
+
+no caso,
+
+
+
+
+
+já tínhamos os códigos de 
+
+
+''
+
+
+
+  if (this.props.token) {
+      redirectAuthenticated = (<Redirect to="/" />)
+  }
+
+
+
+
+  if (this.props.token && this.props.createdBurger) {
+    console.log('test');
+    redirectAuthenticated = (<Redirect to="/checkout" />)
+    
+  }
+
+
+
+
+
+
+)
+
+
+
+
+
+esse approach __FUNCIONOU__ PARA MIM,
+
+
+mas não sei se é o approach MAIS CORRETO... 
+
+
+
+
+
+
+
+-------->  professor nos diz que um approach mais DINÂMICO (ou seja,
+
+um approach que vocÊ provavelmente usaria se você tivesse 
+
+DIFERENTES URLS/MUITAS URLS....),
+ 
+
+ seria o de 
+
+
+ ARMAZENAR SUAS 
+
+ URLS 
+
+ LÁ 
+
+ NO 
+
+
+ REDUX STORE, GLOBAL,
+
+
+para que 
+então 
+
+vocÊ possa/pudesse SUBSTITUIR ESSE CÓDIGO '<Redirect to="/" />' 
+
+
+POR UMA 
+
+
+MARCAÇÃO DINÂMICA,
+
+TIPO ISTO AQUI:
+
+
+
+<Redirect to={url} />
+
+
+
+
+------------------------------------
+
+
+
+
+
+VOCÊ TAMBÉM PODERIA, SE QUISESSE, PASSAR O PATH __ CORRETO ___ DESSE REDIRECT__ POR MEIO ___ 
+
+
+DE QUERY PARAMS, POR MEIO DE ROUTING... (aprendemos como fazer isso, mas é MEIO 
+ruim 
+
+de settar ----> teríamos que PASSAR e então PARSEAR esses queryParams lá em 'Auth.js')...
+
+
+
+
+
+
+
+
+
+------------------> PROFESSOR DIZ QUE FAREMOS __ A 
+
+
+'HALF-MEASURE'; que vamos 
+
+__aRMAZENAR__ O PATH 
+
+
+LÁ 
+
+NO __ REDUX ___sTORE__ (mesmo que em nosso 'app', nós 
+
+SÓ TENHAMOS 1 ÚNICO PATH....)
+
+
+
+
+
+
+
+----> vamos armazenar esse path LÁ 
+
+EM 
+
+'AuthReducer', na slice do AUTH ... ------> professor diz que 
+
+deve 
+
+ser 
+
+armazenado nesse pedaço aí 
+
+
+PQ 
+
+
+
+ESSE REDIRECT É ALGO QUE VAMOS QUERER __FAZER __ DEPOIS __ DE 
+
+ESTARMOS AUTENTICADOS... (o que envolve o 'Auth.js')...
+
+
+
+
+
+
+
+ficará assim:
+
+
+
+
+
+const initialState = {
+        token: null,
+        userId: null,
+        error: null,
+        loading: false,
+        email: null,
+        authRedirectPath: '/'
+}
+
+
+
+------------------------------------
+
+
+
+
+E isso vai ser só o hold de uma string com '/', pq é ISSO QUE VAMOS QUERER 
+
+
+FAZER, 
+
+
+QUANDO PERCEBERMOS QUE O USUÁRIO __NÃO ESTÁ AUTENTICADO____... (que ele precisa do signup, basicamente)...
+
+
+--------------------------------------
+
+
+
+FICOU TIPO ASSIM:
+
+
+
+
+
+
+ if (this.props.token) {
+      redirect = (
+      <Redirect to={this.props.authRedirectPath} />
+      
+      
+      )
+  }
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+
+OK.... E O APPROACH DO PROFESSOR É UM __POUCO ___ DIFERENTE__ DO NOSSO.... 
+
+(ele não usa 
+
+o if statement de 
+
+
+
+'if (this.props.token && this.props.createdBurger)' para REDIRECIONAR PARA 
+
+
+A URL 
+
+DE 
+
+'CHECKOUT'...) --------> em vez 
+
+
+de usar 
+
+
+
+esse 
+
+
+if statement,
+
+o professor 
+
+
+
+FAZ 
+
+USO 
+
+
+
+DE 
+
+
+
+UMA 
+
+__NOVA __ ACTION LÁ EM 
+
+'authActionTypes',
+
+
+
+UMA 
+
+ACTION QUE 
+
+
+__vAI ___rEDIRECIONAR __ O USUÁRIO _, QUANDO ELE ESTIVER AUTENTICADO (tiver uma token), 
+
+
+À PÁGINA DE 'CHECKOUT'...
+
+
+
+
+
+
+
+
+
+(pelo menos eu ACHO que é isso)... ---> 
+
+
+
+bem, 
+
+
+o nome 
+
+desse 
+
+actionType/identifier 
+
+
+
+será 
+
+
+
+'export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';' 
+
+
+
+
+-----------------------------------------
+
+
+
+
+--> ISSO FEITO, 
+
+PROFESSOR 
+PRETENDE
+
+
+ADICIONAR UMA NOVA 
+
+ACTION 
+
+LÁ 
+
+
+
+NO 
+
+
+ARQUIVO DE ACTION CREATORS 'auth.js'...
+
+
+
+
+
+
+
+
+---> será uma função auxiliar chamada 
+
+de 
+
+
+'setAuthRedirectPath'....
+
+
+
+
+(OBS:::EU VOU LÁ E COMENTO ISTO:
+
+'
+// export const BURGER_CREATED_WITHOUT_AUTH = 'BURGER_CREATED_WITHOUT_AUTH';
+// export const BURGER_FINISHED_PURCHASING = 'BURGER_FINISHED_PURCHASING';
+'
+
+
+PARA FORA DO CÓDIGO...
+
+)
+
+
+
+
+
+
+
+--------------------------------
+
+
+
+FICOU TIPO ASSIM:
+
+
+
+
+
+
+
+
+const setAuthRedirectPath = (state, action) => {
+    return updateObject(state, {})
+}
+
+
+
+
+ const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+                    case authActionTypes.AUTH_START:
+                        return authStart(state, action);
+                    case authActionTypes.AUTH_SUCCESS: 
+                        return authSuccess(state, action);
+                        case authActionTypes.AUTH_FAIL:
+                            return authFail(state, action);
+                        case authActionTypes.AUTH_LOGOUT:
+                            return authLogout(state, action);
+                        default: return state;
+                        case authActionTypes.SET_AUTH_REDIRECT_PATH:
+                                return setAuthRedirectPath(state, action);
+              
+        }
+}
+
+
+
+
+-----------------------------------
+
+
+OK, 
+
+
+MAS ESQUECEMOS 
+
+
+
+DE 
+
+DEFINIR 
+
+
+O ACTION CREATOR 
+
+de 
+
+'setAuthRedirectPath'... (lá em 'auth.js'...) --------> 
+
+
+
+E 
+
+
+ESSE 
+
+NEGÓCIO VAI 
+
+
+JUSTAMENTE
+ 
+
+ RECEBER, COMO PARÂMETRO,
+  
+
+
+  O 
+
+  '''__PATH''''____.... ---------->
+
+
+
+
+
+ex:
+
+
+export const setAuthRedirectPath = (path) => {
+  
+}
+
+
+
+-------------------------------
+
+
+
+ISSO FEITO,
+
+essa 
+
+action/action CREATOR 
+VAI 
+
+RETORNAR 
+
+
+
+A ACTION... ------> 
+
+
+
+
+será 
+
+
+'return {
+  type: authActionTypes.SET_AUTH_REDIRECT_PATH,
+  path: path
+}'
+
+
+
+-------------------
+
+
+TIPO ASSIM, BASICAMENTE....
+
+
+
+
+ex:
+
+
+export const setAuthRedirectPath = (path) => {
+    return {
+  type: authActionTypes.SET_AUTH_REDIRECT_PATH,
+  path: path
+}
+
+}
+
+
+
+--------------------------------------------------
+
+
+
+
+OK, O IMPORTANTE AQUI É AQUELE PAYLOAD DE 
+
+'path', que será RECEBIDO PELO NOSSO 'authReducer'... 
+
+
+
+-----------------------------------------
+
+
+
+OK... LÁ NO REDUCER,
+
+
+VAMOS 
+
+
+
+ESCREVER 
+
+A LÓGICA 
+
+DAQUELA 
+
+'HELPER FUNCTION'...:
+
+
+
+
+
+
+
+
+
+const setAuthRedirectPath = (state, action) => {
+    return updateObject(state, {})
+}
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+OK, MAS O QUE ACONTECERÁ DENTRO DESSE UPDATE DO STATE, dentro do '{}'? ------>
+
+
+
+BEM, 
+
+O PROFESSOR 
+
+VAI QUERER 
+
+
+__UPDATAR___ 
+
+'authRedirectPath' (que está com um valor de '/') 
+
+
+PARA ___ QUE 
+
+
+___ SE TORNE ___ O 
+
+
+'path' PASSADO PELO PAYLOAD DAQUELA ACTION DE IDENTIFIER 'SET_AUTH_REDIRECT_PATH' ...
+
+
+
+
+--------------------------------
+
+
+
+
+
+ex:
+
+
+'''''''''''''
+
+const setAuthRedirectPath = (state, action) => {
+    return updateObject(state, {authRedirectPath: action.path})
+}
+
+
+
+'''''''''''
+
+
+
+
+
+
+
+
+-___E ISSO REALMENTE __ VAI FUNCIONAR___....
+
+
+
+
+
+---------------------------
+
+
+CERTO.... --> agora só precisamos 
+
+
+___FAZER __ O DISPATCH ___ DESSA ACTION ___ EM ALGUM LUGAR DE NOSSO CÓDIGO,
+
+PROVAVELMENTE 
+
+NA PÁGINA/CONTAINER 
+
+DE 
+
+'Auth.js'...
+
+
+
+--------------------------------
+
+
+
+OK, MAS A PRIMEIRA COISA QUE O PROFESSOR FAZ, ANTES 
+
+DE 
+
+QUERER 
+
+DISPATCHEAR ESSA ACTION EM ALGUM LUGAR DO CÓDIGO,
+
+é 
+
+EXPORTAR__ ESSA ACTION__ lá no 'index.js',
+
+para que 
+
+ela REALMENTE FIQUE DISPONÍVEL.
+
+
+
+
+
+
+
+-----------------------------------
+
+OK, COM ISSO, AGORA PRECISAMOS ___SABER __ EM QUE 
+
+LUGAR 
+
+DO 
+CÓDIGO 
+
+
+REALMENTE ___ PRECISAMOS 
+
+
+TROCAR O 'PATH' do nosso redirect... -----------> PROFESSOR 
+
+DIZ QUE 
+
+UM LUGAR 
+
+
+
+ÓBVIO É O 'BurgerBuilder' container,
+
+
+PQ 
+
+LÁ 
+
+NÓS 
+
+
+
+ESTAMOS 
+
+REDIRECIONANDO 
+
+
+
+o usuário 
+
+PARA 
+
+
+'auth'
+
+
+NAQUELE 
+
+
+CÓDIGO 
+
+DE 
+
+
+'purchaseHandler'...
+
+
+
+
+
+
+
+ex (código antigo/antes das mudanças....):
+
+
+
+
+
+  purchaseHandler = () => {
+        if (!this.props.token) {
+            this.props.history.push('/auth'); ///AQUI...
+        }
+
+
+    this.setState({
+      purchasing: true,
+    });
+  };
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+---> PROFESSOR VAI, PRIMEIRAMENTE,
+
+
+CONECTAR 
+ 
+
+ A ACTION 'setAuthRedirectPath'
+
+
+ A 
+ ESSE 
+
+
+ CONTAINER DE 'BURGER BUILDER'....
+
+
+
+
+
+ EX:
+
+
+
+
+
+ const mapDispatchToProps = (dispatch) => {
+            return {
+              onIngredientAdd: (ingredientId) => {
+                dispatch(
+                  actionsCreators.ingredient_add(ingredientId)
+                )
+              },
+              onIngredientRemove: (ingredientId) => {
+                dispatch(
+                    actionsCreators.ingredient_remove(ingredientId)
+                )
+              },
+              onIngredientGet: () => {
+                dispatch(
+                      actionsCreators.asyncOrderInitialIngredientsGet()
+                )
+              },
+              onBurgerCreateWithoutAuth: () => {
+                dispatch(
+                  actionsCreators.burgerCreate()
+                )
+              },
+              onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path)); /////EIS O CÓDIGO EM QUESTÃO...
+            }
+}
+
+
+
+
+
+
+------------------------------
+
+
+
+
+ISSO FEITO, 
+
+PROFESSOR 
+
+
+
+FAZ O DISPATCH/ CALL DO DISPATCH 
+
+
+DESSA ACTION AÍ lá 
+
+
+no 
+
+
+'purchaseHandler'... ----------> E AÍ ELE 
+
+
+PASSA 
+
+
+'/checkout' 
+
+COMO 
+
+
+PARÂMETRO 
+
+DE 
+
+'onSetAuthRedirectPath()',
+
+JUSTAMENTE 
+
+PQ 
+
+ELE 
+
+
+VAI QUERER 
+
+QUE 
+
+A URL 
+
+DE 
+
+'localhost:3000/checkout' 
+FIQUE 
+
+
+NO 
+
+
+'BACKBURNER', fique 
+
+no store do REDUX, no background,
+
+PARA 
+
+QUE O USUÁRIO __eNTÃO ___ SEJA REDIRECIONADO PARA 
+
+A PÁGINA 
+
+DE 
+
+'checkout' 
+
+__APÓS___ 
+
+
+
+ser redirecionado à página de '/auth' (por meio daquele códigozinho de 'this.props.history.push'....)....
+
+
+
+
+
+
+---------------------------------
+
+EX:
+
+
+
+
+
+  purchaseHandler = () => {
+        if (!this.props.token) {
+            this.props.onSetAuthRedirectPath('/checkout');
+            this.props.history.push('/auth'); 
+        }
+
+
+    this.setState({
+      purchasing: true,
+    });
+  };
+
+
+
+
+
+
+
+---------------------------
+
+
+OK,
+ 
+
+ MAS 
+
+ AINDA 
+
+ TEMOS MAIS 
+
+ UMA 
+ HIPÓTESE/CASE... -----> queremos 
+
+ que 
+
+
+
+ O USUÁRIO __TAMBÉM__ SEJA REDIRECIONADO 
+
+ À 
+
+ PÁGINA/CONTAINER 
+
+
+ 'Burger Builder' (ou seja, path igual a '/')
+
+
+
+ SE 
+ 
+
+
+ ELE CLICAR 
+
+
+
+
+ 
+
+ NO BOTÃO/NavLink DE 'Authenticate' diretamente, 
+
+ e depois 
+
+ conclua 
+
+ sua 
+
+ autenticação... ------> eu __IMAGINO__ que este código aqui ainda funciona:
+
+
+
+
+
+
+ 
+  if (this.props.token) { //nesse 'case' aqui, o USUÁRIO __ SÓ TERÁ SIDO AUTENTICADO__, MAS NÃO TERÁ COMEÇADO SEU BURGER... (portanto, vamos querer O REDIRECIONAR PARA A PÁGINA 'BURGER BUILDER' depois do seu authenticate, para que possa começar seu burger....)
+    redirect = (
+    <Redirect to='/' />
+    
+    
+    )
+}
+
+
+
+
+  if (this.props.token && this.props.createdBurger) { ///JÁ NESSE 'CASE', O USUÁRIO __ JÁ COMEÇOU O SEU BURGER__, ELE JÁ ESTAVA SENDO MONTADO, AÍ ELE CLICOU EM 'sign up to order', que o fez ir ATÉ A PÁGINA '/auth' (foi até a página COM O TOKEN___ E 'createdBurger: true'.... --> pois clicou em 'add/remove' ingredient).....
+      redirect = (
+      <Redirect to={this.props.authRedirectPath} />
+      
+      
+      )
+  }
+
+
+
+
+
+
+
+  ------------------------
+
+
+  ok, eu fiz tudo isso, mas o código __AINDA NÃO FUNCIONA___... ---> 
+
+
+  quando 
+
+  eu 
+
+
+  clico 
+
+
+
+
+  no 
+
+
+  'sign up', 
+
+
+  o 
+
+  negócio me REDIRECIONA PARA A PÁGINA INICIAL DO BURGER BUILDER (onde eu perco meus ingredients, pois eles são resettados devido ao 'INITIAL_INGREDIENTS_GET'...) --> 
+
+
+  e isso está 
+
+
+  bem podre,
+  pq 
+
+   o que eu quero 
+
+   é 
+
+   __sER REDIRECIONADO__ À PÁGINA 
+
+   DE 
+   'CHECKOUT',
+
+   onde poderei 
+
+   __FINALIZAR__ MEU BURGEr___...
+
+
+
+
+   ---------------------------------
+
+
+   --> parece que o que está faltando 
+
+   é 
+
+
+   'createdBurger', que 
+
+   ainda está ficando como 
+
+
+   'FALSE'... (e deve ficar como 'true', PARA ENGATAR O CÓDIGO 
+   
+   DE 
+   
+   ''''''''''''
+   
+     if (this.props.token && this.props.createdBurger) {
+    console.log(this.props.authRedirectPath);
+      redirect = (
+        
+      // <Redirect to="/" />
+      <Redirect to={this.props.authRedirectPath} />
+      
+      
+      )
+  }
+   
+
+   '''''''''''''
+   
+   
+   
+   )
+
+
+
+
+
+--> o problema era no slice de state 'BURGER', em que 
+
+o 
+
+
+'burgerCreated' ESTAVA 
+
+em um NÍVEL/closure errado do negócio... (estava dentro de 'burger: {}', quando devia estar FORA.)
+   -----------------------
+
+
+
+
+   CERTO... FUNCIONOU. Meu esquema funcionou.
+
+
+
+
+
+
+------->  professor nos diz que 
+
+
+aquela 
+
+
+
+'building information' (o 'burgerCreated') 
+
+É 
+
+
+__MUITO ÚTIL__...  ----------> 
+
+
+
+
+
+
+
+
+
+CERTO.... MAS 
+
+
+
+O 
+
+PROFESSOR
+
+NÃO 
+
+USA 
+
+
+
+ESPECIFICAMENTE 
+
+IF CHECKS 
+
+PARA 
+
+
+
+REDIRECIONAR O USUÁRIO... ---> não, ele prefere 
+
+USAR 
+
+
+ 
+A INFORMAÇÃO 
+
+
+DO 
+
+'burgerCreated'
+
+
+
+no 
+
+
+'componentDidMount'
+
+DO 
+
+
+
+CONTAINER DE 'Auth.js'.----> 
+
+
+
+
+
+
+DENTRO 
+
+DESSE
+
+'componentDidMount',
+
+
+O 
+
+PROFESSOR 
+VAI QUERER 
+
+
+
+QUE 
+
+'onSetAuthRedirectPath' 
+
+SEJA 
+
+EXECUTADO PARA __ REDIRECIONAR A '/' __CASO ___ NÓS NÃO 
+
+ESTEJAMOS 
+
+'BUILDING A BURGER' ( ou seja, se 'createdBurger' ESTIVER COMO 'FALSE'...).
+
+
+
+
+
+
+
+
+
+
+
+--> esse approach do professor é mais bonito do que o nosso...
+
+
+
+ficaria assim:
+
+
+
+
+
+
+
+
+
+
+
+
+
+  componentDidMount() {
+    if (!this.props.createdBurger) {
+      this.props.onSetAuthRedirectPath('/'); ////////////////EIS O CÓDIGO EM QUESTÃO.
+      
+    } 
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+      return (
+      <div className={AuthStyle.Auth}>
+        <form onSubmit={this.submitHandler}>
+          {form}
+          <Button btnType="Success">SUBMIT</Button>
+        </form>
+        <Button btnType="Danger" clicked={this.switchAuthModeHandler}>
+          SWITCH TO {switchMessage}
+        </Button>
+        {this.state.isSignup ? (
+          <p>Already have an account? Switch to Sign-in and enter with your account! </p>
+        ) : null}
+        {errorMessage}
+        <Redirect to={this.props.authRedirectPath} /> ////////EIS O CÓDIGO EM QUESTÃO.
+      </div>
+    );
+  }
+}
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+PORTANTO, resumindo:
+
+
+
+
+é tudo um jogo entre 
+
+
+
+o 'BurgerBuilder' (container) e 
+
+
+
+esse 
+
+
+
+'Auth' (container)... ----------> 
+
+
+
+
+
+se usuário vem da página 'BurgerBuilder' com um BURGER MONTADO (nem que seja 1 único ingredient),
+
+
+
+sua propriedade 
+
+'createdBurger', NO STATE DO REDUX,
+
+estará como 
+
+
+
+'true' ------> se estiver como 
+
+'true',
+
+ISSO 
+
+
+___NÃO VAI __ TRIGGAR__ AQUELE IF CHECK NO 'componentDidMount()' do 'Auth' (que diz 'if (!this.props.createdBurger) '....)  -----> 
+
+
+E 
+
+
+SE 
+
+ELE 
+
+NÃO TRIGGAR ESSE IF CHECK,
+
+
+o 
+
+
+Container 'Auth' vai seguir existindo normal,
+
+MAS 
+
+VAI SEGUIR __EXISTINDO__ JUSTAMENTE __COM 
+
+
+UMA PROPRIEDADE 
+
+
+
+'authRedirectPath', lá no state do redux,
+
+DEFINIDA COMO 
+
+'/checkout' (por causa do código de 'purchaseHandler', aquele call de 'onSetAuthRedirectPath' ) ---> 
+
+E 
+
+ISSO 
+
+FARÁ NÓS SERMOS REDIRECIONADOS 
+
+à PÁGINA 'checkout', onde poderemos CONCLUIR O NOSSO BURGER, depois de nos autenticarmos...
+
+
+
+
+-----------------------------
+
+OK, até aí, tudo fez sentido... ---> PORÉM, QUANDO CLICAMOS EM 
+
+'SIGN UP TO ORDER', agora,
+
+
+NÓS 
+
+___SOMOS IMEDIATAMENTE__ TRANSPORTADOS __ PARA 
+ A PÁGINA 
+
+ 'checkout',
+
+ que não é o que desejamos... (queremos ser direcionados para a página 'checkout'...)
+
+
+
+
+
+
+
+
+ ---------------------
+
+
+
+
+ O PROBLEMA AQUI É A __oRDEM___ ---> o render está sendo executado ___ANTES____ DO 
+
+
+ COMPONENTDIDMOUNT (...? não entendi... não era para ser o contrário?)
+
+
+
+
+
+ -------------------
+
+
+
+
+
+
+
+ continuo
+
+ assistindo
+  
+
+
+as aulas do professor, pq não consegui fazer funcionar... --> nosso app está 
+
+sempre redirecionando para 
+
+
+'Checkout',
+
+e está completamente ignorando a existência 
+
+
+de 
+
+'Authenticate'... ('Auth.js')....
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+
+PROFESSOR CONSEGUIU FAZER ESSE NEGÓCIO FUNCIONAR...
+
+
+
+
+
+
+
+
+CÓDIGO FINAL FICOU ASSIM (ainda tenho que entender):
+
+
+
+
+
+
+
+
+
+
+
+
+
+  componentDidMount() {
+
+    if (!this.props.createdBurger && this.props.authRedirectPath !== '/' ) {
+      
+      this.props.onSetAuthRedirectPath('/');
+      
+      
+    } 
+  }
+
+  
+  let redirect = null;
+
+
+  if (this.props.token) {
+      redirect = (<Redirect to={this.props.authRedirectPath} />)
+  }
+
+
+
+
+
+{redirect}
+
+
+
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+OBS:::: ------>   
+
+
+
+
+
+
+ISTO AQUI:
+
+
+
+  componentDidMount() {
+
+    console.log(this.props.authRedirectPath)
+    if (!this.props.createdBurger && this.props.authRedirectPath !== '/' ) {
+      
+      this.props.onSetAuthRedirectPath('/');
+      
+      
+    } 
+  }
+
+
+
+
+
+SERVE __JUSTAMENTE __ PARA O CASO EM QUE O USUÁRIO CLICA EM 'AUTHENTICATE' 
+
+e quer 
+
+realizar LOGIN__ sem criar um burger previamente... --> sem esse código logo acima,
+
+ele será REDIRECIONADO AO 'CHECKOUT', com um burger vazio, o que não desejamos... (seria um bug no código/impropriedade).
+
+
+
+
+
+
+
+--> esse código aí serve para __rESETTAR___ O LOOP ____ ,
+
+
+resettar 
+
+
+os 
+
+redirects de 'checkout' e '/'...
+
+
+
+
+--------------------------------
+
+
+
+
+
+---> CERTO, ESSA PARTE DE NOSSO CÓDIGO ESTÁ FUNCIONANDO, 
+
+
+MAS 
+
+ISSO FOI BEM DIFÍCIL... --> tentar manipular os 'redirects' do usuário 
+
+a partir 
+
+de 
+
+react PODE SER BEM DIFÍCIL...
+
+
+
+
+
+-------------------------------------------------
+
+
+
+O próximo passo é tentar 'RESOLVER' o 'PROBLEMA' de PERDER 
+
+O 
+
+STATE (o token, na verdade)
+
+
+QUANDO 
+
+
+REINICIAMOS/RELOADAMOS NOSSA PÁGINA... 
+
+
+
+-------------------------------------
+
+
+
+
+Ainda temos o comportamento DEFAULT do browser,
+
+
+aquele 
+que 
+
+
+SE NÓS 
+
+__REINICIARMOS A PÁGINA POR MEIO DO RELOAD,
+
+
+PERDEMOS O STATE E, JUNTO DELE,
+
+
+O __TOKEN__...
+
+
+
+
+
+--------------------------------------
+
+
+
+
+--> o login state é PERDIDo... -->  A RAZÃO 
+
+
+DE 
+
+PERDERMOS 
+
+
+
+AS INFO DE LOGIN QUANDO REINCIAMOS A PÁGINA É SIMPLES:
+
+
+
+NÓS ACABAMOS FAZENDO DOWNLOAD DA 'SINGLE PAGE APPLICATION'
+ 
+
+mais uma vez,
+
+
+
+e 
+
+
+aí o javascript todo é baixado e executado de novo ------> ISSO SIGNIFICA QUE 
+
+É 
+
+UM APLICATIVO TOTALMENTE NOVO SENDO BAIXADO POR CIMA DO ANTIGO...
+
+
+
+
+
+
+--------> PORTANTO, 
+
+NOSSO 
+
+STATE, ARMAZENADO NO REDUX,
+
+É OBVIAMENTE PERDIDO... ---------> por isso, 
+
+nós precisamos 
+
+
+fazer 
+
+
+'persist' 
+
+DO NOSSO 
+
+'LOGIN STATE'
+
+
+
+
+AO LONGO DE NOSSAS 'SESSIONS'...  ------> e isso, 
+
+essa feature 
+
+de 
+
+fazer 
+
+o 
+
+LOGIN STATE (as tokens e localId) __PERSISTIR 
+
+
+_____REQUER___ UMA BROWSER 
+
+
+API___ -------> UMA 
+
+
+BROWSER API QUE 
+
+
+__dEVEMOS UTILIZAR,
+
+
+__ QUE É A __LOCAL STORAGE___.... -------> e devemos aprender sobre COMO 
+
+PODEMOS 
+
+
+UTILIZAR 
+
+'LOCAL STORAGE'.........
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+vamos até o arquivo de action creators 
+
+
+de 
+
+'auth.js'...  -------> ali nós 
+
+fazemos 
+
+
+
+LOGIN COM SUCESSO, POR MEIO DO DISPATCH DA ACTION DE 
+
+'authSuccess'...
+
+
+ex:
+
+
+
+
+
+    axios
+      .post(url, authData) 
+      .then((response) => {
+        console.log(response);
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email)); ///////////// AQUI...
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(authFail(error.response.data.error));
+      });
+  };
+};
+
+
+
+
+-----------------------------
+
+
+
+
+
+BEM NESSA LINHA AÍ,
+
+NOSSA 
+
+
+__TOKEN__ TAMBÉM É PASSADA... --> 
+
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+                            ^^^^^^^^^^
+
+
+
+
+
+
+
+
+E FARIA MUITO SENTIDO __ARMAZENAR __ ESSA 'TOKEN'___ NA LOCALSTORAGE__ DO NOSSO 
+
+BROWSER, TAMBÉM...
+
+
+
+
+
+
+
+
+
+--> a API do localStorage FAZ PARTE DO BROWSER,
+
+
+POR ISSO PODEMOS 
+
+FACILMENTE 
+
+A UTILIZAR... ----------------> PODEMOS 
+
+
+A UTILIZAR 
+
+
+
+
+DENTRO 
+
+DO NOSSO 
+
+
+ACTION CREATOR 
+
+
+
+
+DE 
+
+'authAttempt',
+
+OU ENTÃO 
+
+
+PODEMOS 
+
+
+A UTILIZAR 
+
+
+DENTRO 
+
+
+DO ACTION CREATOR DE 
+
+'authSuccess'...,
+
+que tem 
+
+este código:
+
+
+
+
+
+
+export const authSuccess = (token, userId, email) => {
+  return {
+    type: authActionTypes.AUTH_SUCCESS,
+    // authData: authData
+    token: token,
+    userId: userId,
+    email: email
+  };
+};
+
+
+
+
+
+-----------------------------------------
+
+
+NÓS FARÍAMOS ESSE ___ARMAZENAMENTO DA TOKEN__ LOGO 
+
+ANTES 
+
+DE 
+
+
+FAZER ESSE 
+
+RETURN/DISPATCH 
+
+
+
+DESSA ACTION aí (a action é esse objeto com o 'TYPE'...)
+
+
+
+
+
+
+
+
+
+--> COMO NOSSA TOKEN __É REALMENTE__ RECEBIDA __ DENTRO DESSA FUNÇÃO 'authSuccess' (parâmetro 'token'),
+
+
+
+NÓS REALMENTE __ PODERÍAMOS __ EXECUTAR UM 'CÓDIGO DE ARMAZENAMENTO'
+
+logo antes 
+
+do return/dispatch daquela action...
+
+
+
+
+
+
+
+
+---> MAS COMO O PROFESSOR __ NÃO QUER TRABALHAR APENAS __ COM A TOKEN (algo mais direcionado),
+
+
+
+COMO ELE QUER TRABALHAR COM MAIS DADOS,
+
+
+como com o __EXPIRATION TIME___ ('response.data.expiresIn'),
+
+
+
+QUE ESTÁ NESTE CÓDIGO AQUI, de 'authAttempt':
+
+
+
+'''''''''''
+      .then((response) => {
+        console.log(response);
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+
+
+
+'''''''''''''''''
+
+,
+
+
+
+COMO 
+
+
+ELE QUER USAR ESSE 'expirationTime',
+
+
+ELE __DECIDE__ FAZER O RUN DESSE CÓDIGO DE ARMAZENAMENTO LÁ EM 
+
+'authAttempt'...
+
+
+
+------------------------------
+
+
+
+
+---> POR ISSO,
+
+ELE 
+
+
+VAI 
+
+SETTAR/ARMAZENAR O TOKEN NA LOCALSTORAGE 
+
+lá 
+
+
+
+dentro 
+
+
+do action 
+
+creator 
+
+de 
+
+'authAttempt'... 
+
+
+
+------------------------------
+
+
+
+
+
+
+---> LÁ DENTRO,
+
+
+
+
+professor vai acessar 'local storage'
+
+POR MEIO 
+
+DA ESCRITA 
+
+DE 
+
+'localStorage'...
+
+
+
+
+
+
+ex:
+
+
+
+    axios
+      .post(url, authData) 
+      .then((response) => {
+        console.log(response);
+        localStorage /////////EIS O CÓDIGO EM QUESTÃO.
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(authFail(error.response.data.error));
+      });
+  };

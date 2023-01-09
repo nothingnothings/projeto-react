@@ -1,0 +1,1031 @@
+
+
+
+
+
+
+
+------> SER CAPAZ DE  SETTAR UMA 'DEFAULT CONFIGURATION' 
+
+
+PARA O AXIOS,
+
+COM A AJUDA 
+
+
+DE 
+
+'axios.defaults',
+
+
+
+É ALGO BEM BOM...
+
+
+
+
+
+
+
+
+
+
+
+---> MAS E SE VOCÊ NÃO QUISESSE 
+
+DEFINIR UMA 
+
+MESMA 
+
+
+
+'BASEURL'
+
+para 
+
+seu aplicativo inteiro,
+
+e sim 
+
+para 
+
+
+
+APENAS 
+
+
+
+
+ALGUMAS PARTES DELE? (e outras partes ficariam com OUTRAS URLs )... 
+
+
+
+
+
+
+
+
+---> E SE VOCÊ NÃO QUISESSE 
+
+DEFINIR UM
+
+
+MESMO 
+
+'HEADER'
+
+para 
+
+seu aplicativo inteiro,
+
+e sim 
+
+para 
+
+
+
+APENAS 
+
+
+
+
+ALGUMAS PARTES DELE? (e outras partes ficariam com OUTROS HEADERs )... 
+
+
+
+
+
+
+
+
+
+
+
+
+---> EM CASOS COMO ESSES, 
+
+PODEMOS 
+
+
+
+FAZER/ESCREVER UMA 
+
+'HALF-MEASURE',
+
+por meio 
+
+
+de uma 
+
+feature 
+
+introduzida pelo axios, 
+
+CHAMADA 
+
+
+DE 
+
+'INSTANCES'... -----------> 
+
+
+
+PARA 
+
+
+ISSO, O PROFESSOR 
+
+VAI CRIAR UM NOVO ARQUIVO, 
+
+CHAMADO 
+
+
+DE 
+
+'axios.js'... ------> ele criará 
+
+
+esse arquivo 
+
+
+NO ROOT LEVEL DO NOSSO APLICATIVO, AO LADO DE 'index.js'
+
+
+e 
+de 
+
+'App.js'...
+
+
+
+
+
+
+DENTRO DESSE NEGÓCIO, ELE VAI 
+
+IMPORTAR 
+
+O AXIOS COM 
+
+
+'import axios from 'axios' ' 
+
+
+
+E ENTÃO 
+
+
+VAI 
+
+
+
+
+
+
+
+EXECUTAR UMA FUNÇÃO ESPECIAL, O MÉTODO 
+
+'create'.... -----------> 
+
+
+
+
+O PROFESSOR VAI ARMAZENAR 
+
+
+O RESULTADO DESSE '''CREATE''' 
+
+
+EM UMA CONSTANTE, 
+
+
+A QUAL 
+
+ELE CHAMARÁ 
+
+DE 
+
+'instance'....
+
+
+
+
+
+ex:
+
+
+
+
+const axios from 'axios';
+
+
+
+const instance = axios.create();
+
+
+
+
+--------------------------------------------
+
+
+
+
+OK, MAS O QUE DIABOS 'axios.create()' faz? --------> 
+
+
+
+
+ELE 
+
+
+ACABA CRIANDO UMA ___CÓPIA___ DO AXIOS__.... ----> ELE CRIA UMA 'INSTANCE OF AXIOS'... --> 
+
+
+ele cria uma cópia 
+
+DO OBJETO 'AXIOS'... -------> 
+
+
+
+
+
+
+
+E É POSSÍVEL __CRIAR MÚLTIPLAS __ DESSAS CÓPIAS... -------->  certo...
+
+
+
+E, DENTRO DO 
+
+
+'.create()',
+
+
+
+O PROFESSOR 
+
+
+VAI DEFINIR 
+
+
+UM 
+
+___OBJETO __ JAVASCRIPT ___ PARA CONFIGURAR 
+
+
+ESSA INSTÂNCIA DE AXIOS... --------> 
+
+
+
+
+
+com esse objeto javascript, 
+
+ele vai definir  
+
+
+A 
+
+'baseURL' 
+
+dessa instância como sendo 
+
+
+
+
+
+IGUAL 
+
+
+ÀQUELE 
+
+MESMO LINK 
+
+DO 
+
+'jsonplaceholder'...
+
+
+
+
+
+EX:
+
+
+
+
+const instance = axios.create(
+    {
+        baseURL: 'https://jsonplaceholder.typicode.com';
+    }
+)
+
+
+
+----------------------------------
+
+
+isso feito,
+
+ELE VAI COMENTAR PARA FORA DO CÓDIGO AQUELE TRECHO DE 
+
+'baseURL' 
+
+lá no index.js, aquele trecho que define a baseURL como sendo esse link do typicode... 
+
+
+---------------------------------------
+
+
+
+
+
+
+CERTO... CRIAMOS UMA INSTÂNCIA DE AXIOS, PORTANTO.... 
+
+
+
+
+
+MAS COMO PODEMOS USAR ESSA INSTÂNCIA?
+
+
+
+
+
+
+(antes de mais nada, saiba que você PODE CRIAR MÚLTIPLAS INSTÂNCIAS DE AXIOS...) ----> VOCê 
+
+
+
+PODE CRIAR 
+
+MÚLTIPLAS INSTÂNCIAS, EM DIFERENTES ARQUIVOS DO SEU APLICATIVO,
+
+
+PARA DIFERENTES PARTES DELE... (logo o professor nos ensinará como usar essas instâncias... )......
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+
+certo, é importante relembrar que 
+
+o código de 
+
+'axios.defaults' SEGUE EXISTINDO, MESMO COM 
+
+NOSSA CRIAÇÃO DE 
+
+
+'axios.create()', essa instÂncia aí do axios (armazenada na constante 'instance'...)...
+
+
+
+
+
+
+
+OU SEJA, ISTO AQUI:
+
+
+
+axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN' ///exemplo.
+
+axios.defaults.headers.post['Content-Type'] = 'application/json'; ///EXEMPLO.
+
+
+
+
+
+
+
+
+SEGUE EXISTINDO...  ---------> OS 'DEFAULTS' 
+
+SEGUEM 
+
+EXISTINDO.... A MORAL DAS 
+
+
+__INSTANCES___ DO 
+
+'AXIOS' ___ É QUE 
+ELAS 
+
+
+FAZEM __ OVERWRITE___ DOS 'DEFAULTS/DEFAULT' 
+
+
+__NAS INSTANCES EM SI___... (ou seja, quando elas são REALMENTE UTILIZADAS 
+
+EM ALGUMA PARTE DO SEU CÓDIGO, ELAS 
+
+FAZEM OVERWRITE DAQUILO QUE FOI DEFINIDO COMO DEFAULT...)
+
+
+
+
+
+
+
+
+
+POR EXEMPLO, 
+
+PROFESSOR PODERIA DEIXAR UM CÓDIGO DE DEFINIÇÃO DE COMMON HEADER LÁ NO INDEX.JS 
+
+
+AO MESMO TEMPO EM QUE COLOCA UM CÓDIGO DE DEFINIÇÃO DE COMMON HEADER 
+
+LÁ 
+
+NO 
+
+'axios.js' ---> se ele fizer isso,
+ 
+ A DEFINIÇÃO DE COMMON HEADER 
+
+ LÁ 
+
+DA INSTÂNCIA DO AXIOS __VAI FAZER __ OVERWRITE__ NA DEFINIÇÃO FEITA NO 'axios.defaults'...
+
+
+
+-----------------------------------------------------
+
+
+
+
+EX:
+
+
+
+const instance = axios.create(
+    {
+        baseURL: 'https://jsonplaceholder.typicode.com'
+    }
+);
+
+
+instance.defaults.headers.common['Authorization'] = 'NOT AUTH TOKEN'; ////////ISSO AQUI FARÁ ___OVERWRITE___ NO CÓDIGO DE 'axios.defaults.headers.common[]' DEFINIDO LÁ NO INDEX.JS...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> O EFEITO DISSO SERÁ:
+
+
+
+TODOS OS REQUESTS 
+REALIZADOS POR MEIO 
+
+DESSA __INSTANCE___ ESPECÍFICA __ TERÃO 
+
+
+SEUS 'COMMON HEADERS' (headers comuns a todos eles) 
+
+
+COM 
+
+UM VALOR 
+
+DE 
+
+'NOT AUTH TOKEN', EM VEZ de 'AUTH TOKEN'...
+---------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+BTW, É IMPORTANTE QUE 
+
+
+
+__FAÇAMOS O EXPORT__ DESSA INSTANCE, 'export default'
+ 
+
+ NO ARQUIVO EM QUE ELA 
+
+
+ RESIDE... ---------> DEVEMOS FAZÊ-LO PARA QUE ELA POSSA SER UTILIZADA EM OUTROS ARQUIVOS...
+
+
+
+ ex:
+
+
+
+
+
+
+import axios from 'axios';
+
+
+
+const instance = axios.create(
+    {
+        baseURL: 'https://jsonplaceholder.typicode.com'
+    }
+);
+
+
+instance.defaults.headers.common['Authorization'] = 'NOT AUTH TOKEN'; 
+
+
+
+export default instance; ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+ISSO FEITO, 
+
+
+AGORA O PROFESSOR 
+
+QUER NOS MOSTRAR 
+
+
+
+__COMO PODEMOS __ UTILIZAR ___ 
+
+
+ESSA INSTANCE ___ EM HTTP REQUESTS ESPECÍFICOS AO LONGO DE NOSSO CÓDIGO...
+
+----------------------------------------------------
+
+
+
+
+
+
+
+ELE VAI USAR COMO MODELO O COMPONENT 
+
+'Blog.js'... (o CONTAINER 'Blog')...
+
+
+
+
+
+
+
+
+
+
+--> ele vai até o componentDidMount, e observa 
+
+
+o 
+
+
+'axios.get' escrito ali... --------> PROFESSOR DIZ QUE 
+
+
+VAI QUERER 
+
+USAR 
+
+AQUELA INSTÂNCIA 
+
+
+'instance' 
+
+
+
+
+DE AXIOS ___ nesse ___ HTTP REQUEST ESPECÍFICO... -------> PARA ISSO, 
+
+
+
+SE QUISERMOS 
+
+
+
+FAZER ISSO,
+
+
+
+
+DEVEMOS 
+
+TIRAR AQUELE IMPORT ___PADRÃO__ DO AXIOS,
+
+
+aquele 'import axios from 'axios' ' 
+
+
+
+ENFIADO 
+
+NESSE 'Blog.js'... --------> EM VEZ DISSO ,
+
+
+
+VAMOS IMPORTAR 
+
+
+
+
+
+A INSTÂNCIA DO ___aXIOS__ QUE CRIAMOS NAQUELE ARQUIVO 'axios.js'...
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+import Post from '../../components/Post/Post';
+
+import FullPost from '../../components/FullPost/FullPost';
+import NewPost from '../../components/NewPost/NewPost';
+
+
+import BlogStyle from './Blog.module.css';
+
+
+////////////import axios from 'axios'; /////////REMOVEMOS ISTO.
+
+
+
+import axios from '../../LUGARDOCOMPONENTINSTANCEAXIOS';  //////E IMPORTAMOS ISTO.
+
+
+
+
+class Blog extends Component {
+
+
+        state = {
+            posts: [
+
+            ],
+            selectedPostId: null
+        }
+
+
+
+
+componentDidMount () {
+        axios.get('/posts')
+        .then(
+
+
+            (response) => {
+                    const posts = response.data.slice(0, 4);
+                    const updatedPosts = posts.map(post => {
+                        return {
+                            ...post,
+                            author: 'Max' //propriedade EDITADA/ADICIONADA ao nosso 'response'/post OBTIDO PELO USO DO 'AXIOS'...
+                        }
+                    });
+                // this.setState({
+                //     posts: response.data
+                // })
+                
+                    
+                 this.setState({
+                    posts: updatedPosts
+                })
+            
+            }
+        )
+
+        
+    }
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+CÓDIGO COMPLETO (com a instance aplicada):
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+import Post from '../../components/Post/Post';
+
+import FullPost from '../../components/FullPost/FullPost';
+import NewPost from '../../components/NewPost/NewPost';
+
+
+import BlogStyle from './Blog.module.css';
+
+
+// import axios from 'axios';
+
+
+import axiosinstance from '../../axios';
+
+
+
+class Blog extends Component {
+
+
+        state = {
+            posts: [
+
+            ],
+            selectedPostId: null
+        }
+
+       
+
+
+        postSelectedHandler = (id) => {
+            this.setState(
+                {
+                    selectedPostId: id
+                }
+            )
+        }
+
+    
+
+
+
+
+
+    componentDidMount () {
+        axiosinstance.get('/posts') /////////SIM, ESTA PARTE TEVE DE SER ALTERADA. DEVE FICAR COM O MESMO NOME DO AXIOSINSTANCE IMPORTADO ALI....
+        .then(
+
+
+            (response) => {
+                    const posts = response.data.slice(0, 4);
+                    const updatedPosts = posts.map(post => {
+                        return {
+                            ...post,
+                            author: 'Max' //propriedade EDITADA/ADICIONADA ao nosso 'response'/post OBTIDO PELO USO DO 'AXIOS'...
+                        }
+                    });
+                    
+                 this.setState({
+                    posts: updatedPosts
+                })
+            
+            }
+        )
+
+        
+    }
+
+
+
+    render () {
+            let posts = <p style={{textAlign: 'center'}}>Something went Wrong!</p>
+            if(!this.state.error){
+                posts = this.state.posts.map( 
+                    (post) => {
+                        return <Post title={post.title} 
+                        body={post.body} 
+                        key={post.id} 
+                        author={post.author} 
+                        clicked={() => this.postSelectedHandler(post.id)}
+                     />
+                    }
+                )
+            }
+            
+
+    
+
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    {posts}
+                </section>
+                <section>
+                    <FullPost id={this.state.selectedPostId}/>
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+export default Blog;
+
+
+
+
+
+----------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+---> SALVAMOS TODOS OS ARQUIVOS E VOLTAMOS 
+
+
+AO NOSSO APLICATIVO.... ----> TUDO VAI ESTAR FUNCIONANDO IGUAL, 
+
+
+MAS AGORA 
+
+NÃO VEREMOS MAIS O 
+
+'INTERCEPTOR' 
+
+CONSOLE.LOGGADO NO CONSOLE... (ISSO OCORREU PQ NÃO ESTAMOS MAIS 
+
+USANDO 
+
+
+O AXIOS 'GLOBAL', O AXIOS DEFAULT... NÃO, AQUI ESTAMOS USANDO AQUELA INSTÂNCIA ESPECÍFICA DO AXIOS....)
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----> E PODEMOS USAR 
+
+ESSE 
+
+
+AXIOS INSTANCE E O AXIOS 'DEFAULT' CONCOMITANTEMENTE... eles não conflitam (o instance vai sempre overwritar o default, em caso de conflito.)
+
+
+
+
+
+
+--> com isso, ficamos com o MELHOR DOS DOIS MUNDOS...
+
+
+
+
+BTW --> VOCÊ TAMBÉM PODE ADICIONAR INTERCEPTORS àS SUAS PRÓPRIAS INSTANCES,
+
+não precisam obrigatoriamente 
+
+serem 
+
+settados 
+
+
+
+
+
+no 
+
+
+'AXIOS DEFAULT'...
+
+
+EX:
+
+
+const instance = axios.create(
+    {
+
+    }
+)
+
+
+instance.interceptors.request
+
+
+
+
+
+
+------------------------------
+
+
+
+
+
+
+O PROFESSOR QUERIA NOS MOSTRAR ESSA FEATURE PQ __o USO ___ DE 
+
+'INSTANCES'/AXIOS INSTANCES 
+
+
+
+__PODE NOS DAR __ A FLEXIBILIDADE DE QUE PRECISAMOS 
+
+
+NO NOSSO APLICATIVO... -----> TE PERMITE CONTROLAR EM DETALHE 
+
+
+QUAL SETTING VOCÊ QUER USAR EM QUAL PARTE DO SEU CÓDIGO,
+
+
+ e é uma 
+
+ feature mt boa....
+
+
+
+
+
+ --> aprendemos sobre como enviar http request e 
+
+ receber responses...2

@@ -1,0 +1,28 @@
+
+
+
+
+
+---> este módulo é OPCIONAL...
+
+
+
+
+
+---> let e const...
+
+
+---> arrow functions....
+
+
+
+
+
+--> muitas inovações usadas pelo 
+
+REACT... ---> react realmente usa a versão mais atualizada do javascript...
+
+
+
+
+--> você deve entender todas essas features...

@@ -1,0 +1,1297 @@
+
+
+
+
+
+
+
+
+
+
+
+-----> NA ÚLTIMA LIÇÃO,
+
+
+
+
+
+FIZEMOS COM QUE 
+
+NOSSA UI FOSSE 
+
+UPDATADA 
+
+A 
+
+PARTIR 
+
+
+DA 
+
+EXISTÊNCIA DE UMA 'TOKEN' (ou seja, validação/authentication na página da web) 
+
+
+NO BROWSER DO USUÁRIO ('state.auth.token'...) ------> E ISSO FUNCIONA EM QUALQUER
+ 
+
+ parte 
+
+ DO SEU 
+
+ APP,
+
+
+ VOCê 
+
+ PODE 
+
+
+ MUDAR 
+
+
+ A 
+
+ UI 
+
+ EM QUALQUER PARTE DO SEU APP, A PARTIR 
+
+ DESSA 
+
+ TOKEN...
+
+
+
+ -------------
+
+
+
+
+
+
+
+
+
+Certo, mas agora é hora de fazer o LINK DE LOGOUT FUNCIONAR; DEVEMOS 
+
+FAZER O USUÁRIO 
+
+
+
+
+
+APARECER EM UMA PÁGINA 
+
+
+EM QUE 
+
+ELE 
+
+VAI SER 'LOGGED OUT'...
+
+
+
+------------------------
+
+
+temos aquela route, é claro...
+
+
+A route 
+
+
+
+de 
+
+
+'<NavigationItem link="/logout">Logout</NavigationItem />',
+ 
+ LÁ 
+
+ EM 
+
+ NAVITEMS...
+
+
+
+
+
+
+
+
+
+
+ --> vamos querer ___lIMPAR__ a TOKEN DO USUÁRIO.... ---> E NÓS JÁ TEMOS UMA 
+
+
+
+ ___aCTION __ PARA ISSO...
+
+
+
+
+
+
+
+
+ ----------> a action que temos está em 
+
+
+ 'auth.js',
+
+
+ nas nossas actions/action creators....
+
+
+ é 
+
+
+ aquela 
+
+
+
+ action 
+
+ de 
+
+ código
+
+
+
+
+
+'''''''''''''''''''''''''''
+
+ 
+const authLogout = (state, action) => {
+        return updateObject(state,
+            
+            {
+                token: null,
+                userId: null
+            }
+            
+            
+            )
+}
+
+
+
+
+
+''''''''''''''''''''''''''''''''
+
+
+
+
+
+
+
+TEMOS ESSE ACTION CREATOR... --> vamos querer 
+
+DISPATCHAR 
+
+
+ESSE 
+
+
+ACTION CREATOR AÍ,
+
+MAS 
+
+TAMBÉM 
+
+VAMOS 
+
+QUERER 
+
+
+_REDIRECIONAR__ O USUÁRIO ___ À PÁGINA DE 'BURGER BUILDER'...
+
+
+
+
+
+
+
+
+
+-->ok, então a ideia é:
+
+
+
+
+1) LIMPAR O TOKEN/USER POR MEIO DE 'LOGOUT' 
+
+
+
+2) REDIRECIONAR O USUÁRIO PARA A PÁGINA 'BURGERBUILDER'...
+
+
+
+
+
+
+
+
+
+---> E HÁ, É CLARO, DIFERENTES MANEIRAS 
+
+DE OBTER 
+
+ESSE RESULTADO/EFEITO... ------> 
+
+
+
+
+uma 
+
+
+das 
+
+alternativas 
+
+é 
+
+
+
+ir 
+
+
+até 
+
+O 
+
+
+
+'NavigationItems'
+
+
+
+
+E ENTÃO 
+
+
+CRIAR UM 
+
+TIPO 
+
+'SEPARADO' DE NAVIGATIONITEM, especial.... (dentro desse arquivo...) --------> 
+
+
+
+
+
+
+
+AÍ 
+
+
+
+
+VOCê 
+
+
+
+ESCREVERIA UM __BUTTON__ EM VEZ DE UM ___ LINK PROPRIAMENTE DITO....
+
+
+
+
+
+
+
+
+
+ex(código do professor AGORA):
+
+
+{
+    !props.isAuthenticated ? <NavigationItem link="/auth">Authenticate</NavigationItem>
+
+    : <NavigationItem link="/logout">Logout</NavigationItem> 
+}
+
+
+
+
+
+
+
+
+
+ex(código do professor com esse BUTTON AÍ):
+
+
+
+
+
+{
+    !props.isAuthenticated ? <NavigationItem link="/auth">Authenticate</NavigationItem>
+
+    : <Button>Log out</Button>  //////TIPO ALGO ASSIM...
+}
+
+
+
+
+
+
+----------------------------------------------------------------
+
+
+
+
+
+
+nesse 
+
+
+
+'Button' você poderia 
+
+REGISTRAR 
+
+UM 
+
+
+PROP DE 
+
+'action',
+
+
+que 
+
+então 
+
+
+ACABARIA
+ 
+
+
+
+VINCULADO A UM HANDLER LÁ EM 
+
+'Layout',
+
+
+
+
+um método QUE FARIA O DISPATCH DA ACTION DE LOGOUT...
+
+
+
+
+-----------------------------------------
+
+
+
+ESSA É UMA MANEIRA DE FAZER O 'HANDLE' DESSA SITUAÇÃO....
+
+
+
+
+
+
+ENTRETANTO, 
+
+PROFESSOR
+
+QUER 
+
+NOS 
+
+MOSTRAR 
+
+A 
+
+MANEIRA 
+
+QUE 
+
+
+FAZ 
+
+
+O USUÁRIO __ IR ATÉ UMA PÁGINA DO SEU __ APP ANTES 
+
+DE 
+
+SER 
+
+'LOGGED OUT' E REDIRECIONADO AO BURGERBUILDER...
+
+
+
+
+
+---------------------------------
+
+
+
+
+PARA ISSO, PROFESSOR VAI ATÉ O FOLDER DE 'containers' 
+
+e então 
+
+CRIA UM 
+
+NOVO CONTAINER DENTRO 
+
+
+DE 
+
+
+
+
+'Auth',
+
+O QUAL 
+
+CHAMA 
+
+
+DE 
+
+'Logout'...
+
+
+
+
+-----------------------------
+
+
+
+
+
+ESSE CONTAINER VAI SER UM CLASS-BASED COMPONENT CLÁSSICO...
+
+
+
+
+
+
+
+
+--------------------------------
+
+
+
+CERTO...
+
+
+
+
+ESSE 
+
+
+CONTAINER 
+
+
+__PROVAVELMENTE__ VAI QUERER ___ 
+
+
+TER 
+
+
+UM IMPORT 
+
+DE 
+
+'Redirect',
+
+lá 
+
+
+
+do 
+
+_____REACT-ROUTER-DOM....
+
+
+
+--------------------------------
+
+
+
+
+VAI FICANDO ALGO ASSIM:
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+import { Redirect } from 'react-router-dom';
+
+import actionTypes from '../../../store/actions/index';
+
+
+import { connect } from 'react-redux';
+
+class Logout extends Component {
+            render() {
+
+
+
+
+                return ()
+            }
+}
+
+
+mapDispatchToProps = (dispatch) => {
+        return {
+            onLogout: () => {
+                dispatch(actionTypes.authLogout())
+            }
+        }
+}
+
+
+
+export default connect(null, mapDispatchToProps)(Logout);
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+
+
+
+---> O PROFESSOR VAI QUERER FAZER O DISPATCH DESSA ACTION DE 'logout' __BEM NO MOMENTO EM QUE NOSSA PAGE É RENDERIZADA,
+
+POR ISSO 
+
+ELE 
+
+VAI 
+
+
+ESCREVER 
+
+UM 
+
+'onLogout()' 
+
+
+DENTRO DO RENDER 
+
+
+
+DESSE CLASS-BASED COMPONENT, MAS FORA DO RETURN...
+
+
+
+
+
+
+
+----> NA __VERDADE__, EU ERREI... ---> O QUE ELE VAI FAZER 
+
+É 
+
+USAR 
+
+
+O LIFECYCLE HOOK 
+
+DE 
+
+'componentDidMount'
+
+
+PARA 
+
+
+
+
+__EXECUTAR__ ESSA ACTION/DISPATCHAR ESSA ACTION BEM QUANDO O COMPONENT/CONTAINER
+
+'Logout' for inicializado/montado no nosso app...
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+class Logout extends Component {
+
+                componentDidMount() {
+                    this.props.onLogout(); ////////EIS O CÓDIGO EM QUESTÃO.
+                }
+
+
+
+            render() {
+                
+
+
+
+                return ()
+            }
+}
+
+
+
+
+
+
+
+
+
+mapDispatchToProps = (dispatch) => {
+        return {
+            onLogout: () => {
+                dispatch(actionTypes.authLogout())
+            }
+        }
+}
+
+
+
+export default connect(null, mapDispatchToProps)(Logout);
+
+
+
+
+
+---------------------------------
+
+
+
+CERTO... --> MAS AGORA TAMBÉM PRECISAMOS REDIRECIONAR... (por meio do render, supostamente....)
+
+
+
+
+
+
+
+
+--> PROFESSOR DIZ QUE 
+
+
+
+___HÁ 2 DIFERENTES MANEIRAS__ DE REDIRECIONAR O USUÁRIO,
+
+
+
+NESSE NOSSO CONTANIER... -->
+
+
+
+
+
+
+
+1A MANEIRA/APPROACH --------> fazer o 
+
+
+
+'FORWARD' 
+
+
+dos 
+
+'ROUTING RELATED PROPS' 
+
+a 
+
+esse 
+
+container de 
+
+
+'Logout',
+
+para 
+
+então 
+
+podermos 
+
+FAZER 
+
+
+FORWARD
+
+
+DE 
+
+
+
+'this.props.history' 
+
+
+
+
+_____ A ACTION __ DE 'onLogout',
+
+que 
+então 
+
+
+
+USARIA 
+
+
+
+ESSE 'this.props.history'
+
+PARA 
+
+
+USAR 
+
+'this.props.history.push',
+
+
+PARA 
+
+
+ENTÃO 
+
+__rEDIRECIONAR __ O USUÁRIO__ PARA A PÁGINA 
+
+'BURGER BUILDER'...
+
+
+
+
+ou seja,
+
+o código
+
+
+ficaria assim:
+
+
+
+
+
+
+componentDidMount () {
+    this.props.onLogout(this.props.history);
+}
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+BEM.....
+
+mas 
+
+isso obviamente significa que teríamos de fazer um REPASSE DOS PROPS DE ROUTING 
+
+ao 
+
+component/container 
+
+
+'Logout'....
+
+
+
+---------------------------------------------
+
+
+
+
+EM VEZ DISSO, DIZ O PROFESSOR, O QUE ELE VAI QUERER FAZER É __REDIRECIONAR__ 
+
+
+''''DECLARATIVAMENTE''''''...  (isso quer dizer que 
+ele vai 
+
+querer usar o component '<Redirect />' no RENDER de nosso container 
+
+'Logout'...)
+
+
+
+
+ELE NOS DIZ QUE 
+
+USAR ESSE COMPONENT '<Redirect />'
+
+
+É UMA MANEIRA ___MUITO ELEGANTE___ DE REDIRECIONAR UM USUÁRIO___....
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+import { Redirect } from 'react-router-dom'; //eis o código em questão.
+
+import * as actionTypes from '../../../store/actions/index';
+
+
+import { connect } from 'react-redux';
+
+
+
+
+
+class Logout extends Component {
+
+                componentDidMount() {
+                    this.props.onLogout();
+                }
+
+
+
+            render() {
+                
+
+
+
+                return ()
+            }
+}
+
+
+
+mapDispatchToProps = (dispatch) => {
+        return {
+            onLogout: () => {
+                dispatch(actionTypes.authLogout())
+            }
+        }
+}
+
+
+export default connect(null, mapDispatchToProps)(Logout);
+
+
+
+
+
+
+------------------------------------------
+
+
+---> 
+
+
+AÍ, 
+
+COMO 
+
+PARTE 
+DESSE 
+
+
+COMPONENT/CONTAINER 
+
+'Logout',
+
+
+A ÚNICA COISA QUE O PROFESSOR VAI QUERER RETURN/RENDERIZAR, 
+
+É 
+
+
+esse 
+
+'<Redirect />'...
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+import { Redirect } from 'react-router-dom'; //eis o código em questão.
+
+import * as actionTypes from '../../../store/actions/index';
+
+
+import { connect } from 'react-redux';
+
+
+
+
+
+class Logout extends Component {
+
+                componentDidMount() {
+                    this.props.onLogout();
+                }
+
+
+
+            render() {
+                
+
+
+
+                return <Redirect to="/" />;
+            }
+}
+
+
+
+mapDispatchToProps = (dispatch) => {
+        return {
+            onLogout: () => {
+                dispatch(actionTypes.authLogout())
+            }
+        }
+}
+
+
+export default connect(null, mapDispatchToProps)(Logout);
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+
+
+----> ISSO QUER DIZER QUE QUANDO 'LOGOUT' É pressionado, 
+
+
+esse 
+
+container 
+
+SÓ 
+
+VAI SIMPLESMENTE 
+
+LOGOUT E REDIRECIONAR O USUÁRIO A BURGER BUILDER, e mais nada...
+
+
+
+
+------------------------------------------------------
+
+
+
+
+--> você também pode colocar um alert/outros códigos em 
+
+'componentDidMount' PARA 
+
+
+___ALERTAR__ O USUÁRIO___ QUE ELE FOI LOGGED OUT, E QUE AGORA VAI SER REDIRECIONADO 
+
+AO 
+
+'BurgerBuilder'...
+
+
+
+
+
+---------------------------------------
+
+
+
+Certo.... aquilo está funcionando... --> só 1 PEQUENO PROBLEMA... --> 
+
+
+quando eu faço 'logout',
+
+
+
+meu 
+
+
+
+<p>
+ 
+
+ COM 
+
+ O username
+ __CONTINUA SENDO DISPLAYADO___ NA PÁGINA... --> isso é pq o EMAIL precisa ser expurgado da 
+
+
+ slice 
+
+
+ 'auth' do state TAMBÉM,
+
+ quando ocorre o 
+
+ 'logout'... ('authLogout()')...
+
+
+
+
+-----------------------------------
+
+
+PRONTO, RESOLVIDO:
+
+
+
+
+
+const authLogout = (state, action) => {
+        return updateObject(state,
+            
+            {
+                token: null,
+                userId: null,
+                email: null
+            }
+            
+            
+            )
+}
+
+
+
+---------------------------------------
+
+
+
+
+
+Mas há um negócio que eu quero consertar.... --> 
+
+
+
+os botões 
+
+
+
+de 
+
+
+
+'Signup'/'Signin' --> isso aí tá uma MERDA... -----> 
+
+
+
+
+O botão verde 
+
+
+deve 
+
+estar como 
+
+'Submit', pq só aí isso vai fazer sentido... ----> já o outro botão tem que 
+
+
+ter 
+
+'Switch To Signup' escrito,
+
+
+
+senão 
+
+
+não faz sentido também.... (approach do professor não ficou dos melhores; ainda acho que 
+
+é melhor ter 2 containers, um para SIGNINS, outro para SIGNUPS...)
+
+
+
+
+------------------------------------
+
+OK, consertei o problema... --> o problema 
+
+era 
+
+código excessivo 
+
+
+em 
+
+'switchAuthModeHandler',
+
+
+lá 
+
+
+
+em 
+
+'Auth.js'...
+
+
+
+
+
+
+------------------
+
+
+
+
+
+OK, NÓS ESTAMOS SENDO 'LOGGED Out',
+
+E A 
+
+ 
+ ACTION 
+
+
+
+ DE 
+
+ 'AUTH_LOGOUT' 
+
+ está sendo DISPATCHED...
+
+
+----------------------
+
+
+
+
+COM ISSO IMPLEMENTADO,
+
+
+
+
+PROFESSOR QUER TRABALHAR UM POUCO MAIS NA
+
+
+
+___UI____ ------> ele quer fazer com que O 
+
+
+botão 
+
+de 
+
+
+
+
+'Orders' 
+
+
+
+
+______SUMA_____/não apareça se nós 
+
+não estivermos 
+
+AUTENTICADOS (com o token dentro do browser, basicamente),
+
+
+
+
+E
+ 
+
+ TAMBÉM
+ QUER 
+
+
+ 
+
+
+ MUDAR 
+
+
+
+
+ O 
+
+ BOTÃO 
+
+
+
+ DE 
+
+
+
+ 'ORDER NOW'... ------> ELE QUER 
+
+ QUE 
+
+ ESSE 
+
+ BOTÃO 
+
+
+ SE TRANSFORME EM UM 
+
+
+ 'SIGN-UP TO ORDER', ou algo assim,
+
+ quando 
+
+
+ __NÃO ESTIVERMOS AUTENTICADOS__... (o resto dos botões funcionarão, mas 
+ 
+ esse 
+ 
+ botão 
+ 
+ do 
+ 
+ 'Order Now' vai virar um 
+ 
+ 'Signup to order', ou algo assim...)

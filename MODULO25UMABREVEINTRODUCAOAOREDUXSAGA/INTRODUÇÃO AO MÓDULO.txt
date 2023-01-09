@@ -1,0 +1,180 @@
+
+
+NESTE MÓDULO, USAMOS MUITO REDUX,
+PQ 
+
+
+
+ELE É UMA PARTE INTEGRAL DE REACT APPS...
+
+
+
+
+
+
+
+
+
+
+--> no burger builder também o utilizamos.....
+
+
+
+
+
+
+--> MAS QUANDO ESCREVEMOS CÓDIGO COM O REDUX,
+
+FREQUENTEMENTE 
+
+
+TEMOS QUE 
+
+
+ENFRENTAR O 'PROBLEMA'
+
+
+
+DE 
+
+ESCREVER 
+
+ASYNC ACTIONS...
+
+
+
+(como fazer 
+
+REACHOUT A UM SERVIDOR, ETC ETC..) ------> E, DURANTE O CURSO,
+
+
+
+LIDAMOS COM ESSE PROBLEMA POR MEIO 
+
+DO PACKAGE 
+
+DO 
+
+'redux-thunk'...
+
+
+
+
+
+
+
+
+
+REDUX-THUNK --> É UMA PACKAGE QUE NOS DEIXA 
+
+
+CRIAR
+ 
+ 'ACTION CREATORS'
+
+ em que 
+
+ RODAMOS O ASYNC CODE E EM QUE 
+ ENTÃO 
+
+ DISPATCHEAMOS 
+ 
+
+
+ ACTIONS SÍNCRONAS QUANDO 'WE'RE DONE'... -------> 
+
+
+
+ E NÃO 
+
+ HÁ
+  
+  NADA 
+
+  DE ERRADO
+   
+   COM ESSE 
+
+   MÓDULO,
+
+
+
+
+ele é 'fine by itself'...
+
+
+
+
+
+---> NESTE MÓDULO, 
+
+O PROFESSOR VAI NOS 
+
+APRESENTAR UMA ALTERNATIVA,
+
+QUE 
+NÃO É NECESSARIAMENTE MELHOR,
+
+
+
+
+MAS QUE VOCÊ TALVEZ GOSTE... --> 
+
+
+
+e´
+
+ o 
+
+ REDUX SAGA--->
+
+
+
+
+ o REDUX SAGA 
+
+
+
+ SEGUE 
+
+ UM APPROACH DIFERENTE 
+
+ PARA lidar com 
+
+ ASYNC CODE.... ------> 
+
+
+
+
+
+
+ ELE NÃO 'MIXA' O WRITE DE ASYNC CODE 
+
+ COM 
+
+ O 
+ ATO DE DISPATCHEAR 
+
+ ACTIONS... ------> devemos 
+
+ ver 
+
+ como isso funciona,
+
+ E NÃO 
+
+ HÁ 
+
+ MELHOR 
+
+ LUGAR PARA 
+
+ TESTAR ISSO DO QUE 
+
+ NO 
+
+
+ PROJETO 
+
+ 'BURGER BUILDER'...
+ 

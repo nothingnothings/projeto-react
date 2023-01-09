@@ -1,0 +1,119 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+APRENDEMOS UM MONTE SOBRE O REDUX...
+
+
+
+
+redux.js.org -------> REDUX É UMA 'STANDALONE FRAMEWORK', não é exatamente parte do REACT, mas é frequentemente usada com o react...
+
+
+
+
+
+
+
+---> REDUX ---> TEM MUITOS USE-CASES... ---> também tem MUITOS 'POSSIBLE ADJUSTMENTS'...  --> Você 
+
+deve 
+
+ver 
+
+os docs 
+
+
+SE VOCÊ SENTIR QUE SEU APPROACH ATUAL TE DEIXOU 'STUCK', ou se você perceber que 
+
+
+SUAS 'REDUCER FUNCTIONS' estão EXPLODINDO...  ----> VOCÊ PODE 
+
+APRENDER MAIS SOBRE 
+
+
+'best practices' do redux nesse site aí... 
+
+
+
+
+
+
+
+---------> MAS A MAIOR PARTE DO CONTEÚDO NESSA PÁGINA JÁ FOI 
+
+COBERTA PELO PROFESSOR...
+
+
+
+
+
+
+
+--> você deve usar esse site COMO UMA 'FALLBACK PAGE', fallback no caso 
+
+de 
+
+
+VOCÊ ACHAR QUE ALGO FICOU NÃO TÃO CLARO, ou então se você encontrar um use-case 
+
+QUE VOCÊ NÃO SABE COMO HANDLAR...
+
+
+
+
+
+
+
+
+---> MAS UM RESOURCE BEM ÚTIL É O ARTIGO  'immutable update patterns' nessa página... ---> NELE VOCÊ 
+
+
+
+
+VÊ VÁRIAS DICAS DE COMO __UPDATAR__ NESTED OBJECTS E ARRAYS,
+
+
+
+tudo de forma IMMUTABLE... -----> PQ ISSO PODE SER BEM TRICKY: VOCÊ 
+
+
+SEMPRE 
+
+PRECISA IR 
+
+'DOWN TO ALL NESTED LEVELS'  de um objeto... (código que pode ser meio confuso)...
+
+
+
+ex:
+
+
+casos em que você tem UM OBJETO QUE SEGURA UM OBJETO QUE SEGURA UM OBJETO QUE SEGURA UM OBJETO... -----> e aí 
+
+você quer 
+
+MUDAR 
+
+ALGO NO OBJECT MAIS NESTEADO DELES... --> você vai ter de CLONAR DE FORMA 'deep' (spread operator) TODOS OS OBJETOS QUE O ANTECEDEM/O SEGURAM...
+
+
+
+
+
+
+
+---> ESSE ARTIGO PODE AJUDAR MUITO.
+
+
+
+--> DEVEMOS VOLTAR AO APP DO BURGER, IMPLEMENTAR O REDUX NELE...

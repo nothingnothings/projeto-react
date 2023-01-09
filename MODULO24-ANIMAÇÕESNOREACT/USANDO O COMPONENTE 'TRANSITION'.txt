@@ -1,0 +1,826 @@
+
+
+
+
+NA ÚLTIMA LIÇÃO,
+
+USAMOS 
+
+O COMPONENT 
+
+'Transition'
+
+
+para 
+
+ver 
+
+COMO 
+
+
+UM 
+
+ELEMENTO PODE SER 'REMOVED' E 'SHOWN' por meio de animações e a manipulação de seu 
+
+'state' interno...
+
+
+
+
+
+
+
+
+---> 
+AGORA 
+
+DEVEMOS 
+
+USAR 
+
+
+
+
+ESSE COMPONENT 
+
+'Transition'
+
+
+NO NOSSO ____MODAL__, 
+
+para 
+
+o animar 
+
+com sucesso... (animação de 'open' e 'close', ambas funcionando...)
+
+
+
+
+
+
+
+
+---> PARA ISSO,
+
+
+
+PROFESSOR 
+
+
+VAI WRAPPAR 
+
+
+
+
+O 
+
+
+
+NOSSO MODAL, em 'App.js',
+
+com 
+
+
+O COMPONENT 
+
+'TRansition'....
+
+
+
+MAs primeiro ele vai só escrever 
+
+esse 
+
+
+objeto Transition SEM O 
+
+
+
+RENDER 
+
+
+do component 'modal' no seu interior...
+
+
+
+ex:
+
+
+
+<Transition>
+{state => ()}
+</Transition>
+
+
+
+
+------------------------------------
+
+
+
+OK.... --> ESSE 
+
+'state' vai 
+
+
+ser 
+'entering/entered/exiting/exited'... --> 
+
+
+
+CERTO... --> 
+
+
+ dentro 
+
+
+ daquele (),
+
+ vamos 
+
+ DEFINIR O QUE 
+
+ VAI 
+
+ SER RENDERIZADO __eNTRE ___ESSES STATES___... ------> 
+
+
+
+
+
+ ENTRE ESSES STATES, VAMOS QUERER, É CLARO, RENDERIZAR NOSSO MODAL__...
+
+
+
+ ficará assim:
+
+
+
+
+
+ <Transition>
+{state => (
+      <Modal show={this.state.modalIsOpen} closed={this.closeModalHandler} />
+)}
+</Transition>
+
+
+--------------------------
+
+
+
+
+CERTO... MAS O CHECK PARA O BACKDROP (ternary expression)
+
+VAI CONTINUAR NO MESMO LUGAR,
+ 
+ DO MESMO JEITO,
+ PQ 
+
+
+ O __PROFESSOR ___ QUER AINDA FAZER SHOW/HIDE __ DO MODAL 
+
+ DE FORMA NORMAL,
+
+ sem animação... (e o backdrop, é claro, é 'independente' do 'Modal' ---> independente em RELAÇÃO 
+ À ANIMAÇÃO, mas não em relação A ''APARECER'', pq SEU RENDER TAMBÉM _ ESTÁ VINCULADO __ AO 
+ STATE de true de 'modalIsOpen'....)
+
+
+
+ --> CERTO.... E LÁ NO 
+
+
+ 'MOdal',
+
+
+
+ NÓS QUEREMOS __CONTROLAR__ __AQUELA 
+
+
+ 'Transition' DE 
+
+ __OPEN PARA __ CLOSE, E 
+
+
+ DE 
+ CLOSE PARA OPEN...
+
+
+
+
+
+ O CÓDIGO, NO MOMENTO, ESTÁ ASSIM:
+
+
+
+
+
+
+  <Transition>
+{state => (
+      <Modal show={this.state.modalIsOpen} closed={this.closeModalHandler} />
+)}
+</Transition>
+
+
+
+--------------------------------------
+
+
+
+
+O PROFESSOR, PRIMEIRAMENTE,
+VAI 
+
+DEFINIR UM 'prop',
+ 
+ em 
+
+ 'Transition',
+
+ DE 
+
+ 'this.state.modalIsOpen'... --> pq se ISSO AÍ FOR TRUE,
+
+
+vamos querer que 
+
+o 
+
+'state' NQUELE CÓDIGO DINÂMICO SEJA 
+
+de valor   
+
+'shown/entered'... (ou seja, '''APARENTE'''...) -----> 
+
+
+
+
+
+E O PROFESSOR 
+
+
+VAI QUERER DEFINIR 
+
+o TIMESLOT ('timeout', essa propriedade)
+ 
+
+ dessa animação como sendo 
+
+ de 
+
+ '300ms'...
+
+
+
+ -------------------------------
+
+
+
+ESTÁ FICANDO ASSIM:
+
+
+
+
+
+  <Transition in={this.state.modalIsOpen} timeout={300}> ///////EIS O CÓDIGO EM QUESTÃO.
+{state => (
+      <Modal show={this.state.modalIsOpen} closed={this.closeModalHandler} />
+)}
+</Transition>
+
+
+
+--------------------------
+
+
+ISSO FEITO,
+
+
+AGORA 
+
+O PROFESSOR 
+PODE 
+
+
+PASSAR 
+
+O 'state' (state INTERNO nos curly braces, criado a partir de 'modalIsOpen')
+
+
+___COMO __ VALOR 
+
+DO PROP 
+
+DE 
+'show',
+
+NO NOSSO MODAL...
+
+
+
+ex:
+
+
+
+
+
+  <Transition in={this.state.modalIsOpen} timeout={300}> 
+{state => (
+      <Modal show={state} closed={this.closeModalHandler} /> ///////EIS O CÓDIGO EM QUESTÃO.
+)}
+</Transition>
+
+
+------------------------------------
+
+
+
+
+
+RESUMINDO.. --> o que 'state' é, NA VERDADE, é uma 'MANIPULAÇÃO' dos valores de 
+true/false no STATE/PROPRIEDADE que vocÊ passou (no caso, 'this.state.modalIsOpen') --> 
+o state basicamente subdivide 
+o 
+'true/false' daquele valor/propriedade em ''SUB-STATES'' (entering/entered/exiting/exited),
+tudo 
+
+para que
+
+ANIMAÇÕES POSSAM REALMENTE SER CODADAS POR VOCÊ....
+
+
+
+
+
+--> e o professor nos diz que 
+
+
+LÁ 
+
+EM 
+
+'Modal.js',
+
+
+PODEOMS 
+
+TIRAR VANTAGEM
+
+DESSA VINCULAÇÃO DE modal ao 'state' do Transitions 
+
+__PARA __ AINDA CONTINUAR ADICIONANDO/ANEXANDO CLASSES EXTRAS, COMO FAZÍAMOS ANTES com 'ModalOpen' e 'ModalClosed'....(
+
+            EX (do que fazíamos antes/agora):
+
+                    const cssClasses = [ModalStyle.Modal, props.show ? ModalStyle.ModalOpen : ModalStyle.ModalClosed];
+
+)
+
+
+
+
+
+
+
+--> sim, 
+
+AINDA PODEMOS USAR 
+
+ESSA SINTAXE/APPROACH 
+
+do 
+
+'cssClasses',
+
+
+MAS AGORA,
+
+O PROFESSOR 
+
+
+VA ISSO
+
+DAR __ UMA EDITADA___ NESSE CÓDIGO.... ---> 
+
+
+o que 
+
+ele 
+
+vai escrever é 
+
+ISTO AQUI:
+
+
+
+
+
+
+
+
+const cssClasses = 
+
+[ModalStyle.Modal, 
+
+
+
+props.show === 'entering' ? ModalStyle.ModalOpen : ModalStyle.ModalClosed];
+
+
+
+
+
+
+
+
+
+
+
+PRIMEIRAMENTE, PORTANTO, ELE VAI QUERER CHECAR 
+
+'SE props.show ESTIVER COMO 'entering', vou QUERER QUE 
+
+O ESTILO 
+
+DE 
+
+MODALOPEN (animação de ABRIR) seja anexado e tocado...... --> CASO CONTRÁRIO,
+VOU QUERER.... xxxxx'...
+
+
+
+CERTO,
+
+MAS 
+
+O PROFESSOR NÃO ACABA POR AÍ... -------> 
+
+não,
+PQ 
+
+ELE 
+
+
+VAI ADICIONAR MAIS UMA COISA NA TERNARY EXPRESSION....
+
+ELE 
+
+VAI 
+
+ADICIONAR 
+
+
+
+': props.show === "exiting" ? "ModalClosed" : null' 
+
+
+
+
+
+(SIM, ELE VAI FAZER UM __CHAIN ___ DE TERNARY EXPRESSIONS... COISA SUJA E FEIA,
+mas que 
+funciona....)
+
+
+
+ex(representação final):
+
+
+
+
+
+const cssClasses = 
+
+[ModalStyle.Modal, 
+
+
+
+props.show === 'entering' ? ModalStyle.ModalOpen : props.show === "exiting" ? "ModalClosed" : null
+
+
+
+];
+
+
+
+
+
+---------------------------
+
+
+
+RESUMINDO:
+
+
+
+'''se props.show estiver como ENTERING,
+
+anexe 'modalOpen'... --> CASO ELE NÃO ESTEJA COMO ENTERING,
+
+
+passe para o CHECK DA SEGUNDA TERNARY EXPRESSION, que diz que 
+
+'se props.show estiver como EXITING, anexe 'modalClosed', E SE __ ELE NÃO ESTIVER COMO 
+'exiting' (ou seja, se estiver como ENTERED ou EXITED), ANEXE __NADA __ (null)....'''
+
+
+
+------------------------------
+
+
+FICOU TIPO ASSIM:
+
+
+
+    <Transition in={this.props.modalIsOpen} timeout={300}>
+{(state) => {return (<Modal show={state} closed={this.closeModalHandler} />) }}
+    </Transition>
+
+
+
+  {this.state.modalIsOpen ? <Backdrop show={this.state.modalIsOpen} /> : null }
+        <button
+          className="Button"
+          onClick={this.openModalHandler}
+        >
+          Open Modal
+        </button>
+        <h3>Animating Lists</h3>
+        <List />
+      </div>
+    );
+  }
+
+
+
+
+
+E ASSIM:
+
+
+
+
+   const cssClasses = [ModalStyle.Modal, props.show === "entering" ? ModalStyle.ModalOpen : props.show === "exiting" ? "ModalClosed" : null];
+        //// ^^^^^^ VERSÃO QUE USA O 'react-transition-group'... É mais complexa, mas TE DEIXA ANIMAR TANTO O 'OPEN' quanto o 'CLOSE' do modal...
+
+
+
+-----------------------------------
+
+
+
+
+SALVAMOS TUDO E TESTAMOS...
+
+
+
+
+
+
+----> AGORA __NOSSO MODAL__ FICA RENDERIZADO DE CARA (já fica renderizado 
+
+DIRETAMENTE NA NOSSA TELA, QUANDO INICIALIZAMOS O APP), 
+
+o que 
+é péssimo,
+
+
+PORÉM, __ TANTO SUA ANIMAÇÃO DE ABRIR___ COMO A DE FECHAR __ 
+
+
+FUNCIONAM....
+
+
+
+(menos minha versão, QUE NÃO ESTÁ FUNCIONANDO... ainda está 'estático'...) ---> ISSO ACONTECEU PQ eu havia escrito 'this.PROPS.modalIsOpen', LÁ EM 'in', QUANDO DEVERIA SER 'this.STATE.modalIsOpen'... --> ISSO CONSERTOU O ESTILO DE 'Open'... --> 
+
+
+
+MAS 
+
+O ESTILO/ANIMAÇÃO 
+
+DE 
+
+'close '
+
+AINDA ___ NÃO ESTÁ CERTO, NÃO ESTÁ TOCANDO__... -------> ERA POR CAUSA DO CSS MODULES... (estava 'ModalOpen', quando devia estar 'ModalStyle.ModalOpen'...)
+
+
+
+
+
+
+
+
+--------------------
+
+
+
+OK... MAS QUEREMOS QUE 
+
+ESSE 
+
+
+COMPONENT 
+
+
+___NÃO FIQUE ___ NO NOSSO DOM IMEDIATAMENTE AO CARREGAR A PÁGINA... --> para isso,
+
+provavelmente 
+
+o professor 
+
+
+vai adicionar 
+
+O __BOOLEAN___ PROP ___ de 
+
+
+'mountOnEnter'...
+
+
+
+
+----> E ELE TAMBÉM DECIDE COLOCAR 'unmountOnExit'... ---> E ESSE 'unmountOnExit',
+
+
+
+COMO VISTO LÁ 
+
+NO 
+
+EXEMPLO DO CUBO VERMELHO,
+
+
+vai 
+
+__REMOVER___ NOSSO MODAL __ progressiva e FLUIDAMENTE 
+
+de nosso ___DOM__.... (muito bom)....
+
+
+
+
+
+
+---> com isso,
+
+TEREMOS CRIADO 
+
+UM ___ MODAL __ QUE 
+
+VEM COM UMA ANIMAÇÃO (.ModalOpen) E 
+
+SAI COM UMA ANIMAÇÃO ('.ModalClosed')
+
+DE NOSSO DOM,
+
+tudo 
+
+
+COM A AJUDA 
+
+
+DE 
+
+'react-transition-group' 
+
+E 
+
+O OBJETO '<Transition />'
+
+
+
+(MUITO BOA ESSA AULA...)
+
+
+
+
+
+--> LEMBRE-SE SEMPRE 
+
+DOS BOOLEAN PROPS 
+
+DE 
+
+'mountOnEnter'
+
+e 
+
+'unmountOnExit'..
+
+
+
+
+--> AGORA, PORTANTO,
+
+
+ESTAMOS 
+
+SIMPLESMENTE 
+
+TIRANDO 
+
+VANTAGEM 
+
+
+DAQUELA 
+
+PROPRIEDADE 
+
+de 
+
+
+'transition',
+
+QUE 
+
+É UMA 
+
+
+
+__PROPRIEDADE__ (propriedade adicionada POR MEIO DAQUELE OBJETO 'Transition', e não por meio 
+da propriedade 'css' de 'transition: xxx', que podemos até REMOVER de nosso código css) QUE 
+
+ADICIONA UM 'DELAY' antes 
+
+
+de remover/adicionar 
+
+
+algo no nosso DOM... --------> 
+
+
+
+
+
+E TUDO 
+
+ISSO 
+
+
+OCORRE/É POSSÍVEL POR MEIO DO 
+
+'CHECK' 
+
+
+
+
+do 'state' 
+
+de 
+
+'exiting',
+
+que 
+
+É O VALOR/STATE 
+
+
+__ DO COMPONENT ___ LOGO ANTES __ DE ELE SER _ REMOVIDO __ DO DOM__... (e logo antes de TERMINAR SUA ANIMAÇÃO... --> as 2 coisas estão conectadas....)
+
+
+
+------> ou seja,
+
+
+devemos sempre 
+
+
+
+VINCULAR/checar 
+
+por 
+
+'EXITING' nas 
+
+nossas ternary expressions,
+
+PQ 
+
+ESSE É O 
+
+
+STATE ___ LOGO __ ANTES DE NOSSOS MODAIS/components 
+
+__sEREM ___REMOVIDOS__ do dom... (e mesma coisa para o 'entering', que ocorre QUANDO 
+O COMPONENT RECÉM ESTÁ SENDO __INSERIDO__ no dom...) 
+
+
+
+
+--> nunca faça o check por 'exited' ou 'entered', 
+
+quando quiser animar modais por meio de ternary expressions,
+
+pois
+
+isso aí 
+
+VAI FAZER COM QUE 
+
+AS ANIMAÇÕES __NÃO TOQUEM___ (vai fazer com que as animações 'happen too late'...)

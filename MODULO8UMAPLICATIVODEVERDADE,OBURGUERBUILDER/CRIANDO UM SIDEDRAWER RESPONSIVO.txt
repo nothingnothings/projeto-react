@@ -1,0 +1,996 @@
+
+
+
+
+
+
+--> na última lição, adicionamos navigation items para o toolbar.... ---> 
+
+
+
+agora devemos 
+
+ver como 
+
+
+ADICIONAR 
+
+
+
+ESSES NEGÓCIOS NO NOSSO SIDEDRAWER... (mobile devices)
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+--> PARA ISSO,
+
+
+NOSSO NEGÓCIO 
+
+
+'MENU' DEVE MOSTRAR ___ UM SIDEDRAWER__, um 
+
+
+
+MENU NA ESQUERDA
+ 
+
+
+
+
+ QUE 
+
+ VAI FAZER 'SLIDE' para a direita 
+
+
+ e então 
+
+ nos mostrar 
+
+ vários items... ---> 
+
+
+
+
+ PARA ISSO, 
+
+
+
+ O PROFESSOR 
+
+ VAI ADICIONAR 
+
+
+ UM NOVO COMPONENT .... -------> ISSO DENTRO 
+
+
+
+ DO FOLDER 
+
+ DE 
+
+
+ 'NAVIGATION' --> esse folder vai se chamar de 
+
+
+ 'sidedrawer'.... -------->  ESSE 
+
+
+
+
+
+ COMPONENT 'SIDEDRAWER' SERÁ COMPOSTO 
+
+
+ DE 
+
+ 2 COMPONENTS, POR ASSIM DIZER.... ---> será 
+
+
+ composto: 
+
+
+ 1) PELO SIDE DRAWER EM SI 
+
+
+
+
+ 2) PELO TOGGLE BUTTON (aquele 'menu'... --->vamos transformar isso em um botão sanduíche...) ---> esse botão sanduíche será seu próprio component...
+
+
+
+
+----------------------------------
+
+
+
+TAMBÉM VAMOS PRECISAR DE UM BACKDROP PARA O SIDEDRAWER, mas o backdrop nós JÁ TEMOS (temos no component 'Backdrop'...).
+
+
+
+
+
+
+---> devemos trabalhar com o sidedrawer... --> esse componente 
+
+
+será 
+
+
+um FUNCTIONAL COMPONENT PADRÃO. -------> 
+
+
+
+
+
+
+CERTO.. VAMOS FAZER O RETURN DE CERTO CÓDIGO 
+
+
+
+
+POR MEIO DESSE COMPONENT... 
+
+
+
+
+
+
+-----> esse 'certo código' NÃO SERÁ ___PROPRIAMENTE O CÓDIGO JSX IMEDIATAMENTE ___, 
+
+
+
+E SIM UM 
+
+
+___FUNCTION BODY____ de verdade, aqui... ---> pq 
+
+
+
+ANTES DE O PROFESSOR 
+
+
+
+RETORNAR JSX AQUI, 
+
+
+
+ele vai querer CONDICIONALMENTE ANEXAR (attach) DIFERENTES
+
+
+CLASSES CSS 
+
+
+
+NESSE DRAWER, para que 
+
+CERTA ANIMAÇÃO SEJA 
+
+TOCADA
+ 
+ QUANDO ELE APARECER na página...  -------->  isso quer 
+
+ dizer que 
+
+
+ ELE VAI QUERER 
+
+
+ UTILIZAR 
+
+
+ UMA 
+
+ CLASSE 
+
+
+ '.Open'( que 
+ 
+ VAI FAZER O 'SLIDE-IN' DO SIDEDRAWER),
+
+
+
+
+ E UMA CLASSE 
+
+ '.Close' (que fará o SLIDE-OUT do sidedrawer)... 
+
+
+
+
+--------> LOGO VEREMOS COMO IMPLEMENTAR ISSO... 
+
+
+
+-------------------------------------------------
+
+
+
+
+ANTES DE 
+
+
+DEFINIR QUAISQUER CLASSES CONDICIONAIS,
+
+
+devemos 
+
+
+settar 
+
+
+o SIDEDRAWER EM SI.... ( o elemento 'jsx')... ---------> 
+
+
+
+PARA ISSO, O PROFESSOR FARÁ O RETURN DE UMA __dIV_____... ------>
+
+
+
+
+nessa div,
+
+
+ele vai querer enfiar 
+
+o 
+
+___lOGO___ (O COMPONENT) E 
+
+
+
+OS ___NAVIGATIONITEMS___ --> e é por isso 
+
+
+
+QUE ELE VAI IMPORTAR ESSES COMPONENTS 
+
+DIRETAMENTE 
+
+
+
+NO COMPONENT 
+
+'SIDEDRAWER'...
+
+
+
+
+
+---------------------------------
+
+
+
+FICARÁ ASSIM (por enquanto):
+
+
+
+import React from 'react';
+
+
+
+import Logo from '../../Logo/Logo';
+
+
+import NavigationItems from '../NavigationItems/NavigationItems';
+
+
+const sideDrawer = (props) => {
+
+    return (
+
+        <div>
+            <Logo />
+            <NavigationItems />
+
+
+
+        </div>
+
+
+        
+    )
+
+
+}
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+ISSO JÁ NOS MOSTRA BASTANTE DO 'REUSE' DE COMPONENTS... 
+
+
+
+---> ENTRETANTO, PROFESSOR FAZ UMA COISA ADICIONAL AQUI, 
+
+ELE 
+
+
+FAZ WRAP DO COMPONENT 'NAVIGATIONITEMS' EM UMA 
+
+
+OUTRA TAG, UMA TAG DE 'NAV'...
+
+
+
+
+ex:
+
+
+
+
+
+import React from 'react';
+
+
+
+import Logo from '../../Logo/Logo';
+
+
+import NavigationItems from '../NavigationItems/NavigationItems';
+
+
+const sideDrawer = (props) => {
+
+    return (
+
+        <div>
+            <Logo />
+            <nav>
+            <NavigationItems />
+            </nav>
+
+
+        </div>
+
+
+        
+    )
+
+
+}
+
+
+-----------------------------------------------------
+
+
+
+
+
+PROFESSOR ADMITE QUE, SIM, VOCÊ PODERIA OUTSOURCEAR 
+
+'<nav>' lá naquele component 
+
+
+'navigationItems',
+
+
+mas aí você teria que ajustar o 
+
+estilo 
+
+'.Toolbar nav {
+
+}'  
+
+lá 
+
+em 
+
+'Toolbar.css'... (você teria que MOVER ESSE ESTILO PARA O 'NAVIGATIONITEMS.module.css'...)
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+---> CERTO... 
+
+
+E AGORA 
+
+
+O 
+
+'SIDEDRAWER' 
+
+
+PRECISA DE ALGUM __sTYLING__...
+
+
+
+---> PARA ISSO VAMOS CRIAR UM NOVO ARQUIVO CSS, 
+
+
+
+'SideDrawer.module.css' ----> 
+
+
+
+
+
+DENTRO DISSO VAMOS ESCREVER:
+
+
+
+
+
+
+
+.SideDrawer {
+    
+}
+
+
+
+
+---------------------------------
+
+
+
+
+
+PROVAVELMENTE O PROFESSOR USARÁ 
+
+FLEXBOX com 'flex-direction: column'...
+
+
+
+
+
+------------------------------------------
+
+
+----> CERTO, MAS ANTES DISSO, 
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+ESSE 
+
+
+'.SideDrawer' 
+
+
+
+APENAS SERÁ VISÍVEL EM 
+
+
+___DISPOSITIVOS __ COM TELAS PEQUENAS___... ---------> E ELE VAI USAR 
+
+
+
+CSS 
+
+
+PARA ___gARANTIR__ QUE VOCÊ SÓ CONSIGA 
+
+
+ABRIR 
+
+
+ESSE SIDEDRAWER NELES... 
+
+
+
+
+
+----> para isso, ele começa 
+
+
+
+com 
+
+'position: fixed'... -------> isso vai fazer com que 
+
+ELE SEMPRE FIQUE NA TELA QUANDO ELE APARECER, 
+
+ELE VAI SER UM ELEMENTO 'ESTÁTICO', QUE FICA ALI MESMO QUANDO SCROLLAMOS A PÁGINA...
+
+
+
+
+
+'width: 280px' ----------> isso é bom.
+
+
+
+'max-width: 70%' --------> FAREMOS ISSO PARA QUE ELE NÃO CUBRA COMPLETAMENTE 
+
+A TELA DE DISPOSITIVOS super MENORES.
+
+
+
+
+-----> Height: 100% ---> deverá ocupar TODA A ALTURA DA TELA.
+
+
+
+--> left: 0 
+
+
+--> top: 0 ----> padrão.
+
+
+
+
+--> z-index: 200; --------------> DELIBERADAMENTE COLOCAMOS ESSE Z-INDEX COMO SUPERIOR AO DO BACKDROP, pois ele deverá aparecer acima do backdrop....
+
+
+
+
+
+---> 'background-color: white' --------> ISSO PARA QUE ELE SE DESTAQUE, PARA QUE APAREÇA BEM.
+
+
+
+--> padding: 32px 16px; -------> PROFESSOR ADMITE QUE VOCÊ PODE USAR VALORES PERCENTUAIS AQUI, CASO ACHE MAIS LEGAL.
+
+
+
+
+
+--> box-sizing: border-box --------> ISSO VAI AJUSTAR O TAMANHO DO ELEMENTO AO __PADDING__ QUE FOI DEFINIDO_.
+
+
+
+--> transition (é a animação).. ----> PROFESSOR DEFINE um valor/propriedade de  ' transform' 
+                                        e então coloca uma animação de '0.3s' 'ease-out' (padrão).
+
+
+
+--------------------------------------------------
+
+
+(eu não sei como essa transition funciona/funcionará....)
+
+
+
+
+
+
+
+
+
+
+---> a próxima coisa é um ADD de uma MEDIA QUERY 
+
+
+nesse  arquivo de estilo... ----> essa 
+
+
+
+media query VAI DETERMINAR 
+
+
+O QUE ACONTECERÁ
+ 
+
+ COM ESSE SIDEDRAWER ___EM APARELHOS MAIORES____ --> provavelmente 
+
+ o professor vai colocar 
+
+
+ 'display: none' ----> e realmente, foi isso que ele fez...
+
+
+
+ ----------------------------------
+
+
+
+
+
+QUANDO O MOBILE DEVICE FOR UM POUCO MAIOR, 
+
+O DISPLAY FICARÁ SETTADO COMO 'NONE', 
+
+para que 
+
+
+ELE NÃO SEJA VISÍVEL.... (isso fará com que 
+    esse elemento nunca seja visível em elementos maiores... 
+)
+
+
+
+--------------------------------------
+
+
+O PROFESSOR TAMBÉM VAI (IMPORTANTE!!!) --> ADICIONAR 
+
+
+
+2 CLASSES 
+
+NOVAS 
+
+NESSE ARQUIVO CSS... ------->
+
+
+
+
+classe 
+
+'.Open' 
+
+
+e 
+
+
+'.Close'...
+
+
+------------------------------
+
+
+
+
+---> ESSAS CLASSES SERÃO __ANEXADAS (ATTACHED) CONDICIONALMENTE 
+
+AO ELEMENTO 'SIDEDRAWER'... ---> e elas serão responsáveis 
+
+POR TOCAR UMA ANIMAÇÃO... 
+
+
+
+(E É ___AÍ___ QUE ENTRA O 'transform'...)
+
+
+
+
+CERTO.... --> ele vai 
+
+
+definir 
+
+
+
+
+
+
+.Open {
+
+    transform: translateX(0);
+
+}
+-------------------------------
+
+
+
+
+
+'translateX(0)' --------> isso vai BASICAMENTE ___  MUDAR O __sIDEDRAWER__ PARA 
+
+
+A POSIÇÃO 
+
+
+QUE O __ PROFESSOR __ DEFINIU LÁ EM CIMA___  (posição 'left: 0', 'top: 0', bem na esquerda....)......
+
+
+
+
+
+
+
+
+---> E PARA 
+
+
+O 
+
+
+
+'.Close', o PROFESSOR 
+
+VAI DEFINIR 
+
+
+UM 
+
+
+ESTILO 
+
+
+DE 
+
+
+'transform: translateX(-100%);' ---------> ISSO VAI ___JOGAR___ ESSE SIDEDRAWER ___BEEEEEEM ___ PARA A ESQUERDA,
+ 
+ o que o removerá 
+
+
+ do nosso DOM/da visão do usuário.
+
+
+
+
+
+
+EX:
+
+
+
+.Open {
+    transform: translateX(0);
+}
+ 
+
+.Close {
+    transform: translateX(-100%);
+}
+
+
+
+----------------------------------
+
+
+
+
+Como nós 
+
+CONSTANTEMENTE MUDAREMOS 
+
+ENTRE ESSAS 2 CLASSES (toggle),
+ 
+
+
+ o 'transform' 
+
+
+ será ajustado 
+
+
+
+ e por isso ele 
+
+ será 
+
+ tocado com uma 
+
+ 'transition' de 
+
+
+ '0.3s ease-out'...
+
+
+
+ ------------------------------------------
+
+
+
+
+
+
+
+ /* Apply to 1 property */
+/* property name | duration */
+transition: margin-left 4s;
+
+/* property name | duration | delay */
+transition: margin-left 4s 1s;
+
+/* property name | duration | timing function | delay */
+transition: margin-left 4s ease-in-out 1s;
+
+/* Apply to 2 properties */
+transition: margin-left 4s, color 1s;
+
+/* Apply to all changed properties */
+transition: all 0.5s ease-out;
+
+/* Global values */
+transition: inherit;
+transition: initial;
+transition: unset;
+
+
+
+------------------------------------------------
+
+
+ISSO FEITO, 
+
+AGORA 
+
+
+DEVEMOS IMPORTAR 
+
+ESSE ESTILO 
+
+DE SIDEDRAWER 
+
+DENTRO DO COMPONENT 
+
+'SIDEDRAWER'...
+
+
+
+-------------------------------
+
+
+
+
+
+----> certo... agora precisamos definir o código que fará o ESTILO 
+
+
+do 
+
+
+SIDEDRAWER 
+
+alterar/dar toggle 
+
+entre 
+
+
+'open' e 'closed'...
+
+
+
+---------------------------
+
+
+
+
+NA VERDADE, ANTES TEMOS A IMPORTANTE PERGUNTA:
+
+
+
+ONDE DIABOS ESSE 'SIDEDRAWER' DEVERÁ SER INSERIDO? Onde deve ser usado? -------> 
+
+
+
+
+NO COMPONENT 'APP.JS'? 
+
+
+
+
+NO COMPONENT 'Toolbar'? 
+
+
+
+
+
+--> É CLARO QUE EM __NENHUM DELES__, DIZ O PROFESSOR... -----> o lugar em que 
+
+
+DEVE SER INSERIDO 
+
+
+O 
+
+
+'SIDEDRAWER' é em LAYOUT, pois O SIDEDRAWER FAZ PARTE DO NOSSO 'CORE LAYOUT', na opinião do professor...
+
+
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+
+const layout = (props) => { //usamos um array como WORKAROUND DA LIMITAÇÃO DE 'ADJACENT JSX ELEMENTS'...
+
+
+
+    return(
+        <Aux>
+        {/* <div>Toolbar, SideDrawer, Backdrop</div> */}
+        <Toolbar />
+        <SideDrawer /> ///////EIS O CÓDIGO EM QUESTÃO.
+        <main className={LayoutStyle.Content}>
+            {props.children}
+        </main>
+        </Aux>
+    
+    );
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+------------------------------
+
+
+
+COM ISSO, SE VOLTARMOS AO NOSSO APLICATIVO 
+
+
+E ENTÃO 
+
+
+
+CLICARMOS 
+
+NAQUELA OPÇÃO 
+
+
+'TOGGLE MOBILE COISA' 
+
+
+lá no devtools do chrome,
+
+
+
+VEREMOS 
+
+
+NOSSO ELEMENTO
+
+
+
+SIDEDRAWER NA PÁGINA.... -----> E O NEGÓCIO VAI PARECER __HORRÍVEL_.... ----> 
+
+
+
+
+VAI PARECER HORRÍVEL PQ 
+
+
+NOSSO __LOGO__ ESTARÁ MT GRANDE, 
+
+
+O SIDEDRAWER ESTARÁ NA NOSSA CARA, e os NavigationItems 
+
+
+vão estar horríveis também... 
+
+
+
+
+
+
+
+
+
+---> isso faz sentido pq 
+
+NÓS NÃO AJUSTAMOS NADA PARA MOBILE DEVICES.... ---> devemos ajeitar nosso site versão MOBILE.
+
+
+
+
+

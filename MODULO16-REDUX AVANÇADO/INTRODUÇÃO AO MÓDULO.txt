@@ -1,0 +1,55 @@
+
+
+
+
+
+
+
+REDUX AVANÇADO.... ---------> nós já aprendemos o SIGNIFICADO DO REDUX, O QUE ELE É, E PQ 
+
+TALVEZ 
+
+SEJA LEGAL O UTILIZAR...
+
+
+
+
+--------------------------
+
+
+
+
+NÓS JÁ APLICAMOS O REDUX AO NOSSO PROJETO..
+
+
+----> NESTE MÓDULO,
+
+
+MERGULHAREMOS 
+
+NAS 
+
+FEATURES 
+
+MAIS AVANÇADAS 
+
+DO REDUX,
+
+
+
+
+
+E vamos 
+
+
+ver 
+
+COMO RODAR 
+
+ASYNC CODE 
+
+
+COM 
+
+
+O REDUX....

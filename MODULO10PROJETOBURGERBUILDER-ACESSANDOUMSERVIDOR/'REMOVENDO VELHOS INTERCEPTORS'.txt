@@ -1,0 +1,1048 @@
+
+
+
+
+
+
+
+
+
+
+--> no nosso projeto, até agora, 
+
+adicionamos 
+
+
+UM MONTE DE LÓGICA AO NOSSO BURGER BUILDER... ----> MAS HÁ UMA 
+
+PEQUENA 
+
+
+MELHORIA QUE PODEMOS APLICAR A ELE... --> é uma melhoria sutil, 
+
+pequena,
+ 
+
+ mas que 
+
+
+
+ incrementa bastante nosso app....
+
+
+
+
+ ---------------------------------------------
+
+
+
+
+
+
+----> devemos dar uma olhada no HOC do 
+
+'withErrorHandler'... -------->
+
+
+
+
+NELE, NÓS OBVIAMENTE adicionamos 
+
+
+nossos 
+
+interceptors em 'componentWillMount()' (deprecado).
+
+
+
+
+
+
+
+--> fizemos isso pq ele nos ajuda a settar esses interceptors que 
+
+pegarão erros no futuro, e que mostrarão nosso MODAL DE ERRO, 
+
+se esses erros vierem a existir...
+
+
+(modal que foi criado nesse hoc, mesmo)
+
+------------------------------------------------------
+
+
+
+
+
+Contudo, temos um PROBLEMA... ---> esse MÉTODO 
+
+
+'withErrorHandler()'
+
+
+
+
+PODE SER 
+
+
+
+___WRAPPADO___ 
+
+
+
+EM MÚLTIPLOS COMPONENTS... -------------> E ESSA 
+
+
+É 
+
+TODA A IDEIA POR TRÁS DESSE COMPONENT AÍ,
+
+
+wrappar vários components diferentes, 
+
+e ser utilizável em todos eles... -------> pq se não fosse assim, se não quiséssemos 
+
+wrappar um monte de components de nosso app, components diferentes,
+ 
+
+ poderíamos 
+
+ ter codado 
+
+ essa lógica 
+
+
+ __dIRETAMENTE__ NO BURGER BUILDER, por exemplo...   (se esse fosse o ÚNICO COMPONENT EM QUE desejaríamos usar esse 'withErrorHandler'...)
+
+
+
+
+-----------------> POR ENQUANTO, BURGER BUILDER É O ÚNICO COMPONENT EM QUE 
+
+USAMOS 
+
+O WithErrorHandler,
+
+
+
+
+mas podemos TER MAIS COMPONENTS que fazem http requests/recebem RESPONSES 
+
+
+
+
+no nosso aplicativo.... -----------> O PROBLEMA EM QUESTÃO, AGORA,
+
+
+
+É QUE 
+
+
+
+SE NÓS 
+
+
+
+WRAPPARMOS OUTRO COMPONENT 
+
+
+COM 
+
+
+'withErrorHandler',
+
+
+
+
+O 
+
+
+
+'componentWillMount' 
+
+
+
+DE 
+
+'withErrorHandler' 
+
+
+
+SERÁ 
+
+
+CHAMADO 
+
+DE NOVO E DE NOVO..... ------> isso acontece pq 
+
+
+
+A NOSSA CLASSE INTERNA ANÔNIMA, enfiada nesse 'withErrorHandler', 
+
+
+
+de 
+
+código 
+
+'return class extends Component {...}' 
+
+
+
+
+É 
+
+
+__SEMPRE INSTANCIADA ____ 
+
+
+
+QUANDO 
+
+
+'withErrorHandler' 
+
+
+
+É WRAPPADO 
+
+
+
+EM ALGUM COMPONENT (não importando qual seja o component)... -------> ISSO 
+
+
+SIGNIFICA, EM OUTRAS PALAVRAS, 
+
+
+
+
+QUE 
+
+
+__MÚLTIPLOS INTERCEPTORS__ ESTÃO SENDO SETTADOS __ NO NOSSO APP... ----> e isso consome 
+
+
+___MEMÓRIA____.... ---> ISSO É UM ___MEMORY LEAK__.... ---------> 
+
+
+E TODOS 
+
+ESSE MÚLITPLOS INTERCEPTORS ESTÃO 
+
+
+SENDO 
+
+'ATTACHED' 
+
+
+A MESMA 
+
+
+INSTANCE DE AXIOS, a instance 'axiosOrders'...  ---------->
+
+
+
+O PROBLEMA AQUI, É CLARO, 
+
+
+
+É QUE 
+
+
+
+
+
+
+SE NÓS COLOCARMOS __ROUTING NO NOSSO PROJETO__ ( o que certamente FAREMOS),
+
+
+
+QUANDO NÓS 
+
+ADICIONARMOS MAIS PÁGINAS AO NOSSO PROJETO,
+
+
+MAIS E MAIS COMPONENTS SERÃO REVESTIDOS PELO 'withErrorHandler',
+
+
+
+O QUE CAUSARÁ 
+
+MAIS E MAIS INTERCEPTORS 
+
+SENDO ANEXADOS 
+
+À INSTÂNCIA 
+
+DE 
+'axios' que criamos em 'axios-orders'... --------> 
+
+
+
+E ESSES INTERCEPTORS 'VELHOS', QUE ESTAVAM/ESTÃO REVESTINDO OUTROS COMPONENTS,
+
+VÃO SEGUIR 
+
+
+EXISTINDO, MESMO QUANDO TROCAMOS DE PÁGINAS... (eles vão continuar 
+
+existindo na instância de 'axios', 'axiosOrders', e isso é terrível)
+
+
+
+
+
+
+
+
+
+RESUMINDO: 
+
+
+teremos um monte de 'DEAD INTERCEPTORS' vivendo no nosso código, no nosso runtime...
+
+
+---> todos esses interceptors, na verdade,
+
+NÃO ESTARÃO MORTOS, ELES AINDA TERÃO 'REAÇÃO', MAS SERÃO INÚTEIS, GASTARÃO MEMÓRIA 
+DESNECESSARIAMENTE.
+
+
+
+
+
+--> no pior dos casos, os interceptors 'mortos'/inutilizados 
+
+
+VÃO LEVAR A ERROS, OU ENTÃO MUDARÃO O STATE DE NOSSO APP... ------> MAS MESMO 
+
+
+NO 'BEST CASE',
+
+ELES LEAKAM MEMÓRIA... ---> é por isso que 
+
+
+DEVEMOS 
+
+SEMPRE ____REMOVER OS INTERCEPTORS VELHOS____ ...
+
+
+
+
+
+
+DEVEMOS 
+
+__rEMOVER__ OS INTERCEPTORS VELHOS__ QUANDO 
+
+
+
+O 
+
+COMPONENT 'withErrorHandler' ACABA SENDO 'UNMOUNTED' (ou seja, por meio do hook 
+
+
+'componentWillUnmount' do 
+
+
+'withErrorHandler'...) -------------> vamos querer isso, essencialmente,
+
+
+
+QUANDO 
+
+
+__eSSA INSTÂNCIA ___ ESPECÍFICA DE 
+
+'withErrorHandler' 
+
+
+
+ 
+__NÃO FOR MAIS NECESSÁRIA__ NO NOSSO RUNTIME... ----------> E CERTAMENTE 
+
+
+
+HÁ UM 
+
+LIFECYCLE HOOK PARA ISSO,
+para 
+
+essa tarefa,
+
+
+
+É 
+
+
+O ___LIFECYCLE HOOK DO ___ 
+
+
+'componentWillUnmount'...  -----------> COMO DIZ O NOME,
+
+
+ESSE 
+
+É UM 
+
+LIFECYCLE HOOK 
+
+
+QUE 
+
+EXECUTA SEU CÓDIGO 
+
+
+___qUANDO O COMPONENT EM QUE RESIDE __ NÃO É MAIS NECESSÁRIO... ('is not needed anymore')...
+
+
+
+
+
+
+
+
+
+
+
+---> ALTERNATIVAMENTE, SE VOCÊ ESTIVESSE USANDO UM RETURN DE UM __FUNCTIONAL COMPONENT___ EM 
+
+VEZ DE um class-based one nesse 'withErrorHandler', 
+
+VOCÊ 
+
+
+USARIA 
+
+O 'useEffect', 
+
+
+
+e escreveria 
+
+esse código 'REMOVEDOR DE INTERCEPTORS' 
+
+
+no 
+
+RETURN STATEMENT desse hook, do 'useEffect' hook.... --> você faria/fará 
+
+
+isso 
+
+pq 
+
+o 'RETURN STATEMENT' desse hook é SEMPRE EXECUTADO __ QUANDO 
+
+É REALIZADO O 'CLEANUP' PARA 
+
+ESSE DETERMINADO COMPONENT... (o component em que o 'useEffect' foi utilizado)...
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+CERTO... MAS PARA QUE 
+
+
+POSSAMOS 
+
+
+
+___REMOVER__ UM INTERCEPTOR __ EM 
+
+'componentWillUnmount()',
+
+
+
+NÓS PRECISAMOS (somos obrigados a) 
+
+
+
+SETTAR UMA __REFERÊNCIA ___ AO INTERCEPTOR/INTERCEPTORS QUE CRIAMOS_ _ lá 
+
+em 
+
+'componentWillMount'... ----------> E ESSA REFERÊNCIA 
+
+
+SERÁ 
+
+CRIADA ___ DENTRO DAS PROPRIEDADES___ DA CLASSE 
+
+
+ANÔNIMA de 'withErrorHandler' (ou seja, dentro de 
+
+'return class extends Component {}'....) 
+
+
+
+
+
+
+
+
+
+
+
+EX (CÓDIGO ATÉ AGORA):
+
+
+
+
+
+
+
+
+
+const withErrorHandler = (WrappedComponent, axios) => {
+
+
+  return class extends Component {
+
+
+
+
+        this.state = {
+          error: null
+        };
+
+
+
+
+    componentWillMount() {
+                    axios.interceptors.request.use(
+              req => {
+                this.setState({error: null});
+                return req;
+              }
+        )
+
+        axios.interceptors.response.use(res => res, error => {
+          this.setState({
+            error: error
+          })
+          console.log("Error: " + error.message);
+        })
+    }
+    
+    
+
+
+        componentWillUnmount() { /////////EIS O CÓDIGO EM QUESTÃO
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+    errorConfirmedHandler = () => {
+        this.setState(
+            {
+                error: null
+            }
+        )
+    }
+
+
+
+
+
+
+
+
+  render() {
+
+
+
+    
+
+
+
+
+
+      return ( //obs: aquela propriedade 'message' É ALGO QUE EXISTE NATIVAMENTE NO OBJETO 'error' QUE NOS É RETORNADO/CONCEDIDO PELO firebase EM SI (e repassado pelo axios), QUANDO ALGUM ERRO OCORRE DURANTE O RUNTIME DO NOSSO APLICATIVO...
+
+        <Aux>
+        <Modal show={this.state.error} modalClosed={this.errorConfirmedHandler}>
+            
+            {this.state.error ? this.state.error.message : null}
+            
+            </Modal>
+        <WrappedComponent {...this.props} />
+      </Aux>
+
+
+
+       
+      );
+    }
+  };
+};
+
+export default withErrorHandler;
+
+
+
+
+
+
+
+
+
+
+---------------------------
+
+
+
+
+
+
+
+
+
+
+--> e como nós JÁ TEMOS UM STATE definido DENTRO DESSA 
+
+
+CLASSE ANÔNIMA (por causa de 'state = {
+    error: null
+}'),
+
+
+
+
+NÓS PODEMOS SIMPLESMENTE IR ADICIONANDO 'PROPRIEDADES SOLTAS' 
+
+
+dentro 
+
+dessa classe anônima...
+
+
+
+
+--------------------------------
+
+
+
+
+
+---> PARA ISSO, O PROFESSOR ARMAZENA 
+
+
+
+OS INTERCEPTORS DENTRO DE PROPRIEDADES... (por meio de 'this. + nome da propriedade'...)
+
+
+
+
+ex:
+
+
+
+
+
+
+
+componentWillMount() {
+
+
+            
+  this.reqInterceptor = axios.interceptors.request.use(
+              req => {
+                this.setState({error: null});
+                return req;
+              }
+        )
+
+
+     this.resInterceptor = axios.interceptors.response.use(res => res, error => {
+          this.setState({
+            error: error
+          })
+          console.log("Error: " + error.message);
+        })
+}
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+E ISSO REALMENTE VAI FUNCIONAR.... ---> agora o professor 
+
+
+TERÁ 
+
+2 NOVAS PROPRIEDADES ('reqInterceptor' e 'resInterceptor') 
+
+
+DENTRO 
+
+
+DA CLASSE ANÔNIMA... -------> e essas propriedades 
+
+
+SERÃO 
+
+
+USADAS 
+
+
+
+NO 
+
+
+'componentWillUnmount'... ---------> serão usadas PARA SEREM __REMOVIDAS__...
+
+
+
+
+
+Ok, mas com QUAL 
+
+COMANDO REMOVEREMOS ESSES INTERCEPTORS?
+
+
+
+
+
+Esse remove será feito 
+
+com o 
+
+comando 
+
+
+'axios.interceptors.request.eject()' ---------->  mesma 
+
+
+
+coisa com o 
+
+
+'axios.interceptors.response.eject()'... --------> 
+
+
+
+
+MAS 
+
+
+AMBOS 
+
+COMANDOS REQUEREM ___UM PARÂMETRO__... --> esse parâmetro é 
+
+
+
+JUSTAMENTE ___ A REFERÊNCIA___ AO 
+
+
+INTERCEPTOR ANTIGO, INTERCEPTOR QUE EXISTIA ANTES.... (e que ainda existe, certamente)...
+
+
+
+
+
+
+
+---> nesse caso, os parâmetros serão 
+
+
+'this.resInterceptor' e 'this.reqInterceptor'...
+
+
+
+---------------------------------------------------------
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+
+componentWillMount() {
+
+
+            
+  this.reqInterceptor = axios.interceptors.request.use(
+              req => {
+                this.setState({error: null});
+                return req;
+              }
+        )
+
+
+     this.resInterceptor = axios.interceptors.response.use(res => res, error => {
+          this.setState({
+            error: error
+          })
+          console.log("Error: " + error.message);
+        })
+}
+
+
+
+
+
+
+componentWillUnmount() {
+  axios.interceptors.request.eject(this.reqInterceptor);
+
+  axios.interceptors.response.eject(this.resInterceptor);
+}
+
+
+
+
+
+
+
+
+
+
+
+-------------------
+
+CERTO,
+
+
+COM ISSO NOSSOS INTERCEPTORS DEVERÃO SER 
+
+
+
+___rEMOVIDOS__ QUANDO O COMPONENT 'withErrorHandler' se tornar desnecessário,
+
+
+PREVENINDO ___MEMORY LEAKS___...
+
+
+
+
+
+
+
+
+
+
+
+--> para examinar rapidamente se isso funcionou,
+
+
+
+Professor vai até o APP.js 
+
+
+E VAI 
+
+ADICIONAR 
+
+
+
+UM CÓDIGO PARA ___REMOVER ___ O BURGERBUILDER__ DEPOIS DE UM TEMPO, 
+
+
+APENAS 
+
+PARA 
+
+
+VERIFICAR SE 
+
+OS 
+
+
+INTERCEPTORS FORAM REMOVIDOS...  (e se 'willUnmount' é chamado/foi chamado...) --------> 
+
+
+
+PARA ISSO,
+ 
+
+ PROFESSOR VAI 
+
+ ESCREVER 
+ um 
+
+
+ 'console.log()' 
+
+ em 
+
+ 'componentWillUnmount' 
+
+
+ DE 
+
+
+
+ 'console.log('Wiil Unmount', this.reqInterceptor, this.resInterceptor)'.... ----------> ISSO NOS MOSTRARÁ SE AS PROPRIEDADES FORAM DEFINIDAS, E SE O NEGÓCIO FOI CHAMADO...
+
+
+
+
+
+
+ ---------------------------------------------------------------
+
+
+
+
+
+O PROFESSOR VAI NO CÓDIGO DE APP.JS, que É:
+
+
+
+
+
+
+class App extends Component {
+
+
+  render() {
+
+
+
+   
+
+
+    return(
+        <div>
+       <Layout >
+         <BurgerBuilder/>
+       </Layout>
+       </div>
+    )
+  }
+
+}
+
+
+
+-----------------------------------------
+
+
+
+PARA SE CERTIFICAR QUE 'BurgerBuilder'
+
+DESAPARECE
+ 
+
+
+DEPOIS DE UM TEMPO, 
+
+o professor 
+
+vai 
+
+adicionar um 
+
+STATE 
+
+ao 
+
+
+component 
+
+'App'... ---> 
+
+
+e aí ele 
+
+vai definir 
+
+
+uma propriedae 
+
+
+de 
+
+
+'show'... --> inicialmente ela será 'true'... -----------------> 
+
+
+
+
+
+DEPOIS ELE VAI FAZER UM CÓDIGO CONDICIONAL, UMA TERNARY EXPRESSION 
+
+
+com relação a essa propriedade, ao 'false/true' 
+dessa 
+
+propriedade...
+
+
+
+ficará:
+
+
+
+''''{this.state.show ? <BurgerBuilder /> : null}''''
+
+
+
+
+
+
+---> isso feito, ele provavelmente 
+
+
+vai escrever um 
+
+
+
+'componentDidMount' 
+
+
+
+QUE DEFINIRÁ UM 
+
+'setTimeout' 
+
+de 
+
+5 segundos, ou algo do gênero... --> CERTO, ESSE CÓDIGO FUNCIONOU: 
+
+
+ componentDidMount() {
+
+    setTimeout(
+      () => {
+        this.setState({
+          show: false
+        })
+      }, 5000
+    )
+  }
+
+
+--------------------------

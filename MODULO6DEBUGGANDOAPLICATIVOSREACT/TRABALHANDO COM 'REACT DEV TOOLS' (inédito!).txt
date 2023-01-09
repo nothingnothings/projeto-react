@@ -1,0 +1,181 @@
+
+
+APRENDEMOS SOBRE COMO LER E ENTENDER ERROS DE MENSAGEM,
+
+
+E SOBRE COMO 
+
+ENTENDER 
+
+ERROS DE LÓGICA COM OS CHROME DEV TOOLS (BREAKPOINTS)...  
+
+
+
+
+
+
+
+
+
+---> E APESAR DE QUE àS VEZES VOCÊ VAI CONSEGUIR 
+
+
+RSOLVER OS PROBLEMAS DO REACT COM OS CHROME DEV TOOLS,
+
+
+ESSAS TOOLS àS VEZES PODEM SER INCONVENIENTES... ------->
+
+
+
+
+AINDA BEM QUE EXISTE 
+
+
+______UMA TOOL___ QUE VOCÊ PODE 
+
+
+ADICIONAR AO CHROME,
+
+
+
+a 
+
+
+extensão chamada 
+
+
+
+'REACT DEVELOPER TOOLS'... ------> você deve baixar e a instalar.....
+
+
+
+
+
+
+
+
+
+
+
+
+--> INSTALEI.
+
+
+
+
+
+---> no github HÁ MAIS INFORMAÇÕES SOBRE COMO USAR 
+
+ESSA 
+
+EXTENSÃO....
+
+
+
+
+
+CERTO,
+
+
+AGORA TEMOS ESSA EXTENSÃO NO GOOGLE CHROME ---> ELA PODE SER ACESSADA NA ABA 'DEVTOOLS', na aba 'REACT'...
+
+
+
+nessa aba,
+
+
+A COISA legal
+
+
+
+É QUE 
+
+ELA TE MOSTRA 
+
+OS COMPONENTS DA SUA PÁGINA...
+
+
+
+
+
+--> VEMOS NOSSO REACT APP....
+
+
+
+
+
+MAS SE VOCÊ CLICAR EM 
+
+
+'TOGGLE PERSONS', VOCÊ VERÁ UMA DIFERENÇA 
+
+NESSA ABA 'REACT' em relação 
+
+A ABA 'ELEMENTS' DO google chrome... ----> VOCê Vê TAMBÉM OS SEUS COMPONENTS... ('<App>' e '<person')
+
+
+--------------------------------------
+
+
+
+
+
+E LÁ EMBAIXO, NA ABA INFERIOR, 
+
+VOCÊ TAMBÉM 
+
+
+VÊ 
+
+
+'PROPS'  e o 
+
+
+'STATE' 
+
+DESSE COMPONENT selecionado....
+
+
+(para o component 'App', 
+
+nós vemos 
+
+o array de 
+
+
+'PERSONS' e 
+
+
+aquele 'showPersons: true'...) ----------> E SE EU CLICAR EM UMA PERSON E ENTÃO A REMOVER, AQUELAS INFORMAÇÕES TAMBÉM SÃO UPDATADAS....
+
+
+
+
+
+OBS::: SE CLICARMOS EM UM ELEMENTO 'PERSON', PODEMOS IMEDIATAMENTE VER NAS DEVTOOLS 
+QUE 
+
+
+ELE __NÃO TEM UMA PROPRIEDADE 'state', mas QUE TEM UM 'PROPS' ----> com isso, JÁ SABEMOS QUE ELE É UM FUNCTIONAL COMPONENT, E NÃO UM 'CLASS-BASED COMPONENT'...
+
+
+
+
+
+E SE MARCARMOS a caixa
+
+'HIGHLIGHT UPDATES', 
+
+VEMOS AS ALTERAÇÕES NO CÓDIGO __HIGHLIGHTADAS__ QUANDO ELAS ACONTECEM... 
+
+
+
+
+
+
+--> ESSAS TOOLS TE PERMITEM ENTENDER RAPIDAMENTE OS STATES DO SEU CÓDIGO 
+
+
+E TE DAR ALGUNS INSIGHTS QUE VOCÊ NÃO CONSEGUE TER USANDO AS TOOLS NORMAIS, 
+
+POIS ELA TE DEIXA OLHAR UM MONTE 'POR TRÁS DAS CENAS'....

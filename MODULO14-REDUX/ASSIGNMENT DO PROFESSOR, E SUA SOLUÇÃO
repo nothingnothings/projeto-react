@@ -1,0 +1,1495 @@
+Professor PARECE estar com uma versão 
+
+
+ESTRANHA 
+
+daquele projeto das Persons que tínhamos há 
+
+
+
+
+muito tempo...
+
+
+
+
+mas ele _NÃO É O MESMO_, é claro....
+
+
+
+
+
+
+
+
+
+---> devemos começar um novo projeto, e então IMITAR O SETUP DO PROFESSOR, VISTO NO VIDEO....
+
+
+
+
+
+--------------------------------------
+
+
+OK, COPIEI O SETUP DO PROFESSOR...
+
+
+
+
+TENHO 
+UMA 
+
+
+CÓPIA EXATA DO CÓDIGO INICIAL DELE... 
+
+
+
+--> agora devo 
+
+começar a implementar 
+
+
+'Redux' 
+
+
+no 
+código 
+
+desse 
+
+app 
+
+de 
+
+'Persons'...
+
+
+
+
+
+
+
+---> essa versão do código dele tem APENAS 1 REDUCER... ('reducer.js')... --> vou colocar 
+esse 
+
+
+reducer na pasta 
+
+'reducers'... 
+
+
+
+
+
+--> devo IMPORTAR ESSE REDUCER NO 
+
+
+ARQUIVO DE 
+
+
+'index.js', que é 
+
+O NEGÓCIO QUE SEGURA NOSSO APP...
+
+
+
+
+
+--> ISSO FEITO,
+
+
+devo 
+
+
+IMPORTAR (em 'index.js')
+
+
+
+A FUNÇÃO 
+
+
+'createStore' 
+
+LÁ 
+
+DO 
+
+'react-redux' (que já instalei com 'npm --save install react-redux'), 
+
+
+QUE 
+
+VAI ME 
+
+AJUDAR 
+
+
+
+A 
+
+
+
+CRIAR UMA LOCAL STORE/GLOBAL STORE PARA ESSE APP DAS PERSONS...
+
+
+
+
+
+--> escrevo 
+
+
+import { createStore } from 'redux'
+
+
+
+
+----------------------------
+
+
+
+ISSO FEITO, 
+
+É HORA 
+
+DE CONECTAR 
+
+
+ESSE 
+'store'
+
+
+AO 
+
+
+NOSSO 
+
+
+aplicativo, que 
+
+está 
+
+representado 
+
+em 
+
+'index.js'
+
+pela escrita 
+
+de 
+
+'<App />' .... -----> para isso,
+
+
+NÓS 
+
+
+
+VAMOS 
+
+
+
+TER QUE USAR 
+
+O COMPONENT/WRAPPER 
+
+de 
+
+
+
+
+
+'Provider', 
+
+
+
+
+
+IMPORTADO 
+
+DA PACKAGE DE 
+
+'react-redux' (que é a package que FAZ A CONEXÃO ENTRE O REACT E O REDUX...)
+
+
+
+
+
+ex:
+
+
+
+import { Provider } from 'react-redux';
+
+
+
+
+----------------------
+
+
+
+ISSO FEITO,
+
+
+WRAPPAMOS 
+
+
+APP 
+dessa forma:
+
+
+
+<Provider store={store}>
+<App />
+<Provider />
+
+
+
+
+
+-------------------------
+
+
+
+
+LÁ EM 'reducer.js',
+
+VAMOS 
+
+ESCREVER 
+
+O CÓDIGO DE 
+
+'reducer', 
+
+QUE 
+
+É 
+
+
+
+--------------------------------------------
+
+
+
+const reducer = (state, action) => {
+
+
+
+
+
+}
+
+
+
+
+
+
+export default reducer;
+
+--------------------------------------------
+
+
+
+
+
+
+ISSO FEITO,
+
+
+
+TEREMOS 
+
+QUE 
+
+COMEÇAR 
+
+
+A ESCREVER 
+
+
+AS NOSSAS 
+
+'action' lá 
+
+NO 
+
+COMPONENT/CONTAINER 
+
+
+
+
+'Persons'...
+
+
+
+
+
+
+
+
+
+Antes disso, talvez seja uma boa IDEIA FAZER ____ A ESCRITA __ DAS CONSTANTES QUE VÃO SEGURAR 
+
+
+o 'TYPE', as strings dos TYPES,
+ naquele 
+
+
+ arquivo 'actions.js',
+
+ dentro do folder de 'store'...
+
+
+
+------------------
+
+
+COMO NESSE APP 
+
+
+TEMOS 
+
+
+2 'ações',
+
+
+a ação de DELETAR PERSONS 
+
+
+e 
+
+
+ADICIONAR UMA PERSON,
+
+
+podemos 
+
+usar strings como 
+
+
+
+'DELETE_PERSON' 
+
+
+
+e 
+
+
+'ADD_PERSON'
+
+
+-------------------------------
+
+
+
+
+
+EX:
+
+
+
+
+export const ADD_PERSON = 'ADD_PERSON';
+
+
+
+
+
+export const DELETE_PERSON = 'DELETE_PERSON';
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+CERTO, AGORA É HORA DE USAR AQUELAS 
+
+'HELPER FUNCTIONS' especiais em 
+
+'Persons', nesse container...
+
+
+
+
+
+
+as 
+
+funções são aquelas clássicas,
+
+
+a 
+
+
+
+'mapStateToProps' (relativo ao LOCAL STORE/global state do redux...)
+
+
+
+e 
+
+
+a 
+
+
+
+'mapDispatchToProps' (relativo Às ACTIONS)
+
+
+-----------------------------
+
+
+
+
+
+ATENÇÃO... PRIMEIRO VEREMOS 
+
+O 
+
+
+
+'mapStateToProps'... -------> 
+
+
+
+esse negócio deve ser escrito __DEPOIS_____
+
+
+
+DE _______  SEU ________ CONTAINER... 
+
+
+
+ex: 
+
+------------------------------------
+
+class ComponentAleatório {
+    render() {
+        return()
+    }
+}
+
+
+mapStateToProps = (state) => {
+
+}
+
+
+--------------------------------
+
+
+
+
+
+
+e vai ser escrito assim:
+
+
+
+
+''''''''''''''''
+
+
+
+mapStateToProps = (state) => {
+    return {
+
+    }
+}
+
+
+
+
+--------------------------
+
+
+Ok, agora só precisamos escrever o return em si...
+
+
+
+
+Devemos nos lembrar do modelo desse 'mapStateToProps' usado 
+
+no projeto do 'Counter'...:
+
+
+
+
+
+const mapStateToProps = state => { ///////obs:::: é sempre 'const mapStateToProps', e nunca 'mapStateToProps = () => {}' (PQ ISSO AÍ NÃO É UM MÉTODO, E SIM UMA '''''CONSTANTE __ QUE SEGURA __ UMA FUNÇÃO QUE RETORNA UM OBJETO com 'prop names'... '''')
+        return {
+            ctr: state.counter.counter,
+            storedResults: state.results.results           //  'state'              +                                 '.counter/ctr'                                                +                  .counter;  ------> isso vira exatamente 'ctr: state.counter.counter', como visto nessa linha....
+                                                          //  (O GLOBAL STATE, EM QUESTÃO)            (isso é o SUBSTATE/slice do globalstate DEFINIDO LÁ EM 'combineReducers'...)
+          
+        }
+}
+
+
+
+
+---------------------------------
+
+
+
+
+Ou seja, 
+
+aqui devemos 
+
+fazer return 
+
+
+DAS __PROPRIEDADES___ DO 'GLOBAL STATE' 
+
+de 
+redux que 
+
+desejamos utilizar nesse nosso container 'Persons'... 
+
+
+
+
+---> como nós queremos ESPECIFICAMENTE A  PROPRIEDADE 
+
+'persons' (aquele array lá),
+
+
+Nós vamos escrever 
+
+
+'return {
+    persons: state.persons
+}'
+
+
+
+---------------------------------
+
+
+
+
+
+
+É EVIDENTE QUE ___ISSO NÃO SERÁ __ SUFICIENTE... ----> 
+
+
+
+não, nem um pouco... ---> precisamos 
+
+
+SETTAR 
+
+
+ESSE state INICIAL
+
+
+POR MEIO DE UMA 
+
+
+CONSTANTE 
+
+
+chamada 
+
+de 
+
+
+'const initialState',
+
+
+LÁ NO NOSSO 
+
+
+REDUCER... -------> 
+
+
+
+o nosso ARQUIVO 'reducer.js' vai 
+
+
+segurar 
+
+algo como 
+
+
+
+'const initialState = {
+    persons: []
+}'
+
+
+
+----------------------------
+
+
+
+Parece que nós escrevemos nosso 'reducer' de forma porca, também... ----> nós 
+
+
+devemos 
+
+colocar 
+
+
+esse 
+
+'initialState' NO LADO DE FORA da 'const reducer', e não dentro... ---------> 
+
+
+
+ALÉM DISSO,
+
+
+os parâmetros do reducer devem constar 
+
+
+
+'(state = initialState, action)' , PARA ___QUE SEJA POSSÍVEL USAR __ ESSE 
+
+
+'STATE INICIAL' de 'initialState', que terá nossa propriedade 'persons'...
+
+
+
+
+ex:
+
+
+
+
+
+  const initialState = {
+    persons: []
+};
+
+
+
+const reducer = (state = initialState, action) => {
+
+  
+
+
+
+
+}
+
+
+export default reducer;
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+CERTO.... ISSO FEITO,
+
+
+agora precisamos 
+
+
+CONECTAR 
+
+
+
+NOSSO 
+
+CONTAINER 
+
+
+'Persons'
+
+
+
+POR MEIO 
+
+DAQUELA 
+
+FUNÇÃO/HOC/coisa especial 
+
+
+
+'connect',
+
+QUE 
+
+DEVE 
+
+
+
+WRAPPAR 
+
+
+nosso 
+
+
+
+container (o seu export)
+
+
+
+COM uma sintaxe estranha...
+
+
+ficará assim:
+
+
+
+'''                                                     '''''
+export default connect(mapStateToProps, mapDispatchToProps)(Persons);
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+ANTES DE USAR 'connect', contudo, devemos IMPORTÁ-LO 
+
+por meio 
+
+
+
+da sintaxe 
+
+
+
+'import { connect } from 'react-redux'; '
+
+
+
+
+----------------------------
+
+
+
+NÓS __TAMBÉM PRECISAMOS ___ iMPORTAR __ 
+
+os 
+
+
+
+'actionTypes' 
+
+
+
+nesse arquivo 
+
+de 
+
+'Persons', precisamos importar 
+
+
+AQUELAS CONSTANTES REPRESENTANDO AS NOSSAS STRINGS A SEREM UTILIZADAS....
+
+
+
+---------------------
+
+
+
+Certo, importamos isso por meio da sintaxe 
+
+
+
+'import * as actionTypes from '../../store/actions';
+
+
+
+
+
+
+-----------------------------
+
+
+
+ISSO FEITO, PRECISAMOS CONFIGURAR 
+
+
+
+O 
+
+
+'mapDispatchToProps'... -------> 
+
+
+
+
+nós vamos definir 
+
+
+O seu expected parameter 
+
+como 
+
+
+sendo 
+
+
+'dispatch' (como sempre)....
+
+
+
+ex:
+
+
+
+
+
+const mapDispatchToProps = () => {
+
+}
+
+
+
+----------------------------------
+
+
+
+
+ISSO FEITO,
+
+
+agora vamos 
+
+fazer o RETURN __DAQUELE GRANDE OBJETO___ com 
+
+
+várias 
+
+'actions'/dispatches 
+
+
+
+que serão enviados por nosso container...
+
+
+
+
+
+
+
+
+
+será escrito assim:
+
+
+
+
+
+
+
+const mapDispatchToProps = () => {
+        return {
+            
+            onPersonAdd: () => {
+                dispatch(
+                    {
+                        type: actionTypes.ADD_PERSON
+                    }
+                )
+            },
+
+            onPersonDelete: () => {
+                dispatch(
+                    {
+                        type: actionTypes.DELETE_PERSON
+                    }
+                )
+            }
+
+
+
+
+        }
+}
+
+
+
+--------------------------------
+
+
+
+
+CERTO.... MAS É EVIDENTE QUE VAMOS QUERER UM _____ ID______ NESSE 
+
+
+'onPersonDelete', mas ainda NÃO SABEMOS ___COMO SERÁ COLOCADO O __ ID NESSE NEGÓCIO__.... (vamos ter que 
+
+nos inspirar no projeto de 'Counter'...)
+
+
+
+
+------------------------------
+
+
+
+O QUE PRECISAMOS FAZER AGORA, na verdade,
+
+
+
+É 
+
+
+
+____SETTAR___ 'switch-cases' no nosso 
+
+REDUCER,
+
+
+switch-cases que 
+
+VÃO 
+
+
+EXECUTAR LÓGICA A PARTIR 
+
+
+DA 'action type' QUE 
+
+FOR 
+
+RECEBIDA NELE...
+
+
+
+-------------------------------
+
+
+
+
+
+ANTES DISSO,
+
+
+VAMOS EM FRENTE E SUBSTITUÍMOS, NO RENDER DESSE CONTAINER,
+
+
+aquelas referencias antigas, que estavam tipo 
+
+
+'<AddPerson personAdded={this.addPersonHandler'} />'
+
+
+
+
+
+
+
+SUBSTITUÍMOS POR 
+
+
+'<AddPerson personAdded={this.props.onPersonAdd'} />'  ---------> AGORA ISSO VAI SE REFERIR 
+
+
+
+
+A NOSSA 'ACTION' enviada por meio do container 'Persons'...
+
+
+
+----------------------------------
+
+
+
+---> e fazemos A MESMA COISA COM 
+
+
+o 
+
+o 
+
+
+'''''
+
+      clicked={() => {
+              this.personDeleteHandler(person.id);
+            }}
+
+''''''
+
+
+
+
+----------------
+
+
+
+TROCAMOS POR 
+
+
+    clicked={() => {
+              this.props.onPersonDelete(person.id);
+            }}
+
+
+------------------------------
+
+
+
+
+
+PARA CONFIGURAR 
+
+
+esse 
+
+'onPersonDelete'
+
+
+PARA __rECEBER AQUELE ID__, 
+
+
+simplesmente escrevemos 
+
+
+
+ OnPersonDelete: (personId) => {
+                        dispatch(
+                            {
+                                type: actionTypes.DELETE_PERSON,
+                                personId: personId
+                            }
+                        )
+                    }
+
+
+
+
+----------------------------------
+
+
+
+
+CERTO... AGORA RESTA CONFIGURAR O REDUCER...
+
+
+
+
+
+
+FICARÁ TIPO ISSO AQUI:
+
+
+
+
+
+-----------------------------
+
+
+
+const reducer = (state = initialState, action) => {
+    switch(action.type) {
+        case 'ADD_PERSON':
+
+
+
+
+
+
+
+        break;
+        case 'DELETE_PERSON':
+
+
+
+
+
+
+        break;
+        
+        default:
+        return state;
+
+
+    }
+  
+
+
+
+
+}
+
+
+
+-----------------
+
+
+
+
+
+
+Ok, agora só falta  A __LÓGICA ___ DESSES 'cases'...
+
+
+
+
+
+
+--> antes disso, talvez seja uma boa IDEIA 
+
+
+
+TROCAR A REFERÊNCIA DO STATE COMO 'this.state.persons.map()' 
+
+
+
+Lá em 
+
+
+
+        {this.state.persons.map((person) => (
+          <Person
+            key={person.id}
+            name={person.name}
+            age={person.age}
+            clicked={() => {
+              this.props.onPersonDelete(person.id);
+            }}
+          ></Person>
+        ))}
+
+
+
+
+POR 
+
+
+
+
+ESTA VERSÃO aqui:
+
+
+
+
+
+
+        {this.props.state.persons.map((person) => (
+          <Person
+            key={person.id}
+            name={person.name}
+            age={person.age}
+            clicked={() => {
+              this.props.onPersonDelete(person.id);
+            }}
+          ></Person>
+        ))}
+
+
+-------------------------
+
+
+
+
+
+Certo... agora só falta ADICIONAR UM CÓDIGO 
+
+
+NO
+
+
+
+REDUCER ___QUE FAÇA ___ COM QUE CADA BUTTON CLICK ___REALMENTE __ ADICIONE UMA 'PERSON'
+
+
+ao 
+
+
+
+ARRAY DE 
+
+'persons'... -------> E PARA ISSO, VAMOS TER QUE 
+
+
+______UPDATAR NOSSO __STATE (essa propriedade 
+
+
+'persons') 
+
+
+
+
+DE FORMA __iMMUTABLE___...
+
+
+
+-----------------------
+
+
+
+PARA INÍCIO DE CONVERSA,
+
+
+vamos precisar 
+
+
+da 
+
+lógica do antigo handler 'personAddedHandler'... --> que é:
+
+
+
+
+ const newPerson = {
+    id: Math.random(),
+     name: 'Max',
+      age: Math.floor(Math.random() * 40),
+     };
+
+
+
+--------------------------
+
+
+
+ENFIAMOS ISSO AÍ NO REDUCER, NO CASE DE 
+
+'ADD_PERSON'...
+
+
+
+
+
+
+
+
+
+--> PARA CONSEGUIR ADICIONAR ESSE NOVO OBJETO 'person' DENTRO DO ARRAY 'persons', no GLOBAL STATE DO REDUX,
+
+
+
+PROVAVELMENTE VAMOS SER OBRIGADOS A USAR 'concat'...
+
+
+---------------------------------
+
+
+
+
+ENTRETANTO, RECEBEMOS NOSSO PRIMEIRO ___ERRO___:
+
+
+
+
+×
+TypeError: Cannot read property 'map' of undefined
+
+
+> 73 |         <AddPerson personAdded={this.props.onPersonAdd} />
+
+
+
+
+
+-------------------------
+
+
+CERTO, RESOLVI O PROBLEMA; EU ESTAVA COLOCANDo 'counter' como propriedade 
+
+naquela 
+
+
+DEFINIÇÃO 
+
+
+
+DE 'mapStateToProps', quando deveria
+ 
+
+ ESTAR 
+
+ 'return {
+     persons: state.persons
+ }'
+
+ -----------------------
+
+
+
+
+ OK, A PARTE DE 'ADD PERSONS' 
+
+ do código já funciona, 
+
+
+
+ AGORA 
+
+ SÓ PRECISO FAZER 
+
+ A 
+ PARTE DE 
+
+
+ 'DELETE_PERSON' funcionar...
+
+
+
+ ----------------------------
+
+
+
+
+ PARA CONSEGUIR FAZER ESSA PARTE FUNCIONAR, USEI A SINTAXE DO 
+
+
+
+ '.concat()' com meu array de 'persons', o que me deixou updatá-lo de forma immutable,
+
+ updatá-lo de jeito que o 
+
+
+ OBJETO COM AQUELE DETERMINADO ID É REMOVIDO... --->
+
+
+
+ ex:
+
+
+ import * as actionTypes from '../actions';
+
+
+
+
+const initialState = {
+  persons: []
+};
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actionTypes.ADD_PERSON:
+      const newPerson = {
+        id: Math.random(),
+        name: 'Max',
+        age: Math.floor(Math.random() * 40),
+      };
+        return {
+            ...state,
+            persons: state.persons.concat(newPerson)
+        }
+      break;
+    case actionTypes.DELETE_PERSON:
+        const updatedPersons = state.persons.filter(
+            (person) => {
+                return person.id !== action.personId;
+            }
+        )
+        return {
+            ...state,
+            results: updatedPersons
+        }
+      break;
+    default:
+      return state;
+  }
+};
+
+
+
+
+-------------------------
+
+
+
+RECEBO UM ERRO:
+
+
+
+
+TypeError: this.props.onPersonDelete is not a function
+
+
+
+
+
+
+--> ok, mas isso não faz o menor sentido... ---> essa função já está definida.
+
+
+
+
+
+
+-----------------------
+
+
+
+
+Era um erro de grafia.... ('Onxxxx' e 'onxxxxx'...)
+
+
+
+-------------------------
+
+
+
+A ÚNICA COISA QUE FALTA CONSERTAR É O STYLING DA PÁGINA, QUE POR ALGUMA RAZÃO NÃO ESTÁ SENDO APLICADO DIREITO 
+
+
+(conflito entre 'module.css' e 'react-redux'...)
+
+
+-----------------------------
+
+
+
+
+CONSEGUI.
+
+
+
+FICOU ASSIM:
+
+
+
+
+import React from 'react';
+
+import AddPersonStyle from '../../components/AddPerson/AddPerson.module.css';
+
+const addPerson = (props) => {
+  return <div className={AddPersonStyle.AddPerson}>
+    <button onClick={props.personAdded}>Add Person</button>
+  </div>;
+};
+
+
+
+export default addPerson;
+
+
+------------------------------
+
+
+
+
+
+
+
+
+Praticamos um pouco do redux nesse assignment...

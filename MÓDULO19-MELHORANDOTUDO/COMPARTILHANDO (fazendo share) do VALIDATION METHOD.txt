@@ -1,0 +1,151 @@
+
+
+
+
+
+
+
+---> na última lição, nós havíamos usado 
+
+
+'updateObject',
+
+
+aquela UTILITY FUNCTION... --> havíamos usado ela EM OUTROS LUGARES DE NOSSO CÓDIGO, COMO 'Auth.js' 
+
+e 
+
+'ContactData'...
+
+
+
+
+
+
+--> MAS HÁ OUTRA FEATURE QUE 
+
+
+NÓS COMPARTILHAMOS 
+
+
+AO LONGO 
+
+DE MÚLTIPLOS 
+
+
+
+
+ARQUIVOS,
+
+
+e por isso 
+
+faz 
+
+
+sentido 
+
+reutilizar essa função/feature 
+
+ao longo deles...
+
+
+
+
+
+
+
+
+---> provavelmente 
+
+é 
+
+
+a LÓGICA DE VALIDAÇÃO, O 
+
+MÉTODO 
+
+'checkValidity',
+
+
+CUJA 
+
+LÓGICA 
+
+ESTÁ SENDO USADA 
+
+IGUALMENTE 
+
+
+NOS 
+
+
+
+COMPONENTS 
+
+
+'Auth' 
+
+
+e 
+
+'ContactData'...
+
+
+
+----------------------------
+
+
+
+
+
+--> É POR ISSO QUE FAZ SENTIDO 'GRABBAR' O checkValidity
+
+
+
+e fazer 
+
+outsource, colocar na pasta de 'shared'...
+
+
+
+
+
+
+
+
+
+---> vamos colocar dentro daquele arquivo 'utility' msm...
+
+
+
+
+--> isso feito, basta exportarmos essa função 
+
+
+nos arquivos 
+
+de 
+'Auth' 
+e 
+
+
+'ContactData'...
+
+
+
+
+Ex:
+
+
+
+
+valid: checkValidity(event.target.value, ....)...
+
+
+
+--------------------
+
+E ISSO É BOM, PQ DEIXA NOSSO CÓDIGO MAIS 'LEAN', e evita 
+
+DUPLICAÇÃO DE CÓDIGO...

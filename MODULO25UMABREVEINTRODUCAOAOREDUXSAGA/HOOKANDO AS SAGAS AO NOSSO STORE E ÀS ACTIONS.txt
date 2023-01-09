@@ -1,0 +1,1118 @@
+Redux-Thunk	                                                 Redux-Saga
+                                  
+Less boilerplate code	                            More boilerplate code
+Easy to understand as compared to redux-saga	    Difficult to understand as there are multiple concepts to learn like generator functions and redux-saga effects
+May be difficult to scale up	                    Easy to scale as compared to redux-thunk
+Action creators may hold too much async logic	     Action creators stay pure
+May get difficult to test	                        Comparatively easy to test as all your async logic remains together
+
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+NA ÚLTIMA LIÇÃO,
+
+
+criamos 
+
+NOSSO 
+
+'SAGA-GENERATOR'...
+
+
+
+
+
+QUE TEM ESTE CÓDIGO:
+
+function* logout(action) {
+    yield localStorage.removeItem('token'); //'YIELD' DEVE SER CHAMADO EM CADA 'step' DE __FUNÇÕES DE TIPO 'GENERATOR' (generator functions).... (generator functions === SÃO OBJETOS 'SAGA', na verdade...)
+    yield localStorage.removeItem('expirationDate');
+    yield localStorage.removeItem('email');
+    yield localStorage.removeItem('userId');
+    yield put(
+        {
+            type: authActionTypes.AUTH_LOGOUT
+        }
+    );
+}
+
+
+
+
+------------------------
+
+
+
+
+
+
+
+
+NOSSO 'SAGA-GENERATOR '
+
+
+
+NÃO PARECE MT ÚTIL ATÉ AGORA....
+
+
+
+
+
+
+
+
+
+---> MAS PRECISAMOS 
+
+
+HOOKAR 
+
+NOSSO 
+
+'SAGA'
+
+AO 
+
+NOSSO 
+STORE DO REDUX... --> 
+
+para 
+
+fazer isso,
+
+
+
+PRECISAMOS 
+
+IR 
+
+ATÉ 
+
+O LUGAR
+ 
+ EM QUE 
+
+ __cRIAMOS NOSSA _ STORE,
+
+
+
+
+ LÁ 
+
+ EM 
+
+
+
+'index.js'... ---> 
+
+
+E LÁ ,
+
+
+EU NÃO VOU QUERER CRIAR 
+
+APENAS 
+
+A 
+
+STORE,
+
+
+MAS 
+TAMBÉM
+
+
+
+
+VOU QUERER ___ REGISTRAR__ MINHAS 
+
+'sagas', 
+
+FAZER COM QUE 
+
+
+O 
+
+STORE FIQUE KINDOF 'aware of'...( ele deve ter conhecimento da existência DESSAS __SAGAS__)...
+ 
+
+
+
+----> PQ VAMOS QUERER QUE NOSSA STORE CONSIGA 'USAR' essas 
+
+sagas...
+
+
+
+
+
+
+
+
+
+
+
+--> PARA ISSO,
+
+O PROFESSOR 
+
+VAI IMPORTAR,
+
+
+EM 
+'index.js',
+
+
+
+
+UM OBJETO 
+
+
+ESPECIAL 
+
+CHAMADO 
+
+DE 
+
+
+'createSagaMiddleware',
+
+
+
+
+
+LÁ DO PACOTE 
+
+'redux-saga'....
+
+
+ex:
+
+
+
+
+import createSagaMiddleware from 'redux-saga';
+
+
+
+
+
+
+
+----------------------------------------
+
+
+
+DEPOIS DISSO ,
+
+O PROFESSOR TAMBÉM 
+
+VAI IMPORTAR OUTRA COISA, 
+
+VAI IMPORTAR 
+
+
+
+A 'SAGA' QUE RECÉM 
+CRIAMOS,
+
+E QUE 
+
+AGORA EXPORTAMOS 
+
+em 
+
+'auth.js',
+
+por meio 
+
+de um 
+
+código 
+
+de 
+
+
+
+
+
+'export function* logout(action) {
+    ...
+}'
+
+
+
+
+
+
+
+EX:
+
+
+
+import createSagaMiddleware from 'redux-saga';
+import authSagas from './store/sagas/auth';
+
+
+
+
+----------------------------
+
+
+EX:
+
+
+
+import createSagaMiddleware from 'redux-saga';
+import * as authSagas from './store/sagas/auth';
+
+
+
+
+-----------------------------------------------------------
+
+
+
+
+
+COM ISSO 
+
+IMPORTADO,
+
+podemos 
+
+TAMBÉM 
+
+
+
+EXECUTAR 
+
+
+
+O MÉTODO 
+'createSagaMiddleware'
+
+
+LÁ EM 
+
+'index.js',
+
+ E ENTÃo 
+
+
+ ARMAZENAR 
+
+ O RESULTADO DESSA EXECUÇÃO 
+
+ EM 
+ UMA CONSTANTE 
+
+ DE 
+
+ nome 
+
+ 'sagaMiddleware'...
+
+
+
+ ex:
+
+
+
+ const sagaMiddleware = createSagaMiddleware();
+
+
+
+ ---------------------------------------
+
+
+
+
+
+
+ NOSSO CÓDIGO DE 'index.js'
+
+
+ ESTÁ FICANDO ASSIm:
+
+
+
+
+-------------------------------------------
+
+
+ import createSagaMiddleware from 'redux-saga';
+import * as authSagas from './store/sagas/auth';
+
+
+const logger = (store) => {
+  return (next) => {
+    return (action) => {
+      const result = next(action);
+      return result;
+    };
+  };
+};
+
+
+
+
+ const sagaMiddleware = createSagaMiddleware();
+
+
+const composeEnhancers = process.env.NODE_ENV === 'development' ?  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;  ///versão óptima de ATIVAÇÃO DO 'REDUX DEV TOOLS'... --> por meio deste código, o redux devtools só vai funcionar/realmente mostrar o 'redux state' nas redux devtools SE NÓS REALMENTE ESTIVERMOS DURANTE 'dev mode', e não PRODUCTION MODE....
+
+
+const reducer = combineReducers({
+      burger: BurgerReducer,
+      order: orderReducer,
+      loading: orderReducer,
+      auth: authReducer
+     
+})
+
+
+
+const store = createStore(
+  reducer,
+  composeEnhancers(applyMiddleware(logger, thunk)) 
+); 
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+
+
+--------------------------------
+
+
+
+
+
+CERTO...
+
+
+E 
+LÁ EMBAIXO,
+
+em que 
+temos 
+
+'applyMiddleware',
+
+
+
+VAMOS 
+
+
+QUERER 
+
+ADICIONAR 
+
+'sagaMiddleware'
+
+COMO SEGUNDO parâmetro 
+
+de 
+
+'applyMiddleware',
+
+dentro 
+
+daquela 
+
+EXECUÇÃO DE 
+
+'createStore' que possui o método de 'composeEnhancers'...
+
+
+
+
+ex:
+
+
+
+
+
+ import createSagaMiddleware from 'redux-saga';
+import * as authSagas from './store/sagas/auth';
+
+
+const logger = (store) => {
+  return (next) => {
+    return (action) => {
+      const result = next(action);
+      return result;
+    };
+  };
+};
+
+
+
+
+ const sagaMiddleware = createSagaMiddleware();
+
+
+const composeEnhancers = process.env.NODE_ENV === 'development' ?  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;  ///versão óptima de ATIVAÇÃO DO 'REDUX DEV TOOLS'... --> por meio deste código, o redux devtools só vai funcionar/realmente mostrar o 'redux state' nas redux devtools SE NÓS REALMENTE ESTIVERMOS DURANTE 'dev mode', e não PRODUCTION MODE....
+
+
+const reducer = combineReducers({
+      burger: BurgerReducer,
+      order: orderReducer,
+      loading: orderReducer,
+      auth: authReducer
+     
+})
+
+
+
+const store = createStore(
+  reducer,
+  composeEnhancers(applyMiddleware(logger, thunk, sagaMiddleware)) 
+); 
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+
+
+
+---------------------------
+
+CERTO....
+
+
+
+
+
+--> FINALMENTE,
+
+
+DEPOIS 
+DISSO TUDO, 
+
+
+ O PROFESSOR DIZ QUE 
+
+ PODEMOS 
+
+
+
+
+ CHAMAR 
+
+
+ ESSE 
+
+ 'sagaMiddleware' (QUE AGORA, depois daquela escrita ali, ESTARÁ __ REGISTRADO _ NO 'STORE') 
+
+ PARA 
+
+ __ENTAÕ 
+
+
+
+
+ RODAR O MÉTODO 'run()' 
+
+
+ DENTRO 
+
+ DESSE OBJETO 'sagaMiddleware'...
+
+
+
+
+
+ ex:
+
+
+ sagaMiddleware.run();
+
+
+
+
+
+ ------------------------
+
+
+
+ POR FIM,
+
+
+ ESSE '.run()'
+
+ EXIGE UM PARÂMETRO, UM ARGUMENTO,
+
+ QUE 
+
+ SERÁ 
+ JUSTAMENTE 
+
+
+ A 
+ 'SAGA' que vamos querer usar/executar no nosso código... ---> 
+
+
+
+
+
+
+
+ para isso, vamos 
+
+ passar 
+
+
+ como parÂmetro 
+
+
+
+ a 'saga' QUE RECEM IMPORTAMOS 
+
+
+ NESTE ARQUIVO 'index.js',
+
+
+ por meio da sintaxe:
+
+
+
+
+
+----------------------------------
+
+ sagaMiddleware.run(authSagas.logout);
+
+
+
+--------------------------------------
+
+
+
+ ------------------------
+
+
+
+
+ CÓDIGO FICOU ASSIM:
+
+ 
+const composeEnhancers = process.env.NODE_ENV === 'development' ?  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;  ///versão óptima de ATIVAÇÃO DO 'REDUX DEV TOOLS'... --> por meio deste código, o redux devtools só vai funcionar/realmente mostrar o 'redux state' nas redux devtools SE NÓS REALMENTE ESTIVERMOS DURANTE 'dev mode', e não PRODUCTION MODE....
+
+
+
+const sagaMiddleware = createSagaMiddleware(); ///redux-saga //1
+
+
+
+
+
+
+
+const reducer = combineReducers({
+      burger: BurgerReducer,
+      order: orderReducer,
+      loading: orderReducer,
+      auth: authReducer
+     
+})
+
+
+
+const store = createStore(
+  reducer,
+  composeEnhancers(applyMiddleware(logger, thunk, sagaMiddleware)) //código redux (REDUX AVANÇADO ---> é o segundo parâmetro, que vai IMPLEMENTAR/APLICAR AQUELES MIDDLEWARES NO FLOW DE NOSSO CÓDIGO.... --> OBS: middlewares são sempre executados/exercem efeitos __ENTRE A ETAPA DO __DISPATCH__ DA ACTION __ E O EFETIVO RECEBIMENTO DESSA ACTION LÁ NO REDUCER...)
+);  //REDUX-SAGA //2//
+
+
+
+sagaMiddleware.run(authSagas.logout);///REDUX-SAGA //3///
+
+
+
+
+------------------------------------
+
+
+
+
+VOLTAMOS 
+
+
+
+AO 
+
+
+
+
+NOSSO APLICATIVO... ---> salvamos tudo anteriormente... ---> 
+
+
+agora 
+
+
+VAMOS 
+
+
+
+VER ALGO INTERESSANTE
+ 
+ NO 
+
+ REDUX DEV TOOLS... ---> vamos observar que 
+
+ '
+
+ 'AUTH_LOGOUT' (essa action aí)
+
+
+ FOI 
+
+ EXECUTADO/DISPATCHEADO
+  
+
+  NO 
+
+  STARTUP DE NOSSA PÁGINA ___ UM PUNHADO DE VEZES__....
+
+
+  --------> ISSO FAZ SENTIDO PQ NO NOSSO 
+
+  'ACTION CREATOR' 
+
+  de 
+
+  'authCheckState'
+
+
+  NÓS ___TAMBÉM ___ FAZEMOS 
+
+  DISPATCH 
+
+  DE 
+
+  'logout'
+  quando 
+
+
+
+  'token' não é encontrada..... ('if(!token)' ....)
+
+
+
+  ex:
+
+
+
+   
+
+   export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token'); 
+      if(!token) {
+        // console.log('test');
+        dispatch(authLogout()) ////EIS O CÓDIGO EM QUESTÃO.
+      } else {
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate <= new Date()) {
+          dispatch(authLogout());
+        } 
+        else {
+          const userId = localStorage.getItem('userId');
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, userId, email)); ///////// esse userId é aquele 'gettado' logo acima....
+          // dispatch(checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds()));  ////este código NÃO VAI FUNCIONAR... vai introduzir um PROBLEMA NO NOSSO CÓDIGO: nosso código vai sempre executar 'auth_logout'... ---------> ao usar 'getTime()' em vez de 'getSeconds()', nós vamos obter A DIFERENÇA ENTRE O 'FUTURO' E O 'PRESENTE' (que é o tempo até a token expirar, basicamente) EM __MILISSEGUNDOS___, que é exatamente o que queremos (pq a unidade de tempo usada GERALMENTE no javascript é MILISSEGUNDOS.... os timers/setTimeouts também funcionam com ms, e é por isso que vamos utilizar '.getTime()' aqui....)
+          dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));  ////devemos WRAPPAR essa expressão em parênteses PARA PODER ENTÃO A DIVIDIR por 1000... ---> e dividimos por 1000 pq LOGO DEPOIS ELA SERÁ MULTIPLICADA por '1000', lá na action de checkAuthTimeout()...
+        }
+  
+      }
+  }
+}
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+
+
+PARA PROPÓSITOS DE __TESTING___, 
+
+devemos 
+
+
+remover 
+todos 
+
+esses 
+
+dispatches 
+de 
+'auth_logout' derivados 
+
+DESSE ACTION CREATOR EM 
+
+'auth.js'...
+
+ 
+
+
+
+
+ --> AGORA, SE VOLTARMOS AO NOSSO 
+
+ APP 
+
+ E 
+
+ RECARREGARMOS 
+
+ A PÁGINA,
+
+ AINDA 
+
+ VEREMOS 
+
+ '
+ auth_logout' __ SENDO 
+
+ DISPATCHEADO___ ---> isso é sinal 
+
+ DE QUE 
+
+
+ ___A NOSSA 'SAGA' 
+
+ de logout __FUNCIONOU_.... ----> ESSA ACTION
+
+
+
+ ESTÁ 
+
+ VINDO 
+
+ LÁ 
+
+ DE 
+
+NOSSA 
+
+'saga'... --> também devido ao código de 'sagaMiddleware.run(logout);', lá em 'index.js'...
+
+
+
+
+
+
+---------------------------O 
+
+
+SAGAS ESTÁ 
+
+FAZENDO ALGUMA COISA NO NOSSO CÓDIGO DAR __ERRADO__.... --> era um mistype 
+
+no 
+
+import... --> o import correto 
+
+é 
+
+'import xxx from 'redux-saga/effects',
+
+e o meu 
+
+estava como 
+
+'import xx from' REACT-saga/effects'...
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+SE COMENTARMOS 
+
+'sagaMiddleware.run(authSagas.logout)'
+
+PARA 
+
+FORA DO CÓDIGO,
+
+VEREMOS QUE 
+
+
+'auth_logout' DEIXARÁ DE SER DISPATCHEADo---> ISSO 
+
+
+NOS MOSTRA 
+
+
+QUE 
+
+
+
+
+UM SAGA/OS SAGAS __ SEMPRE ___ SÃO CHAMADOS 
+
+
+QUANDO 
+
+
+SÃO 
+
+EXECUTADOS ASSIM,
+
+dentro 
+
+do 
+
+'index.js' (elemento ROOT de nosso projeto)....
+
+
+--------------------------------------------
+
+
+
+
+----> CERTO... MAS O PROBLEMA É QUE 
+
+SEMPRE QUE 
+
+VOCÊ 
+
+CHAMA 
+
+
+'sagaMiddleware.run()',
+
+
+
+
+VOCÊ ___ RODA __ UM 'SAGA'... --> e isso NÃO PARECE SER MUITO ÚTIL... (pq queremos 
+
+conseguir rodar código ASSÍNCRONO com os sagas....)
+
+
+
+
+
+
+---> ISSO SIGNIFICA QUE AGORA, NO MOMENTO,
+
+
+SE 
+
+INICIARMOS NOSSO APP (inicializarmos qualquer página),
+
+
+
+O QUE 
+
+
+AQUELE 
+
+
+
+'sagaMiddleware.run()'
+
+VAI 
+
+FAZER É 
+
+SIMPLESMENTE __ 'LOGGAR PARA FORA' (deletar os dados no localStorage do usuário) 
+
+O USUÁRIO...
+
+
+
+(
+    isso pq nosso código dessa 'saga' é:
+
+
+
+          '''''''''''
+              yield localStorage.removeItem('token'); //'YIELD' DEVE SER CHAMADO EM CADA 'step' DE __FUNÇÕES DE TIPO 'GENERATOR' (generator functions).... (generator functions === SÃO OBJETOS 'SAGA', na verdade...)
+    yield localStorage.removeItem('expirationDate');
+    yield localStorage.removeItem('email');
+    yield localStorage.removeItem('userId');
+    yield put(
+        {
+            type: authActionTypes.AUTH_LOGOUT
+        }
+    );
+
+    ''''''''''''''''''
+
+
+
+
+
+
+)
+
+
+
+
+---> ELE REMOVE TODOS ESSES ITEMS,
+
+
+E AÍ 
+
+
+
+
+
+DISPATCHA 
+
+A 
+
+
+ACTION 
+
+de 
+
+'actionTypes.AUTH_LOGOUT'.... -----> e nós, OBVIAMENTE,
+
+
+NÃO QUEREMOS 
+
+RODAR 
+
+
+ESSA 
+
+'saga'
+
+EM 
+
+TODAS HIPÓTESES DE STARTUP.... --> não,
+
+
+EM VEZ DISSO,
+
+QUEREMOS 
+
+
+RODAR
+
+
+
+'''sagaMiddleware.run() ''''
+
+
+
+
+NOS LUGARES 
+
+
+
+
+
+DE NOSSO APP EM QUE 
+
+'authLogout()' (action creator QUE DISPATCHEAVA A ACTION DE 'AUTH_LOGOUT'..)
+
+
+
+ERA CHAMADO....
+
+
+------------------------------
+
+
+
+
+
+
+OK.... MAS ISSO É BASICAMENTE 
+
+A 
+MESMA COISA QUE 
+
+O 
+
+
+REDUX THUNK... (mas mais complexo, um pouquinho...)
+
+
+
+
+
+
+
+
+- MAS O OBJETIVO,
+
+A REAL RAZÃO DO REDUX-SAGA,
+
+
+É 
+
+FAZER:
+
+
+
+1) ___O DISPATCH __ DE UMA ACTION__ 
+
+
+
+
+2) FAZER O 'LISTEN TO' DESSA ACTION, POR MEIO DO REDUX SAGA (que se coloca ENTRE 
+O FLOW DE DADOS DA ACTION E O REDUCER... ele vira uma PONTE entre o REDUCER e a ACTION, manipulando/complementando 
+o DISPATCH DA ACTION...)
+
+
+
+
+3) FEITO ESSE 'LISTEN TO' pelo REDUX-SAGA,
+queremos 
+
+
+QUE 
+
+ESSE SAGA/SAGA-GENERATOR rode e execute código ESPECÍFICO (código assíncrono)
+
+UMA VEZ 
+
+QUE 
+ESSA ACTION FOR RECONHECIDA por ele...
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+-------> FAREMOS ISSO, essa ESTRUTURAÇÃO, NA PRÓXIMA AULA....
+

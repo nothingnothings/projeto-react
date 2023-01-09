@@ -1,0 +1,434 @@
+
+
+
+
+
+
+--> 
+
+
+
+
+NÓS DEMOS UMA OLHADA NO COMPONENT 
+
+'CSSTransition'... --> 
+
+O PROFESSOR 
+
+
+NOS 
+
+
+
+EXPLICOU QUE DEFINIMOS 
+
+
+
+ESSE 
+
+'trunk' (aquela string lá), o 'estado base' 
+
+
+
+de nosso component,
+
+lá em 
+
+
+
+'classNames="..." '..
+
+
+
+
+
+
+
+
+
+
+
+--> E AÍ O PROFESSOR NOS EXPLICOU QUE 
+
+ISSO 
+
+
+
+
+É 'EXPANDIDO' em várias classes com aquele nome,
+
+lá em 
+
+
+
+'.module.css'... ->
+ 
+ (ex:
+ 
+ 
+ 'exemplo-enter',
+ 
+ 'exemplo-enter-active',
+  
+  etc etc....
+  )
+
+
+
+
+
+
+---> CERTO.... LOGO DEPOIS DISSO,
+
+APRENDEMOS QUE ___ O CSS MODULES__ NÃO FUNCIONA COM ESSA SINTAXE da 
+
+'string'/'trunk' na definição 
+
+de 
+
+
+
+'classNames'... ---> PARA 
+
+
+
+___CONTORNAR ESSE PROBLEMA,
+
+
+APRENDEMOS 
+
+QUE 
+
+
+DEVE-SE 
+
+
+ESCREVER ALGO COMO ISTO:
+
+
+
+
+        classNames={
+            {
+                enterActive: ModalStyle.ModalEnterActive,
+                enterDone: ModalStyle.ModalEnter,
+                exitActive: ModalStyle.ModalExitActive,
+                exitDone: ModalStyle.ModalExit
+            }
+        }
+
+
+---------------
+
+
+
+ESTE VALOR-OBJETO, passado ao 'classNames',
+
+lá 
+
+em 
+
+'CSSTransition',
+
+
+
+
+VAI 
+
+
+____ATRIBUIR/ASSIGNAR___ 
+
+
+
+CADA 
+
+'state' (como 'enterActive', 'enterDone', etc etc)
+
+
+
+
+A UM ESTILO QUE 
+
+DEFINIMOS 
+
+
+LÁ 
+
+
+EM 
+
+'Modal.module.css'...
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+Ex:
+
+
+
+
+.ModalEnter {
+
+}
+
+
+.ModalEnterActive {
+    animation: openModal 0.4s ease-out forwards;
+}
+
+
+
+
+
+.ModalExitActive {
+    animation: closeModal 1s ease-out forwards;
+}
+
+.ModalExit {
+
+}
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+
+professor agora nos diz justamente isto,
+
+que podemos
+definir 
+
+
+
+um OBJETO, objeto em que 
+
+PODEMOS 
+
+DEFINIR MANUALMENTE 
+
+VÁRIAS 
+
+
+CSS CLASSES (ex: 'ModalExitActive' ) QUE 
+
+DEVEM 
+
+
+SER UTILIZADOS 
+
+
+__PARA ___ CADA UM DOS DIFERENTES 'HOOKS'... 
+
+
+
+
+
+
+
+
+--> como exemplo disso,
+
+
+professor 
+
+
+escreve 
+
+
+
+
+---------------------
+
+
+enter:
+
+
+
+enterActive:
+
+
+
+exit:
+
+
+
+
+exitActive:
+
+
+--------------------
+
+
+
+
+
+
+CERTO... (mas isso aí difere um pouco daquiloq que 
+
+escrevemos/vimos no post do github, em que 
+
+
+'enter' era 'enterDone', e exit era 'exitDone'...)
+
+
+
+
+
+
+
+
+
+--> PROFESSOR TAMBÉM NOS INFORMA QUE 
+
+
+EXISTE OUTRA PROPRIEDADE/HOOK,
+
+o 
+
+'appear',
+que 
+
+É __ USADO __ QUANDO ALGO APARECE (é montado no DOM)
+
+PELA __PRIMEIRA___ VEZ NA PÁGINA... (como a h1 tag de 'React Animations', e o button de className 'Button' --> poderíamos ANIMAR ISSO usando esse 'appear'...)
+
+
+
+
+
+
+
+ou seja,
+
+
+
+
+eles todos seriam assim:
+
+
+
+
+
+
+
+
+
+
+
+-------------------------
+
+
+enter:
+
+
+
+enterActive:
+
+
+
+exit:
+
+
+
+
+exitActive:
+
+
+appear:
+
+
+appearActive:
+
+
+
+--------------------
+
+
+
+
+
+
+
+----> SE VOCê NÃO QUER 
+
+DEFINIR 
+NADA 
+
+EM 
+
+'enter',
+
+você nem precisa escrever seu código...
+
+
+
+
+
+
+---> ok... mas podemos 
+
+especificar as classes css que queremos utilizar... (E então escapar do 
+
+'schema' de usar 
+
+A TRUNK, que ___NÃO FUNCIONA COM CSS MODULES__...).
+
+
+
+
+-------------------------
+
+
+
+
+
+OK,
+
+
+
+
+
+
+AS ANIMAÇÕES AINDA VÃO FUNCIONAR COMO ANTES,
+
+NO NOSSO EXEMPLO,
+
+mas 
+
+agora 
+
+com 
+
+esse 
+
+recurso 
+de 
+
+'assignar css classes' 
+
+aos states/hooks de nosso component 
+
+'CSSTransition'....
+
+
+
+
+
+---> isso é um recurso de FLEXIBILIDADE,
+
+no final das contas...
+

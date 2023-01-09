@@ -1,0 +1,635 @@
+
+
+
+
+
+
+-------> AGORA QUE APRENDEMOS SOBRE COMO CARREGAR COMPONENTS 
+
+
+
+no 
+
+'Route', 
+
+
+
+
+
+DEVEMOS ADICIONAR MAIS ROUTES 
+
+
+no nosso projeto, 
+
+ROUTES 
+
+
+PARA 
+
+RENDERIZAR DIFERENTES 
+
+
+COMPONENTS 
+
+DE ACORDO 
+
+
+COM O 
+
+PATH 
+
+
+ACESSADO PELO USUÁRIO... -----> por exemplo,
+
+
+vamos definir uma 
+
+ROUTE 
+
+para 
+
+
+
+A PÁGINA/container de 
+
+
+'new-post'... --------> PARA ISSO O PROFESSOR VAI SIMPLESMENTE 
+
+DUPLICAR 
+
+
+a route 
+
+
+de '/', aquela route dos POSTS (Que renderiza os posts COMUNS)
+
+
+
+
+E ENTÃO
+
+
+
+A EDITAR 
+
+
+PARA 
+
+QUE 
+
+SE 
+
+TORNE
+ 
+
+ A 
+
+ DE 
+
+
+ 'new-post'...
+
+
+
+ ex:
+
+
+
+ <Route path="/new-post' exact component={} />
+
+
+
+
+
+ E, AQUI, 
+
+O PROFESSOR
+
+DIZ QUE 
+
+
+PODEMOS
+
+
+___rEMOVER___ o 'exact', isso 
+
+pq 
+
+
+AQUI 
+
+NÓS 
+
+VAMOS QUERER, PROVAVELMENTE, 
+
+
+____fAZER HANDLE/MANAGE/FAZER ESSE ROUTE SER RESPONSÁVEL 
+
+__POR ___tODOS 
+
+
+OS PATHs/URLs que 
+
+COMECEM COM 
+
+
+'/new-post' (e não só 1 ÚNICO PATH/URL 'new-post', estático... ---> pq talvez existam SUBDIVISÕES de new-post, como '/new-post/1'... ---> se formos codar algo assim no futuro, esse boolean value de 'exact' não pode ficar nessa 'Route'...)
+
+
+
+
+
+
+---> 
+
+
+CERTO,
+
+
+E AQUI,
+
+AGORA,
+
+
+O COMPONENT 
+
+
+NÃO SERÁ 
+
+MAIS 
+
+
+'Posts',
+
+
+e sim
+
+SERÁ
+
+'NewPost',
+
+
+QUE 
+
+DEVERÁ 
+
+
+SER IMPORTADO 
+
+
+PARA
+
+O CONTAINER 
+
+de 
+
+
+'Blog.js'....
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+NOSSA... E ISSO ___rEALMENTE ___ FUNCIONA... QUE FÁCIL!
+
+
+
+
+
+CÓDIGO FICOU ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import { Route } from 'react-router-dom';
+
+import BlogStyle from './Blog.module.css';
+
+import Posts from './Posts/Posts';
+
+import NewPost from '../../containers/Blog/NewPost/NewPost'
+
+
+
+
+class Blog extends Component {
+
+
+
+
+
+ render () {
+    
+
+        return (
+            <div className={BlogStyle.Posts}>
+                <header>
+                    <nav>
+                        <ul  style={{
+                            listStyle: 'none',
+                            margin: '0',
+                            padding: '0', 
+                            display: 'flex row',
+                            justifyContent: 'center'
+                        }}>
+                            <li style={{
+                                    display: "inline-block",
+                                    margin: "20px"
+                            }}><a style={{
+                                textDecoration: 'none', 
+                                color: 'black'
+                            }}    href="/" >Home</a></li>
+                            <li style={{
+                                    display: "inline-block",
+                                    margin: "20px"
+                            }}><a  style={{
+                                textDecoration: 'none', 
+                                color: 'black'
+                            }} href="/new-post">New Post</a></li>
+                        </ul>
+                    </nav>
+                </header>
+                   {/* <Posts /> */}
+                                                
+                 <Route exact path="/" component={Posts} />
+
+
+                <Route path="/new-post" component={NewPost}  />
+
+
+
+
+
+
+---------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+SALVAMOS TUDO E RECARREGAMOS... FUNCIONA.  ---> quando clicarmos 
+
+
+em 
+
+'New Post',
+
+veremos 
+
+
+
+A '''PÁGINA'''/CONTAINER 
+
+
+de 
+
+'NewPost'....  --------> ISSO 
+
+
+JÁ 
+
+NOS MOSTRA 
+
+
+COMO 
+
+O 'ROUTING' FUNCIONA...
+
+
+
+
+
+
+
+
+
+--------> AGORA, NO MOMENTO, NOSSO APLICATIVO TEM UM 
+
+__PROBLEMA__, NO ENTANTO... -----------> 
+
+
+O PROBLEMA É:
+
+
+
+
+quando 
+
+
+clicamos 
+
+nos links de 
+
+
+
+'Home' 
+
+
+e 
+
+'New Post',
+
+
+professor 
+
+
+
+aponta que 
+
+
+ELES REALMENTE PODEM SER CLICADOS.... --> contudo, 
+
+
+
+
+esses links aí são ANCHOR TAGS... --> 
+
+
+
+e quando clicamos 
+
+nelas,
+
+
+
+NOSSO APLICATIVO ___aCTUALLY____ RECARREGA,
+
+
+
+o que 
+
+
+
+
+NAO É O QUE DESEJAMOS... -----> isso pode ser visto com 
+
+
+
+a voltinha/icone de reload na parte de cima do chrome,
+
+que 
+
+brevemente vai para um X e depois volta para a setinha...
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+CERTO... E ISSO NÃO É UM PROBLEMA AQUI, nesse aplicativo,
+
+É CLARO,
+
+
+
+MAS 
+
+
+TEORICAMENTE UM ___APLICATIVO___ QUE 
+
+
+____RECARREGA____ 
+
+
+SIGNIFICA QUE ___sEU CÓDIGO JAVASCRIPT ___ ESTÁ 
+
+'COMEÇANDO DE NOVO', e, portanto, isso 
+
+
+SIGNIFICA/SIGNIFICARÁ 
+
+
+QUE 
+
+TODO 
+
+
+O 
+
+'APPLICATION STATE' 
+
+
+PRÉVIO __SERÁ TOTALMENTE PERDIDO__... ------------> 
+
+
+
+
+E ISSO 
+
+É 
+
+
+__RARAMENTE__ O FENÔMENO QUE 
+
+VOCE QUER
+
+NO SEU APP REACT... ---------> 
+
+
+
+
+
+VOCE GERALMENTE VAI QUERER QUE, ENQUANTO O USUÁRIO 
+
+ESTIVER 
+
+NAVEGANDO NO SEU APP,
+ 
+
+ VOCE 
+
+ VAI QUERER 
+
+
+ QUE 
+
+
+ A PÁGINA ___NÃO SEJA RECARREGADA___;
+
+ VOCÊ VAI QUERER 
+
+ QUE 
+
+
+ APENAS __aLGUNS PEDACINHOS DA PÁGINA SEJAM 
+
+ RE-RENDERIZADOS, NAS PARTES EM QUE 
+
+ ISSO REALMENTE É NECESSÁRIO... ------> 
+
+e essas partes 
+
+que 
+
+são 
+
+RE-RENDERIZADAS
+
+
+VAO 
+
+APARENTAR QUE 
+
+O USUÁRIO CARREGOU UMA NOVA PÁGINA,
+
+mas ainda
+será 
+
+a página 
+
+antiga,
+
+só com uns components novos.... ------> CERTO...
+
+
+
+
+
+
+
+
+ISSO QUER DIZER ___qUE NÓS PRECISAMOS MUDAR O COMPORTAMENTO DE NOSSA PÁGINA,
+
+__dEVEMOS FAZER COM QUE 
+
+
+NÓS 
+
+DEIXEMOS DE TER 
+
+
+UM 
+
+'LINK COMUM' 
+
+nessa toolbar (<nav>)
+
+
+
+ali de cima,
+
+
+
+deixemos de ter um link que recarregue 
+
+
+a página,
+
+
+
+
+PARA
+QUE ENTÃO 
+
+
+TENHAMOS UMA PÁGINA 
+
+QUE 
+
+
+AO 
+
+
+'TROCAR DE PATH'
+
+
+
+VAI 
+
+__PREVENIR__ SEU PRÓPRIO REBUILD,
+
+em vez disso deixando
+
+ao 
+
+'react router' 
+
+
+a 
+tarefa
+ 
+ de 
+
+ RE-RENDERIZAR 
+
+ AS 
+
+
+ PARTES 
+
+ DA PÁGINA/DOM
+
+
+
+ QUE 
+
+
+ DEVEM 
+
+ SER RE-RENDERIZADAS/ALTERADAS... -->
+
+
+
+ é o 'react-router-dom' QUE 
+
+ VAI comunicar 
+
+ AO 
+
+ REACT 
+
+ 
+
+ QUAIS PARTES 
+
+ DO DOM 
+
+
+ PRECISAM SER RE-RENDERIZADAS...
+
+
+
+
+
+--> DEVEMOS VER COMO FAZER ISSO NA PRÓXIMA LICAO... --> vamos
+ver 
+
+
+
+
+COMO 
+
+'FICAR DENTRO DE NOSSO APLICATIVO', COMO 
+
+FAZER ISSO PARA ENTÃO EVITAR ___ O SEU RELOAD__ A TODA HORA...

@@ -1,0 +1,2759 @@
+
+
+
+
+
+
+
+
+
+
+--> certo.... professor quer que o botão 
+
+
+
+'Order' lá 
+
+
+em 'http://localhost:3000/checkout/contact-data'
+
+
+
+
+
+EFETIVAMENTE __ENVIE __ UM POST REQUEST__ AO NOSSO SERVIDOR DO FIREBASE...
+
+
+
+
+
+
+
+
+
+para isso, vamos precisar de um MÉTODO NO BOTÃO DE 
+
+
+'Order'...
+
+
+
+
+
+
+
+
+
+
+
+
+-> aqui, porém, TEMOS UM PROBLEMA____... ONDE VAMOS SETTAR ESSE 'METHOD'? ---> 
+
+
+
+provavelmente no component 'Checkout', eu diria... (Que é o outro container, além de 'BurgerBuilder'....)
+
+
+
+
+
+------------------------
+
+
+
+
+OK, EU TENTEI FAZER UM MONTE DE COISAS...E TUDO DEU ERRADO...
+
+
+
+
+
+--------------------------
+
+
+Professor quer que nossa Order
+___REALMENTE_ 
+
+SEJA 
+
+SUBMITTADA 
+
+
+QUANDO CLICAMOS 
+
+NO COMPONENT 
+
+'
+Button' 
+
+
+lá 
+
+EM 
+
+
+'ContactData', lá naquele botão 'Order'....
+
+
+
+
+
+
+
+
+
+
+
+--> PARA ISSO, PROFESSOR FAZ O QUE NÃO HAVÍAMOS PENSADO ANTES:
+
+
+ELE __CRIA UM MÉTODO 
+
+'ORDERHANDLER' 
+
+
+
+
+lá 
+
+no 
+
+'ContactData'...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> certo...
+
+
+
+
+ficará 
+
+
+
+
+'orderHandler = () => {
+
+}'
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+
+
+
+
+ISSO FEITO, NAQUELE Elemento 
+
+'button'
+
+QUE TEMOS ALI EMBAIXO, jsx,
+
+
+NÓS 
+
+
+VAMOS 
+
+
+ASSIGNAR 
+
+ESSE 
+
+
+
+
+método 
+
+'OrderHandler'
+
+
+
+
+EM UM PROP/NO PROP JÁ BEM CONHECIDO de 'clicked', que definimos/'expect' lá 
+
+
+NO COMPONENT 
+
+
+
+'Button'...
+
+
+
+
+ex:
+
+
+
+
+orderHandler = () => {
+
+}
+
+
+
+
+
+
+
+
+
+
+<Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
+
+
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+CERTO.... ------> portanto, 
+
+esse 
+
+'orderHandler'
+
+
+vai ser executado.... -----> É EVIDENTE QUE 
+
+
+VAMOS 
+
+
+PRECISAR DE ___aCESSO ___ AOS 'ingredients'
+
+
+DE NOSSO 
+BURGER,
+
+nesse 
+
+'orderHandler'... ------>E vamos precisar 
+
+
+
+DA 
+
+
+
+
+DATA 
+SOBRE OS 
+
+
+'INGREDIENTS'
+
+
+
+NO __NOSSO COMPONENT 'ContactData', 
+PARA QUE 
+
+
+POSSAMOS ENVIAR NOSSA ORDER DATA... ------------> E AQUI, NESTE LUGAR,
+
+
+
+
+O PROFESSOR 
+
+
+QUER 
+
+
+
+NOS _____MOSTRAR UM PEQUENO ___ TRUQUE__, UM TRUQUE MUITO, MAS __MUITO __ ÚTIL.... ---------> 
+
+
+
+
+
+O PROFESSOR 
+
+
+APONTA QUE 
+
+
+
+___JÁ NOS MOSTROU TODOS OS 'BUILDING BLOCKS' 
+
+para fazer essa gambiarra (que é USAR O STATE DE UM COMPONENT QUALQUER EM __OUTRO COMPONENT, DISTINTO)... ----> 
+
+
+
+
+
+Mesmo que ele já tenha nos mostrado como fazer isso, ainda 
+
+não é algo natural para nós....
+
+
+
+
+
+
+
+
+
+---> professor explica que DEVEMOS IR ATÉ 
+
+O CONTAINER
+
+
+'CHECKOUT'... ----> código de checkout:
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+class Checkout extends Component {
+  state = {
+    ingredients: {
+      bacon: 1,
+      cheese: 1,
+      meat: 1,
+      salad: 1,
+    },
+  };
+
+  componentDidMount() {
+
+   const query = new URLSearchParams(this.props.location.search);
+
+    console.log(query);
+
+    console.log(query.entries());
+
+    const ingredients = {};
+
+    for (let param of query.entries()) {
+      console.log(param);
+      //    ingredients[param[0]]
+
+      ingredients[param[0]] = +param[1];
+    }
+
+    this.setState({
+      ingredients: ingredients,
+    });
+  }
+
+  checkoutCancelledHandler = () => {
+    this.props.history.goBack();
+  };
+
+  checkoutContinueHandler = () => {
+    this.props.history.replace('/checkout/contact-data');
+  };
+
+
+  render() {
+    console.log(this.state);
+
+    return (
+      <div>
+        <CheckoutSummary
+          ingredients={this.state.ingredients}
+          checkoutCancelled={this.checkoutCancelledHandler}
+          checkoutContinue={this.checkoutContinueHandler}
+        />
+        <Route
+          path={this.props.match.path + '/contact-data'}
+          component={ContactData}
+        />
+      </div>
+    );
+  }
+}
+
+export default Checkout;
+
+
+----------------------------------
+
+
+
+
+nesse 
+
+
+
+
+component
+
+
+
+'Checkout', é ÓBVIO QUE O STATE DELE __sERÁ ALTERADO__ PARA FICAR __ IGUAL AO 
+
+
+
+STATE EM 
+
+
+'BurgerBuilder'....
+
+
+
+
+
+
+
+
+
+NESSE LUGAR, EM 
+
+'checkout',
+
+
+LÁ NO __RENDER__ DE NOSSAS ROUTES,
+
+
+naquele lugar em 
+
+
+QUE 
+
+INCLUÍMOS/VINCULAMOS NOSSO COMPONENT na route
+
+ASSIm:
+
+
+
+
+
+    return (
+      <div>
+        <CheckoutSummary
+          ingredients={this.state.ingredients}
+          checkoutCancelled={this.checkoutCancelledHandler}
+          checkoutContinue={this.checkoutContinueHandler}
+        />
+        <Route
+          path={this.props.match.path + '/contact-data'}
+          component={ContactData} ///////AQUI, NESTE LUGAR...
+        />
+      </div>
+    );
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+nesse lugar aí... (eu acredito que a coisa que o professor nos mostrará 
+
+É ___ O ANEXO/APPEND___ DE PROPS A UMA CONSTANTE QUE 
+
+ESTÁ 
+
+SEGURANDO 
+
+
+CÓDIGO JSX DE NOSSO COMPONENT... ----> e esses props serão, por exemplo, 
+
+
+O ___STATE____ DE 
+
+
+'Checkout', que precisamos que seja passado 
+
+
+ao component 
+
+'ContactData', pq esse state contém nossa propriedade 'ingredients', que é o que 
+
+será enviado ao servidor por meio de um 'axios.post'....)
+
+
+
+
+
+
+
+
+
+
+
+
+NÃO.... MAS ESSE CÓDIGO AÍ NÃO FUNCIONOU... ----->
+
+
+
+
+ex( do código que NÃO FUNCIONOU):
+
+
+  render() {
+
+    const contactDataWithIngredients = (
+      <ContactData ingredients={this.state.ingredients}/>
+    )
+
+
+
+    console.log(this.state);
+
+    return (
+      <div>
+        <CheckoutSummary
+          ingredients={this.state.ingredients}
+          checkoutCancelled={this.checkoutCancelledHandler}
+          checkoutContinue={this.checkoutContinueHandler}
+        />
+        <Route
+          path={this.props.match.path + '/contact-data'}
+          component={contactDataWithIngredients}
+        />
+      </div>
+    );
+  }
+}
+
+export default Checkout;
+
+
+
+
+-------------------------------
+
+
+
+
+
+CERTO, MAS AGORA TUDO FAZ SENTIDO... É ÓBVIA A RAZÃO PARA ESSE NEGÓCIO NÃO ESTAR FUNCIONANDO/NÃO ESTAR 
+
+
+ACEITANDO 
+
+
+NOSSO ''COMPONENT MODIFICADO'... -------> 
+
+
+
+
+não vai funcionar PQ ___A COISA 
+
+QUE 
+
+DEVEMOS 
+
+DEFINIR 
+
+
+
+NAQUELa 
+
+
+'<Route />' não 
+
+é um 
+
+
+'component={}',
+
+
+
+E SIM 
+
+
+UM 
+
+
+'render={}'....   (pq o RENDER VAI NOS DEIXAR DEFINIR/RENDERIZAr ____ UM COMPONENT __ COM PROPS 
+
+
+ENFIADOS NO SEU MEIO... um component com props, um PROPS QUE VAI SEGURAR UM STATE, por exemplo...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+EIS O CÓDIGO EM QUESTÃO:
+
+
+
+
+
+
+
+
+
+
+
+class Checkout extends Component {
+  state = {
+    ingredients: {
+      bacon: 1,
+      cheese: 1,
+      meat: 1,
+      salad: 1,
+    },
+  };
+
+  componentDidMount() {
+
+    const query = new URLSearchParams(this.props.location.search);
+
+    console.log(query);
+
+    console.log(query.entries());
+
+    const ingredients = {};
+
+    for (let param of query.entries()) {
+      console.log(param);
+
+      ingredients[param[0]] = +param[1];
+    }
+
+    this.setState({
+      ingredients: ingredients,
+    });
+  }
+
+
+
+
+    
+
+
+
+
+  checkoutCancelledHandler = () => {
+    this.props.history.goBack();
+  };
+
+  checkoutContinueHandler = () => {
+    this.props.history.replace('/checkout/contact-data');
+  };
+
+
+  render() {
+
+    const contactDataWithIngredients = (
+      <ContactData ingredients={this.state.ingredients}/> ///////////EIS O CÓDIGO EM QUESTÃO.
+    )
+
+
+
+    console.log(this.state);
+
+    return (
+      <div>
+        <CheckoutSummary
+          ingredients={this.state.ingredients}
+          checkoutCancelled={this.checkoutCancelledHandler}
+          checkoutContinue={this.checkoutContinueHandler}
+        />
+        <Route
+          path={this.props.match.path + '/contact-data'} 
+           render={() => {       //////////////////////EIS O CÓDIGO EM QUESTÃO.
+                return contactDataWithIngredients;
+           }}                           
+        />
+      </div>
+    );
+  }
+}
+
+export default Checkout;
+
+
+
+
+--------------------------
+
+
+
+
+
+E ISSO AÍ REALMENTE VAI FUNCIONAR.... (vamos conseguir passar 
+
+o 
+
+
+props de 'ingredients', que segura 'this.state.ingredients', ao COMPONENT DE 
+
+
+'ContactData' renderizado a partir dessa route em 'Checkout'...)
+
+
+
+
+
+
+
+OBS:::: O PROFESSOR FEZ ALGO QUASE IGUAL, mas ele não fez outsource...
+
+
+ele simplesmente 
+
+escreveu
+ 
+
+
+
+
+ <Route path={this.props.match.path + '/contact-data'} render={() => (<ContactData ingredients={this.state.ingredients})} />
+
+
+
+
+
+
+
+
+ E TACOU FICHA...
+
+
+
+
+
+
+
+ ---------------------------------------
+
+
+
+
+
+ CERTO, ISSO SIGNIFICA QUE 
+
+
+ AGORA 
+
+VAMOS 
+
+
+TER 
+
+
+OS 
+
+DADOS 
+
+
+de 
+
+'this.state.ingredients'
+
+
+
+
+ARMAZENADOS EM UM PROP 
+
+'ingredients',
+
+
+no component 
+
+'ContactData'... 
+
+
+
+
+ 
+
+
+
+
+
+
+--> para garantir que esse flow de código do nosso projeto está funcionando, professor 
+
+escreve um console.log de 'this.props.ingredients' 
+
+LÁ 
+
+
+NO MÉTODO 
+
+
+'orderHandler'....
+
+
+
+ex:
+
+
+
+
+
+orderHandler = () => {
+    console.log(this.props.ingredients);
+}
+
+
+
+
+
+
+
+
+
+--------------------
+
+
+
+
+E SE NÓS DEIXARMOS ESSE CÓDIGO AÍ.... __NÃO VEREMOS NADA NO CONSOLE....________ NÃO VEREMOS 
+
+
+NADA NO CONSOLE PQ ____O COMPORTAMENTO ___ DEFAULT 
+
+DE 
+
+
+'RELOAD DE PÁGINA' 
+
+
+a partir 
+
+do SUBMIT EM UMA FORM (algo que é típico de qualquer código de webdesign, esse comportamento sempre é 
+
+o default, e você precisa o DESABILITAR 
+
+para conseguir ver coisas como CONSOLE.LOGS, por exemplo)...
+
+
+
+
+
+
+
+PARA CONSEGUIR __PREVENIR O __ DEFAULT (prevenir esse reload por meio do método 'preventDefault'),
+
+
+O PROFESSOR COLOCA/ESPERA UM PARÂMETRO DE 
+
+
+
+
+'event' 
+
+
+em 'OrderHandler', 
+
+tudo 
+
+para 
+
+
+poder então 
+
+
+escrever 
+
+
+
+'event.preventDefault()'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+orderHandler = (event) => {
+    event.preventDefault();
+}
+
+
+
+
+
+
+
+
+---------------------
+
+
+
+NA VERDADE, O CÓDIGO COMPLETO FICARÁ ASSIM:
+
+
+
+
+
+
+
+import React, { Component } from "react";
+
+import Button from '../../components/UI/Button/Button';
+
+
+import ContactDataStyle from './ContactData.module.css';
+
+
+class ContactData extends Component {
+
+
+    state = {
+        name: '',
+        email: '',
+        address: {
+            street: '',
+            postalCode: ''
+        }
+    }
+
+
+
+    orderHandler = (event) => {
+        event.preventDefault();
+            console.log(this.props.ingredients);
+    }
+
+
+
+    render() {
+
+        console.log(this.props.clicked)
+
+
+        return (
+                    
+    <div className={ContactDataStyle.ContactData}>
+    <h4>Enter your Contact Data</h4>
+        <form>
+        <input type="text" name="name" placeholder="Your Name" />
+        <input type="email" name="email" placeholder="Your Mail" />
+        <input type="text" name="street" placeholder="Street" />
+        <input type="text" name="postal" placeholder="Postal Code" />
+        <Button btnType="Success" clicked={(event) => {this.orderHandler(event)}}>ORDER</Button>
+        </form>
+    </div>
+        )
+    }
+
+
+
+}
+
+
+
+
+export default ContactData;
+
+
+
+
+---------------------------------------
+
+
+
+
+
+CERTO, E ISSO VAI REALMENTE FUNCIONAR,
+
+
+agora vamos 
+
+ver 
+
+o output no console dos INGREDIENTS 
+
+
+do nosso burger, do burger criado na página 
+
+'BurgerBuilder'...
+
+
+
+
+
+
+--> VEREMOS
+
+
+
+{bacon: 1, cheese: 2, meat: 5, salad: 0}   (exemplo).
+
+
+
+
+-----------------------------------
+
+
+OU SEJA, 
+
+CONSEGUIMOS OS INGREDIENTS, sucesso....
+
+
+
+
+
+COM OS INGREDIENTS SENDO PASSADOS, 
+
+
+
+
+O __'ACTUAL REQUEST', post request 
+
+ao 
+
+
+servidor,
+
+
+É ALGO BEM MAIS FÁCIL... ------->
+
+
+
+
+
+
+
+temos que 
+
+usar aquele 
+
+
+
+CÓDIGO QUE JÁ TEMOS, AQUELE CÓDIGO 
+
+
+NO '
+
+BurgerBuilder'...
+
+
+
+
+
+
+QUE É 
+
+
+
+
+este:
+
+
+
+
+
+
+
+  //   this.setState({
+  //     loading: true
+  //   })
+  
+  
+  // const orderData = {
+      
+  //     ingredients: this.state.ingredients,
+  //   price: this.state.totalPrice,
+  //     customer: {
+  //       name: 'Max schwarzmuller',
+  //       address: {
+  //         street: 'Teststreet 1',
+  //         zipCode: '41351',
+  //         country: 'Germany'
+  //       },
+  //       email: 'test@test.com'
+  //     },
+
+  //     deliveryMethod: 'fastest'
+  
+  
+  
+  // }
+  
+  
+  
+  // axiosOrder.post('/orders.json', orderData).then(
+
+  //   (response) => {
+  //     this.setState({
+  //       loading: false,
+  //       purchasing: false
+  //     });
+  //   }
+  // )
+  // .catch(error => {
+  //   this.setState(
+  //     {
+  //       loading: false,
+  //       purchasing: false
+  //     }
+  //   )
+  // }
+  // )
+
+
+
+
+
+
+
+
+---------------------------------------
+
+
+é claro que vamos ter que adaptar um pouco este código...
+
+
+
+
+
+TALVEZ ASSIM:
+
+
+
+
+
+
+        orderHandler = (event) => {
+
+                    event.prevenDefault();
+
+
+                                this.setState({
+                                         loading: true
+                                         })
+  
+  
+  const orderData = {
+      
+      ingredients: props.ingredients,
+    price: this.state.totalPrice,
+      customer: {
+        name: this.state.name,
+        email: this.state.email,
+            address: {
+          street: this.state.address.street,
+          postalCode: this.state.postalCode,
+        },
+      ,
+  
+  
+  
+  }
+  
+  
+  
+  axiosOrder.post('/orders.json', orderData).then(
+
+    (response) => {
+      this.setState({
+        loading: false,
+        purchasing: false
+      });
+    }
+  )
+  .catch(error => {
+    this.setState(
+      {
+        loading: false,
+        purchasing: false
+      }
+    )
+  }
+  )
+
+
+        }
+
+
+        }
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+É evidente que, para que nosso código funcione regularmente,
+ 
+ o professor vai adicionar uma propriedade 
+
+ 'loading' (será usada para um SPINNER...)
+  
+
+
+  no state de 
+
+  'ContactData' (ou seja, algo bem padrão, como fizemos no passado...)
+
+
+
+
+  eX:
+
+
+
+
+
+
+
+    state = {
+        name: '',
+        email: '',
+        address: {
+            street: '',
+            postalCode: ''
+        },
+        loading: false ////////eis o código em questão.
+    }
+
+
+
+
+
+          orderHandler = (event) => {
+
+                    event.prevenDefault();
+
+
+                                this.setState({
+                                         loading: true
+                                         })
+  
+  
+  const orderData = {
+      
+      ingredients: props.ingredients,
+    price: this.state.totalPrice,
+      customer: {
+        name: this.state.name,
+        email: this.state.email,
+            address: {
+          street: this.state.address.street,
+          postalCode: this.state.postalCode,
+        },
+      ,
+  
+  
+  
+  }
+  
+  
+  
+  axiosOrder.post('/orders.json', orderData).then(
+
+    (response) => {
+      this.setState({
+        loading: false,
+        purchasing: false
+      });
+    }
+  )
+  .catch(error => {
+    this.setState(
+      {
+        loading: false,
+        purchasing: false
+      }
+    )
+  }
+  )
+
+
+        }
+
+
+        }
+
+
+
+
+
+-------------------------
+
+
+
+
+O ÚNICO PROBLEMA, NESSE CÓDIGO INTEIRO,
+
+É 
+
+O 
+
+
+'price: this.state.totalPrice'... ------> NÓS AINDA 
+
+__NÃO TEMOS __ ESSA PROPRIEDADE/VALOR DESSA PROPRIEDADE __dISPONÍVEL___ DENTRO 
+
+
+
+DE 
+
+
+'ContactData'... -----> PROVAVELMENTE VAMOS TER QUE FAZER A MESMA COISA QUE 
+
+FIZEMOS COM O INGREDIENTS,
+
+
+passar esse negócio como prop 
+
+por meio de 
+
+algo como 
+
+
+'<Route render={() => {<ContactData propNameIdiota={this.state.totalPrice}}} />',
+
+
+
+ISSO 
+
+LÁ EM 
+
+
+
+'Checkout' (que é onde temos aquele state...)
+
+
+
+--------------------------
+
+
+
+
+Espere.... mas lá em 
+
+'Checkout', encontramos um problema... -----> nós __NÃO TEMOS NENHUM PRICE SENDO PASSADO NA 
+
+URL, POR MEIO DOS QUERYPARAMS da url... ----> e nós realmente PRECISAMOS DISSO... ----> precisamos passar essa informação, a informação do 'this.state.totalPrice', lá no BURGERBUILDER...
+
+
+
+
+
+
+----------------------
+
+
+PROFESSOR EXPLICA QUE ESSA SERÁ UMA DIFÍCIL TAREFA... --> ele nos explica que 
+
+
+VAMOS PRECISAR PASSAR 
+O 
+
+'PRICE'
+ 
+
+ JUNTO COM 
+
+ OS INGREDIENTS,
+
+ naquela url com os query params... (formulada lá em 'BurgerBuilder'...)
+
+
+
+
+
+
+
+
+
+
+
+
+ ---> PARA ISSO, O PROFESSOR AFIRMA QUE ELE ___DEVE FAZER '.push()' 
+
+
+ DO VALOR 
+
+
+ DE 
+
+
+ 'this.state.totalPrice', lá de burgerBuilder,
+
+
+ ___PARA__ DENTRO DO ___ 
+
+
+ ARRAY DE 
+
+ 'queryParams'...  --------> 
+
+
+
+ E ELE VAI 
+
+ PUSHAR 
+
+ UM 
+
+ VALOR 
+
+
+ DE 
+
+
+
+ 'price=' + this.state.totalPrice...   (ISSO FARÁ COM QUE ESSE VALOR AÍ FIQUE EM UM FORMATO DE 'QUERY PARAMETER', efetivamente....).
+
+
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+
+
+
+
+
+purchaseContinueHandler = () => {
+
+
+
+     const queryParams = [];
+    for(let i in this.state.ingredients) {
+      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+    
+    }
+
+
+    queryParams.push('price=' + this.state.totalPrice); ////////EIS O CÓDIGO EM QUESTÃO.
+
+    const queryString = queryParams.join('&');
+
+
+
+
+
+
+    console.log(queryParams);
+
+
+
+
+
+
+
+
+    this.props.history.push({
+      pathname: '/checkout',
+      search: '?' + queryString 
+    });
+
+}
+
+
+
+
+
+-----------------------------------
+
+
+CONTUDO, DIZ O PROFESSOR, ISSO
+
+TAMBÉM 
+
+
+
+__sIGNIFICA __ QUE EU VOU PRECISAR DE UMA MANEIRA __ DE __EXTRAIR __ ESSE VALOR DE DENTRO DO 
+
+'queryParameter',
+
+lá 
+
+
+em 
+
+
+'Checkout.....'
+
+
+
+código de checkout(até agora):
+
+
+
+
+
+componentDidMount () {
+
+
+
+   const query = new URLSearchParams(this.props.location.search);
+
+    console.log(query);
+
+    console.log(query.entries());
+
+    const ingredients = {};
+
+
+    let price = null;
+
+
+    for (let param of query.entries()) {
+      console.log(param);
+      //    ingredients[param[0]]
+
+      ingredients[param[0]] = +param[1];
+    }
+
+
+
+
+    
+
+    this.setState({
+      ingredients: ingredients,
+      totalPrice: price
+    });
+
+
+    
+
+
+
+
+  }
+
+
+
+--------------------------------
+
+
+
+
+naquele 'for of loop', o professor está LOOPANDO POR DENTRO DE TODOS OS INGREDIENTS, E ENTÃO 
+
+ESTÁ 
+
+OS EMPURRANDO  PARA DENTRO ___ DO 
+
+OBJETO 
+
+'ingredients'... ----------> E O 
+
+
+
+
+'totalPrice', em si, NÃO __ É UM INGREDIENT__, POR ISSO _ELE NÃO DEVERÁ SER EMPURRADO __ PARA 
+
+DENTRO DESSE ARRAY... (ok, mas COMO FAZER ISSO, COMO DIZER AO JAVASCRIPT QUE, DENTRO DAQUELE LOOP, 
+
+QUEREMOS ABRIR UMA EXCEÇÃO PARA O 
+
+
+'totalPrice'?) ------> PROFESSOR 
+
+
+
+NOS APONTA QUE PARA FAZER ISSO, É NECESSÁRIO 
+
+USAR 
+
+UM 
+
+
+
+'if() statement' dentro do 
+
+FOR OF LOOP...
+
+
+
+
+
+
+--> esse é um método BEM HACKY,
+
+n vou te mentir..
+
+
+
+
+--> o professor vai escrever 
+
+
+
+------------------------------------------
+
+
+....
+
+
+
+
+for (let param of query.entries() ) {
+
+
+    if(param[0] === 'price') { ///////EIS O CÓDIGO EM QUESTÃO...
+
+    }
+
+
+
+    ingredients[param[0]] = +param[1];
+}
+this.setState(
+    {ingredients: ingredients} 
+)
+
+
+.......
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+E o professor ADMITE que esse código aí, esse if check,
+
+É BASICAMENTE 
+
+UM 
+
+'WORKAROUND' temporário... -----> MAIS TARDE VAMOS VER UMA MANEIRA M LHOR DE FAZER HANDLE E PASS 
+
+DESSE 
+
+STATE 
+
+
+DE 
+
+'totalPrice' por partes do nosso código...
+
+
+
+
+
+
+
+--> certo, aqui, SE O PARAM[0] for price,
+
+
+NÓS __NÃO VAMOS QUERER QUE ELE SEJA ADICIONADO AO 
+
+
+OBJETO 'ingredients', como os outros negócios... (vamos querer isso dos ingredients NO NOSSO ELSE CASE desse loop...)
+
+
+
+
+
+
+
+--> E O PROFESSOR SETTARÁ UMA VARIÁVEL INICIAL DE 'let price = null', nesse 
+
+
+
+'componentDidMount'...
+
+
+
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+    let price = null;
+
+
+    for (let param of query.entries()) {
+      console.log(param);
+
+
+      if (param[0] === 'price') {
+        
+      } else {
+            ingredients[param[0]] = +param[1];
+      }
+ 
+      this.setState( { ingredients: ingredients });
+    }
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+AÍ, DENTRO DAQUELE FOR LOOP, o professor vai definir a variável price 
+
+
+COMO SENDO IGUAL 
+
+
+a 
+
+'
+param[1]', 
+
+pq pense assim:
+
+
+param[0] ----> isso é o 'price' (''''keyname''''') naquele queryParam...
+
+
+param[1] --> (isso é o VALOR do price, naquele queryParam....)
+
+
+
+
+
+
+
+ex:
+
+
+
+    let price = null;
+
+
+    for (let param of query.entries()) {
+      console.log(param);
+
+
+      if (param[0] === 'price') {
+        price = param[1];
+      } else {
+            ingredients[param[0]] = +param[1];
+      }
+ 
+      this.setState( { ingredients: ingredients });
+    }
+
+
+
+  
+  ----------------------------------
+
+
+
+  ISSO FEITO, PROFESSOR TAMBÉM 
+
+
+  VAI SETTAR 
+
+  O 
+
+
+  STATE 
+
+
+  no 'this.setState',
+
+
+  ELE VAI PASSAR TBM ESSE NOVO VALOR DE 
+
+
+
+  'totalPrice: price'...
+
+
+
+
+
+  --------------------------
+
+
+
+  FICARÁ ASSIM:
+
+
+
+      const query = new URLSearchParams(this.props.location.search);
+
+    console.log(query);
+
+    console.log(query.entries());
+
+    const ingredients = {};
+
+
+    let price = null;
+
+
+    for (let param of query.entries()) {
+      console.log(param);
+      //    ingredients[param[0]]
+
+
+      if (param[0] === 'price') {
+          price = param[1];
+      } else {
+        ingredients[param[0]] = +param[1];
+      }
+
+     
+    }
+    
+    this.setState({
+      ingredients: ingredients,
+      totalPrice: price
+    });
+
+
+    
+
+
+
+
+  }
+
+
+
+
+  -----------------------------------------
+
+
+
+
+  O professor também faz uma alteração no STATE DE CHECKOUT,
+
+
+  ele 
+
+  troca aqueles valores dummy/placeholder de 
+
+  ingredients, coloca um valor inicial de 'null',
+
+
+
+  E 
+  depois
+
+
+  SETTA 
+
+
+
+  uma propriedade 
+
+  'price', também de valor inicial 'null'...     ----------> E AÍ ELE VAI PASSAR 
+
+  ESSE PRICE 
+
+  COMO 
+
+
+  PROP 
+
+
+  ao 
+
+  'ContactData' (pq o 'ContactData' é um component CHILD de 'Checkout'....)
+
+
+
+
+
+
+  ------------------------------------
+
+
+
+
+  Certo.... (nós revertemos o 'state inicial' dos ingredients, nós 
+  
+  fizemos eles voltarem a ser aquele objeto inicial de '{
+    meat: 1,
+    cheese: 1,
+    salad: 1,
+    bacon: 1
+  }', pq 
+  
+  
+  NÓS ESTÁVAMOS ENCONTRANDO UM ERRO POR 
+
+  ESSA PROPRIEDADE ESTAR COMO 'ingredients: null'... --> erro relacionado a mapping, acho... (não podemos converter um valor nulo em um objeto, ou algo assim....)
+  
+  
+  )   (uma solução alternativa seria transformar 'componentDidMount', lá em 'Checkout', em 'ComponentWillMount'...)
+        (entretanto, 'ComponentWillMount' é um código que será DEPRECADO NO FUTURO, por isso não é tão bom de ser usado....)
+
+
+
+
+  --> o importante é que agora 
+
+  NOSSO BOTÃO_ __''' ORDER''' __JÁ ESTÁ ENVIANDO 
+
+
+  REQUESTS DE TIPO 'POST' ao nosso servidor.... 
+
+
+  (entretanto, aqui temos um problema... ------> nossos 
+  
+  input fields 
+  
+  AINDA 
+  
+  
+  NÃO ESTÃO ALTERANDO O NOSSO 'STATE', não estão enfiando dados no nosso state, dados que precisamos que 
+  
+  fiquem no state,
+  
+  pq 
+  
+  
+  é ele que será 
+  
+  usado 
+  
+  para 
+  
+  
+  
+  enviar 
+  
+  
+  
+  
+  os 'dados de contato' do usuário ao nosso servidor....) ----> basta examinarmos 
+
+
+  o console.log 
+
+  da response 
+
+
+  recebida 
+
+  por nosso browser,
+
+
+  ao enviar 
+  esse request de tipo post:
+
+
+
+  config: {url: "/orders.json", method: "post", data: "{\"ingredients\":{},\"price\":null,\"customer\":{\"name\":\"\",\"email\":\"\
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EM outras palavras, o SEND AO NOSSO SERVIDOR DO 'FIREBASE' 
+
+está funcionando, 
+
+
+MAS 
+
+
+OS 
+
+DADOS QUE 
+
+O PROFESSOR INPUTTA 
+
+NOS 
+
+INPUT FIELDS __NÃO ESTÃO SENDO ENVIADOS__, NÃO ESTÃO SENDO REGISTRADOS 
+
+
+
+no 
+
+nosso
+
+
+'state' 
+
+de 
+
+'Checkout'...
+
+
+
+(vou checar o código daquele projeto láááá do início do curso, das 'persons', lá 
+
+temos um código que vai nos ajudar, certamente.)
+
+
+
+
+
+
+
+
+
+
+
+-->sim, mas um switch statement não vai nos salvar, aqui... ----> precisamos de OUTRA COISA...
+
+
+
+TALVEZ UM BLOCO DE IF STATEMENTS? isso daria conta do recado...
+
+
+
+
+
+
+
+------------------------
+
+
+
+CERTO, FINALMENTE CONSEGUI FAZER O CÓDIGO FUNCIONAR... NÓS REALMENTE ESTAMOS CONSEGUINDO 
+
+
+ENVIAR 
+
+
+
+OS DADOS, os 
+
+
+'OrderData' 
+
+
+do usuário, 
+
+por meio 
+
+desse 
+
+
+contactForm... (e sem recarregar a página... por causa do 'event.preventDefault()')...
+
+
+
+
+
+---------------------
+
+
+
+SERIA BOM SE EU COLOCASSE UM COMPORTAMENTO DE 'aaah, aqui só vão números' na caixa de 'postalcode',
+
+
+
+e 
+
+
+
+também 
+
+'aqui só vão letras', na caixa de nomes...
+
+
+
+
+
+
+
+
+Ok, qual é o próximo passo?
+
+
+
+
+
+Bem, uma coisa que o professor fez foi remover a propriedade de 
+
+'purchasing: false' 
+
+definida 
+
+
+
+com o 
+
+'axios.post'... (antes estava assim...)
+
+
+
+
+
+
+
+
+---------------------------
+
+OUTRO PROBLEMA:
+ 
+ ainda não estamos usando 
+
+
+ a propriedade/state de 
+
+ 'loading'...
+
+
+
+
+
+
+
+ ----------------------------
+
+
+
+
+ DEVEMOS TIRAR VANTAGEM DESSE 'LOADING STATE'.... ---> vamos ter que importar o Spinner 
+
+ em 
+
+
+ 'ContactData', basicamente... -----> vamos colocar esse spinner 
+
+
+
+ lá no RENDER de 
+ 
+
+ 'ContactData', 
+
+ e aí o renderizar CONDICIONALMENTE...
+
+
+
+
+
+
+
+
+ --------> conseguimos renderizar condicionalmente o spinner, e ele ficou meio bruto....
+
+
+
+
+
+
+ eis o código:
+
+
+
+
+
+
+
+
+
+
+
+  orderHandler = (event) => {
+    event.preventDefault(); ///VAI PREVENIR O RELOAD DA PÁGINA.(e sim, precisamos do parâmetro 'event' para acessar esse método especial, método que PREVINE O COMPORTAMENTO DEFAULT DO BROWSER DE __RECARREGAR___ PÁGINAS QUANDO UM 'SUBMIT' OCORRE DENTRO DE UMA FORM...)
+    console.log(this.props.ingredients);
+
+    this.setState({
+      loading: true,
+    });
+
+    const orderData = {
+      ingredients: this.props.ingredients,
+      price: this.props.price,
+        name: this.state.name,
+        email: this.state.email,
+          street: this.state.street,
+          postalCode: this.state.postalCode,
+      
+      }
+    
+
+        axiosOrder.post('/orders.json', orderData)
+        .then(
+
+            (response) => {
+              console.log(response);
+                this.setState({
+                  loading: false
+                });
+              }
+        )
+        .catch(error => {
+            this.setState(
+                {
+                    loading: false
+                }
+            )
+        }
+        )
+  };
+
+  render() {
+    console.log(this.state);
+
+
+    let contactDataContent = (<div className={ContactDataStyle.ContactData}> ////////////EIS O CÓDIGO EM QUESTÃO.
+    <h4>Enter your Contact Data</h4>
+    <form>
+      <input type="text" name="name" placeholder="Your Name" onChange={(event) => { this.contactDataHandler(event, "name")}}/>
+      <input type="email" id="email" pattern="(?!(^[.-].*|[^@]*[.-]@|.*\.{2,}.*)|^.{254}.)([a-zA-Z0-9!#$%&'*+\/=?^_`{|}~.-]+@)(?!-.*|.*-\.)([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,15}" name="email" placeholder="Your Mail" onChange={(event) => { this.contactDataHandler(event, "email")}}/>
+      <input type="text" name="street" placeholder="Street" onChange={(event) => { this.contactDataHandler(event, "street")}} />
+      <input type="number" onwheel={event => event.preventDefault()} name="postal" placeholder="Postal Code" onChange={(event) => { this.contactDataHandler(event, "postal")
+
+
+      }}/>
+      <Button
+        btnType="Success"
+        clicked={(event) => {
+          this.orderHandler(event);
+        }}
+      >
+        ORDER
+      </Button>
+    </form>
+  </div>
+    )
+
+
+
+    if(this.state.loading) {
+         contactDataContent = (<Spinner />); /////////EIS O CÓDIGO EM QUESTÃO.
+    }
+
+
+
+
+
+
+
+
+    return (
+
+
+
+
+
+
+
+
+
+            <div>
+        {contactDataContent} ///////////EIS O CÓDIGO EM QUESTÃO.
+        </div>
+
+
+
+
+
+    );
+  }
+}
+
+export default ContactData;
+
+
+
+
+------------------------------------------
+
+
+
+Certo... mas parece que o professor fez as coisas 
+
+
+de um modo diferente....
+
+
+
+
+
+
+
+
+---> ele criou uma variável chamada de 
+
+
+
+'form'....
+
+
+
+e aí ele 
+
+settou, dentro de 'render()',
+
+
+
+este código:
+
+
+
+
+
+
+''''
+render () {
+  let form = (<códigoJsx />);
+
+
+
+
+
+  if (this.state.loading) {
+      form = <Spinner />
+  }
+}
+
+
+
+''''',
+
+
+
+
+
+
+NA VERDADE, 
+
+
+É EXATAMENTE O MESMO CÓDIGO QUE UTILIZAMOS, só que com um nome de constante um pouco diferente.... (usamos 'contactDataContent'....)
+
+
+
+
+
+
+
+
+--> mas lá naquele return de código jsx, ele deixou o layout um pouco diferente....
+
+
+ele deixou 
+
+
+
+'return (
+  <div className={classes.ContactData}>
+    <h4>Enter your Contact Data</h4>
+      {form}
+    </div>
+)
+'
+
+
+
+---------------------------------------------
+
+
+
+
+CERTO, MAS ISSO FUNCIONOU, BASICAMENTE.... ------> NOSSA 'ORDER' JÁ 
+
+ESTÁ SENDO ENVIADA, QUANDO CLICAMOS NESSE 
+
+BOTÃO DE 
+
+'Order'... --------> AGORA __APENAS QUEREMOS _ QUE 
+
+
+O USUÁRIO___ SEJA ___rEDIRECIONADO__ PARA A PÁGINA ___ 
+
+
+'BurgerBuilder' 
+
+
+APÓS ___ O PROCESSO DE SEND TER ACABADO...._________ --------> para fazer isso,
+
+
+provavelmente 
+
+vamos ter que 
+
+escrever 
+
+
+
+
+este código 
+
+LÁ NAQUELE BLOCKS 
+
+do 
+
+'axios.post',
+
+
+dentro do método 
+
+
+
+'orderHandler'...
+
+
+
+
+
+
+
+
+
+
+
+EIS O CÓDIGO (nosso código atual):
+
+
+
+
+ orderHandler = (event) => {
+    event.preventDefault(); ///VAI PREVENIR O RELOAD DA PÁGINA.(e sim, precisamos do parâmetro 'event' para acessar esse método especial, método que PREVINE O COMPORTAMENTO DEFAULT DO BROWSER DE __RECARREGAR___ PÁGINAS QUANDO UM 'SUBMIT' OCORRE DENTRO DE UMA FORM...)
+    console.log(this.props.ingredients);
+
+    this.setState({
+      loading: true,
+    });
+
+    const orderData = {
+      ingredients: this.props.ingredients,
+      price: this.props.price,
+        name: this.state.name,
+        email: this.state.email,
+          street: this.state.street,
+          postalCode: this.state.postalCode,
+      
+      }
+    
+
+        axiosOrder.post('/orders.json', orderData)
+        .then(
+
+            (response) => {
+              console.log(response);
+                this.setState({
+                  loading: false
+                });
+              }
+        )
+        .catch(error => {
+            this.setState(
+                {
+                    loading: false
+                }
+            )
+        }
+        )
+  };
+
+
+
+
+
+  ---------------------------------
+
+
+
+
+  PROVAVELMENTE O PROFESSOR USARÁ 
+
+  'this.props.history.replace('/')'  OU 'this.props.history.push('/')' 
+
+
+  PARA ____ 
+
+
+  REDIRECIONAR O USUÁRIO___ A NOSSA PÁGINA INICIAL (burgerBuilder)...
+
+
+
+
+
+CONTUDO, QUANDO TENTAMOS O CÓDIGO 
+
+
+'this.props.history.push('/');',
+
+
+
+ELE __NÃO FUNCIONA__... ----------> PARA FAZER FUNCIONAR, EU SÓ FUI LÁ 
+
+
+
+E SIMPLESMENTE ___ WRAPPEI____ MEU COMPONENT 
+
+
+
+'ContactData' ( o seu EXPORT) 
+
+
+com aquele 
+
+objeto/component 
+
+
+'withRouter', 
+
+
+que 
+
+NOS É CONCEDIDO PELO PACOTE 'react-router-dom'... ------> aí eu escrevi 
+
+
+
+'export default withRouter(ContactData);',
+
+
+
+
+
+E ISSO FEZ COM QUE EU CONSEGUISSE OS PROPS RELATIVOS AO ROUTING DE NOSSO PROJETO... ---> com esses props aí, 
+
+
+
+eu simplesmente 
+
+
+usei o 
+
+'''''this.props.history.push('/');'''' lá dentro do 
+
+
+RESOLVE/then block do pacote 
+
+do axios,
+
+
+e isso fez com que 
+
+
+o código funcionasse, ele faz com que 
+
+o usuário volte À página 'burgerBuilder'... (na verdade, ele faz PUSH DE UMA __NOVA PÁGINA __'BURGERBUILDER'__ em cima de todas as outras... ele a empilha em cima das outras... )
+
+
+
+
+
+
+
+
+
+
+
+---> uma maneira ALTERNATIVA, explica o professor, 
+
+
+É PASSAR OS PROPS DE 
+
+
+
+'Checkout' (que JÁ CONTÉM OS 'ROUTING RELATED PROPS' dentro de seu próprio 'props') 
+
+
+MANUALMENTE,
+ 
+ POR MEIO DO SEGUINTE CÓDIGO (isso lá em 'Checkout.js'):
+
+
+
+ <Route 
+
+  render={(props) => (<ContactData ingredients={blablabla}/>)}  />
+            ^^^^
+            ^^^^^
+            este props aqui... --------------> ISSO FARÁ COM QUE 
+
+            O PROPS 
+
+            DE 
+
+            'Checkout SEJA RECEBIDO POR ESSE 
+
+            COMPONENT 'ContactData' renderizado por meio dessa propriedade 'render'... ---------> OK.......
+
+
+
+
+            MAS E AÍ, COMO PODERÍAMOS 
+
+            EXTRAIR ESSE NEGÓCIO (esse 'props') lá em 'ContactData'? ---------> BEM, 
+
+
+            TERÍAMOS DE USAR O __sPREAD __ OPERATOR__....
+
+
+
+            tipo assim:
+
+
+
+
+ <Route 
+
+  render={(props) => (<ContactData ingredients={blablabla}  {...props}    />)}  />
+
+                                                              ^^^^^^^-------------> POR MEIO DESTE CÓDIGO ALI, BASICAMENTE......... --> e isso vai efetivamente passar 
+
+                                                              o 
+
+                                                              método 
+
+                                                              'this.props.history.push()'
+
+
+
+                                                              AO 
+
+
+                                                              COMPONENT 
+                                                              
+
+                                                              'Contact.data'... (junto de todas as outras 'route-related' props...)
+  
+  -------------------------------------------
+
+
+
+
+
+
+
+
+
+  Certo, agora O SEND DA ORDER VAI CARREGAR,
+
+  e nosso 
+
+
+  aplicativo VAI RETORNAR A PÁGINA 
+
+
+  INICIAL...
+
+
+
+
+
+
+
+
+  ---> OK, TERMINAMOS ESSA PARTE TODA... ----> é claro que ainda faltaram algumas coisas... (principalmente a FORM),
+
+  mas 
+
+
+  tomaremos conta disso no PRÓXIMO MÓDULO... (sobre forms)...
+
+
+
+
+
+
+
+
+
+  --> AGORA NÓS VAMOS FOCAR NA PÁGINA 
+
+  'MY-ORDERS', que é uma página que 
+
+
+  AINDA NÃO CONSTRUÍMOS...

@@ -1,0 +1,1137 @@
+
+
+
+
+
+
+
+
+
+
+---> useEffect 
+
+PODE 
+
+
+SER 
+MEIO 
+
+TRICKY 
+
+
+DE 
+ENTENDER... ---> 
+
+
+
+
+
+ESSENCIALMENTE,
+
+TODOS 
+
+OS CÓDIGOS/OPERAÇÕES 
+
+QUE 
+
+VOCÊ 
+
+EXECUTAVA 
+
+EM 
+
+
+'componentDidMount'
+
+
+
+e 
+
+'componentDidUpdate()',
+
+
+em 
+
+
+CLASS-BASED COMPONENTS,
+
+
+deverá 
+
+ir 
+
+para 
+
+dentro 
+
+
+desse 
+
+
+'useEffect()'... ------> E O SEGUNDO ARGUMENTO 
+
+
+
+NOS PERMITE CONTROLAR QUANDO
+
+
+O 
+
+PRIMEIRO ARGUMENTO DEVERÁ SER EXECUTADO... ---> e se você tem um 
+array 
+
+
+VAZIO, 
+
+o 
+
+PRIMEIRO ARGUMENTO SÓ SERÁ EXECUTADO 
+
+QUANDO 
+
+O COMPONNET 
+
+FOR 
+
+'MOUNTED'...
+
+
+
+
+----> e se você passa um array com valores como segundo parâmetro,
+
+O CÓDIGO DO PRIMEIRO ARGUMENTO SÓ SERÁ 
+
+EXECUTADO 
+
+quando esse valor/valores 
+
+forem alterados..
+ 
+
+
+
+
+
+
+
+
+
+
+
+ ---> CERTO... MAS E QUANTO À 'componentDidUnmount',
+
+ 
+
+
+
+ E QUANTO AO CLEANUP? DIGAMOS QUE 
+
+ VOCÊ QUEIRA 
+
+
+
+ FAZER CLEANUP DE ALGUNS SIDEEFFECTS  DE SEU CÓDIGO, SIDEEFFECTS 
+
+ QUE 
+
+ PRECISAM DE CLEANING PARA EVITAR SOBRECARREGAMENTO DA MEMÓRIA DO SEU APP...
+
+
+
+
+
+
+
+
+----> Existirão casos em que 
+
+vamos querer 
+
+CLEANUP 
+
+nossa página, 
+
+qunado 
+
+
+um 
+
+
+component 
+
+É REMOVIDO,
+
+ou em geral....
+
+
+
+---------------------------------------
+
+
+
+
+
+-------> TALVEZ PRECISE DE CLEANUP EM COISAS ALÉM DE 'COMPONENT REMOVAL',
+
+
+como por exemplo cleanup SEMPRE QUE 
+ESSE 
+
+COMPONENT 
+
+FOR RE-RENDERIZADO.... --> bem,
+
+
+nesses casos 
+
+
+VOCÊ
+PODE 
+
+FAZER CLEANUPS TAMBÉM... ------> PARA FAZER 
+
+CLEANUP,
+
+
+VOCê 
+
+PODE 
+
+
+
+__RETORNAr__ UMA COISA __ DENTRO 
+
+
+DAQUELA 
+
+FUNÇÃO QUE PASSAMOS 
+
+COMO PRIMEIRO PARâMETRO 
+
+
+DE 
+
+'useEffect'..
+
+
+
+EX:
+
+
+
+
+
+  useEffect(() => { 
+    axios.get(
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+    ).then(
+      result => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+        
+
+
+        for (const key in todoData) {
+          todos.push(
+            {
+              id: key,
+              todoName: todoData[key].todoName
+            }
+          )
+        }
+        console.log(todos);
+        setTodoList(todos);
+      }
+    )
+},  [])
+
+
+
+
+
+
+------------------------------
+
+
+
+
+
+
+SE VOCê ADICIONAR UM RETURN STATEMENT ALI DENTRO,
+
+TIPO ASSIm:
+
+
+
+
+
+  useEffect(() => { 
+    axios.get(
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+    ).then(
+      result => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+        
+
+
+        for (const key in todoData) {
+          todos.push(
+            {
+              id: key,
+              todoName: todoData[key].todoName
+            }
+          )
+        }
+        console.log(todos);
+        setTodoList(todos);
+      }
+    )
+return; ///AQUI.
+
+},  [])
+
+
+
+------------------------------
+
+
+
+
+
+SE VOCÊ FIZER ISSO,
+
+
+O PROFESSOR
+
+NOS DIZ QUE 
+
+
+
+___ESSE RETURN STATEMENT __ TAMBÉM DEVERÁ SER UMA __FUNÇÃo_,
+
+UMA 
+
+
+FUNÇÃO ANÔNIMA... (podemos usar a function keyword, mas arrow functions são melhores)....
+
+
+
+
+
+---> E ESSA FUNÇÃO RETORNADA __ VAI SER EXECUTADA _ PELO REACT 
+
+A CADA 
+
+RENDER CYCLE, TAMBÉM... --> 
+
+
+e aí 
+
+o 
+
+react 
+
+
+VAI 
+
+EXECUTAR 
+
+ESSA FUNÇÃO 
+
+COMO 
+
+
+UM 
+
+'CLEANUP'
+
+
+ANTES 
+
+DE 
+
+APLICAR/EXECUTAR 
+
+O CÓDIGO 
+
+
+
+DO SEU 'MAIN CODE'
+
+
+MAIS UMA VEZ...
+
+
+
+ex(ordem de execução das coisas):
+
+
+
+
+
+
+
+
+
+
+  useEffect(() => { 
+    axios.get( //////2
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+    ).then(
+      result => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+        
+
+
+        for (const key in todoData) {
+          todos.push(
+            {
+              id: key,
+              todoName: todoData[key].todoName
+            }
+          )
+        }
+        console.log(todos);
+        setTodoList(todos);
+      }
+    )
+return () => {}; ///1 (É EXECUTADO __ ANTES__ da '''função de verdade''' do primeiro parâmetro desse 'useEffect()', quando esse código do primeiro parâmetro for EXECUTADO MAIS UMA VEZ (ou seja, da segunda vez em diante...))
+
+},  [])
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+----------> POR ENQUANTO, PROFESSOR DECIDE APENAS 
+
+FAZER UM 
+
+CONSOLE.LOG 
+
+de 
+
+'Cleanup',
+
+para mostrar como isso aparece no console, a ordem 
+
+de execução....
+
+
+
+(obs: professor também altera o segundo parâmetro, troca de '[]' para 'todoName', justamente para que ESSE CÓDIGO DO PRIMEIRO PARÂMETRO POSSA SER EXECUTADO MAIS DE 1 VEZ, sempre que o valor de nosso inputfield/valor de 'todoName' sofrer alterações...)
+
+ex:
+
+
+
+
+
+  useEffect(() => { 
+    axios.get( //////2
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+    ).then(
+      result => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+        
+
+
+        for (const key in todoData) {
+          todos.push(
+            {
+              id: key,
+              todoName: todoData[key].todoName
+            }
+          )
+        }
+        console.log(todos);
+        setTodoList(todos);
+      }
+    )
+return () => {
+    console.log('Cleanup') ///1 (É EXECUTADO __ ANTES__ da '''função de verdade''' do primeiro parâmetro desse 'useEffect()', quando esse código do primeiro parâmetro for EXECUTADO MAIS UMA VEZ (ou seja, da segunda vez em diante...))
+}; 
+
+
+},  [todoName]) ////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+CADA KEYSTROKE 
+
+NO INPUTFIELD VAI 
+
+
+EXECUTAR 
+
+ESSE NOSSO FLOW DE CÓDIGO... 
+
+
+
+
+
+
+
+--> no console, veremos:
+
+
+
+Todo.js:51 cleanup function, inside the first parameter
+
+
+{data: {…}, status: 200, statusText: "OK", headers: {…}, config: {…}, …}
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+OU SEJA, 
+
+PRIMEIRO É EXECUTADA 
+
+A 'CLEANING PHASE',
+
+para 
+
+então 
+executar 
+
+o 
+resto 
+
+do código...
+
+
+
+
+
+
+
+ok... acho que entendi... -->  É EVIDENTE QUE 
+
+
+
+ESSA 
+
+FUNÇÃO 
+
+DE 
+
+'CLEANUP'
+
+não faz mt sentido 
+
+PARA 
+
+HTTP REQUESTS 
+
+SIMPLES 
+
+COMO ESTE...
+
+
+
+
+
+
+--> MAS NÃO PODEMOS DIZER O MESMO ACERCA DE __ EVENTLISTENERS____ ---> 
+
+
+eventListeners 
+
+são 
+OBJETOS _ QUE __ PERMANECEM_ NO CÓDIGO __ DEPOIS DOS __ COMPONENTS/ELEMENTOS
+ 
+
+ A ELES 
+
+ VINCULADOS 
+
+
+ TEREM SIDO DELETADOS...
+
+
+
+
+
+
+
+
+ --> para mostrar isso,
+
+ professor 
+
+ adiciona um 
+
+
+ NOVO 'EFFECT' 
+
+
+ por meio de
+
+ 'useEffect'... ------->
+
+
+
+
+
+ DENTRO 
+
+ DESSE 
+
+ 'useEffect',
+
+ ELE VAI 
+
+
+ ADICIONAR UM EVENTLISTENER 
+
+ NO NOSSO 
+
+ APLICATIVO...
+
+
+ por meio 
+
+ do código 
+
+ de 
+
+
+ 'document.addEventListener('mousemove') ---------> OU SEJA,
+
+
+
+ VAMOS 
+
+
+ FAZER 'LISTEN TO' A _EVENTOS 'MOVE' do mouse... ---> quando 
+
+ o usuário 
+
+ mexer 
+
+ o mouse,
+
+ esse eventListener será TRIGGADO...
+
+
+
+
+
+
+
+
+a sintaxe do 'addEventListener',
+
+já conhecida por nós,
+
+é 
+esta:
+
+
+
+
+document.addEventListener('mousemove', (event) => {
+    console.log(event.clientX, event.clientY)
+})
+
+-------------------------------
+
+
+
+
+
+OK, ISSO
+
+
+
+VAI FICAR FAZENDO CONSOLE.LOG 
+
+
+
+dA POSIÇÃO DO MOUSE CURSOR DO USUÁRIO em relação a nossa página ('clientX' e 'clientY')....
+
+
+
+
+
+
+
+
+COLOCAREMOS ISSO 
+
+
+DENTRO DE OUTRA CALL 
+
+DE 
+
+'useEffect'...
+
+
+ex:
+
+
+
+
+
+  useEffect(() => { 
+    axios.get( //////2
+      'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+    ).then(
+      result => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+        
+
+
+        for (const key in todoData) {
+          todos.push(
+            {
+              id: key,
+              todoName: todoData[key].todoName
+            }
+          )
+        }
+        console.log(todos);
+        setTodoList(todos);
+      }
+    )
+return () => {
+    console.log('Cleanup') 
+}; 
+
+
+},  [todoName]) 
+
+
+
+
+
+
+useEffect(() => {
+    document.addEventListener('mousemove', event => {
+        console.log(event.clientX, event.clientY);
+    })
+})
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+PROFESSOR 
+
+SALVA 
+ISSO..... --> 
+
+
+ENQUANTO VAMOS MOVENDO NOSSO 
+
+
+MOUSE,
+
+
+UM MONTE DE COORDENADAS VÃO SENDO ADICIONADAS 
+
+
+NO CONSOLE.... (isso sinaliza que 
+
+EVENTLISTENERS 
+
+ESTÃO SENDO ADICIONADOS __aOS MONTES__...) ------> entretanto,
+
+
+se DIGITARMOS ALGO NO INPUT FIELD,
+
+
+LISTENERS __TAMBÉM VÃO SENDO ADICIONADOS__ .... (não será adicionado 1 entry no console.log por vez, e SIM __ VAI AUMENTANDO CADA VEZ MAIS, os console.log outputs vão aumentando cada vez mais pq OS VELHOS LISTENERS NÃO SERÃO REMOVIDOS AUTOMATICAMENTE...)
+
+
+....
+
+ISSO 
+
+É 
+
+___TERRÍVEL__ PARA A PERFORMANCE DA PÁGINA.... -------> 
+
+
+
+VALE A PENA __REMOVER__ ESSES EVENTLISTENERS,
+
+JUSTAMENTE 
+
+
+POR MEIO 
+
+
+DA NOSSA 
+
+
+'FUNÇÃO DE CLEANUP' 
+
+do useEffect..
+
+
+
+
+
+
+
+--> É POR ISSO QUE CERTAMENTE VAMOS QUERER __ LIMPAR ___ NOSSO VELHO 'mousemove' listener 
+
+ANTES 
+
+
+DE 
+
+FAZER 'ATTACH'
+
+ DE UM NOVO NA NOSSA PÁGINA....
+
+
+
+
+
+
+ O PROFESSOR ESCREVEU UM CÓDIGO SEMELHANTE AO NOSSO....
+
+
+
+
+ ex:
+
+
+
+
+ const mouseMoveHandler = event => {
+     console.log(event.clientX, event.clientY);
+ }
+
+
+ useEffect(() => {
+     document.addEventListener('mousemove', mouseMoveHandler);
+     return () => {
+         document.removeEventListener('mousemove', mouseMoveHandler)
+     }
+ })
+
+
+
+
+ ------------------------------------------------------
+
+
+
+
+ CERTO... ---> 
+
+
+
+ examinamos 
+
+ nosso console... ------> 
+
+
+ VEMOS 
+
+
+ QUE 
+
+OS OUTPUTS/CONSOLE.LOG 
+
+
+
+de 
+
+'mousemove' listener 
+
+
+
+VÃO 
+
+APARECER
+ 
+ SEMPRE 
+
+ 1 POR 1 (pq só teremos 1 listener efetivamente, devido ao cleanup),
+
+ e não como antes,
+
+ 
+quando não tínhamos 
+
+
+a função de cleanup,
+
+e os 
+
+
+mousemove listeners persistiam na página 
+
+e acabavam
+
+até mesmo sobrecarregando o console.log, pq eram adicionados 1 por cima do outro, sem parar, 
+persistindo...
+
+
+
+
+
+
+
+
+
+
+----------------> CERTO.... só temos '1 listener at a time'... (pq o velho 'ALWAYS GETS CLEANED UP WHEN THE EFFECT GETS APPLIED again....' )
+
+
+
+
+
+---> OK.. 
+
+
+MAS 
+
+É ÓBVIO QUE 
+
+ÀS 
+
+VEZES 
+VCOê 
+
+
+
+
+NÃO VAI QUERER 
+
+'CLEANUP'
+
+para 
+
+cada 
+
+RENDER CYCLE 
+
+DE SEU COMPONENT.... () --------> 
+
+
+
+TALVEZ 
+
+VOCÊ 
+
+QUEIRA 
+
+
+
+SÓ 
+
+
+FAZER 'CLEANUP' 
+
+
+
+QUANDO 
+
+SEU 
+
+
+COMPONENT 
+
+__ FOR __ DESTROYED__....  --> você pode facilmente 
+
+
+fazer 
+
+isso 
+
+
+
+POR MEIO ___DA ADIÇÃO 
+
+
+DE 
+
+UM 
+
+
+'[]' (ARRAY VAZIO) 
+
+
+
+COMO SEGUNDO PARÂMETRO 
+
+DE 
+
+'useEffect()'... -------> ISSO BASICAMENTE 
+
+
+VAI 
+
+DIZER:
+
+""" O CÓDIGO DO PRIMEIRO PARÂMETRO 
+
+DEVE 
+
+SER 
+EXECUTADO 
+
+'when componentDidMount''''''' --------> ISSO QUER 
+
+DIZER QUE 
+
+__QUANDO O COMPONENT 
+
+FOR 
+
+
+__REMOVIDO___ DO DOM/da tela,
+
+
+
+NÓS VAMOS QUERER __ QUE A ENGINE AUTOMATICAMENTE 
+
+EXECUTE O CÓDIGO DE DENTRO DA 'CLEANUP FUNCTION'... --> e essa sintaxe 
+
+aí 
+
+__É BASICAMENTE___ A 'FEATURE' de 'componentDidUnmount',
+
+MAS 
+
+COM REACTHOOKS...
+
+
+
+ficaria/fica tipo assim:
+
+
+
+
+
+
+
+ const mouseMoveHandler = event => {
+     console.log(event.clientX, event.clientY);
+ }
+
+
+ useEffect(() => {
+     document.addEventListener('mousemove', mouseMoveHandler);
+     return () => {
+         document.removeEventListener('mousemove', mouseMoveHandler)
+     }
+ }, []) /////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+
+
+
+ EX:
+
+
+
+
+
+
+
+ 
+  useEffect(() => {
+    document.addEventListener('mousemove', mouseMoveHandler);
+
+    return () => {
+      document.removeEventListener('mousemove', mouseMoveHandler); //////EXEMPLO DE USO DA 'CLEANUP FUNCTION' dentro de useEffect __ PARA REMOVER___ EVENTLISTENERS que vão sendo adicionados na nossa página.... ---> antes de um NOVO EVENTLISTENER de 'mousemove' ser adicionado, O VELHO É __REMOVIDO__ por meio de 'removeEventListener' e por meio dessa função de CLEANUP de 'return () => {}' dentro do FINAL DA FUNÇÃO PASSADA COMO PRIMEIRO PARÂMETRO DE 'useEffect()'... ----> isso evita que os VELHOS 'mousemove' listeners PERSISTAM NA PÁGINA... --> ficará SÓ 1 listener, o que melhorará em muito a performance...
+    };
+  }, []); ////a posição desse '[]' (array vazio) como segundo parâmetro FARÁ COM QUE SEJA SIMULADO O __o COMPORTAMENTO DE 'componentDidUnmount' com essa parte do seu código... --> isso significa que SE O REACT DETECTAR QUE O ELEMENTO 'todo' FOI 'UNMOUNTED' da página, ELE __ VAI AUTOMATICAMENTE__ EXECUTAR__ ESSE SEU CÓDIGO DE CLEANUP que você definiu nesse 'useEffect' (no caso, esse 'removeEventListener' ali....) ---> e isso é acessado justamente por esse segundo parâmetro de '[]' no seu useEffect, e pela presença DA CLEANUP FUNCTION ('return (...) => {...}....' no PRIMEIRO PARÂMETRO de um 'useEffect', ao final...)
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+
+
+Se agora recarregarmos 
+
+
+essa versão aí 
+
+do add de eventlisteners,
+
+veremos 
+
+que 
+
+A CLEANUP PHASE NÃO VAI MAIS RODAR ENTRE OS 'renders' de nosso component (entre o MOVIMENTO DO MOUSE, COMO ANTES),
+
+
+e sim 
+
+__APENAS QUANDO 
+
+O COMPONENT 
+
+FOR 
+
+'MOUNTED' E 'UNMOUNTED' 
+
+DA PÁGINA (
+
+    em outras palavras, QUANDO É CARREGADO NA PÁGINA, E QUANDO É REMOVIDO DA MESMA...
+)

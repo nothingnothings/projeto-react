@@ -1,0 +1,799 @@
+
+
+
+
+
+
+
+
+
+
+
+
+---> PRIMEIRAS COISAS QUE PRECISAMOS FAZER:
+
+
+ir 
+
+
+até 
+
+'index.js'
+
+
+
+e 
+
+
+
+escrever:
+
+
+
+import { applyMiddleware } from 'redux';
+
+
+
+
+depois 
+
+
+vamos 
+
+INSTALAR 'REDUX-THunk'
+
+
+por meio 
+
+da sintaxe 
+
+
+
+npm install --save redux-thunk 
+
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+import thunk from 'redux-thunk';
+
+
+------------------------------------
+
+
+PARA 
+
+CONSEGUIR 
+USAR 
+
+
+O 
+
+'REDUX DEV TOOLS',
+
+precisamos 
+
+
+DESTE CÓDIGO:
+
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
+
+
+
+
+
+MAS PARA USAR ESSE CÓDIGO,
+
+PRECISAMOS 
+
+IMPORTAR 
+
+'compose'
+
+LÁ DA PACKAGE DE 'redux'...
+
+
+ex:
+
+
+import { compose } from 'redux';
+
+
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+CÓDIGO FICOU ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import { createStore } from 'redux';
+import reducer from '../src/store/reducers/reducer';
+import reportWebVitals from './reportWebVitals';
+import thunk from 'redux-thunk'; ///////REDUX AVANÇADO. ---> THUNK --> USADO PARA CONSEGUIR EXECUTAR CÓDIGOS ASSÍNCRONOS/DISPATCH ASSÍNCRONO DE ACTIONS... --> por meio de action creators ---> é usado para coisas como HTTP REQUESTS e setTimeout, getLocation, etc etc...
+import { applyMiddleware } from 'redux'; //////////CÓDIGO ESSENCIAL PARA: 1) implementar/utilizar o REDUX DEV TOOLS; 2) UASR O 'redux-thunk', que é o PACKAGE DE REDUX _ QUE NOS PERMITE FAZER HANDLE DE CÓDIGOS ASSÍNCRONOS no REDUX POR MEIO DE ACTION CREATORS..
+import { compose } from 'redux'; //////REDUX AVANÇADO. Usado para __COMBINAR TODOS OS MIDLEWARES EM APENAS 1 SÓ...
+import { Provider } from 'react-redux'; //REDUX BÁSICO.
+
+
+
+
+
+
+
+const logger = (store) => {  ///EXEMPLO DE MIDDLEWARE. MIDDLEWARE COM O REDUX. É ASSIM QUE UM MIDDLEWARE É CONSTRUÍDO/escrito.
+  return next => {
+    return action => {
+      console.log('[Middleware] Dispatching', action);
+      const result = next(action);
+      console.log('[Middleware] Next state', store.getState());
+      return result;
+    }
+  }
+}
+
+
+
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; //código importante para usar o REDUX DEV TOOLS....
+
+
+
+
+const store = createStore(reducer, composeEnhancers(applyMiddleware(logger, thunk))); //código redux (REDUX AVANÇADO ---> é o segundo parâmetro, que vai IMPLEMENTAR/APLICAR AQUELES MIDDLEWARES NO FLOW DE NOSSO CÓDIGO.... --> OBS: middlewares são sempre executados/exercem efeitos __ENTRE A ETAPA DO __DISPATCH__ DA ACTION __ E O EFETIVO RECEBIMENTO DESSA ACTION LÁ NO REDUCER...)
+
+
+
+ReactDOM.render(
+  <Provider store={store}>
+     {/* //código redux. */}
+    <App 
+     />
+    </Provider>,
+  document.getElementById('root')
+);
+
+
+-----------------------------------------------------
+
+
+
+
+Certo...
+
+fizemos esse passo aí...
+
+
+
+
+---> testamos brevemente o REDUX DEV TOOLS, para ver se funciona com nosso burgerBuilder...
+
+
+
+
+
+
+--> CERTO, ISSO FUNCIONOU.
+
+
+
+
+
+
+---> agora devemos 
+
+
+
+ESCREVER AQUELES 
+
+
+'ACTION CREATORS...' ----> nós vamos criar esses action creators 
+
+
+EM 
+
+UM 
+
+FOLDER
+
+
+
+'actions',
+
+LÁ 
+
+
+EM 
+
+
+'store'...
+
+
+
+
+
+
+
+
+--> PRIMEIRAMENTE CRIAMOS UM ARQUIVO
+
+
+'actionTypes', que é onde colocamos os IDENTIFICADORES DE NOSSAS ACTIONS...
+
+
+
+
+--> ISSO FEITO,
+
+
+vamos 
+
+
+criar 
+
+
+alguns 'action creators'... ---> provavelmente 
+
+
+vamos 
+
+
+
+criar um arquivo chamado 
+
+
+
+'BurgerBuild', que será 
+
+onde 
+
+FICARÃO 
+
+OS 
+
+
+ACTION CREATORS QUE CRIARÃO 
+
+
+
+as actions de 'ADD_INGREDIENT'
+ 
+
+ e 
+
+ 'REMOVE_INGREDIENT'...
+
+
+
+
+
+
+ --------------------------
+
+
+ OK...O CÓDIGO DE 'BurgerBuilder' ficou:
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Aux from '../../hoc/Auxiliary/Auxiliary'; //usado para renderizar múltiplos react components de forma adjacente.
+
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+
+import Burger from '../../components/Burger/Burger';
+
+import Modal from '../../../src/components/UI/Modal/Modal';
+
+import OrderSummary from '../../../src/components/Burger/OrderSummary/OrderSummary';
+
+import Spinner from '../../../src/components/UI/Spinner/Spinner';
+
+import axiosOrder from '../../axios-orders'; //instância especial axios
+
+import withErrorHandler from '../../../src/hoc/withErrorHandler/withErrorHandler';
+import axios from 'axios'; //axios
+
+import * as actionsCreators from '../../store/actions/index';
+
+import { connect } from 'react-redux'; //redux
+
+
+ const mapDispatchToProps = (dispatch) => {
+            return {
+              onIngredientAdd: (ingredientId) => {
+                dispatch(
+                  actionsCreators.ingredient_add(ingredientId)
+                )
+              },
+              onIngredientRemove: (ingredientId) => {
+                dispatch(
+                    actionsCreators.ingredient_remove(ingredientId)
+                )
+              }
+            }
+}
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+CERTO.... 
+
+
+
+seria 
+
+bom, ademais,
+
+TER 
+
+UM 
+
+ARQUIVO 
+
+'utility', lá em STORE,
+
+
+com um código que REDUZISSE UM POUCO 
+
+O TAMANHO DE NOSSO REDUCER....
+
+
+
+
+
+
+
+
+
+
+--> VAMOS COPIAR AQUELE MODELO DO PROFESSOR... ---> 
+
+este aqui:
+
+
+export const updateObject = (oldObject, updatedValues) => {
+    return {
+        ...oldObject,
+        ...updatedValues
+    }
+};
+
+
+
+
+
+
+
+
+----------------------
+
+
+
+
+
+PROBLEMA:
+
+
+NÓS USAMOS O PADRÃO/MODELO DO PROFESSOR 
+
+
+DAQUELE 
+
+'utility' 
+
+
+
+com a 'FUNÇÃO AUXILIAR' (no caso, ' const delete_result'....),
+
+
+
+E ISSO 
+
+
+FEZ COM QUE 
+
+NOSSO 
+
+STATE __PARASSE __ DE SER ATUALIZADO QUANDO CLICAMOS 
+
+EM 
+
+
+'More' (nos ingredients...) --> state fica como 'undefined', no caso...
+
+
+
+
+
+
+--> CONSERTEI:
+
+
+
+O problema era um 'return' faltando 
+
+em 
+
+
+'return ingredient_add'....
+
+
+
+
+CÓDIGO FICOU ASSIM, PORTANTO:
+
+
+
+
+
+
+UTILITY:
+
+
+export const updateObject = (oldObject, updatedValues) => {
+    return {
+        ...oldObject,
+        ...updatedValues
+    }
+};
+
+
+
+
+
+
+'burgerBuild.js' (arquivo em que ESTÃO OS ACTION CREATORS...):
+
+
+import * as actionTypes from './actionTypes';
+
+
+export const ingredient_add = (ingredientId) => {
+        return {
+            type: actionTypes.INGREDIENT_ADD,
+                    ingredientName: ingredientId
+        };
+};
+
+
+
+
+export const ingredient_remove = (ingredientId) => {
+        return {
+            type: actionTypes.INGREDIENT_REMOVE,
+            ingredientName: ingredientId
+        }
+}
+
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+'reducer.js':
+
+
+
+
+/* eslint-disable no-unreachable */
+import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from '../utility';
+
+const initialState = {
+  ingredients: {
+    bacon: 0,
+    salad: 0,
+    cheese: 0,
+    meat: 0,
+  },
+  totalPrice: 4,
+};
+
+const INGREDIENT_PRICES = {
+  salad: 0.5,
+  bacon: 0.7,
+  cheese: 0.4,
+  meat: 1.3,
+};
+
+const ingredient_add = (state, action) => {
+  const updatedPrice = state.totalPrice + INGREDIENT_PRICES[action.ingredientName];
+  const updatedIngredients = {
+    ...state.ingredients,
+    [action.ingredientName]: state.ingredients[action.ingredientName] + 1,
+  };
+  return updateObject(state, {totalPrice: updatedPrice,
+                      ingredients: updatedIngredients})
+};
+
+
+
+const reducer = (state = initialState, action) => {
+
+
+
+    switch (action.type) {
+    case actionTypes.INGREDIENT_ADD:
+
+     return ingredient_add(state, action);
+      break;
+    case actionTypes.INGREDIENT_REMOVE:
+
+   return {
+        ...state,
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+        ingredients: {
+          ...state.ingredients,
+          [action.ingredientName]: state.ingredients[action.ingredientName] - 1,
+        },
+      };
+    default:
+      return state;
+  }
+};
+
+export default reducer;
+
+
+
+
+---------------------------------------
+
+
+
+
+CERTO, 
+
+MAS 
+
+AGORA 
+
+DEVO 
+
+
+FAZER 
+
+
+A 
+
+MESMA COISA 
+
+
+COM 
+
+O CASE 
+DE 
+
+
+
+'INGREDIENT_REMOVE'...
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+
+OK, RESUMO DA OPERA... ---> em um aplicativo redux __cOMUM,
+
+
+teremos 
+
+
+
+essas partes integrantes de uma AÇÃO:
+
+
+
+
+
+1) reducer...
+
+
+
+2) 'actionTypes', arquivo em que colocamos os IDENTIFIERS de nossas actions....
+
+
+3) arquivos de nomes aleatórios, que serão ___OS LUGARES EM QUE COLOCAMOS NOSSOS ACTION CREATORS relacionados àquela tarefa....
+
+
+
+4) arquivo 'utility', EM QUE COLOCAMOS NOSSA FUNÇÃO 'UTILITY', FUNÇÃO QUE __vAI REDUZIR O TAMANHO DO CÓDIGO DO 'REDUCER', que vai deixar o código do reducer mais SIMPLES e LEGÍVEL, mais 'lean'...
+
+
+
+5) FUNÇÃO AUXILIAR, dentro do arquivo do 'reducer' ---> essa função auxiliar É USADA QUANDO TEMOS UMA ACTION ESPECÍFICA que __TOMARÁ/leva mais ___ETAPAS QUE AS OUTRAS ACTIONS no seu arquivo... (aqui, no caso, precisamos de uma função auxiliar tanto para 'add_ingredient' como para 'remove_ingredient', POIS AMBAS ACTIONS __POSSUEM MAIS DE 1 ETAPA/coisa alterada no state dentro de sua execução....)
+
+
+6) index.js ------> É COLOCADO DENTRO Do folder 'actions', dentro de 'store'... --> SERVE COMO 'INDEXADOR', como basicamente um SUMÁRIO das actions exportadas nos seus arquivos de 'nomes aleatórios' (como 'burgerBuild', nesse nosso exemplo).
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+--> OK, VAMOS 
+
+
+FAZER 
+REPETIR 
+
+O PROCEDIMENTO 
+
+
+DE 
+
+'add_ingredient', mas com o 
+
+
+'ingredient_remove'...
+
+
+
+------------------------
+
+
+
+
+
+
+
+CERTO... AGORA ESTÁ FUNCIONANDO, DE VERDADE.
+
+
+
+
+
+-----------------------------
+
+
+
+Continuo assistindo o vídeo do professor... ---> ele vai lá 
+
+
+E 
+
+DÁ 
+
+'CLEARUP' na database 
+
+do firebase...
+
+
+
+(dá uma breve faxinada)....
+
+
+---------------------
+
+
+
+
+
+
+PROFESSOR NOS DIZ PARA 
+
+IMPLEMENTAR O REDUX DEV TOOLS no 
+
+
+nosso app...
+
+
+
+
+--> ENTRETANTO, ELE FAZ UM POUCO DIFERENTE O NEGÓCIO... ---> ele instala 
+
+
+a 
+
+versão 
+
+'BASIC SETUP' 
+
+do 
+
+
+redux devtools... (a versão que NÃO USA MIDDLEWARES...) 
+
+
+
+
+
+A versão mais simples dessa instalação fica basicamente 
+
+assim (em 'index.js'):
+
+
+
+
+
+
+
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() );
+
+
+
+
+---> mas como nós USAMOS 
+
+MIDDLEWARES 
+
+NA NOSSA VERSÃO,
+
+
+
+usamos a mais avançada....
+
+
+
+
+
+
+
+
+--------------------
+
+
+CERTO, O REDUX DEV TOOLS ESTÁ FUNCIONANDO...

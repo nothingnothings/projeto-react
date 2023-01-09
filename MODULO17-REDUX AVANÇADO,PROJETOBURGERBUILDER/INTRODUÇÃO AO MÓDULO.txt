@@ -1,0 +1,85 @@
+
+VOLTAMOS AO BURGERBUILDER.... 
+
+
+
+
+
+----> nós JÁ HAVÍAMOS ADICIONADO 
+
+
+'REDUX'
+
+
+no nosso BURGERBUILDER ANTES... --> mas agora vamos usar AS __fEATURES__ AVANÇADAS __ DO REDUX 
+
+__ NO 
+
+
+
+BURGERBUILDER... ----> 
+
+
+
+isso significa que 
+
+usaremos:
+
+
+
+
+
+
+
+1) ARQUIVO SEPARADO PARA OS 'actionTypes'....
+
+
+
+
+
+2) ACTION CREATORS... 
+
+
+
+
+3) UTILITY FUNCTIONS... (optimizar nossos reducers...)
+
+
+
+
+4) mais algumas coisas... 
+
+
+
+5) rodar CÓDIGO ASSÍNCRONO COM O BURGER BUILDER, QUE USA REDUX.... (redux com código assíncrono = middleware de redux-thunk e ACTION CREATORS...)
+
+
+6) IMPLEMENTAR/ADICIONAR O 'REDUX DEVTOOLS' no __FLOW___ do burgerbuilder... (também colocar aquele middleware útil de nome 'logger', que nos ajuda a ver A OCORRÊNCIA DE DISPATCHES NO NOSSO CÓDIGO...)
+
+
+
+
+
+---> ATÉ AGORA, NÓS SÓ FAZEMOS O 'BUILD' DO BURGER PROPRIAMENTE DITO, NO REDUX... --> nós ADICIONAMOS 
+
+E REMOVEMOS INGREDIENTS 
+
+POR MEIO DO REDUX... 
+
+
+
+
+
+--> mas agora vamos querer DISPATCHAR 
+
+ACTIONS DE FORMA ASSÍNCRONA COM O REDUX, vamos querer conseguir fazer POST e GET (lá na página 'Orders'...) 
+
+de dados no nosso server...
+
+
+
+
+
+---> vamos usar TODAS AS COISAS QUE APRENDEMOS NO MÓDULO ANTERIOR...
+
+

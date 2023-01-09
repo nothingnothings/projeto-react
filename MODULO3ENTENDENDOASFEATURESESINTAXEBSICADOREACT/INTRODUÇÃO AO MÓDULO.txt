@@ -1,0 +1,30 @@
+
+
+
+
+
+
+
+
+
+----> AGORA QUE CONSTRUÍMOS NOSSO PRIMEIRO EXEMPLO REACT,
+
+
+
+DEVEMOS VER TODOS OS CONCEITOS E SINTAXE BÁSICA DO REACT....
+
+
+
+
+--> AGORA VAMOS VER O QUE PRECISAMOS PARA 
+
+CONSTRUIR UM APLICATIVO REACT....
+
+
+
+
+---> veremos quais core features o react oferece, e como as utilizamos...
+
+
+
+---> veremos como settar um projeto react na nossa máquina...

@@ -1,0 +1,1475 @@
+
+
+
+
+
+
+
+
+
+---> Agora vamos trabalhar com nossas orders... ------> 
+ 
+
+
+Vamos fazer com que 
+
+só 
+
+as orders de cada usuário 
+
+
+seja mostrada na página,....
+
+
+
+
+
+
+
+
+
+
+---> para isso, 
+
+precisamos 
+
+
+
+fazer com que 
+
+
+o 
+
+USERID SEJA 
+
+ANEXADO 
+
+A CADA 
+
+
+ORDER... ----> a sorte nossa é que 
+
+o 
+
+USER ID 
+
+JÁ 
+
+ESTÁ 
+
+
+
+GUARDADO 
+
+
+NO 
+
+STATE 
+
+DO REDUX,
+
+
+
+NAQUele 
+
+
+'userId: null', que é eventualmente substituído 
+
+por 
+
+um válido... 
+
+
+
+
+
+
+
+PROFESSOR FALA DE 
+
+
+
+'  const orderData = {
+      // ingredients: this.props.ingredients, /
+      ingredients: this.props.ingr, //código que agora está usando o REDUX.
+      price: this.props.price, //código que agora está usando o REDUX.
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+      userId: this.props.userId
+    };
+
+
+
+
+
+
+
+ex:
+
+
+const mapStateToProps = (state) => {
+  return {
+    ingr: state.burger.burger.ingredients,
+    price: state.burger.burger.totalPrice,
+    loading: state.order.loading,
+    token: state.auth.token,
+    redirectToHome: state.order.redirectToHome,
+    userId: state.auth.userId,
+    // redirectToOrders: state.order.redirectToOrders,
+    error: state.order.error
+  };
+};
+
+''''''''''' 
+
+
+
+
+
+
+
+
+
+
+CERTO....
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+
+-----------> agora queremos que QUANDO 'ORDERS' for visitada,
+essa página aí,
+
+SEJAM
+
+
+MOSTRADAS __APENAS ___ AS 
+
+
+ORDERS 
+
+QUE 
+
+
+POSSUAM 
+
+
+'userId'
+
+equivalente ao userId do usuário...
+
+
+-------------------------------------
+
+
+
+--> PARA ISSO, PROVAVELMENTE 
+
+VAMOS 
+
+PRECISAR 
+
+DE 
+
+
+OUTRO PARÂMETRO, um parâmetro 'userId',
+
+
+
+LÁ NO ACTION CREATOR QUE 
+
+FAZ 
+
+O FETCH DAS ORDERS... --> tipo assim:
+
+
+
+
+
+
+
+
+
+
+ export const asyncFetchOrdersStart = (token, userId) => { ///////EIS O CÓDIGO EM QUESTÃO.
+        return dispatch => {
+                dispatch(fetchOrdersStart());
+            axiosOrder.get('/orders.json?auth=' + token)
+            .then(
+               res => {
+                   const fetchedOrders = [];
+                   for (let key in res.data) {
+                       fetchedOrders.push(
+                           {
+                               ...res.data[key],
+                               id: key
+                           }
+                       )
+                   }
+                   dispatch(fetchOrdersSuccess(fetchedOrders)); ///AQUI É DISPATCHADA A ACTION DE 'fetchOrdersSuccess', com um pass de 'fetchedOrders' como payload (propriedade 'orders')...
+               }
+            )
+            .catch(error => {
+                    dispatch(fetchOrdersFail(error));
+            })
+        }
+    }
+
+
+
+
+
+------------------------------
+
+
+
+
+Não sei o que fazer neste trecho aqui:
+
+'''''''                                         '''''
+     axiosOrder.get('/orders.json?auth=' + token)
+
+
+
+
+
+---> talvez eu tenha que substituir 'token' por 'userId'...
+
+
+
+
+
+
+--------------------------------
+
+
+
+OK... MAS O PROFESSOR NOS DIZ QUE 
+
+__HÁ 2 MANEIRAS DE FAZER O 'CHECK' 
+
+
+
+de essa propriedade 
+'userId' 
+
+
+dentro 
+
+das 'order'...
+
+
+------------------------
+
+
+
+
+
+1a MANEIRA---> PENEIRAR OS DADOS RECEBIDOS, NO FRONTEND MESMo... ----> 
+
+
+
+
+
+SIMPLESMENTE EXECUTARÍAMOS UM CÓDIGO PARA CHECAR POR ORDERS LÁ 
+
+NO 
+
+ARRAY DE 'orders' no REDUX STATE que tenham 
+
+
+
+um 'userId' 
+
+QUE SEJA IGUAL 
+
+AO USERID 
+
+que 
+
+está atualmente 
+
+no nosso browser.... ------> o problema PRINCIPAL
+ 
+ deste 
+
+ approach 
+
+ é 
+
+
+ QUE 
+
+ TODAS AS ORDERS __aINDA SERIAM FETCHEADAS__, E ISSO PODE LEVAR 
+
+ A DEMORAS... ----> pq todas as orders teriam de ser fetcheadas,
+
+ para 
+
+ SÓ 
+
+ ENTÃO COMEÇARMOS O 'FILTERING'/peneiração que 
+
+
+ vai 
+ extrair 
+
+ as 
+
+ orders 
+
+
+ com um userId correspondente.... ------> E ISSO, ESSE RETRIEVE 'GERAL' 
+
+
+ DAS ORDERS PARA ENTÃO 'PENEIRAR', 
+ É __UMA 
+
+ 'SECURITY ISSUE'.... --> security issue 
+
+ PQ 
+
+ SE 
+ ALGUÉM 
+
+
+ DEPOIS INSPECIONAR NOSSO CÓDIGO JAVASCRIPT,
+
+
+ esse alguém poderá ver orders QUE NÃO SÃO/NÃO FORAM FEITAS POR ELE../não são para ele....
+
+
+
+
+
+
+
+
+ --> É POR ISSO QUE O APPROACH 2 É MUITO MELHOR...
+
+
+
+
+
+
+
+ APPROACH 2 ---> FAZER 
+
+ O 
+
+ RETRIEVE, DIRETAMENTE COM O SERVIDOR,
+
+
+ DAS ORDERS QUE SATISFAÇAM 
+
+ O 
+
+ CRITÉRIO 
+
+ DE 
+ 'userId'...   --------->  ISSO É FÁCIL COM O FIREBASE.... 
+ 
+ 
+ 
+ 
+ ENTRETANTO,
+ 
+ É  CLARO
+
+ QUE
+
+
+
+ SE VOCÊ 
+
+ TIVER 
+
+
+SUA PRÓPRIA BACKEND,
+
+VOCê PRECISA 
+
+DE UM 
+
+MEIO 
+
+PRÓPRIO (algo criado pOR VOCÊ) que 
+
+
+CONSIGA __PASSAR O 'userId' 
+
+
+
+
+___aO BACKEND__ para que 
+
+
+então 
+
+consiga 
+
+ser realizado esse procedimento...
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+mas SE/QUANDO VOCÊ USA O FIREBASE,
+
+
+VOCê PODE ___FACILMENTE__ FILTRAR ___ DADOS/DATA........... (E fazer esse retrieve das orders específicas, orders com aquele userId)... --> 
+
+
+para 
+
+fazer isso,
+
+você 
+
+deve 
+
+VOLTAR 
+
+
+ao 
+
+
+seu
+
+arquivo 
+
+'order.js',
+
+onde 
+
+estão 
+
+
+seus ACTION CREATORS DE ORDERS,
+
+
+e aí 
+
+
+LÁ NAQUELE 
+
+LUGAR EM QUE 
+
+TEMOS 
+
+
+'asyncFetchOrdersStart()',
+
+
+VOCÊ 
+
+DEVE 
+
+
+
+
+
+
+
+__PASSAR___ MAIS QUERY PARAMS 
+
+ÀQUELE 
+
+
+'axios.get('/orders.json?auth=' + token)'.... ---------> 
+
+
+
+PROFESSOR 
+
+
+NOS 
+
+DIZ QUE 
+
+JÁ 
+
+
+PASSAMOS 
+
+A TOKEN,
+
+DE FATO,
+
+
+mas 
+
+
+NÓS __PODEMOS ___ PASSAR __ MAIS QUERY PARAMS....
+
+
+
+
+
+
+
+
+
+
+
+
+---> E, EXPLICA O PROFESSOR,
+
+COMO 
+
+NÓS VAMOS 
+
+ADICIONAR MAIS ALGUNS QUERYPARAMS 
+
+
+
+NA NOSSA 
+
+URL 
+que está sendo usada para o 'get',
+
+
+
+ELE 
+
+
+DECIDE QUE 
+
+
+VAI 
+
+
+
+CRIAR 
+UMA NOVA CONSTANTE AQUI,
+
+chamada 
+
+de 
+
+'queryParams'...
+
+
+
+
+
+
+
+
+
+
+---> e essa constante vai SEGURAR 
+UMA STRING 
+
+que 
+
+
+será 
+
+
+'?auth=' + token + '&' .....
+
+
+
+
+
+
+
+
+----------------------------
+
+
+OBS:::: '&' É USADO __PARA ___'CHAINAR'__ DIFERENTES QUERYPARAMS.... ---> chainar mais de 1 queryparam...
+
+
+
+------> E O SEGUNDO 'queryParam' dentro dessa constante 
+
+vai 
+
+
+
+se chamar 
+
+'orderby'...
+
+
+
+
+
+
+VAI FICAR ASSIM, ESSENCIALMENTE:
+
+
+
+
+
+'?auth=' + token + '&orderBy' .....
+
+
+------------------------------------------
+
+
+
+
+
+
+
+OK, 
+
+MAS 
+
+PQ 
+
+'orderBy'? -------> É PQ 
+
+ESSE 
+
+É 
+
+UM 
+
+QUERYPARAM __ QUE É ENTENDIDO___ PELO 
+
+FIREBASE____, e que 
+
+TE 
+
+PERMITE 
+
+
+FAZER 'order' de nossos dados/data (ou seja, ORGANIZAR NOSSOS DADOS....) 
+
+
+
+
+
+
+
+ex:
+
+
+
+'&orderByDate' ,
+
+
+'&orderByName',
+
+etc etc.... --------------------> 
+
+
+
+
+
+
+ENTRETANTO, DIZ O PROFESSOR,
+ 
+ ESSE QUERYPARAM ESPECIAL TEM UM USO SECUNDÁRIO, TAMBÉM MUITO ÚTIL,
+
+
+
+
+ que é 
+
+
+ basicamente 
+
+ dizer ao firebase 
+
+ 'HEY, VOCÊ TAMBÉM PODE FILTRAR OS ITEMS NO DATABASE POR ISSO E ISSO/dessa e dessa forma......'
+
+
+
+
+
+
+
+
+
+
+ --> o professor, no caso do nosso projeto,
+
+
+ vai 
+
+ querer 
+
+
+ 'orderBy' (ordenar por) 
+
+
+
+
+ 'userId', ou seja,
+
+
+ VAI QUERER 
+
+
+ FITLRAR/ORDENAR 
+
+
+ NOSSO CÓDIGO ___ TENDO COMO CRITÉRIO___ A PROPRIEDADE 
+
+ 'userId' -------------------------> 
+
+ É 
+
+
+ EVIDENTE QUE 
+
+
+
+ 'orderBy', POR SI MESMO,
+
+
+
+ NÃO __ FAZ COISA ALGUMA___ ----> professor nos explica que 
+ É 
+
+ NECESSÁRIO ADICIONAR AINDA __OUTRO__ QUERYPARAM, com outro '&',
+
+ que 
+
+
+ SERÁ 
+
+
+ um 
+
+ querParam 
+
+ de 
+
+
+ 'equalTo' ( resumindo...: 'ordenar/organizar por UserId IGUAL A TAL E TAL COISA...')...
+
+
+  
+
+
+
+
+
+
+
+
+
+  'equalTo 'VAI SEMPRE SE 
+
+  REFERIR 
+
+
+  à 
+
+  'key' (no caso, 'userId') 
+
+
+
+A QUAL VOCÊ ESTÁ 
+
+'ORDERING BY'...
+
+
+
+
+
+
+
+
+--> ok...
+
+
+
+está 
+
+ficando 
+
+
+
+''''''''''''                                                                ''''''''''''
+queryParams = '?auth=' + token + '&orderBy=userId&equalTo='.........
+
+
+
+
+
+
+
+
+
+
+POR FIM, 
+
+PARA COMPLETAR ESSA EXPRESSÃO,
+
+DEVEMOS 
+
+
+
+ADICIONAR 
+
+
+NOSSA 
+
+constante 
+
+de 
+
+'userId'
+ 
+
+
+ ali,
+
+
+ pq 
+ é 
+ isso 
+ que queremos 
+
+ que
+
+
+ exista dentro 
+
+
+ das 'keys'/'orders'
+
+ armazenadas no firebase,
+
+ queremos que 
+ exista uma propriedade 
+
+
+ 'userId' QUE SEJA IGUAL ao 'userId' 
+
+ QUE TEMOS ARMAZENADO 
+
+
+ NO 
+
+ REDUX STATE DE NOSSO APLICATIVO....
+
+
+ -----------------------------------
+
+
+
+
+ex:
+
+
+
+
+queryParams = '?auth=' + token + '&orderBy=userId&equalTo=' + userId;
+
+
+
+
+
+------------------------------------
+
+
+
+
+RESULTADO COMPLETO:
+
+
+
+
+
+
+
+
+ export const asyncFetchOrdersStart = (token, userId) => {
+        return dispatch => {
+                dispatch(fetchOrdersStart());
+        //     
+        axiosOrder.get('/orders.json?auth=' + token + '&orderBy=userId&equalTo=' + userId)
+            .then(
+               res => {
+                   const fetchedOrders = [];
+                   for (let key in res.data) {
+                           console.log(key);
+                       fetchedOrders.push(
+                           {
+                               ...res.data[key],
+                               id: key
+                           }
+                       )
+                   }
+                   dispatch(fetchOrdersSuccess(fetchedOrders));
+               }
+            )
+            .catch(error => {
+                    dispatch(fetchOrdersFail(error));
+            })
+        }
+    }
+
+
+-------------
+
+
+
+PROFESSOR FAZ, ENTÃO, O CÓDIGO FICAR UM POUCO MAIS BONITO...
+
+ex:
+
+
+
+
+
+
+ export const asyncFetchOrdersStart = (token, userId) => {
+        return dispatch => {
+                dispatch(fetchOrdersStart());
+        //     
+        const queryParams = '?auth=' + token + '&orderBy=userId&equalTo=' + userId;
+        axiosOrder.get('/orders.json + queryParams);
+            .then(
+               res => {
+                   const fetchedOrders = [];
+                   for (let key in res.data) {
+                           console.log(key);
+                       fetchedOrders.push(
+                           {
+                               ...res.data[key],
+                               id: key
+                           }
+                       )
+                   }
+                   dispatch(fetchOrdersSuccess(fetchedOrders));
+               }
+            )
+            .catch(error => {
+                    dispatch(fetchOrdersFail(error));
+            })
+        }
+    }
+
+
+------------------------------
+
+
+
+CERTO...
+
+AGORA SÓ NOS RESTA __TESTAR__ O NOSSO CÓDIGO___....
+
+
+
+--------------------------------
+
+
+
+
+
+
+--> ok... surge outro problema: nossa página 
+
+'Orders' está 
+em 
+
+branco.... --------> 
+
+
+deve 
+
+ser 
+
+pq 
+
+
+algum código 
+
+em 
+
+'FetchOrders' está faltando....
+
+
+
+
+-------------------------------
+
+
+NÃO, ESQUEÇA O QUE EU HAVIA DITO... ---> ESTÁ FUNCIONANDO, SIM... ---> 
+
+agora 
+
+
+CADA
+
+VEZ QUE 
+
+CRIAMOS UM BURGER,
+
+
+ELE FICA VINCULADO
+ 
+
+ A 
+
+NOSSA 
+
+'CONTA' 
+
+
+no firebase; fica vinculado 
+
+ao 
+
+
+
+nosso
+ 'SIGNUP'...
+
+
+
+
+
+ -------------------------
+
+
+
+ CERTO... MAS EU AINDA ACHO QUE ALGO ___NÃO ESTÁ CERTO...___ algo está errado nesse 'store' e 'retrieve' das orders de cada usuário, no firebase...
+
+
+
+
+
+
+
+
+ ---> E REALMENTE, ALGO NÃO ESTAVA CERTO...
+
+
+
+
+
+
+
+ --> era um problema em 'queryParams', naquela constante lá....
+
+
+ ex:
+
+
+
+
+
+
+     const queryParams = '?auth=' + token + '&orderBy=userId&equalTo=' + userId;
+
+
+
+
+
+
+HÁ UM ERRO NISSO AÍ... --> o erro 
+
+está 
+
+
+naquele NOME DE PROPRIEDADE/coisa 
+
+que 
+
+está 
+
+vinculada
+
+à 
+
+'key' de 
+
+
+'orderBy'.... -----------> 
+
+
+
+
+OS VALORES A DIREITA do '=' DAS keys ___dEVEM SEMPRE __ SER 
+
+WRAPPADOS EM 
+
+"" ------> isso significa que 
+
+deve ser 
+
+escrito userID 
+
+
+assim:
+
+"userId",
+
+
+e não 
+
+assim:
+
+
+userId....
+
+
+
+
+CÓDIGO CONSERTADO:
+
+
+
+
+     const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo=' + userId;
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+--------> E MAIS, PARA FICAR AINDA MAIS ABSURDO: 
+
+
+
+como vocÊ já deve ter imaginado,
+
+
+o 
+
+
+'userId' referenciado AO FINAL DESSA EXPRESSÃO __TAMBÉM__  VAI PRECISAR 
+
+DE 
+uns 
+
+''/"" o wrappando, e é POR ISSO 
+
+QUE 
+
+VAMOS 
+
+
+COLOCAR UM 
+
+( ' ) DEPOIS DO equalTo=", 
+
+
+
+
+
+AÍ __ DEPOIS DELE....
+
+
+ex:
+
+
+
+
+
+
+const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
+
+
+
+
+
+
+(SIM, É UM CÓDIGO ABSURDO ASSIM MESMO, TUDO PARA QUE o último userId fique "userId"...)
+
+
+
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+COM ISSO, __QUASE__ TERMINAMOS __ TUDO... ----> digo 'quase' PQ 
+
+
+__AINDA FALTOU __ O SETUP DO BACKEND__.... ----> PRECISAMOS 
+
+
+aprontar/preparar o BACKEND... 
+
+
+
+
+
+
+
+
+
+---> AQUI, NO FIREBASE (E especificamente NO FIREBASE, pq em 
+
+outros backends não preicsamos fazer isso...),
+
+
+
+SE VOCÊ QUER SER CAPAZ de __FILTRAR__ DADOS COM O FIREBASE,
+
+
+
+NÓS __SOMOS OBRIGADOS__ A ALTERAR __ AS RULES__ DO SERVIDOR FIREBASE... (lá nas 'Rules'...)
+
+
+----------------------------------
+
+
+---> NÓS DEVEMOS ALTERAR __AS 'RULES' _ PARA QUE 
+
+UM 
+
+CERTO 
+
+'FIELD' 
+
+SEJA 
+
+'INDEXABLE',
+
+
+devemos 
+
+tornar 
+
+um field 
+
+específico __INDEXÁVEL__, essencialmente... (isso para que possamos fazer algo como 'orders[userId]')
+
+
+
+
+
+
+SE ESSE FIELD FICAR 
+
+'indexável',
+
+
+O 
+
+FIREBASE 
+
+VAI PODER 
+
+'SEARCH THROUGH IT'... ------- >
+
+
+
+
+
+
+e o field que nos interessa é __O 'ORDERS'... --->
+
+
+esse field específico vai ter que 
+
+receber uma 
+
+regra extra
+
+de 
+
+
+".indexOn: " ----------> 
+
+
+
+
+
+
+E AÍ, 
+
+
+COMO VALOR 
+
+DESSE 
+
+NEGÓCIO, VOCê __DEVE COLOCAR UM __ARRAY___... --> DENTRO DESSE ARRAY,
+
+VOC~E DEVE 
+
+
+ESPECIFICAR __tODOS OS FIELDS __ QUE VOCÊ QUER 
+
+QUE 
+
+SEJAM 
+
+'SEARCHABLE'... ------> como aqui NÓS SÓ QUEREMOS o 'userId' 
+
+
+dentro 
+
+DAS NOSSAS 'orders',
+
+
+
+O PROFESSOR 
+
+SÓ VAI 
+ESCREVER 
+
+
+
+
+
+".indexOn": ["userId"]  ------------> 
+
+
+
+
+COM ISSO 
+
+PUBLICADO,
+
+
+
+NOSSA 
+
+FEATURE 
+
+DE 
+
+'vinculação das orders a cada user '
+
+DEVE ESTAR FUNCIONANDO...
+
+
+
+
+ex:
+
+
+
+
+{
+   "rules": { //ESTA VERSÃO FUNCIONA... ---> subdividimos os 'acessos' dos nodes do nosso aplicativo/database... --> os ingredients vao sempre ficar ABERTOS AO PÚBLICO EM GERAL, ENQUANTO QUE o node de 'orders' vai ter aqueles acessos específicos, condicionados A EXISTÊNCIA/VALIDADE DE 'auth' (que será o token anexado ao request enviado pelo usuário, em outras palavras).
+     
+     "ingredients": {
+       ".read": true,
+     ".write": true},
+       "orders": { ///////EIS O CÓDIGO EM QUESTÃO. --> ISSO FARÁ COM QUE ESSAS REGRAS DE 'read' e 'write' específicas, submetidas a existência de um 'auth', SEJAM APLICADAS APENAS AO 'trecho' 'orders' de nossa database...
+         ".write": "auth != null",
+           ".read": "auth != null",
+             ".indexOn": ["userId"]
+       }
+   }
+ }
+
+
+----------------------------------------------
+
+
+
+
+
+AGORA, COM ESSAS ALTERAÇÕES TODAS 
+
+NO BACK E FRONTEND SALVAS,
+
+
+
+TESTAMOS NOSSO APLICATIVO...
+
+
+
+
+
+
+
+OK... ___FUNCIONOU___...
+
+
+
+
+--> CERTO, AGORA O USUÁRIO ___NÃO TEM CHANCE __ DE ACESSAR 
+
+DADOS 
+
+QUE 
+
+NÃO PERTENCEM A ELE... (o que é ótimo...)
+
+
+
+
+
+
+
+
+
+
+--> É EVIDENTE QUE 
+
+ESTE EXEMPLO FOI USANDO O FIREBASE....
+
+
+SE VOCÊ TEM SEU 
+
+BACKEND PRÓPRIO,
+
+VOCê 
+
+PROVAVELMETNE 
+
+
+TEM SUA PRÓPRIA 'FILTERING LOGIC' posicionada... ------> e sua 
+
+filtering 
+
+logic 
+
+PROVAVELMENTE 
+
+USA 
+UM SISTEMA 
+
+SIMPLES 
+
+DE TOKEN,
+
+OU ENTÃO 
+
+USA 
+
+
+
+UMA LÓGICA DE FILTERING COMO ESTA QUE UTILIZAMOS AQUI...

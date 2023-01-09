@@ -1,0 +1,780 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+----> NA ÚLTIMA LIÇÃO,
+
+FIZEMOS 
+
+BUILD DE NOSSOS ARQUIVOS... ---> agora o professor quer 
+
+OS 
+
+
+
+DEPLOYAR NO NOSSO SERVIDOR...
+
+
+
+
+
+
+
+--> PROFESSOR DIZ QUE 
+
+PODEMOS 
+
+
+ESCOLHER QUALQUER 'STATIC FILE HOST',
+que 
+
+NÃO SOMOS 
+
+OBRIGADOS A USAR O FIREBASE....
+
+
+
+(basta seguir as informações do 'chosen host', e aí ASSEGURAR QUE O INDEX.HTML REALMENTE 
+É sempre RETORNADO POR ESSE SERVIDOR/HOST...)
+
+
+
+
+
+----> NÓS VAMOS 
+
+USAR 
+
+O MESMO 
+
+SERVIDOR 
+
+'FIREBASE' 
+
+
+QUE 
+ESTÁVAMOS 
+
+USANDO 
+
+
+
+PARA 
+
+
+FAZER O 'BACKEND' DO BURGERBUILDER.... -------> 
+
+
+
+
+
+
+NÓs vamos 
+
+na página do firebase,
+
+e aí vamos clicar 
+
+na opção 
+
+'hosting'.... 
+
+
+
+
+
+
+
+
+--> LÁ EM HOSTING,
+
+clicamos 
+
+
+em 
+
+
+
+'get started' e ganhamos algumas instruções... ----------> 
+
+
+
+
+
+
+SE QUISERMOS USAR O FIREBASE,
+
+PRECISAMOS 
+
+O INSTALAR 
+
+
+GLOBALMENTE 
+
+
+
+
+('npm install -g firebase-tools') --------> NÓS JÁ FIZEMOS ISSO UMA 
+
+VEZ,
+
+JÁ TEMOS EXPERIÊNCIA... 
+
+
+
+
+
+
+
+
+
+
+---> SE VOCÊ NÃO QUISER SEGUIR COM ESSE 'APPROACH',
+
+do 
+
+FIREBASE,
+
+que 
+
+
+
+usa O COMMAND LINE DO SEU COMPUTADOR,
+
+você 
+
+pode 
+
+usar 
+
+ALGO COMO 
+
+O 
+
+'AWS3', da amazon,
+
+que 
+
+dispensa isso...
+
+
+
+
+
+
+
+---> certo,
+
+nós vamos iNSTALAR ESSE NEGÓCIO...
+
+
+
+
+
+
+
+
+
+---> instalado o firebase,
+
+
+
+
+devemos 
+
+ver o SEGUNDO PASSO...
+ 
+
+ ---------------------------------
+
+
+
+
+
+
+
+
+ --> DEVEMOS FAZER 'SIGNIN' NO google,
+
+ por meio 
+
+ de 
+
+
+ 'firebase login' no terminal,
+
+
+ e aí,
+  
+  depois de 'signed in',
+
+
+
+  DEVEMOS 
+
+  INICIAR NOSSO PROJETO 
+
+  COM 
+
+
+  'firebase init'...
+
+
+
+
+
+  ---------------------
+
+  OK...
+
+
+  Already logged in as testestest20012@gmail.com
+
+
+
+
+
+
+
+  --> depois disso,
+  provavelmente 
+
+  vamos querer rodar 
+
+
+  'firebase init'..
+
+
+
+
+
+
+  ---> ISSO FEITO,
+
+
+
+
+
+  O NEGÓCIO NOS DÁ VÁRIAS OPÇÕES:
+
+
+
+
+Which Firebase features do you want to set up for this directory? Press Space to select features, then Enter to confirm your choices. (Press <space> to select, <a> to toggle all, <i> to invert selection)
+>( ) Realtime Database: Configure a security rules file for Realtime Database and (optionally) provision default 
+instance
+ ( ) Firestore: Configure security rules and indexes files for Firestore
+ ( ) Functions: Configure a Cloud Functions directory and its files
+ ( ) Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys
+ ( ) Hosting: Set up GitHub Action deploys
+ ( ) Storage: Configure a security rules file for Cloud Storage
+(Move up and down to reveal more choices)
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+--> VAMOS TER QUE USAR O COMANDO 'firebase deploy' 
+
+depois...
+
+
+
+
+
+
+
+--> VAMOS USAR 
+
+
+
+A OPÇÃo
+
+
+
+
+' ( ) Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys
+
+
+
+'
+
+
+
+
+
+
+
+First, let's associate this project directory with a Firebase project.
+You can create multiple project aliases by running firebase use --add,
+but for now we'll just set up a default project.
+
+
+
+
+
+> Use an existing project
+  Create a new project
+  Add Firebase to an existing Google Cloud Platform project 
+  Don't set up a default project
+
+
+
+
+
+
+
+
+? Please select an option: Use an existing project
+? Select a default Firebase project for this directory: 
+> burgerbuilder201051 (burgerbuilder201051)
+
+
+
+
+
+----------------------------------------------
+
+
+
+IMPORTANTE --> 
+
+
+Your public directory is the folder (relative to your project directory) that
+will contain Hosting assets to be uploaded with firebase deploy. If you
+have a build process for your assets, use your build's output directory.
+
+? What do you want to use as your public directory? (public)
+
+
+
+
+
+--> ISSO TE PERGUNTA 
+QUAL 
+
+
+SERÁ 
+
+
+SEU 
+
+
+FOLDER 'public' --> PARA NÓS, NO NOSSO CASO,
+
+
+
+ESSE FOLDER 
+
+AÍ 
+
+NÃO 
+
+SERÁ/NÃO É 
+
+'public',
+
+
+e sim 
+
+
+'build'... ----> devemos escrever 'build', isso informará 
+O 
+
+
+FIREBASE 
+
+DE QUE 
+
+QUEREMOS 
+ 
+
+ USAR/UPLOADAR OS ASSETS QUE 
+
+
+ ESTÃO 
+
+
+ DENTRO DE 'build'...
+
+
+
+
+ --------------------------------
+
+
+
+
+ DEPOIS DISSO,
+
+
+ O 
+
+ FIREBASE 
+
+ VAI NOS PERGUNTAR ALGO BEM IMPORTANTE:
+
+
+
+ ''''? Configure as a single-page app (rewrite all urls to /index.html)? (y/N) ''''
+
+
+
+
+
+
+ --> COLOQUE 'YES',
+
+
+
+
+ se estiver construindo com 'create-react-app' (nós estamos)....
+
+
+
+
+
+
+
+ -----------> SE ELE PEDIR
+  
+
+
+  'File build/index.html already exists. Overwrite? (Y/N)',
+
+
+  VOCÊ 
+
+
+  DEVE COLOCAR 
+
+
+  'no'...  (PQ NÓS __OBVIAMENTE ___ QUEREMOS MANTER O INDEX.HTML
+  CRIADO 
+  
+  POR NOSSO PROJETO REACT, E NÃO QUEREMOS usar um novo...)
+
+
+
+
+
+
+  --> com isso tudo,
+
+
+  TERMINAMOS... ------> 
+
+
+
+  NOSSO 
+
+  PROJETO FOI 
+
+  'DEPLOYED' (isso significa que 
+  
+  
+  
+  NOSSOS 'BUILD ARTIFACTS'/ nosso projeto em FORMATO __PRODUCTION/deployment JÁ __ FOI 
+  
+  UPLOADADO 
+  
+  
+  
+  AO 
+  
+  
+  SERVIDOR 'FIREBASE'... ---------> COM ISSO,
+  
+  
+  
+  
+  SÓ NOS RESTA ___ EXECUTAR_ _  O 
+
+  SERVIDOR.... --> 
+  ) -------> 
+
+
+
+  PARA SABER 
+
+  SE 
+
+  NOSSA BUILD/PROJETO JÁ FOI UPLOADADO AO SERVIDOR FIREBASE,
+
+
+  basta 
+
+  constatarmos 
+
+  a existência de 
+  uns
+
+  arquivos
+
+  '.firebasesrc'  e 'firebase.json'
+
+  NO NOSSO 
+
+  FOLDER 
+
+  'src'...
+
+
+
+  -------------------
+
+
+
+  '.firebasesrc' ---> SIMPLESMENTE CONTÉM INFORMAÇÃO SOBRE ESSE NOSSO PROJETO.... ----> 
+
+
+
+
+  'firebase.json' ---> ESSE É O IMPORTANTE... ---> É AQUI 
+
+
+  EM QUE 
+
+  O HOSTING É CONFIGURADO,
+
+
+  é também 
+
+  o lugar em que 
+
+
+
+  TEMOS O LUGAR QUE SERÁ DEFINIDO COMO FOLDER 'public',
+
+  E TAMBÉM 
+
+  OS 
+
+  FOLDERS QUE 
+
+
+
+FORAM/SÃO IGNORADOS QUANDO 
+
+FAZEMOS UPLOAD DE BUILD ARTIFACTS ao servidor firebase (como 'firebase.json', e 'node_modules', folders desnecessários ao funcionamento de nosso app no SERVIDOR...)
+
+
+
+
+
+
+
+
+
+
+-----> NESSE 'firebase.json'
+
+
+também temos uma propriedade 
+
+de 
+
+'rewrites',
+
+que segura 
+
+UM 
+
+ARRAY 
+
+QUE 
+
+
+
+FAZ COM QUE 
+
+TODOS 
+
+OS 'INCOMING REQUESTS'
+
+retornem
+
+
+'HTML'...
+
+
+
+ex:
+
+
+
+
+
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+COM TUDO ISSO SETTADO
+,
+
+
+
+SÓ PRECISAMOS 
+
+
+
+ESCREVEr 
+
+'firebase deploy'
+
+PARA 
+
+DEPLOYAR 
+NOSSO 
+
+APLICATIVO NA INTERNET...
+
+
+
+
+
+É REALMENTE SIMPLES ASSIM...
+
+
+
+
+
+
+-------------------------------------
+
+
+
+COM OUTROS 'STATIC HOSTING SERVICES',
+
+
+
+
+VOCê TALVEZ PRECISE 
+
+
+
+UPLOADAR MANUALMENTE SEUS ARQUIVOS A ELES (parecido com esse init do firebase que fizemos aqui, mas por outros meios.... tvz pelo browser.)
+
+
+
+
+
+----------------------------------------
+
+
+
+COM ISSO,
+
+
+
+
+
+NÓS PODEMOS VISITAR NOSSO APLICATIVO,
+
+por meio 
+
+daquela 
+
+
+url 
+
+
+
+
+,
+
+hosting URL:
+
+
+
+
+'''https://burgerbuilder201051.web.app''''....
+
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+--> E É CLARO QUE 
+EXISTEM MANEIRAS 
+
+
+DE 
+
+
+ASSIGNAR SEU PRÓPRIO 'DOMAIN',
+
+basta 
+você 
+
+
+ler 
+
+a documentação 
+
+
+do firebase...
+
+
+
+
+
+
+
+-> certo, nosso aplicativo agora 
+
+RODA 
+
+NA INTERNET 
+QUANDO 
+
+RODAMOS 
+
+
+
+ESSE COMANDO NO TERMINAL...
+
+
+
+
+ESTÁ TUDO RODANDO EM UM SERVIDOR DE VERDADE...
+

@@ -1,0 +1,1298 @@
+
+
+
+
+
+
+
+
+---> DEVEMOS COMEÇAR COM O SETUP DE UM PROJETO 
+
+NEXT.JS
+
+
+
+
+
+---> temos um monte de instruções na página do 
+github... 
+
+
+
+
+
+
+
+
+
+----> O NEXT.JS USA VERSÃO 
+
+REACT 17... ---> 
+
+DEVEMOS 
+
+
+INSTALAR 
+
+
+NEXT.JS 
+
+COM O COMANDO
+
+
+
+
+
+'npm install --save-dev next' .... -->  E É __EVIDENTE__ QUE TAMBÉM É NECESSÁRIO INSTALAR 
+
+
+REACT E REACT-DOM....
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+
+
+AS INSTRUÇÕES,
+
+NO SITE 
+
+DO 
+
+
+'next',
+
+são 
+
+
+de escrever 
+
+
+
+'npm install --save next react react-dom' 
+
+
+
+e 
+
+DEPOIS 
+
+
+COLOCAR 
+
+UMA 
+
+CONFIG 
+
+NO 
+
+package.json 
+
+ASSIM:
+
+
+{
+
+    "scripts": {
+        "dev": "next",
+        "build": "next build",
+        "start": "next start"
+    }
+}
+
+
+-------------------------------------
+
+
+
+
+
+
+
+
+--> PARA RODAR O NEXT,
+ 
+
+
+ VAMOS PRECISAR DE UM PROJETO VAZIO...
+
+
+
+
+
+--> DENTRO DISSO,
+
+
+DEVEMOS 
+
+
+
+COLOCAR 
+
+
+
+ESSE PROJETO 
+
+
+
+'SOB O COMANDO' do NPM....  ---> 
+
+
+
+FAZEMOS 
+
+ISSO 
+
+POR MEIO 
+DA 
+
+ESCRITA 
+DE 
+
+'npm init'...
+
+
+
+
+
+
+--> um package.json é criado.
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+ISSO FEITO,
+
+
+
+
+vmaos 
+
+
+
+
+
+rodar 
+
+
+
+'npm install --save next react react-dom'...
+
+
+
+
+----------------------------------
+
+
+
+NEXT-JS ---> É UMA 
+
+'LIBRARY BUILDING UPON REACT'...  -------> ISSO QUER DIZER QUE 
+
+ELE 
+
+TE 
+
+DA 
+
+'EXTRA FEATURES', sim 
+
+,
+
+MAS 
+
+POR TRÁS 
+
+DAS CENAS,
+
+
+E 
+
+SOB A PERSPECTIVA DAQUILO QUE VOCÊ VAI ESCREVER,
+
+
+__AINDA É __rEACT...
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+
+
+--------> TEREMOS 
+
+'next',
+
+'react' 
+
+e 
+
+'react-dom'....
+
+
+
+
+
+
+
+ADICIONAMOS ESTA SEÇÃO:
+
+{
+
+    "scripts": {
+        "dev": "next",
+        "build": "next build",
+        "start": "next start"
+    }
+}
+
+
+
+
+
+dentro do packages.json...
+
+
+
+
+----------------------------------
+
+
+CERTO....
+
+
+
+--> COM ISSO,
+
+
+
+PODEMOS 
+
+
+
+COMEÇAR A USAR O NEXT.JS
+
+
+
+
+---> mas antes disso,
+
+
+TEMOS 
+
+AQUELE 
+
+DETALHE,
+
+O 
+
+'FILE SYSTEM' ESPECIAL.....
+
+
+
+
+
+
+
+
+
+
+
+
+--> EM NEXT.JS,
+
+
+O 
+
+''''FILE-SYSTEM'''
+
+
+
+É __ O 
+
+MAIN API__, ESSENCIALMENTE... ---------> ISSO SIGNIFICA QUE 
+
+
+
+_______NÓS NÃO USAMOS/NÃO VAMOS USAR __ REACT ROUTER___ 
+
+
+COM O 
+
+NEXT.JS__, eles são INCOMPATÍVEIS... --------->  
+
+
+
+
+
+
+
+VOCÊ __NÃO USA___ REACT ROUTER__ QUANDO VOCê TRABALHA COM O 
+
+
+'NEXT.JS'...
+
+
+('After that, the file-system is the main API. Every .js file becomes a ROUTE that __gETS __ 
+AUTOMATICALLY PROCESSED AND RENDERED')
+
+
+
+
+
+
+
+
+
+---> no NEXT.JS,
+
+
+NÓS __cRÍAMOS __ 
+
+
+FOLDERS__ E FILES, essencialmente...  ------->
+
+
+
+ESSAS FOLDERS E FILES  REFLETEM/SÃO NOSSAS 'URLS',
+
+
+ou seja;
+
+
+O 
+
+FILE-SYSTEM (folders e files)  ***É*** O SISTEMA DE ROUTES...
+
+
+
+
+
+
+
+
+--> next-js vai automaticamente PARSEAR NOSSO FILE-SYSTEM em um SISTEMA DE ROUTES,
+
+e vai usar SEU PRÓPRIO ROUTING SYSTEM PARA __FAZER __ O 'HEAVY LIFTING'... --> 
+
+
+e, ao longo do caminho, __o NEXT.JS__ VAI __'PRE-RENDER' O CONTEÚDO QUE CARREGAMOS __COMO 
+
+__PÁGINAS __ NO SERVIDOR__... 
+
+
+
+
+
+
+--> OUTRO DETALHE:
+
+
+
+O NEXT.JS ___faZ __ CODE SPLITTING (lazy loading)
+
+___aUTOMÁTICO____... ----> 
+
+
+NÃO PRECISAMOS CONFIGURAR NADA,
+
+
+
+
+
+O ROUTING E LAZY LOADING JÁ VEM OUT OF THE BOX... ----> e é por isso que 
+
+
+NEXT.JS 
+
+
+É UMA 
+
+package
+
+
+TÃO INCRÍVEL.... -------> VALE A PENA 
+
+USAR 
+
+NEXT.JS...
+
+
+
+
+
+
+---------------------------
+
+
+
+TUDO ISSO:
+
+* ROUTING 
+
+* LAZY LOADING 
+
+* SITE PREVIEWS (para data crawlers, como google search engine),
+
+
+
+
+
+TUDO ___ PELO SIMPLES PREÇO DE ___MANTER__ UMA CERTA __ 
+'FILE STRUCTURE' no seu projeto...
+
+
+
+
+
+
+
+---> ESSA FILE STRUCTURE é 
+
+
+'all about'
+
+
+
+O 
+
+
+FOLDER 
+
+DE 
+
+'pages',
+
+que 
+
+deve existir DENTRO DO NOSSO PROJETO...
+
+
+
+
+
+
+
+--> esse folder,
+
+
+'pages',
+
+DEVE SER CRIADO ___dIRETAMENTE __ NO ROOT FOLDER __ DO SEU APLICATIVO/PROJETO... (do lado do node_modules)....
+
+
+
+
+
+
+--> DENTRO DE PAGES 
+
+VOCê 
+
+CRIA SEUS 
+
+ARQUIVOS 
+
+
+JVASCRIPT,
+
+
+
+QUE 
+
+
+SERÃO 
+
+
+REACT COMPONENTS NORMAIS,
+
+QUE 
+
+SEGURARÃO IMPORTS... --------> E ESSES 
+
+FILE 
+
+NAMES,
+
+os 
+
+
+FILE NAMES 
+
+QUE 
+
+VOCÊ USA,
+
+
+
+AGORA 
+
+
+VÃO DEFINIR __oS DIFERENTES__ 
+
+'paths' 
+
+QUE 
+
+VOCÊ TEM NO SEU APLICATIVo...
+
+
+
+
+
+
+
+--------> professor nos explica que poderíamos/podemos ter um SUBFOLDER,
+
+
+como 
+
+'auth',
+
+dentro 
+
+de 
+
+'pages'... -----> E DENTRO 
+
+
+DESSE FOLDER 
+VOCê 
+
+
+PODE 
+
+ADICIONAR UM ARQUIVO 
+
+
+CHAMADO DE 
+
+'user.js'...
+
+
+
+-------------------------
+
+
+
+
+ESSE ARQUIVO 
+
+DE 
+
+'user.js'
+
+
+
+SERIA 
+
+
+ALCANÇADO,
+
+NO SEU DOMÍNIO,
+
+POR MEIO 
+
+
+DE 
+
+'localhost:3000/auth/user' --------------------> É ASSIM QUE 
+
+A 
+
+ESTRUTURA 
+
+DO 
+
+'FILE SYSTEM' É REFLETIDA
+ 
+
+
+ NAS URLS/routes do nosso aplicativo....
+
+
+
+
+ ----------------------------
+
+
+
+
+
+ok... MAS SE VOCÊ 
+
+RENOMEAR 
+
+
+
+SEU 
+
+ARQUIVO 'auth.js'
+
+COMO 
+
+'index.js',
+
+
+
+
+ISSO VAI ALTERAR A URL,
+
+ELA VAI FICAR 
+
+'localhost:3000/auth', VAI PARAR NO 'auth', e não VAI CHEGAR NO 'index'...
+
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+PROFESSOR DIZ QUE TAMBÉM DEVEMOS 
+ADICIONAR 
+
+UM 
+
+'index.js'
+
+
+NO ROOT DE NOSSO APLICATIVO... (com isso, teremos 2 arquivos,
+
+
+o 
+
+
+
+'index' DENTRO DE 'pages',
+
+
+e o 
+
+
+index.js 
+
+
+
+__FORA__ de 'pages', no root de nosso aplicativo...)
+
+
+
+
+
+
+
+
+
+DIGAMOS QUE TEMOS 
+
+ESTA DISPOSIÇÃO:
+
+
+
+
+
+> pages (folder)
+    > auth (folder)
+        > index.js (arquivo)
+
+
+index.js (arquivo no root)
+
+
+
+
+
+---> se tivermos essA DISPOSIÇAO AÍ,
+
+
+QUANDO O USUÁRIO 
+
+escrever 
+
+'localhost:3000/',
+
+ELE VAI ACABAR ACESSANDO O ARQUIVO de 'index.js' NO __ROOT___....
+
+
+já 
+
+se ele escrever 
+
+'localhost:3000/auth',
+
+
+ELE VAI ACABAR ACESSANDO __ O ARQUIVO 'index.js' __ DENTRO DA 'page' DE NOME 'auth' (que é aquele folder...)
+
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+--> OK, DEVEMOS ADICIONAR UM COMPONENT 
+
+EM 
+
+AMBOS 
+
+OS 'index.js',
+
+PARA 
+
+TESTAR 
+
+COMO 
+ISSO FUNCIONA...
+
+
+
+
+
+
+----------------------
+
+
+
+
+
+
+AQUI, O PROFESSOR NOS EXPLICA QUE 
+
+TIPICAMENTE 
+
+USAMOS 
+
+'FUNCTIONAL COMPONENTS' QUE NÃO FAZEM MANAGE DE STATE (stateless)... mas ele 
+
+nos diz que 
+
+TAMBÉM 
+
+PODERÍAMOS/PODEMOS 
+
+
+ADICIONAR/ESCREVER 
+
+
+CLASS-BASED COMPONENTS com a keyword 'state',
+
+OU ENTÃO 
+
+
+FUNCTIONAL COMPONENTS COM O REACT HOOK DE 'useState'....
+
+
+----------------------------------------------
+
+
+
+
+NO index.js
+ 
+
+
+ DE 
+
+ 'ROOT',
+
+ o professor 
+
+ CRIA UM FUNCTIONAL COMPONENT....
+
+
+
+
+ex:
+
+import React from 'react';
+
+
+const indexPage = (props) => {
+
+}
+
+
+export default indexPage;
+
+
+
+
+-----------------------------
+
+
+
+
+
+OU SEJA,
+A SINTAXE É MAIS OU MENOS A MESMA;
+
+VOCÊ TEM QUE 
+IMPORAR O REACT,
+
+DEFINIR 
+
+O COMPONENT 
+
+E ENTÃO O EXPORTAR 
+
+COM 
+
+'export default'...
+
+
+
+
+
+
+
+
+--> professor faz o return de uma simples DIV,
+
+
+
+
+em que 
+
+ele 
+
+
+tem um <h1> que 
+
+diz 
+'The Main Page'...
+
+
+
+
+EX:
+
+
+import React from 'react';
+
+
+
+const indexPage = (props) => {
+        <div>
+            <h1>The Main Page</h1>
+        </div>
+}
+
+export default indexPage;
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+O PROFESSOR ENTÃO COPIA ESSE CÓDIGO E COLA EM 
+'auth',
+
+para então criar o 
+
+COMPONENT 
+
+'authIndexPage' (quer diferenciar os 2...)
+
+
+
+
+
+
+
+
+
+----> import React from 'react';
+
+const IndexPage = (props) => {
+  <div>
+    <h1>The Auth Index Page</h1>
+  </div>;
+};
+
+export default authIndexPage;
+
+
+
+
+
+
+
+-------------------------------
+
+
+O PROFESSOR 
+
+SALVA
+ 
+ ESSES 
+
+ 2 CÓDIGOS,
+
+
+  
+
+  E AGORA 
+
+
+  QUER 
+
+  EXECUTAR 
+
+
+  UM DOS SCRIPTS 
+
+  QUE 
+
+
+  DEFINIMOS... --> ele 
+
+  executa 
+
+
+  'npm run dev'... --> ISSO 
+
+
+  VAI 'SPIN UP '
+
+
+
+UM 
+
+
+DEV SERVER,
+
+
+dev server que 
+
+VAI 
+
+'BUILD' NOSSO 
+
+
+
+APLICATIVO,
+
+
+
+
+
+VAI BUILDAR NOSSO APLICATIVO 
+
+E 
+
+ENTÃO 'SERVERSIDE RENDER IT' (serverside rendering it...) -----> ALÉM DISSO,
+
+
+TAMBÉM 
+
+
+
+NOS 
+
+DÁ 
+
+
+HOTRELOADING,
+
+e um 
+
+
+
+AMBIENTE DE DESENVOLVIMENTO BEM NICE....
+
+
+
+
+
+
+
+---> SE VOCÊ VOLTAR 
+
+
+AO BROWSER,
+
+
+
+você pode 
+
+abrir 
+
+'localhost:3000' ------> ISSO VAI NOS MOSTRAR 
+
+
+
+NOSSA 
+PÁGINA 
+
+'MAIN',
+
+com 
+
+'The Main Page'... -----------> E 
+
+
+SE 
+
+NÓS 
+
+
+IRMOS 
+
+ATÉ 
+
+
+
+
+'localhost:3000/auth' (digitarmos isso na barra de endereços),
+
+
+
+
+
+
+VAMOS 
+
+VER 
+
+
+'The Auth Index Page'... ------> SINAL DE QUE O NEXT.JS ESTÁ FUNCIONANDo...
+
+
+
+
+
+
+
+
+
+
+---> ISSO SIGNIFICA QUE, SEM SETTAR QUALQUER TIPO DE ROUTING MANUALMENTE,
+
+ESSES 
+
+2 COMPONENTS JÁ PODEM SER 
+
+CARREGADOS
+
+COMO 'PAGES'  PELO 
+
+NEXT.JS... -----------> E, CONFORME O PROFESSOR MENCIONOU,
+
+
+
+ESSES COMPONENTS ___ NÃO PRECISAM __ SER FUNCTIONAL COMPONENTS,
+
+
+PODEM SER CLASS-BASED COMPONENTS TAMBÉM....
+
+
+
+
+
+
+
+
+
+OBS: 
+
+RECEBEMOS UM __ERRO___:
+
+
+
+
+event - build page: /next/dist/pages/_error
+wait  - compiling...
+event - compiled successfully
+
+
+
+
+--------------------------
+
+
+
+
+DEPOIS,
+
+EU 
+
+TENTEI 
+
+RODAR 
+
+O 
+
+CÓDIGO DE 'NPM run build' (constrói o código de 'PRODUCTION' do next.js,
+
+presumo eu.... ) ---> esse código deu VÁRIOS ERROS.... ---> depois 
+
+
+descobri
+ 
+ QUE 
+
+
+ ___O NEXT.JS __ NÃO SUPORTA MAIS O LOAD DE 'FUNCTIONAL COMPONENTS'
+
+
+ como 
+
+ 'pages' 
+ de nosso 
+
+ APP.... ---> para que 
+
+ sejam 
+
+
+ carregados 
+
+ como 
+
+ 'pages',
+
+ os COMPONENTS 
+
+
+ ____DEVEM __ OBRIGATORIAMENTE __ TER UMA 
+
+ SINTAXE 
+
+ DE 
+
+ 'class-based component'... 
+
+
+ (pelo menos eu acho que é essa a razão do erro...)
+
+
+
+
+
+ ok... o código compilou e tals.
+
+
+ Agora 
+
+ devo ver se o dev server funciona também.....
+
+
+
+ -------------------------
+
+
+
+ NÃO.
+
+
+ MESMO ERRO DE ANTES:
+
+
+
+ event - build page: /next/dist/pages/_error
+
+
+
+
+
+
+
+ https://auth0.com/blog/next-js-practical-introduction-for-react-developers-part-1/
+
+
+
+
+
+
+ Head to http://localhost:3000/ and bask in the glory of a 404 error. 
+ You haven't done anything wrong. This error shows up because the pages
+  directory is empty. It needs an index.js file inside to render the default / home route.
+   You'll do that... Next!
+
+
+
+
+
+
+CERTO... --> ESSE ERA O ERRO:
+
+ESTAVAMOS 
+
+COM 
+
+
+
+'index.js'
+
+
+
+NO __ROOT__ DE NOSSO 'PROJECT FOLDER',
+
+
+
+MAS 
+
+O LUGAR EM QUE 
+
+ELE REALMENTE DEVE SER COLOCADO 
+
+É 
+
+'pages',
+dentro do 
+
+ROOT de 'pages' (e fora de 'auth', que é uma DE NOSSAS PAGES...) ---> duuh, agora isso parece óbvio.
+
+
+
+
+
+(CERTO, AGORA FIZ FUNCIONAr....)

@@ -1,0 +1,1496 @@
+
+
+
+
+
+
+
+
+
+
+
+---> DEVEMOS FAZER COM QUE 
+
+__'ALGO DE ÚTIL' ocorra
+ 
+ quando 
+
+ aquele 
+
+ botão 
+
+ 'submit' em 
+
+
+ 'Auth.js'
+
+
+ FOR 
+
+ PRESSIONADO__... --------> para isso,
+
+
+ O 
+
+
+ PROFESSOR ___ VAI ADICIONAR ACTION CREATORS__ AO NOSSO CÓDIGO__... ------> 
+
+
+ PQ 
+
+ É 
+
+ EVIDENTE QUE 
+
+ ELE 
+
+
+
+ __VAI QUERER ___FAZER DISPATCH __ DE UMA ACTION _ QUANDO AQUELE 
+
+ BOTÃO 
+
+ 'submit'
+
+
+
+
+
+FOR 
+PRESSIONADO... -------> É POR ISSO QUE 
+
+DENTRO 
+
+DE 
+
+
+'actions',
+
+
+o professor 
+
+vai criar um 
+
+NOVO ARQUIVO,
+o qual chamará 
+
+
+de 
+
+
+'auth.js'...  --> e nele ficarão os ACTION CREATORS 
+
+de 
+
+'Auth.js'...
+
+
+-------------------------
+
+
+
+
+
+---> DENTRO DESSE ARQUIVO, PROFESSOR VAI QUERER SETTAR 
+
+'AUTHENTICATION-RELATED ACTIONS'...
+
+
+
+---------------------
+
+
+(por enquanto, podemos conectar nosso Container 'Auth.js'
+
+
+
+AO REDUX... --> esse é um bom começo...)
+
+
+-----------------------------------
+
+
+
+
+criamos um arquivo 
+
+
+chamado 
+
+
+de 
+
+
+'authActionTypes',
+
+
+onde 
+
+
+colocaremos nossos IDENTIFIERS
+ 
+
+ das 
+
+ actions desse container aí...
+
+
+
+
+ será tipo isto:
+
+
+
+ export const AUTH_START = 'AUTH_START';
+
+
+ -----------------------------------------------
+
+
+
+
+
+ TAMBÉM 
+
+ VAMOS COLOCAR 
+
+ UM
+
+
+ 'AUTH_FAILED' 
+
+
+ e um 
+
+
+ 'AUTH_SUCCESS'...
+
+
+ ---------------------------------------------
+
+
+
+
+ export const AUTH_START = 'AUTH_START';
+
+export const AUTH_FAIL = 'AUTH_FAIL';
+
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+com isso, 
+
+lá 
+
+em 
+
+
+'auth.js',
+
+
+
+professor 
+
+VAI 
+
+
+'import * as authActionTypes from '../../authActionTypes'...
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+CERTO...
+
+
+
+ficará assim, inicialmente:
+
+
+---------------------------------------------------
+
+
+import * as authActionTypes from './authActionTypes';
+
+
+
+
+export const authStart = () => {
+    type: authActionTypes.AUTH_START
+}
+
+
+
+
+
+
+
+export const authSuccess = () => {
+    type: authActionTypes.AUTH_SUCCESS
+}
+
+
+
+
+
+export const authFail = () => {
+    return {
+        type: authActionTypes.AUTH_FAIL
+    }
+}
+
+
+
+
+
+---------------------- 
+
+
+E NÓS 
+
+
+VAMOS 
+
+USAR 
+
+
+O 
+
+MESMO 
+
+'PADRÃO' DE ANTES, que usamos já várias vezes:
+
+
+
+
+o professor 
+
+
+NÃO VAI ADICIONAR NENHUM PAYLOAD NAQUELE ACTION CREATOR 
+
+de 
+
+'authStart',
+
+
+JUSTAMENTE
+ 
+ __PQ __ ELE É O 'LOADING',
+
+ é 
+
+
+ o 
+
+ ACTION CREATOR 
+
+ QUE 
+
+ DÁ 
+ INÍCIO AO PROCESSO DE 'SEND'... ------> É ELE QUE 
+
+
+
+
+
+VAI DEFINIR UM ESTADO DE 'LOADING' NO NOSSO APLICATIVO,
+
+
+
+ele é basicamente a mesma coisa que 
+
+o 
+
+
+'purchaseBurgerLoading',
+
+lá 
+
+
+da 
+
+ORDER....
+
+
+
+
+--------------------------------
+
+
+
+
+
+--> 
+
+já 
+
+
+'authSuccess', 
+
+POR SUA 
+
+VEZ,
+
+
+
+___vAI REALMENTE ___ RECEBER ALGUNS DADOS.... -------> 
+
+
+
+
+
+vai 
+
+
+
+receber 
+
+'authData' como PARÂMETRO....
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+export const authStart = () => {
+    return {type: authActionTypes.AUTH_START}
+}
+
+
+
+
+
+
+
+export const authSuccess = (authData) => { /////////eis o código em questão.
+    return {type: authActionTypes.AUTH_SUCCESS}
+}
+
+
+
+
+
+export const authFail = () => {
+    return {
+        type: authActionTypes.AUTH_FAIL
+    }
+}
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+
+
+E ESSE 
+
+'authSuccess'
+
+
+
+
+TAMBÉM VAI TER UM 'type', mas 
+
+
+VAI 
+
+TER, ALÉM DISSO,
+
+
+um 
+
+
+payload 
+
+de 
+
+'authData',
+
+
+
+
+CUJO VALOR SERÁ ___ JUSTAMENTE AQUELE PARÂMETRO 
+
+'authData' 
+
+recebido
+ 
+
+ por ele....
+
+
+
+ ex:
+
+
+
+
+
+ export const authSuccess = (authData) => { 
+    return {type: authActionTypes.AUTH_SUCCESS},
+            authData: authData ////////////////eis o código em questão.
+}
+
+
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+ISSO FEITO, VAMOS PRECISAR DO 
+
+
+'authFail'... --------> NESSE 
+
+
+
+
+
+
+'Case'/action aí,
+
+
+
+NÓS 
+
+VAMOS 
+
+POTENCIALMENTE
+ 
+
+
+
+
+ RECEBER UM OBJETO 'error',
+
+
+
+ e aí 
+
+ v
+ amos 
+
+
+
+ retornar um objeto javascript 
+
+
+ com 
+
+ um 
+
+ 'type' de fail 
+ e então 
+
+
+
+
+ uma propriedade 
+
+ 'error: error'....
+
+
+
+
+
+ ex:
+
+
+
+
+export const authStart = () => {
+    return {
+        type: authActionTypes.AUTH_START
+    }
+}
+
+
+
+
+
+
+
+export const authSuccess = (authData) => {
+    return {
+        type: authActionTypes.AUTH_SUCCESS,
+        authData: authData
+    }
+}
+
+
+
+
+
+export const authFail = (error) => {
+    return {
+        type: authActionTypes.AUTH_FAIL,
+        error: error
+    }
+}
+
+
+
+
+-----------------------------------------
+
+
+
+FINALMENTE,
+
+PROFESSOR 
+
+
+ADICIONARÁ 
+
+UM 
+
+__ÚLTIMO ACTION CREATOR___, QUE 
+
+PROVAVELMENTE 
+
+SERÁ 
+
+
+O ___RESPONSÁVEL __ PELO 'SEND ASSÍNCRONO' DE NOSSO 
+
+REQUEST 
+
+AO SERVIDOR... --------> DE FATO,
+ 
+ ELE 
+
+
+
+ SERÁ 
+
+ O ACTION CREATOR 
+
+
+ __QUE SEGURARÁ O ___CÓDIGO ASSÍNCRONO___....
+
+
+
+
+
+
+
+
+
+ será 
+
+
+
+ 'export const authAttempt'.... ----------> 
+
+
+
+
+
+
+ DENTRO 
+
+
+ DESSE NEGÓCIO,
+
+
+
+ NÓS 
+
+ VAMOS 
+
+
+ RECEBER 
+
+ 'email' 
+
+
+
+ e 
+ 'password' ('we will expect the email and password as parameters')....
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+ export const authStart = () => {
+    return {
+        type: authActionTypes.AUTH_START
+    }
+}
+
+
+
+
+
+
+
+export const authSuccess = (authData) => {
+    return {
+        type: authActionTypes.AUTH_SUCCESS,
+        authData: authData
+    }
+}
+
+
+
+
+
+export const authFail = (error) => {
+    return {
+        type: authActionTypes.AUTH_FAIL,
+        error: error
+    }
+}
+
+
+
+export const authAttempt = (email, password) => {
+
+}
+
+
+
+
+
+--------------------------------
+
+
+
+
+com base 
+
+nesses parâmetros,
+
+o professor 
+
+vai 
+
+então 
+
+RETORNAR  
+
+
+
+'dispatch => {
+
+}
+
+'
+
+
+
+
+
+(AQUELE MESMO MODELO DE SEMPRE, visto em 'purchaseBurgerAttempt', em que 
+
+tínhamos este código:
+
+export const purchaseBurgerAttempt = (orderData) => {
+        return (dispatch) => {
+                        dispatch(purchaseBurgerLoading());
+                        axiosOrder.post(
+                                '/orders.json', orderData
+                        )
+                        .then(
+                                response => {
+                                        console.log(response);
+                                        dispatch(purchaseBurgerSuccess(response.data.name, orderData));
+                                }
+                        )
+                        .catch(
+                                error => {
+                                        dispatch(purchaseBurgerFail(error.message));
+                                }
+                        )
+        }
+}
+
+
+
+
+
+)
+
+
+
+-------------------------------------------------
+
+
+
+ou seja,
+
+o professor vai escrever 
+
+algo MAIS OU MENOS ASSIm:
+
+
+export const authAttempt = (email, password) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        axios.post(
+            xxxxxxxxxx
+        ).then(
+            response => {
+                dispatch(authSuccess(response.data.email, response.data.password))
+            }
+        )
+        .catch(
+            error => {
+                dispatch(authFail(error))
+            }
+        )
+    }
+}
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+E, DE FATO, ELE VAI ESCREVENDO...
+
+
+
+
+
+
+
+
+
+export const auth = (email, password) => {
+    return dispatch => {
+        dispatch(authStart());
+    }
+}
+
+
+
+
+-----------------------------------
+
+
+
+
+
+PROFESSOR 
+
+
+
+NOS DIZ, ENTÃO, QUE DEVEMOS __CONECTAR ESSAS/NOSSAS ACTIONS 
+
+
+__ AO CONTAINER 
+
+de 
+
+'Auth.js'.... -----> isso para que 
+
+ELAS POSSAM SER DISPATCHEADAS...
+
+
+
+
+(em 'index.js'):
+
+
+export {
+    ingredient_add,
+    ingredient_remove,
+    asyncOrderInitialIngredientsGet
+} from './burgerBuild';
+
+
+
+
+
+
+
+export {
+    // orderPost
+    purchaseBurgerAttempt,
+    purchaseBurgerLoading,
+
+    asyncFetchOrdersStart,
+    fetchOrdersFail,
+    fetchOrdersStart,
+    fetchOrdersSuccess
+
+    // asyncFetchBurgerOrders //antigo approach nosso de conseguir fazer 'fetch' das ORDERS no servidor...
+
+
+
+
+    //purchaseInit /////approach do PROFESSOR de redirect do usuário depois da execução de actions, nas nossas páginas...
+    // purchaseBurgerSuccess,
+    // purchaseBurgerFail
+
+} from './order';
+
+
+
+
+
+export {
+    authAttempt
+
+} from './auth';
+
+
+-----------------------
+
+
+
+OK, FICOU ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+import * as actions from '../../store/actions/index';
+
+import { connect } from 'react-redux';
+
+
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAuthAttempt: () => {dispatch(actions.authAttempt())}
+    }
+}
+
+
+
+export connect(mapStateToProps, mapDispatchToProps)(Auth);
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+----------> BEM..... MAS AINDA 
+
+
+falando 
+
+sobre 
+
+aquele 
+
+
+'onAuthAttempt: () => {dispatch(actions.authAttempt())',
+
+
+
+
+
+
+NÓS NOS LEMBRAMOS 
+
+QUE 
+
+
+'authAttempt()'
+
+
+
+EXIGE 
+
+UM __EMAIL___ E UM PASSWORD___ como
+
+
+
+
+PARÂMETROS.... --->  e é por isso que 
+
+vamos 
+
+escrever 
+
+isto:
+
+
+
+
+
+'onAuthAttempt: (email, password) => {dispatch(actions.authAttempt(email, password))'
+                    ^^^^^^^^                                        ^^^^^^^^^^
+
+
+------------------------------------
+
+
+
+
+
+
+
+O PROFESSOR VAI QUERER 
+
+EXECUTAR 
+
+
+'onAuthAttempt'
+
+
+
+
+
+__SEMPRE QUE __ 
+
+
+A 'FORM' FOR SUBMITTADAa 
+
+nesse 
+
+
+
+container 
+
+'Auth.js'....
+
+
+
+
+
+
+
+---------------------------------
+
+
+PARA ISSO,
+
+PROVAVELMENTE
+
+
+VAMOS 
+
+
+TER QUE 
+
+
+
+VINCULAR 
+
+
+
+esse 
+
+'onAuthAttempt'
+
+
+AO 
+
+
+
+
+BOTÃO (button) de 'Auth'... ------>  
+
+
+
+
+
+PARA 
+
+ISSO,
+
+
+PROFESSOR 
+USARÁ 
+
+O __ APPROACH __ DO HANDLER 'onSubmit'
+
+
+
+
+LÁ NA NOSSA FORM (em 'Auth.js')
+
+
+
+
+
+
+eX:
+
+
+
+
+
+
+
+
+    return (
+      <div className={AuthStyle.Auth}>
+        <form onSubmit={this.props.onAuthAttempt}>
+          {form}
+          <Button btnType="Success">SUBMIT</Button>
+        </form>
+      </div>
+    );
+  }
+}
+
+
+------------------------------------------------
+
+
+
+
+
+TIPO ISSO AÍ.... 
+
+
+
+
+
+
+
+
+
+
+---> MAS ERRAMOS UMA COISINHA... ----> o professor não vai querer chamar 
+
+
+ESSA 
+
+AÇÃO DE FORMA 'PURA'/direta... --> não, ele vai QUERER ___CHAMAR 
+
+UM 
+
+
+MÉTODO, inventado agora,
+
+QUE MEDIARÁ 
+
+ESSE CHAMADO....
+
+
+
+esse método será chamado de 'submitHandler'....
+
+
+
+
+
+ex:
+
+
+
+
+
+
+    return (
+      <div className={AuthStyle.Auth}>
+        <form onSubmit={this.submitHandler}>
+          {form}
+          <Button btnType="Success">SUBMIT</Button>
+        </form>
+      </div>
+    );
+  }
+}
+
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+---> O professor VAI __, de fato, fazer 'expect' do objeto 'event' 
+
+nesse 
+
+'submitHandler', pq 
+
+ele 
+
+vai 
+
+utilizar propriedades 
+
+DE 
+
+'event' (dentro de 'event') 
+
+
+para 
+
+
+
+
+ajudar 
+
+
+com o funcionamento desse handler... ---> A PRIMEIRA COISA QUE 
+
+__ ELE __ TERÁ DE USAR__ (é totalmente obrigatório)
+
+
+É 
+
+
+
+O 
+
+'event.preventDefault()',
+ 
+ já 
+
+ velho conhecido nosso...
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+submitHandler = (event) => {
+        event.preventDefault();
+}
+
+
+
+
+
+
+
+
+-----------------------------
+
+
+
+PROVAVELMENTE, A SEGUNDA COISA QUE ELE VAI CHAMAR 
+
+É 
+
+JUSTAMENTE 
+
+o 
+
+
+'this.props.onAuthAttempt()'....
+
+
+
+
+ex:
+
+
+
+
+
+submitHandler = (event) => {
+        event.preventDefault();
+        this.props.onAuthAttempt();
+}
+
+
+--------------------------------
+
+
+
+
+
+
+
+
+
+
+
+Acertei... ---> bem, mas feito isso,
+
+
+é 
+
+necessário passar 
+
+O 
+
+'EMAIL' 
+
+
+e o 
+
+'PASSWORD',
+
+
+parâmetros dessa action/do dispatch dessa action aí...
+
+
+
+
+
+
+
+
+
+
+
+---> PARA CONSEGUIR PASSAR O 'EMAIL' e o 'PASSWORD',
+
+
+professor 
+
+simplesmente vai fazer o 
+
+'REACH OUT' ao 
+
+STATE 
+
+local,
+
+
+em que 
+
+temos 
+
+'this.state.controls.email',
+
+
+
+e 
+
+
+ao 
+
+
+
+state local de 
+
+'this.state.controls.password'...
+
+
+
+
+-----------------------------
+
+
+
+
+---> MAS É EVIDENTE QUE 
+
+ELE NÃO VAI QUERER OS OBJETOS 'control' inteiros,
+ 
+
+ E SIM __aPENAS __ SEU VALOR (sua propriedade 'value', que é editada por 'event.target.value', e pelo 'setState()' ...)
+
+
+
+
+
+
+ -------------------------------
+
+
+
+
+
+
+
+
+
+SALVAMOS TUDO ISSO,
+
+
+E AGORA 
+
+
+TEMOS 
+
+
+
+
+um 'handler' 
+
+QUE 
+
+VAI DISPATCHAR nossa action (vai ENGATAR O 'FLOW' de dispatch de nossa action)
+
+
+
+'authAttempt',
+
+QUE 
+
+É 
+
+
+A ACTION QUE ENTÃO EXECUTA TODAS AS OUTRAS QUE DEFINIMOS ANTES... 
+
+
+
+e essa 
+
+action aí 
+
+
+VAI REALMENTE 
+
+
+RECEBER 
+
+
+'email' e 'password',
+
+
+extraídos 
+
+DO 
+
+__sTATE__ LOCAL DO __ CONTAINER 'Auth.js'...
+
+
+
+
+---------------------
+
+
+isso feito,
+
+salvamos tudo e testamos nosso app.... --> vamos até 
+
+a página 
+
+'Authenticate',
+
+
+aí clicamos 
+
+em 
+
+'SUBMIT' e examinamos a aba 
+
+dos 
+
+'redux dev tools'... ---> vamos ver que 
+
+
+UM ACTION DE 
+
+
+'AUTH_sTART' sempre será ___DISPATCHADA....---> isso significa que nosso código,
+
+
+pelo menos o início dele,
+
+FUNCIONOU.
+
+
+
+
+----> ISSO SIGNIFICA QUE NOSSO PROCESSO 
+
+DE 
+
+'AUTH_sTART' realmente é iniciado; (e nosso código de 'checkValidity', aquele código que CHECA A VALIDADE DO INPUT DO USUÁRIO, TAMBÉM ESTÁ FUNCIONANDO...)
+
+ENTRETANTO, 
+
+POR ENQUANTO ESSE 
+
+
+
+PROCESSO/ACTION AÍ __NÃO FAZ NADA__, 
+
+não envia 
+
+
+dados ao servidor, 
+e nem 
+
+tenta 
+
+autenticar/checar autenticidade desses dados...
+
+
+
+
+
+
+NÓS VAMOS USAR O FIREBASE 
+
+
+PARA 
+
+ENVIAR 
+
+
+ACTIONS QUE ___ REALMENTE __ NOS AUTENTICAM PERANTE O SERVIDOR....

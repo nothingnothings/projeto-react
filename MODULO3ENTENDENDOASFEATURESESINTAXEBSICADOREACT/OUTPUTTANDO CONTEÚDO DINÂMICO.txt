@@ -1,0 +1,334 @@
+
+
+
+
+
+NA ÚLTIMA LIÇÃO, 
+
+NÓS 
+
+__REPLICAMOS___ 
+
+
+O COMPONENTE 'PERSON' várias vezes...
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+AGORA DEVEMOS VER 
+ 
+COMO OUTPUTTAR 
+
+__UM CONTEÚDO DINÂMICO__ NO REACT...
+
+
+
+
+
+
+ATÉ AGORA,
+
+
+nós sempre 
+
+
+HARDCODEAMOS 
+
+uns elementos 
+
+HTML (na verdade, não é HTML, é JSX/pseudoHTML)
+ 
+
+
+ nos nossos react components... 
+
+
+
+
+ uns elementos html 
+
+ E UNS TEXTOS NO MEIO DESSES ELEMENTOS...
+
+
+
+ --------------------------------------
+
+
+
+ AGORA DIGAMOS 
+
+
+
+
+ QUE QUEREMOS 
+
+
+ ESCREVER 
+
+
+ 'I am a Person and I am X years old' (X = número....)
+
+
+
+
+
+
+ X ---> DEVERÁ SER UM 
+
+ __NÚMERO ALEATÓRIO__... --------> PARA ISSO, DEVEREMOS SUBSTITUIR 
+
+ 'X' por 
+
+
+ 'Math.random()'.... -----> isso vai nos dar um NÚMERO ALEATÓRIO ENTRE 0 E 1...   podemos pegar esse número aleatório e múltiplicá-lo por 30, talvez, e então usar um método JS para __ARREDONDAR___ O RESULTADO... (talvez 'Math.ceil()'... --------> PROFESSOR USA 'Math.floor()', que é o OPOSTO, é um método que faz 'ROUND DOWN' dos números, e não 'ROUND UP', como '.ceil()'...)
+
+
+
+
+
+
+
+
+certo, 
+
+
+o professor basicamente vai querer
+
+'I am Math.floor(Math.random() * 30) years old'...
+
+
+
+
+
+
+
+MAS SE ESCREVERMOS ISSO AÍ """SOLTO""" DENTRO DO 
+
+'p' 
+
+do nosso react component 'Person',
+
+
+ESSE NEGÓCIO VAI SIMPLESMENTE APARECER COMO TEXTO....
+
+
+
+ex:
+
+
+
+import React from 'react'; 
+
+const person = () => {
+  return <p>I'm a Person and I am Math.floor(Math.random() * 30) years old!</p>;
+};
+
+
+
+export default person; 
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+
+ISSO FAZ SENTIDO: COMO DIABOS REACT SABERIA QUE VOCê QUER um valor dinâmico aqui?
+
+
+COMO DIABOS ELE SABERIA QUE VOCÊ QUER 
+
+__eXECUTAR___ esse código de 'Math.floor(Math.random() * 30)' COMO JAVASCRIPT?
+
+
+
+
+
+--> SE NÓS TEMOS 
+
+
+UM __CONTEÚDO DINÂMICO___ NO NOSSO JSX,
+ 
+ conteúdo dinâmico que 
+
+ queremos 
+
+ __RODAR___ COMO CÓDIGO JAVASCRIPT, E QUE NÃO QUEREMOS 
+
+ QUE SEJA INTERPRETADO COMO TEXTO, 
+
+
+
+ NÓS TEMOS QUE 
+
+
+ ___WRAPPAR___ esse nosso código a ser executado ('Math.floor(Math.random() * 30)')
+  
+
+  EM ''''SINGLE CURLY BRACES''''''... ({})....
+
+
+
+
+
+
+  ex:
+
+
+
+
+import React from 'react'; 
+
+const person = () => {
+  return <p>I'm a Person and I am {Math.floor(Math.random() * 30)} years old!</p>; //////////EIS O CO´DIGO EM QUESTÃO.
+};
+
+
+
+export default person; 
+
+
+
+
+
+
+------------------------------------------------------- 
+
+
+
+
+CERTO...
+
+
+SALVAMOS 
+
+ISSO E RECARREGAMOS...
+
+
+AGORA 
+
+
+VEMOS 
+
+
+QUE DEU CERTO...
+
+
+
+
+
+--------------------------
+
+
+
+ESSA LIÇÃO É SUPER IMPORTANTE, 
+
+
+POIS NOS DEMONSTRA 
+
+
+__QUE PODEMOS OUTPUTTAR ___ CONTEÚDO 
+
+DINÂMICO 
+
+
+COMO __PARTE __ DE NOSSO CONTEÚDO JSX/PSEUDOHTML.... 
+
+
+
+
+
+
+****ENTRETANTO, NÓS NÃO PODEMOS 
+
+
+DEFINIR UMA CLASSE JAVASCRIPT dentro desses espaços... ---> o máximo 
+
+que podemos 
+
+
+fazer é 
+
+EXECUTAR 'ONE-LINE EXPRESSIONS'... (como essa do Math floor + Math random) --> PEQUENAS 
+
+
+E SIMPLES EXPRESSÕES, como CÁLCULOS 
+
+
+E FUNCTION CALLS SÃO POSSÍVEIS, MAS MAIS DO QUE ISSO, NÃO.... --------> 'function calls' ---> ISSO 
+
+SIGNIFICA 
+
+QUE O 
+
+PROFESSOR PODERIA
+
+__CHAMAR___ UMA FUNÇÃO 
+
+
+nesse slot do '{}', e essa função 
+
+__PODE SER__ UM POUQUINHO MAIS COMPLEXA do que esse cálculo com 
+math floor e math random .....
+
+
+
+NÓS VAMOS VER FUNCTION CALLS NESSES ESPAÇOS 
+
+___QUANDO TRABALHARMOS ___ COM  EVENT HANDLERS... ----> AGORA 
+
+
+QUE SOMOS CAPAZES 
+
+
+DE OUTPUTTAR 
+
+
+
+___CONTEÚDO DINÂMICO___, por que 
+
+
+não levar 
+
+esse negócio ao 
+
+PRÓXIMO NÍVEL, levar 
+
+
+ao próximo 
+
+nível 
+
+
+E DEIXAR 
+
+____NOSSO COMPONENTE EM SI MAIS DINÂMICO, também____... ----> 
+
+
+agora, na próxima lição,
+
+VAMOS 
+
+
+__PASSAR UMA CONFIGURAÇÃO__ lá do 'App.js' 
+
+PARA 
+
+esse nosso componente... (talvez uns HTML ATTRIBUTES 
+
+QUE PASSAMOS 
+
+
+AO 'Person' pARA CONFIGURAR ___ O QUE NÓS QUEREMOS OUTPUTTAR PARA 
+
+CADA USO DO COMPONENTE 'Person'... )

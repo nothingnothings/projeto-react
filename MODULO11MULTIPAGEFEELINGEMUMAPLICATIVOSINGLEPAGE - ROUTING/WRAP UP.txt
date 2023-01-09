@@ -1,0 +1,92 @@
+
+
+
+
+
+
+
+
+
+APRENDEMOS SOBRE ROUTING... ------> APRENDEMOS CONTEÚDOS CRUCIAIS..... ---> PQ 
+
+
+COM 
+
+
+O REACT ROUTER NÓS REALMENTE TEMOS UMA MANEIRA DE USAR 'routing' NO REACT... --> e o routing é 
+
+
+
+MUITO BOM. -------> VOCÊ TORNA SUA 
+
+'
+SINGLE-PAGE APPLICATION' 
+
+
+
+
+EM UM 
+
+
+
+'FELT-LIKE' multi-page application.... (ou seja,
+ 
+ 
+ __PARECE QUE VOCê TEM MÚLTIPLAS PÁGINAS___, MAS TUDO 
+ 
+ 
+ OCORRE EM UMA 
+ 
+ SÓ...) -----------------> É O REACT ROUTER QUE 
+
+
+ __________REALMENTE____ EXTRAI O PODER DO REACT...  ------> PROVIDENCIA AO USUÁRIO ____ UMA 
+
+
+
+ EXCELENTE USER EXPERIENCE, UMA PÁGINA QUE 
+
+
+
+ __PARECE E SE COMPORTA COMO UMA PÁGINA ___ NORMAL (com várias páginas),
+
+
+
+MAS QUE 
+
+
+USA AO MÁXIMO 
+
+TODA A INTERATIVIDADE e REATIVIDADE DE UM APP 'javascript-driven only'....
+
+
+
+
+
+
+
+
+
+
+--> E É EXATAMENTE ISSO QUE DESEJAMOS. 
+
+
+AGORA 
+
+DEVEMOS 
+
+IMPLEMENTAR 
+
+O 
+
+
+
+REACT ROUTER NO NOSSO HAMBURGER,
+
+finalmente adicionar mais páginas 
+
+ao nosso projeto (na verdade, é a mesma página, mas você entendeu... parece que são múltiplas páginas,
+
+mas na verdade são 'containers'...).
+
+

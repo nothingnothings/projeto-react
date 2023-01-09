@@ -1,0 +1,235 @@
+
+
+
+
+
+
+
+
+
+
+
+
+---> AGORA QUE O PLANNING JÁ FOI FEITO,
+
+
+DEVEMOS MERGULHAR NO NOSSO PROJETO E AÍ REALMENTE CONSTRUIR NOSSO APP... ---> para isso,
+
+
+
+
+
+O PROFESSOR ABRIU um BRAND NEW PROJECT,
+
+
+criado a partir 
+
+
+do comando 
+
+'create-react-app' 
+
+
+no terminal...
+
+
+
+
+
+---> AINDA NÃO MUDAMOS NADA DENTRO 
+
+DESSES FOLDERS criados a partir desse comando... -----> DENTRO 
+
+DESSE PROJECT,
+
+
+
+
+
+O PROFESSOR ANTES DE MAIS NADA QUER HABILITAR 
+
+
+
+OS CSS MODULES --> ele quer fazer isso para que 
+
+
+AS CLASSES CSS QUE CRIAMOS  
+
+
+
+EM ARQUIVOS 
+
+
+.CSS 
+
+
+___PODEM/PODERÃO___ SER SCOPADAS ____ 
+
+
+em __COMPONENTS ___ ESPECÍFICOS __ NO NOSSO APP.... --> fará isso 
+
+PARA QUE 
+
+NÃO EXISTAm CONFLITOS DE ESTILO ENTRE 
+
+
+USO DE CLASSES CSS... --> fará isso para que estilos das coisas 
+
+NÃO SEJAM APLICADOS GLOBALMENTE 
+
+quando 
+
+estivermos os escrevendo, e quando acidentalmente reutilizarmos 
+
+
+a mesma classe CSS ----->  
+
+
+PARA ISSO, O PROFESSOR VAI FAZER AQUELE 
+
+
+PROCESSO IDIOTA DO EJECT... ---> contudo, nós 
+
+NÃO PRECISAMOS 
+
+FAZER ISSO,
+
+
+BASTA 
+
+
+ESCREVERMOS 
+
+
+
+'arquivocss.module.css' 
+
+
+nas extensões dos nossos arquivos...
+
+
+
+
+-> PROFESSOR REMOVE O 'LOGO.SVG'...
+
+
+
+
+---> E NO ARQUIVO 
+
+
+'APP.JS',
+
+
+O PROFESSOR 
+
+
+REMOVE 
+
+OS IMPORTS DESSAS COISAS INÚTEIS....
+
+
+
+-----------------------------------
+
+
+
+
+
+--> professor também remove todo código que existia dentro do return do render do component 'App'...
+
+
+
+---> professor reomve todos os códigos de estilo do arquivo 
+
+
+'App.module.css'...
+
+
+
+
+
+--> MAS ELE DEIXA O STYLING GLOBAL de 
+
+'index.css'... --> pq isso vem a calhar
+
+
+
+
+---> MAS NESSE INDEX.CSS, que está sendo 
+
+IMPORTADO 
+
+
+
+
+NO 
+
+'index.js' __GLOBALMENTE___ (está sendo aplicado GLOBALMENTE pq está com um 
+
+import simples 
+
+de 
+
+
+'import './index.css'...) 
+
+
+
+
+
+
+
+---------> DENTRO DESSE ARQUIVO CSS 
+
+de 'index.css',
+
+
+
+o PROFESSOR VAI QUERER DEFINIR A FONT-FAMILY COMO _OUTRA FONT_... ------> 
+
+
+ele usou a fonte ___OPEN SANS____ ---> ele usou 
+
+
+
+A PÁGINA DO GOOGLEFONTS...
+
+
+
+
+
+------> VOCÊ DEVE SELECIONAR O 'CUSTOMIZE' 
+
+
+E AÍ CUSTOMIZAR, PEGAR MÚLTIPLOS ESTILOS DESSA FONT... --> ele vai querer 
+
+a regular 400 e a bold 700.. (que será usada para HEADINGS.., para coisas que 
+
+vamos querer DESTACAR)... ----> vamos até o EMBED e aí COPIAMOS E COLAMOS 
+
+AQUELE 
+
+
+LINK DA CDN DA GOOGLE QUE TE DÁ ESSA FONT...
+
+
+USAMOS O LINK: '<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">'
+
+
+
+E DEPOIS O ESTILO CORRESPONDENTE, LÁ NOS 
+
+ARQUIVOS .CSS....
+
+---> professor diz que esse approach é PERFECTLY FINE, E QUE É O APPROACH QUE DEVEMOS USAR ....
+
+
+
+
+
+COM ISSO, ACABAMOS NOSSO SETUP. DEVEMOS COMEÇAR A IMPLEMENTAR OS COMPONENTS react,
+
+
+E NOSSA COMPONENT TREE...

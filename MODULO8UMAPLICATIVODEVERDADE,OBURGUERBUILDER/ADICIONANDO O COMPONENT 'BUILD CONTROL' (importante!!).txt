@@ -1,0 +1,1026 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> AGORA É HORA DE ADICIONAR ALGUNS CONTROLES, PARA QUE 
+
+O USUÁRIO 
+
+SEJA 
+
+CAPAZ 
+
+DE CONTROLAR QUANTOS 
+
+
+
+COMPONENTS 
+
+O 
+
+
+BURGER 
+
+DEVERÁ OU NÃO TER... (vamos ter que usar 'props' e 'setState()', provavelmente... ---> 
+
+
+e também provavelmente vamos ter de usar 
+
+'[...array]'...)
+
+
+
+
+
+----------> 
+
+PARA 
+
+
+
+
+ISSO,
+ 
+
+ NÓS PRECISAMOS 
+
+
+ADICIONAR UM 
+
+
+
+NOVO COMPONENT AO NOSSO CÓDIGO, UM 
+
+
+COMPONENT 
+
+
+DE NOME 
+
+
+'BUILD CONTROLS'... ------> ESSE ___PROVAVELMENTE___ SERÁ 
+
+
+UM ___STATELESS COMPONENT___ DENTRO 
+
+
+DE 
+
+'BurgerBuilder' (ele será 
+
+RENDERIZADO no burgerBuilder/será um CHILD COMPONENT 
+
+de 
+
+'BurgerBuilder'...)
+
+
+
+
+
+
+
+LEMBRE-SE DO CÓDIGO 
+
+
+DE 
+
+
+
+'BURGERBUILDER':
+
+
+
+
+
+
+  render() {
+    return (
+      <Aux>
+        <Burger ingredients={this.state.ingredients}/>
+        <div>Build Controls</div> /////////É AQUI QUE SERÁ ENFIADO O COMPONENT 'BUILD CONTROLS'...
+      </Aux>
+    );
+  }
+
+
+
+
+----------------------------------
+
+
+
+
+
+--> PROFESSOR VAI ADICIONAR 
+
+
+ESSE COMPONENT 
+
+NO 
+
+FOLDER 
+
+'Burger'... -----> ELE VAI ADICIONAR ESSE NEGÓCIO EM 
+
+UM 
+
+NOVO 
+
+SUBFOLDER,
+
+
+de nome 
+
+''BuildControls'... ------> parece que a IDEIA DO PROFESSOR É DIFERENTE DA NOSSA:
+
+parece 
+
+
+que ele vai querer 
+
+RENDERIZAR 
+
+ESSE NEGÓCIO COMO SE FOSSE UM 
+
+
+__CHILD COMPONENT___ DE 
+
+
+'Burger'.... ----------->
+
+
+
+
+
+ELE EXPLICA QUE 
+
+
+'buildControls' 
+
+
+DEVERÁ 
+
+
+
+
+__seR UM FUNCTIONAL COMPONENT....
+
+
+
+
+
+
+
+
+
+
+---> VAI RETORNAR UM CÓDIGO JSX, a partir de 'props'....
+
+
+
+
+
+
+--> TUDO NORMAL, ATÉ AGORA.... --------> CERTO,
+
+
+
+MAS 
+
+
+'HOW SHOULD BUILD CONTROLS LOOK LIKE'? --------> 
+
+
+DEVEM ESTAR PRESENTES 
+
+VÁRIOS BOTÕES... --> vários botões dentro de uma CAIXA.
+
+
+
+
+
+
+
+
+---> É CLARO QUE O STYLING DO 'BUILDCONTROLS' 
+
+É ALGO QUE 
+
+nós podemos escrever nós mesmos.. -> 
+
+
+
+
+mas o que o professor
+ fará é, primeiramente,
+
+
+ REVESTIR
+
+
+
+ TODO ESSE CÓDIGO EM UMA <div> ---> pq ele vai usar 
+
+ ESSA DIV PARA APLICAR UM 
+
+ STYLING ESPECÍFICO...
+
+
+
+ ex:
+
+
+
+
+
+
+ 
+const buildControls = (props) => {
+
+
+
+    return(
+                <div>
+
+
+                </div>
+
+        
+    );
+}
+
+
+------------------------------
+
+
+
+
+
+
+
+DENTRO DESSA <DIV>,
+
+
+O PROFESSOR VAI QUERER TER 
+
+
+SEUS VÁRIOS 
+
+'BUILD CONTROLS'...
+
+
+
+
+
+ex:
+
+
+
+
+import React from 'react';
+
+
+
+
+import BuildControlsStyle from './BuildControls.module.css';
+
+
+
+
+const buildControls = (props) => {
+
+
+
+    return(
+
+        <div className={}>
+
+
+        </div>
+
+
+    );
+}
+
+
+
+export default buildControls;
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+--> ELE DIZ QUE DEVEMOS COMEÇAR PELO STYLING 
+
+
+
+
+DO ELEMENTO 'DIV'... ------>
+
+
+
+ELE FAZ A MESMA COISA QUE JÁ FIZEMOS... ------> 
+
+
+
+
+AÍ ELE VAI 
+
+LÁ 
+
+E VAI 
+
+CRIAR 
+
+UM 
+
+ESTILO 
+
+
+DE NOME 
+
+
+
+'.BuildControls {}
+'
+
+
+
+
+
+
+
+
+
+
+
+
+
+----> ELE VAI DEFINIR O STYLING COMO SENDO 
+
+
+
+
+
+'width: 100%;
+
+background-color: #CF8F2E;
+
+
+display: flex;
+'
+
+
+
+
+
+
+
+
+
+--> ELE VAI DEFINIR O 'DISPLAY' COMO SENDO 'FLEX', vai usar flexbox
+
+
+PARA __POSICIONAR___ TODOS OS BUILD CONTROLS DE FORMA CORRETA... ---> 
+
+
+aí ele vai usar 
+
+
+'flex-flow: column' --> PARA POSICIONAR TODOS ESSES ELEMENTOS 1 ACIMA/ABAIXO DO OUTRO... 
+
+
+
+
+
+E AÍ ELE VAI USAR 
+
+'align-items: center' 
+
+
+PARA __ALINHAR __ TODO O TEXT DESSES ITEMS BEM NO CENTRO...
+
+
+
+
+
+----> ELE VAI QUERER DAR UMA BOX-SHADOW 
+
+de 
+
+'0 2px 1px #ccc'...
+
+
+
+
+
+--> margin: auto;
+
+
+
+---> padding: 10px 0;  (padding de 10px cima-baixo, 0px left-right.)
+
+
+
+
+
+
+
+
+
+
+---> ESSE SERÁ O ESTILO 
+
+DO 
+'BUILDCONTROLS', 
+
+
+DA 'BUILD CONTROLS AREA'... --> é claro que 
+
+NÓS DEVEMOS ADICIONAR 
+
+ALGUM CONTEÚDO A ESSA ÁREA,
+
+
+POIS SÓ O ESTILO NÃO NOS ADIANTA DE NADA.
+
+
+
+
+
+
+
+
+---> ali, dentro daquela div, 
+
+
+
+
+VAMOS QUERER TER 
+
+OS TAIS BUILD CONTROLS... ---> 
+
+
+
+
+mas o professor diz que 
+
+TAMBÉM 
+
+FAZ MUITO SENTIDO FAZERMOS 
+
+
+'OUTSOURCE' 
+
+DESSES BUILD CONTROLS (pq os botões serão os mesmos, vão se repetir várias vezes) ---> 
+
+
+para fazer esse outsource,
+
+__PRESUMO__ QUE O PROFESSOR VÁ CRIAR __UM NOVO COMPONENT (dumb) 
+PARA ELES... 
+
+
+
+
+
+---> VAMOS TER 1 LABEL E 2 BOTÕES...  (várias vezes...) --> e isso 
+
+
+VAI SER ___BASICAMENTE ___ UM 
+
+'REUSABLE UI ELEMENT'...
+
+
+
+
+
+
+
+------> Certo.... e como ficará isso? --> vamos colocar esses ''botões''
+
+em seu 
+
+PRÓPRIO 
+
+
+COMPONENT... --------> dentro
+
+
+do folder de 'BuildControls',
+
+o professor 
+
+
+vai criar uma pasta  
+
+
+
+de nome 
+
+'BuildControl' --> e esse folder terá um arquivo 'BuildControl.js' no seu interior,
+
+com os nossos BOTÕES, supostamente....
+
+
+
+
+
+--> ele também vai adicionar um arquivo de estilos (BuildControls.module.css)...
+
+
+
+
+----------------------------------------
+
+
+
+---> ele escreve esse component como um FUNCTIONAL COMPONENT....
+
+
+
+
+
+
+
+
+--> cERTO,
+
+
+agora devemos decidir COMO ESSE 'BUILDCONTROL' 
+
+
+deve ser estruturado... ----> VAMOS 
+
+
+
+____UTILIZAR___ UMA ___DIV___ COMO WRAPPEr.... (tbm a utilizaremos 
+
+para o styling...)
+
+
+
+
+
+
+
+DENTRO DESSA WRAPPING DIV,
+
+
+teremos 
+
+uma 
+
+
+DIV __QUE CONTERÁ__ O 'text' para o build control (basicamente, o que 
+
+será 
+
+mostrado nesse 'text' é o NOME DO INGREDIENT QUE 
+
+O PROFESSOR VAI QUERER ADICIONAR) -----> para isso, vamos 
+
+
+precisar de 
+
+
+um 
+
+VALOR DINÂMICO ({}).... -------> para conseguirmos outputtar 
+
+
+
+o 'NOME DO INGREDIENT' aqui, o professor 
+
+
+vai usar 
+
+
+'props.xxxx' --------->  o prop que ele vai querer receber 
+
+
+nesse component 'BuildControl' 
+
+
+TERÁ UM NOME DE 
+
+'label'...
+
+
+
+ex:
+
+
+
+
+import React from 'react';
+
+
+
+
+
+
+
+const buildControl = (props) => {
+    
+    <div>
+        <div>{props.label}</div>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+export default buildControl;
+
+
+
+
+------------------------------------
+
+
+
+
+
+(Provavelmente o professor vai querer usar CONTEXT para passar esse prop de 
+
+'label' --> mas veremos quanto a isso MAIS TARDE)...
+
+
+
+
+-----------------------------
+
+
+
+Professor aponta que 
+
+devem constar DOIS BOTÕES 
+
+
+DO LADO DESSA DIV 'label'... -------> Serão botões 
+
+'Less' e 'More'.... -----> 
+
+
+AGORA TEMOS 
+
+
+2 BOTÕES QUE NOS PERMITEM 
+
+REMOVER/ADICIONAR 
+
+
+elementos do burger (Assim que os codarmos)...
+
+
+
+
+
+---------------------------
+
+
+
+PROFESSOR EXPLICA QUE ELE VAI PRECISAR DE UM POUCO DE .CSS 
+
+
+
+PARA DEIXAR ESSE 
+
+'BuildControl' BONITO...
+
+
+
+
+
+
+--> ele adiciona um estilo 
+
+
+de 
+
+
+'.BuildControl {
+
+}
+'
+
+
+
+--> ele vai 
+
+
+usar 
+
+
+'display: flex', vai usar FLEXBOX para posicionar A 
+
+DIV com o texto e os botões... ------> 
+
+
+
+E AÍ ELE VAI USAR 
+
+'flex-flow: row'... (esse é o DEFAULT, por isso ele não vai escrever coisa alguma).
+
+
+
+ele colocar 
+
+'justify-content: space-between' PARA QUE 
+
+
+FIQUE ALGUMA DISTÂNCIA ENTRE OS BUTTONS...
+
+
+
+
+E aí ele coloca 
+
+
+
+
+'align-items: center' 
+
+
+PARA ALINHAR OS ITEMS VERTICALMENTE....
+
+
+
+
+---> E AÍ COLOCA UMA 'margin' de 5px (top-bottom) e aí 0 (left-right)....
+
+
+
+
+
+
+RESULTADO:
+
+
+
+.BuildControl {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0;
+
+}
+
+
+-------------------------------------
+
+
+
+
+DEPOIS DISSO,
+
+ELE EXPLICA QUE 
+
+
+PRECISA 
+
+___ESTILIZAR OS 'BUTTON'.. -------> 
+
+
+
+
+
+ele 
+
+escreve 
+
+
+
+'.BuildControl button {
+
+}'...
+
+
+
+
+
+E AÍ ELE 
+
+
+COLOCA 
+
+'display: block' ------->  O DEFAULT É INLINE, MAS O PROFESSOR VAI OVERWRITAR para que 
+
+seja 
+
+de 
+
+
+estilo 
+
+
+'block'....
+
+
+
+
+
+font ficará 'inherit', 
+
+
+
+padding será de 5px;
+
+
+
+
+
+a margin será de 0 (top-bottom) e 5 (left-right)
+
+
+
+width será de 80px....
+
+
+
+
+
+a border será '1px solid #AA6817;'
+
+
+
+cursor será 'pointer'
+
+
+
+
+
+E O PROFESSOR VAI REMOVER 
+
+
+A 'outline' QUE TEMOS POR DEFAULT...
+
+'outline: none';
+
+
+
+ex:
+
+
+
+
+.BuildControl button {
+  display: block;
+  font: inherit;
+  padding: 5px;
+  margin: 0 5px;
+  width: 80px;
+  border: 1px solid #AA6817;
+  cursor: pointer;
+  outline: none;
+}
+
+
+
+----------------------------------------- 
+
+
+AINDA PRECISAMOS IMPORTAR E APLICAR ESSES ESTILOS 
+
+NO NOSSO ARQUIVO 
+
+
+
+'BuildControl'....
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+import React from 'react';
+
+
+import BuildControlStyle from './BuildControl.module.css';
+
+
+
+
+
+const buildControl = (props) => {
+    
+   return <div className={BuildControlStyle.BuildControl}>
+        <div>{props.label}</div>
+        <button className={BuildControlStyle.BuildControl.button}>Less</button>
+        <button className={BuildControlStyle.BuildControl.button}>More</button>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+export default buildControl;
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+PROFESSOR EXPLICA QUE HÁ 
+
+___BEM MAIS ESTILOS __ QUE DEVEM SER APLICADOS 
+
+
+NA 'LABEL' E NOS BUTTONS.... --> ELE ANEXOU UM ARQUIVO COM TODOS OS ESTILOS... --> devemos 
+
+
+os adicionar...
+
+
+
+
+
+
+-- Coloquei os estilos,
+
+mas os estilos 
+
+
+
+de 
+
+
+'.Less' 
+
+
+e 
+
+
+'.More' 
+
+
+
+EU NÃO SEI COMO ADICIONAR... - ---> parece que 
+
+
+era SÓ
+
+
+
+escrever
+
+'BuildControlsStyle.Less' 
+
+
+e 
+
+
+'BuildControlsStyle.More'...
+
+
+
+
+
+----> REALMENTE ERA ESSA A SOLUÇÃO.
+
+
+
+
+
+
+
+

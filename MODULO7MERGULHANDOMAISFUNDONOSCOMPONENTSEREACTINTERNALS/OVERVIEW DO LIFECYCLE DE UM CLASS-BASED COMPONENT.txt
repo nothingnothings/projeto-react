@@ -1,0 +1,922 @@
+
+
+
+
+
+
+
+
+
+
+--> O PROFESSOR TAMBÉM MENCIONOU 'COMPONENT LIFECYCLE'
+
+NA ÚLTIMA LIÇÃO...
+
+
+
+
+
+
+--> MAS OQ DIABOS É 'COMPONENT LIFECYCLE'? ------> BEM, 
+
+
+
+A PRIMEIRA MORAL 
+
+
+É QUE 
+
+
+'component lifecycle' 
+
+APENAS 
+
+EXISTE/É DISPONÍVEL 
+
+
+_________EM 'CLASS-BASED COMPONENTS'...___________
+
+
+
+
+
+--------------------------------------
+
+
+
+ISSO SIGNIFICA QUE FUNCTIONAL COMPONENTS __a PRINCÍPIO__ NÃO TEM ISSO.... ---> mas 
+
+com 
+
+'reacthooks',
+
+ PODE-SE DIZER 
+
+ _QUE ELES TEM UMA FEATURE __ EQUIVALENTE A ISSO... ---> contudo,
+  
+  geralmente 
+
+
+  se admite que 
+
+
+  ESSE RECURSO 
+  APENAS 
+
+  EXISTE/É DISPONÍVEL 
+
+
+  DENTRO 
+
+  DE 
+  CLASS-BASED 
+
+  COMPONENTS....
+
+
+
+
+
+------> VEREMOS AMBOS, 
+
+
+O  'CLASS-BASED LIFECYCLE' e a feature equivalente a ele, mas dos REACT HOOKS...
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+CERTO, COMEÇAMOS PELO 'CLASS-BASED LIFECYCLE'...
+
+
+
+
+
+
+HÁ ESSES MÉTODOS QUE PODEMOS ADICIONAR 
+
+A QUALQUER 'CLASS-BASED COMPONENTS':
+
+
+
+---------------------------
+
+
+constructor()
+
+
+
+getDerivedStateFromProps()
+
+
+
+getSnapshotBeforeUpdate()
+
+
+
+componentDidCatch()
+
+
+
+componentWillMount()
+
+
+shouldComponentUpdate()
+
+
+componentDidUpdate()
+
+
+componentDidMount()
+
+
+
+render()
+
+
+----------------------------
+
+
+
+
+
+TODOS ESSES MÉTODOS SERÃO EXECUTADOS PELO REACT, PARA NÓS.... ----------> 
+
+
+
+
+E ESSES MÉTODOS VÃO RODAR ___EM DIFERENTES__ MOMENTOS/PONTOS NO TEMPO, 
+
+
+
+E NÓS 
+
+PODEMOS 
+
+FAZER DIFERENTES 
+
+COISAS 
+
+
+COM ELES....  ------> podemos 
+
+fazer coisas 
+
+
+
+como  
+
+
+'FAZER FETCH DE DADOS DA WEB', ou então 
+
+
+
+"FAZER UM CLEANUP WORK ANTES DE UM DETERMINADO COMPONENT SER REMOVIDO DO DOM'...
+
+---------------------------
+
+
+
+CERTO,
+
+
+MAS COMO EXATAMENTE PODEMOS USAR ESSES 
+
+
+MÉTODOS AÍ?
+
+
+
+
+E EM QUE ORDEM ELES EXECUTAM, POR ACASO?
+
+
+----------------------------------
+
+
+
+
+
+COMPONENT LIFECYCLE - CREATION 
+
+
+
+
+
+(vamos começar por isso, pela fase de CRIAÇÃO DOS COMPONENTS, vamos ver o LIFECYCLE DOS 
+
+CLASS-BASED COMPONENTS desde a sua CRIAÇÃO)...
+
+(OBS: LIFECYCLE HOOKS E REACT HOOKS __NÃO SÃO A MESMA COISA__, APENAS POSSUEM NOMES PARECIDOS.)
+
+
+
+(pq nós temos que DIFERENCIAR ENTRE LIFECYCLE HOOKS QUE RODAM 
+
+SEMPRE QUE ALGUMA COISA ___MUDA ___ EM ALGUM COMPONENT, como alguns PROPS, por exemplo,
+
+E LIFECYCLES/LIFECYCLE HOOKS QUE RODAM APENAS QUANDO UM 
+COMPONENT É RENDERIZADO PELA PRIMEIRA VEZ... )
+
+
+
+
+
+
+ LIFECYCLES/LIFECYCLE HOOKS QUE RODAM APENAS QUANDO UM 
+COMPONENT É RENDERIZADO PELA PRIMEIRA VEZ...      ---------------> ISSO OCORRE 
+
+QUANDO O COMPONENT É RENDERIZADO COMO PARTE DE UMA LISTA, OU TALVEZ PQ 
+
+NÓS FAÇAMOS O 'SHOW' CONDICIONAL DELE...
+
+
+
+
+
+
+
+
+
+1) CREATION:
+
+
+
+
+*primeiro, o COMPONENT É __CRIADO___ 
+
+
+
+
+
+DEPOIS DISSO,
+
+
+
+ANTES DE MAIS NADA, O 
+
+___CONSTRUCTOR____ É EXECUTADO.... (o constructor tem um código de  'constructor(props)')...
+
+
+
+
+
+
+--> o professor explica que 'constructor()' na verdade (actually)
+
+NÃO É 
+
+UM 
+
+LIFECYCLE HOOK.. -----> constructor() DE FATO
+
+NÃO É UM LIFECYCLE HOOK, E SIM É UMA ____FEATURE___ DEFAULT 
+
+DAS CLASSES NO ES6... ---------> MAS A COISA IMPORTANTE 
+
+DE SE ENTENDER 
+
+AQUI 
+
+
+É QUE ESSE 'CONSTRUCTOR' VAI SEMPRE RECEBER OS 'PROPS' 
+ 
+____DO COMPONENT__... 
+
+
+
+
+--->
+
+
+
+-----> E, IMPORTANTE, 
+
+NESSE 
+
+CONSTRUCTOR __VOCÊ DEVE __ CHAMAR 
+
+'super(props)'                        (VOCê TEM QUE CHAMAR 'SUPER' DENTRO DO CONSTRUCTOR...)
+
+
+
+
+
+
+
+
+
+-----> CERTO...
+
+
+
+
+
+ESSA EXPLICAÇÃO PODE ESTAR UM POUCO CONFUSA...
+
+
+
+RESUMINDO:
+
+
+
+
+
+Se você colocar um 
+
+
+'constructor(props)' DENTRO 
+
+DO SEU 
+
+CÓDIGO 
+
+CLASS-BASED,
+
+
+VOCÊ 
+
+___DEVE__, OBRIGATORIAMENTE__, 
+
+CHAMAR 
+
+
+'super(props)' 
+
+DENTRO 
+
+DESSE CONSTRUCTOR...   (você não deve chamar 'super(props)' se você APENAS USAR 
+
+O CONSTRUCTOR DEFAULT.... MAS SE VOCÊ FOR DEFINIR 
+
+
+SEU PRÓPRIO CONSTRUCTOR, 
+
+COM SUA LÓGICA CUSTOM, 
+
+
+VOCÊ DEVE OBRIGATORIAMENTE 
+
+CHAMAR 
+
+'super(props)' NO SEU INTERIOR.... ) -------> E O PROFESSOR 
+
+
+
+VAI NOS MOSTRAR ISSO EM AÇÃO 
+
+
+
+DEPOIS DESSAS EXPLICAÇÕES/SLIDES...
+
+
+
+CERTO, MAS O QUE É O CONSTRUCTOR?
+
+
+
+
+-------------------------------------------
+
+
+
+MAS O QUE É O 'CONSTRUCTOR', qual é sua função no mundo do react, e dentro 
+
+dos class-based components?  ---> bem, você pode o UTILIZAR PARA 
+
+
+'BASIC INITIALIZATION WORK',
+
+como 
+
+
+por exemplo para 
+ 
+
+ SETTAR UM STATE INICIAL... (initial state) ---------> MAS O QUE 
+
+
+ VOCÊ NÃO 
+
+ DEVE FAZER 
+
+ NO CONSTRUCTOR É 
+
+ CAUSAR ''''SIDE-EFFECTS''''... 
+
+
+
+
+
+
+
+
+ SIDE-EFFECTS ----> essa palavra é RELATIVAMENTE ABSTRATA; CONTUDO, O QUE QUEREMOS 
+
+ DIZER POR SIDE-EFFECTS É COISAS QUE VOCÊ NÃO QUER,  COMO POR EXEMPLO ''ENVIAR HTTP REQUESTS'', ou 
+
+ ARMAZENAR ALGUMA COISA NA LOCAL STORAGE DO BROWSER, OU TALVEZ 
+
+ ENVIAR ALGUMAS ANALYTICS PARA O GOOGLE ANALYTICS.... -------> VOCÊ 
+
+ NUNCA VAI 
+
+ QUERER FAZER 
+
+ ISSO NO CONSTRUCTOR... não vai querer PQ ISSO SEMPRE IMPACTARÁ 
+
+ A PERFORMANCE DA SUA PÁGINA... ----> AFETA A PERFORMANCE E CAUSA 
+
+ CICLOS DESNECESSÁRIOS DE RE-RENDER ('unecessary re-render cycles'),
+
+
+ QUE SÃO 
+
+ COISAS BEM RUINS QUE VOCÊ SEMPRE QUER EVITAR.
+
+
+
+
+ --------------------------------
+
+
+
+
+
+RESUMINDO:  ---> SE FOR USAR/ALTERAR O CONSTRUCTOR:
+
+
+DO (faça): SET UP 'STATE' (defina o STATE do seu component)
+
+
+DON'T (NÃO FAÇA): CAUSAR SIDE-EFFECTS (sempre evite causá-los no constructor)...
+
+
+
+
+
+--------------------------------------------
+
+
+
+1) CONSTRUCTOR(PROPS) 
+
+
+........
+
+
+
+
+2) getDerivedStateFromProps(props, state) ----------> É A SEGUNDA ETAPA/PROCESSO Da fase 'CREATION' do 'COMPONENT LIFECYCLE' (class-based).
+
+
+
+
+
+-------> esse negócio é UM LIFECYCLE HOOK QUE 
+
+FOI ADICIONADO PELO 
+
+REACT 16.3.... -----------> A IDEIA POR TRÁS DELE É QUE ________sEMPRE QUE ____ 
+
+OS SEUS PROPS ___ MUDAM__, para o seu class-based component, VOCê 
+
+PODE (você tem essa opção)
+
+
+
+_____ SINCRONIZAR SEU 'STATE' a eles____..... ---------------------->
+
+
+--------------------->
+
+
+---------------------> CONTUDO, O PROFESSOR JÁ NOS EXPLICA 
+QUE 
+
+OS USE-CASES DESSE NEGÓCIO SÃO ___MUITO, MUITO RAROS___... SÃO 'NICHO'...
+
+
+
+
+ESSE LIFECYCLE HOOK É __RARAMENTE__ USADO__...
+
+
+
+
+
+
+
+DE NOVO,
+
+
+
+
+DO(FAÇA): SINCRONIZAR STATE AOS PROPS QUE MUDARAM.
+
+
+DON'T (não faça): CAUSAR SIDE-EFFECTS
+
+------------------------------------------------------------------
+
+
+
+
+
+
+-----> O cenário em que vocÊ vai querer usar esse lifecycle hook é um 
+
+CENÁRIO EM QUE OS PROPS DO SEU COMPONENT  __MUDAM__/PODEM MUDAR....  ------> e aí, você, nesse cenário, 
+
+VAI QUERER __UPDATAR___ O STATE INTERNO DESSE COMPONENT ESPECÍFICO de acordo com esses props... -----> (O PROFESSOR NOS MOSTRARÁ A FORMA DE FUNCIONAMENTO DESSE LIFECYCLE HOOk).
+
+
+
+
+
+
+
+
+----> AINDA ASSIM, A COISA QUE VOCÊ NUNCA VAI QUERER FAZER DENTRO DESSA ETAPA/MÉTODO 
+
+
+
+É 
+
+
+'causar SIDE EFFECTS'.... --------> (e vamos ver COMO PODEMOS CAUSAR SIDE EFFECTS, como 
+send http requests,  coisa que 
+nunca devemos fazer).
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+
+1) constructor(props) 
+
+
+
+
+
+
+2) getDerivedStateFromProps(props, state)
+
+
+
+--------------------------------------------------------
+
+
+3) render()
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+CERTO, 
+
+
+DEPOIS 
+
+DESSES 2 MÉTODOS/ETAPAS, 
+
+temos 
+
+
+'render()' ---------> JÁ VIMOS ESSE MÉTODO EM AÇÃO....
+
+
+
+
+
+
+--------> render() --------> É O MÉTODO QUE FAZ 'RETURN' DE CÓDIGO JSX... -----> E ESSE É 
+___REALMENTE___ O SEU TRABALHO/sua tarefa..... 
+
+
+
+
+render() -> 'Prepare & Structure your JSX Code'....
+
+
+
+
+ELE SOMENTE DEVE SER USADO PARA PREPARAR OS DADOS COMO 
+
+VOCÊ OS PRECISA, PARA ENTÃO LAYOUTAR 
+
+SEU CÓDIGO JSX e então RENDERIZAR SEU CÓDIGO 
+
+HTML A PARTIR DELE...
+
+
+
+
+
+
+--> DE NOVO, ___NÃO ___ DEVEMOS ___ CAUSAR SIDE-EFFECTS 
+
+DENTRO 
+
+DO RENDER(), como por exemplo 'setTimeOut()' e O ENVIO DE HTTP REQUESTS.... --------> OU SEJA,
+ 
+
+ NÃO DEVEMOS ENFIAR NADA DENTRO DELE QUE __ACABE __ BLOQUEANDO O PROCESSO ___ DE RENDERIZAÇÃO 
+
+ DOS ELEMENTOS JSX/PSEUDOHTML/HTML...
+
+
+
+
+ ---------------------------------------------------------------- 
+
+
+
+--> CERTO.
+
+
+E QUANDO O 'RENDER()' RODA,
+ 
+
+ e você DE FATO ___rENDERIZA ___ QUAISQUER OUTROS 
+
+
+___REACT COMPONENTS___ DENTRO DESSE CLASS-BASED COMPONENT (vimos isso várias vezes, 
+como por exemplo com 'Cockpit' e 'Persons' dentro de App..),
+
+
+VOCê VERÁ QUE ENTÃO 
+
+
+_____oS 'CHILD COMPONENTS' SERÃO ENTÃO RENDERIZADOS___... ('Render Child Components')....
+
+
+
+
+
+-------------------------------------
+
+
+
+
+DE NOVO, AS ETAPAS:
+
+
+
+
+
+
+
+1) constructor(props) 
+
+
+
+
+
+
+2) getDerivedStateFromProps(props, state)
+
+
+
+3) render()
+
+
+
+''4'')  RENDER CHILD COMPONENTS (of the component rendered by 'render()') ---------> ISSO SIGNIFICA QUE 
+
+
+QUAISQUER CHILD COMPONENTS QUE VOCÊ INCLUIU DENTRO DO SEU 'RENDERED COMPONENT' (renderizado por meio de 'render()') 
+
+serão 
+
+então RENDERIZADOS TAMBÉM.
+
+
+
+
+-------------------------------------
+
+
+
+
+Certo,
+
+e SÓ APÓS TODOS OS CHILD COMPONENTS SEREM RENDERIZADOS, E SÓ DEPOIS DO LIFECYCLE HOOK
+
+DE CADA UM DESSES CHILD COMPONENTS TIVER ACABADO,
+
+
+__SÓ ENTÃO__ SEU 'LIFECYCLE HOOK' do 'COMPONENT PAI' ACABARÁ,
+
+
+E ACABARÁ COM O CALL DE 'componentDidMount()'...  ---> (O 'CREATION LIFECYCLE HOOK' de um determinado COMPONENT ____termina___ NO MOMENTO EM QUE 'componentDidMount()' É CHAMADO...)
+
+
+
+--------------------------------
+
+
+
+
+
+OU SEJA, ESSAS SÃO AS ETAPAS/MÉTODOS/PASSOS  do 'Class-based component lifecycle - CREATION' :
+
+
+
+
+
+
+
+
+1) constructor(props) 
+
+
+
+
+
+
+2) getDerivedStateFromProps(props, state)
+
+
+
+3) render()
+
+
+
+''4'')  RENDER CHILD COMPONENTS (of the component rendered by 'render()') 
+
+
+
+
+
+
+5) componentDidMount()
+
+
+
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+--------------------------------------->
+
+E
+
+'COMPONENTDIDMOUNT()' é UM LIFECYCLE HOOK __SUPER IMPORTANTE__, 
+
+
+
+QUE VOCê USARÁ MUITO QUANDO VOCÊ ESTIVER TRABALHANDO COM 
+
+'CLASS-BASED COMPONENTS'... --------------> mas pq isso?
+
+
+
+BEM, é pq 
+
+
+
+em 'componentDidMount()' (ou 'por meio de componentDidMount()') 
+
+
+NÓS 
+
+
+PODEMOS (E DEVEMOS) 
+
+
+CAUSAR 
+
+
+_______SIDE EFFECTS____ NO NOSSO CÓDIGO.... (pelo fato de ele EXECUTAR POR ÚLTIMO; pelo fato de ser o último desses passos/etapas).
+
+
+-----------------------------------------------
+
+
+
+
+OU SEJA, 
+
+ESSE 'componentDidMount()':
+
+
+
+DO (FAÇA): CAUSE SIDE-EFFECTS. (mande http requests para conseguir dados da web; utilizar 'setTimeout', e outros)
+
+
+DON'T (NÃO FAÇA): VOCÊ NUNCA DEVE UPDATAR O STATE do seu COMPONENT (pq o UPDATE DO STATE___ SEMPRE VAI TRIGGAR__ UM RE-RENDER DO COMPONENT)...
+
+
+
+
+
+---------------------------------------------------------------------------------
+
+
+
+
+É UM HOOK TIPICAMENTE USADO PARA FAZER HTTP REQUESTS PARA 
+
+CONSEGUIR DADOS DA WEB...
+
+
+
+
+
+-----> CONTUDO, VOCÊ NUNCA DEVE ATUALIZAR O STATE DO SEU COMPONENT ('this.setState()')
+
+dentro desse método aí... ---------> A NÃO SER (única exceção) 
+
+QUE esse update de state (setState) 
+
+ESTEJA 
+
+
+_____DENTRO DO '.THEN()' block ____ DE UMA PROMISE QUE ENVIA UM HTTP REQUEST (ou seja, um UPDATE 
+DE STATE no bloco 
+
+'resolve' de uma promise, que será LIDO/EXECUTADO ASSIM QUE A PROMISE TERMINAR DE ENVIAR E RECEBER 
+O HTTP REQUEST DO USUÁRIO (async code) ) ------------------> A MORAL, A MENSAGEM 
+
+DO PROFESSOR É QUE 
+
+
+_________NÓS NUNCA DEVEMOS___ CHAMAR 
+
+
+'setState()' 
+
+DENTRO 
+
+DESSE MÉTODO 
+
+
+'componentDidMount()' DE FORMA SÍNCRONA... (apesar de que a forma __aSSÍNCRONA__, COM PROMISES e async/await, 
+É PERMITIDA.)
+
+
+
+
+
+
+RESUMINDO: 
+
+
+
+--> nunca execute 'this.setState()' (atualiza state do component)
+ 
+ DE FORMA ___sÍNCRONA___ (e não ASSÍNCRONA, COM PROMISES) 
+
+ DENTRO 
+
+ DO MÉTODO 
+
+
+ 'componentDidMount'... -------> mas vocÊ tem passe livre, é claro, para  DEFINIR 
+
+ ___CÓDIGO QUE RODA __ NO FUTURO (promises) E QUE ATUALIZA O STATE.... (como, por exemplo,
+ 
+ 
+QUANDO A 'RESPONSE' DO SERVER RETORNA... ) --------> MAS VOCê NUNCA DEVE FAZER ISSO 
+
+DE FORMA SÍNCRONA (ex: chamar 'setState()' IMEDIATAMENTE, DENTRO DE 
+
+'componentDidMount()'... ) ----> PQ ISSO AÍ VAI TRIGGAR UM __RE-RENDER CYCLE__, E ISSO 
+É TERRÍVEL PARA A PERFORMANCE...
+
+
+
+
+DEVEMOS VER TUDO ISSO EM PRÁTICA.

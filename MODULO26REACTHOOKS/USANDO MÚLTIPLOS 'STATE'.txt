@@ -1,0 +1,1345 @@
+
+
+
+
+
+
+
+
+
+
+--> nós adicionamos nosso 
+
+primeiro uso de 'useState'.... -> 
+
+
+
+MAS 
+
+QUEREMOS 
+
+ADICIONAR 
+MAIS 
+
+DE 
+
+1
+ 
+
+ 'useState'
+
+ NESSE NOSSO COMPONENT...
+
+
+
+
+------------------------------
+
+
+ALÉM 
+
+DISSO,
+
+PROFESSOR 
+
+QUER 
+
+
+QUE 
+
+NOSSA 
+
+'<ul />'
+
+SEJA 
+_POPULADA___ 
+
+
+
+
+SEMPRE QUE CLICARMOS 
+
+NO BOTÃO 
+
+DE 
+
+'add'... --> pq até agora,
+
+esse button não faz COISA ALGUMA...
+
+
+------------------------------
+
+
+
+
+--> o próximo passo,
+
+portanto,
+
+É 
+
+fazer um 
+
+
+MANAGE 
+
+
+
+
+de um NOVO STATE,
+
+
+STATE 
+
+
+
+de 'todoItems' dentro 
+
+dessa list...
+
+
+
+
+
+
+
+
+
+---> e aqui 
+
+vem a parte legal: 
+
+podemos 
+
+usar 
+
+o hook 
+
+
+de 
+
+'useState()'
+
+
+QUANTAS VEZES QUISERMOS...
+
+
+
+
+
+
+
+
+----> É por isso que 
+
+ele 
+
+vai 
+
+escrever:
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+
+    const [todoName, setTodoName] = useState(''); 
+
+
+    const [] = useState(); ////EIS O CÓDIGO EM QUESTÃO.
+
+
+  const inputChangedHandler = (event) => {
+      setTodoName(event.target.value);
+  };
+
+
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        value={todoName}
+
+        onChange={inputChangedHandler}
+      />
+      <button type="button">Add</button>
+      <ul>{setTodoName}</ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+--------------------
+
+
+
+
+
+
+
+
+
+CERTO,
+
+MAS 
+
+DENTRO 
+
+DESSE NEGÓCIO,
+
+OBVIAMENTE
+ 
+
+NÃO VAMOS ARMAZENAR 
+
+UMA STRING vazia,
+
+
+E SIM 
+
+
+ARMAZENA 
+
+
+um __ARRAY__... ---> ele vai armazenar um array 
+
+pq 
+
+PRETENDE TER UM __aRRAY__ DE 'todoItems'.....
+
+
+
+ficará 
+
+assim:
+
+
+const [] = useState([]);
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+VAMOS COLOCAR O 'INITIALSTATE', portanto, como 
+
+UM 
+
+___ARRAY __ VAZIO.... ---> professor nos conta que é evidenteu que 
+poderíamso 
+
+
+definir 
+
+um 
+
+'elemento default' nesse array 
+
+como 
+
+um STARTING VALUE,
+
+tipo isto aqui:
+
+
+
+'''''const [] = useState(['exemplo']);'''''''''''',
+
+
+
+
+
+MAS QUE 
+
+AQUI 
+
+
+
+ELE 
+
+NÃO FARÁ ISSO....
+
+
+
+
+
+
+
+------> PROFESSOR VAI USAR UM 
+
+ARRAY VAZIO.... --> 
+
+
+
+
+CERTO...
+
+
+E aí, 
+
+esse código de 
+
+
+'const [] = useState([])' 
+
+
+
+VAI 
+
+RETORNAR
+ 
+
+ UM 
+
+
+ ARRAY COM EXATAMENTE 2 
+
+ elementos,
+
+ QUE 
+ SERÃO 
+
+ ENTÃO 
+
+ ARMAZENADOS EM CONSTANTES INDEPENDENTES...
+
+
+
+ ex:
+
+
+
+
+
+ const [todoList, setTodoList] = useState([]);
+
+
+
+
+ISSO VAI CRIAR BASICAMENTE:
+
+
+
+const todoList = [];
+
+
+const setTodoList = TIPO UM 'THIS.SETSTATE()' com essa list/array vazio aí... vai alterar esse array vazio....
+
+
+
+
+ ----------------------------------------------
+
+
+
+
+
+
+
+
+
+ EX(resultado completo):
+
+
+
+
+
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+
+    const [todoName, setTodoName] = useState(''); 
+
+
+    const [todoList, setTodoList] = useState([]); ////EIS O CÓDIGO EM QUESTÃO.
+
+
+  const inputChangedHandler = (event) => {
+      setTodoName(event.target.value);
+  };
+
+
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        value={todoName}
+
+        onChange={inputChangedHandler}
+      />
+      <button type="button">Add</button>
+      <ul>{setTodoName}</ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+
+
+
+
+
+----------------------------
+
+
+
+
+
+
+
+
+
+IMPORTANTE!!!! -->  -----------> PROFESSOR 
+
+
+
+NOS EXPLICA QUE 
+
+PODERÍAMOS 
+
+
+FAZER 
+
+MANAGE 
+
+DESSAS 
+
+2 EXPRESSÕES  (
+
+    const [todoName, setTodoName] = useState(''); 
+    const [todoList, setTodoList] = useState([]); 
+
+
+
+)
+ 
+
+ __EM UM MESMO __ OBJETO 
+
+ 'useState()'...  --------> E VEREMOS ISSO 
+
+
+ EM UMA 
+
+
+ DAS PRÓXIMAS LIÇÕES...
+
+
+
+
+ ---------------------------------
+
+
+
+
+
+-> PROFESSOR DIZ QUE __NÃO SOMOS OBRIGADOS __ A ESCREVER OS MÚLTIPLOS 'useState' calls 
+
+
+EM __MÚLTIPLAS LINHAS/1 call para cada state/propriedade do state,
+
+
+MAS 
+
+
+__ ELE ____ RECOMENDA____ QUE 
+
+
+
+FAÇAMOS ASSIM MESMO... ----> ISSO 
+
+PQ 
+
+
+
+
+ESSA ESCRITA/SINTAXE TE DEIXA 
+
+
+REALMENTE 
+
+__SEPARAR__ OS SEUS STATES/PROPRIEDADES 
+
+NO 
+
+STATE,
+
+
+E AÍ 
+
+REALMENTE 
+
+
+SEPARAR/DEIXAR UM INDEPENDENTE DO OUTRO,
+
+
+e aí 
+
+
+MUDAR ELES INDIVIDUALMENTE,
+
+
+E AÍ 
+
+
+
+
+TE DEIXA  FOCAR 
+
+EM 
+
+1 ÚNICO STATE POR VEZ... (mais fácil de codar)....
+
+
+
+
+
+
+
+
+
+
+--> OK... -> AGORA PRECISAMOS 
+
+ESCREVER ALGUM MÉTODO/FUNÇÃO 
+
+
+
+A SER DISPARADO QUANDO 
+
+O BUTTON 
+
+for clicado ('onClick={...}') --> 
+
+
+
+
+
+PARA ISSO,
+
+
+CRIAREMOS UM HANDLER.... --------> 
+
+
+
+
+ESSE HANDLER SERÁ 
+
+
+chamado 
+
+de 
+
+
+
+
+'todoAddHandler'...
+
+
+
+
+ex:
+
+
+
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+
+    const [todoName, setTodoName] = useState(''); 
+
+
+    const [todoList, setTodoList] = useState([]); 
+
+
+  const inputChangedHandler = (event) => {
+      setTodoName(event.target.value);
+  };
+
+
+
+
+const todoAddHandler = () => { //////EIS O CÓDIGO EM QUESTAÕ.
+
+}
+
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        value={todoName}
+
+        onChange={inputChangedHandler}
+      />
+      <button type="button" onClick={todoAddHandler}>Add</button> /////////EIS O CÓDIGO EM QUESTÃO.
+      <ul>{setTodoName}</ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+
+--------------------------------------
+
+
+
+
+
+DENTRO 
+
+
+
+DESSA FUNÇÃO,
+
+PROFESSOR 
+
+VAI QUERER 
+
+CHAMAR 
+
+
+'setTodoList'
+
+E ENTÃO 
+
+
+
+
+PASSAR O ___VALOR___ DE 
+
+
+'todoList.concat(todoName)'... (ESSA É MINHA IDEIA DE CÓDIGO; PROVAVELMENTE ESTÁ ___ERRADA____...)
+
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+
+    const [todoName, setTodoName] = useState(''); 
+
+
+    const [todoList, setTodoList] = useState([]); 
+
+
+  const inputChangedHandler = (event) => {
+      setTodoName(event.target.value);
+  };
+
+
+
+
+const todoAddHandler = () => { //////EIS O CÓDIGO EM QUESTAÕ.
+    setTodoList(todoName);
+}
+
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        value={todoName}
+
+        onChange={inputChangedHandler}
+      />
+      <button type="button" onClick={todoAddHandler}>Add</button> /////////EIS O CÓDIGO EM QUESTÃO.
+      <ul>{setTodoName}</ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+E 
+
+ESSE CÓDIGO AÍ DEU __ERRADO__:
+
+
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+  // const inputState = useState(''); //versão FEIA de escrever o HOOK de 'useState'... (não usa array destructuring)...
+
+    const [todoName, setTodoName] = useState(''); ////versão __BONITA__ de escrever o hook de 'useState()' (usa ARRAY DESTRUCTURING...)
+
+    const [todoList, setTodoList] = useState([]); ///PODEMOS CHAMAR 'useState()' QUANTAS VEZES QUISERMOS...
+
+  const inputChangedHandler = (event) => {
+    // inputState[1](event.target.value);
+      setTodoName(event.target.value);
+  };
+
+
+
+  const todoListAddHandler = () => {
+      // setTodoList(todoName);
+      setTodoList(todoList.concat(todoName));
+  }
+
+  ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        // value={inputState[0]}
+        value={todoName}
+        //   onChange={inputState[1]}
+        onChange={inputChangedHandler}
+      />
+      <button type="button" onClick={todoListAddHandler}>Add</button>
+      {/* <ul>{inputState[0]}</ul> */}
+      <ul>{setTodoList}</ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+
+
+
+PROFESSOR 
+DIZ QUE 
+
+DEVEMOS 
+
+COMEÇAR 
+POR 
+
+ESTE CÓDIGO:
+
+
+
+
+const todoAddHandler = () => {
+    setTodoList();
+}
+
+
+
+-----------------------------
+
+
+
+IMPORTANTE!!! ---> 
+
+QUANDO 
+
+
+chamamos 
+
+aquela 
+FUNÇÃO 
+
+ALTERADORA (no caso, 'setTodoList()',
+
+),
+
+
+
+
+NÓS FAZEMOS ___ OVERWRITE__ DO VALOR __ ANTERIOR __ POR INTEIRO... --> 
+
+
+A NÃO 
+
+SER QUE 
+
+USEMOS __ A FORMA 
+
+
+'EXTENDIDA' 
+
+DESSA FUNÇÃO ALTERADORA,
+
+
+A FORMA 
+
+QUE 
+
+'LEVA EM CONSIDERAÇÃO 
+
+O
+
+'prevValue'(previous value)
+
+
+NA HORA 
+
+DE ALTERAR O STATE... --> isso significa que 
+
+ELE VAI, NESSE CASO AÍ,
+
+__MANTER__ OS ELEMENTOS QUE EXISTIAM 
+
+NO 
+
+
+ARRAY DE
+
+'todoList', SE USARMOS ESSA FORMA EXTENDIDA ----------------> 
+
+
+
+
+
+
+PROFESSOR 
+
+DIZ QUE 
+
+
+PODEMOS FAZER ISSO...
+
+
+
+
+
+
+'useState()' 
+
+
+
+TEM 
+
+UMA 'FORMA EXTENDIDA'
+
+SIMILAR 
+
+ÀQUELA 
+
+DE 
+
+
+'this.setState()'...  
+
+
+
+
+
+
+
+
+
+---> com o 'this.setState',
+
+tínhamos esta escrita:
+
+
+''''
+this.setState(prevState => {
+        return {
+            count: prevState.count + 1
+        }
+})
+
+
+'''''
+
+
+-------------------------------
+
+
+
+
+
+
+
+ESSA ESCRITA AÍ ERA NECESSÁRIA, 
+
+
+PARA CASOS ESPECÍFICOS,
+
+EM 
+
+
+CLASS-BASED COMPONENTS... --> 
+
+PARA 
+
+__FUNCTIONAL COMPONENTS,
+
+COM 
+
+
+____HOOKS__,
+
+NÓS 
+
+NÃO PRECISAMOS 
+
+ESCREVER 
+
+ESSA FORMA 
+
+AÍ... ------> EM VEZ DISSO,
+
+
+
+
+QUANDO EU __dEPENDO___ DO 'oldState' PARA 
+
+SETTAR O 'NOVO STATE',
+
+
+
+
+__EU POSSO SIMPLESMENTE __ USAR 
+
+
+
+
+O 'OLDSTATE' 
+
+
+__IMEDIATAMENTE_.... (sem escrever toda aquela lenga lenga de '(prevState) => {return {
+                xxxx: prevState.xxxx;
+}}')
+
+
+
+
+
+
+
+
+
+
+---> E NESSE CASO,
+ 
+ É EVIDENTE QUE 
+
+ O __ PROFESSOR __ QUER ADICIONAR __ UM NOVO 'item' 
+
+
+ AO NOSSO ARRAY... --> 
+
+
+ para 
+ isso,
+
+ ele vai chamar 
+
+
+ 'setTodoList(todoList.concat())'... -------> 
+
+
+
+
+ DENTRO 
+
+
+ DESSE 
+
+ 'concat()',
+
+
+ ELE 
+
+ VAI QUERER 
+
+ PASSAR 
+
+
+ NOSSO 'STATE'/old/currentSTATE __ de 
+
+
+ 'todoName',
+
+ QUE 
+
+ É EXATAMENTE O VALOR QUE QUEREMOS....
+
+
+
+
+ (opa, parece que esse código que o professor 
+ É EXATAMENTE AQUELE 
+ 
+ QUE EU HAVIA ESCRITo....)
+
+
+
+
+
+
+ MAS PQ ELE ESCREVEU ISSO? --> bem simples:
+
+
+
+
+ PQ 
+
+ '.concat()'
+
+
+ SEMPRE ___ RETORNA UM __ NOVO ___ ARRAY__, 
+
+
+ E NÃO __ EDITA/ALTERA O VELHO ARRAY__... ------> 
+
+
+
+ E 
+
+ ESSE 
+
+ NOVO ARRAY 
+
+ VAI SER PASSADO 
+
+
+ A 
+
+ 'setTodoList',
+
+ pq o código 
+
+ está assim:
+
+
+
+ 'setTodoList(todoList.concat(todoName))'....
+
+
+
+
+ -----------------------------
+
+
+
+ UÉ.... -> AGORA NOSSO CÓDIGO __ REALMENTE __ FUNCIONOU___...
+
+
+
+ Bem estranho... ---> 
+
+
+
+ as strings estão sendo CONCATENADAS 
+
+ em 
+
+ 1 GRANDE STRING... ---> ISSO 
+
+ PQ 
+
+
+ nós não estabelecemos NADA dentro 
+
+
+ daquele 
+
+ '{todoList}',
+
+ ele 
+ é 
+
+
+
+ só um '{todoList}',
+
+
+ e isso 
+
+
+ VAI ADICIONAR 
+
+
+ TODO ESSE CÓDIGO COMO UMA STRING 'FITA SOLTA' 
+
+
+ dentro 
+
+ desse 
+
+ 'ul'..
+
+
+
+
+
+
+
+ ---> PARA CONSEGUIR FAZER 
+
+
+ O OUTPUT 
+ DESSES ITEMS 
+
+ DE FORMA CORRETA,
+
+ TEREMOS DE USAR UM 
+
+ '.map()' dentro 
+
+ dessa marcação 
+
+ dinâmica,
+
+ na 'ul'...
+
+
+
+ ----------------------
+
+
+
+
+ CONSEGUI....
+
+ FICOU ASSIM:
+
+
+
+ import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+
+  const [todoName, setTodoName] = useState('');
+
+  const [todoList, setTodoList] = useState([]);
+
+  const inputChangedHandler = (event) => {
+    setTodoName(event.target.value);
+  };
+
+  const todoListAddHandler = () => {
+    console.log(todoList.concat(todoName));
+    setTodoList(todoList.concat(todoName));
+  };
+
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        value={todoName}
+        onChange={inputChangedHandler}
+      />
+      <button type="button" onClick={todoListAddHandler}>
+        Add
+      </button>
+      <ul>
+        {todoList.map((todoItem, index) => { /////////EIS O CÓDIGO EM QUESTÃO.
+          return (
+            <li
+              style={{
+                listStyle: 'none',
+              }}
+            >
+              {todoItem}
+            </li>
+          );
+        })}
+      </ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+------------------------------
+
+
+
+
+
+
+SÓ ESQUECEMOS UMA COISINHA: uma __KEY__ (prop) para cada 
+
+elemento 
+
+
+'<li>' que será produzido....
+
+
+
+
+escrevemos 
+
+algo como 
+
+
+
+'Math.random() * new Date()'....
+
+
+
+
+
+
+
+
+
+
+FICOU ASSIM:
+
+
+
+
+import React from 'react';
+
+import { useState } from 'react';
+
+const Todo = (props) => {
+  // const inputState = useState(''); //versão FEIA de escrever o HOOK de 'useState'... (não usa array destructuring)...
+
+  const [todoName, setTodoName] = useState(''); ////versão __BONITA__ de escrever o hook de 'useState()' (usa ARRAY DESTRUCTURING...)
+
+  const [todoList, setTodoList] = useState([]); ///PODEMOS CHAMAR 'useState()' QUANTAS VEZES QUISERMOS...
+
+  const inputChangedHandler = (event) => {
+    // inputState[1](event.target.value);
+    setTodoName(event.target.value);
+  };
+
+  const todoListAddHandler = () => {
+    // setTodoList(todoName);
+    console.log(todoList.concat(todoName));
+    setTodoList(todoList.concat(todoName));
+    console.log(new Date().getTime());
+  };
+
+  ///React.Fragment --> MESMA COISA QUE '<Aux />'...
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        // value={inputState[0]}
+        value={todoName}
+        //   onChange={inputState[1]}
+        onChange={inputChangedHandler}
+      />
+      <button type="button" onClick={todoListAddHandler}>
+        Add
+      </button>
+      {/* <ul>{inputState[0]}</ul> */}
+      {/* <ul>{todoName}</ul> */}
+      {/* <ul>{todoList}</ul> */}
+
+      <ul>
+        {todoList.map((todoItem, index) => {
+          return (
+            <li
+            key={new Date().getTime() * Math.random()}
+              style={{
+                listStyle: 'none',
+              }}
+            >
+              {todoItem}
+            </li>
+          );
+        })}
+      </ul>
+    </React.Fragment>
+  );
+};
+
+export default Todo;
+
+
+
+
+
+
+------------------
+
+É ASSIM 
+
+
+
+QUE USAMOS 
+
+MÚLTIPLOS 
+
+'STATES'/propriedades no state 
+
+COM O 
+
+
+
+HOOK DE 'useState()',
+
+
+
+E TUDO ISSO ACONTECE NO NOSSO FUNCTIONAL COMPONENT...
+

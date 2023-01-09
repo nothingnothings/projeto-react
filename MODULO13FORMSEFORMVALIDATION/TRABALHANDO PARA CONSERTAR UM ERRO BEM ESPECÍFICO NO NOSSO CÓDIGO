@@ -1,0 +1,262 @@
+
+
+
+ Professor fala de um breve erro que 
+
+ talvez já tenhamos consertado (e já consertamos!), 
+
+
+ que é um erro que 
+
+ acontece
+  
+  com 
+
+  O DROPDOWN --> se você 
+
+troca/seleciona a segunda 
+
+
+opção no dropdown,
+
+
+aparece 
+
+um 
+
+erro de 
+
+
+'TypeError: Cannot read property 'required' of undefined'... ------->
+
+
+E ESSE ERRO APARECE EXATAMENTE NA LINHA 
+
+'if (rules.required) {
+    isValid = value.trim() !== '' && isValid;
+}'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------PROFESSOR DIZ QUE DEVEMOS CONSERTAR ESSE ERRO NA PRÓXIMA AULA..... (mas ele já está consertado...) -------> SIM, EU HAVIA 
+
+CONSERTADO POR CONTA PRÓPRIA.... ----> a maneira que 
+
+eu encontrei foi adicionar 
+
+
+um if check 
+
+de 
+
+'    if (!rules) {
+      return;
+    }
+'
+
+
+
+
+ANTES DESSE CÓDIGO DE 
+
+'rules.required' -----> esse 'if (!rules)' VAI SER 
+
+
+__dISPARADO__ SEMPRE QUE 
+
+
+estivermos falando de um objeto/elemento QUE NÃO TEM um objeto 'rules'... (tipo select/dropdown, que NÃO TEM ESSE CÓDIGO....)
+
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+PROFESSOR ADMITE QUE NOSSO APPROACH É VÁLIDO... --> contudo, na versão DELE DO CÓDIGO, 
+
+ele fez um 
+
+return 
+
+de 
+
+'true', em vez de um ''''return vazio'''' ('return;')....
+
+
+
+
+ex:
+
+
+ if (!rules) {
+      return true;
+    }
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+
+CONTUDO, PROFESSOR APONTA QUE 
+
+ELE PREFERE UM APPROACH ALTERNATIVO, 
+
+APPROACH 
+
+EM QUE 
+
+SIMPLESMENTE 
+
+DEFINIMOS UM OBJETO 
+
+'validation' meio '''placeholder''' (ou seja, sem nada no seu interior) 
+
+
+DENTRO 
+
+DAQUELE 
+
+OBJETO
+
+
+'deliveryMethod'... (no state)...
+
+
+
+--> esse objeto 'validation' será como os outros, dos outros objetos, 
+
+mas 
+
+estará ___vAZIO____ ----> ele ficará VAZIO, o que faz com que 
+
+'rules.required' ainda dÊ __''TRUE'' (pq objetos vazios AINDA SÃO OBJETOS VÁLIDOS,
+
+eles não 
+são 
+
+objetos 'undefined', objetos com valor de 'undefined', que eram a origem de nosso problema... -------> 
+
+ou seja,
+
+esse é um bom workaround, definir um objeto VAZIO de validation em 'deliveryMethod'...)
+
+
+
+
+ex:
+
+
+ deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                  
+                        value: 'fastest', 
+                        validation: {} /////////EIS O CÓDIGO EM QUESTÃO
+                        valid: true
+    
+    
+    },
+
+
+
+-------------------------
+
+
+
+PROFESSOR 
+
+
+DIZ QUE 
+
+PREFERE
+
+ESSE APPROACH 
+
+PQ 
+
+
+ELE 
+
+DEIXA NOSSO CÓDIGO MAIS 'PARELHO'; --> isso quer dizer que 
+
+TIPO TODOS __OS __ ELEMENTOS/OBJETOS (até mesmo 'deliveryMethod')
+
+no nosso 
+
+state de 
+
+'orderForm'
+
+VÃO TER O MESMO FORMATO: vão ter um
+
+
+
+'elementType',
+
+
+um 
+
+
+
+'elementConfig',
+
+um 
+
+
+'value',
+
+uma
+
+
+'validation'
+
+
+e 
+
+um 
+
+'valid'...
+
+
+---------------------------------
+
+
+
+
+CERTO, ISSO FUNCIONOU.... ---> o dropdown pode ser alterado agora sem sofrer nenhum erro....

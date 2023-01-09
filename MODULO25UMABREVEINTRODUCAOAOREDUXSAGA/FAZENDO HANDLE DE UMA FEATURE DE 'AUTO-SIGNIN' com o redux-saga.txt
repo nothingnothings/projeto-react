@@ -1,0 +1,1089 @@
+
+
+
+-----> DE VOLTA 
+
+AO ARQUIVO 
+
+
+'auth.js'
+
+
+
+
+
+
+no 
+
+folder 
+
+
+de 
+
+'actions',
+
+NÓS 
+
+__JÁ FIZEMOS __ O OUTSOURCE __ DE UM MONTE 
+
+
+__ DE LÓGICA__
+
+PARA 
+
+DENTRO 
+
+
+
+
+
+DAS SAGAS QUE 
+
+NÓS CRIAMOS... --> 
+
+e 
+
+em razão disso,
+
+JÁ 
+
+ESTAMOS 
+
+
+COM UM 
+
+
+ARQUIVO 
+
+'auth.js'
+
+
+BEM MAIS __LEAN__, 
+
+
+arquivo em que 
+
+
+NEM PRECISO MAIS FAZER IMPORT DE 
+
+'axios',
+
+PQ __NÃO O UTILIZO NESSE ARQUIVO (utilizo axios, agora, __aPENAS __ EM 
+
+
+'authSaga.js',
+
+
+NAS NOSSAS SAGAS, que fazem o handle do CÓDIGO ASSÍNCRONO DE NOSSOS 
+
+ACTION CREATORS...)
+
+
+
+
+
+----------------------------------
+
+
+
+
+AGORA, POR CONSEQUÊNCIA,
+
+NOSSOS 
+
+ACTION CREATORS ___ REALMENTE__ FAZEM O RETURN __DE ACTIONS PURAS,
+
+e nada mais do que isso....
+
+
+
+
+
+
+
+
+
+--> COM EXCEÇÃO DO 
+
+
+'authCheckState' --------> 
+
+
+
+
+
+ELE ESTÁ COM ESTE CÓDIGO:
+
+
+
+
+
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+      if(!token) {
+
+        dispatch(authLogout()); 
+      } else {
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate <= new Date()) {
+          dispatch(authLogout()); 
+        } 
+        else {
+          const userId = localStorage.getItem('userId');
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, userId, email)); 
+          dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));  
+        }
+  
+      }
+  }
+}
+
+
+
+--------------------------------------------
+
+
+
+CERTO... 
+
+E VAMOS 
+
+QUERER 
+
+
+TRANSPLANTAR 
+A LÓGICA 
+
+'ASYNC' 
+
+desse 
+
+ACTION CREATOR/action 
+
+PARA __ DENTRO 
+
+
+DE UMA SAGA 
+
+
+com um nome parecido com 
+
+'authCheckState'...
+
+
+
+
+
+
+
+
+
+
+--> LEMBRE-SE,
+
+
+'authCheckState'
+
+
+ERA/É SEMPRE __ EXECUTADO __ NO INÍCIO __ DE 
+
+NOSSO 
+
+APLICATIVO (no 'index.js', realmente),
+
+
+
+
+
+E ELE FAZ O 'CHECK' SE NOSSO 
+
+
+USUÁRIO/BROWSER DO USUÁRIO __ REALMENTE__ ESTÁ 
+
+OU NÃO 
+
+
+AUTENTICADO/POSSUI TOKEN...  -----> SE ELE TIVER O TOKEN NO SEU LOCAL STORAGE,
+
+NÓS 
+
+FAZEMOS 
+
+
+'LOGIN' DELE AUTOMATICAMENTE 
+
+QUANDO 
+ELE RECARREGAR A PÁGINA... --> caso contrário,
+
+EXECUTAMOS 
+
+'LOGOUT',que 
+
+LIMPA O STORAGE DELE,
+
+
+E FAZ DISPATCH DE 'AUTH_LOGOUT', disparado por meio de 'AUTH_INITIATE_LOGOUT'...
+
+
+------------------------------------------
+
+
+
+
+
+OK...
+
+
+
+
+
+
+EU IMAGINO QUE 
+
+O CÓDIGO DESSE NEGÓCIO (no arquivo de ACTIONS) VAI FICAR ASSim:
+
+
+
+
+export const authCheckState = () => {
+    return {
+        type: authActionTypes.AUTH_INITIALIZE_AUTHCHECK_STATE
+    }
+}
+
+
+
+----------------------------------------------
+
+
+
+
+--> isso feito,
+
+PROVAVELMENTE VAMOS QUERER ESCREVER 
+
+
+UMA SAGA PARA ESSE NEGÓCIO...
+
+
+
+
+
+
+
+--> CERTO... EU FUI TRADUZINDO 
+
+
+
+
+A SINTAXE DO 'REDUX-THUNK' 
+
+PARA 
+
+A DO REDUX-SAGA, 
+
+
+E FICOU MAIS OU MENOS ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+
+(código no arquivo 'authSaga'):
+
+
+
+export function* authCheckStateSaga(action) {
+                const token = localStorage.getItem("token");
+                if(!token) {
+                        yield put(authActions.authLogout())
+                } else {
+                        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+                        if (expirationDate <= new Date()) {
+                                yield put(authActions.authLogout())
+                        } else {
+                                const userId = localStorage.getItem("userId");
+                                yield put(authActions.authSuccess(token, userId));
+                                yield put(authActions.checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));  
+                        }
+
+                }
+}
+
+
+
+(código no arquivo DOS ACTION CREATORS):
+
+
+export const authCheckState = () => {
+  return {
+      type: authActionTypes.AUTH_INITIALIZE_AUTHCHECK_STATE
+  }
+}
+
+
+
+
+
+
+
+
+(código em 'index.js' dos SAGAS...):
+
+
+
+
+
+export function* watchAuth() {
+
+  
+  yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+  yield takeEvery(actionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+  yield takeEvery(actionTypes.AUTH_ATTEMPT, authAttemptSaga); ///código que DE FATO FAZ  O LOGIN....
+  yield takeEvery(actionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, authCheckStateSaga);
+}
+
+
+--------------------------------
+
+
+
+
+CERTO...
+
+
+
+mas eu 
+
+cometi alguns ERROS.... ----> ESQUECI VÁRIOS 'yield' 
+
+
+
+DENTRO DA
+
+
+SAGA 
+
+de 
+
+'authCheckStateSaga'...
+
+
+
+
+CÓDIGO CORRIGIDO:
+
+
+
+
+
+export function* authCheckStateSaga(action) {
+                const token = yield localStorage.getItem("token");
+                if(!token) {
+                        yield put(authActions.authLogout())
+                } else {
+                        const expirationDate = yield new Date(localStorage.getItem('expirationDate'));
+                        if (expirationDate <= new Date()) {
+                                yield put(authActions.authLogout())
+                        } else {
+                                const userId = yield localStorage.getItem("userId");
+                                yield put(authActions.authSuccess(token, userId));
+                                yield put(authActions.checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));   ///ISSO, É CLARO, SE REFERE AO ACTION CREATOR de 'checkAuthTimeout' LÁ EM 'auth.js' (arquivo dos action creators...) --> E ESSE CÓDIGO AÍ VAI TRIGGAR __ AINDA OUTRA SAGA, a saga de 'checkAuthTimeoutSaga'....
+                        }
+
+                }
+}
+
+
+
+
+
+
+------------------
+
+
+CERTO...
+
+
+
+
+E ESSAS 
+
+
+ERAM 
+
+TODAS AS MUDANÇAS DE QUE 
+
+PRECISÁVAMOS....
+
+
+
+
+
+
+
+
+
+---> esse foi meu 
+
+'authCheckStateSaga'...
+
+
+
+-----------------------
+
+
+
+
+--> AGORA QUEREMOS 
+
+
+'HOOK THIS UP' 
+
+E ENTÃO 
+
+ASSEGURAR 
+
+QUE 
+
+ESSE CÓDIGO 
+
+AÍ REALMENTE 
+
+SEJA 
+
+EXECUTADO 
+QUANDO 
+
+EXECUTARMOS 
+
+NOSSO APLICATIVO....
+
+
+
+
+
+
+
+--> professor faz exatamente o que eu fiz,
+
+
+escreve 
+
+algo assim:
+
+
+
+
+
+export const authCheckState = () => {
+  return {
+      type: authActionTypes.AUTH_INITIALIZE_AUTHCHECK_STATE
+  }
+}
+
+
+
+
+(NÃO PRECISAMOS PASSAR NENHUM ARGUMENTO/PAYLOAD COM ESSA ACTION AÍ...  ela ficar pura 
+
+já está ótimo...)
+---------------------------------------
+
+
+
+PROFESSOR 
+
+TAMBÉM 
+
+ESCREVE ISTO:
+
+
+
+
+
+
+
+
+export function* watchAuth() {
+
+  
+  yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+  yield takeEvery(actionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+  yield takeEvery(actionTypes.AUTH_ATTEMPT, authAttemptSaga); ///código que DE FATO FAZ  O LOGIN....
+  yield takeEvery(actionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, authCheckStateSaga);
+}
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+
+
+SALVAMOS TUDO... 
+
+
+
+RETORNAMOS AO NOSSO APP...
+
+
+
+
+----------> nosso auto-login 
+
+AGORA FUNCIONA 
+
+COMO ANTES... -> mas agora,
+
+FUNCIONA 
+
+
+COM __ REDUX-SAGA....
+
+
+-------------
+
+
+
+
+
+
+
+--> E OS SAGAS, REITERANDO,
+SÃO 
+
+
+EXECUTADOS 
+
+GRAÇAS 
+AOS NOSSOS 'LISTENERS',
+
+aos 
+
+WATCHERS 
+
+
+em 
+
+
+'index.js' (dos sagas...) ------>  ISSO, POR SUA VEZ, É EXECUTADO LÁ NO BOOT DO NOSSO APLICATIVO, em 'index.js' (do root), POR MEIO DAQUELE ´CODIGO DE 'sagaMiddleware.run(watchAuth)'...
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+COM ISSO,
+
+
+
+DEIXAMOS/TORNAMOS 
+
+'REDUX-THUNK'
+
+
+
+__TOTALMENTE___ REDUNDANTE__ PARA 
+
+A 
+PARTE 
+
+DE 
+'auth'
+
+
+DE NOSSO APLICATIVO...
+
+
+
+
+
+
+
+
+
+
+--> MAS PARA TORNAR 
+
+O 
+
+
+REDUX-THUNK TOTALMENTE REDUNDANTE, DEVEMOS 
+
+
+
+TERMINAR O PROCESSO: 
+
+DEVEMOS 
+
+
+TRANSFERIR 
+
+A LÓGICA 
+
+'ASYNC' 
+
+
+DE NOSSOS 
+
+ARQUIVOS 
+
+DE ACTION CREATOR 
+
+
+
+'order.js'
+ 
+e 
+
+
+'burgerBuild.js'...
+
+
+
+
+
+
+--> DEVEMOS PRATICAR ISSO DAÍ...
+
+
+
+
+
+
+--> DEVEMOS SETTAR SAGAS EM NOVOS ARQUIVOS,
+
+TALVEZ SETTAR NOVOS WATCHERS 
+
+em 
+
+
+'index.js', 
+
+
+PARA 
+
+TESTAR/PRATICAR 
+OS SAGAS....
+
+
+
+--
+
+ 
+
+ OK... 
+
+
+ MAS 
+
+ AÍ SURGE UMA PERGUNTA:
+
+
+
+ ONDE EXECUTAR 
+
+
+ '''sagaMiddleware.run(watchBurger);'''? -----> DEVO 
+
+
+ EXECUTAR 
+
+
+ NO 
+
+
+ 'index.js',
+
+ OU LÁ 
+
+ NO 
+
+ 'BurgerBuilder' (que é onde esse negócio teoricamente importa...)
+
+
+
+
+
+
+
+
+
+ --> CERTO... 
+
+ POR ALGUMA RAZÃO,
+
+ O CÓDIGO 
+
+ DE 
+
+ '
+
+
+ export function* asyncOrderInitialIngredientsGetSaga() {
+  try {
+    const response = yield axios.get(
+      'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json'
+    );
+
+
+
+    const ingredients = yield response.data;
+    put(actionTypes.orderInitialIngredientsGet(ingredients));
+  } catch (error) {
+    put(actionTypes.fetchIngredientsFailed());
+  }
+}
+
+
+
+'
+
+
+
+ESTÁ 
+
+
+NOS DANDO UM PROBLEMÃO... --> 
+
+
+nosso 
+
+SPINNER __ NUNCA PARA DE GIRAR__, E O BURGER __ NUNCA É 'RETRIEVADO' do servidor...
+
+
+
+
+---------------------------------
+
+
+--> O PROBLEMA É QUE NOSSO SAGA NUNCA ESTÁ SENDO EXECUTADO... --> 
+
+o 
+
+'LISTENER'
+
+não está fazendo seu trabalho...
+
+
+
+
+->ah, agora deu certo.
+
+
+Consegui.
+
+
+
+código ficou assim:
+
+
+
+
+
+(em index.js do root):
+
+
+
+
+  sagaMiddleware.run(watchBurger);
+
+
+
+
+
+
+
+
+(em 'burgerBuildSaga.js'):
+
+
+
+
+export function* asyncOrderInitialIngredientsGetSaga() {
+  try {
+    const response = yield axios.get(
+      'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json'
+    );
+        console.log(response);
+    const ingredients = yield response.data;
+    yield put(actionTypes.orderInitialIngredientsGet(ingredients));
+  } catch (error) {
+    console.log(error);
+    yield put(actionTypes.fetchIngredientsFailed());
+  }
+}
+
+
+
+
+
+
+(em 'index.js'):
+
+
+
+
+export function* watchAuth() {
+
+  
+  yield takeEvery(authActionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+  yield takeEvery(authActionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+  yield takeEvery(authActionTypes.AUTH_ATTEMPT, authAttemptSaga); ///código que DE FATO FAZ  O LOGIN....
+  yield takeEvery(authActionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, authCheckStateSaga)
+}
+
+
+
+
+export function* watchBurger() {
+  yield takeEvery(burgerActionTypes.INITIALIZE_INITIAL_INGREDIENTS_GET, asyncOrderInitialIngredientsGetSaga)
+}
+
+
+
+
+
+-----------------------
+
+
+
+
+CERTO....
+
+
+DEVO FAZER A MESMA COISA COM 
+
+
+
+O CÓDIGO ASYNC DOS ACTION CREATORS
+
+
+DE 
+
+'ORDER.js'...
+
+
+
+
+SÃO ESTES:
+
+
+export const purchaseBurgerAttempt = (orderData, token, userId) => {
+        return (dispatch) => {
+                        dispatch(purchaseBurgerLoading());
+                        axiosOrder.post(
+                                '/orders.json?auth=' + token, orderData
+                        )
+                        .then(
+                                response => {
+                                
+                                        // const userId = localStorage.getItem('userId');
+                                        dispatch(purchaseBurgerSuccess(response.data.name, orderData));
+                                        // dispatch(authActions.burgerFinished());
+                                }
+                        )
+                        .catch(
+                                error => {
+                                        dispatch(purchaseBurgerFail(error.message));
+                                }
+                        )
+        }
+}
+
+
+
+
+
+
+
+
+ export const asyncFetchOrdersStart = (token, userId) => {
+        return dispatch => {
+                dispatch(fetchOrdersStart());
+        //     axiosOrder.get('/orders.json?auth=' + token)   
+        const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';  ///obs:: sempre coloque as propriedades/objetos à direita das keys (keys como 'orderBy') WRAPPADAS POR  '  ""  ' (double quotation marks), como visto naquele "userId"....
+        axiosOrder.get('/orders.json' + queryParams ) ////////// '/orders.json'   | ?auth= token |  'orderBy=userId equal to userId(constante) ' | )
+       // (SIM, É UM CÓDIGO ABSURDO ASSIM MESMO, TUDO PARA QUE o último userId fique "userId"...)
+        //e tudo isto é necessário, de verdade....
+        
+        .then(
+               res => {
+                   const fetchedOrders = [];
+                   for (let key in res.data) {
+                           console.log(key);
+                       fetchedOrders.push(
+                           {
+                               ...res.data[key],
+                               id: key
+                           }
+                       )
+                   }
+                   dispatch(fetchOrdersSuccess(fetchedOrders)); ///AQUI É DISPATCHADA A ACTION DE 'fetchOrdersSuccess', com um pass de 'fetchedOrders' como payload (propriedade 'orders')...
+               }
+            )
+            .catch(error => {
+                    dispatch(fetchOrdersFail(error));
+            })
+        }
+    }
+
+
+
+
+-----------------------------------
+
+
+
+
+OK, ADAPTEI 
+
+
+TODOS 
+
+OS 
+
+
+CÓDIGOS
+ 
+ DE 
+ 'redux-thunk'
+
+
+
+ em 
+
+ 'burgerBuild' 
+
+ e 
+
+
+ 'order.js'
+
+
+
+ PARA FICAREM 
+
+ NA 
+
+ FORMA 
+
+
+ DE 
+
+
+
+ 'redux-saga'... --------> 
+
+
+
+
+
+
+ AGORA SÓ PRECISO RODAR 
+
+
+ 'watchBurger()' 
+
+
+ e 
+
+ 'watchOrder()'
+
+
+
+
+ LÁ NO INDEX,
+
+
+ PENSO EU...
+
+
+ -----------------
+
+
+ OK,
+
+ JÁ VI UM ___ERRO___ --->  2 
+
+
+ 'AUTH_START'
+  
+  estão sendo dispatcheados... (era 2 
+  
+  execuções de 
+  
+  'sagaMiddleware.run(watchAuth)' o problema...)
+
+
+
+
+  ------------------
+
+  OK... Consegui consertar 
+
+
+  o 
+
+
+
+
+
+'someone'/nome do usuário na toolbar quando loggamos na página....
+
+
+
+
+-------------------
+
+
+
+CERTO... TUDO ESTÁ FUNCIONANDO... (com os saga.
+)
+
+
+
+
+
+--> TUDO ESTÁ FUNCIONANDO, E AGORA 
+
+NOSSOS 
+
+
+ACTIONCREATORS/arquivo de action creators 
+
+
+ESTÁ 
+
+BEM MAIS 
+
+'LEAN'...
+
+
+
+
+-------------------
+
+
+OK... AGORA TEMOS UM 'WORKING SETUP'...

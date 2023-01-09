@@ -1,0 +1,982 @@
+ 
+
+
+
+
+
+
+
+
+ --> há outras coisas que 
+
+ PODEMOS 
+
+
+ OPTIMIZAR 
+
+
+
+ NO NOSSO APLICATIVO... -----> temos aquela 
+ 'utility function' 
+
+
+ de 
+
+ 'updateObject',
+
+ que 
+
+ é 
+
+ chamada 
+
+
+
+ TROCENTAS 
+
+ VEZES 
+
+ nos nossos reducers...
+
+
+
+
+ ------------------------------
+
+
+
+
+
+ ---> E SE DERMOS UMA OLHADA NO NOSSO COMPONENT 
+
+ 'ContactData',
+
+
+
+
+ VAMOS 
+
+ PERCEBER 
+
+ QUE 
+
+
+ EM 
+
+
+ 'inputChangedHandler'
+
+
+ NÓS 
+
+
+ TAMBÉM
+  
+  'kindof'
+
+
+  UPDATAMOS 
+
+
+  OBJETOS, 
+
+  UPDATAMOS 
+
+  
+
+
+  + OU - COM AQUELE MESMO PADRÃO 
+
+  DE 
+
+  'updateObject'...
+
+  (que 
+  
+  tem um 
+  
+  
+  CÓDIGO 
+  
+  
+  
+  de 
+  
+  '''''
+
+  export const updateObject = (oldObject, updatedValues) => {
+    console.log(oldObject);
+    console.log(updatedValues);
+    return {
+        
+        ...oldObject,
+        ...updatedValues
+    }
+};
+
+
+''''''
+  
+  )
+
+
+
+
+  -------------> OU SEJA,
+
+
+
+
+
+  PODERÍAMOS USAR 
+
+  'updateObject' nesse lugar também...
+
+
+
+
+
+
+
+
+  --------------> 
+
+  basta importarmos 
+
+
+  a função 
+
+  'updateObject', lá do arquivo 'utility.js',
+
+  nesse 
+
+  arquivo 
+
+
+
+  de 
+
+  'ContactData'...
+
+
+
+  --> MAS PARA ISSO, PROFESSOR VAI TIRAR 
+
+  'utility'
+   
+   lá 
+
+   do 
+
+   folder de 
+   'store'; ele vai criar um 
+   folder 
+
+   chamado de 
+
+   'shared',
+
+   onde 
+
+   será 
+
+   colocado 
+
+   esse 
+
+   'utility.js',
+
+   que 
+
+   tem uma função (updateObject() ) que 
+
+   será 
+
+   usada NO APP INTEIRO....
+
+
+
+   ---------------------------------------------
+
+
+
+   CERTO... Depois disso, vou importar essa função aí em 'ContactData.js'...
+
+
+
+
+
+   -------------------------------------------
+
+
+
+
+   BTW,
+
+
+   o 
+
+   código 
+
+   de 
+
+
+
+   'inputChangedHandler'
+
+
+
+   ESTÁ _ _ UMA BAGUNÇA__:
+
+
+
+
+
+
+
+
+   inputChangedHandler = (event, inputIdentifier) => {
+    if (inputIdentifier === 'select') {
+      const updatedOrderForm = {
+        ...this.state.orderForm,
+      };
+
+      const updatedFormElement = {
+        ...updatedOrderForm[inputIdentifier],
+      };
+
+      updatedFormElement.value = event.target.currentValue;
+
+      updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+      this.setState({
+        orderForm: updatedOrderForm,
+      });
+
+
+    }
+
+    const updatedOrderForm = {
+      ...this.state.orderForm,
+    };
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier],
+    };
+
+    updatedFormElement.value = event.target.value;
+
+    console.log(updatedFormElement.touched);
+
+    updatedFormElement.valid = this.checkValidity(
+      updatedFormElement.value,
+      updatedFormElement.validation
+    );
+
+    updatedFormElement.touched = true;
+
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValid = true; 
+
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid; ////ISSO FARÁ COM QUE 'formIsValid' APENAS FIQUE COMO 'true' (valor de 'true') SE O VALOR NO NOSSO 'given input element ( ou seja, EM TODOS ELES, pq estamos LOOPANDO por dentro de todos eles com esse for in loop) E ___ O ___ VALOR DE 'formIsValid' __ EM SI__ JÁ ESTIVER SETTADO COMO 'true' (esse último check, de '&& formIsValid', serve para que O VALOR DE 'formIsValid' seja true __aPENAS__ QUANDO TODOS VALORES '.valid' dentor de 'updatedOrderForm[inputIdentifer]', esse elemento dinâmico, que na verdade é todos, FOR ___ DE TRUE__...)
+    }
+
+    this.setState({
+      orderForm: updatedOrderForm,
+      formIsValid: formIsValid,
+    });
+
+    console.log(this.state);
+    console.log(formIsValid);
+  };
+
+
+
+
+
+
+
+  -----------------------------------------
+
+
+
+
+
+
+
+
+  CERTO... MAS COMO 
+
+
+  VAMOS 
+
+
+  REFATORAR NOSSO CÓDIGO 
+
+  PARA QUE 
+
+  ESSA FUNÇÃO SEJA USADA?
+
+
+
+
+
+
+
+  --> professor diz que devemos 
+
+
+  escrever:
+
+
+
+
+  const updatedOrderForm = {
+      ...this.state.orderForm
+  }
+
+
+  const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], ...);
+
+
+
+
+
+
+------> Ok...
+
+
+
+
+resumindo:
+
+
+o primeiro parâmetro é o 'OLD OBJECT'/old state que 
+
+o professor 
+
+vai querer 
+
+'spread' em um novo state/objeto.... 
+
+
+
+
+JÁ O SEGUNDO PARÂMETRO É TODAS AS PROPRIEDADES QUE 
+
+O PROFESSOR 
+
+VAI QUERER 
+
+OVERWRITTAR (
+
+    que são:
+
+
+
+
+
+'updatedFormElement.value = event.target.value;
+updatedFormElement.valid = this.checkValidity(updatedFormElement);
+updatedFormElement.touched = true;' 
+
+
+
+
+)
+
+
+
+
+
+
+
+
+--> E VAI FICAR ASSIM:
+
+
+
+
+  const updatedOrderForm = {
+      ...this.state.orderForm
+  }
+
+
+  const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], 
+  
+  value: event.target.value,
+  valid: this.checkValidity(updatedFormElement.value, updatedFormElement.validation),
+  touched: true
+  
+  
+  
+  
+  
+  );
+
+
+
+
+
+--------------------------
+
+
+OK, ISSO SIGNIFICA QUE 
+
+ESTAREMOS 
+
+__UPDATANDO__ O 'OLD ELEMENT' por meio 
+
+do 
+
+'get' do VELHO STATE  
+
+E ENTÃO 
+
+
+REALIZANDO SEU UPDATE DE FORMA 'SAFE' __por meio ___ do helper method 'updateObject',
+
+formulado lá em 'utility.js'...
+
+
+
+
+
+
+
+CERTO... MAS ELE NÃO ACABA POR AQUI... --> 
+
+
+ele 
+também 
+
+
+vai alterar 
+
+
+o 
+
+
+'updatedOrderForm'... ---> 
+
+
+ele 
+
+vai 
+
+em frente 
+
+E 
+
+O COLOCA 
+
+EMBAIXO 
+
+DE 
+
+
+'updatedFormElement',
+
+
+PARA ENTÃO 
+
+O EDITAR... -------> 
+
+
+ex:
+
+
+
+
+
+
+  const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], 
+  
+  value: event.target.value,
+  valid: this.checkValidity(updatedFormElement.value, updatedFormElement.validation),
+  touched: true
+  
+  );
+
+
+
+  const updatedOrderForm = {
+      ...this.state.orderForm
+  }
+
+
+----------------------------------
+
+
+
+
+
+BEM, nesse 'updatedOrderForm',
+
+
+PROFESSOR 
+
+DIZ QUE VAI QUERER 
+
+
+EXECUTAR
+ 
+
+
+ NOVAMENTE 
+
+ O 
+
+ 'updateObject',
+
+
+dessa vez sobre 'orderForm' 
+
+em geral.... ('this.state.orderForm')... --------> 
+
+
+
+
+
+mas no SEGUNDO PARÂMETRO,
+
+ele vai querer editar um daqueles 'email'/'name'/'password', etc, ou seja, os 'controls' no nosso state... ---> 
+
+
+e 
+
+como 
+ele 
+
+vai querer 
+
+editar/updatar dinamicamente __tODOS __OS 'controls' (diferentes objetos),
+
+ele 
+
+
+VAI TER QUE USAR 
+
+UMA ESCRITA DE '[inputIdentifer]' no campo DAS PROPRIEDADES (na esquerda, essencialmente...)... -----> 
+
+
+isso 
+
+fará com que 
+
+O 'PROPERTY NAME' fique __dinâmico__... 
+
+
+
+
+ex:
+
+
+
+
+const updatedOrderForm = updateObject(this.state.orderForm,
+{
+    [inputIdentifier] ////////EIS O CÓDIGO EM QUESTÃO.
+})
+
+
+
+
+
+
+FINALMENTE,
+
+
+nessa propriedade 
+dinâmica 
+
+
+
+de 
+
+'inputIdentifier',
+
+
+
+PROFESSOR 
+
+
+VAI 
+
+COLOCAR COMO SEU VALOR AQUELA
+
+CONST 
+
+
+DE 
+
+
+'updatedFormElement' que recém criamos... 
+
+
+
+
+ficará assim:
+
+
+
+
+
+
+
+
+  const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], 
+  value: event.target.value,
+  valid: this.checkValidity(updatedFormElement.value, updatedFormElement.validation),
+  touched: true
+  
+  );
+
+
+
+
+const updatedOrderForm = updateObject(this.state.orderForm,
+{
+    [inputIdentifier]: updatedFormElement ////EIS O CÓDIGO EM QUESTÃO.
+})
+
+
+
+
+
+
+----------------------------
+
+
+
+COM ISSO,
+
+VAMOS 
+TER 
+
+OPTIMIZADO UM POUQUINHO ESTE CÓDIGO AQUI,
+
+
+e teremos usado 
+
+
+nossa utility function que criamos 
+
+anteriormente...
+
+
+
+
+
+
+
+
+
+
+
+
+CÓDIGO FINAL FICARÁ ASSIM (os parâmetros de 'checkValidity' também são alterados, pq senão o negócio não vai funcionar).
+
+
+
+
+ex:
+
+
+
+
+
+
+
+  const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], 
+  value: event.target.value,
+  valid: this.checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+  touched: true
+  
+  );
+
+
+
+
+const updatedOrderForm = updateObject(this.state.orderForm,
+{
+    [inputIdentifier]: updatedFormElement ////EIS O CÓDIGO EM QUESTÃO.
+})
+
+
+
+
+
+
+
+
+--------------------
+
+
+SALVAMOS TUDO 
+
+ISSO 
+
+
+E 
+TESTAMOS SE FUNCIONOU.... --------> 
+
+
+
+certo,
+
+
+nossos input fields ainda funcionam...
+
+
+
+
+--------------
+
+
+
+Agora estamos USANDO 
+
+
+
+'updateObject()', essencialmente...
+
+
+
+
+
+
+--> e é claro que NÃO ESTAMOS LIMITADOS 
+
+A 
+
+ESSE 
+
+
+
+ARQUIVO DE 
+
+'ContactData'... ---> 
+
+
+o 
+
+arquivo 
+
+de 
+
+'Auth.js'
+
+É 
+
+__SIMILAR___... -------> lá 
+
+NÓS 
+
+
+TAMBÉM 
+
+FAZEMOS 
+
+HANDLE 
+
+DE
+UMA 
+
+
+'FORM',
+
+
+e lá 
+
+
+NÓS TAMBÉM 
+
+
+TEMOS UM 
+
+HANDLER 
+
+'inputChangedHandler'...
+
+
+
+
+
+
+
+
+
+O 'inputChangedHandler' de lá tem ESTE CÓDIGO:
+
+
+
+
+
+
+EX:
+
+
+
+  inputChangedHandler = (event, inputIdentifier) => {
+    const updatedControls = {
+      ...this.state.controls,
+      [inputIdentifier]: {
+        ...this.state.controls[inputIdentifier],
+        value: event.target.value,
+        valid: this.checkValidity(
+          event.target.value, //'value'
+          this.state.controls[inputIdentifier].validation
+        ), 
+        touched: true,
+      },
+    };
+
+    this.setState({ controls: updatedControls });
+ 
+  };
+
+
+
+
+
+
+  -------------------------
+
+
+  TEMOS QUE aos poucos refatorar ESSE CÓDIGO AÍ...
+
+
+
+
+
+
+ficaria tipo:
+
+
+
+
+
+const updatedControl = 
+    updateObject(this.state.controls[inputIdentifier], 
+    {
+        value: event.target.value,
+        valid: this.checkValidity(event.target.value, this.state.controls[inputIdentifier].validation),
+        touched: true
+    } )
+
+
+
+
+
+
+const updatedControls = {
+    ...this.state.controls,
+    updatedControl
+}
+
+
+
+--------------------
+
+
+SERÁ QUE ISSO ESTÁ CERTO? --->NÃO, ESTÁ ERRADO... --> a versão 
+
+CORRETA 
+desse código é esta:
+
+
+
+
+
+
+const updatedControls = updateObject(this.state.controls, {
+    [inputIdentifier]: updateObject(this.state.controls[inputIdentifier],
+                {
+                          value: event.target.value,
+                        valid: this.checkValidity(event.target.value, this.state.controls[inputIdentifier].validation),
+                        touched: true
+                }
+    )
+})
+
+
+
+
+
+
+
+this.setState(
+    {
+        controls: updatedControls
+    }
+)
+
+
+
+
+
+-----------------------------
+
+
+OU SEJA,
+
+
+VAMOS 
+
+NESTEAR
+ 
+ UM CALL 
+
+ DE 
+
+ 'updateObject'
+
+ DENTRO DE OUTRO,
+
+ DENTRO DO SEGUNDO PARÂMETRO 
+
+
+
+ DO 
+
+ PRIMEIRO 'updateObject'...
+
+
+
+
+
+ --------------------
+
+
+
+ CERTO... ACHO QUE ENTENDI..
+
+
+ --> 'updateObject'
+
+ VAI DEIXAR NOSSO CÓDIGO UM POUCO MAIS 'LEAN', realmente...
+
+
+
+
+
+ -------------------------------------
+
+
+
+
+
+
+
+ --> E TAMBÉM HÁ OUTROS LUGARES NO NOSSO APP EM QUE 
+
+ FAZ SENTIDO USAR ESSA 'UTILITY FUNCTION'.... --> devemos a utilizar nesses lugares....
+
+
+
+
+
+ (mas não encontrei nenhum lugar...)

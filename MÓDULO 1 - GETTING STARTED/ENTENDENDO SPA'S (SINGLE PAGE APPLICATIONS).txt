@@ -1,0 +1,432 @@
+
+
+
+
+QUANDO FALAMOS SOBRE 'REACT',
+
+
+
+ou também sobre ANGULAR E VUE....
+
+
+
+
+NÓS 
+
+TEMOS QUE APONTAR/MANTER 
+
+EM MENTE 
+
+
+QUE PODEMOS 
+
+
+
+CRIAR 
+
+
+2 TIPOS DE WEBAPPS COM 
+
+
+ESSES FRAMEWORKS...
+
+
+
+
+----------------------------------
+
+
+
+SINGLE PAGE APPLICATION
+
+
+
+
+
+
+
+
+
+MULTI PAGE APPLICATION
+
+
+
+
+------------------------
+
+
+
+ 
+SPA ----> NÓS APENAS PEGAMOS DE VOLTA 1 ÚNICO ARQUIVO HTML VINDO DO SERVIDOR... ---> 
+
+
+E NÓS RECEBEMOS ESSE HTML ___ APENAS NA PRIMEIRA VEZ QUE O USUÁRIO VISITA AQUELA PÁGINA...___
+
+
+('Only ONE HTML PAGE, Content is (re)renderd on Client'(com a ajuda do react))... 
+
+
+----> DEPOIS QUE ESSA ÚNICA PÁGINA HTML É CARREGADA, 
+
+TUDO DA PÁGINA PASSA A SER CONTROLADO/REGIDO POR 
+
+__JAVASCRIPT___...  (OU SEJA, PELO ___rEACT___....)
+
+
+
+
+
+
+ISSO QUER DIZER 
+
+
+
+QUE A 
+
+
+
+___PÁGINA INTEIRA___ É CONSTITUÍDA POR 
+
+___COMPONENTS____, components que SÃO RENDERED E HANDLED PELO 
+
+JAVASCRIPT....
+
+
+
+------------------------------------
+
+
+
+
+
+
+POR OUTRO LADO, 
+
+
+
+EM 
+
+MULTI PAGE APPLICATIONS, 
+
+
+
+
+NÓS GANHAMOS DE VOLTA __VÁRIAS PÁGINAS__ HTML..., em que 
+
+CADA PÁGINA TEM O ___CONTEÚDO___ PARA 
+
+
+UMA DETERMINADA ___ROTA___ (route), uma DETERMINADA URL 
+
+QUE O USUÁRIO VISITOU....
+
+
+
+('Multiple HTML Pages, Content is rendered on Server...')
+
+
+ 
+
+
+
+
+ex:
+
+
+
+ example.com 
+
+
+E
+
+
+ example.com/users....   -----------> AQUI 
+
+ NÓS GANHAMOS DE VOLTA 
+
+
+ 2 DIFERENTES PÁGINAS, 
+
+ a página 
+
+ 'HOME' e a página 'users'..., 'path' daquele domínio..
+
+
+
+
+
+
+CERTO....
+
+
+EM 'MULTI PAGE APPLICATIONS', NÓS 
+
+TAMBÉM 
+
+PODEMOS 
+
+
+USAR REACT, MAS 
+APENAS 
+
+PARA 
+
+__cRIAR ____ 'PEQUENOS WIDGETS' (por assim se dizer)...
+
+
+
+
+
+Como assim, 'pequenos widgets'?
+
+
+
+
+
+----> o professor quer dizer 'INDIVIDUALLY CONTAINED COMPONENTS' dumpados 
+
+na página/nas nossas páginas....  
+
+
+
+E esses components individuais são largados nas páginas de nosso site... 
+
+MAS ___ AS PÁGINAS EM SI __ NÃO SÃO ADMINISTRADAS PELO REACT (não há uso do 
+
+'react router') ----> É ISSO QUE 
+VIMOS 
+
+NO PRIMEIRO EXEMPLO DESSE CURSO, NO EXEMPLO DO 'PERSON CARD'...
+
+
+
+
+
+
+
+---> sim, NÓS VEMOS/PODEMOS VER ESSE TIPO DE USO DE REACT (React 
+em multi page applications) EM ALGUMAS PÁGINAS, 
+
+
+MAS É ÓBVIO QUE O APPROACH 
+
+MAIS POPULAR, NESSES DIAS,
+ 
+
+é o 
+
+'SINGLE PAGE APPLICATION/APPROACH'... ------> ESSE APPROACH 
+
+
+
+
+PREFERÍVEL PQ ____sE VOCê CONSEGUE ADMINISTRAR TODO O CONTEÚDO DA PÁGINA COM 
+____ JAVASCRIPT, VOCê NUNCA PRECISA EFETIVAMENTE __ 'RECARREGAR'/CARREGAR UMA 
+
+NOVA PÁGINA... (ou seja, você nunca precisa implorar para o servidor 
+
+TE MANDAR UMA NOVA PÁGINA HTML, esperar o servidor te mandar uma página nova...) ----> 
+
+
+E ISSO RENDE 
+
+UMA __FANTÁSTICA ___ USER EXPERIENCE, 
+
+POIS TUDO ACONTECE _INSTANTANEAMENTE___... ----> 
+
+e, MESMO SE O USUÁRIO TIVER DE ESPERAR, 
+
+VOCÊ 
+
+FARÁ ALGO 
+
+COMO MOSTRAR UM SPINNER, 
+
+ou então APRESENTAR ALGO REATIVO... (você ainda assim estará mostrando 
+
+ALGUMA REAÇÃO NA PÁGINA, algo para mostrar que está carregando, etc etc...) --> e isso 
+
+é bom, pois vocÊ deixa de 
+
+entregar ao usuário aquele clichê da 'PÁGINA BRANCA QUE ESTÁ CARREGANDO'....
+
+
+
+---------------------------------------------------------
+
+
+
+Certo...
+
+
+
+
+Resumindo:
+
+
+
+EM SPAs, 
+
+nossa 
+
+página 
+
+
+é CONSTRUÍDA COM 
+
+COMPONENTS... ----> e cada 
+
+component 
+
+
+é um 
+
+'REACT COMPONENT'...  ___E __, MAIS IMPORTANTE:
+
+
+__A PÁGINA INTEIRA___ TAMBÉM É UM ___REACT____ COMPONENT... .... ela é 
+gerenciada 
+
+por um tal de 'ROUTE REACT COMPONENT'... ---> e essa página 
+
+FICA SOB O CONTROLE DO REACT...
+
+
+
+-----------------------------
+
+
+
+
+
+NAS 'MULTI PAGE APPLICATIONS', por outro lado, 
+
+
+
+NÓS TAMBÉM PODERÍAMOS SPLITTAR NOSSO 
+
+APP, teoricamente, EM 
+
+'COMPONENTS'... MAS, NA VERDADE (Actually), 
+
+
+MUITAS DAS PÁGINAS serão 
+
+
+compostas por código ordinário css e JS... --> será isso 
+
+e mais alguns WIDGETS que dumpamos 
+
+na página... --> widgets como uma 'IMAGE GALLERY' ou algo assim.... ---> essa 
+
+IMAGE GALLERY PODE/PODERÁ SER GERENCIADA PELO REACT, por exemplo....
+
+
+(ISSO QUER DIZER QUE A PÁGINA INTEIRA NÃO ESTARÁ SOB O CONTROLE 
+DO REACT, SÓ OS WIDGETS ESTARÃO.... ---> E OS WIDGETS SERÃO WIDGETS __INDIVIDUAIS__, 
+
+WIDGETS INDEPENDENTES, QUE NÃO SABERÃO DA EXISTÊNCIA UM DO OUTRO... (um widget não 
+sabe que o outro widget existe, por exemplo... são independentes.))
+
+
+----------------------------------------------------------------------
+
+
+
+
+
+
+
+AS SPAs ___TIPICAMENTE___ POSSUEM 
+
+___aPENAS 1 ÚNICO CALL DE 'ReactDOM.render()'... (esse método que vimos 
+
+
+no primeiro projeto, o mÉTODO MAIS IMPORTANTE DO REACT... ) ---> 
+
+
+NÓS TIPICAMENTE 
+
+só precisamos 
+
+
+de 1 desses calls PQ NÓS SÓ TEMOS 1 
+
+'ROUTE APP COMPONENT', um route app component 
+
+QUE 
+
+É MONTADO NO DOM...  ---> e esse 'route app component' 
+
+
+VAI __HOSTEAR___ TODOS OS OUTROS REACT COMPONENTS 
+
+DA PÁGINA (pq é só 1 página, lembre-se. )
+
+
+
+
+---------------------------------------
+
+
+
+
+JÁ 
+
+
+
+NAS MULTI PAGE APPLICATIONS, 
+
+nós 
+
+tipicamente 
+
+CHAMAMOS 
+
+
+
+
+'ReactDOM.render()' __MÚLTIPLAS VEZES___... --> 
+
+('One ReactDOM.render() call per "widget" ')
+
+
+
+
+PRECISAMOS CHAMÁ-LO MÚLTIPLAS VEZES POIS TEMOS 
+
+___MÚLTIPLOS COMPONENTS INDEPENDENTES__, components 
+
+QUE SÃO CHAMADOS 
+
+EM DIFERENTES LUGARES E EM DIFERENTES PÁGINAS 
+
+DE NOSSO PROJETO...
+
+
+(Os widgets não tem ciência da existência dos outros widgets)...
+
+
+
+
+
+
+
+
+---> o código react é o mesmo para ambos os approaches (e esse curso nos mostra 
+os 2 approaches).. --->  MAS O PROFESSOR 
+
+VAI FOCAR 
+
+NAS 
+
+'SPAs'; também pq elas nos permitem 
+
+focar em LIBRARIES
+
+
+
+COMO O 'REACT ROUTER', e também por ser 
+
+
+o approach mais popular para criar webapps hoje em dia...

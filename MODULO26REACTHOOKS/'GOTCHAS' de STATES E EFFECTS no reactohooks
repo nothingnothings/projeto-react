@@ -1,0 +1,1863 @@
+
+
+
+
+
+
+
+
+
+COM 
+
+'useState',
+
+
+'
+useEffect' 
+
+
+E 
+
+
+
+'useContext',
+
+
+
+
+DEMOS UMA 
+
+OLHADA 
+
+
+NOS 
+
+
+3 HOOKS 
+
+
+MAIS IMPORTANTES 
+
+OFERECIDOS 
+
+PELO 
+
+REACT 
+
+
+NO MOMENTO...
+
+
+
+
+
+
+--> AGORA DEVEMOS VER OUTROS HOOKS INTERESSANTES....
+
+
+
+
+
+
+-------> Mas antes disso, professor quer corrigir um negociozinho no nosso projeto...
+
+
+
+
+
+
+--> se adicionamos um NOVO ITEM,
+
+NÓS 
+
+
+__CONSEGUIMOS UM ____ ERRO__...  (o erro é que UM __LIST ITEM__ VAZIO É CRIADO, mesmo se digitarmos algo no input field... --> e aí vemos no console: 'Each child in an array or iterator should have a unique 'key' prop...)
+
+
+
+
+
+O ERRO ACONTECE DEVIDO 
+
+A ESTE CÓDIGO:
+
+
+
+  const todoListAddHandler = () => {
+    setTodoList(todoList.concat(todoName)); ///////ESTE CÓDIGO AQUI....
+
+    console.log(todoName);
+
+    axios
+      .post(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json',
+        { todoName: todoName }
+      ) 
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+
+
+--------------------
+
+
+
+
+
+
+
+ESSE CÓDIGO AÍ 'DOESNT FIT OUR DATA-SCHEMA ANYMORE'...  ---> isso 
+
+pq 
+
+agora, QUANDO 
+
+
+NÓS 
+
+CARREGAMOS DADOS NA NOSSA PAGINA,
+
+
+
+NÓS SEMPRE 
+
+VAMOS 
+
+
+
+CRIAR/ADICIONAR UM OBJETO 
+
+COM 
+
+UM FIELD 
+
+DE 
+
+'id',
+
+e outro 
+
+
+de 
+
+'name'...
+
+(
+''''
+todos.push(
+    {id: key,
+    name: todoData[key].name
+)
+''''
+
+)
+
+
+
+
+
+---> E É CLARO QUE EU QUERO FAZER A MESMA COISA QUANDO 
+
+EU __ ADICIONO UM NOVO ITEM... 
+
+
+
+
+
+
+
+
+
+
+PARA FAZER 
+
+ESSE 
+
+
+
+'SET'/add Desse 'todoName'
+
+
+
+na nossa list,
+
+
+PROFESSOR 
+
+
+DIZ QUE 
+
+ELE PODERIA __ FAKAR___  
+um 
+
+
+id 
+dentro 
+
+desse 
+
+'todoName' (quando nós adicionamos o item, adicionar um id FAKE, id que NÃO EXISTE NO SERVIDOR... )
+
+
+
+
+
+---> mas em vez disso,
+
+ele 
+
+decide 
+
+
+
+
+MOVER 
+
+o 
+
+'setTodoList' PARA 
+DENTRO 
+
+
+DAQUELE 
+
+'.then() block'
+
+DO AXIOS... --> isso pq 
+
+
+DENTRO 
+
+DESSE AXIOS REQUEST O PROFESSOR 
+
+REALMENTE 
+
+TERÁ 
+
+O 
+
+ID já na response... 
+
+
+
+
+FICARÁ TIPO ASSIM:
+
+
+
+
+
+  const todoListAddHandler = () => {
+
+
+    console.log(todoName);
+
+    axios
+      .post(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json',
+        { todoName: todoName }
+      ) 
+      .then((res) => {
+              setTodoList(todoList.concat(todoName));  /////EIS O CÓDIGO EM QUESTÃO....
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+
+---------------------------------
+
+
+
+MAS É 
+
+CLARO QUE 
+
+O PROFESSOR 
+
+NÃO VAI ESCREVER 
+
+SÓ 
+ESSE CÓDIGO AÍ,
+
+pq se ele 
+
+escrever 
+
+só esse código aí, 
+
+o negócio NÃO VAI FUNCIONAR... --> 
+
+
+
+não,
+
+ele vai lá 
+
+e 
+
+cria uma constante
+
+
+
+de 'todoItem',
+
+
+que vai SEGURAR NOSSO 
+
+'todoName' 
+
+
+
+e O ID EM SI (extraído do axios, é a propriedade 'name' no axios...).
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+  const todoListAddHandler = () => {
+
+
+    console.log(todoName);
+
+    axios
+      .post(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json',
+        { todoName: todoName }
+      ) 
+      .then((res) => {
+          const todoItem = {id: res.data.name, ////////EIS O CÓDIGO EM QUESTÃO.
+                            name: todoName }
+              setTodoList(todoList.concat(todoItem));  
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+
+
+------------------
+
+
+
+CERTO,
+
+SALVAMOS TUDO ISSO....
+
+
+
+
+---> agora, QUANDO FAZEMOS LOGIN' 
+
+e abrimos a todo list,
+
+
+
+NÓS PODEMOS ADICIONAR UM NOVO ITEM, QUE EU NÃO VOU RECEBER 
+
+UM ERRO NO CONSOLE.LOG... (e o negócio não vai ficar em branco)....
+
+
+
+--------------------------------------
+
+
+
+OK, 
+
+CONSERTAMOS 
+
+ESSE PROBLEMA 
+
+
+DA 
+
+'Todo List',
+
+
+MAS 
+
+
+
+___eXISTE OUTRO PROBLEMA__ QUE 
+
+
+
+PODEMOS ENCONTRAR... -----------> 
+
+
+
+
+SE OBSERVARMOS 
+
+O ARQUIVO 
+
+
+
+'Todo.js',
+
+
+
+O PROFESSOR 
+
+
+
+
+
+__EDITOU _ UM POUCO 
+
+
+
+
+__o CÓDIGO 
+
+
+
+DAQULEE 
+
+
+
+'todoListAddHandler',
+
+
+
+ELE 
+
+
+
+COLOCOU MAIS ALGUMAS COISAS EXTRAS PQ 
+
+
+
+__ELE QUER NOS MOSTRAR MELHOR___ O PROBLEMA... ----> 
+
+
+
+PARA 
+
+MOSTRAR 
+
+O PROBLEMA,
+
+EIS O CÓDIGO:
+
+
+
+
+
+
+
+
+
+(ESTA ASSIM, ANTES):
+
+
+
+  const todoListAddHandler = () => {
+    console.log(todoName);
+
+    axios
+      .post(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json',
+        { todoName: todoName }
+      ) 
+      .then((res) => {
+        console.log(res);
+
+          const todoItem = {
+            id: res.data.name, 
+            name: todoName
+          }
+
+        setTodoList(todoList.concat(todoItem));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+
+
+
+
+AGORA ESTÁ ASSIM:
+
+
+
+
+
+
+
+  const todoListAddHandler = () => {
+    console.log(todoName);
+
+    axios
+      .post(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json',
+        { todoName: todoName }
+      ) 
+      .then((res) => {
+          
+            setTimeout(() => { ///////////EIS O CÓDIGO EM QUESTÃO.
+                const todoItem = { id: res.data.name, name: todoName };
+                   setTodoList(todoList.concat(todoItem));
+
+
+
+            }, 3000)
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+OU SEJA,
+
+o 
+PROFESSOR 
+
+ADICIONOU 
+
+___UM TIMER____ 
+
+DE 
+
+
+3 SEGUNDOS 
+
+antes 
+
+
+de 
+
+fazer 
+
+O UPDATE 
+
+DO 
+
+STATE 
+
+por meio 
+
+de 
+
+'setTodoList'... ----------> MAS A MESMA COISA ACONTECERIA
+ 
+
+ SE 
+
+
+ O __ 'AXIOS.POST' que escrevemos ali em cima DEMORASSE UM POUCO (ou seja, esse timmer aqui apenas serve para FAKAR uma DEMORA no retrieve de DADOS de um servidor...)
+
+
+
+
+
+
+
+------------->  OK.....
+
+
+
+
+
+SE FIZERMOS 
+
+ISSO,
+
+
+SE DEIXARMOS 
+
+ESSE TIMER/demora 
+
+de 
+
+3 SEGUNDOS 
+
+
+E AÍ 
+
+____TENTARMOS ___ ADICIONAR 2 ITEMS 
+
+
+DIFERENTES,
+
+BEM RÁPIDO,
+
+
+1 ATRÁS DO OUTRO (back-to-back),
+
+
+
+PERCEBEREMOS 
+
+
+QUE 
+
+A PÁGINA 
+
+VAI 
+
+
+__BUGGAR___ ----> 
+
+
+
+digamos 
+
+que você 
+
+digita 
+
+
+'exemplo',
+
+
+
+clica ADD,
+
+
+
+e 
+
+depois 
+
+digita 
+
+
+'teste' 
+
+e 
+
+clica 
+'add'... ------->
+
+
+
+
+
+SERÁ ADICIONADO APENAS 1 ITEM à LIST,
+
+
+'exemplo',
+
+
+MAS ELE LOGO SERÁ __ SUBSTITUÍDO POR 
+
+'teste'.... -----------> COM ISSO,
+
+
+TEREMOS UM VERDADEIRO 
+
+
+
+___PROBLEMA DE FUNCIONAMENTO___ COM OS HOOKS... ----> ISSO SIGNIFICA QUE 
+
+O 
+
+SEGUNDO 
+
+
+
+'TodoItem' 
+
+ACABOU 
+
+FAZENDO __OVERWRITE__ do primeiro....
+
+
+
+
+
+
+
+
+----> MAS O MAIS INTERESSANTE É QUE 
+
+
+SE NÓS 
+
+__RECARREGARMOS __ A PÁGINA,
+
+
+
+VAMOS IMEDIATAMENTE CONSTATAR QUE 
+
+
+__aMBOS ___ OS ITEMS __ FORAM ADICIONADOS AO 
+
+'todoList'... (ou seja,
+
+AQUILO ERA _UM BUG VISUAL/BUG NA UI/BUG NO FUNCIONAMENTO  DO HOOK/BROWSERSIDE...)
+
+
+
+
+-----------------> RESUMINDO: 2 ITEMS FORAM ___rEALMENTE__ ENVIADOS DE FORMA SEPARADA 
+
+AO 
+
+'BACKEND',
+
+ 
+
+
+
+MAS 
+
+
+
+HÁ ALGUMA COISA ERRADA ACONTECENDO _ QUANDO OCORRE __ O UPDATE __ DO 
+
+FRONTEND... ---------> E, DE FATO,
+
+
+HÁ 
+
+
+ALGO QUE 
+
+
+PODEMOS __ E DEVEMOS__ MELHORAR__ 
+
+
+nesse 
+
+
+nosso 
+
+app.... ----> O PROBLEMA QUE 
+
+ESTAMOS 
+
+ENFRENTANDO 
+
+É QUE 
+
+
+
+NO MOMENTO EM QUE 
+
+CLICAMOS no 
+
+'button',
+
+
+
+NÓS ENTRAMOS
+ 
+
+
+ naquela 
+ FUNCTION 
+
+
+ DE 
+
+
+ 'todoListAddHandler()"... ----> 
+
+
+ E 
+
+ ESSA FUNÇÃO 
+
+
+ AÍ 
+
+ __É ESSENCIALMENTE __ UM ___CLOSURE____... --> ISSO SIGNIFICA 
+
+
+
+ QUE OS 
+
+
+ VALORES 
+
+
+ DAS VARIÁVEIS 
+
+ QUE 
+
+ NÓS CONSEGUIMOS 
+
+
+ __DE FORA__ DESSA FUNÇÃO (como 'todoName' e 'todoList' ) 
+
+
+
+
+ ___SÃO 'LOCKEDIN' nessa função,
+
+ NO MOMENTO EM QUE ELA É EXECUTADA.... ----> e o problema 
+
+ existe 
+ PQ 
+
+
+O _PRIMEIRO__ E SEGUNDO 'todoName' que adicionamos/enfiamos nessa 
+
+FUNÇÃO 
+
+
+'BUILDAM UPON a MESMA todoList inicial'...
+
+
+
+
+
+
+
+
+(OBS::: FINALMENTE CONSEGUI CONSERTAR O PROBLEMA DE 
+
+__NÃO CONSEGUIR __ ADICIONAR COISAS POR MEIO 
+
+DO 
+
+BUTTOn... --> 
+
+
+a combinação de código que resolveu o problema foi esta:
+
+
+-------------------------------
+
+  useEffect(() => {
+
+    axios
+      .get(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+      )
+      .then((result) => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+
+        for (const key in todoData) {
+          todos.push({
+            id: key,
+            todoName: todoData[key].todoName,
+          });
+        }
+        console.log(todos);
+        setTodoList(todos);
+      });
+      
+    return () => {
+      console.log('cleanup function, inside the first parameter'); 
+    };
+
+}, [todoName]); ////ESTE CÓDIGO AQUI.
+
+
+--------------------------------
+
+
+
+
+E ESTE CÓDIGO AQUI:
+
+
+
+
+
+  const todoListAddHandler = () => {
+    console.log(todoName);
+
+    axios
+      .post(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json',
+        { todoName: todoName }
+      ) 
+      .then((res) => {
+          
+
+
+        const todoItem = {
+          id: res.data.name,
+          name: todoName
+        }
+          setTodoName(''); ////ESTE CÓDIGO AQUI.
+          setTodoList(todoList.concat(todoItem));
+          
+
+        console.log(res);
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+
+)
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+OK, DEVO CONTINUAR COM A AULA DO PROFESSOR...
+
+
+
+
+
+
+
+
+
+ E 
+
+ ESSA FUNÇÃO 
+
+
+ AÍ 
+
+ __É ESSENCIALMENTE __ UM ___CLOSURE____... --> ISSO SIGNIFICA 
+
+
+
+ QUE OS 
+
+
+ VALORES 
+
+
+ DAS VARIÁVEIS 
+
+ QUE 
+
+ NÓS CONSEGUIMOS 
+
+
+ __DE FORA__ DESSA FUNÇÃO (como 'todoName' e 'todoList' ) 
+
+
+
+
+ ___SÃO 'LOCKEDIN' nessa função,
+
+ NO MOMENTO EM QUE ELA É EXECUTADA.... ----> e o problema 
+
+ existe 
+ PQ 
+
+
+O _PRIMEIRO__ E SEGUNDO 'todoName' que adicionamos/enfiamos nessa 
+
+FUNÇÃO 
+
+
+'BUILDAM UPON a MESMA todoList inicial'...
+
+
+
+
+
+------------------------------
+
+(recoloquei  O ___setTimeout....)
+
+OK, MAS COMO CONSERTAMOS ISSO?
+
+
+
+
+
+
+
+
+
+
+
+-------> ok, a função 'todoListAddHandler'... ---> esta LOCKANDO OS 
+
+VALORES 
+
+DAS VARIÁVEIS 
+
+
+QUE VEM DE FORA DELA... --> tanto o primeiro como segundo 'ADD'  de 'todoItem'
+
+À __LIST___ estão levando em consideração 
+
+O _ _MESMO OBJETO 'LIST'...___ ------------> basicamente um 
+
+
+MESMO VALOR/VALOR ANTIGO DA LIST 
+
+
+
+
+
+
+é enviado/USADO por 2 'add' de 'todoItem'.... 
+
+
+
+
+
+imagine tipo assim:
+
+
+
+
+lista --> tem 0....
+
+
+
+-> adição de 1 item 
+
+
+
+----- carregando --- (considera lista que tem 0...) 
+
+
+
+--> adição de OUTRO ITEM, item 2 (considera lista que tem 0 TAMBÉM)  ------ item 1 AINDA CARREGANDO ----
+
+
+
+
+--- item 2 carregando adição de si à list/update da list --------
+
+
+
+---------- item 1 TERMINA __ adição de si À list/update da list DO SEU JEITO -------
+
+
+
+-- item 2 TERMINA __ ADIÇÃO DE SI À LIST/update da list DO SEU JEITO, --------
+E FAZ OVERWRITE DA LIST QUE HAVIA SIDO CRIADA PELO PRIMEIRO ITEM (mas essa list do segundo item NÃO VAI CONTER o primeiro item na sua list, justmaente pq ele partiu da 'LIST COM 0', em vez da 'LIST COM 1'...)
+
+
+
+
+------------------------------
+
+
+
+
+
+----> ISSO PODE 
+
+LEVAR 
+
+
+AO PROBLEMA 
+
+
+
+DE NÓS NÃO CONSEGUIRMOS UPDATAR
+ 
+ A 
+
+
+ UI DE FORMA CORRETA --> e isso obviamente DEVE SER CONSERTADO....
+
+
+
+
+
+
+
+--> E PODEMOS CONSERTAR ISSO COM HOOKS, TAMBÉM... ---> o fix 
+
+pode 
+
+parecer 
+
+meio 
+
+
+contraintuitivo
+
+
+em um primeiro momento,
+
+
+
+MAS NO FINAL DAS CONTAS 
+
+NÓS SIMPLESMENTE 
+
+TIRAMOS VANTAGEM
+ 
+
+ DA MANEIRA 
+
+
+
+ PELA QUAL HOOKS FUNCIONAM...
+
+
+
+
+ ok, qual é o fix? -------> 
+
+
+
+
+
+
+ BEM,
+
+
+ O PROFESSOR (diz que podemos encontrar OUTRO FIX, eles existem)
+
+
+
+DIZ QUE 
+
+
+
+UM FIX COMUM 
+É 
+
+
+A SIMPLES ADIÇÃO __ DE UM NOVO ___ STATE__ NO 
+
+
+NOSSO COMPONENT 
+
+'Todo.js'...
+
+
+
+
+
+
+
+
+
+--> VAMOS CRIAR UM NOVO STATE POR MEIO 
+
+DA 
+
+SINTAXE 
+DE 
+
+
+
+'const [] = useState()'...
+
+
+
+
+
+--------------------------------
+
+
+
+
+DENTRO 
+
+DESSE STATE,
+
+
+O PROFESSOR VAI COMEÇAR COM UM 
+
+VALOR 
+
+DE 
+
+'null'...
+
+
+
+ex:
+
+
+
+
+const [] = useState(null)
+
+
+
+
+----------------------------
+
+
+
+E O QUE 
+
+O PROFESSOR 
+
+VAI 
+
+QUERER 
+
+FAZER 
+
+
+
+'MANAGE' aqui,
+
+e o que 
+
+será 
+
+USADO COMO 
+
+'NOME' DAS CONSTANTES 
+aqui 
+
+serão 
+
+
+
+'submittedTodo' 
+
+
+e 
+
+'setSubmittedTodo'...
+
+
+
+
+ex:
+
+
+
+
+
+  const [todoName, setTodoName] = useState(''); ////versão __BONITA__ de escrever o hook de 'useState()' (usa ARRAY DESTRUCTURING...)
+
+  const [todoList, setTodoList] = useState([]); ///PODEMOS CHAMAR 'useState()' QUANTAS VEZES QUISERMOS...
+
+  const [submittedTodo, setSubmittedTodo] = useState(null);
+
+
+
+
+-----------------------------------
+
+
+
+É ISSO QUE 
+
+SERÁ 'MANAGEADO' AQUI,
+
+
+E É 
+
+EVIDENTE QUE 
+
+
+__NÃO VAMOS COMEÇAR COM NENHUM valor inicial 'submittedTodo',
+
+
+E É POR ISSO QUE 
+
+O STATE INICIAL ESTÁ como 'null'...
+
+
+
+
+------> CERTO... --> 
+
+
+
+
+NA PARTE DO CÓDIGO EM QUE __ EU DE FATO ___ CONSIGO DE VOLTA 
+
+MINHA RESPONSE,
+
+lá 
+
+
+dentro daquele 
+
+timeout 
+
+
+no .then() block,
+
+
+QUANDO EU GERO AQUELE 
+
+
+
+'todoItem' que 
+
+
+EU 
+
+
+
+QUERO ADICIONAR À 'todoList'
+
+por meio 
+
+deste código:
+
+
+
+
+----------------------------------
+
+      .then((res) => {
+          
+
+
+        const todoItem = {
+          id: res.data.name,
+          name: todoName
+        }
+
+
+
+setTimeout(() => {
+
+  setTodoList(todoList.concat(todoItem)); ///ESTE CÓDIGO AQUI
+
+
+}, 3000)
+
+
+--------------------------
+
+
+
+
+
+
+DENTRO DESSE TRECHO AÍ,
+
+O 
+
+PROFESSOR 
+
+NÃO VAI QUERER ADICIONAR ESSE 
+
+ITEM à 
+
+'todoList'... em vez disso,
+
+
+ELE VAI QUERER 
+
+CHAMAR 
+
+
+'setSubmittedTodo',
+
+
+
+
+E ENTÃO VAI PASSAR 
+
+
+'todoItem' 
+
+COMO VALOR DISSO....
+
+
+ex:
+
+
+
+
+
+      .then((res) => {
+          
+
+
+
+
+
+
+setTimeout(() => {
+
+  //////setTodoList(todoList.concat(todoItem));  ///REMOVIDO.
+
+          const todoItem = {
+          id: res.data.name,
+          name: todoName
+        }
+
+    setSubmittedTodo(todoItem);
+
+
+
+}, 3000)
+
+
+
+
+
+-----------------------------
+
+
+
+COM ISSO,
+
+O 
+
+STATE 
+
+de 
+
+'submittedTodo'
+
+
+VAI TROCAR 
+
+DE 
+
+'null'
+
+
+PARA 
+
+'todoItem',
+
+
+E ENTÃO 
+
+
+PODEREMOS 
+
+CHAMAR 
+
+
+
+
+ISSO, DE ALGUMA FORMA,
+
+EM OUTRO CALL DE 'useEffect()'
+
+
+no nosso 
+
+component 
+
+'Todo'... -----> 
+
+
+
+
+
+
+
+
+PROFESSOR NOS EXPLICA DNV 
+
+que 
+
+'useEffect()"
+
+RODA
+ 
+
+
+ __ SEMPRE A CADA __ RENDER CYCLE,
+
+
+
+ e 
+
+ o 
+
+
+ render cycle JÁ VAI SER TRIGGADO AUTOMATICAMENTE QUANDO 
+
+ CHAMARMOS 
+
+
+
+ 'setSubmittedTodo()' e passarmos o 
+
+ 'todoItem'
+
+ COMO 
+
+ PARÂMETRO DELE... (e isso muda o STATE, e essa mudança do state é que faz o state re-renderizar...)
+
+
+
+
+
+
+
+
+
+ E NESSE OUTRO 'useEffect()',
+
+
+
+ O PROFESSOR 
+
+ VAI QUERER 
+
+ CHAMAR 
+
+ 'setTodoList()'
+
+
+
+
+E ENTÃO PASSAR 
+
+
+
+'todoList.concat(submittedTodo)' 
+
+
+
+COMO 
+
+VALOR DE SEU PARÂMETRO...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+      .then((res) => {
+          
+setTimeout(() => {
+          const todoItem = {
+          id: res.data.name,
+          name: todoName
+        }
+
+    setSubmittedTodo(todoItem);
+
+
+
+}, 3000)
+
+
+
+
+
+useEffect(() => {
+    setTodoList(todoList.concat(submittedTodo)); /////EIS O CÓDIGO EM QUESTÃO.
+})
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+CERTO... mas o professor NÃO TERMINOU DE DEFINIR 
+
+ESSE 
+
+'useEffect()'... --> não terminou 
+
+PQ 
+
+ELE 
+
+PRECISA 
+
+DO 
+
+SEGUNDO PARÂMETRO... --> nesse segundo parâmetro,
+
+ele 
+
+vai 
+
+
+definir 
+
+'[submittedTodo]', justamente 
+
+PQ 
+
+ELE 
+
+SÓ VAI QUERER 
+
+QUE 
+
+
+ESSE 'EFFECT' 
+
+SEJA EXECUTADO 
+
+QUANDO  
+
+
+O 
+
+VALOR DE 'submittedTodo' (que inicialmente é 'NULL') 
+
+
+for ALTERADO... (vai ser alterado quando aquele código de 'todoListAddHandler' rodar, aquele código de '''setSubmittedTodo(todoItem)'').....
+
+
+
+
+
+--> ISSO VAI ASSEGURAR QUE 
+
+ __ SEMPRE __ QUANDO 
+
+ ESSE 
+
+
+
+submittedTodo for settado,
+
+NOSSA LIST 
+
+
+SEJA UPDATADA..
+
+
+-----------------------------------------------
+
+
+
+
+
+--> certo... ---> A ÚNICA HIPÓTESE/CENÁRIO QUE
+
+O PROFESSOR 
+
+DIZ QUE 
+
+ELE 
+
+DEVE 
+
+'TAKE CARE ABOUT' 
+
+é 
+
+a hipótese 
+
+
+
+EM QUE 
+
+
+
+____ESSE __ COMPONENT 'Todo' 
+
+É EXECUTADO 
+
+__PELA PRIMEIRA VEZ__... ---> PQ,
+
+NESSA 
+
+HIPÓTESE,
+
+ESSE 
+
+
+
+EFFECT 
+
+de 
+
+
+
+
+'''
+
+  useEffect(
+    () => {
+    setTodoList(todoList.concat(submittedTodo))
+  },
+      [submittedTodo]
+  )
+
+
+  '''
+
+
+
+  TAMBÉM 
+
+
+  VAI SER EXECUTADO,
+
+  E ISSO 
+
+
+  VAI CAUSAR UM ERRO (pq nesse caso é EVIDENTE QUE 
+  
+  _eU NÃO VOU QUERER TROCAR MINHA 'todoList' PARA SER 
+  
+  AQUELE VALOR 
+  
+  
+  DE 'submittedTodo' (que é 'NULL', inicialmente )) -------> 
+
+
+
+
+
+  É POR ISSO QUE 
+  O 
+
+  PROFESSOR 
+
+  SÓ VAI QUERER 
+
+  EXECUTAR ESSE EFEITO 
+
+  AÍ ___ SE 
+
+  O 
+
+  'submittedTodo'
+   
+   for 
+
+   'TRUEISH'...  --> 
+
+
+   ELE 
+
+   FARÁ 
+
+   ISSO 
+
+   POR MEIO 
+
+
+   DE UM IF STATEMENT...
+
+
+
+
+   EX:
+
+
+
+   
+  useEffect(
+    () => {
+
+        if (submittedTodo) { ////EIS O CÓDIGO EM QUESTÃO.
+                  setTodoList(todoList.concat(submittedTodo))
+        }
+  
+  },
+      [submittedTodo]
+  )
+
+
+  -----------------------
+
+
+
+  FAZEMOS 
+
+  LOGIN 
+
+
+  E VAMOS 
+
+  ATÉ 
+
+  A 
+
+
+  'TodoList'...
+
+
+  -----------------------
+
+
+
+
+  ENTRETANTO,
+
+  AGORA ESTOU RECEBENDO UM ERRO NO CONSOLE...:
+
+
+
+  index.js:1 Warning: Encountered two children with the same key, `-MgHqmKRjhwjdcVA5z-1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+    at ul
+    at Todo (http://localhost:3000/static/js/main.chunk.js:638:89)
+    at div
+    at App (http://localhost:3000/static/js/main.chunk.js:72:95)
+
+
+
+
+----------------------------------
+
+
+
+
+
+Tenho que consertar aquele 
+
+problema,
+
+aquela linha de 
+
+
+
+'  setTodoName('');''''

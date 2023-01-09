@@ -1,0 +1,1650 @@
+
+
+
+
+
+
+O 
+
+
+
+COMPONENT 
+
+
+'WithClass' 
+
+
+É UM HIGHER ORDER COMPONENT...
+
+
+
+
+
+
+
+-----> MAS, NA VERDADE, ESSE APPROACH DE CRIÁ-LO,
+
+que usamos 
+
+antes 
+
+
+(criar um folder de 'hocs', com um arquivo 
+
+'WithClass' NO SEU INTERIOR, QUE CONTERÁ 
+
+1 ÚNICO COMPONENT,
+
+'WithClass.js',
+
+que terá um 
+
+código de 
+'
+
+
+
+import React from 'react';
+
+
+
+
+
+
+
+
+
+const withClasses = (props) => {
+            <div className={props.classes}>
+                {props.children}
+            </div>
+
+}
+
+
+
+
+export default withClasses;
+
+
+
+
+
+
+'   
+
+)....
+
+
+
+
+
+
+
+EXISTEM OUTRAS MANEIRAS DE CRIAR HIGHER ORDER COMPONENTS...
+
+
+
+
+
+----------------------------
+
+
+
+
+2o approach/MANEIRA de criar __HIGHER ORDER COMPONENTs...
+
+
+
+
+2) ESSE APPROACH N FUNCIONA POR MEIO DO RETURN DE UM FUNCTIONAL COMPONENT como 
+
+aquele usado em 'WithClass'... E SIM FUNCIONA POR MEIO DE 
+
+
+__UMA 'REGULAR JAVASCRIPT FUNCTION' (com keyword/arrow function).
+
+
+
+
+
+---> OU SEJA, 
+
+
+EM VEZ DE USAR UM CÓDIGO COMO ESTE:
+
+
+
+----------------------------------------
+
+import React from 'react';
+
+
+
+
+
+
+
+
+
+const withClasses = (props) => {
+            <div className={props.classes}>
+                {props.children}
+            </div>
+
+}
+
+
+
+
+export default withClasses;
+
+
+------------------------------------------
+
+
+
+,
+
+
+
+VAMOS 
+
+
+USAR 
+
+um código 
+
+
+
+
+como 
+
+
+este:
+
+
+
+
+'const withClass = (WrappedComponent) => (...);     '
+
+
+
+
+
+
+----> DETALHE: O PRIMEIRO ARGUMENTO ('WrappedComponent') 
+
+
+DEVE __SEMPRE TER UMA INICIAL MAIÚSCULA__..... ---> esse argumento 
+
+pode ter o nome que vocÊ quiser,
+
+mas 
+
+ELE SEMPRE DEVE SER UM NOME MAIÚSCULO... -----> esse parâmetro é 
+
+O __COMPONENT___ QUE VAI 
+
+
+SER WRAPPADO POR 
+
+
+NOSSO 
+
+
+
+'HOC'.... ------> UÉ, mas __PQ__ usar 'LETRA INICIAL MAIÚSCULA'? -----> SIMPLES,
+
+é pq 
+
+
+ESSE PARÂMETRO/ARGUMENTO __SERÁ UMA REFERÊNCIA___ A UM 
+
+__COMPONENT__ DO NOSSO PROJETO... (o component que vamos querer wrappar com nosso HOC)...
+
+
+
+
+
+CERTO....
+
+MAS NÃO SERÁ 
+
+SÓ ESSE PARÂMETRO AÍ, PRECISAMOS DE 1 SEGUNDO PARÂMETRO....
+
+
+
+
+2o parâmetro -->   É ___ALGO DE QUE VOCÊ VAI PRECISAR __ DENTRO DO SEU 
+
+'HIGHER ORDER COMPONENT', UM PARÂMETRO QUE SERÁ NECESSÁRIO... -----> e é claro que 
+
+ISSO DEPENDE 
+
+__DO HOC___ QUE ESTAMOS ESCREVENDO/USANDO... (e qual sua ideia por 
+
+trás desse HOC... )
+
+
+
+
+
+
+
+-------> NESSE EXEMPLO DO PROFESSOR, ESSE SEGUNDO PARÂMETRO 
+
+
+
+SERÁ 
+
+'className' (mas esse 2o parâmetro pode ser QUALQUER COISA QUE 
+VOCÊ QUISER, NA VERDADE....) -----> e isso é bem específico, depende sempre do TIPO de HOC que você está criando...
+
+
+
+
+EX(representação):
+
+
+---------------------------------------
+
+
+
+const withClass = (WrappedComponent, className) => (...)
+
+
+
+
+-------------------------------------------
+
+
+
+
+ESSE HOC 
+QUE 
+
+
+ESTAMOS CRIANDO AGORA 
+
+
+TEM UM PROPÓSITO BEM ESPECÍFICO: 
+
+ele TEM 
+
+
+O PROPÓSITO DE ___ADICIONAR UMA DIV___ COM 
+
+
+UMA CERTA 'CLASSE CSS' 
+
+AO REDOR DE CADA ELEMENTO NO SEU INTERIOR... (e é POR ISSO 
+
+QUE 
+
+FAZER 'expect' de um parâmetro/de o parâmetro 
+
+'className' __FAZ MUITO SENTIDO__...)
+
+
+
+
+
+
+
+OBS::: PROFESSOR COMENTA/EXPLICA QUE ___NÓS PODEMOS ___ ADICIONAR QUANTOS 
+
+PARÂMETROS/ARGUMENTOS QUISERMOS, nesses slots... (usamos muitos e muitos se o HOC precisa deles....)
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+CERTO, MAS NÃO ACABAMOS POR AÍ...
+
+
+
+
+
+PROFESSOR VAI MUDAR O CÓDIGO,
+
+
+AGORA ELE ESTÁ ASSim:
+
+
+
+
+const withClass = (WrappedComponent, className) => (...)
+
+
+e 
+
+
+
+
+ELE VAI FICAR 
+
+
+ASSIM (mudamos o function body) :
+
+
+
+
+
+'const withClass = (WrappedComponent, className) => {};'
+
+
+
+----------------------------------------------------------
+
+
+
+ex:
+
+
+
+import React from 'react';
+
+
+
+
+const withClass = (WrappedComponent, className) => {
+
+};
+
+
+
+export default withClass;
+
+
+
+--------------------------------------------------
+
+
+
+
+
+AQUI JÁ PODEMOS 
+
+
+VER DIFERENÇAS ESTRUTURAIS ENTRE OS 2 APPROACHES, O APPROACH DO 'props' e o approach dos MÚLTIPLOS PARÂMETROS/ARGUMENTOS:
+
+
+
+
+-----------------------------------------------
+
+
+
+const withClasses = (props) => {
+            <div className={props.classes}> ///////código JSX.
+                {props.children} 
+            </div>
+
+}
+
+
+            VS
+
+
+
+const withClass = (WrappedComponent, className) => {
+
+ };
+
+
+----------------------------------------------
+
+
+
+
+CERTO,
+
+
+MAS 
+
+
+ 
+O PROFESSOR NÃO ACABOU POR AQUI... PARA COMPLETAR ESSE '''SEGUNDO APPROACH''' 
+
+DE escrever 'HOCs',
+
+
+
+NÓS DEVEMOS ___ FAZER RETURN ("return;") 
+
+
+
+DE UM 
+
+
+__FUNCTIONAL COMPONENT____ DENTRO 
+
+
+DO BODY 
+
+DESSE 
+
+'HOC'.......
+
+
+
+
+
+
+OK, RECAPITULANDO AS DIFERENÇAS NESSE APPROACH (segundo approach):
+
+
+
+
+
+
+1) NÓS USAMOS __uma FUNÇÃO JAVASCRIPT COMUM/NORMAL__ para definir nosso HOC...
+
+
+
+
+2) NÓS ___PODEMOS PASSAR/USAR MÚLTIPLOS PARÂMETROS ('WrappedComponent' e 'className'), e não só 'props'....
+
+
+
+3) NÓS FAZEMOS UM 
+
+__RETURN___ DE UM FUNCTIONAL COMPONENT (E NÃO CÓDIGO 
+'JSX', como no PRIMEIRO APPROACH) DENTRO DO __BODY___ de nosso HOC... -------> 
+
+
+isso significa que 
+
+
+NÓS VAMOS 
+
+
+
+
+ESTAR __rETORNANDO __ AINDA OUTRA ___'FUNCTION DEFINITION',
+
+e essa definição de função SERÁ 
+
+A DE UMA __COMPONENT___ FUNCTION...
+
+
+
+
+
+
+(ou seja, 
+
+
+professor escreverá 
+
+
+'return props => ()' ) ------------> E 'return props => ();'  ___É JUSTAMENTE__ UM 'FUNCTIONAL COMPONENT' ___DENTRO___ DO BODY__ daquela 'função comum' 'withClass'...
+
+-----------------------------------------------------------------
+
+
+
+
+EX(representação):
+
+
+
+
+
+
+
+const withClass = (WrappedComponent, className) => {
+    return props => ();
+ };
+
+
+
+
+
+
+ -------------------------------------------------------------------
+
+
+
+
+
+ CERTO... NO FINAL DAS CONTAS,
+
+ EU TENHO 
+
+
+ UMA __FUNÇÃO___ QUE RETORNA UMA ''FUNÇÃO'' (na verdade, é um FUNCTIONAL COMPONENT),
+
+
+ E DENTRO DESSE 
+
+
+ FUNCTIONAL COMPONENT O 
+
+
+ PROFESSOR __vAI ESCREVER UNS CÓDIGOS JSX___... -------> 
+
+
+
+ ELE VAI, por exemplo,
+
+
+
+
+ ESCREVER 
+
+
+ UMA ___<div>___...
+
+
+
+ será uma __DIV__ com um 
+
+ 'className'
+
+
+
+
+ DE 
+
+
+ 'className' (esse 'className' É UMA REFERÊNCIA AO ARGUMENTO 
+ 
+ DESSA NOSSA FUNÇÃO 'withClass'...)
+
+
+
+ ex:
+
+
+
+
+
+
+
+ const withClass = (WrappedComponent, className) => {
+    return props => (
+        <div className={className}></div> //////EIS O CÓDIGO EM QUESTÃO. o 'className' (valor dinâmico) É EXTRAÍDO DAQUELE SEGUNDO PARÂMETRo de 'withClass'...
+    );
+ };
+
+
+
+
+ export default withClass;
+
+
+
+
+ --------------------------------------------
+
+
+
+
+ CERTO.... AÍ DENTRO DESSA 'DIV',
+  
+
+NÓS 
+
+VAMOS ___PASSAR/CHAMAR___ O NOSSO 
+
+COMPONENT 
+
+
+'WrappedComponent'...  (e é exatamente por isso que 
+
+HAVÍAMOS passado 'WrappedComponent' COM INICIAIS MAIÚSCULAS...)
+
+
+
+ex:
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+ const withClass = (WrappedComponent, className) => {
+    return props => (
+        
+        <div className={className}>
+            <WrappedComponent />
+        </div> 
+    );
+ };
+
+
+
+
+ export default withClass;
+
+
+
+ -------------------------------------------------
+
+
+
+
+ AGORA TUDO FAZ SENTIDO: 
+
+
+ 'WrappedComponent' 
+
+
+ VAI ___sER ___ O 'COMPONENT'__ que 
+
+ NÓS
+
+ PASSAMOS __ 
+
+ A 
+
+
+ ESSA FUNÇÃO 
+
+ 'withClass'... (o component pode ser qualquer component do nosso código,
+ 
+ pode ser 
+ 
+ 'Person.js', 'Persons.js', 'Cockpit.js', 'App.js'...) -------> E 
+
+
+ SE PASSARMOS 
+
+
+ ESSE 
+
+
+ COMPONENT QUALQUER AÍ, 
+
+
+
+ ELE ACABARÁ TENDO APLICADO SOBRE SI O ESTILO DE 
+
+ 'className' (estilo que é/foi passado como parâmetro 
+ 
+ à função 'withClass', e que 
+ 
+ 
+ será aplicado por meio 
+ 
+ do código 
+ 
+ 
+ '<div className={className}', código dessa div 
+ 
+ QUE __ENGLOBA/WRAPPA__ O 'WrappedComponent'...)
+
+
+
+
+
+ EX(representação):
+
+
+
+
+import React from 'react';
+
+
+
+
+ const withClass = (WrappedComponent, className) => {
+    return props => (
+        
+        <div className={className}>
+            <WrappedComponent />
+        </div> 
+    );
+ };
+
+
+
+
+ export default withClass;
+
+
+
+ --------------------------------------------
+
+
+
+
+
+
+Aí, quando você for 
+
+chamar 
+
+essa função lá no seu código, você provavelmente terá 
+
+
+de importar 
+
+
+essa função... ----> 
+
+
+
+ex (OBS: ESSE CÓDIGO AQUI ___ESTÁ ___ERRADO__. FUI EU QUE TENTEI UTILIZAR/INVENTAR,
+
+MAS ELE ESTÁ ERRADO. VOCÊ 
+
+NUNCA VAI CHAMAR UMA 'COMMON FUNCTION' como 'withClass', DE OUTRO ARQUIVO .JS,
+
+DENTRO 
+
+DO RETURN STATEMENT, DENTRO DE UM RETURN STATEMENT QUE 
+
+RETORNA CÓDIGO JSX...):
+
+
+
+import { withClass } from '../../../hoc/WithClass';
+
+
+
+
+
+
+
+class Person extends Component {
+
+
+
+
+    render() {
+    
+    return( 
+    
+    
+    {withClass(Person, Pessoa);} //////EIS O CÓDIGO EM QUESTÃO.
+
+            );
+   
+    }
+
+
+}
+
+
+
+
+------------------------------------------------------
+
+
+
+
+WrappedComponent --> realmente UM 
+
+___COMPONENT___ SERÁ PASSADO.... 
+
+
+
+
+
+
+
+--> PROFESSOR 
+
+
+
+VAI EM FRENTE E DIZ QUE DEVEMOS USAR 
+
+ESSE 'HOC' 
+
+
+no nosso código...
+
+
+
+
+
+
+
+--> para usar 
+
+esse 
+
+'HOC' de 'withClass',
+
+
+
+
+
+PROFESSOR PRIMEIRAMENTE EXPLICA QUE 
+
+NÓS 
+
+
+
+NÃO 
+
+VAMOS 
+
+USAR 
+
+O APPROACH ANTIGO... (approach que
+era assim:
+
+
+
+
+'''''''''''''''''''''''
+
+return (
+    <WithClass classes={classes.App}
+    <button onClick={() => {this.setState({showCockpit: false})}}>Remove Cockpit</button>
+  {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+          />
+        ) : null}
+  {persons}
+    </WithClass>
+);
+
+''''''''''''''''''
+
+
+
+),
+
+
+
+
+
+NÃO,
+
+
+
+
+
+NÓS VAMOS,
+
+
+EM VEZ DISSO,
+
+USAR 
+
+
+ESSE APPROACH 
+
+
+da 'normal function' de 
+
+'WithClass'... ------------> para usar 
+
+
+esse approach, professor 
+
+
+explica que 
+
+
+DEVEMOS, ANTES DE MAIS NADA,
+
+
+
+SUBSTITUIR 
+
+
+'<WithClass classes={classes.App}' 
+
+
+
+
+POR 
+
+
+
+'<Aux>'            (ou seja, 
+
+__WRAPPAR___ TODO O CONTEÚDO DESSE CÓDIGO JSX 
+
+
+no nosso EMPTY CONTENT WRAPPER 'Auxiliary '...) ------> VAMOS FAZER 
+
+
+ISSO 
+
+
+PQ ___NÓS NÃO TEMOS/NÃO TEREMOS 
+
+
+1 ÚNICO 
+
+
+'ROOT LEVEL ELEMENT' 
+
+nesse return statement (pq nós NÃO TEREMOS UMA 
+
+'DIV SEGURANDO TUDO'...) -------> como 
+
+
+nós 
+
+
+temos/teremos 
+
+ELEMENTOS ADJACENTES,
+
+
+nós precisamos daquele component 
+'Auxiliary'... 
+
+
+
+
+VAI FICAR ASSIM:
+
+
+
+
+
+
+
+return (
+    <Auxiliary>
+    <button onClick={() => {this.setState({showCockpit: false})}}>Remove Cockpit</button>
+  {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+          />
+        ) : null}
+  {persons}
+    </Auxiliary>
+);
+
+
+
+
+-------------------------------------------------
+
+
+
+
+CERTO....
+
+
+ELE USOU 
+
+ESSE COMPONENT 
+
+
+'AUX'... --------> para usá-lo, ele o IMPORTA do folder 'HOCs'.... --------> 
+
+
+
+
+
+NO ENTANTO, 
+
+EXPLICA O PROFESSOR,
+
+
+ESSE USO 
+
+
+DE 
+
+'Auxiliary'
+
+
+NÃO TEM NADA 
+
+A VER COM 
+
+
+
+O NOSSO COMPONENT (higher order compponent)
+
+'WithClass'........ 
+
+
+
+
+-----> mas uma coisa que o professor faz, 
+LÁ 
+
+
+NO 'App.js',
+
+
+
+É 
+
+
+__IMPORTAR___ essa função 
+
+
+'withClass' 
+
+
+__SEM UMA INICIAL MAIÚSCULA__ (pq, de fato, 
+
+esse negócio __NÃO É UM COMPONENT__, E SIM UMA __FUNÇÃO___)...
+
+
+
+
+
+
+
+E REALMENTE, 
+
+ESSE 
+
+'withClass' 
+
+
+
+__É UMA FUNÇÃO__, E NÃO 
+
+
+__UM COMPONENT__... ------> 
+
+
+É UMA 
+
+__FUNCTION QUE RETORNA UMA 'COMPONENT FUNCTION',
+
+
+MAS __QUE NÃO É, ELA EM SI, UM COMPONENT... --------->
+
+
+
+Para deixar isso ainda mais claro,
+
+
+o professor 
+
+renomeia 
+
+
+o arquivo 
+
+'WithClass.js'
+
+para 
+
+
+'withClass.js' --> ISSO 
+
+
+
+___'DÁ UMA DICA' __ QUE 
+
+NESSE ARQUIVO NÓS 
+
+__sÓ TEMOS UMA FUNÇÃO (normal) QUE RETORNA UM COMPONENT,
+
+e não um 
+
+__COMPONENT EM SI___...
+
+
+
+
+----------------------------
+
+
+CERTO,
+
+
+MAS COMO VOCê USA ESSA FUNÇÃO 'withClass'?
+
+
+
+
+PROFESSOR EXPLICA QUE VOCê __NÃO DEVE FAZER ISSO AQUI__ (está TOTALMENTE ERRADO):
+
+
+
+
+-------------------------------------------------------
+
+import { withClass } from '../../../hoc/WithClass';
+
+
+
+
+
+
+
+class Person extends Component {
+
+
+
+
+    render() {
+    
+    return( 
+    
+     
+    {withClass(Person, Pessoa);} //////EIS O CÓDIGO EM QUESTÃO. ___ELE ESTÁ ERRADO__...
+
+            );
+   
+    }
+
+
+}
+
+
+-------------------------------------------------
+
+
+
+
+
+
+PARA USAR 
+
+
+
+'withClass' 
+
+CORRETAMENTE 
+
+
+COM O 
+
+
+
+COMPONENT 
+
+'App.js',
+
+
+
+NÓS 
+
+
+DEVEMOS 
+
+IR 
+
+ATÉ O EXPORT STATEMENT 
+
+
+DE 
+
+
+'App.js'
+
+
+
+E FAZER 
+
+ALGO QUE 
+
+JÁ HAVÍAMOS VISTO ANTES:
+
+
+
+
+
+Devemos ____WRAPPAR___ o export 
+
+desse component 
+
+
+'App' 
+
+
+
+
+__COM A NOSSA ___ FUNÇÃO 'comum' 'withClass'... (OU SEJA, 
+
+DEVEMOS 
+
+ENFIAR ALI DENTRO 
+
+NOSSO COMPONENT 'App', que será exportado, 
+COMO SE FOSSE 
+
+UM PARÂMETRO/ARGUMENTO COMUM...
+
+)
+
+
+
+
+
+
+Ex:
+
+
+
+
+
+export default withClass(App);
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+CERTO,
+
+
+MAS NÃO ACABAMOS POR AÍ... :
+
+
+O PRIMEIRO ARGUMENTO DESSE NEGÓCIO 
+
+
+SERÁ 
+
+
+O __COMPONENT__ (component a ser WRAPPADO pelo 
+
+'component'/função 'withClass'...) ----------> já 
+
+
+__O SEGUNDO PARÂMETRO____ 
+
+
+SERÁ o 'className' 
+
+QUE VOCÊ 
+
+QUER QUE SEJA 
+
+APLICADO A 
+
+TODO O COMPONENT 
+
+'App' ( ou qualquer outro component que o seja...)
+
+
+
+
+Aqui, nesse exemplo,
+
+provavelmente usaremos 
+
+
+'classes.App;'....
+
+
+
+
+
+EX(esse código está em 'App.js'):
+
+
+
+
+
+
+
+export default withClass(App, classes.App);
+
+
+
+
+
+---------------------------------
+
+
+
+CERTO...
+
+
+SALVAMOS E RECARREGAMOS NOSSO CÓDIGO ---> NÓS 
+
+
+
+AINDA 
+
+
+TEREMOS 
+
+AQUELE 
+
+STYLING 
+
+DE 'CENTERED',
+
+MAS AGORA 
+
+NÓS ESTAREMOS/ESTAMOS 
+
+USANDO 
+
+AQUELA 
+
+'MANEIRA ALTERNATIVA'
+
+
+
+DE CRIAR/ESCREVER 
+
+
+UM 
+
+
+'HIGHER ORDER COMPONENT' -------> e isso leva à questão:
+
+
+
+
+___QUAL DOS APPROACHES (qual dos 2 approaches) VOCÊ 
+
+
+__DEVE UTILIZAR?
+
+
+
+
+
+
+
+-->RESPOSTA:
+
+
+
+
+__DEPENDE___...  ----> HÁ 
+
+
+ALGUNS HOCs,
+
+
+como
+este aqui:
+
+
+
+
+'''''''''''
+
+const withClass = (WrappedComponent, className) => {
+        
+return props => (
+                <div className={className}>
+                    <WrappedComponent />
+                </div>
+        );
+};
+
+
+''''''''''''''
+
+
+,
+
+
+
+
+
+E 
+
+
+
+
+
+
+ESTE AQUI:
+
+
+
+'''''''
+
+const aux = props => props.children;
+
+
+
+
+export default aux;
+
+'''''''''
+
+
+,
+
+
+
+
+OU SEJA,
+
+
+HOCS
+
+QUE __SÓ ___ MUDAM 
+
+O CÓDIGO HTML,
+
+
+
+OU QUE SÓ MUDAM COISAS PEQUENAS,
+COMO O STYLING DE ALGUNS/UM ELEMENTO...   ------> o professor diz 
+
+
+
+que esses aí, 
+
+que fazem 'pouca coisa', 
+
+
+SÃO MELHOR UTILIZADOS 
+
+
+
+___QUANDO __ SÃO INSERIDOS DIRETAMENTE NO SEU CÓDIGO JSX, COMO ''WRAPPING COMPONENTS'''(aquilo que vimos antes com 'Auxiliary'...)
+
+
+
+ex (do component/HOC 'simples'  'Auxiliary'):
+
+
+
+
+
+return (
+
+    <Auxiliary> ////////EIS O CÓDIGO EM QUESTÃO
+    <button onClick={() => {this.setState({showCockpit: false})}} >Remove Cockpit</button>
+ 
+  {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+          />
+        ) : null}
+  {persons}
+    <Auxiliary/> ////////EIS O CÓDIGO EM QUESTÃO.
+
+);
+
+
+------------------------------
+
+
+
+
+
+
+É EVIDENTE QUE 
+
+
+HÁ 
+
+__OUTROS HOCs mais complexos,
+
+
+HOCs que 
+
+___aDICIONAM ALGUMAS LÓGICAS 
+
+'BEHIND THE SCENES'...  -----------> COMO UNS CÓDIGOS JAVASCRIPT QUE 
+
+
+FAZEM HANDLING DE ERROS, OU QUE MANDAM ANALYTICS... coisas como essas... ------> 
+
+
+
+ESSES TIPOS DE HOCs devem/PROVAVELMENTE 
+
+
+
+DEVEM 
+
+
+____SER ESCRITOS ___ NAQUELE 
+
+
+
+ESTILO 
+
+mais 'complexo',
+
+
+
+
+aquele estilo 
+
+
+de
+
+
+
+''''''''''''''
+const withClass = (WrappedComponent, className) => {
+        
+return props => (
+                <div className={className}>
+                    <WrappedComponent />
+                </div>
+        );
+}; 
+
+
+
+
+
+(com um WRAP posterior no component em que você quer usar, como visto em 'export default withClass(App, classes.App)' )
+
+
+''''''''''''''''''''''''''''''''''''
+
+
+
+
+VOCÊ DEVE USAR 
+
+
+ESSA SINTAXE 
+
+
+__QUANDO VOCÊ QUER DEIXAR BEM CLARO __ QUE ELES NÃO ESTÃO/ESTARÃO
+
+
+
+
+__ENVOLVIDOS__ TANTO ASSIM COM O CÓDIGO JSX QUE ACABA RENDERIZADO,
+
+
+E sim que 
+
+ELES SE PREOCUPAM __MAIS COM SUA LÓGICA ESPECÍFICA (a lógica do HOC em si), 
+
+que deverá 
+
+ser executada sobre os COMPONENTS que eles wrappam... -------------> 
+
+
+MAS É EVIDENTE QUE 
+
+
+
+VOCÊE PODE 
+
+
+ESCREVER HOCs de qualquer jeito que você quiser,
+
+
+O PROFESSOR 
+
+APENAS QUERIA NOS MOSTRAR 
+
+
+AS 
+
+2 MANEIRAS DE FAZER ISSO...
+
+
+
+(ISSO É BASICAMENTE UMA QUESTÃO SEMÂNTICA, QUE DEPENDE UM POUCO DE NÓS)...
+
+
+
+
+
+
+
+
+
+
+---> AO LONGO DO CURSO, 
+
+VEREMOS MÚLTIPLOS 'HOCs', NEM 
+
+
+TODOS ESCRITOS POR NÓS; alguns serão INTRODUZIDOS 
+
+
+POR THIRD PARTY PACKAGES....
+
+
+
+
+
+---> E QUANDO VOCÊ AVISTAR UM 
+
+'HIGHER ORDER COMPONENT',
+
+
+VOCÊ 
+
+ 
+DEVE OBSERVAR A COISA QUE ELES FAZEM POR TRÁS DAS CENAS:
+
+
+PODE SER O ADD DE UM ESTILO,
+
+
+PODE SER O ADD/MODIFY DE UM CÓDIGO HTML,
+
+
+OU PODE SER (nos mais complexos)
+
+
+UMA LÓGICA QUE SERÁ EXECUTADA NOS SEUS COMPONENTS...

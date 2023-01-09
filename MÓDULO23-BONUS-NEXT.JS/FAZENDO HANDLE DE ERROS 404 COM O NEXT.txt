@@ -1,0 +1,588 @@
+
+
+
+
+
+
+APRENDEMOS UM BOCADO SOBRE O NEXT.JS...  --------> 
+
+
+
+ESTAMOS 
+
+NO FINAL DO MÓDULO...
+
+
+
+
+
+----------------
+
+
+
+
+MAS 
+
+HÁ 
+
+ALGUMAS COISAS QUE 
+
+O PROFESSOR 
+
+QUER 
+
+NOS MOSTRAR.... 
+
+
+
+
+
+
+--> SE LERMOS 
+
+O 
+
+SUMMARY 
+
+
+DO 
+
+NEXT.JS,
+
+
+VAMOS 
+
+PERCEBER QUE 
+
+
+TEMOS UMA 
+
+FEATURE 
+
+DE 
+
+'custom error handling'... --------> 
+
+
+
+
+PQ 
+
+AGORA,
+
+COMO 
+
+NÓS __ JÁ TEMOS ROUTES __ NO NOSSO APLICATIVO 
+
+
+'next.js',
+
+
+
+É NECESSÁRIO QUE NÓS TENHAMOS 
+
+
+
+'ERROR HANDLING'... ------------> 
+
+
+
+
+SE 
+
+EU 
+
+
+
+
+ESCREVER UMA __ROUTE INVÁLIDA __ PARA 
+
+O MEU 
+
+
+APLICATIVO 
+
+
+NEXT.JS,
+
+
+
+tipo 
+
+
+'localhost:3000/bunda',
+
+
+
+
+
+EU 
+
+VOU 
+
+
+RECEBER 
+UMA 
+
+PÁGINA 
+
+DIZENDO 
+
+'404 | this page could not be found'.... --> 
+
+
+
+
+
+
+ESSA PÁGINA, COM ESSE ERRO,
+
+É 
+
+__MELHOR DO QUE NADA__, COM CERTEZA,
+
+
+__MAS NÓS PODEMOS __ CUSTOMIZAR ISSO,
+
+
+DEIXAR 
+
+MELHOR...
+
+
+
+
+
+
+
+
+
+
+
+----> COMO DESCRITO 
+
+
+NAQUELA FEATURE DE 
+
+'custom error handling',
+
+
+VOCÊ 
+
+
+
+__PODE __ CRIAR 
+
+O SEU 
+
+
+PRÓPRIO 
+'error handler',
+
+
+
+
+
+POR MEIO 
+
+DA CRIAÇÃO 
+
+
+
+
+
+DE UM ARQUIVO 
+
+
+
+
+
+'_error.js' 
+
+
+LÁ NO 
+
+FOLDER 
+
+
+de 
+
+
+'pages',
+
+no seu aplicativo....
+
+
+
+
+
+-------> 
+
+
+
+E FAZEMOS ISSO,
+
+CRIAMOS 
+
+UM 
+
+arquivo 
+
+'_error.js'
+
+
+LÁ NAQUELE FOLDER...
+
+
+
+
+
+
+
+
+
+
+
+--> E ESSE ARQUIVO AÍ É/SERÁ 
+
+
+UM 
+
+___COMPONENT __ NORMAL JAVASCRIPT/REACT....
+
+
+
+
+
+
+
+
+---> O PROFESSOR 
+
+VAI CHAMAR 
+
+
+ESSE COMPONENT/PÁGINA 
+
+DE 
+
+
+
+
+'errorPage'.... 
+
+
+
+
+
+
+
+
+
+
+-> AÍ 
+
+ELE 
+
+
+VAI 
+
+
+DIZER 
+
+'Oops, something went wrong',
+
+
+e aí 
+
+
+'Try GOING BACK'  (e nesse link aí, vamos apenas para '/', para o nosso home, em outras palavras...)...
+
+
+
+
+
+EX:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Link from 'next/link';
+
+
+
+
+const errorPage = (props) => {
+    
+    const router = useRouter(); 
+
+    return(
+        
+        <div>
+        <h1>Oops, something went wrong. </h1>
+        <p>Try <Link href="/"><a>going back</a></Link></p>
+      </div>
+    )   //IMPERATIVE NAVIGATION (é esse approach do 'router.push()'...)
+
+
+}
+
+export default errorPage;
+
+
+
+
+
+
+---------------------------
+
+CERTO.....
+
+
+MAS 
+
+ISSO 
+
+NÃO DEU CERTO... ---> recebi um erro de 
+
+
+'500
+Internal Server Error.'
+
+
+
+
+(tenho que ver isso.)
+
+
+
+
+The 500 Internal Server Error is a very general
+ HTTP status code that means something has gone wrong 
+ on the web site's server but the server 
+could not be more specific on what the exact problem is.
+
+
+
+
+
+
+
+NOS DOCS 
+
+DE 
+
+
+'NEXT.JS',
+
+
+encontramos:
+
+
+
+
+
+500 Page
+Server-rendering an error page for every visit adds complexity to responding to errors. To help users get responses to errors as fast as possible, Next.js provides a static 500 page by default without having to add any additional files.
+
+Customizing The 500 Page
+To customize the 500 page you can create a pages/500.js file. This file is statically generated at build time.
+
+
+
+
+
+Customizing The 404 Page
+To create a custom 404 page you can create a pages/404.js file.
+ This file is statically generated at build time.
+
+
+
+
+ --------------------
+
+
+
+
+ ISSO QUER DIZER, ESSENCIALMENTE, 
+
+
+ que o 
+
+
+ '_error.js' 
+
+ já não é a mesma coisa que era antigamente....
+
+
+ Ex:
+
+
+
+
+ More Advanced Error Page Customizing
+500 errors are handled both client-side and server-side by the Error component. 
+If you wish to override it, define the file pages/_error.js and add the following code:
+
+
+
+
+
+
+function Error({ statusCode }) {
+  return (
+    <p>
+      {statusCode
+        ? `An error ${statusCode} occurred on server`
+        : 'An error occurred on client'}
+    </p>
+  )
+}
+
+Error.getInitialProps = ({ res, err }) => {
+  const statusCode = res ? res.statusCode : err ? err.statusCode : 404
+  return { statusCode }
+}
+
+export default Error
+
+
+
+------------------------------
+
+
+
+
+
+
+
+
+
+ESTE CÓDIGO AQUI __FUNCIONOU __ PARA NÓS__:
+
+
+
+import Link from 'next/link'
+
+
+function Error({ statusCode }) { ////MODELO 'INICIAL' DE NOSSO 'ERROR COMPONENT', COMPONENT (página) QUE APARECE quando ocorre um erro generalizado quando o user acessa nosso app (por isso que o nome desse arquivo é '_error.js', e não '404.js', ou '500.js') 
+  return ( 
+    <div>
+    <h1>
+      {/* {statusCode
+        ? `An error ${statusCode} occurred on server`
+        : 'An error occurred on client'} */}
+        Oops, something went wrong...
+    </h1>
+    <p>Try <Link href="/"><a>going back</a></Link></p>
+    </div>
+  )
+}
+
+Error.getInitialProps = ({ res, err }) => {
+  const statusCode = res ? res.statusCode : err ? err.statusCode : 404
+  return { statusCode }
+}
+
+export default Error
+
+
+
+
+----------------------------------
+
+
+
+OU SEJA,
+
+AGORA 
+
+É NECESSÁRIO 
+
+
+USAR UMA FUNÇÃO QUE RECEBA 'statusCode' COMO __OBJETO___ no seu parâmetro... --> e essa 
+
+função TEM DE TER UM NOME DE 'Error'....
+
+
+
+
+
+
+
+
+
+--> complementando a lição do professor,
+crio 
+
+2
+ 
+ arquivos,
+
+
+
+ 404.js 
+
+ e 
+
+
+ 500.js,
+
+ que 
+ SÃO DESTINADOS
+
+
+
+ A 'MANAGE DE ERROS'
+  
+
+
+  __MAIS DIRECIONADO___ ( ao contrário 
+  
+  
+  de 
+  
+  
+  '_error.js',
+  
+  QUE 
+  
+  É __MAIS GERAL__...)
+
+
+
+
+
+  -------------------------------------------
+
+
+
+
+  Warning: You have added a custom /_error page without a custom /404 page. This prevents the 404 page from being auto statically optimized.
+See here for info: https://nextjs.org/docs/messages/custom-error-no-custom-404
+
+
+
+
+
+--------------------------------
+
+OK,
+
+AGORA 
+
+
+TEMOS 
+
+NOSSA 
+
+'CUSTOM ERROR PAGE'... --> 
+
+
+E ISSO 
+
+É BEM IMPORTANTE, QUANDO QUEREMOS CRIAR UM ___aPLICATIVO __ DE VERDADE__...

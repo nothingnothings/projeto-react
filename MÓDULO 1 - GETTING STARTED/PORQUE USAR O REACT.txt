@@ -1,0 +1,150 @@
+
+
+
+
+--> já sujamos as nossas mãos, 
+
+e já vimos  COMO 
+
+
+PODEMOS 
+
+
+CONSTRUIR UM APLICATIVO REACT.... ---> Isso já nos responde um pco 
+
+
+a pergunta de 'pq usar react'? ----> 
+
+
+
+
+HÁ OUTRAS RAZÕES PARA QUERERMOS USAR REACT ----> ---> 
+
+
+---> REACT NOS AJUDA COM UM PROBLEMA QUE 
+
+ENCONTRAMOS FREQUENTEMENTE NO JAVASCRIPT VANILLA... ---> 
+
+
+
+O 'UI STATE' FICA DIFÍCIL DE GERENCIAR COM O JAVASCRIPT VANILLA....
+
+
+('The UI state becomes difficult to manage with Vanilla javascript...') 
+
+
+
+
+
+
+
+
+---> EM APLICATIVOS JAVASCRIPT MAIORES, 
+
+
+VOCê TEM QUE ___TARGETTAR___ ELEMENTOS ____MANUALMENTE NO SEU DOM__...  ---> 
+
+
+E SE VOCÊ ENTÃO MUDA/MUDAR A ESTRUTURA DO SEU CÓDIGO HTML, SEMPRE É MUITO PROVÁVEL 
+
+QUE VOCê TERÁ DE MUDAR A MANEIRA QUE 
+
+VOCÊ SELECIONA SEUS ELEMENTOS NAQUELE PROJETO....
+
+
+ex: se vocÊ USOU QUERYSELECTOR, vocÊ vai ter que mudar alguma coisa, certamente...
+
+
+
+
+ATÉ MESMO SE VOCÊ USAR 'JQUERY', o traverse do DOM ainda continua difícil (ele é facilitado 
+um pouco pelo jquery, mas não tanto assim) ----> mas ainda é algo 
+
+que você tem que ter em mente, o 'DOM TRAVERSAL' --> dom traversal é 
+
+algo que temos que ter em mente quando usamos javascript comum (querySelectors) 
+
+e JQUERY...
+
+
+
+-----------------------------
+
+
+
+CERTO.... 
+
+
+MAS SE VOCÊ TIVER WEBAPPS mais ___COMPLEXOS___, em que 
+
+você adiciona e REMOVE ELEMENTOS DINAMICAMENTE,
+
+ESSE DOM TRAVERSAL PODE RAPIDAMENTE SE TORNAR 
+
+____UM INCÔMODO___ ('cumbersome')... ---> no nosso 
+
+
+PROJETO, nós vamos 
+
+CONSTRUIR UM 
+
+APLICATIVO QUE 
+
+É ____ALTAMENTE DINÂMICO___.... ----> é um app em que SEREMOS 
+
+CAPAZES DE CONSTRUIR UM HAMBURGUER e então adicionar/remover ingredientes ---->
+
+SE VOCÊ FOSSE ESCREVER ESSE PROJETO DO HAMBURGUER COM JAVASCRIPT COMUM, SERIA 
+
+UM PESADELO... 
+ 
+
+
+
+
+----> essa é uma das vantagens do REACT --> ele faz esse 'UI STATE MANAGEMENT' 
+
+SER uma 'non-issue'...
+
+
+
+
+
+-----------> o REACT nos permite 'focus on business logic, not on preventing 
+your app from EXPLODING'....
+
+
+
+
+
+
+
+
+---> ALÉM DISSO, O REACT É 'MAINTAINED' por uma GRANDE COMUNIDADE,
+
+por isso é bem provável que O CÓDIGO REACT QUE VOCê ESCREVER 
+
+SEJA ESCRITO MELHOR/mais  DOCUMENTADO PELA COMUNIDADE... --> geralmente 
+
+a versão 'react' de nossos aplicativos SEMPRE ACABA MAIS RÁPIDA E MELHOR DO QUE 
+
+A VERSÃO 'VANILLA'... ---> 
+
+
+isso pq 
+
+
+
+'''FRAMEWORK CREATORS PROBABLY WRITE BETTER CODE THAN YOU''''...
+
+
+
+
+
+
+
+---> REACT TEM UM ECOSSISTEMA ENORME, UMA COMUNIDADE ATIVA, ALTA PERFORMANCE ---> ISSO QUER 
+
+DIZER QUE SE VOCÊ TIVER UM PROBLEMA, HÁ 
+
+UMA GRANDE CHANCE DE ENCONTRAR UMA SOLUÇÃO PARA ESSE PROBLEMA EM FÓRUNS E AFINS....

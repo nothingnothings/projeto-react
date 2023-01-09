@@ -1,0 +1,774 @@
+
+
+
+
+NA ÚLTIMA LIÇÃO,
+
+
+
+
+nós HABILITAMOS A FEATURE DOS CSS MODULES POR MEIO DO 'EJECT' DO NOSSO CÓDIGO (
+    isso não é mais necessário hoje em dia.... ---> 
+
+    atualmente, se você quer usar a feature dos CSS MODULES, você não precisa 
+
+
+    ejetar o seu código/projeto (OBS: o eject é sempre IRREVERSÍVEL), 
+
+
+    VOCê SÓ PRECISA 
+
+    ESCREVER O NOME DO ARQUIVO CSS QUE VOCÊ QUER SCOPAR 
+
+    ASSIM:
+
+
+    'xxxx.module.css'.... ---> e então importá-lo normalmente no 
+
+    arquivo .js em que vocÊ quer o utilizar.  (importá-lo normalmente com 
+    
+    uma sintaxe de 
+    
+    
+    'import xxxx from './yyyy.module.css' --------> ISSO FARÁ COM QUE TODOS OS ESTILOS 
+    DE 'yyyy' fiquem ARMAZENADOS NO OBJETÃO de 'xxxx'; depois, você simplesmente invoca 
+    
+    'xxxx.nomeDoEstiloQueVocêQuer' no local do código/component 
+    
+    em que você deseja ter aquele estilo aplicado.)
+
+
+
+
+
+)
+
+
+
+
+-----------------------------------
+
+
+
+AGORA DEVEMOS ADICIONAR PSEUDOSELECTORS (:hover) E 
+
+MEDIA QUERIES 
+
+
+
+ENQUANTO USAMOS CSS MODULES... -----------> 
+
+
+
+
+
+
+--> NO NOSSO EXEMPLO,
+ 
+ PSEUDOSELECTORS SÃO IMPORTANTES 
+
+ NO ARQUIVO 
+
+ 'App.js',
+
+
+
+
+ pois lá 
+
+
+ nós estávamos assignando um ESTILO ÀQUELE BOTÃO, UM ESTILO QUE ERA ATIVADO 
+
+ QUANDO OCORRIA UM EVENTO 'HOVER'....  ----------->
+
+
+
+
+
+ --------> como nós 
+
+
+ ___NÃO VAMOS MAIS ____ ESTILIZAR ESSE ELEMENTO POR MEIO 
+
+ DO APPROACH 'INLINE STYLES',
+
+
+ o professor remove 
+
+
+ o código 'style={style}' 
+
+
+ DESSE ELEMENTO 'button'....
+
+
+
+
+ ELE TAMBÉM 
+
+ VAI LÁ E REMOVE 
+
+ AS 
+
+ LINHAS 
+
+
+ DE CÓDIGO 
+
+
+ 'style.backgroundColor = 'red' ; ' 
+
+
+
+ E 
+
+
+
+ aquele style de 
+
+
+ 'const style = {
+        
+      backgroundColor: 'green', 
+      color: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer',
+
+   
+ }' 
+
+
+ ------------------------------
+
+
+
+
+
+ PROFESSOR DIZ QUE PODERÍAMOS, É CLARO, USAR ESSE APPROACH 
+
+ DOS INLINE STYLES,
+
+ mas que 
+
+ agora 
+
+ ele vai usar 
+
+
+ O APPROACH DOS CSS MODULES....
+
+
+
+
+
+
+
+ --> para isso,
+  
+  ele vai até o código 
+
+  .css de 
+
+
+  'App.module.css'... --------->
+
+
+
+
+EX:
+
+
+
+.App {
+  text-align: center;
+}
+
+
+.red {
+  color: red;
+}
+
+
+.bold {
+  font-weight: bold;
+}
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+Dentro desse lugar, 
+
+
+ele simplesmente adiciona UMA NOVA 'REGRA CSS'... --> 
+
+
+coloca
+
+
+um seletor 
+
+de 
+
+
+'.App button {
+
+
+}'
+
+
+
+-----------------------------------
+
+
+
+ELE ESCREVE ASSIM PQ O 'BUTTON' ESTÁ NESTEADO DENTRO 
+
+
+DE NOSSA CLASSE/ELEMENTO 'APP'.... ---> 
+
+
+
+feito isso, 
+
+ele diz que podemos 
+
+ESCREVER OS ESTILOS QUE DESEJARMOS... ------->
+
+
+o professor coloca os estilos de antes, 
+
+
+
+'border: 1px solid blue;
+padding: 16px;
+background-color: green;
+font: inherit;
+'
+
+
+
+
+CERTO...
+
+
+ISSO FUNCIONA/FUNCIONOU. ------> NOSSOS ESTILOS, PORTANTO, FORAM APLICADOS, 
+
+MAS NÃO MAIS DE UMA MANEIRA 'INLINE', MAS DE UMA 
+
+MANEIRA 
+
+___'CSS MODULES'____
+
+
+
+----------------------------------------------------
+
+
+
+Professor coloca uma cor de letra de 'white', para finalizar esse estilo...
+
+
+EX:
+
+
+
+
+
+.App button {
+    
+border: 1px solid blue;
+padding: 16px;
+background-color: green;
+font: inherit;
+color: white;
+
+}
+
+
+
+--------------------------------------------------
+
+
+
+DEPOIS DISSO, ELE MALANDRA E SIMPLESMENTE 
+
+
+ESCREVE 
+
+
+'App button:hover {
+    background-color: pink;
+}',
+
+
+
+
+
+OU SEJA,
+
+
+UM PSEUDOSELECTOR,
+ 
+
+
+ NESSE ARQUIVO CSS.... (ou seja, a feature dos CSS MODULES É MUITO, MAS MUITO ÚTIL, 
+ E É MUITO SUPERIOR àS OUTRAS APPROACHES.)
+
+
+
+
+ --------------------------
+
+
+ CÓDIGO DE 
+
+ 'App.module.css' 
+
+ ATÉ AGORA:
+
+
+
+
+
+ .App {
+  text-align: center;
+}
+
+
+.red {
+  color: red;
+}
+
+
+.bold {
+  font-weight: bold;
+}
+
+
+
+.App button { 
+  border: 1px solid blue;
+padding: 16px;
+background-color: green;
+font: inherit;
+}
+
+
+
+
+.App button:hover {
+  background-color: lightgreen;
+  color: black;
+}
+  
+
+
+----------------------------------
+
+
+
+
+DEPOIS DISSO, O PROFESSOR ABUSA AINDA MAIS:
+
+
+
+ele vai lá e coloca OUTRO PSEUDOSELECTOR,
+
+MAS 
+
+DESSA VEZ 
+
+
+ELE ESCREVE 
+
+
+
+'App button.red' --------> ué, como assim 'button.Red'? --------> professor diz que 
+
+isso é uma malandragem...
+
+
+
+ELE VAI 
+
+PRIMEIRO DEFINIR 
+
+
+ESSA CLASSE/SELETOR AÍ,
+
+
+
+de 
+
+
+'.App button.red'... ---> depois ele vai vincular ESSE NOME DE CLASSE ao elemento button, para que esse estilo seja aplicado quando o <button> estiver na sua fase ''alternativa'', ou seja, quando TIVERMOS AS PERSONS MOSTRANDO NO NOSSO CÓDIGO, momento em que vamos querer que O BUTTON FIQUE 'PINK' QUANDO PASSAMOS O CURSOR POR CIMA DELE (hover)...
+
+
+
+
+
+---> ''estilize todos os button que tenham a classe 'RED'..'''
+
+
+
+
+
+--> ELE VAI USAR ESSE MESMO PRINCÍPIO PARA 
+
+APLICAR 
+
+O ESTILO 
+
+DE 
+
+'HOVER', O pseudoselector desse botão 'red'....
+
+
+ex:
+
+
+
+
+
+
+ .App {
+  text-align: center;
+}
+
+
+.red {
+  color: red;
+}
+
+
+.bold {
+  font-weight: bold;
+}
+
+
+
+.App button { 
+  border: 1px solid blue;
+padding: 16px;
+background-color: green;
+font: inherit;
+}
+
+
+.App button:hover {
+  background-color: lightgreen;
+  color: black;
+}
+  
+
+.App button.red {
+    backgroundColor: red;
+}
+
+
+.App button.red:hover {
+    backgroundColor: pink
+}
+
+
+
+
+-------------------
+
+
+
+certo, mas as coisas não acabam por aqui... não, porque 
+
+
+ESSE ESTILO DO 'HOVER' E DO 'RED' não serão aplicados 
+
+ao botão 
+
+
+DIRETO... ---> temos que codar a CONDIÇÃO (if statement)
+
+PARA ESSE ESTILO SER APLICADO...
+
+
+
+---> PRECISAMOS __BINDAR__ A CLASSNAME do botão (diz o professor).... 
+
+
+
+
+--> VAMOS FAZER ISSO DENTRO DO MÉTODO DE 'RENDER()', em 'App.js'...
+
+
+
+
+
+--> vamos criar uma NOVA VARIÁVEL, 
+
+
+'let btnClass = ...'
+
+
+
+---> ESSA CLASSE INICIAL SERÁ 
+
+de valor 
+
+'null', ou uma 'EMPTY STRING'...
+
+
+-------------------------------
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+let persons = null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+render {
+
+let persons = null;
+let btnClass = ''; ////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+    if (this.state.showPersons) {
+
+
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        name={person.name} 
+        age={person.age} 
+        key={person.id}
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>
+      })}
+
+
+
+    </div>
+  );
+
+
+}
+
+
+
+
+
+-----------------------------------------------------------
+
+
+
+
+
+
+
+
+DEPOIS DISSO, O PROFESSOR COLOCARÁ UMA 
+
+EXPRESSÃO 
+
+
+DE 
+'btnClass = classes.Red;' 
+
+
+NAQUELE 
+
+
+CONDICIONAL DE 'this.state.showPersons = true'....
+
+
+
+-----------------------------------------
+
+
+
+
+render {
+
+let persons = null;
+let btnClass = ''; ////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+    if (this.state.showPersons) {
+
+
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        name={person.name} 
+        age={person.age} 
+        key={person.id}
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>
+      })}
+
+
+
+    </div>
+  );
+
+btnClass = classes.red; //////EIS O CÓDIGO EM QUESTÃO.
+}
+
+
+
+-----------------------------
+
+
+
+
+
+
+COM ISSO, AGORA A ÚNICA COISA QUE ELE PRECISA FAZER 
+
+É ESCREVER 
+
+
+
+'className={btnClass}' 
+
+LÁ 
+
+NO ELEMENTO BUTTOn...
+
+
+
+
+
+IMPORTANTE !!!! ---> 'btnClass' PRECISA SER UMA __STRING__ para que 
+
+ELA SEJA 
+
+USADA LÁ NO 'className={}'.... ---> e, de fato, 
+
+
+'classes.red' É __UMA STRING___.... --> é uma string 
+
+CRIADA PELO 'CSS-LOADER', com o código css válido.
+
+
+
+-------------------------------------
+
+
+
+
+CERTO... ISSO FUNCIONARÁ DE FORMA EXEMPLAR...
+
+
+
+FUNCIONARÁ MT BEM, POIS 
+
+
+'btnClass' SERÁ SEMPRE ___UMA STRING VAZIA___ QUANDO 
+
+
+ESTIVERMOS FORA DA IF CONDITION DE 'if (this.state.showPersons)',
+
+
+E SERÁ SEMPRE 
+
+'btnClass = classes.red' 
+
+QUANDO 
+
+O CÓDIGO ENTRAR DENTRO DESSE IF STATEMENT (quando a condição 'this.state.showPersons' for igual a TRUE, ou seja, quando AS PERSONS ESTIVEREM SENDO MOSTRADAS NA NOSSA PÁGINA... )
+-------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+SALVAMOS TUDO ISSO E RECARREGAMOS O APLICATIVO...
+
+
+
+---> NOSSO PSEUDOSELETOR TAMBÉM ESTÁ FUNCIONANDO.. -----> e isso está 
+
+funcionando TAMBÉM PARA 'NESTED CLASSES', como 'Red', que é uma 
+
+CLASSE QUE DEFINIMOS APENAS NO NOSSO BOTÃO (que é nesteado dentro do APP COMPONENT)...
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+-----------> ISSO QUER DIZER QUE QUALQUER CLASSE CSS QUE NÓS DEFINIMOS NO 
+
+ARQUIVO CSS QUE IMPORTAMOS COM AQUELE 'CSS MODULES' HABILITADO, 
+
+
+QUALQUER CLASSE, ATÉ MESMO SE ELA SE APLICAR APENAS A UM SUBSELECTOR ESPECIAL (como 'App button.red'),
+
+
+TODAS ELAS FICARÃO DISPONÍVEIS 
+
+NO 
+
+OBJETO 'classes2/classes' QUE NÓS IMPORTAMOS 
+
+
+DE 
+
+'xxxx.module.css'...
+
+
+
+
+
+SALVAMOS TUDO E RECARREGAMOS, 
+
+TUDO FUNCIONA COMO QUERÍAMOS.

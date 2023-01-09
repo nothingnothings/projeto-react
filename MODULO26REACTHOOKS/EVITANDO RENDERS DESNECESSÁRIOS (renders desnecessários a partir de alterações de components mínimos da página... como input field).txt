@@ -1,0 +1,511 @@
+ 
+
+ --> PARA GARANTIR QUE NOSSA LIST NÃO SEJA SEMPRE RE-RENDERIZADA 
+
+ QUANDO 
+
+
+ OCORRE ALTERAÇÃO/RE-RENDER DO COMPONENT 'INPUT',
+
+
+
+
+ PODEMOS 
+
+ USAR 
+
+ OUTRO 
+
+
+ HOOK PROVIDENCIADO
+  
+
+
+pelo 
+
+react... -------> O NOME DESSE HOOK 
+
+É 
+
+
+'useMemo()'...
+
+
+
+
+
+
+
+
+
+--> USEMEMO() 
+
+PODE 
+
+SER 
+UTILIZADO 
+
+
+__LÁ EMBAIXO__, NO SEU 
+
+
+CÓDIGO 
+
+JSX,
+
+
+
+
+
+
+POR MEIO DO SIMPLES 
+
+
+WRAP DE SEU CÓDIGO JSX 
+
+
+
+
+COM ___ ESSA FUNÇÃO/OBJETO de 
+
+'useMemo'...
+
+
+
+ex:
+
+
+
+
+
+  return (
+    <React.Fragment>
+      <input
+        type="text"
+        placeholder="Todo"
+        ref={todoInputRef}
+        onChange={inputValidationHandler}
+        style={
+          {
+            backgroundColor: !inputIsValid ? 'red' : 'transparent'
+          }
+        }
+      />
+      <button type="button" onClick={todoAddHandler}>
+        Add
+      </button>
+      <ul>
+        <List items={todoList}  clicked={todoRemoveHandler}/>  //////////VAMOS WRAPPAR ESTE ITEM AQUI...
+      </ul>
+    </React.Fragment>
+  );
+
+
+
+------------------------
+
+
+PARA ISSO,
+
+VOCÊ 
+
+DEVE 
+
+PRIMEIRAMENTE 
+
+USAR 
+
+'{}'
+
+PARA 
+
+WRAPPAR DINAMICAMENTE 
+
+ESSE 
+
+CÓDIGO JSX... 
+
+
+ex:
+
+
+
+ {<List items={todoList}  clicked={todoRemoveHandler}/>}
+
+
+
+
+
+
+
+
+
+ ISSO FEITO,
+
+
+ VOCê VAI ESCREVER 
+
+
+ 'useMemo()'
+
+ no início... ---> e aí,
+
+
+ VAI PASSAR 
+ COMO 
+
+
+
+ _ARGUMENTO DELE __ UMA _ FUNÇÃO INTERNA/arrow function...
+
+
+
+
+
+
+--> E VOCÊ VAI RETORNAR, COMO VALOR, NESSA FUNÇÃO,
+O 
+
+SEU CÓDIGO JSX...
+
+ ex:
+
+
+
+
+
+  {useMemo(() => {
+
+      <List items={todoList}  clicked={todoRemoveHandler}/>
+  })        }
+
+
+
+----------------------------------
+
+
+
+CERTO, MAS AQUI 
+
+DEVEMOS RESSALTAR UM DETALHE:
+
+
+
+VOCÊ NÃO É OBRIGADO A RETORNAR __ CÓDIGO JSX__ NAQUELE FUNCTION BODY ALi... --> não,
+
+VOCê 
+PODE__ 
+
+FAZER, ACTUALLY,__ RETURN __ DE QUALQUER 
+
+COISA QUE 
+VOCÊ DESEJAR, QUALQUER VALOR, NÃO NECESSARIAMENTE JSX... --------> 
+
+
+
+
+
+POR MEIO DESSE 'RETURN',
+
+
+VOCê VAI 
+
+'MEMOIZE' alguma coisa...
+
+
+
+
+
+
+'MEMOIZING' ---> BASICAMENTE 
+
+SIGNFICA 
+
+
+
+'CACHING/ARMAZENAMENTO DE __ VALORES__ SE __ SEUS INPUTS
+ NÃO MUDAREM/NÃO MUDAM__...' ----------> 
+
+
+ ISSO É BASICAMENTE 
+
+ O NOSSO CASO... -----> NOSSO CASO 
+
+ pq 
+
+
+
+
+ DENTRO 
+
+ DESSE COMPONENT 
+
+ 'List',
+
+ Nós temos 2 
+
+ props,
+  
+  OS PROPS 
+
+  de 
+
+  'items' (Que é a TODOLIST EM SI)  e onClick (que é o TODOREMOVEHANDLER)... -------> 
+
+
+
+
+
+
+  SE NÓS TEMOS ESSES 2 INPUTS/PROPS nesse component aí ('<List />')
+
+  E 
+
+  SE ESSES 
+
+  INPUTS ESPECÍFICOS NÃO FOREM ALTERADOS,
+
+
+  _NÃO VAMOS QUERER 'REGENERATE' ESSA LIST AÍ.... -> não vamos querer 'regenerate' ela,
+
+  E SIM 
+
+
+  __vAMOS QUERER PEGAR __ A VERSÃO (valor) 'OLD', 'STORED'/'CACHED' DESSA LIST.... ------>  
+
+
+
+
+
+
+E 
+
+PARA DIZER 
+
+AO 
+
+REACT/'useMemo()'
+
+
+QUAIS 
+
+INPUTS 
+
+SÃO IMPORTANTES 
+
+PARA 
+
+ESSE COMPONENT/FUNÇÃO/COISA ESPECÍFICA (no caso, '<List />'),
+
+
+
+
+NÓS DEVEMOS ___ aDICIONAR UM SEGUNDO ARGUMENTO __ AO 
+
+'useMemo'... -------> ESSE 
+
+SEGUNDO 
+
+ARGUMENTO 
+
+É ___ UM ARRAY__ ---> é um ARRAY EM QUE 
+
+LISTAMOS 
+
+TODOS 
+
+OS ARGUMENTOS/coisas que 
+
+
+QUEREMOS 
+
+QUE O 
+
+
+REACT 
+FAÇA 
+
+'WATCH OUT FOR',
+
+
+PARA QUE 
+
+
+SEMPRE QUE 
+
+UM 
+
+DESSES ARGUMENTOS/DATA FIELDS estipulados
+ 
+nesse ARRAY
+
+MUDAREM,
+
+o react SEJA FORÇADO ____ A RE-RODAR __ o código JSX 
+
+de 
+
+'<List />',
+
+
+fazendo com que um novo valor/versão de '<List />'/NOVA _ VERSÃO __DESSE COMPONENT__ 
+
+
+seja 
+
+
+gerada (regenerateD)....
+
+
+
+
+
+
+
+--> E AQUI,
+
+NO CASO,
+
+NÓS SÓ VAMOS QUERER 
+
+PEGAR 
+
+UM NOVO ITEM/NOVA LIST 
+
+__sE A 
+
+
+
+'TODOLIST' (state da todoList)
+
+
+EM 
+
+
+__SI ___ FOR ALTERADA... 
+
+
+
+É POR ISSO QUE 
+
+ESSE CÓDIGO VAI FICAR ASSIm:
+
+
+  {useMemo(() => {
+
+      <List items={todoList}  clicked={todoRemoveHandler}/>
+  }, [todoList] //EIS O ARGUMENTO EM QUESTÃO.
+  
+  
+  )        }
+
+
+
+
+
+
+
+--------------------
+
+
+
+CERTO...
+
+
+
+SÓ 
+
+SERÁ 
+
+RE-RENDERIZADO 
+ESSE COMPONNET 
+
+'List' QUANDO 
+
+A LIST (o state que tem a list )
+FOR ALTERADA... ------------->
+
+
+
+
+
+OU SEJA, 
+
+
+'useMemo()'
+
+vai 
+sempre 
+
+fazer RETURN DA 'OLD LIST' aqui, caso não seja satisfeita essa condição...
+
+
+
+
+
+
+
+'useMemo' faz ESSA STORAGE, RETRIEVAL E RECRIATION, TUDO PARA NÓS, AUTOMATICAMENTE (desde que passemos aquele segundo parâmetro/argumento...)
+
+
+
+
+
+
+
+
+--> COMO RESULTADO DISSO,
+
+quando 
+
+COMEÇARMOS A DIGITAR ALGO 
+
+
+
+NO INPUT FIELD,
+
+NOSSA LIST _ NÃO SERÁ RE-RENDERIZADA... --> só será 
+
+re-renderizada 
+
+
+QUANDO EFETIVAMENTE REMOVERMOS UM 
+
+
+ELEMENTO DO NOSSO ARRAY/ARRAY LÁ NO STATE 
+
+de 
+
+'todoList'... ---> COMO ISSO CONTA COMO ALTERAÇÃO DO VALOR DE 
+'todoList',
+
+o useMemo é triggado (por causa do segundo parâmetro, que é 'todoList'...)
+
+
+
+
+
+
+---> o mesmo se aplica quando ADICIONAMOS 1 ITEM... 
+
+
+
+
+
+
+
+
+
+--> isso significa que esse use-case realmente funciona....
+
+
+
+
+---> e useMemo FUNCIONA 
+
+__COM OUTRAS LÓGICAS__, 
+
+
+
+
+NÃO SÓ COM 'react'..

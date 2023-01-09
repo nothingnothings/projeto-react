@@ -1,0 +1,122 @@
+
+
+
+CONSTRUÍMOS NOSSO PROJECT SETUP, TENDO O WEBPACK 
+COMO BUILD TOOL.... ----> 
+
+e 
+
+você 
+
+
+pode 
+
+
+ir 
+
+bem mais em detalhe:
+
+
+você pode configurar 
+
+MAIS LOADERS,
+
+MAIS 
+
+PLUGINS,
+ 
+ ETC ETC... --> você deve mergulhar na configuração de 
+
+ 'eject'
+
+
+ DO 
+
+ REACT,
+
+ para então 
+
+
+ ver 
+
+
+ O 
+
+
+
+
+ CONFIG DO 
+
+ 'create-react-app' que é 
+
+ criado 
+
+ com ele... (mas 
+ 
+é um CONFIG BEM COMPLEXO,
+
+ELABORADO...) ---------> 
+
+
+
+devemos 
+
+pegar 
+
+
+esse config do webpack trabalhado  durante este módulo 
+
+COMO UMA 
+
+'STARTING CONFIGURATION',
+
+um 
+
+
+starting point 
+
+
+para os nossos próximos projetos.... ----> devemos 
+
+
+
+ver as páginas do github,
+
+em que 
+
+podemos 
+
+
+ver 
+
+
+as documentações 
+
+
+
+
+dos vários loaders e plugins,
+
+
+para 
+
+então 
+
+configurar 
+
+nossa página 
+
+como 
+
+precisarmos...
+
+
+
+
+
+
+--------------------
+
+
+
+

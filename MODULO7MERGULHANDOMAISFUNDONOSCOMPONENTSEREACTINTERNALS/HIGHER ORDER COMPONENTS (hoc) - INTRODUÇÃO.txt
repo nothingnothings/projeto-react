@@ -1,0 +1,773 @@
+
+
+
+
+
+
+
+--->  PROFESSOR MENCIONOu que 
+
+
+o 'AUX' 
+
+
+é um tipo 
+
+
+de 
+
+HIGHER ORDER COMPONENT.... ------> E TBM Q É POR ISSO QUE ELE FOI COLOCADO 
+
+
+
+EM UM FOLDER CHAMADO DE 'hoc'...
+
+
+
+
+
+
+
+
+
+HIGHER ORDER COMPONENT ---> ELES RECEBEM ESSE NOME PQ ELES __SIMPLESMENTE __ WRAPPAM ___ UM OUTRO COMPONENT... --->
+
+
+ESSE 'HIGHER ORDER COMPONENT' de aux NÃO RENDERIZA NENHUM ELEMENTO JSX,
+
+NÃO USA NENHUM ESTILO, NÃO FAZ COISA ALGUMA,
+
+SÓ WRAPPA 
+
+o conteúdo HTML/JSX que queremos renderizar de forma adjacente... (wrappa outros components)...
+
+
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+ESSES HIGHER ORDER COMPONENTS GERALMENTE ADICIONAM ALGUMA LÓGICA EXTRA AOS COMPONENTS 
+
+QUE ELES WRAPPAM... ---> contudo, o 'aux' 
+
+NÃO ADICIONA/NÃO ADICIONOU LÓGICA ALGUMA,
+
+SÓ WRAPPOU OS 
+
+
+
+COMPONENTS/ELEMENTOS HTML/JSX.... ele é só um 'technical wrapper'...
+
+
+
+----------------
+
+
+
+BEM... OUTRO EXEMPLO DE HOC (higher order component) que 
+
+
+VOCÊ PODERIA 
+
+
+CRIAR 
+
+
+SERIA/É 
+
+
+UM COMPONENT QUE 
+
+SETTA UMA __dIV___ QUE CONTÉM UMA CLASSE, ou que 
+
+__SETTA__ uma classe...
+
+
+
+
+
+PROFESSOR USA 
+
+COMO EXEMPLO O NOSSO RETURN STATEMENT LÁ EM 'App.js'...
+
+
+Lá nós fazemos 
+
+
+o return 
+
+
+
+de uma DIV com um 'className' de '{classes.App}'...
+
+
+
+ex:
+
+
+
+
+
+
+
+'
+
+return (
+
+  <div className={classes.App}>
+    <button onClick={() => {this.setState({showCockpit: false})}} >Remove Cockpit</button>
+  {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+          />
+        ) : null}
+  {persons}
+  </div>
+);
+
+
+
+'
+
+
+
+
+-----------------------------
+
+
+NESSE LOCAL, 
+
+NÓS ESTAMOS USANDO 
+
+UMA DIV __E ESTAMOS SETTANDO UMA CLASSE NESSA DIV...  --> e é claro 
+
+QUE NÃO HÁ ___NADA DE ERRADO COM ISSO____ ----->  E NÓS 
+
+
+ESTÁVAMOS 
+
+
+FAZENDO A MESMA COISA NO 
+
+COMPONENT 'Person',
+
+
+nós estávamos (antes de usar 'Aux') 
+
+FAZENDO RETURN DE UM CÓDIGO COMO:
+
+
+''''''
+    return (
+      <div className={Pessoa.Person}> /////EIS O CÓDIGO EM QUESTÃO.
+        <p onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </div>
+    );
+  }
+}
+
+
+''''''
+
+
+
+OU SEJA,
+
+
+ALI TAMBÉM 
+
+ESTÁVAMOS FAZENDO 
+
+O RETURN 
+
+de uma div que setta/TEM UM CLASSNAME DEFINIDO SOBRE SI....
+
+
+
+---------> nessa div nós também assignamos um estilo de '.Person', lá no arquivo 'Person.module.css'..... 
+
+
+
+
+----> OBVIAMENTE NÃO HÁ NADA DE ERRADO EM USAR APENAS 
+
+___UMA DIV COM UM CLASSNAME___.... ------> mas 
+
+essas 
+
+
+'divs simples com um classname sendo definido nelas" 
+
+SERVEM COMO BONS 
+
+EXEMPLOS 
+
+
+PARA MOSTRAR O FUNCIONAMENTO DE HIGHER ORDER COMPONENTS.... ------> PQ 
+
+
+
+ESSES COMPONENTS, ainda que simples,
+
+JÁ __FAZEM MAIS COISAS___ DO QUE 
+
+O COMPONENT 'Aux'/React.Fragment 
+
+QUE 
+
+O PROFESSOR NOS MOSTROU NAS AULAS ANTERIORES... 
+
+
+
+
+
+
+
+
+---> PROFESSOR EXPLICA QUE ESTE NOSSO HOC, que críaremos agora, 
+
+será 
+
+APENAS UM EXEMPLO...
+
+
+
+
+
+
+---> vamos criar, dentro do folder 'hoc', 
+
+UM ARQUIVO CHAMADO 
+
+
+'WithClass.js'... ------------> PROFESSOR EXPLICA QUE 
+
+
+EXISTE QUASE UMA CONVENÇÃO, UMA 
+
+CONVENÇÃO 
+
+DE SEMPRE NOMEAR 'higher order components' COM 
+
+
+
+um 'With' 
+
+NO COMEÇO DE SEUS ARQUIVOS... (mas é claro que o naming depende de você. Mas essa convenção é boa).
+
+
+
+----------------------------------
+
+
+
+
+CERTO,
+
+
+
+MAS COMO DIABOS 
+
+
+DEVE SER A ESTRUTURA/APARÊNCIA DE UM 
+
+HIGHER ORDER COMPONENT? ------> BEM, 
+
+
+
+ANTES DE MAIS NADA VAMOS PRECISAR 
+
+
+DE UM 'import React from 'react', 
+
+
+POIS 
+
+ESSE NOSSO ARQUIVO/COMPONENT 
+
+VAI PRECISAR 
+
+__RENDERIZAR__ UM POUCO DE CÓDIGO JSX... 
+
+
+
+DEPOIS DISSO,
+
+
+CRIAMOS UM 
+
+
+FUNCTIONAL COMPONENT COMUM POR MEIO DE 
+
+'const withClass = props => ....'....
+
+
+
+
+
+
+
+----------------------------------
+
+
+
+EX
+
+
+
+import React from 'react';
+
+
+
+const withClass = props => ();
+
+
+
+
+
+
+export default withClass;
+----------------------------------
+
+
+
+
+
+
+CERTO. ---> DENTRO DO 
+
+'FUNCTION BODY'/RETURN STATEMENT 
+
+DESSE FUNCTION BODY,
+
+O PROFESSOR 
+
+
+
+VAI RENDERIZAR UMA 
+
+
+
+'div' 
+
+COM UM CLASSNAME 
+
+
+
+De 
+
+'props.classes' (e professor explica que 'ESSA É A PARTE DIVERTIDA'...).
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+const withClass = props => (
+    <div className={props.classes}
+);
+
+
+
+
+
+
+export default withClass;
+
+
+
+--------------------------------------------------------
+
+
+
+
+--> PROFESSOR DIZ/AFIRMA QUE AQUI NÓS USAMOS 
+
+'classes', 
+
+mas que 
+
+
+esse 'props.xxx' passado aqui ao 
+
+
+'className' da div 
+
+PODE SER 
+
+
+__QUALQUER__ COISA QUE VOCÊ QUISER... PODE SER NOMEADO COMO QUALQUER 
+
+
+
+COISA QUE VOCÊ QUISER __PQ ESSA __ SERÁ UMA PROPRIEDADE __QUE EU/O COMPONENT 'WithClass' (o HIGHER ORDER COMPONNET) 
+
+
+VAI ESPERAR RECEBER (expect)....
+
+
+
+
+
+
+
+
+
+
+CERTO.... E ENTRE 
+
+AS OPENING E CLOSING TAGS DESsa '<DIV>',
+
+
+
+O PROFESSOR VAI FAZER UM RETURN ""CLÁSSICO"" 
+
+de 'props.children' (HOCs quase sempre vão fazer isso... vão fazer isso JUSTAMENTE PQ ELES SEMPRE WRAPPAM UM OUTRO COMPONENT/CONTEÚDO JSX/HTML...)
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+const withClass = props => (
+    <div className={props.classes}>
+        {props.children} //////////EIS O CÓDIGO EM QUESTÃO.
+    </div>
+);
+
+
+
+
+
+
+export default withClass;
+
+
+
+-------------------------------------------------------------
+
+
+
+CERTO...
+
+COM ESSE SIMPLES CÓDIGO,
+
+
+NÓS DEFINIMOS NOSSO 'HIGHER ORDER COMPONENT'... --------> 
+
+
+
+E ESSE COMPONENT 
+
+'WithClass'
+
+
+
+FAZ __sIMPLESMENTE 1 ÚNICA COISA____... (1 única tarefa).... -------> 
+
+ELE 
+
+___SETTA___ UMA 'className' 
+
+
+em uma DIV, uma DIV QUE ___WRAPPA__ MEU COMPONENT/COMPONENTS... --> certo,
+
+
+
+MAS COMO USARÍAMOS 
+
+
+ESSE NEGÓCIO?
+
+
+BEm, devemos testar esse 
+
+HOC 
+
+'withClass' 
+
+LÁ 
+
+
+NO COMPONENT 'App.js'...
+
+
+
+
+
+-----------------------
+
+
+LÁ NO APP.JS,
+
+
+O PROFESSOR 
+
+
+VAI IMPORTAR 
+
+
+
+'WithClass' 
+
+por meio 
+
+da 
+
+sintaxe 
+
+
+'''                                       ''''
+import WithClass  from '../hoc/WithClass';
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+CERTO....
+
+
+
+
+
+DEPOIS DISSO,
+
+
+PODEMOS 
+
+
+USAR 
+
+
+
+ESSE COMPONENT 
+
+'WithClass' 
+
+
+
+NO LUGAR DAQUELE CÓDIGO 
+
+
+'<div className={classes.App}>' QUE 
+
+ESTAVA 
+
+WRAPPANDO NOSSO CÓDIGO DO 'return' (nosso código que era tanto uns return de ELEMENTOS HTML/JSX como o return do COCKPIT, nesteado dentro DO RENDER de 'App.js')...
+
+
+
+
+ex:
+
+
+
+
+
+   return (
+       <WithClass /////////EIS O CÓDIGO EM QUESTÃO.
+        <p onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+       </WithClass>
+    );
+
+
+
+------------------------------------------------
+
+
+
+
+CERTO...
+
+
+MAS É EVIDENTE que 
+
+
+esse 'PASS' desse component 
+
+
+ESTÁ __INCOMPLETO__... ----> está incompleto 
+
+PQ 
+
+PRECISAMOS colocar/passar um prop de 
+
+ 
+'classes={classes.App}'...   (pq LÁ EM 'WithClass', EU USO UM PROP DE 'classes' dentro de 'props'... (props.classes)...)
+
+
+
+
+
+EX:
+
+
+
+
+
+   return (
+       <WithClass classes={classes.App} ////////EIS O CÓDIGO EM QUESTÃO.
+        <p onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+       </WithClass>
+    );
+
+
+
+---------------------------------------
+
+
+
+
+
+-------> CERTO,
+
+
+
+SE EU FIZER ISSO,
+
+
+QUANDO O APP RECARREGAR,
+
+ELE VAI SE COMPORTAR 
+
+E TER A MESMA APARÊNCIA DE ANTES...  ------> AS COISAS 
+
+
+SERÃO IGUAIS... ------------> MAS ISSO SIGNIFICA QUE 
+
+
+NOSSO 
+
+
+'HIGHER ORDER COMPONENT' FUNCIONOU...
+
+
+
+-----------------------------
+
+
+
+É CLARO QUE ESSE HIGHER ORDER COMPONENT, ESSE EXEMPLO AÍ,
+
+É REALMENTE SÓ UM EXEMPLO... pq não haveria 
+
+nada 
+
+de errado 
+
+
+em usar 
+
+o código 
+
+
+'<div className={classes.App}>'... ------> ELE RESULTA NO MESMO EFEITO DO 'WithClass', MAS ___ SEM UM __ HIGHER ORDER COMPONENT___...
+
+
+
+
+
+ENTRETANTO, NÓS COM CERTEZA INTRODUZIREMOS OUTROS 
+
+'HOCS' ao longo do curso,
+
+
+HOCs em que 
+
+vamos, por exemplo,
+
+
+
+ADICIONAR __ERROR HANDLING__, EM QUE 
+
+
+WRAPPAMOS 
+
+AO REDOR DE QUALQUER ____COMPONENT___ QUE FAZ UM HTTP REQUEST... --> para fins de erroR HANDLING,
+
+
+OS 'HIGHER ORDER COMPONENTS' DE REPENTE __sE TORNAM BEM MAIS ÚTEIS....
+
+
+
+
+
+
+----> O CONCEITO GERAL É SIMPLES: VOCÊ TEM UM COMPONENT QUE WRAPPA AO REDOR 
+
+
+DE OUTROS COMPONENTS, UM 'WRAPPER' QUE ADICIONA 
+
+OUTRAS COISAS A ESSES COMPONENTS QUE FORAM WRAPPADOS,
+
+ESSAS COISAS 
+
+PODEM SER VARIADAS: pode 
+
+ser UM STYLING DIFERENTE,
+
+UMA ESTRUTURA HTML ADICIONAL AO REDOR DELE,
+
+
+OU TALVEZ ALGUMA LÓGICA... (como ERROR HANDLING automático... em http requests...)

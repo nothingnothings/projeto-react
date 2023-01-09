@@ -1,0 +1,519 @@
+
+
+
+
+
+--> NA ÚLTIMA LIÇÃO ,
+
+
+
+
+APRENDEMOS SOBRE __cOMO __ USAR 'props',
+ 
+
+ SOBRE
+
+
+
+ COMO 
+
+
+ ___OS __RECEBER COMO __ ARGUMENTO 
+
+
+ EM REACT COMPONENTS :
+
+
+
+ex:
+
+
+'const person = (props) => {
+    return ...<p>{props.name}.... etc...
+}'
+
+
+
+
+
+APRENDEMOS 
+
+SOBRE 
+
+COMO RECEBÊ-LOS 
+
+
+
+E SOBRE COMO 
+
+
+
+__OS OUTPUTTAR __ DINAMICAMENTE NO NOSSO CÓDIGO (por meio de '{}' e por meio da DOT NOTATION + referência da propriedade/atributo que queremos acessar, como 'props.age' e 'props.name')....
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+---> AGORA, O PROFESSOR 
+
+
+TAMBÉM QUER __OUTPUTTAR___ as coisas 
+
+
+QUE INSERIMOS 
+
+
+ENTRE 
+
+
+A 
+
+'OPENING E CLOSING TAGS' 
+
+dos nossos 
+
+'Person' components (E de componentes em geral)...
+
+
+
+
+
+
+Como assim?
+
+
+
+Bem, 
+
+é o código 
+
+
+'My Hobbies: Racing' que 
+
+O PROFESSOR 
+
+QUER OUTTPUTTAR...
+
+
+
+
+
+É o código 
+
+
+visto aqui:
+
+
+
+
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person> ///////AQUI, EIS AQUI O CÓDIGO QUE ELE QUER OUTPUTTAR, ESSE CÓDIGO/STRING NO MEIO DAS OPENING E CLOSING TAGS DO COMPONENT...
+        <Person name="Stephanie" age="30"/>
+      </div>
+    );
+
+
+
+
+-------------------------------
+
+
+
+
+E ISSO, EXPLICA O PROFESSOR,
+ 
+
+
+
+É SUPER SIMPLES DE FAZER, TAMBÉM... ----> 
+
+
+
+EXISTE UM 'PROP ESPECIAL' que podemos acessar...
+
+
+seu acesso É CONCEDIDO ___ PELO REACT__, para ser mais preciso...
+
+
+
+
+
+
+
+
+--> na DEFINIÇÃO DO COMPONENTE 'Person', em 'Person.js', 
+
+
+
+
+EM QUE QUEREMOS 
+
+
+RECEBER OS 'props', no final das contas...
+
+
+
+
+
+CÓDIGO (do componente 'Person'...):
+
+
+
+
+
+const person = (props) => {
+  return <p>Hi, I'm {props.name} and I am {props.age} years old!</p>;
+};
+
+
+
+
+---------------------------------
+
+
+
+NESSE NEGÓCIO, 
+
+
+O PROFESSOR 
+
+VAI QUERER 
+
+
+___WRAPPAR____ o PARAGRAPH (a tag <p>) 
+
+
+
+EM PARÊNTESES 
+
+NORMAIS... --->  
+
+ELE fará isso para 
+
+que 
+
+ele consiga 
+
+escrever esse código 
+
+
+em múltiplas linhas...
+
+
+
+
+----> ELE VAI QUERER 
+
+ESCREVER SEU CÓDIGO 
+
+EM MÚLTIPLAS LINHAS 
+
+
+PQ ELE VAI QUERER ___WRAPPAR___ 
+
+NOSSO 
+
+ELEMENTO 
+
+
+'<p>' 
+
+
+EM OUTRO ELEMENTO....
+
+
+
+
+Esse elemento 'wrapper'
+
+
+SERÁ UMA SIMPLES DIV...
+
+
+
+EX:
+
+
+
+
+
+const person = (props) => {
+  return (
+
+      <div>
+      <p>Hi, I'm {props.name} and I am {props.age} years old!</p>;
+      </div>
+  )
+
+};
+
+
+--------------------------
+
+
+FEITO 
+
+ISSO, 
+
+O PROFESSOR 
+
+TAMBÉM 
+
+VAI QUERER 
+
+ADICIONAR 
+
+___ UM OUTRO ELEMENTO HTML/PSEUDOHTML___ APÓS 
+
+
+ESSA tag/elemento '<p>'...
+
+
+
+ESSE OUTRO ELEMENTO ___TAMBÉM SERÁ UM 'paragraph'....
+
+
+
+
+
+MAS ELE SERÁ UM PARAGRAPH 
+
+
+QUE ___OUTPUTTARÁ ____ A parte que passamos, no call do component 'Person', 
+
+NO MEIO DAS OPENING E CLOSING TAGS... (aquele 'My Hobbies: Racing'...)....
+
+
+
+
+
+PODEMOS FAZER ISSO COM FACILIDADE, 
+
+
+POR MEIO 
+
+
+DO USO DE 
+
+
+1) CURLY BRACES...  
+
+
+ex:
+
+
+
+'<p>{}</p>'.... ----> FAZEMOS 
+
+USO DE 
+
+CURLY BRACES, AQUI, POIS VAMOS CERTAMENTE FAZER O OUTPUT ___DE ALGO DINÂMICO___....
+
+
+
+
+
+2) Devemos acessar o 'props' e então, por meio da DOT NOTATION, 
+acessar A PROPRIEDADE 
+
+ESPECIAL 'children'..... 
+
+
+
+
+OBS: 'children' É UMA __RESERVED WORD___ -----> NÓS NÃO PASSAMOS NENHUM atributo de nome 'children' EM QUALQUER UM DE NOSSOS calls do componente 'Person', lá em 'App.js'... não, lá nós só PASSAMOS 'name' e 'age'.... ---> NÃO PASSAMOS 'children' PQ ESSA É UMA ___RESERVED WORD__ NO JAVASCRIPT... ela não pode ser usada JUSTAMENTE POR CAUSA DESSA PROPRIEDADE existente em 'props'....
+
+
+
+
+
+
+Representação (em 'Person.js'):
+
+
+
+
+
+
+const person = (props) => {
+  return (
+
+      <div>
+      <p>Hi, I'm {props.name} and I am {props.age} years old!</p>;
+      <p>{props.children}</p> ///////EIS O CÓDIGO EM QUESTÃO.
+      </div>
+  )
+
+};
+
+
+
+
+-------------------------------------------------
+
+
+
+
+PROFESSOR EXPLICA QUE '.children' 
+
+
+em 'props' 
+
+SE REFERE 
+
+__A QUAISQUER ELEMENTOS___  
+
+QUE EXISTEM ___ ENTRE 
+
+
+OS 'OPENING E CLOSING TAGS' de nosso component... (como a STRING de 
+'My Hobbies' que deixamos ali) ---------> ISSO QUER 
+
+DIZER QUE, 
+
+
+SE VOCê QUISESSE/QUISER,
+
+
+VOCê PODE 
+
+___NESTEAR___ CÓDIGO HTML ___ COMPLEXO____ 
+
+
+ENTRE O 'OPENING E CLOSING TAG' de um determinado 
+
+REACT COMPONENT ---> OU SEJA, 
+
+VOCê NÃO 
+
+ESTÁ LIMITADO A FAZER APENAS O OUTPUT 
+
+DE TEXTO 
+
+nesse espaço aí... --> VOCê PODERIA/PODE ENFIAR 
+
+UMA '<UL>' COM MÚLTIPLOS LIST ITEMS,
+
+OU OUTROS 
+
+REACT COMPONENTS... ---> qualquer 
+
+coisa pode ir nesse espaço...
+
+
+
+
+
+----> E ESSAS CHILDREN acessadas 
+por 
+
+'props.children' 
+
+
+SÃO AGORA 
+
+
+
+OUTPUTTADAS nesse lugar, nessa tag de '<p>'...
+
+
+---------------------------
+
+
+
+SE SALVARMOS ESSE CÓDIGO,
+ 
+
+ VEREMOS 
+
+ 'My Hobbies: Racing'
+
+
+ ENTRE 
+ O ELEMENTO 
+
+
+ 'Person' 
+
+ de 'Manu' 
+
+ e de 
+
+ 'Stephanie'...
+
+
+
+
+ ----------------------------------------------
+
+
+
+
+
+ ----> SE INSPECIONARMOS OS ELEMENTOS de 'Max' e de 'Stephanie'
+
+
+ VEREMOS QUE 
+
+
+ __UM PARÁGRAFO VAZIO __ ESTÁ RENDERIZADO 
+
+ EMBAIXO DE CADA UM DELES.. (um '<p></p>'...) ---> 
+
+ ISSO SIGNIFICA 
+
+
+ QUE 
+ 
+
+ O PARAGRAPH criado para abrigar o 'My Hobbies: Racing' 'ESTÁ LÁ (pq todos os COMPONENTS COLADOS 
+ NO NOSSO PROJETO PARTEM DO MESMO MODELO, E O MODELO TEM ESSE 'props.children' QUE FAZ O CONTEÚDO ENFIADO 
+ NO MEIO DA OPENING E CLOSING TAG DE UM DETERMINADO cALL DE 'PERSON' SER RENDERIZADO....), 
+
+ ele só está vazio porque NÃO PASSAMOS NADA AO 'CHILDREN' de MAX e STEPHANIE, nesse nosso exemplo..
+
+
+
+
+
+ ----> ISSO É IMPORTANTE 
+
+ DE ENTENDER, PORTANTO... ---> você pode 
+
+
+ENFIAR SEU CONTEÚDO __DENTRO___ DO SEU COMPONENTE 
+
+
+''POR FORA/DE FORA'' não só 
+
+por 
+
+meio de passar 
+
+
+props/atributos como 
+
+'name' e 'age', daquela forma lá,
+
+
+MAS TAMBÉM 
+
+__POR MEIO DESSA GAMBIARRA__ com o 'props.children', que faz 
+
+O CONTEÚDO NO MEIO das opening e closing tags de um determinado 
+
+'COMPONENT CALL' ser _RENDERIZADO__/outputtado.... ---> isso quer dizer que VOCÊ PODE PASSAR UM 'STRUCTURED HTML CODE' por meio desse 'props.children'...

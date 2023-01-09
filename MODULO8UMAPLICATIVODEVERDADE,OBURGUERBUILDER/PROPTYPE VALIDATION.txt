@@ -1,0 +1,195 @@
+
+
+
+
+
+
+
+
+---> DEVEMOS COMEÇAR COM 'PROPTYPES'.... -----> 
+
+
+
+AGORA, 
+
+NESTE MOMENTO,
+ 
+
+
+
+ ESTAMOS FAZENDO PROPTYPE VALIDATION LÁ 
+
+
+ NO 
+
+
+ COMPONNET 
+
+
+ 'BURGERINGREDIENT'... --> lá nós estamos assegurando 
+
+ que  
+
+ o 
+
+
+
+ type 
+ está 
+
+
+ definido 
+
+
+ como 
+
+ 
+
+
+ 'BurgerIngredient.propTypes = {
+     type: PropTypes.string.isRequired
+ }
+
+
+
+
+
+
+
+
+ -------> O PROP, EM OUTRAS PALAVRAS,
+
+
+ DEVE SER UMA __STRING__, E ISSO É __REQUERIDO__... 
+
+
+
+
+ ------------------------------------
+
+
+
+  Certo,
+
+
+
+  mas NENHUMA OUTRA VALIDAÇÃO ESTÁ SENDO FEITA EM 
+
+
+ OUTROS COMPONENTS DE NOSSO CÓDIGO... -----> ok, mas pq isso? ---------> 
+
+
+
+
+
+
+ SIMPLES: 
+
+
+
+ É PQ 
+
+ NÃO ESTAMOS TRABALHANDO EM UM PROJETO QUE SERÁ 
+
+ FUÇADO POR OUTRAS PESSOAS/DESENVOLVEDORES... -------> 
+
+
+
+
+
+
+além disso, não estamos trabalhando/desenvolvendo uma TPL (third party library),
+
+
+
+E NÓS 
+
+TAMBÉM 
+
+NÃO ESTAMOS TRABALHANDO COM UMA EQUIPE... ---------> É POR ISSO 
+
+
+
+QUE 
+
+
+USAR 
+
+PROP INCORRETAMENTE 
+
+
+__NÃO É ALGO RELEVANTE__, AQUI.... --------> ADICIONALMENTE,
+
+
+são remotas as chances de 
+
+
+
+
+acabar com 
+
+
+ERROS LÓGICOS no nosso código 
+
+
+por causa de ESQUECER/ASSIGNAR propriedades de 'KEY' ERRADAS 
+
+AOS NOSSOS COMPONENTS... -------->   
+
+
+E É POR ISSO 
+
+
+QUE 
+
+NÃO ADICIONAMOS 
+
+PROPTYPES VALIDATION 
+
+
+
+TANTO ASSIM NO NOSSO CÓDIGO....  ---> professor 
+
+
+diz que 
+
+
+estamos livres 
+
+para 
+
+
+colocar 
+
+
+'proptype validation' 
+
+
+
+EM MAIS COMPONENTS 
+
+DE NOSSO PROJETO, SE QUISERMOS...
+
+
+
+
+
+
+---> ELE DIZ QUE PODEMOS ADICIONAR 'proptype validation' 
+
+
+TANTO EM FUNCTIONAL QUANTO EM 'CLASS-BASED' COMPONENTS.... (o professor admite que 
+
+gosta 
+
+
+de converter 
+
+functional em class-based quando 
+
+
+adiciona proptype validation pq ISSO 
+
+RESSALTA A SUA EXISTÊNCIA,
+
+mas que não é necessário fazer isso.)

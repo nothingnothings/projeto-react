@@ -1,0 +1,636 @@
+
+
+
+
+
+
+NOSSO CÓDIGO ATUAL DE obtenção de 'price '
+
+do 
+
+burger é uma CONFUSÃO:
+
+
+       const updatedCount = state.ingredients[action.ingredientName] + 1;
+
+        const updatedIngredients = {
+          ...state.ingredients
+        };
+        updatedIngredients[action.ingredientName] = updatedCount;
+        const priceAddition = INGREDIENT_PRICES[action.ingredientName];  /////ESTE CÓDIGO AQUI É TERRÍVEL...
+        const oldPrice = state.totalPrice;
+        const newPrice = oldPrice + priceAddition;
+        return {
+          ...state,
+          totalPrice: newPrice,
+          ingredients: {
+            ...state.ingredients,
+            [action.ingredientName]: state.ingredients[action.ingredientName] + 1
+          }
+        }
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+O PROFESSOR, POR SUA VEZ, 
+
+nos mostra uma sintaxe bem mais LIMPA e eficaz...
+
+
+
+
+
+
+
+
+
+
+---> ele nos diz o que já sabemos: 
+
+
+que 
+
+
+o 'price' deverá ser updatado QUANDO OCORRER ESSA 
+
+
+ACTION DE 'ADD_INGREDIENT'.... ( e também quando ocorrer a de 'REMOVE_INGREDIENT')....
+
+
+
+
+
+
+
+Para updatar o price,
+
+
+ 
+ -----------------------------
+
+
+ MAS PROFESSOR NOS DIZ QUE 
+
+
+
+ EXISTEM 
+
+
+ 2 
+
+ 'ROUTES'/APPROACHES
+
+ QUE 
+
+ PODERÍAMOS 
+
+ TOMAR 
+
+ PARA 
+
+ UPDATAR O PRICE...
+
+
+
+
+
+ ROUTE 1 -------> DEFINIR UM NOVO 
+
+ 'ACTION TYPE' 
+
+
+
+
+ para 
+
+ a mudança de preço.... ---> poderíamos chamar 
+
+
+ essa action de 
+
+ 'UPDATE_PRICE'... -----> assignaríamos 
+
+
+ essa action a uma propriedade,
+
+ dispatchada 
+
+ por meio 
+
+
+ de 
+
+ 'mapDispatchToProps'...  --> isso enviaria 
+
+
+
+ a action ao reducer, que a capturaria 
+
+ e 
+
+ calcularia o preço de nossos ingredients... --> E ISSO FUNCIONARIA... --> 
+
+
+
+ A VANTAGEM 
+
+ DESSE 
+
+
+ APPROACH É QUE ELE 
+
+ DEIXARIA
+  
+  SEU CÓDIGO MAIS __CONSISTENTE__... --> isso levaria 
+
+  a um código 
+
+
+
+  em que 
+
+
+
+  __CADA__ ACTION AFETA __ APENAS 1 PEDAÇO DO SEU STATE, e nada mais... (1 pedaço do state manipulado por cada ação...)
+
+
+
+
+
+
+
+
+
+
+  POR OUTRO LADO,
+
+  NÓS JÁ 
+
+  TEMOS 
+
+  AS 
+
+  2 ACTIONS QUE 
+
+  VÃO MANIPULAR NOSSO PRICE 100% das vezes, que 
+
+  são 
+
+
+  'ADD_INGREDIENT' 
+
+  e 
+
+  'REMOVE_INGREDIENT'...
+
+
+
+  -------------------------------
+
+
+
+
+
+
+
+
+  ---> É POR ISSO QUE FAZ SENTIDO UPDATAR MAIS DO QUE 
+
+  OS 
+
+  'ingredients' no state, por meio dessas actions,
+
+
+  MAS TAMBÉM 
+
+
+
+  O __PRICE___...  ------> E PROFESSOR OPTARÁ POR ESSA 'ROUTE', nesse nosso projeto...
+
+
+
+
+
+
+
+  -----> E PROFESSOR FARÁ ISSO POR MEIO 
+
+
+  DA 
+
+  sintaxe:
+
+
+
+
+  return {
+      ...state,
+      totalPrice: /////////
+      ingredients: {
+          ...state.ingredients,
+          [action.ingredientName]: state.ingredients[action.ingredientName] + 1
+      }
+  }
+
+
+
+  vai ficar 
+
+
+
+
+  '
+
+
+  totalPrice: state.totalPrice +  alguma coisa...
+
+
+
+
+  '
+
+
+
+
+
+
+
+
+ESSA 
+
+
+'ALGUMA COISA' vai ser uma informação 
+
+QUE NÓS JÁ TEMOS,
+
+
+INFORMAÇÃO EXTRAÍDA 
+
+DAQUELE 
+
+ARRAY 
+
+QUE 
+
+TEMOS 
+
+
+em 
+
+'BurgerBuilder',
+
+
+aquele 
+
+array 
+
+
+
+de 
+
+
+
+
+''''''''''''''''''''
+
+
+const INGREDIENT_PRICES = {
+  salad: 0.5,
+  bacon: 0.7,
+  cheese: 0.4,
+  meat: 1.3,
+};
+
+
+
+
+''''''''''''''''''''''''''''''
+
+
+
+
+
+vai ficar tipo isso aqui, basicamente:
+
+
+  '''''''''totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName] '''''''''''
+
+
+
+
+
+
+ISSO AÍ VAI REFERENCIAR CORRETAMENTE O PREÇO DO INGREDIENT QUE DEVE SER ADICIONADO 
+
+A 
+
+esse nosso state 
+
+de 
+
+'totalPrice', 
+
+que é o que queremos....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const initialState = {
+    ingredients: {
+      bacon: 0,
+      salad: 0,
+      cheese: 0,
+      meat: 0
+    },
+    totalPrice: 4,
+    purchasable: false
+}
+
+
+const INGREDIENT_PRICES = {
+    salad: 0.5,
+    bacon: 0.7,
+    cheese: 0.4,
+    meat: 1.3,
+  };
+
+
+
+
+
+
+const reducer = (state = initialState, action) => {
+
+switch(action.type) {
+  
+    case actionTypes.INGREDIENT_ADD:
+
+      return {
+          ...state,
+          totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+          ingredients: {
+            ...state.ingredients,
+            [action.ingredientName]: state.ingredients[action.ingredientName] + 1
+          }
+        }
+
+
+}
+}
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+E ISSO REALMENTE FUNCIONA/FUNCIONARÁ...
+
+
+
+
+É CLARO QUE VAMOS FAZER A MESMA COISA PARA O 'REMOVE_INGREDIENT'...
+
+
+
+
+
+
+
+---> PROFESSOR NOS DIZ QUE ESSA CONSTANTE 
+
+referencial,
+
+esse 
+
+
+'const INGREDIENT_PRICES'
+
+
+poderia 
+
+
+
+ser settado/extraído ____ DE QUALQUER LUGAR DE NOSSO APLICATIVO;
+
+
+TAMBÉM PODERIA SER FETCHEADO DE UMA DATABASE/SERVIDOR, SE QUISÉSSEMOS/FOSSE NECESSÁRIO (é evidente que 
+
+AINDA NÃO CONSEGUIMOS FAZER ISSO, POIS NÃO SABEMOS 
+
+FAZER HANDLE DE ASYNC CODE COM O REACT,
+
+mas no futuro vamos aprender a fazer isso...).
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+
+---------> O PROFESSOR TAMBÉM DIZ QUE DEVEMOS 
+
+VINCULAR 'price' 
+
+
+de nosso 
+
+GLOBAL REDUX STATE 
+
+
+
+
+
+
+AO NOSSO 
+
+
+CONTAINER 
+
+'BurgerBuilder', por meio 
+
+daquele 
+
+
+
+'mapStateToProps'....
+
+
+
+FICARÁ ASSIM:
+
+
+
+'''''''
+
+const mapStateToProps = state => {
+    return {
+        ingr: state.ingredients,
+        price: state.totalPrice
+    }
+}
+
+''''''''''
+
+
+
+
+
+
+ISSO FEITO,
+ 
+ BASTA REFERENCIARMOS 
+
+ ESSA 
+
+ PROPRIEDADE 
+
+
+ COM A SINTAXE 
+
+
+
+ 'this.props.price'
+
+
+
+ nos locais do código em que ela é necessária... 
+
+
+
+
+ ---------------------------------------------
+
+
+
+
+
+
+ Professor diz que 
+
+
+ OS BOTÕES 'more' e 'less' funcionam,
+
+ MAS PARA MIM 
+
+ AINDA 
+
+ OCORRE 
+
+ AQUELE 
+
+ ERRO DE 
+
+
+ 'invalid array length'... ---> devo examinar o código do professor 
+
+
+ e então 
+
+ consertar 
+
+
+ isso manualmente...
+
+
+
+ -------------------------
+
+
+ ACABEI DE DESCOBRIR O PROBLEMA:
+
+
+
+
+
+ Era isso aqui:
+
+
+
+               onIngredientRemove: (ingredientId) => {
+                dispatch(
+                  {
+                    type: actionTypes.INGREDIENT_REMOVE,
+                    ingredientName: ingredientId
+                  }
+                )
+              }
+
+
+-------------------------------------
+
+
+
+ESTAVA FALTANDO O PASS DO PARÂMETRO 
+
+
+'ingredientId',
+
+e também 
+
+
+
+a definição daquele payload de 
+
+
+'ingredientName' (que é VITAL/ESSENCIAL para a realização 
+
+
+DA REMOÇÃO DO INGREDIENT 
+
+de nossa página...)
+
+
+----------------------------
+
+
+
+
+
+
+CERTO.... -----> O QUE FALTA, AGORA, 
+
+É FAZER 
+
+
+1) com que o BOTÃO DE 'ORDER NOW' SE ILUMINE QUANDO ADICIONAMOS INGREDIENTS, E COM QUE ELE __sE APAGUE___ QUANDO removermos todos ingredients de nosso burger....
+
+
+
+
+2) FAZER COM QUE APAREÇA O 'ORDERSUMMARY', com os detalhes 
+
+
+de nossa 'ORDER'....

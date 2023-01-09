@@ -1,0 +1,78 @@
+
+
+
+
+
+
+
+
+
+
+-----> PROFESSOR, AO LONGO DAS ÚLTIMAS LIÇÕES, 
+
+
+NOS 
+
+MOSTROU COMO USAR O AXIOS...  ---------> 
+
+
+
+ENTRETANTO,
+
+AGORA 
+
+
+ELE NOS DIZ QUE 
+
+
+__ENCONTROU UM PEQUENO 'BUG' NO NOSSO APLICATIVO.. --> 
+
+
+
+
+naquele espaço 'FullPost' 
+
+
+NÃO É POSSÍVEL VER O 'BODY' 
+
+
+DO NOSSO 
+
+
+POST 
+
+RETRIEVADO DO SERVIDOR...
+
+
+
+(entretanto, nossa versão do código nos mostra, SIM, esse body aí, 
+
+então 
+
+
+não temos esse problema/não tivemos esse problema...) -------->
+
+
+
+    PROFESSOR 
+
+    EXPLICA QUE 
+
+    ISSO ACONTECEU 
+
+    PQ 
+
+    ele escreveu 
+
+    'this.state.loadedPost.content',
+
+
+    MAS DEVERIA
+     
+     TER SIDO 
+
+
+     'this.state.loadedPost.body'... -------> É APENAS 1 PEQUENO FIX,
+
+
+     no final das contas.

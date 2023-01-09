@@ -1,0 +1,1149 @@
+
+
+
+
+
+
+--> Nós trabalhamos nos action creators 
+
+das 
+
+
+
+'orders'.... ('purchaseBurgerSuccess', 'Fail' e 'Attempt'....)
+
+
+
+
+
+
+--> E NÓS JÁ CONSEGUIMOS ___dISPATCHAR___ ESSAS orders, lá em 'ContactData'... 
+
+
+
+
+
+
+--> agora precisamos 
+
+
+
+
+CONSEGUIR FAZER MANAGE DO 'order state' (as propriedades relativas a 'order' )
+
+
+LÁ 
+
+NO NOSSO REDUCER... (ainda não sabemos se o professor 
+
+vai 
+
+usar 
+
+o mesmo 
+
+reducer 
+
+
+
+de 
+
+'ingredients'-burgerbuilder, ou se ele vai usar um diferente...))
+
+
+
+
+
+ 
+---------------------------
+
+
+
+PARECE QUE ELE USARÁ OUTRO REDUCER... --> 
+
+
+ele vai até
+
+
+o arquivo 
+
+
+'order.js'
+
+
+
+no folder dos reducers,
+
+
+e 
+
+ali 
+
+
+
+ELE 
+
+
+
+importa as actionTypes ali dentro, pq ele precisa delas.... --> precisa delas no switch case statement...
+
+
+
+
+
+
+
+--->  FICA ASSIM:
+
+
+import * as orderActionTypes from '../actions/orderActionTypes';
+
+
+
+
+
+
+------------------------------
+
+
+
+
+feito isso, ele vai criar o reducer, por meio 
+
+do 
+
+código:
+
+
+
+
+
+
+const orderReducer = (state = initialState, action) => {
+
+
+    switch (action.type) {
+        case orderActionTypes.PURCHASE_BURGER_SUCCESS :
+           
+            return;
+
+        default: 
+        return state;
+
+
+
+
+    }
+    
+
+}
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+
+
+certo.... 
+
+
+
+
+
+PROFESSOR VAI DEFINIR UM 'initialState' 
+
+
+
+
+com um valor 
+
+BEM 
+
+
+ESPECÍFICO... ---> algumas informações 
+
+DEVEM 
+
+
+FICAR 
+
+
+
+DENTRO 
+
+
+
+DESSE INITIALSTATE... ----> 
+
+
+
+PROFESSOR VAI QUERER, COM CERTEZA,
+
+
+TODAS 
+
+AS SUAS 
+
+'ORDERS'... ---> por isso ele vai usar 
+
+UM 
+
+ARRAY, para 
+
+armazená-las em uma lista...
+
+
+
+ex:
+
+
+
+
+import * as orderActionTypes from '../actions/orderActionTypes';
+
+
+
+
+
+const initialState = {
+    orders: []
+}
+
+
+
+const orderReducer = (state = initialState, action) => {
+
+
+    switch (action.type) {
+        case orderActionTypes.PURCHASE_BURGER_SUCCESS :
+           
+            return;
+
+        default: 
+        return state;
+
+
+
+
+    }
+    
+
+}
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+ELE TAMBÉM VAI QUERER ___SABER__ SE ESTAMOS ____ DURANTE O PROCESSO 
+
+DE 'ordering',
+
+
+OU SE 
+
+JÁ ESTAMOS 
+
+'DONE',
+
+por isso 
+
+ele 
+
+vai colocar um state/propriedade 
+
+de 
+
+'loading'... (isso vai ser usado com O SPINNER, lá em 'ContactData')...
+
+
+
+
+ex:
+
+
+
+
+
+
+import * as orderActionTypes from '../actions/orderActionTypes';
+
+
+
+
+
+const initialState = {
+    orders: [],
+    loading: false
+}
+
+
+
+const orderReducer = (state = initialState, action) => {
+
+
+    switch (action.type) {
+        case orderActionTypes.PURCHASE_BURGER_SUCCESS :
+           
+            return;
+
+        default: 
+        return state;
+
+
+
+
+    }
+    
+
+}
+
+
+
+--------------------------
+
+
+
+É CLARO QUE 
+
+O LOADING 
+
+será 
+
+definido como 
+
+'false', inicialmente... -----> ESSE STATE DEVERÁ SER SETTADO COMO 
+
+'true'
+
+QUANDO COMEÇARMOS A NOSSAS ORDER (quando o processo de 'POST' da order tiver se iniciado...).
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+
+O CÓDIGO DE 
+
+
+
+'orderReducer.js' (onde há o reducer das ORDERS e da propriedade 'loading') 
+
+
+está 
+
+ficando 
+
+ASSIM:
+
+
+
+  const initialState = {
+            orders: [],
+            loading: false
+  }
+
+
+
+const orderReducer = (state = initialState, action) => {
+
+
+    switch (action.type) {
+        case orderActionTypes.PURCHASE_BURGER_LOADING:
+            return {
+                ...state,
+                loading: true /////////NÃO SEI SE ISSO ESTÁ CERTO.
+            }
+
+
+
+
+        case orderActionTypes.PURCHASE_BURGER_SUCCESS:
+            return 
+
+        default: 
+
+
+
+        case orderActionTypes.PURCHASE_BURGER_FAIL:
+            
+
+        return state;
+
+
+
+
+    }
+    
+
+}
+
+export default orderReducer;
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+ACHO QUE 
+
+O 
+
+
+'orderHandler' vai ter que ficar assim:
+
+
+
+
+
+
+  orderHandler = (event) => {
+    event.preventDefault(); ///VAI PREVENIR O RELOAD DA PÁGINA.(e sim, precisamos do parâmetro 'event' para acessar esse método especial, método que PREVINE O COMPORTAMENTO DEFAULT DO BROWSER DE __RECARREGAR___ PÁGINAS QUANDO UM 'SUBMIT' OCORRE DENTRO DE UMA FORM...)
+    console.log(this.props.ingr);
+
+
+    const orderData = {
+      ingredients: this.props.ingr, 
+      price: this.props.price, 
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+    };
+
+
+
+
+    this.props.onOrderAttempt(orderData);
+
+
+    this.props.onPurchaseLoading(); /////////EIS O CÓDIGO EM QUESTÃO.
+ 
+
+
+  }
+
+
+
+
+  -----------------------------
+
+
+
+
+  OK, QUAL É O PRÓXIMO PASSO? ---> devo assistir a aula do professor...
+
+
+
+
+
+
+  ---> falta a lógica de 
+
+
+
+
+  ''     case orderActionTypes.PURCHASE_BURGER_SUCCESS:'''...
+
+
+
+
+  ------------------
+
+
+
+
+  ---> ISSO PQ O NOSSO SPINNER JÁ ESTÁ SENDO MOSTRADO quando clicamos no 'order' (bom sinal)....
+  
+
+
+
+
+  -------------------
+
+
+
+  Continuando a aula do professor, ele nos relata que 
+  um 
+
+  problema
+
+  em 
+
+
+  'order.js'
+
+
+  é 
+
+  que 
+
+  nós 
+
+
+  só temos 
+
+
+
+  as hipóteses/actions 
+
+
+  de 
+
+
+  'purchaseBurgerSuccess'
+
+
+
+
+e 
+
+
+'purchaseBurgerFail'...
+
+
+
+
+
+
+
+
+
+----------->  isso significa que nós não temos um estado 'LOADING'... -----> 
+
+
+e a action 'purchaseBurgerAttempt' não 
+
+
+
+faz o dispatch propriamente 
+
+
+de algo que podemos 
+
+
+'CATCH' no redux.... ----> e realmente deve ser assim,
+
+pq 
+
+
+
+a única utilidade desse 
+
+
+'purchaseBurgerAttempt' É 
+
+RODAR 
+
+
+
+UNS CÓDIGOS ASSÍNCRONOS __PARA __ DISPATCHAR OUTRAS ACTIONS (success e fail) 
+
+
+a partir 
+
+
+do código/dados ('orderData')
+
+
+OBTIDOS DE NOSSO STATE 
+
+do 
+
+
+redux, e postados no servidor...
+
+
+
+--------------------------------------
+
+
+
+
+
+E ESSE PADRÃO AÍ DE CIMA É __UM PADRÃO COMUM___... --> mas como nós 
+
+queremos 
+
+
+UPDATAR
+
+
+
+NOSSA PROPRIEDADE 
+
+'loading: false'
+
+LÁ NO 
+
+
+
+
+'initialState' do reducer 
+de 
+
+'order.js',
+
+
+
+
+NÓS PRECISAMOS DE UMA ACTION ADICIONAL, QUE DEVE SER DISPATCHADA 
+
+depois 
+
+
+
+de 
+
+
+'onOrderAttempt'... ---> e eu já fiz isso, ver o 'orderHandler'...
+
+
+
+--------------------
+
+
+
+
+NESTA AULA, VAMOS TRABALHAR COM AS 'ACTIONS' QUE NÓS __JÁ TEMOS __... --->
+
+
+
+
+
+bem,
+
+no meu reducer 
+
+
+
+de 
+
+'order.js',
+
+
+
+
+professor vai colocar um switch case padrão,
+
+
+aquele 
+
+
+'switch(action.type) {
+    case actionTypes.PURCHASE_BURGER_SUCCESS: 
+        return {};
+}
+'
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+VAMOS TRABALHAR COM A LÓGICA 
+
+DESSE 
+
+'return statement' logo logo....
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+--> NO REDUCER, ESTE CÓDIGO É MUITO IMPORTANTE:
+
+
+'''''''''''''''''''
+         default:
+        return state;
+
+''''''''''''''''
+
+
+
+
+--> VOCÊ SEMPRE DEVE ESCREVÊ-LO... (ainda mais quando você estiver usando 
+
+múltiplos reducers.../combinando múltiplos reducers... )
+
+
+
+
+--------------------------------------------------------------
+
+
+
+
+
+
+
+OK, AGORA PARA A LÓGICA DO 
+
+'return {}' de SUCCESS... ---> 
+
+
+A PARTIR 
+
+DE 
+
+UM 
+
+
+'SUCCESS' 
+
+
+ao 
+
+
+fazer um ATTEMPT 
+
+de ORDER do burger,
+
+
+
+
+O PROFESSOR VAI QUERER, OBVIAMENTE,
+
+ARMAZENAR 
+
+ESSA 
+
+'order'
+
+DENTRO 
+
+DO 
+
+
+
+
+ARRAY DE 
+
+'orders', 
+
+
+no nosso 
+
+STATE GLOBAL DO REDUX... -------> ALÉM DISSO, 
+
+
+ELE 
+
+
+TAMBÉM 
+
+___VAI QUERER __DEFINIR 'LOADING' COMO FALSE.... (isso é óbvio....) 
+
+
+
+
+
+
+
+
+Para isso, 
+
+ele provavelmente 
+
+
+vai 
+
+escrever 
+
+
+
+
+'return {
+    ...state,
+    loading: false,
+    orders: [
+        ...state.orders,
+        orderData
+    ]
+}
+'
+
+
+
+
+----
+
+OK, MAS ISSO AÍ ESTÁ ___ERRADO____....  --------> 
+
+
+
+
+está 
+
+
+COMPLETAMENTE ERRADO.... ---> devemos nos lembrar do código de 'Counter'... (do projeto do COUNTER)...
+
+
+(
+
+
+      return updateObject(state, { ///USO DE NOSSA 'UTILITY FUNCTION' para __rEDUZIR __O  TAMANHO DO CÓDIGO DO NOSSO REDUCER (reduzir repetição INÚTIL DE MESMO CÓDIGO/reutilização de referência a 'updateObject', que possui seu próprio código 'utility' que é reutilizado múltiplas vezes no reducer de 'counter' e no reducer de 'result', que é este aaqui....)
+        results: state.results.concat({
+          value: action.result * 2,
+          resultId: new Date() * Math.random(),
+        }),
+      });
+
+
+
+)
+
+
+
+
+---------------------------
+
+
+
+
+ISSO QUER DIZER QUE 
+
+
+NOSSO 
+
+'return' vai (PROVAVELMENTE) ficar assim:
+
+
+
+
+
+
+
+
+'return {
+    ...state,
+    loading: false,
+    orders: state.orders.concat(action.orderData)
+}
+'
+
+
+
+
+
+
+
+
+
+
+
+
+'.CONCAT()', como você deve se lembrar,
+
+
+__RETORNA A NÓS __ UM __NOVO ARRAY__, E ISSO SIGNIFICA QUE 
+
+ESTAREMOS 
+
+
+UPDATANDO O STATE GLOBAL DO REDUX ___dE FORMA IMMUTABLE... (o que é o ideal, o que você deve fazer....) -----> 
+
+
+
+
+
+
+
+
+Certo... --> nós vamos querer a 'orderData', SIM; MAS NÓS 
+
+
+TAMBÉM 
+
+VAMOS 
+
+QUERER 
+
+
+o 
+
+
+'orderId',
+
+
+
+
+aquela propriedade 'orderId' 
+que 
+
+COLOCAMOS TAMBÉM DENTRO DE NOSSO OBJETO 'action'... -------> 
+
+
+
+
+e o professor vai querer que 
+
+
+'orderId' 
+
+e 
+
+'orderData' fiquem 
+
+
+'MERGED INTO ONE OBJECT', 
+
+um objeto 
+
+que 
+
+será então enfiado 
+
+
+no 
+
+
+
+array 'orders'.... -----> eu CHUTO que ele vai usar SPREAD OPERATORS,
+
+mas 
+
+
+provavelmente estou errado....
+
+
+
+
+tipo assim:
+
+
+
+orders: state.orders.concat({
+    ...action.OrderData,
+    ...action.orderId
+})
+
+
+------------------------------
+
+
+
+
+
+DE FATO, 
+
+
+
+EU ____QUASE __ ACERTEI _ A LÓGICA EMPREGADA __ PELO PROFESSOR...___
+
+
+
+
+
+a lógica dele, o código, ficou assim:
+
+
+
+
+switch(action.type) {
+    case actionTypes.PURCHASE_BURGER_SUCCESS:
+        const newOrder = {
+                ...action.orderData,
+                id: action.orderId
+        }
+}
+
+
+----------------------------
+
+
+
+
+FICOU TIPO ASSIM:
+
+
+
+
+const orderReducer = (state = initialState, action) => {
+
+
+    switch (action.type) {
+        case orderActionTypes.PURCHASE_BURGER_LOADING:
+            return {
+                ...state,
+                loading: true
+            }
+
+
+
+
+        case orderActionTypes.PURCHASE_BURGER_SUCCESS:
+            const newOrder = {
+                ...action.orderData,
+                id: action.orderId
+            }
+            return {
+                ...state,
+                orders: state.orders.concat(newOrder),
+                loading: false
+            };
+
+
+
+
+        case orderActionTypes.PURCHASE_BURGER_FAIL:
+                return {};
+        
+
+
+            default:
+        return state;
+
+
+
+
+    }
+    
+
+}
+
+
+
+
+-----------------------------------------
+
+
+
+
+PARA O 
+
+'FAIL'/failing,
+
+
+
+O PROFESSOR 
+VAI QUERER 
+
+
+
+
+
+RETORNAR O ___oLD STATE (pq ele claramente não vai querer 'clear out' as ORDERS 
+
+VELHAS no state...) 
+
+
+
+E AÍ 
+
+VAI QUERER 
+
+
+DEFINIR 'loading' como false... ---> pq MESMO SE O SEND FALHAR, NÓS AINDA ESTAREMOS 
+
+'DONE'... ----->  E 
+
+PROFESSOR 
+
+
+NOS DIZ QUE 
+
+ESSE 
+
+
+'error' 
+
+aí 
+
+
+vai 
+
+ser handlado 
+
+PELO
+
+
+
+HOC de 
+
+'withErrorHandler' (entretanto, esse código NÃO ESTÁ FUNCIONANDO NO MOMENTO... --> vou ter de consertar....)
+
+
+
+
+
+
+
+
+CÓDIGO DE 'FAIL' VAI FICAR ASSIm:
+
+
+
+
+case actionTypes.PURCHASE_BURGER_FAIL:
+        return {
+            ...state,
+            loading: false
+        }
+
+
+
+
+-----------------------
+
+
+O PRÓXIMO PASSO É 
+
+SETTAR 
+
+NOSSO 
+
+'loading' no state global do redux como __TRUE_ quand começarmos a ENVIAR (post) o burger...
+
+
+
+-----------------------
+
+
+
+
+

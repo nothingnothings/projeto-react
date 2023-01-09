@@ -1,0 +1,1599 @@
+ 
+
+
+ --> NA ÚLTIMA LIÇÃO, 
+
+
+
+ COMEÇAMOS A ESCREVER NOSSO COMPONENT 'BURGER',
+
+
+ MAS MUITA COISA AINDA ESTÁ FALTANDO.
+
+
+
+
+
+
+
+ ---> AGORA É HORA DE CONTINUAR 
+
+
+ NOSSO TRABALHO... -->DEVEMOS CERTIFICAR QUE OS 
+
+
+ BURGER 
+ INGREDIENTS 
+
+
+ SEJAM ADICIONADOS...  ---> PARA ISSO,
+
+
+
+ PROFESSOR 
+
+
+
+ VAI ATÉ O FOLDER DE 'COMPONENTS' 
+
+
+ e adiciona 
+
+
+
+ UM NOVO SUBFOLDER,
+
+
+  
+
+  chamado de 
+
+
+
+'Burger'....  ---->  E, DE NOVO, 
+
+
+ESSA É UMA BOA MANEIRA DE ESTRUTURAR SEUS PROJETOS... ---> pq 
+
+
+
+em projetos maiores PODE 
+
+
+ficar 
+
+difícil o MANAGEMENT 
+
+
+Desses components... ---> pq é uma BOA PRÁTICA NO REACT
+ 
+
+
+ __cRIAR__ 'GRANULAR COMPONENTS'__ e não grandes chunks... --> 
+
+
+
+
+ SE VOCÊ TIVER UM MONTE DE COMPONENTS,
+
+
+ VOCÊ VAI TER UM MONTE DE FOLDERS ---> e é sempre 
+
+
+ bom os organizar  EM UMA 'FOLDER STRUCTURE' 
+
+
+ NÃO APENAS DIVIDIDA 
+
+
+ EM FOLDERS DE 
+
+
+ '
+ COMPONENTS' E 
+
+ 'CONTAINERS',
+
+
+  mas também ___DENTRO__ DESSES 
+
+
+  FOLDERS aí 
+
+
+  SUBDIVIDIR os 
+
+
+  COMPONENTS/CONTAINERS EM 'feature areas'... ----> PQ AÍ FICA BEM MAIS INTUITIVO:
+
+
+
+
+  ''AH PRECISO TRABALHAR NO BURGER-SIDE''...... --> ok, então basta 
+
+
+  EXAMINAR OS ARQUIVOS DENTRO DE 'BURGER'... 
+
+
+
+
+
+  ---------------------------------
+
+
+
+
+
+  ---> DENTRO DO FOLDER 'BURGER',
+
+  VAMOS 
+
+  ADICIONAR ALGUNS SUBCOMPONENTS... ---> primeiro deles 
+
+
+  será 
+
+
+  o 
+
+  'Burger.js' ---> esse será o arquivo QUE TERÁ O COMPONENT 'BURGER' QUE VAMOS 
+
+  RENDERIZAR NA TELA.... -------> 
+
+
+  MAS O PROFESSOR 
+
+
+  JÁ 
+
+  NOS INFORMA QUE __ 
+
+  O 'BURGER EM SI'
+
+
+  NÃO SERÁ SUFICIENTE; não, nós precisamos/PRECISAREMOS ___DE___ 
+
+  INGREDIENTS___ para esse burger.......
+
+
+
+  ---> BREAD, CHEESE, SALAD, MEAT, BACON... --> vários ingredients.. -> 
+
+
+  PARA ISSO, 
+
+  O PROFESSOR VAI CRIAR OUTRO SUBFOLDER DENTRO DO 'BURGER', UM 
+
+
+  FOLDER CHAMADO 
+
+
+  DE 
+
+  'BurgerIngredients'...
+
+
+
+
+-----> DENTRO DESSE 'BurgerIngredients', 
+
+O PROFESSOR VAI CRIAR UM ARQUIVO CHAMADO  DE 
+
+
+'BurgerIngredient.js'...
+
+  ---------------------------------------
+
+
+
+
+
+
+
+---> PROFESSOR EXPLICA QUE ELE VAI, NA VERDADE,
+
+QUERER __COMEÇAR___ O WRITE DO NOSSO 'BURGER BUILDER' 
+
+
+
+__POR MEIO DESSE ARQUIVO 
+
+'BurgerIngredient'... --> PQ É EXATAMENTE ISSO QUE 
+
+PRECISAMOS, NO MOMENTO. ---> PRECISAMOS 
+
+DE COMPONENTS 
+
+
+'INGREDIENT' 
+
+
+__PARA EFETIVAMENTE__ RENDERIZAR ALGO NA NOSSA TELA....
+
+
+
+
+---------------------------------
+
+
+
+--> PARA OS '''BURGER INGREDIENTS''',
+
+
+o professor preparou 
+
+UM ARQUIVO CSS
+ 
+
+ QUE PODEMOS ENCONTRAR ANEXADO a esse vídeo.... (contém mt código css...) --> 
+
+ E 
+
+ ESSE ARQUIVO 
+
+
+ __FAZ__ BASICAMENTE __ O RENDER VISUAL ___ DE 'BURGER INGREDIENTS'__ APENAS COM CSS...
+
+
+
+
+
+ ----> CERTO... --> ESSE NEGÓCIO FOI FEITO ___ COM NENHUMA IMAGEM__ (esses ingredients) ---> 
+
+ ISSO SIGNIFICA QUE 
+
+ ___ESSE HAMBURGUER NOSSO __ É __eXCELENTE__ DE UMA PERSPECTIVA 
+ de
+
+ 'filesize',
+
+ POIS 
+
+ TUDO FOI CONSTRUÍDO COM CSS, que é MT MAIS LEVE DO QUE USAR IMAGENS...
+
+
+
+
+ --------------------------------------------------
+
+
+
+
+ -------> DEPOIS QUE COPIAMOS ISSO AÍ,
+
+
+
+ Temos os arquivos css.... ----> MAS AINDA PRECISAMOS 
+
+
+
+
+ ESCREVER 
+
+ NOSSOS INGREDIENTS 
+
+
+ EM 
+
+ 'BurgerIngredient',
+
+
+ O COMPONENT 
+
+ 'BUrgerIngREDIENT'...
+
+
+
+
+
+
+
+
+
+
+ --> OS INGREDIENTS/INGREDIENT ___ SERÁ 
+
+
+ UMA 'FUNCTION'/FUNCTIONAL COMPONENT... ---> e o professor 
+
+
+ chamará 
+
+ esse componnet 
+
+
+ de 
+
+
+ 'BurgerIngredient'....
+
+
+
+ NOSSO CÓDIGO:
+
+
+
+
+
+
+
+ 
+import React from 'react';
+
+
+
+
+
+
+
+
+
+
+
+const burgerIngredient = (props) => {
+
+    return ();
+    
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+export default burgerIngredient
+
+
+
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+NÓS VAMOS RETORNAR ALGUM CÓDIGO JSX,
+
+CERTO,
+
+MAS ANTES 
+
+
+__DISSO__ VAMOS QUERER __ EXECUTAR ___ ALGUMA LÓGICA, DIZ O PROFESSOR...
+
+
+
+
+
+
+
+---> PROFESSOR DIZ QUE É UMA BOA IDEIA 
+
+'WRITE A SNIPPET' 
+
+DE UM 
+'STATELESS COMPONENT', no nosso IDE (o IDE TEM ESSA FUNÇÃO...)
+
+
+
+
+
+
+(DEVEMOS APRENDER A USAR SNIPPETS)...
+
+
+
+
+
+
+--> DE VOLTA AO NOSSO COMPONENT 
+
+
+'BurgerIngredient',
+
+
+
+
+
+
+
+
+O PROFESSOR DIZ QUE 
+
+
+ELE PRECISA DE 
+
+
+UMA LÓGICA 
+
+
+
+
+PARA ___RENDERIZAR ___ OS NOSSOS INGREDIENTS --> ELE PRECISA 
+
+
+DE UMA 
+
+
+LÓGICA 
+
+
+
+
+PRÉVIA 
+
+
+PQ ___ELE VAI RENDERIZAR OS INGREDIENTS (que são de diferentes espécies)
+
+
+COM BASE 
+
+
+
+NO 
+
+
+ARGUMENTO/LÓGICA ANTERIOR AO 'RENDER'...
+
+
+-----------------------------------
+
+
+
+
+--> ELE VAI ESPERAR (expect) RECEBER 
+
+
+A INFORMAÇÃO DE 'QUAL INGREDIENT DEVO RENDERIZAR' 
+
+
+por meio do 
+
+'props'... --------> para isso,
+
+
+
+ELE VAI CRIAR, FORA DO 'render()',
+
+
+
+UMA 
+
+
+VARIÁVEL (let) 
+
+de 
+
+'ingredient',
+
+
+E VAI A DEFINIR COMO 
+
+
+
+
+'null'...
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+
+
+
+
+
+
+
+const burgerIngredient = (props) => {
+    
+
+
+    let ingredient = null;
+    return ();
+
+
+
+
+
+}
+
+
+
+
+
+
+
+export default burgerIngredient
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+INICIALMENTE, NADA SERÁ RENDERIZADO (null) --> ou seja,
+
+
+NADA ___sERÁ RENDERIZADO__ SE NADA/ALGO INVÁLIDO FOR 'passed in' como 
+
+
+'props'...
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+Depois disso,
+
+
+o professor 
+
+vai 
+
+
+
+executar 
+
+'switch()' --------> É UM 'SWITCH STATEMENT', coisa de 
+
+JAVASCRIPT __COMUM__... -----> 
+
+
+
+É ISSO QUE ELE FAZ:
+
+
+
+
+
+A condicional switch avalia uma expressão, 
+combinando o valor da expressão para um cláusula case, 
+e executa as instruções  associadas ao case.
+
+
+
+
+
+
+EX:
+
+-----------------------------------------
+
+
+const expr = 'Papayas';
+switch (expr) {
+  case 'Oranges':
+    console.log('Oranges are $0.59 a pound.');
+    break;
+  case 'Mangoes':
+  case 'Papayas':
+    console.log('Mangoes and papayas are $2.79 a pound.');
+    // expected output: "Mangoes and papayas are $2.79 a pound."
+    break;
+  default:
+    console.log(`Sorry, we are out of ${expr}.`);
+}
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+E ELE VAI COLOCAR UM ARGUMENTO/PARÂMETRO DE 
+
+
+
+'props.type' nesse método/função 'switch()'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+import React from 'react';
+
+
+
+
+
+
+
+
+
+
+
+const burgerIngredient = (props) => {
+    
+
+
+    let ingredient = null;
+
+
+
+
+    switch(props.type) ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+    return ();
+
+
+
+
+
+}
+
+
+
+
+export default burgerIngredient;
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+Certo...
+
+
+MAS NÃO ACABAMOS POR AQUI... ---> 'props.type'  ---------> 
+
+
+
+
+
+ESSE MÉTODO 'SWITCH' (VAI ANALISAR O ___'TYPE'___ 
+
+
+DO MEU 'props'.... --> e de acordo com O TYPE que 
+
+ele encontrar/analisar, 
+
+
+ELE VAI 
+
+
+__DAR___/EXECUTAR__ O 'CASE' CORRESPONDENTE,
+
+DENTRO DO SEU BODY....)
+
+
+
+
+
+
+
+(E 'type' É __UMA PROPRIEDADE__ QUE 
+
+O PROFESSOR ESPERA RECEBER em 
+
+'props'...)
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+E DENTRO DE 
+
+
+'Switch', 
+
+TEREMOS UM __PUNHADO DE DIFERENTES __ 'CASES'... (um PARA CADA INGREDIENTE...).
+
+
+
+
+
+
+Ele define um 'case' de 'bread-bottom'... ---> você pode NOMEAR ESSE 
+
+CASE DA COISA QUE VOCÊ QUISER,
+
+você apenas tem que 
+
+SE LEMBRAR desse 'nome' desse 'case', pois você vai o UTILIZAR AO LONGO DO APLICATIVO...
+
+
+
+
+
+
+
+
+
+
+Ex:
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+const burgerIngredient = (props) => {
+    
+
+
+    let ingredient = null;
+
+
+
+
+    switch(props.type) {
+ 
+
+    case ('bread-bottom'):                          ////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+    return ();
+
+
+
+
+
+}
+
+
+
+
+export default burgerIngredient;
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+NOSSAS CLASSES CSS JÁ HAVIAM SIDO DEFINIDAS 
+
+
+
+em  
+
+
+'BurgerIngredient.css'... --> logo os APLICAREMOS nos nossos elementos/elemento 'ingredient'....
+
+
+
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+CERTO,
+
+DIGAMOS QUE 
+
+TEMOS UM 
+
+'case ('bread-bottom')' ----> 
+
+
+
+SE ISSO ACONTECER,
+
+
+VOU QUERER 
+
+
+DEFINIR 
+
+MINHA 
+
+
+VARIÁVEL 
+
+
+'ingredient'
+ 
+
+
+ como sendo  
+
+
+ ___UMA DIV____ COM UM CLASSNAME ESPECÍFICO, CLASSNAME de '.BreadBottom' (como definido no nosso ARQUIVO CSS)....
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+import React from 'react';
+
+
+
+import BurgerIngredient from 'BurgerIngredient.module.css'; 
+
+
+
+const burgerIngredient = (props) => {
+    
+
+
+    let ingredient = null;
+
+
+
+
+    switch(props.type) {
+ 
+
+    case ('bread-bottom') {
+        ingredient = <div className={BurgerIngredient.BreadBottom}></div> ////////EIS O CÓDIGO EM QUESTÃO.
+    }
+
+
+
+
+
+
+    }
+
+    return ();
+
+
+}
+
+
+
+
+export default burgerIngredient;
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+import BurgerIngredient from 'BurgerIngredient.module.css';
+
+
+
+
+
+
+
+const burgerIngredient = (props) => {
+    
+
+
+    let ingredient = null;
+
+
+
+
+    switch(props.type) {  ///sintaxe de 'switch()' ===== switch(parâmetro) {case(x): códigoASerExecutado}
+        case ('bread-bottom'): ingredient = <div className={BurgerIngredient.BreadBottom}></div>;
+        case('bread-top'): ingredient = <div className={BurgerIngredient.BreadTop}></div>;
+        case('meat'): ingredient = <div className={BurgerIngredient.Meat}></div>;
+        case('cheese'): ingredient = <div className={BurgerIngredient.Cheese}></div>;
+        case('bacon'): ingredient = <div className={BurgerIngredient.Bacon}></div>;
+        case('salad'): ingredient = <div className={BurgerIngredient.Salad}></div>;
+
+    }
+
+
+
+
+
+
+    return ();
+
+
+
+
+
+}
+
+
+
+
+export default burgerIngredient;
+
+
+
+
+-----------------------------------------
+
+
+OBS: 'seeds' vão NO __bREAD___ (são elementos de estilo complementar... ':after' e ':before'...)
+
+
+
+
+
+
+
+
+OBS:::: MAS ESTE NOSSO CÓDIGO ESTÁ __INCOMPLETO____. .... ---> QUANDO 
+USAMOS 
+
+'switch()',
+
+
+SEMPRE 
+
+
+___DEVEMOS __ ESCREVER 
+
+'BREAK;' ___ENTRE 
+
+OS ___ 'CASE CASES'...
+
+
+
+EX( COM OS 'BREAK'):
+
+
+
+
+
+
+import React from 'react';
+
+
+
+import BurgerIngredient from 'BurgerIngredient.module.css';
+
+
+
+
+
+
+
+const burgerIngredient = (props) => {
+    
+
+
+    let ingredient = null;
+
+
+
+
+    switch(props.type) {  ///sintaxe de 'switch()' ===== switch(parâmetro) {case(x): códigoASerExecutado}
+        case ('bread-bottom'): ingredient = <div className={BurgerIngredient.BreadBottom}></div>;
+
+        break;
+
+        case('bread-top'): ingredient = <div className={BurgerIngredient.BreadTop}></div>;
+
+        break;
+
+
+        case('meat'): ingredient = <div className={BurgerIngredient.Meat}></div>;
+
+        break; 
+
+
+        case('cheese'): ingredient = <div className={BurgerIngredient.Cheese}></div>;
+
+        break;
+
+
+        case('bacon'): ingredient = <div className={BurgerIngredient.Bacon}></div>;
+
+        break;
+
+
+        case('salad'): ingredient = <div className={BurgerIngredient.Salad}></div>;
+
+    }
+
+
+
+
+
+
+    return ();
+
+
+
+
+
+}
+
+
+
+
+export default burgerIngredient;
+
+
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
+CERTO... MAS PROFESSOR DIZ QUE 
+
+nosso 
+
+'ingredient' (a variável 'ingredient') 
+
+
+DO __CASE__ DE 
+
+'bread-top' __DEVERÁ __SER UM POUCO DIFERENTE... --> DIFERENTE
+
+
+
+PQ __ NÓS VAMOS COLOCAR UMAS 
+
+'Seeds' ___EM CIMA DO PÃO__...
+
+
+
+
+
+
+ISSO QUER DIZER QUE ELE VAI QUERER 
+
+
+RETORNAR UM CÓDIGO JSX __MULTI-LINE___ naquele 
+
+'ingredient'...
+
+
+
+
+--> A 'OUTER DIV' VAI RECEER UM 'CLASSNAME' de 'BreadTop'.... 
+
+
+--> MAS A __INNER DIVs__ VÃO RECEBER classnames diferentes... essas inner divs
+
+SERÃO Os NEGÓCIOs QUE REPRESENTARÁ AS 'SEEDS'...
+
+
+
+
+ex:
+
+
+
+
+
+ingredient = (
+
+        <div className={BurgerIngredient.BreadTop}>
+        <div className={BurgerIngredient.Seeds1}></div>
+        <div className={BurgerIngredient.Seeds2}></div>
+        </div>
+
+
+
+
+)
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+FEITO ISSO COM TODOS OS INGREDIENTS,
+
+
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+__PODERÍAMOS __ IMPLEMENTAR ESSE CÓDIGO/SINTAXE 
+
+
+DOS 
+
+'INGREDIENTS' 
+
+
+DE FORMA _DIFERENTE__, QUE EXISTEM 
+
+
+OUTROS APPROACHES, approaches 
+
+
+QUE NÃO USAM ESSE 
+
+GRANDE 'SWITCH STATEMENT'... ---------------> mas esse approach é bom...
+
+
+
+
+
+
+
+
+----> MAS NÃO ACABAMOS NOSSO  'SWITCH STATEMENT'... ---> 
+
+
+como 'fail-safe' do nosso SWITCH STATEMENT,
+
+devemos 
+
+PASSAR UM __vALOR__ PARA O CASO EM QUE __ O USUÁRIO/NOSSO APP ___ 
+
+
+PASSE UM 'props' QUE NÃO TENHA um valor em 'type', ou que tenha 
+
+um 'TYPE' __QUE NÃO É CONTEMPLADO __ PELOS 
+
+MÚLTIPLOS 
+
+'case' CHECKS... ----------> É POR ISSO QUE VAMOS ESCREVER, NO FINAL DO SWITCH STATEMENT,
+
+
+
+
+___'default: ingredient = null;'____  ------------------>  isso 
+
+
+
+SERÁ EXECUTADO CASO ACONTEÇA UMA DAQUELAS HIPÓTESES ALI, 
+
+DE 'type' INVÁLIDO/FALTANDO...
+
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+PARA FECHAR ESSE 
+
+GRANDE 
+
+'SWITCH STATEMENT',
+
+
+DEVEMOS 
+
+
+__fAZER__ O RETURN DE 
+
+
+'ingredient' (dessa variável)
+
+
+NO SEU Final...
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+import BurgerIngredient from 'BurgerIngredient.module.css';
+
+
+
+
+
+
+
+const burgerIngredient = (props) => {
+    
+
+
+    let ingredient = null;
+
+
+
+
+    switch(props.type) {  ///sintaxe de 'switch()' ===== switch(parâmetro) {case(x): códigoASerExecutado}
+        case ('bread-bottom'): ingredient = <div className={BurgerIngredient.BreadBottom}></div>;
+        
+        break;
+
+
+        case('bread-top'): ingredient = 
+        
+        <div className={BurgerIngredient.BreadTop}>
+            <div className={BurgerIngredient.Seeds1}></div>
+            <div className={BurgerIngredient.Seeds2}></div>
+            <div></div>
+        </div>;
+
+        break;
+
+        case('meat'): ingredient = <div className={BurgerIngredient.Meat}></div>;
+
+        break;
+
+        case('cheese'): ingredient = <div className={BurgerIngredient.Cheese}></div>;
+
+        break;
+
+        case('bacon'): ingredient = <div className={BurgerIngredient.Bacon}></div>;
+
+        break;
+
+        case('salad'): ingredient = <div className={BurgerIngredient.Salad}></div>;
+        
+
+        break;
+
+        default: ingredient = null; //isso aqui é o que ocorre quando o 'type' DENTRO DE PROPS É INVÁLIDO/NÃO EXISTE/NÃO FOI PASSADO... --> o ingredient será NULO, ou seja, NADA ACONTECERÁ/será renderizado..., pois não existirá elemento 'div' com className de 'null'...
+
+
+
+        
+    }
+
+
+        return ingredient;
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+export default burgerIngredient;
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+COM ISSO, 
+
+COM ESSE CÓDIGO,
+
+
+o 'ingredient' 
+
+VAI OU __sER __ 'null' __ OU VAI SER 
+
+UMA DAQUELAS VÁRIAS DIVS... (E tiramos aquele 'return()' seco, pois agora 
+
+temos 
+
+
+
+o 'return ingredient;'...)
+
+
+
+
+----------------------------------------
+
+
+
+
+
+---> E UMA COISA QUE PODEMOS FAZER, E QUE FAREMOS NA PRÓXIMA AULA... -------> 
+
+
+
+
+VAMOS ADICIONAR 'PROPTYPE VALIDATION' 
+
+A 
+
+ESSE 
+
+ARQUIVO/AOS PROPS DE 
+
+'BurgerIngredient'... --> QUEREMOS 
+
+
+ISSO PQ 
+
+
+QUEREMOS 
+
+
+ASSEGURAR  
+
+QUE 
+
+NÓS __DE FATO __ ('we do') 
+
+
+RECEBAMOS 
+
+
+
+UMA PROPRIEDADE 
+
+de nome 
+
+'type'... ------> PARA ISSO, DEVEMOS INSTALAR/INCORPORAR 
+
+'PROPTYPES' 
+
+
+
+NO NOSSO CÓDIGO...
+
+
+
+
+
+
+
+
+PARA ISSO, 
+
+IMPORTAMOS 
+
+
+'Proptypes'
+
+POR MEIO DA SINTAXE 
+
+
+
+import PropTypes from 'prop-types';
+
+
+
+
+
+
+E AÍ 
+
+
+
+NÓS 
+
+
+ESCREVEMOS
+
+
+
+ISSO AQUI, ESSE CÓDIGO ABAIXO,
+
+PARA RESTRINGIR 
+
+
+
+OS PROPS (só será aceito 'type') QUE PODEM SER 
+
+PASSADOS 
+
+A ESSE 'BurgerIngredient' component,
+
+e também 
+
+PARA 
+
+RESTRINGIR O DATATYPE PERMITIDO (só poderá ser 'string')...
+
+
+EX:
+
+
+
+
+
+BurgerIngredient.propTypes = {
+    type: propTypes.string
+
+}
+
+
+
+
+-------------------------------------------------
+
+
+
+CERTO, AGORA O NEGÓCIO ESTÁ ESTILIZADO.... ----> 
+
+
+
+A PRÓXIMA ETAPA É CONSEGUIR ____CRIAR UM 
+
+___aRRAY____ 
+
+
+DESSE '''modelo''' (
+
+
+    de 
+
+
+'''''
+    <div className={BuildControlStyle.BuildControl}>
+        <div className="Label">{props.label}</div>
+        <button className={BuildControlStyle.Less}>Less</button>
+        <button className={BuildControlStyle.BuildControl.More}>More</button>
+    </div>
+''''
+)
+
+
+
+
+
+LÁ 
+
+
+
+NO COMPONENT 'BuildControls'....

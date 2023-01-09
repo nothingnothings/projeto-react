@@ -1,0 +1,2161 @@
+
+
+
+
+
+
+
+--> NÓS CONSEGUIMOS A 'TOKEN' (propriedade/objeto 'tokenId') 
+
+
+
+e todas aquelas informações
+
+
+QUANDO 
+
+
+
+FIZEMOS 
+
+
+'SIGNUP'/'SIGNIN',
+
+
+
+
+MAS 
+
+OBVIAMENTE 
+
+TAMBÉM
+
+QUEREMOS 
+
+
+____ARMAZENAR ESSAS TOKENS... ---> queremos armazenar 
+
+essas 
+
+tokens para, no futuro,
+
+
+SERMOS CAPAZES DE 'BLOQUEAR' ("guard') 
+
+GUARDAR 
+
+CONTEÚDO 
+
+QUE QUEREMOS 
+
+QUE 
+
+SEJA 
+PROTEGIDO... (como as 'Orders' de cada um dos clientes/usuários...)
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+PARA CONSEGUIR ARMAZENAR UMA TOKEN DESSAS,
+
+o professor 
+
+
+vai 
+
+ir 
+
+ATÉ 
+
+OS NOSSOS REDUCERS,
+
+
+
+
+e então vai 
+
+
+
+__CRIAR UM NOVO REDUCER__, UM REDUCER ESPECÍFICO PARA O 'Auth',
+
+O QUAL 
+CHAMARÁ 
+
+
+DE 
+
+'Auth.js'....
+
+
+-------------------------------
+
+
+
+
+
+--> DENTRO DE ESSE REDUCER,
+
+O 
+
+PROFESSOR 
+VAI QUERER 
+
+
+FAZER 
+
+HANDLE 
+
+DE TODAS 
+
+AS 
+
+'AUTH ACTIONS',
+
+e também 
+
+
+do 
+
+state 
+
+'auth'...
+
+
+
+
+
+------------------------
+
+
+FARÁ ALGO ASSIM:
+
+
+
+import * as authActionTypes from '../actions/authActionTypes';
+
+
+const initialState = {
+    auth: {
+
+    }
+}
+
+
+const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+            
+        }
+}
+
+
+export default authReducer;
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+------------------->
+
+DENTRO 
+
+
+DO 
+
+INITIALSTATE,
+
+
+
+
+PROFESSOR VAI QUERER ALGUMAS PROPRIEDADES.... ----> 
+
+
+ele vai, primeiramente,
+
+
+querer uma propriedade 
+
+'token',
+
+
+onde será armazenada 
+
+
+
+A TOKEN...
+
+
+
+
+--> ESSA TOKEN TERÁ UM VALOR INICIAL DE 'null'...
+
+
+
+
+ex:
+
+
+
+
+
+
+import * as authActionTypes from '../actions/authActionTypes';
+
+
+const initialState = {
+    token: null;
+}
+
+
+const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+            
+        }
+}
+
+
+export default authReducer;
+
+
+
+----------------------------------
+
+
+PROFESSOR TAMBÉM VAI QUERER ARMAZENAR O 'userId',
+
+QUE 
+
+
+SERÁ INICIALMENTE
+
+
+'null'...
+
+
+
+ex:
+
+
+
+
+
+
+import * as authActionTypes from '../actions/authActionTypes';
+
+
+const initialState = {
+    token: null,
+    userId: null
+}
+
+
+const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+            
+        }
+}
+
+
+export default authReducer;
+
+
+
+
+---------------------------------- 
+
+
+
+ISSO FEITO,
+
+ELE VAI QUERER 
+
+
+___ 
+
+DEFINIR TBM UM 
+
+'error',
+
+que 
+
+terá 
+
+valor inicial de 'null'...
+
+
+
+
+
+---> E TAMBém, provavelmente (às vezes é bom),
+
+
+UM 
+
+
+'loading',
+
+QUE 
+
+SERÁ 
+INICIALMENTE 
+
+'false'...
+
+
+
+ex:
+
+
+
+
+import * as authActionTypes from '../actions/authActionTypes';
+
+
+const initialState = {
+    token: null,
+    userId: null,
+    error: null,
+    loading: false
+}
+
+
+const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+            
+        }
+}
+
+
+export default authReducer;
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+DENTRO DO REDUCER,
+
+ELE 
+
+VAI COMEÇAR A COLOCAR 'CASES'...
+
+
+
+
+
+
+
+
+----> ele 
+
+vai checar.... 
+
+
+
+'case 
+
+
+actionTypes.AUTH_START'...  -------> dentro disso,
+
+
+PROFESSOR 
+
+
+
+SÓ VAI QUERER 
+
+
+RETORNAR 
+
+O 
+
+STATE... ('return {}' ) -------> 
+
+
+
+
+E PARA RETORNAR 
+
+O STATE 
+
+
+DE FORMA LIMPA, DE FORMA IMMUTABLE,
+
+PODEMOS 
+
+USAR AQUELA 
+
+UTILITY FUNCTION 
+
+DE 
+
+'updateObject', 
+
+
+definida 
+
+lá 
+no arquivo 
+
+'utility.js'...
+
+
+
+ex:
+
+
+
+
+
+
+import * as authActionTypes from '../actions/authActionTypes';
+
+import { updateObject } from '.......';
+
+
+
+const initialState = {
+    token: null,
+    userId: null,
+    error: null,
+    loading: false
+}
+
+
+const authReducer = (state = initialState, action) => {
+        switch(action.type) {   
+               case authActionTypes.AUTH_START:
+               return updateObject(state, ...);
+        }
+}
+
+
+export default authReducer;
+
+
+
+--------------------------------
+
+
+
+FICOU ASSIM...:
+
+
+
+
+import * as authActionTypes from '../actions/authActionTypes';
+
+
+import { updateObject } from '../utility';
+
+
+
+const initialState = {
+    auth: {
+
+    }
+}
+
+ const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+                    case authActionTypes.AUTH_START:
+                        return updateObject(state, {});
+
+
+                        default: return state;
+        }
+}
+
+
+export default authReducer;
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+
+CERTO, 
+
+
+MAS 
+
+
+É EVIDENTE QUE 
+
+A 
+PARTE IMPORTANTE 
+
+DESSE NEGÓCIO É 
+
+o 
+'{}', o SEGUNDO PARÂMETRO 
+
+DE 
+
+'updateObject'... ----> devemos passar 
+
+AS COISAS QUE 
+
+QUEREMOS 
+
+QUE 
+
+SEJAM 
+
+
+UPDATADAS, NO STATE,
+
+ A PARTIR 
+
+ DOS 
+
+ DADOS 
+
+ EXISTENTES 
+
+ DENTRO 
+
+ DA ACTION 
+
+
+ 'AUTH_START'...
+
+ ------------------
+
+
+
+
+
+ ----> certo.... O QUE EU __aCHO QUE O PROFESSOR VAI FAZER__ É USAR 
+
+ ESSE 
+
+ 'case actionTypes.AUTH_START' PARA 
+
+
+ FAZER UMA SIMPLES TROCA: PARA 
+
+
+ TROCAR 
+
+ O 
+
+ 'loading: false' 
+
+ no STATE DO REDUX, nesse 'authReducer' aí,
+
+ PARA 
+ 'loading: true'...
+
+
+
+ ex:
+
+
+
+
+ 
+import * as authActionTypes from '../actions/authActionTypes';
+
+
+import { updateObject } from '../utility';
+
+
+
+const initialState = {
+    auth: {
+
+    }
+}
+
+ const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+                    case authActionTypes.AUTH_START:
+                        return updateObject(state, {loading: true});
+
+
+
+
+
+                        default: return state;
+        }
+}
+
+
+export default authReducer;
+
+
+
+-------------------------------------------
+
+
+
+
+CERTO....
+
+
+
+MAS 
+
+
+AGORA,
+
+SURGE UMA PERGUNTA... ---> A QUAL ___SLICE___ DO STATE VAMOS 
+
+VINCULAR 
+
+
+ESSE 
+
+'authReducer.js'?..... --------> 
+
+
+PROVAVELMENTE 
+
+
+VAMOS 
+
+
+VINCULAR A UM 'SUBSTATE' chamado de 
+
+'auth'... (e faremos isso lá no INDEX.JS, é claro...)
+
+
+
+
+
+
+
+
+FICOU ASSIM:
+
+
+const reducer = combineReducers({
+      burger: BurgerReducer,
+      order: orderReducer,
+      loading: orderReducer,
+      auth: authReducer
+     
+})
+
+
+
+
+
+--------------------------
+
+
+
+
+O meu 
+
+
+código 
+
+
+do reducer lá 
+
+ficou certo,
+
+
+
+MAS 
+
+FALTOU UMA DEFINIÇÃO... ----> faltou escrever 'error: null', além daquele 'loading: true'...
+
+
+ex:
+
+
+
+
+
+import * as authActionTypes from '../actions/authActionTypes';
+
+
+import { updateObject } from '../utility';
+
+
+
+const initialState = {
+    auth: {
+
+    }
+}
+
+ const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+                    case authActionTypes.AUTH_START:
+                        return updateObject(state, {error: null, 
+                        loading: true});
+
+
+
+
+
+                        default: return state;
+        }
+}
+
+
+export default authReducer;
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+VAMOS QUERER 'loading' COMO TRUE ___ JUSTAMENTE PQ __ NÓS RECÉM COMEÇAMOS A 'LOADAR' 
+
+
+o processo de signup/signin....
+
+
+
+
+
+
+
+
+
+--> professor fala do DEFAULT CASE,
+ 
+ mas já fizemos isso...
+
+
+(return state;)....
+
+
+
+
+
+
+
+ ---> 
+  
+
+
+  PROFESSOR 
+
+
+
+  DIZ QUE 
+
+
+  COMO 
+
+  NÓS OPTIMIZAMOS TODOS OS REDUCERS ANTIGOS,
+
+  FIZEMOS COM QUE 
+
+  TIVÉSSEMOS 
+
+  'LEAN CODE',
+
+
+
+
+  devemos fazer a mesma coisa aqui.... --> vamos criar uma 
+
+  função auxiliar,
+
+
+  'const 
+
+  authStart',
+
+  E ENTÃO 
+
+  PREENCHÊ-LA 
+
+  com 
+
+
+  a lógica que 
+
+  agora 
+
+  está no nosso reducer (outsourcing)...
+
+
+
+  ex:
+
+
+
+
+
+  import * as authActionTypes from '../actions/authActionTypes';
+
+
+import { updateObject } from '../utility';
+
+
+
+const initialState = {
+        token: null,
+        userId: null,
+        error: null,
+        loading: false
+}
+
+
+const authStart = (state, action) => {
+        return updateObject(state, {loading: true, error: null})
+}
+
+
+
+
+ const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+                    case authActionTypes.AUTH_START:
+                        return authStart(state, action);
+
+                        default: return state;
+        }
+}
+
+
+export default authReducer;
+
+
+
+-----------------------------------------
+
+
+
+
+
+DEU, MUITO MELHOR...
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+BEM, E AGORA VOU ADICIONAR ___OUTRA FUNÇÃO AO MEU 'authReducer.js',
+
+
+VOU ADICIONAR
+
+
+
+
+
+'const authSuccess'... ---> vai ser uma UTILITY FUNCTION QUE NEM 
+
+A DE 
+
+
+
+'authStart',
+
+
+
+
+mesmo formato...
+
+
+ex:
+
+
+
+
+
+
+import * as authActionTypes from '../actions/authActionTypes';
+
+
+import { updateObject } from '../utility';
+
+
+
+const initialState = {
+        token: null,
+        userId: null,
+        error: null,
+        loading: false
+}
+
+
+const authStart = (state, action) => {
+        return updateObject(state, {loading: true, error: null})
+}
+
+
+
+const authSuccess = (state, action) => {
+    return updateObject(state, {
+     
+
+    })
+}
+
+
+
+
+ const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+                    case authActionTypes.AUTH_START:
+                        return authStart(state, action);
+                    case authActionTypes.AUTH_SUCCESS: 
+                        return authSuccess(state, action);
+                        default: return state;
+        }
+}
+
+
+
+
+
+
+export default authReducer;
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+OK... QUANTO AO CÓDIGO DO SEGUNDO PARÂMETRO,
+
+EU 
+
+________aCHO_________ QUE FICARÁ ASSIM:
+
+
+
+
+
+
+import * as authActionTypes from '../actions/authActionTypes';
+
+
+import { updateObject } from '../utility';
+
+
+
+const initialState = {
+        token: null,
+        userId: null,
+        error: null,
+        loading: false
+}
+
+
+const authStart = (state, action) => {
+        return updateObject(state, {loading: true, error: null})
+}
+
+
+
+const authSuccess = (state, action) => {
+    return updateObject(state, {
+                loading: false,
+                error: null,
+                token: action.authData.tokenId, ///talvez isto.
+                userId: action.authData.email //talvez isto
+
+
+    })
+}
+
+
+
+
+ const authReducer = (state = initialState, action) => {
+        switch(action.type) {
+                    case authActionTypes.AUTH_START:
+                        return authStart(state, action);
+                    case authActionTypes.AUTH_SUCCESS: 
+                        return authSuccess(state, action);
+                        default: return state;
+        }
+}
+
+
+
+
+
+
+export default authReducer;
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+---> ok, mas 
+
+
+
+essas propriedades/pedaços de dados 
+
+'token' 
+
+
+e 
+
+'userId' 
+
+
+
+
+QUE O PROFESSOR COLOCOu,
+
+ele colocou com 
+
+
+valores/referencias 
+
+COMPLETAMENTE DIFERENTES.... --> 
+
+ele colocou 
+
+
+
+'token: action.idToken,
+userId: action.userId' -------------------> ELE NOS DIZ __ QUE ESPERA (expects) RECEBER ISSO, ESSES VALORES AÍ, POR MEIO DE NOSSA ACTION 'AUTH_SUCCESS'...
+
+
+(mas eu não sei qual versão do código está correta; a minha ou a do professor....)
+
+------------------------------------
+
+
+
+--> mas o error realmente será settado como 'null',
+
+
+e o 
+
+
+'loading' será settado como 'false',
+
+
+PQ 
+
+REALMENTE 
+
+ESTAREMOS 
+
+
+'DONE'...
+
+
+
+-------------------------------------
+
+
+
+
+
+eX:
+
+
+
+
+const authSuccess = (state, action) => {
+    return updateObject(state, {
+                loading: false,
+                error: null,
+                token: action.idToken, ///talvez isto.
+                userId: action.userId //talvez isto
+
+
+    })
+}
+
+
+
+-------------------------------
+
+
+
+
+
+PROFESSOR TAMBÉM 
+
+VAI CRIAR 
+
+UMA 
+OUTRA 
+
+FUNÇÃO AUXILIAR,
+
+
+DE 
+
+'authFail',
+
+a qual 
+
+escreverá 
+
+assim:
+
+
+
+
+const authFail = (state, action) => {
+    return updateObject(state, {error: action.error,
+    loading: false });
+
+
+}
+
+
+
+
+------------------------------------------------
+
+
+(OBS: NUNCA SE ESQUEÇA DO 'loading: false'...!!!! )
+
+
+
+
+
+
+
+
+-----------> OK, NOSSO REDUCER ESTÁ BEM ___LEAN__...
+
+
+
+
+
+
+
+
+
+
+--> professor nos diz que agora DEVEMOS COMBINAR ESSE REDUCER COM NOSSOS OUTROS REDUCERS... (mas eu já fiz isso...).
+
+
+
+ex:
+
+
+
+
+
+
+const reducer = combineReducers({
+      burger: BurgerReducer,
+      order: orderReducer,
+      loading: orderReducer,
+      auth: authReducer
+     
+})
+
+
+
+
+-------------------------------------
+
+
+
+
+ENTRETANTO,
+
+NÓS 
+
+AINDA 
+
+
+NÃO ESTAMOS RECEBENDO 
+TODA 
+
+
+INFO/DADOS/DATA 
+
+de que 
+
+precisamos... ----> isso 
+
+pq 
+
+
+o professor 
+
+escreveu 
+
+
+'token: action.idToken,
+userId: action.userId' --------------> ISSO SIGNIFICA QUE 
+
+
+
+ESSES 
+
+VALORES ESTÃO/PRECISAM SER EXTRÁIDOS 
+
+LÁ 
+
+DA __aCTION__,, 
+
+
+
+LÁ 
+
+DO 
+
+__PAYLOAD__ DA ACTION 'AUTH_sUCCESS'...
+
+
+
+
+
+
+
+--> E SE NÓS DERMOS UMA OLHADA NA ACTION 
+
+
+
+DE 
+
+
+'AUTH_SUCCESS',
+
+
+dentro 
+
+
+dO 
+
+ACTION CREATOR 
+ASSÍNCRONO 
+'authAttempt',
+
+
+PERCEBEREMOS __ QUE 
+
+
+-___NÃO ESTÁ SENDO PASSANDO ESSES DADOS AÍ (extremamente necessários) 
+
+
+
+
+AO CALL/DISPATCH 
+
+
+de 
+
+
+'authSuccess',
+
+visto 
+
+em 
+
+
+'dispatch(authSuccess(response.data));'
+
+
+
+---------------------------------
+
+É POR ISSO QUE DEVEMOS __eXAMINAR AQUELE 
+
+THEN block
+ 
+
+ ___ E __ A 
+
+
+ RESPONSE 
+
+ RECEBIDA 
+
+ DO servidor por meio daquele 
+
+ 'axios.post',
+
+
+ JUSTAMENTE 
+
+ PARA __ QUE CONSIGAMOS DESCOBRIR __A FORMA __ DE EXTRAIR ESSES VALORES/DADOS 
+
+
+ de nossa response...
+
+
+
+ O código que temos lá é este:
+
+
+
+
+
+
+
+ 
+export const authAttempt = (email, password, isSignup) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password, 
+            returnSecureToken: true 
+        }
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';
+        if (!isSignup) {
+            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; 
+        };
+        axios.post(url, authData)
+        .then(
+            response => {
+                console.log(response);
+                dispatch(authSuccess(response.data)); ////EIS O CÓDIGO IMPORTANTE EM QUESTÃO...
+            }
+
+        )
+        .catch(error => {
+            console.log(error);
+            dispatch(authFail(error));
+        })
+    }
+}
+
+
+-------------------------------------------
+
+
+
+'Uncaught Error: Reducer returned undefined during initialization. If the state passed to the reducer is undefined, you must 
+explicitly return the initial state. THe initial state MAY NOT BE UNDEFINED.... if you dont wnat to se a value for this reducer,
+you can use null instead of undefined'... -------> 
+
+
+ISSO ACONTECEU PQ 
+
+PROFESSOR 
+
+
+ESQUECEU 
+
+DE 
+ESCREVER 
+
+
+'state = initialState' NO REDUCER...  ---> se ele não fizer isso, esse 'state' VAI FICAR COMO ___ UNDEFINED__ NA INICIALIZAÇÃO DO APP...
+
+
+--------------------------------------------------------------------------
+
+
+
+
+
+
+
+PROFESSOR EXAMINA O OBJETO 'RESPONSE' obtido ao tentarmos 'login'/'signin'...
+
+
+o objeto 
+fica 
+
+assim:
+
+
+
+
+
+response 
+
+        config 
+        
+        data  -------> professor ABRE ISTO AQUI, que é aquilo que NOS INTERESSA...
+
+        headers 
+
+        request 
+
+        status 
+
+        statusText
+
+
+
+
+
+
+
+DENTRO DE 
+
+'data',
+
+
+é possível ver:
+
+
+
+
+1) displayName
+
+
+2) email 
+
+3) expiresIn 
+
+
+4) idToken 
+
+5) kind 
+
+6) localId 
+
+7) refreshToken 
+
+8) registered: true
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+OK....
+
+
+VAMOS EXPLICAR...
+
+
+'localId' -----> É O _USERID___... (não é tao gigante como o idToken...)
+
+
+
+
+
+
+
+'idToken'... ----> ISSO É IMPORTANTE... ------> essas 
+
+
+SÃO 
+
+
+AS 
+
+
+2 COISAS 
+
+
+QUE 
+
+
+SERÃO 
+
+
+__sALVAS__...  ('localId' e 'idToken'...) -------> ENTRETANTO,
+
+
+
+
+O PROFESSOR __NÃO VAI QUERER ___ SALVAR A 'refreshToken'.... ---> isso fará com que 
+
+
+NOSSAS 
+
+TOKENS SIGAM O COMPORTAMENTO PADRÃO,
+
+QUE 
+
+É 
+
+O DE __eXPIRAR EM APENAS 1 HORA ('expiresIn: 3600'),
+
+
+
+
+QUE É o
+
+
+DEFAULT,
+
+EXPECTATIVA DE VIDA DEFAULT DE UMA TOKEN.... ----------> 
+
+
+
+SE VOCÊ 
+
+
+NÃO QUISER 
+
+QUE 
+
+
+
+SUAS TOKENS EXPIREM EM 1 ÚNICA HORA NOS SEUS APPS,
+
+
+VOCê 
+
+TEM QUE fazer algumas maracutaias EXTRAS, COMO POR EXEMPLO ____ ARMAZENAR 
+
+A 'refreshToken'... ------------------> 
+
+
+
+
+
+COMO O PROFESSOR VAI QUERER __ QUE NOSSAS TOKENS ___ NÃO PASSEM DE 1 HORA DE VIDA,
+
+
+
+ele __NÃO VAI QUERER MANTER/ARMAZENAR 
+
+O 
+
+'refreshToken',
+
+POIS 
+
+
+
+fora essa função aí, específica, de QUERER QUE A TOKEN DURE MAIS DE 1 HORA,
+
+
+ele 
+é 
+
+INÚTIL... --> é inútil o armazenar, em casos que não envolvam essa questão do 
+
+'expiresIn'...
+
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+RESUMINDO: EM NOSSO APLICATIVO,
+
+PESSOAS VÃO TER DE LOGAR DNV, PASSADA 1 HORA...
+
+
+
+-------------------------------------------------------
+
+
+
+PARA 
+
+SALVAR
+
+ESSES 
+
+DADOS,
+
+o 
+
+'localId' 
+
+
+
+e 
+o 
+
+
+'idToken',
+
+
+
+DEVEMOS 
+
+
+
+ESCREVER MAIS ALGUNS CÓDIGOS...
+
+
+
+
+-------------------------
+
+
+
+
+
+
+O professor NOS DIZ QUE RECEBEMOS
+
+
+
+
+
+
+'o 
+
+'localId' 
+
+
+
+e 
+o 
+
+
+'idToken' 
+
+''
+
+
+
+LÁ NO ARQUIVO 
+
+'auth.js'
+
+no arquivo 'auth.js',
+
+
+JUSTAMENTE 
+
+
+NAQUELE 
+
+TRECHO 
+
+
+
+EM QUE 
+
+EXECUTAMOS 
+
+'axios.post(url, authData)'....
+
+
+
+
+
+ex:
+
+
+export const authAttempt = (email, password, isSignup) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password, 
+            returnSecureToken: true  ///propriedade obrigatória para FUNCIONAMENTO DO 'REST API' do firebase... ---> deve sempre estar settada como 'true'...
+        }
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';/// url usada para SIGNUP/CADASTRO....
+        if (!isSignup) {
+            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; ///url/endpoint usado para ___SIGNIN/LOGIN...
+        };
+        axios.post(url, authData) ///ESSA 'key' ([API_KEY]) FOI OBTIDA LÁ DO SITE DO GOOGLE FIREBASE, na engrenagem, e depois em 'Configurações do Projeto' > 'Chave de API da web'...
+        .then(
+            response => {
+                console.log(response);
+                dispatch(authSuccess(response.data))
+            }
+
+        )
+        .catch(error => {
+            console.log(error);
+            dispatch(authFail(error));
+        })
+    }
+}
+
+-------------------------------------
+
+
+
+
+
+
+A parte importante é aquele 
+
+
+'
+dispatch(authSuccess(response.data));'  -----------> 
+
+
+
+
+ISSO 
+
+
+AÍ 
+
+
+É BASICAMENTE O PARÂMETRO 
+
+
+'authData' em 'authSuccess', 
+
+que 
+
+
+é 
+
+então usado na linha de código 
+
+'authData: authData'...
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+
+
+
+E É EXATAMENTE POR ISSO QUE VAMOS PODER ESCREVER 
+
+'userId: action.authData.localId' 
+
+e 
+
+também
+
+'localId: action.authData.idToken' , 
+
+
+LÁ 
+
+
+
+
+NA FUNÇÃO AUXILIAR 
+
+
+'authSuccess',
+
+em 
+
+'authReducer.js'...
+
+
+
+-------------------------------
+
+
+
+Certo... mas a SINTAXE QUE O PROFESSOR UTILIZA É UM POUCO DIFERENTE... ---> acho que 
+
+ele 
+
+usou 
+essa sintaxe JUSTAMENTE PQ ELA É __FLAT___, o que evita que 
+
+NÓS 
+
+TENHAMOS 
+
+QUE 
+
+FAZER OUTRa 'DEEP COPY' do state.... --------> 
+
+
+
+a sintaxe que 
+
+ele 
+
+usa 
+
+é 
+
+
+'export const authSuccess = (idToken, userId) => {
+    return {
+        type: actionTypes.AUTH_SUCCESS,
+        token: idToken,
+        userId: userId
+    }
+}'
+
+
+
+
+----------------------
+
+
+VAI SER BASICAMENTE O MESMO CÓDIGO QUE TÍNHAMOS ANTES,
+
+MAS 
+
+AGORA 
+
+
+com 
+
+um 
+
+state/propriedades mais 'FLAT'.... ( o que é mt bom para o redux....)
+
+
+
+-------------------------------------
+
+
+
+CERTO, ISSO SIGNIFICA, AGORA,
+
+QUE 
+NOSSO 
+
+REDUCER 
+VAI 
+
+
+TENTAR (e conseguir) 
+
+
+extrair 
+
+
+'token'
+ 
+
+ e 
+
+ 'userId'
+
+
+
+ DE DENTRO DO PAYLOAD DE NOSSA ACTION, 
+
+ PARA 
+
+ ENTÃO 
+
+
+ UPDATAR O STATE GLOBAL DO REDUX 
+ com 
+
+ esses dados aí....
+
+
+ (
+
+
+     ex:
+
+
+
+        const initialState = {
+        token: null,
+        userId: null,
+        error: null,
+        loading: false
+}
+
+ )
+
+
+
+ ------------------------
+
+
+ Certo... mas não acabamos por aí, pois esquecemos um detalhe... -->
+  
+  como 
+
+  nós subdividimos 
+
+  'authData' 
+
+
+  em 
+
+  'token' 
+
+  e 
+
+  'userId',
+
+  nós precisamos 
+
+  EDITAR 
+
+  AQUELE 
+
+
+
+  'dispatch(authSuccess(response.data));',
+
+  LÁ 
+
+
+
+  NO 
+
+
+  'axios.post' 
+
+
+
+  EM 
+
+
+  'authAttempt',
+
+  LÁ NO
+
+
+  'auth.js'...
+
+
+
+  ex:
+
+
+
+
+
+  export const authAttempt = (email, password, isSignup) => {
+    return (dispatch) => {
+        dispatch(authStart());
+        const authData = {
+            email: email,
+            password: password, 
+            returnSecureToken: true  
+        }
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4';
+        if (!isSignup) {
+            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; 
+        };
+        axios.post(url, authData) 
+        .then(
+            response => {
+                console.log(response);
+                dispatch(authSuccess(response.data.idToken, response.data.localId)); ////////////EIS O CÓDIGO EM QUESTÃO.
+            }
+
+        )
+        .catch(error => {
+            console.log(error);
+            dispatch(authFail(error));
+        })
+    }
+}
+
+
+
+
+
+-------------------------------------
+
+
+
+
+E é claro que você sempre pode verificar o nome dessas propriedades 
+
+LÁ NO CONSOLE.LOG....(nesse caso, são 'localId' e 'idToken'...)
+
+
+
+-----------------------------------------
+
+
+
+
+
+--> AGORA NÓS TESTAMOS ISSO:
+
+
+
+vamos 
+
+
+até 
+
+
+o 
+
+
+
+
+NOSSO APP 
+
+E 
+ENTÃO 
+
+
+
+FAZEMOS LOGIN.... ---> vamos 
+
+
+observar 
+
+que 
+
+
+
+NÓS VAMOS CONSEGUIR 
+
+FAZER 'LOGIN' no nosso app, no nosso servidor.... --> 
+
+
+e 
+
+se examinarmos o 
+
+'REDUX DEV TOOLS',
+
+lá 
+
+na aba 'state' 
+
+da 
+
+action
+'AUTH_SUCCESS',
+
+veremos 
+
+que 
+
+
+
+DENTRO DO SUBSTATE DE 
+
+'auth'
+
+
+SERÁ __ENCONTRADA __ UMA PROPRIEDADE 
+
+'token',
+
+
+com 
+
+nosso 
+
+'idToken'
+
+
+ARMAZENADO COM SUCESSo... ---> isso signfica 
+
+QUE 
+
+
+__NOSSO USUÁRIO __ ESTÁ EFETIVAMENTE ____ LOGGADO NO NOSSO SITE (e seu 'localId'/'userId' e 'idToken' __eSTÃO ARMAZENADOS EM SEU BROWSER....), 
+
+USANDO 
+
+
+
+1) react 
+
+2) redux 
+
+3) firebase (limitação: senhas devem sempre ter 6 caracteres, '.json/' nas routes...)
+
+4) redux-thunk
+
+5) tokens (sempre são usadas TOKENS, em aplicativos react...)
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+-> tudo funcionou... ---> estamos ARMAZENANDO O 'AUTHENTICATION STATUS'
+
+
+
+NO 
+
+BROWSER DO USUÁRIO, NO STATE DO REDUX DO BROWSER  DO USUÁRIO....
+
+
+
+
+
+---> mas O QUE NÃO 
+
+ESTÁ FUNCIONANDO:
+
+
+
+1) O SPINNER de 'loading' não está aparecendo enquanto fazemos 'login'....
+
+
+2) O ERROR HANDLING AINDA NÃO FUNCIONA...
+
+
+3) AINDA NÃO CONSEGUIMOS _USAR EFETIVAMENTE_ ESSE 'TOKEN' PARA 
+acessar 
+
+recursos que, normalmente,
+ 
+ não seríamos/somos capazes de acessar (guards, os quais ainda precisamos codar, é claro.).

@@ -1,0 +1,356 @@
+
+
+
+
+
+
+
+---> NAS ÚLTIMAS LIÇÕES, VIMOS ALGUMAS DAS FEATURES 
+
+JAVASCRIPT MAIS RECENTES, AS QUAIS VEREMOS NESSE CURSO...
+
+
+
+
+
+
+
+---> feature importante ---> REFERENCE E PRIMITIVE TYPES....
+
+
+
+
+
+
+
+---> se eu criar uma constante 
+
+
+'const number = 1';
+
+
+
+
+
+ESSE NEGÓCIO SERÁ UM 'PRIMITIVE TYPE'...
+
+
+
+
+
+ISSO QUER DIZER QUE SE EU CRIAR 
+
+UMA SEGUNDA CONST,
+
+
+a 
+
+
+const 'num2' 
+
+
+E ENTÃO ASSIGNAR O VALOR DE 'number' A ELA, 
+
+
+TEREI UMA __CÓPIA VERDADEIRA__ DA PRIMEIRA CONSTANTE...
+
+
+
+ex:
+
+
+
+
+const number = 1;
+const num2 = number; //////////ISSO AQUI É UMA CÓPIA DA PRIMEIRA CONSTANTE. É INDEPENDENTE, POIS É UM PRIMITIVE TYPE.
+
+
+
+console.log(num2); ///vai render '1' TAMBÉM, mas será o VALOR COPIADO DE 'number' (que é 1) DENTRO DO 'num2'...
+
+
+---------------------------------------------------------------------
+
+
+
+
+
+
+NUMBERS, STRINGS E BOOLEANS ---> todos eles são PRIMITIVE TYPES ---> sempre 
+
+que você REASSIGNA/ARMAZENA UMA VARIÁVEL EM ___OUTRA VARIÁVEL__, 
+VOCÊ ACABA COPIANDO O VALOR 
+
+NESSA OUTRA VARIÁVEL...
+
+
+
+
+
+JÁ 
+
+
+OBJECTS E ARRAYS SÃO ___REFERENCE TYPES___.... --> 
+
+
+
+professor nos mostra um exemplo...
+
+
+------------------------------------
+
+
+
+
+PROFESSOR CRIA UMA CONSTANTE 
+
+'person'...
+
+
+e também 
+
+uma segunda constante, 'secondPerson'...
+
+
+
+
+
+ex:
+
+
+const person = {
+    name: 'Max'
+}
+
+
+
+const secondPerson = person;
+
+
+
+
+console.log(secondPerson);
+
+
+
+--------------------------------
+
+
+
+Se ele console.loggar 
+
+'secondPerson', ele FICARÁ COM O MESMO VALOR DA PRIMEIRA PERSON, DE FATO... ---> mas O QUE 
+
+INTERESSA AQUI 
+
+É QUE O VALOR DAQUELE OBJETO NÃO SERÁ, NA VERDADE, COPIADO DE VERDADE.... (aquele 'secondPerson', aquela constante,
+ 
+ SEGURA APENAS UM __POINTER__ AO OBJETO 'person', e NÃO UMA CÓPIA DO objeto 'person'...)
+
+
+
+
+
+ EM VEZ DISSO, 
+
+ o 
+
+ OBJETO 'PERSON' 
+
+
+ É REALMENTE ARMAZENADO NA MEMÓRIA...
+
+
+ E NA CONSTANTE 'PERSON' NÓS APENAS ARMAZENAMOS __UM POINTER___ Àquele objeto/lugar na memória....
+
+
+
+E QUANDO 
+
+
+NÓS ASSIGNAMOS 
+
+
+'person' COMO VALOR DE 'secondPerson',
+
+
+APENAS AQUELE __POINTER__ É COPIADO.
+
+
+----------------------------
+
+
+
+
+ PODEMOS 
+
+ VER QUE ESSE É O CASO SE NÓS 
+
+
+ ALTERARMOS O  valor de 'name' em 'person' LOGO APÓS DE TER 
+
+ ARMAZENADO SEU POINTER NA CONSTANTE 'secondPerson'...
+
+
+
+
+ ex:
+
+
+
+
+
+
+ 
+const person = {
+    name: 'Max'
+}
+
+
+
+const secondPerson = person;
+
+
+
+person.name = 'Manu';
+
+
+console.log(secondPerson); ///ISSO VAI PRINTAR ' { name: 'Manu'} ', e não 'max',  POIS AQUI TRATA-SE DE REFERENCE VALUES/types...
+
+
+
+-------------------------------------
+
+
+
+
+
+PQ O SECONDPERSON __ APONTA___ PARA O MESMO LUGAR __ DO CÓDIGO __ AO QUAL __'PERSON'___ APONTA___...
+
+
+
+
+
+
+
+
+----> O MESMO ACONTECE PARA ARRAYS... ---> 
+
+
+
+SE VOCÊ '''COPIAR''' UM ARRAY  como esse 
+
+
+e então VOCÊ TROCAR UM ELEMENTO DE UM ARRAY, 
+
+
+O ARRAY QUE FORA ''COPIADO'' TAMBÉM MUDARÁ... --> e há jeitos de 'go around' isso.... ----> 
+
+
+ISSO VIRA IMPORTANTE NO REACT ...  --->  PQ ISSO PODE LEVAR 
+
+
+A COMPORTAMENTOS INESPERADOS SE VOCê 
+
+
+TENTAR COPIAR ARRAYS/OBJECT DESSA FORMA... --> comportamentos como:
+
+
+eu manipulo uma coisa em um lugar do APP, e AÍ DO NADA ___ ALGO NO OUTRO LADO DO APP (
+     com o mesmo objeto na memória/com pointers ao mesmo lugar na memória) __ SE 
+COMPORTA DA MESMA FORMA... (Acidentalmente).... ---> 
+
+
+É POR ISSO 
+
+
+QUE VAMOS TER DE APRENDER MANEIRAS 
+
+
+DE COPIAR ARRAYS/OBJETOS DE UMA MANEIRA 'IMUTÁVEL' ----> o que quer dizer que NÓS 
+
+VAMOS QUERER COPIAR __REALMENTE COPIAR __ O OBJETO/array, e não apenas 
+
+COPIAR 
+
+O POINTER DAQUELA COISA....
+
+
+
+
+
+
+----> OK, E COMO PODEMOS FAZER ISSO?
+
+
+
+
+BEM, PODEMOS USAR __O SPREAD OPERATOR____....
+
+
+
+por exemplo,
+ 
+ NÓS CRÍAMOS UM NOVO ELEMENTO/CONSTANTE 'secondPerson' 
+
+ E ENTÃO 
+
+
+ VAMOS __'SPREAD'____ OS ELEMENTOS 
+
+
+ DE 'person'
+
+ DENTRO DESSE NOVO ELEMENTO, EVITANDO, COM ISSO, 
+
+
+ A MERA CÓPIA DO POINTER, e conseguindo EFETIVAMENTE 
+
+ COPIAR 
+
+ O CONTEÚDO/ARRAY OU OBJETO EM SI...
+
+
+
+ ex:
+
+
+
+
+
+ const person = {
+     name: 'Max'
+ };
+
+
+
+ const secondPerson = {
+     ...person
+ }
+
+
+ ------------------------
+
+
+ ISSO VAI PUXAR PARA FORA AS PROPRIEDADES (KEY-VALUE PAIRS) 
+
+ DAQUELE OBJETO 'person' e então os COLOCARÁ DENTRO 
+
+ DE 
+
+ 'secondPerson'...  ----> OU SEJA, ASSIM NÓS __REALMENTE COPIAMOS ___ UM ARRAY/OBJETO....
+
+
+
+ RESUMINDO:
+
+
+ SE QUEREMOS COPIAR 
+
+
+ UM OBJETO/ARRAY, SEMPRE DEVEMOS 
+
+
+ ___COPIAR AS PROPRIEDADES___ EM UM NOVO OBJETO/ARRAY,
+
+  e nunca O OBJETO/ARRAY ORIGINAL INTEIRO...

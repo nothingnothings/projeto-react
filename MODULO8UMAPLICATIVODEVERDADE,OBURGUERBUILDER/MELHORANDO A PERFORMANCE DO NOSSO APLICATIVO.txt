@@ -1,0 +1,1426 @@
+
+
+
+
+
+
+
+
+
+---> CERTO,
+
+
+
+PROFESSOR NOS DISSE O QUE PENSA SOBRE OS PROPTYPES (devemos os utilizar quando 
+
+ESTIVERMOS EM UMA EQUIPE DE DESENVOLVIMENTO, OU QUANDO ESTIVERMOS 
+
+DESENVOLVENDO UMA TPL - THIRD PARTY LIBRARY)....
+
+
+
+
+
+
+
+
+
+
+----> CERTO, 
+
+
+
+
+MAS 
+
+E QUANTO 
+
+
+à 
+
+
+
+'pureComponents' e ao 'shouldComponentUpdate()'?
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+NÓS __NÃO ESTAMOS__ OS UTILIZANDO, ESSAS FEATURES AÍ, NO NOSSO APLICATIVO...
+
+
+
+
+
+
+
+
+
+---> DEVEMOS _ANALISAR__ __ O NOSSO APLICATIVO, ANTES DE MAIS NADA...
+
+
+
+
+
+DEVE-SE FORMULAR A SEGUINTE/SEGUINTES PERGUNTAS:
+
+
+
+
+
+
+
+
+
+1) TEMOS ALGUM STATE/PROP CHANGE que __TRIGGA/ESTÁ TRIGGANDO UM RE-RENDER___, SENDO 
+ESSE RE-RENDER DESNECESSÁRIO? -------> para isso, devemos usar as DEVTOOLS...... 
+
+
+
+
+RESPOSTA: professor admite que A MAIOR PARTE DAS COISAS/FUNCIONALIDADES DO NOSSO APLICATIVO, 
+NO PRESENTE, 
+__VÃO TRIGGAR/ESTÃO REALMENTE __MUDANDO A __UI___, E, POR CONSEQUÊNCIA, ESTÃO TRIGGANDO updates e (por consequência) __RE-RENDERS DE NOSSOS COMPONENTS__...
+
+--> ISSO QUER DIZER QUE 
+
+_NÓS NÃO DEVEMOS ESTAR PERDENDO MUITA PERFORMANCE NESSE APP, pq esses re-renders SÃO NECESSÁRIOS, SÃO AS COISAS QUE 
+MOSTRAM MUDANÇAS NA PÁGINA/CONSTROEM O BURGER... 
+
+
+
+---> e professor elabora a lição:
+
+
+USAR MUITOS 'PURECOMPONENTS' PARA 
+
+__REALIZAR __ __ UM MONTE __ DE CHECKS de 'shouldComponentUpdate()' 
+
+___DESNECESSÁRIOS__ pode acabar deixando as COISAS ___AINDA PIORES__ EM QUESTÃO 
+
+DE PERFORMANCE.... --> às vezes é melhor ter uns 2-3 unecessary re-renders do que 
+
+TENTAR ELIMINAR TODOS OS UNECESSARY RE-RENDERS POR MEIO DE UMA PORRADA DE 
+
+'PURECOMPONENTS' e 'shouldComponentUpdate()'s...
+
+
+
+
+
+---------------------------------------------------------------------------------
+
+
+
+
+
+CERTO, MAS AINDA TEMOS QUE CHECAR NOSSO CÓDIGO...
+
+
+
+
+
+PONTOS CRUCIAIS QUE DEVEM SER CHECADOS:
+
+
+
+
+
+
+1) nosso CONTAINER 'BurgerBuilder'... -----> NESSE CONTAINER AÍ, 
+
+
+NÓS FIZEMOS/FAZEMOS O __CHANGE__ DO STATE__... ------> CERTO, 
+
+
+
+MAS SEMPRE QUE O STATE É ALTERADO POR MEIO DE SUA AÇÃO, __ESSE ___ UPDATE DO STATE ___ 
+
+É REALMENTE NECESSÁRIO__, E REALMENTE PRECISAMOS DO RE-RENDER A PARTIR DE SUA MUDANÇA....
+
+
+
+
+
+
+ 
+CÓDIGO JSX RETORNADO POR 'BurgerBuilder':
+
+
+
+
+    return (
+      <Aux>
+        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+        <OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice} clicked={this.purchaseCancelHandler} success={this.purchaseContinueHandler}></OrderSummary>
+        </Modal>
+        <Burger ingredients={this.state.ingredients}/>
+        <BuildControls 
+        disabled={disabledInfo} 
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}
+         ordered={this.purchaseHandler}
+      
+         />
+        
+      </Aux>
+    );
+
+
+
+-------------------------------------------------------
+
+
+
+
+ENTRETANTO, 
+
+
+PROFESSOR APONTA QUE 
+
+
+EXISTE ___ UM ÚNICO ELEMENTO AQUI __ QUE PODE SER ALTERADO, ___ QUE PODE 
+
+SER 
+
+MODIFICADO __ PARA NÃO SOFRER RE-RENDER SEMPRE.... ---------> 
+
+
+
+E ESSE COMPONENT AÍ É __o COMPONENT____ 
+
+
+
+''''MODAL''''...
+
+
+
+''<Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>'...
+
+
+
+-----------------------------------------------
+
+
+
+
+
+ESSE COMPONENT AÍ ____WRAPPA___ O 'OrderSummary'.....
+
+
+
+ex:
+
+
+
+<Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+        <OrderSummary 
+
+        ingredients={this.state.ingredients} 
+        price={this.state.totalPrice} 
+        clicked={this.purchaseCancelHandler} 
+        success={this.purchaseContinueHandler}>
+        
+        </OrderSummary>
+        </Modal>
+
+
+---------------------------------------------------
+
+
+
+
+
+--> CERTO, 'OrderSummary' É WRAPPADO 
+
+
+PELO 
+
+
+'MODAL'... --------> e isso significa que 
+
+
+___SEMPRE ___ QUE OS 
+
+
+'''INGREDIENTS'''  ou o 'PRICE' __ MUDAM, 
+
+
+
+
+COMO ESSES NEGÓCIOS SÃO __PROPS __ de 
+
+
+
+'OrderSummary',
+
+
+
+
+O __oRDERSUMMARY__ EM SI SERÁ ___RE-RENDERIZADO___ A PARTIR 
+
+
+DE SUA MUDANÇA...
+
+
+
+
+
+
+
+
+------>>>>> CONTUDO, SE O ___MODAL____ NÃO ESTIVER/NÃO ESTÁ VISÍVEL (modal é o negócio que 
+
+aparece quando clicamos em 'order'), 
+
+
+NÓS REALMENTE ___NÃO PRECISAMOS ___ RE-RENDERIZAR 
+
+
+O 'OrderSummary'... ------------>>>>>> OU SEJA, 
+
+
+O RE-RENDER 
+
+
+DO 
+
+
+ORDERSUMMARY ____SÓ FAZ SENTIDO____ QUANDO 
+
+O 
+
+
+'___MODAL____'', O COMPONENT__ MODAL ___ESTIVER __ VISÍVEL___.....
+
+
+
+-----------------------------------------
+
+
+
+
+OU SEJA, ISSO É ALGO QUE 
+
+
+TALVEZ SEJA BOM NÓS CHECARMOS/CONTROLARMOS....
+
+
+
+---> PARA CONSERTAR ESSE PROBLEMA ,
+
+
+PRIMEIRAMENTE 
+
+
+
+DEVEMOS 
+
+ENCONTRAR __EM QUE PONTO/MOMENTO' ___ 
+
+
+'OrderSummary' 
+
+
+
+É ___RE-RENDERIZADO__....
+
+
+
+
+--> ao examinar o REACT DEVTOOLS, no google chrome,
+
+
+percebemos 
+
+
+no PROFILER que 
+
+
+o 
+
+
+ORDERSUMMARY 
+
+
+
+É __RE-RENDERIZADO __ ANTES DO MODAL___ ...
+
+
+
+
+
+---------------------------------------
+
+
+
+CONTUDO, O PROFESSOR DIZ QUE 
+
+PODEMOS VER MELHOR ESSE EXATO MOMENTO SE NÓS 
+
+
+___aDICIONARMOS UM LIFECYCLEHOOK___ 
+
+
+AO 
+
+'OrderSummary'... ---------> 
+
+
+
+É POR ISSO QUE VAMOS 
+
+
+ATÉ O COMPONENT 
+
+
+DE ORDERSUMMARY 
+
+E ENTÃO, primeiramente, 
+
+
+
+__CONVERTEMOS___O  COMPONENT 
+
+
+'OrderSummary' 
+
+
+
+
+
+EM ___ UM CLASS-BASED COMPONENT ___ (para que o uso 
+
+dos 
+
+LIFECYCLE HOOKS SEJA POSSÍVEL)...
+
+
+
+
+ex:
+
+
+
+
+import React, { Component } from 'react';
+
+
+import Aux from '../../../hoc/Auxiliary';
+
+
+
+import Button from '../../UI/Button/Button';
+
+
+
+
+class OrderSummary extends Component  {
+
+
+    
+    capitalizeFirstLetter = string =>  {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+
+
+    render() {
+
+        const ingredientSummary = Object.entries(this.props.ingredients);
+    console.log(ingredientSummary);
+
+
+
+        return (
+            <Aux>
+            <h3>Your Order</h3>
+            <p>A delicious burger with the following ingredients:</p>
+            <ul>
+                <li>{this.capitalizeFirstLetter(ingredientSummary[0][0])}: {this.props.ingredients.salad}</li>
+                <li>{this.capitalizeFirstLetter(ingredientSummary[1][0])}: {this.props.ingredients.bacon}</li>
+                <li>{this.capitalizeFirstLetter(ingredientSummary[2][0])}: {this.props.ingredients.cheese}</li>
+                <li>{this.capitalizeFirstLetter(ingredientSummary[3][0])}: {this.props.ingredients.meat}</li>
+            </ul>
+            <h2>Total Price: $ {this.props.price.toFixed(2)}</h2>
+            {/* <button onClick={this.props.clicked}>CANCEL</button>
+            <button>CONTINUE</button> */}
+            <Button clicked={this.props.success} btnType="Success">
+            CONTINUE
+            </Button>
+            <Button clicked={this.props.clicked} btnType="Danger">
+            CANCEL
+            </Button>
+    
+            </Aux>
+
+)
+
+
+
+    }
+
+
+   
+
+
+
+  
+}
+
+
+
+export default OrderSummary
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+CERTO.
+
+
+
+ISSO FEITO,
+
+
+
+
+
+
+AGORA DEVEMOS __IMPLEMENTAR ___ UM MÉTODO PARA VER __QUANDO __ O COMPONENT 
+
+
+'OrderSummary'  REALMENTE É __UPDATADO__... ('updata-se'...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> PARA ISSO, PROFESSOR VAI USAR 
+
+
+
+'componentWillUpdate()'   (que é um MÉTODO/LIFECYCLE HOOK __BEM VELHO__...) --> professor diz que SE O NOSSO REACT NÃO SUPORTA MAIS ESSE NEGÓCIO, DEVEMOS USAR 'componentDidUpdate'...
+---> professor admite que 
+
+AQUI ELE SÓ QUER MOSTRAR 
+
+ALGO PRÓPRIO DO UPDATING PROCCESS, NÃO PRECISA SER 'componentWillUpdate', poderia ser 'componentDidUpdate', não faz diferença qual dos dois 
+
+você utiliza nesse exemplo/demonstração dele...
+
+
+
+
+ex:
+
+
+
+class OrderSummary extends Component  {
+
+
+componentDidUpdate() {
+    console.log('[OrderSummary] WillUpdate');
+}
+
+
+
+}
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+---> professor vai recarregar o código e pressionar um dos botões...
+
+
+
+
+
+VAMOS 
+
+
+VER 
+
+
+
+
+
+'WillUpdate' 
+
+no console,
+
+
+
+
+MESMO ESSE 
+
+
+'ORDERSUMMARY' 
+
+
+ESTANDO INVISÍVEL AOS OLHOS DE NÓS, USUÁRIOS da página.... ---> é por isso 
+
+
+
+QUE __RE-RENDERIZAR__ ESSE NEGÓCIO TODA SANTA VEZ QUE 
+O RESTANTE 
+
+DOS PROPS/ELEMENTOS 
+
+É ATUALIZADO/RE-RENDERIZADO É ESTUPIDEZ.
+
+
+
+
+
+----> É POR ISSO QUE DEVEMOS DEIXAR DE RE-RENDERIZAR ESSE COMPONENT 
+A PARTIR 
+
+DOS UPDATES DE 
+
+'ingredients' e de 'price'... 
+
+
+
+------------------------------
+
+
+
+
+AGORA DEVEMOS VER SE ISSO 
+
+
+
+MUDA, SE ESSA SITUAÇÃO SUBOPTIMIZADA ___MUDA __ SE NÓS 
+
+
+
+__iMPEDIRMOS___ QUE 
+
+
+'Modal' RE-RENDERIZE 
+
+DE FORMA DESNECESSÁRIA.... 
+
+
+
+
+
+
+---> PARA ISSO, VAMOS 
+
+ATÉ 
+
+
+
+
+o component 'Modal'... --> também o transformamos em um 
+
+
+CLASS-BASED COMPONENT, PARA QUE 
+
+O USO DOS 
+
+LIFECYCLES SEJA POSSÍVEL... (e para que possamos USAR 
+
+'shouldComponentUpdate'...)
+
+
+
+
+
+
+
+
+
+---------------------------------
+
+
+ALTERNATIVAMENTE, EXPLICA O PROFESSOR, VOCê PODERIA 
+
+
+WRAPPAR 
+
+
+O COMPONENT QUE VOCÊ ESTÁ EXPORTANDO ('Modal') com 
+
+
+'React.memo()'....
+
+
+
+
+ex:
+
+
+
+
+export default React.memo(Modal); ---------------->
+
+
+
+
+
+
+
+ESSA SINTAXE VAI TER O ___MESMO EFEITO___ E MESMO IMPACTO
+ 
+
+ DA UTILIZAÇAÕ DE 
+
+
+
+ 'shouldComponentUpdate' no nosso component...
+
+
+
+
+
+ ---------------------------------------------------
+
+
+
+
+ VAMOS VER, AGORA, SE CONSEGUIMOS 
+
+ CONTROLAR 
+
+
+ O PROCESSO DE UPDATE DE 'OrderSummary'
+
+
+
+ POR MEIO DO ___sTOP__ DO 
+
+
+ UPDATING PROCCESS DO 'MODAL'...
+
+
+
+
+
+
+ ---> 
+
+
+
+ Certo, vamos lá e escrevemos 
+
+
+
+ 'shouldComponentUpdate(nextProps, nextState) {
+     
+ }' 
+
+
+
+ (SIM, 'nextProps' e 'nextState' são PARÂMETROS NECESSÁRIOS).
+
+
+
+
+ ----------------> Certo,
+
+
+
+ agora o professor diz que 
+
+
+
+ ___ELE SÓ VAI QUERER ___ QUE 
+
+ O COMPONENT 
+
+
+
+ 'MODAL' ____SEJA __ UPDATADO (shouldComponentUpdate --> '''YES!!!!''') 
+
+
+
+ SE 
+
+ O 
+
+ 
+
+ PROP DE 'show' (props.show) 
+
+
+ ___FOR ALTERADO___..... ( ou seja, se O ___MODAL FOR EFETIVAMENTE MOSTRADO__....)...
+
+
+
+
+
+ ex:
+
+
+
+
+ class Modal extends Component {
+
+
+
+     shouldComponentUpdate(nextProps, nextState) {
+         if (nextProps.show !== this.props.show) {
+
+         }
+     }
+ }
+
+
+
+
+
+
+
+ ----------------------------------
+
+
+
+ OU SEJA 
+
+
+ 'se o 'show' do PRÓXIMO PROPS ('nextProps') FOR
+
+
+ DIFERENTE DO 'props.show' ATUAL (this.props.show), 
+
+
+ VOU QUERER RETORNAR ALGUMA COISA'...
+
+
+
+
+ ---------------------------------------
+
+
+
+
+ 
+
+ ex:
+
+
+
+ 
+ class Modal extends Component {
+
+
+
+     shouldComponentUpdate(nextProps, nextState) {
+         if (nextProps.show !== this.props.show) {
+             return true;
+         }
+     }
+ }
+
+
+-----------------------------------------
+
+
+
+EM OUTRAS PALAVRAS: 
+
+SE 
+
+O '''NOVO''' PROP 
+
+'show' 
+
+FOR DIFERENTE EM RELAÇÃO AO PROP 
+
+
+ATUAL (this.props.show),
+
+
+VOU QUERER 
+
+
+QUE 
+
+ESSE shouldComponentUpdate RETORNE 'true' (ou seja, 
+
+o component será __UPDATADO__....) -----> 
+
+
+
+CASO CONTRÁRIO, ELE VAI RETORNAR FALSE...
+
+
+
+O PROFESSOR SIMPLIFICA, USA ESSA SINTAXE AQUI, QUE FAZ A MESMA COISA (ele vai checar se esse statement é correto, e então vai retornar 'true/false'):
+
+
+
+ class Modal extends Component {
+
+
+
+     shouldComponentUpdate(nextProps, nextState) {
+         return nextProps.show !== this.props.show;
+ }
+
+
+
+
+
+-------------------------------
+
+
+
+
+----> certo.. o professor também 
+
+
+diz que 
+
+
+vai 
+
+usar 
+
+
+'componentWillUpdate' 
+
+dentro desse component
+
+
+'Modal'...
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+class Modal extends Component {
+
+
+
+
+    shouldComponentUpdate(nextProps, nextState) {
+        // if(nextProps.show !== this.props.show) { //MESMA COISA QUE O CÓDIGO DE BAIXO, MAS O CÓDIGO DE BAIXO É MAIS SIMPLIFICADO (e melhor).
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+
+        return nextProps.show !== this.props.show;
+    }
+
+
+
+    componentWillUpdate() {
+        console.log('[Modal] componentWillUpdate')
+    }
+
+
+}
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+AGORA, COM ESSAS MUDANÇAS (com a mudança 
+
+do 
+
+'shouldComponentUpdate' aplicado 
+
+
+AO prop 
+
+'SHOW' de 'modal',  ou seja,
+
+
+a atribuição 
+
+
+das mudanças do prop 'show' ao 
+
+
+
+
+UPDATE DE 'MODAL' ),
+
+
+
+NOSSO 
+
+
+
+MODAL __ SÓ SERÁ RE-RENDERIZADO (updatado) 
+
+QUANDO 
+
+
+O 
+
+
+PROP 'show' É ALTERADO/UPDATADo (sofre alguma alteração em relaçaõ ao seu 
+
+passado, ao seu 'this.props.show')... ----------> E ISSO 
+
+
+VAI __aCABAR__ COM O RE-RENDER DESNECESSÁRIO 
+
+
+DE 
+
+'ORDERSUMMARY',
+
+
+
+PQ O ORDERSUMMARY
+
+
+
+___DEPENDE DO MODAL__ (do lifecycle do MODAL) 
+
+
+para ser renderizado (
+
+    basta olharmos o código 
+
+    em 'burgerbuilder', em que 
+
+    o 'OrderSummary' É __WRAPPADO___ PELO MODAL__...
+
+    ex:
+
+
+   <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+        <OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice} clicked={this.purchaseCancelHandler} success={this.purchaseContinueHandler}></OrderSummary>
+        </Modal>
+
+
+
+)
+
+---------------------------------
+
+
+
+CERTO,
+
+
+
+E A PARTIR DESSE CÓDIGO AÍ, 
+
+NÃO 
+
+
+VAMOS VER 
+
+
+NENHUM CONSOLE.LOG 
+
+
+
+DE 
+
+
+'Modal - WillUpdate' 
+
+e 
+
+
+de 
+
+'[OrderSummary] WillUpdate' 
+
+
+A PARTIR DE BUTTON CLICKS DOS INGREDIENTS... (pq o shouldComponentUpdate do MODAL n depende disso),
+
+
+
+SÓ VAMOS 
+
+
+VER 
+
+ESSES NEGÓCIOS OUTPUTTADOS 
+
+NO CONSOLE QUANDO ___o BOTÕA 
+
+'ORDER NOW' É CLICADO,
+ 
+
+ POIS ELE É UM ELEMENTO/COMPONENT 
+
+
+ QUE 
+
+ INTERFERE COM O 
+
+
+
+ PROP DE 'show', do qual 'shouldComponentUpdate' de MODAL depende...
+
+
+
+ ------------------------
+
+
+ OK, NÓS DEFINITIVAMENTE 
+
+
+ 
+
+ MELHORAMOS NOSSA APPLICATION.... 
+
+
+
+
+
+--> E AQUI PODEMOS VER CLARAMENTE QUE O 
+
+
+'WRAPPING ELEMENT' 
+
+
+CONTROLA 
+
+
+__dIRETAMENTE __ O UPDATE PROCCESS__ DO 
+
+'WRAPPED ELEMENT'___...
+
+
+
+
+
+
+OrderSummary ----------> TEORICAMENTE ELE 
+
+É/ESTÁ ____INSERIDO DENTRO DO 
+
+'BURGERBUILDER'___... -----> de fato, 
+
+
+ele está inserido dentro do burgerbuilder,
+
+
+MAS __POR ESTAR __ DENTRO DE __OUTRO ELEMENTO (wrappado por elemento, wrappado 
+
+por 
+
+'Modal'),
+
+
+
+
+ELE PODE SER __CONTROLADO__ PELO UPDATE PROCCESS DO SEU 'COMPONENT PAI'; ou seja, 
+
+pelo update proccess do component 
+
+'Modal'... (ao pararmos o update proccess do 'modal' por meio de 'shouldComponentUpdate: false', 
+
+CONTROLAMOS/CESSAMOS O UPDATE TAMBÉM 
+
+
+DO COMPONENT 'OrderSummary', seu 'CHILD'...)
+
+
+
+----------------------------
+
+
+
+
+
+
+
+--------> FORA ESSE PEQUENO DETALHE DO ORDERSUMMARY,
+
+
+
+NOSSO CÓDIGO ESTÁ BEM __LEAN__ LÁ NO MODAL....  ------> 
+
+
+
+UMA OBSERVAÇÃO 
+
+
+QUE O PROFESSOR FAZ É QUE 
+
+__NÓS NÃO REAGIMOS __ A MUDANÇAS (changes)
+
+LÁ 
+
+
+
+
+NO ___ LISTENER 
+
+
+'clicked' 
+
+NAQUELE COMPONENT BACKDROP....
+
+
+
+ex:
+
+
+
+  return  ( <Aux>
+    <Backdrop show={this.props.show}
+    clicked={this.props.modalClosed}/> //////não reagimos a mudanças AQUI.
+<div className={ModalStyle.Modal} style={
+    {
+    transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
+    opacity: this.props.show ? '1' : '0'
+}
+}>
+      {this.props.children}
+          </div>
+          </Aux>
+)
+
+
+
+-------------------------------------------
+
+
+
+
+
+ou seja,
+
+não vamos checar por mudanças 
+
+
+no prop de 'modalClosed'... ---------> 
+
+ISSO 
+
+SIGNFICA QUE 
+
+
+
+NÓS 
+
+
+_SÓ VAMOS RETORNAR 'TRUE' __ EM 'shouldComponentUpdate' 
+
+
+
+
+SE O 
+
+
+prop
+
+'show' 
+
+MUDAR... ------> e isso é OK NESSE APLICATIVO, 
+
+
+
+POIS NÓS NUNCA 
+
+
+VAMOS MUDAR/NÃO MUDAREMOS NESSE 
+
+PROJETO 
+
+
+__ESSE__ CLICKLISTENER... --------> MAS SE FOSSEMOS MUDAR 
+
+
+ESSE CLICKLISTENER,
+
+OU SE FOSSEMOS TAMBÉM __MUDAR ____ O __sTATE__ NO MODAL,
+
+
+
+NÓS 
+
+DEFINITIVAMENTE 
+
+
+TERÍAMOS DE TAMBÉM 
+
+CHECAR POR ____ OUTRAS CHANGES, CHANGES EM OUTROS PROPS/PROPERTIES,
+
+ 
+OU ENTÃO 
+
+
+
+SIMPLESMENTE 
+
+
+FAZER 
+
+'class Modal extends PureComponent'  ( OU SEJA, 
+
+
+TRANSFORMAR NOSSO COMPONENT MODAL EM UM __PURE COMPONENT___... ------> PureComponent ---> 
+
+
+É UM COMPONENT QUE RE-RENDERIZA A PARTIR DE __QUALQUER MUDANÇA, EM QUALQUER PROP_....) ----------> 
+
+
+
+
+
+AQUI, NO NOSSO CÓDIGO, O PROFESSOR 
+
+
+NÃO ESTÁ 
+
+'RODANDO PURECOMPONENT', não está definindo modal como um PURECOMPONENT 
+
+
+
+__PQ ___ SE ELE FIZESSE ISSO, ELE ACABARIA RODANDO 
+
+
+MT MAIS CHECKS DO QUE ELE GOSTARIA (isso impacta a performance).
+
+
+
+
+
+
+
+----> por exemplo, se modal fosse um PURECOMPONENT,
+
+
+ele também checaria por MUDANÇAS 
+
+em 
+
+
+'modalClosed', aquele outro prop, o que é algo DESNECESSÁRIO, NO NOSSO APLICATIVO.
+
+
+
+--> e como não temos interesse nisso, nesse aplicativo,
+ 
+
+
+ nosso método 
+
+ 'shouldComponentUpdate(...)'
+
+
+
+ DEVE SER __BEM STRAIGHTFORWARD___, DEVE 
+
+
+ SER 
+
+ só 
+
+
+ esse 
+
+
+ check do prop de 
+
+
+ 'show'...
+
+
+------------------------------------------------
+
+
+
+
+-->
+
+CERTO, COM ISSO, 
+
+
+PODEMOS TAMBÉM 
+
+TRANSFORMAR/CONVERTER 
+
+
+NOSSO 
+
+
+'ORDERSUMMARY'
+
+
+DE VOLTA EM UM FUNCTIONAL COMPONENT... --------> FAREMOS ISSO PARA 
+
+
+
+
+QUE 
+
+NÃO SEJA MAIS  OUTPUTTADO AQUELE CONSOLE.LOG DE 
+
+'console.log('OrderSummary WillUpdate')'
+
+
+
+
+-------------------------------
+
+
+CERTO, FIZEMOS ISSO.
+
+
+
+Professor vai deixar o 
+
+
+'componentWillUpdate() {
+
+}' 
+
+PARA FINS __DE DEBUGGING____....

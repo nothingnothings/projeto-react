@@ -1,0 +1,113 @@
+JSBIN E CODEPEN 
+
+
+NÃO BASTAM....
+
+
+
+
+
+
+
+
+
+---> FAREMOS UM SETUP LOCAL...
+
+
+
+
+
+
+--> workflow elaborado.... ---> 
+
+
+
+É RECOMENDADO TANTO PARA 
+
+
+SPAs (single page applications)
+
+
+como 
+
+
+MPA (multi-page applications)...
+
+
+
+
+
+
+
+A QUESTÃO É:
+
+
+
+POR QUE TER UM WORKFLOW MAIS COMPLEXO?
+
+
+
+
+
+
+Razões:
+
+
+
+1) QUANDO CONSTRUÍMOS UM APP DE VERDADE, SEMPRE QUEREMOS __OPTIMIZAR __ O NOSSO PROJETO... --> 'big applications, code as small as possible'... --> isso aumenta a performance dos nossos aplicativos 
+
+
+2) QUEREMOS USAR __NEXT-GEN__ JAVASCRIPT FEATURES ---> fazem nossa vida como desenvolvedores muito mais fácil. --> leaner code, mais rápido, menos error prone, e melhor em geral...  --> não é algo opcional, é uma BEST PRACTICE....
+        ---> QUEREMOS ESCREVER CÓDIGO ES6+ (es7, de preferência)  E ENTÃO SHIPPAR ESSE CÓDIGO COMO ES5, por meio do babel e outros compiladores...
+
+3) QUEREMOS SER MAIS PRODUTIVOS... ---> javascript mais moderno nos deixa escrever CÓDIGOS MAIS CONDENSADOS/produtivos, mas os IDE também nos ajudam com 'css auto-prefixing' ----> CSS PREFIXES SÃO UMA COISA PARA ATINGIR O MAIOR BROWSER SUPPORT POSSÍVEL PARA FEATURES CSS ----> e adicionar esses prefixes manualmente É BEM CHATO... ---> deixar esse processo automático é bem recomendado ----> (LINTING TAMBÉM É BOM, ELE TE AVISA SE VOCê ESTIVER ESCREVENDO CÓDIGO SUBOPTIMIZADO... ) 
+
+
+
+
+
+
+COMO (FERRAMENTAS NECESSÁRIAS, necessárias para __ESCREVER__ E para COMPILAR O NOSSO CÓDIGO...):
+
+
+
+1) DEVEMOS USAR UMA 'DEPENDENCY MANAGEMENT TOOL' ---> já conhecemos a mais famosa: 'npm'... ----> DEPENDENCIES SÃO SIMPLESMENTE THIRD PARTY LIBRARIES/PACKAGES... ---> react e reactDOM são dependencies... ---> TODAS AS BUILD TOOLS DE QUE PRECISAREMOS SÃO ___DEPENDENCIES___- (como o 'BABEL'...) 
+        --> outra 'dependency management tool' É O 'YARN'...
+
+
+
+2) DEVEMOS USAR UM ___BUNDLER____.... VAMOS USAR O WEBPACK, QUE É O MAIS RECOMENDADO... ---> vamos sempre splittar nosso source code em módulos, para ser mais fácil de escrever... mas aí vamos SEMPRE QUERER COMPILAR TODO ESSE CÓDIGO EM UM BUNDLE ANTES DE O SHIPPAR... (pq browsers antigos não suportam mt bem vários arquivos de script... e múltiplos http requests tbm são ruins para o nosso código).... ---> WEBPACK TBM APLICA ALGUMAS COISAS AO NOSSO CÓDIGO, 'OPCIONAIS', COMO o 'babel' (babel-loader, etc) E OUTRAS FEATURES....
+
+
+
+
+3) DEVEMOS TER/USAR UM __COMPILER__ (Next-Gen Javascript) --> PRECISAMOS DE ALGO QUE FAÇA A TRADUÇÃO DO JAVASCRIPT MODERNO PARA O ANTIGO, ANTIQUADO.... --> usaremos o BABEL + presets para o babel ('preset-env'...)
+        ---> BABEL PODE SER HOOKADO NO WEBPACK, PODE FAZER PARTE DO 'BUNDLE AND OPTIMIZATION PROCCESS'...
+
+
+
+
+4) QUEREMOS USAR UM DEV SERVER PARA TESTAR NOSSO APLICATIVO 
+
+NO NOSSO PC.... --> poderíamos abrir um HTML por meio de double click no arquivo, mas isso usará o file system, e isso é uma droga... --> por isso precisamos de um web server, criado na nossa máquina...
+-------------------------------------------------------------------------
+
+
+
+
+
+
+SETTAR TUDO ISSO ----> É COM WEBPACK... ----------> CERTO, MAS 
+
+VAMOS TER QUE USAR UMA FERRAMENTA CRIADA PELA 
+
+
+EQUIPE E COMUNIDADE DO REACT... --> é a maneira mais recomendada de 
+
+criar aplicativos REACT.
+
+
+
+
+--> se você quer ver como settar tudo isso 'por trás das cenas', 'FROM SCRATCH', há um 
+módulo para isso no final do curso...

@@ -1,0 +1,334 @@
+
+
+
+
+
+
+
+Na última lição, aprendemos 
+
+
+a CONFIGURAR O reducer em 'reducer.js'
+
+
+E 
+
+
+O DISPATCH 
+
+DE 
+
+
+'ACTIONS'
+ 
+
+ no nosso 
+
+ container 
+
+ 'Counter'... 
+
+
+
+ (fizemos todo o setup, que pode ser conferido em 'redux-basics.js' e 
+ 
+ 
+ nos arquivos 
+ 
+ 
+ 'index.js', 
+ 
+ 
+ 
+ 'Counter.js' 
+ 
+ e 
+ 
+ 'reducer.js'...)
+
+
+
+
+
+ --------------------
+
+
+
+
+ OBS: professor fez EXATAMENTE A MESMA COISA QUE NÓS ,
+
+
+
+ ele 
+
+
+ replicou a sintaxe 
+
+ de 
+
+ 'onIncrementCounter'
+
+ 
+
+ COM OS OUTROS BUTTONS,
+
+
+ e agora 
+
+ nosso 
+
+ APP 
+ de 
+
+ 'Counter' 
+
+
+
+
+ FAZ O GERENCIAMENTO DE SEU STATE na 'central store' 
+
+
+ DO REDUX... ( o que é uma grande melhoria).
+
+
+
+
+
+
+ -------------------------------------------
+
+
+
+ PROFESSOR MENCIONA QUE, PARA 'ADD_COUNTER' e 'SUB_COUNTER',
+
+ o 
+
+ IDEAL
+
+
+ seria 
+
+ receber um __PAYLOAD___ 
+
+
+
+ (isso é aquela coisa do 
+ 
+ 
+ 'value: 10', que JÁ FIZEMOS ANTES...)
+
+
+
+
+ ISSO QUER DIZER QUE 
+
+ ELE ESTÁ 
+
+ FALANDO 
+
+
+ das linhas de código 
+
+
+
+ 1) (em 'Counter.js')
+
+
+      onAddCounter: () => {
+        dispatch({
+          type: 'ADD_COUNTER',
+          value: 10 ///////////////////ESTA LINHA ___PASSA__ O VALOR de 'value', esse '''''payload'''''' de nossa action... (payload = PROPRIEDADE/PROPRIEDADES OPCIONAIS, cujos valores serão USADOS NO 'reducer' PARA CÁLCULOS/ESCRITA DE LÓGICA...)
+        })
+      }
+
+
+
+
+
+2)  (em 'reducer.js')
+
+
+
+
+    if(action.type === 'SUB_COUNTER') {
+    return {
+        ...state,
+            counter: state.counter - action.value ////////////CÓDIGO QUE EFETIVAMENTE ____aCESSA_________ O 'PAYLOAD' (no caso, a propriedade 'value') DEFINIDA LÁ NA ACTION DE 'type' 'SUB_COUNTER'...
+    }
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+CERTO... 
+
+
+NÓS JÁ SABEMOS COMO FAZER ISSO...
+
+
+
+
+
+
+--> professor, CONTUDO,
+ 
+nos mostra 
+
+
+
+aquela sintaxe ''''ALTERNATIVA'''' de 'payload',
+
+que 
+
+é 
+
+escrever 
+
+
+'''''''''''''''''''''''''''''''''''
+xxxxxx: () => dispatch ( { type: 'ADD', 
+                            
+                            payload: {value: 10,
+                                        name: 'Max',
+                                        exemplo: 'Trash'...}
+
+})
+
+
+'''''''''''''''''''''''''''''''''
+
+
+,
+
+
+
+OU SEJA,
+
+
+escrever 
+
+'payload' e então colocar essa propriedade PARA SEGURAR UM __oBJETO__, QUE SERÁ 
+
+ONDE COLOCAREMOS TODAS AS PROPRIEDADES 'opcionais' (não são bem opcionais, pq precisamos delas,
+
+mas não são como 'type', que é ___100%____ OBRIGATÓRIO, independentemente 
+de qual objeto
+'action' você está escrevendo)
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+
+
+PROFESSOR 
+
+
+NOS CONTA UM DETALHE:
+
+
+
+
+Como nós
+
+ESTAMOS 
+
+
+
+DENTRO DO 
+
+'CONtainer',
+
+
+quando 
+
+escrevemos aquelee código 
+
+
+
+'dispatch(
+    {
+        type: 'ADD', value: 10
+    }
+)',
+
+
+
+
+NÓS ___PODEMOS ___ FACILMENTE __ 
+
+
+
+
+
+___________cONECTAR ___ ESSE DISPATCH AÍ ____ A UM 
+
+'INPUT FIELD' QUALQUER QUE TEMOS EM 'Counter'...
+
+
+
+
+-------------------------------------
+
+
+
+
+--> RESUMINDO: 
+
+
+OS 
+
+DADOS 
+
+QUE 
+
+
+___SÃO RELEVANTES __a MIM ___ SÃO 
+
+
+__DEFINIDOS/PASSADOS __ no 'container', naquelas 'actions',
+
+
+E ENTÃO __SÃO ___rETRIEVADOS __ NO 
+
+'REDUCER' (em 'reducer.js' ), que é o local em que 
+
+ESCREVEREI A LÓGICA __PARA ALTERAR O STATE___ DO REDUX, lá na 'Central store' do redux...
+
+
+
+
+
+
+
+-------------------------------
+
+
+CERTO, ISSO SIGNIFICA QUE AGORA 
+
+NOSSO 
+
+APP ESTÁ 100% FUNCIONA, E QUE 
+
+AGORA 
+
+ELE 
+ESTÁ 
+
+PASSANDO, COM SUCESSO,
+ 
+
+ UM 
+
+ 'payload' com a nossa action.... (ou seja, ESTAMOS PASSANDO 'SOME ADDITIONAL DATA' ao reducer, e NÃO SÓ O 'Type' da action...)

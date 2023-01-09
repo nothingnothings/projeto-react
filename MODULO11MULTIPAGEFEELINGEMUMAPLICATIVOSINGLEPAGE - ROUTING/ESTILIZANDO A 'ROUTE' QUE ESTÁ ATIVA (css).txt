@@ -1,0 +1,1392 @@
+
+
+
+
+
+
+
+
+
+
+CERTO, AGORA TEMOS UM ROUTING QUE FUNCIONA... 
+
+
+
+
+NÓS TAMBÉM 
+
+
+
+CONSEGUIMOS/SOMOS CAPAZES DE EXTRAIR 
+
+INFORMAÇÕES
+
+
+DOS 
+
+
+'props' recebidos pelo routing... (recebidos pelo 'react router')...
+
+
+
+
+
+
+
+
+
+
+
+
+-----------> MAS SERIA LEGAL SE PUDÉSSEMOS, ALÉM DE PODER FAZER TODAS ESSAS COISAS, 
+
+
+VER ___QUAL ____ ROUTE __ ESTAMOS/QUAL ROUTE ESTÁ 
+
+ATIVA __ 
+
+
+NO PRESENTE... ----------> E isso 
+
+
+poderia 
+
+
+
+ser 
+
+
+FEITO 
+
+
+COM 
+
+
+STYLING CSS... -----> talvez deixar 
+
+
+
+VERMELHO ___ os links 'home'/'new post' 
+
+
+
+QUANDO 
+
+ESTIVERMOS 
+
+NESSAS ROTAS/routes...
+
+  
+
+
+
+
+
+---> VAMOS QUERER __ADICIONAR UMA CLASSE CSS AO LINK QUE ESTÁ 'ativo', para 
+
+que 
+
+possamos perceber quando ele realmente está ativo.
+
+
+
+----------------------------------
+
+
+
+
+O PROFESSOR INSPECIONA NOSSOS LINKS, no devtools... -----> 
+
+
+
+ali nós 
+
+vemos 
+
+
+
+'<a href="/new-post?quick-submit=true#submit"/>New Post</a>'....
+
+
+
+
+
+Ou seja, uma anchor tag FOI CRIADA, POR TRÁS DAS CENAS,
+
+PARA 
+
+SERVIR DE LINK....
+
+
+
+
+
+
+
+
+
+
+--> mas, de novo, essa é 
+
+uma 
+
+ANCHOR TAG 
+
+
+
+GERENCIADA/HANDLED PELO 'REACT ROUTER', que 
+
+faz com que 
+
+SEJA PREVENIDO 
+
+O COMPORTAMENTO PADRÃO DE RECARREGAR A PÁGINA (de enviar um http request, que faz 
+recarregar a página) SEMPRE QUE CLICAMOS NELA...
+
+
+
+
+
+
+
+
+
+---> entretanto, pode-se constatar que 
+
+
+NENHUMA CLASSE CSS ESTÁ ADICIONADA/CARREGADA 
+
+NO LINK 
+
+do negócio/component cuja ROUTE está ativa,
+
+
+
+AINDA QUE 
+
+ESSA SEJA 
+
+A PÁGINA TECNICAMENTE ATIVA...  -----------> O QUE NÓS, AQUI, PRECISAMOS 
+
+
+FAZER, 
+
+É 
+
+
+__DIZER MANUALMENTE____ AO REACT ROUTER QUE  
+
+
+__ ELE DEVE __ CARREGAR UM ESTILO NESSE LINK AÍ..... 
+
+
+
+
+
+
+
+
+
+----> E ISSO É FEITO, NO CASO, 
+
+
+
+NÃO PROPRIAMENTE PELO USO DE '<Link />',
+
+
+
+E SIM 
+
+
+__POR UM DIFERENTE __TIPO___ DE LINK___....  --------> 
+
+
+
+
+
+esse 
+
+link/objeto Link NÃO É O MESMO QUE NÓS ESTAMOS USANDO... -----> não, 
+
+
+ele é um OBJETO 
+
+
+___EXISTENTE DENTRO DO 'react-router-dom',
+
+
+UM OBJETO 
+
+
+chamado 
+
+
+
+de 
+
+
+
+'NavLink'..
+
+
+
+
+
+é 
+
+o 
+
+
+
+' { NavLink }' ...
+
+
+
+
+
+
+NÓS O IMPORTAMOS 
+
+POR MEIO 
+
+DA SINTAXE 
+
+
+
+'import { NavLink } from 'react-router-dom'...
+
+
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+ESSE 
+
+LINK 
+
+
+
+É ___BEM SIMILAR___ 
+ 
+
+
+ ao 
+
+ '<Link />',
+
+
+ mas 
+
+
+
+ ele tem algumas distinções,
+
+
+
+
+ como o fato de 
+
+ TER UNS PROPS EXTRAS, uns 
+
+
+ PROPS 
+
+ QUE 
+
+ NOS DEIXAM 
+
+
+ ___dEFINIR UNS 'STYLINGS' PARA 
+
+ O ___'ACTIVE LINK'____... --------> E É POR ISSO QUE O UTILIZAREMOS PARA 
+
+ NOSSA 
+
+ 'NAVBAR'/'TOOLBAR'...
+
+
+ ----------------------------
+
+
+
+
+
+
+ SE FIZERMOS ISSO, SE SUBSTITUÍRMOS 
+
+
+ TODOS 
+
+
+ OS 
+
+
+
+ 'Link' de nosso código por 'NavLink',
+
+
+
+
+ veremos uma MUDANÇA NA NOSSA PÁGINA.... ------->
+
+
+
+
+
+ o professor inspeciona nossos links 
+
+
+ de novo,
+
+
+ e 
+
+ dessa 
+
+ vez 
+
+ ele 
+
+ APONTA QUE 
+
+
+ A 
+
+
+ ABA 
+
+
+
+ 'Elements'
+
+
+ NO MOSTRA 
+ que 
+
+ agora 
+
+ há 
+
+ uma 
+
+ 'class' aplicada a esses elementos 
+
+ 'NavLink',
+
+ uma
+
+
+ 'class' com valor de 
+ 'active'... ------------------>  E ESSA CLASSE CSS 
+
+ NÃO ESTAVA PRESENTE ANTES,
+
+
+ NAQUELE 
+
+ component/object 'Link'...
+
+
+
+
+-------------------------------------
+
+
+
+
+---> E isso, é claro, nos deixa 
+
+
+
+
+
+APLICAR ALGUM STYLING... ------> ok...
+
+
+
+
+
+
+Aí, lá em 
+
+'
+Blog.module.css'....,
+
+
+
+
+O professor aponta que 
+
+ele 
+
+
+vai 
+
+
+
+ACRESCENTAR 
+
+UMA NOVA 
+
+
+REGRA 
+
+
+Em 
+
+ 
+'.Blog a:active {
+
+
+}'......... --> ELE 
+
+
+FARÁ 
+
+
+COM QUE 
+
+
+NÃO SÓ 
+
+SEJA 
+
+APLICADA 
+
+
+UMA 
+
+COR LARANJA 
+
+
+
+
+AOS 
+
+
+ELEMENTOS 
+
+
+
+QUE 
+
+
+TENHAM 
+
+'.blog a',
+
+
+
+
+MAS 
+
+
+TAMBÉM 
+
+
+EM 
+
+TODOS 
+
+
+ELEMENTOS 
+
+
+QUE 
+
+
+TENHAM 
+
+
+
+'.Blog a' 
+
+
+E UMA 
+
+__cLASSE___ DE 'active' ____ NO SEU INTERIOR.... ( ou seja,
+
+justamente 
+
+
+aqueles 
+
+
+components 'NavLink' que adicionamos 
+
+
+ao nosso código...)
+
+
+
+
+
+
+
+
+EX(ANTES):
+
+
+
+.Blog a:hover, 
+.Blog a:active {
+    color: #fa923f;
+}
+
+
+
+
+
+
+
+EX(DEPOIS):
+
+
+
+.Blog a:hover,
+.Blog a:active,
+.Blog a.active {
+    color: #fa923f;
+}
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+SE SALVARMOS ISSO, VEREMOS OUTRO PROBLEMA:
+
+
+
+Ambos 
+
+os 
+
+
+
+'NavLink' ESTARÃO __LARANJA___... (o que é ruim...)
+
+
+
+
+
+
+
+
+FICOU ASSIM (com o problema do 'laranja'):
+
+
+
+.Posts {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+}
+
+
+
+
+.Posts ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.Posts li {
+    display: inline-block;
+    margin: 20px;
+}
+
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+
+
+a:hover,
+a:active,
+a.active {
+    color: #fa923f;
+}
+
+
+
+
+
+
+
+--------------------------
+
+
+
+
+
+
+
+
+CERTO,
+
+
+
+MAS SE EU CLICO EM 'Home', outro problema surge: 
+
+
+SÓ 
+
+
+'HOME' 
+
+fica orange, 
+
+
+
+e o 
+
+'New Post' fica preto... -----> pq isso acontece? --------> 
+
+
+
+A RAZÃO 
+
+
+
+
+
+PARA ISSO ACONTECER
+ 
+
+ É __ ALGO QUE JÁ VIMOS ANTES___... ---> 
+ 
+ 
+ explicacão:
+ 
+ 
+ 
+ 
+ por DEFAULT,
+
+O 
+
+'REACT-ROUTER' TRATA 
+
+
+aqueles 
+
+
+
+
+'PATHS' definidos 
+
+
+em 
+
+'<Route path="/" />
+
+e 
+
+
+'<Route path="/new-post" />' 
+
+
+
+
+
+
+
+COMO ___PREFIXES___... ------------> 
+
+
+
+e 
+
+esse QUIRK 
+
+
+
+
+do react-router-dom 
+
+
+__________tAMBÉM____________SE APLICA 
+
+
+AOS 
+
+
+LINKS (tanto de 'NavLink', como de 'Link'....)....... ---------> 
+
+
+ISSO 
+
+SIGNIFICA QUE 
+
+
+QUANDO O REACT-ROUTER-DOM 
+
+
+checa 
+
+
+se 
+
+UM NavLink
+
+
+
+
+ESTÁ 
+
+'active' ou não,
+
+
+
+
+
+ELE ___TRATA ___ O 
+
+
+VALOR/STRING 
+
+
+PASSADA 
+
+
+
+em 
+
+
+'to={}', lá 
+
+naquele 
+
+
+'NavLink' 
+
+
+(
+
+
+    <NavLink to="/" />'
+
+
+
+
+)
+
+
+
+
+
+COMO 
+
+
+
+
+
+
+UM ___PREFIX___....   ----------> PARA RESOLVER ESSE PROBLEMA,
+
+TEMOS QUE 
+
+
+FAZER 
+
+
+___EXATAMENTE (haha) 
+
+A MESMA 
+
+
+__cOISA QUE 
+
+
+FIZEMOS 
+
+PARA 
+
+SOLUCIONAR 
+
+
+O PROBLEMA 
+
+DOS 
+
+'PREFIXES' 
+
+
+
+com 
+
+a definição 
+
+
+dos 
+
+'path={}'
+
+LÁ NA DEFINIÇÃO 
+
+
+das '<Route'>.... --------> OU SEJA,
+
+DEVEMOS 
+
+
+__ADICIONAR 'exact', aquele exemplo de 'Boolean Property',
+
+
+
+
+
+AO CÓDIGO DE DEFINIÇÃO DE NOSSOS 'NavLink'...
+
+
+ex:
+
+
+
+<NavLink to="/" exact />Home</NavLink />'...
+
+
+
+
+
+
+
+
+----------------------
+
+
+
+CERTO...
+
+
+
+SE REALIZARMOS 
+
+ESSA ALTERAÇÃO,
+ 
+
+
+ O STYLING 
+
+
+ DOS 
+
+ 'active',
+  
+  dos 
+
+  NAVLINK, VAI FUNCIONAR...
+
+
+
+
+
+
+
+
+
+
+
+  OBS:::: ESSE 'exact' definido lá no 'NavLink' 
+
+
+  NÃO VAI __MUDAR O __ LINK AO QUAL ESTAMOS APONTANDo... não,
+
+
+  O QUE ELE VAI MUDAR 
+
+  É O __COMPORTAMENTO __ DA 
+
+
+  CLASSE 
+
+  'active', que antes considerava PREFIXES,
+
+
+  e agora 
+
+  vai 
+
+  considerar VALORES 
+
+  EXATOS 
+
+  passados 
+
+  em 
+
+  'to'... (agora o FULLPATH tem que ser '/', ou 'new-post', para triggar ESSE ESTILO 'active'...)
+
+
+
+
+
+
+
+  --> professor aponta que não precisamos do 'exact' no segundo link, 
+
+  que precisamos 
+
+  disso apenas no primeiro (ainda assim, deixamos 'exact' no segundo link...)
+
+
+
+
+
+  -----------------------------
+
+
+
+
+
+
+
+
+  É ASSIM, PORTANTO, 
+
+  QUE 
+
+
+
+  PODEMOS 
+
+
+  DEFINIR 
+  'ACTIVE CLASSES'
+
+
+
+  com 
+
+
+  a ajuda 
+
+  do component/objeto 
+
+  
+
+  'NavLink'...
+
+
+
+
+----------------------
+
+
+
+  -------->  OUTRO DETALHE:
+
+
+
+
+
+  vale apontar que 
+
+
+  EXISTIRÃO CASOS EM QUE 
+
+
+  VOCê NÃO VAI QUERER 
+
+
+  QUE 
+
+a class 
+
+
+de active realmente 
+
+
+tenha um nome 
+
+'active'... (
+
+    ou seja,
+
+
+    que 
+
+    lá 
+
+    no código do 
+
+    component nós tenhamos 
+
+    'class=active', que é o DEFAULT...
+) -------------------------------------->  ou seja,
+
+
+você 
+
+
+talvez queira usar um class/className
+
+
+de 
+
+
+'my-active',
+
+
+ 
+ ou 
+
+
+
+ 'highlight', ou qualquer outra coisa... ----------> 
+
+
+
+ É 
+
+ PARA CASOS COMO ESSES 
+
+ QUE 
+
+
+ EXISTE 
+
+
+ A OPÇÃO DE __OVERWRITAR__ 
+
+
+
+___A CLASSE QUE DEVERÁ SER APENSA ('appended') 
+
+
+
+AO 
+
+
+LINK/NAVLINk QUE VOCÊ DEFINIU... ------------> para fazer 
+
+
+essa mudança/operação/definição,
+
+
+
+VOCê 
+
+
+DEVERÁ 
+
+
+
+
+
+ACRESCENTAR UNS PROPS EXTRAS___... -----> O PROP EXTRA QUE VOCÊ VAI ADICIONAR 
+
+
+tem um 
+
+nome 
+de 
+
+
+'activeClassname=....'....
+
+
+
+
+
+ex:
+
+
+
+
+
+<NavLink 
+    to="/"
+    exact
+    activeClassName="stringDoNomeDaClasseAtivaQueVoceDeseja"
+
+>Home></NavLink>
+
+
+
+
+
+
+
+
+
+O PROFESSOR USA UM EXEMPLO DE 
+
+
+'my-active'...
+
+
+
+ex:
+
+
+
+
+
+<NavLink 
+    to="/"
+    exact
+    activeClassName="my-active"
+
+>Home></NavLink>
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+SE VOCÊ FIZER ISSO,
+
+O PRIMEIRO LINK 'NavLink' 
+
+
+
+SERÁ 
+
+
+ADICIONADO 
+
+COM UMA CLASSE 
+
+ATIVA 
+
+de 
+
+
+
+'my-active'...  (e não o DEFAULT, que é 'active'...) -------> 
+
+
+
+
+SE SALVARMOS ESSAS MUDANÇAS NO NOSSO CÓDIGO E RECARREGARMOS,
+
+
+VAMOS 
+
+VER QUE 
+
+O LINK DE 'home' foi afetado,
+ 
+ que 
+
+ agora 
+
+ ele tem 
+
+ uma 
+
+ class 
+
+ ativa 
+
+ de 
+
+ 'my-active'....
+
+
+
+
+
+ ---------------------------------
+
+
+
+
+
+
+ ADEMAIS,
+
+
+ SE VOCÊ REALMENTE NÃO QUISER FAZER ISSO,
+
+
+
+ VOCê PODE 
+ AFASTAR 
+
+
+ O USO 
+
+
+ DE 
+ CSS CLASSES  
+
+ com esses 
+
+ 'NavLink'.... -------> isso quer 
+
+
+ dizer que 
+
+ você 
+
+
+ pode 
+
+ escrever 
+
+ um 
+
+
+ 'activeStyle={
+     {
+
+     }
+ }' 
+
+
+
+
+
+NU E CRU, 
+
+em cada 
+
+
+NavLink... 
+
+
+
+
+
+
+-->OBS::: DEVEMOS TER CUIDADO, pois o que funciona aqui 
+
+é 
+
+'activeStyle={
+    {
+
+    }
+}',
+
+
+E NÃO 
+
+'style={
+    {
+        
+    }
+}
+'
+
+
+
+----------------------------------------
+
+
+
+ESSE NEGÓCIO 'activeStyle'
+ 
+
+ FUNCIONA ___EXATAMENTE __ DA MESMA FORMA QUE __ A 
+
+
+ DEFINIÇÃO 
+
+ DE STYLES 
+
+ por 
+
+ 'inline-styles' (com 'style = {{}} ')
+
+
+
+
+
+
+
+ --> DENTRO DESSE NEGÓCIO VOCÊ PODE SETTAR 
+
+ QUAISQUER ESTILOS CSS QUE VOCÊ QUISER,
+
+ como 
+
+
+ 'color: #fa923f' 
+
+
+
+ e 
+
+
+
+ 'textDecoration: 'underline'....
+
+
+
+
+
+
+
+
+
+
+
+
+---> e esse inline style será aplicado SOBRE a classe definida antes...
+
+
+
+
+
+--> certo,
+
+
+essa foi a matéria dos ACTIVE LINKS... ------> o takeaway principal 
+
+é usar 
+
+
+
+o 
+
+NAVLINK em 
+
+vez de 'Link' para 
+
+settar 
+esses links que dependem 
+
+
+de 
+
+classes ativas....(active). ----------> 
+
+
+E NÓS 
+
+
+TAMBÉM 
+
+TEMOS QUE NOS ATENTAR PARA O USO DE 'exact', para substituir 
+
+aquele comportamento indesejado de 
+
+'prefixing' de 'to'...

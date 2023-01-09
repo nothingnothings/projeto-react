@@ -1,0 +1,593 @@
+
+
+
+
+
+
+
+
+
+--> DEVEMOS COMEÇAR COM 'next.js'.... ----> 
+
+
+
+GOOGLAMOS 
+
+
+'next.js' 
+
+
+
+
+E 
+
+VEMOS 
+
+O 
+
+REPOSITÓRIO.... --> 
+
+
+
+há a página 
+
+
+'learnnextjs.com'...
+
+
+
+--------------------------
+
+
+
+
+---> INSTRUÇÕES DE COMO INSTALAR... 
+
+
+
+
+
+---> OK, MAS 
+
+O QUE É O 
+
+NEXT.JS? 
+
+-------> 
+
+
+
+O NEXT-JS 
+
+'
+is 
+
+a minimalistic framework for server-rendered react applications'...
+
+
+
+
+
+
+
+
+---> SERVERSIDE RENDERING --> É UM 
+
+CONCEITO ___aVANÇADO__ DE 
+
+REACT.. (há cursos focados INTEIRAMENTE NISSO... )
+
+
+
+
+
+
+
+
+
+--> SERVERSIDE RENDERING ... ---> significa que 
+
+
+QUANDO UM USUÁRIO ENTRA EM UMA __URL__ QUE LEVA AO SEU REACT APP/PÁGINAS DO SEU REACT APP,
+
+
+
+
+
+o NEXT.js/linguagem 
+
+
+__vAI ___PRE-RENDERIZAR 
+
+
+AQUELA 
+
+PÁGINA __ NO 
+
+SERVIDOR EM SI,
+
+PARA QUE 
+
+O 
+
+SERVIDOR 
+
+___RETORNE ___ AQUELE 'PRE-RENDERED' HTML CODE...
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+O PROFESSOR NOS MOSTRA UM ESQUEMA PARA ENTENDERMOS MELHOR...
+
+
+
+
+
+
+
+
+
+SERVER 
+
+^
+|
+|
+|
+|
+V 
+
+
+Client (Browser)
+
+
+
+
+------------------------------
+
+
+
+
+ESSE É O ___ SETUP NORMAL___  -----> TEMOS UM SERVIDOR 
+
+E 
+UM
+
+CLIENT,
+
+E AÍ 
+
+
+O 
+
+'react app code'...
+
+
+
+
+
+EX:
+
+
+
+
+
+
+SERVER                |  REACT APP CODE |
+
+^                   
+|
+|
+|
+|
+V 
+
+
+Client (Browser)
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+REACT APP CODE -->  por isso, queremos dizer o código de 'build', dentro do folder 'build' no nosso BUILD WORKFLOW... (ou em 'build' quando rodamos 'npm build', lá no CREATE-REACT-APP...)
+                    E TAMBÉM O 'RAW CODE', lá no seu FOLDER 'src' (source folder)...
+
+
+
+
+
+
+
+
+
+    
+    -----> QUANDO O USUÁRIO/QUALQUER PESSOA VISITA O SEU SERVIDOR PELA PRIMEIRA VEZ,
+    ou seja,
+
+    SUA PÁGINA É CARREGADA PELA __PRIMEIRA VEZ__, 
+    O 
+
+    SERVIDOR TIPICAMENTE 
+    FARIA/FAZ O 
+
+    __SHIP___ DO ARQUIVO 
+
+    'index.html' 
+
+
+    E DO SEU CÓDIGO '''NORMAL'''/código react... -------> e aí você 
+
+
+    TIPICAMENTE TERIA ESSE CÓDIGO/CONTEÚDO RENDERIZADO NO SEU CLIENT...
+
+
+
+
+
+
+
+
+O ___PROBLEMA___, que pode existir,
+
+
+É QUE 
+
+
+
+
+SE SUA PÁGINA PRECISA SER 
+
+
+'CRAWLEABLE'
+
+por uma 
+
+
+SEARCH 
+
+ENGINe (COMO 'google'),
+
+
+
+
+
+CRAWLERS COMO O 
+
+GOOGLE CRAWLER ___PODEM _ NÃO ACABAR __ ENTENDENDO
+
+OU ACABAR LENDO SUA PÁGINA 
+
+INCORRETAMENTE... -------->
+
+
+
+****ESPECIALMENTE***** SE VOCÊ ESTÁ USANDO 
+
+'ASYNCHRONOUS CODE' 
+
+__PARA _ RENDERIZAR ___ O CONTEÚDO INICIAL DE SUA PÁGINA... ------> isso quer dizer,
+
+essencialmente,
+
+
+QUE 
+
+SE 
+VOCê 
+
+
+TEM UMA 
+
+PÁGINA 
+
+EM QUE 
+
+
+A PRIMEIRA COISA QUE ACONTECE NELA É UM 
+
+'REACH OUT' A UM SERVIDOR,
+
+essa 
+
+página 
+
+dificilmente 
+
+vai 
+
+
+ser 
+
+
+'crawleada' por 
+
+
+SEARCH ENGINE CRAWLERS... (não vai ser googlable facilmente)
+
+
+
+
+
+
+--------> isso de fetchear dados de um SERVIDOR __ JÁ NO INÍCIO __ DO LOAD __ DE UM 
+
+SITE REACT __ É ÓTIMO PARA O USUÁRIO (as coisas são carregadas mais rapidamente),
+
+
+MAS 
+
+É __PÉSSIMO EM RELAÇÃO AOS MOTORES DE PESQUISA__.... -------> O CRAWLER SÓ VAI 
+
+VER O SPINNER, E NADA 
+
+MAIS DO QUE ISSO....
+
+-------------------------------------
+
+
+
+
+
+
+
+EIS O BENEFÍCIO DO 'SERVERSIDE RENDERING'... --> COMO ELE __RENDERIZA___ UM __'''PREVIEW'''____ da página, do conteúdo retrievado pelo CÓDIGO ASYNC,
+
+
+DENTRO 
+
+
+DO 
+
+SERVIDOR... -----> 
+
+
+
+
+
+
+
+**Os crawlers SEMPRE SÓ CONSIDERAM O 'FIRST PAGE LOAD'... eles só enxergam A PRIMEIRA PÁGINA RETORNADA PELO SERVIDOR....
+
+
+
+
+
+
+RESUMINDO:
+
+
+
+
+
+
+QUANDO EXISTE O SERVERSIDE RENDERING EM UM SITE,
+
+
+O 
+
+SERVIDOR 
+NÃO 
+
+VAI 
+
+APENAS 
+
+
+
+'''FETCHEAR E RETORNAR'''' O CÓDIGO/CONTEÚDO/REACT APP AO USUÁRIO,
+
+
+MAS __TAMBÉM ___ VAI 
+
+
+___RENDERIZAR__, LÁ NO SERVIDOR___, ESSE REACT APP, 
+
+PARA QUE 
+
+O SEARCH CRAWLER CONSIGA PERCEBER O SEU CONTEÚDO DE VERDADE (conteúdo retornado pelo código async...)
+
+
+
+
+--> ele vai RENDERIZAR O APP/PÁGINA, PARA SÓ DEPOIS FETCHEAR E RETORNAR O CÓDIGO/CONTEÚDO/REACT APP AO USUÁRIO...
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+-------> OU SEJA,
+
+
+O QUE 
+
+O 
+
+USUÁRIO RECEBE 
+
+
+É 
+
+
+
+'Return rendered FIRST PAGE + React App Bundle'... 
+
+
+
+
+
+
+
+
+
+
+
+O USUÁRIO/SEARCH ENGINE CRAWLER ___ VAI RECEBER ___ 
+
+
+UMA RENDERIZAÇÃO DA PRIMEIRA PÁGINA DO APP ('rendered first page') +  O 
+
+BUNDLE DO REACT APP PERTINENTE/NECESSÁRIO...
+
+
+
+
+
+
+
+
+-> fora isso,
+
+TUDO ACONTECE COMO ANTES,
+
+SEM 
+
+NENHUMA MUDANÇA.... 
+
+(o aplicativo ainda será/é uma SINGLE PAGE APPLICATION,
+
+e as coisas 
+
+ocorrem normalmente.... --> só o FIRST PAGE LOAD que é diferente...)
+
+
+
+
+
+(VER ESQUEMA 'server side rendering' para ENTENDER MAIS, no slide...)
+
+
+
+
+
+
+
+
+---------------------------------------
+
+É 'ALL ABOUT THAT FIRST PAGE LOAD'.... 
+
+
+
+
+
+
+
+
+
+---> MAS O NEXT.JS NÃO PARA POR AÍ.... --> ele essencialmente nos AJUDA COM 
+
+SERVERSIDE RENDERING,
+ 
+
+ PQ ISSO 
+
+ É 
+
+ 'SUPER TRICKY TO SETUP'...
+
+
+
+
+
+
+
+
+
+----> ALÉM DE NOS AJUDAR 
+
+COM 
+
+O SERVERSIDE RENDERING,
+
+
+O 
+
+
+NEXT.JS 
+
+NOS 
+
+DÁ 
+
+UMA 
+
+
+ESTRUTURA 
+
+ESPECÍFICA 
+
+
+QUE DEVEMOS USAR... ---> ESSA ESTRUTURA 
+
+
+
+TIRA VANTAGEM 
+
+DE 
+FORÇAR VOCÊ A USAR 
+
+
+
+
+UMA FOLDER STRUCTURE __eSTRITA___, que você 
+
+
+DEVE 
+
+__USAR___..... ---> aqui o professor menciona que 
+
+UM 
+
+DETERMINADO 
+
+__FOLDER_ _LÁ __ DEVE SER NOMEADO ___ DE UMA MANEIRA ESPECÍFICA... --> você 
+
+faz 
+
+
+
+ISSO PARA QUE 
+
+__tODAS AS ROUTES ___ DO SEU APLICATIVO __ PASSEM 
+
+A 
+
+SER 
+GERADAS 
+
+
+___AUTOMATICAMETNE,
+
+PELO 
+
+'Next.js'...
+
+
+
+
+
+
+
+
+
+------------> PROFESSOR VAI NOS MOSTRAR 
+
+
+COMO ISSO É FEITO, NA PRÓXIMA AULA....

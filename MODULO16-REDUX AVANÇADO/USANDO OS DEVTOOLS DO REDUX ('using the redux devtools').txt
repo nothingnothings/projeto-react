@@ -1,0 +1,1404 @@
+
+
+
+
+
+
+
+--> NA ÚLTIMA LIÇÃO,
+
+ADICIONAMOS NOSSO PRÓPRIO MIDDLEWARE 
+
+AO 
+
+PROJETO 
+
+DE 
+
+
+'Counter'...
+
+
+
+ex:
+
+
+
+
+import { applyMiddleware } from 'redux';
+
+
+const logger = (store) => {  ///EXEMPLO DE MIDDLEWARE. MIDDLEWARE COM O REDUX.
+  return next => {
+    return action => {
+      console.log('[Middleware] Dispatching', action);
+      const result = next(action);
+      console.log('[Middleware] Next state', store.getState());
+      return result;
+    }
+  }
+}
+
+
+const store = createStore(rootReducer, applyMiddleware(logger)); /////USADO COM NOSSO 'MIDDLEWARE'... --> esse segundo parâemtro de 'createStore' SERVE PARA __vINCULARMOS__ NOSSO 'Middleware' AO 'store' GLOBAL DE NOSSO APP...
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+
+
+ESSE MIDDLEWARE, É CLARO, É UM 
+
+'LOGGING MIDDLEWARE',
+
+um middleware
+
+QUE 
+
+__APENAS __ FAZ CONSOLE.LOG Do  processo de SEND de uma action/dispatch de uma action
+
+
+E ENTÃO, POSTERIORMENTE,
+
+
+FAZ O CONSOLE.LOG 
+
+DO 
+
+'Store' 
+
+QUE 
+
+FOI ALTERADO 
+
+POR 
+
+ESSA ACTION/DISPATCH....
+
+
+
+
+-------------> ESSE MIDDLEWARE 'logging' é __DISPARADO__ SEMPRE QUE 
+
+ALGUMA 'ACTION' é/for dispatcheada...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----> E ISSO É NICE, POIS NOS DEIXA TER ALGUNS 'INSIGHTS' DENTRO 
+
+DO 
+
+'store' de nosso aplicativo..... -------->  MAS UM PROBLEMA/O PROBLEMA 
+
+É QUE 
+
+ESSE 
+
+
+'middleware'
+
+
+de 
+
+'logging'
+ 
+ SÓ ACABA OCORRENDO/SENDO EXECUTADO ________ SE NÓS REALMENTE ___ 
+
+
+ DISPATCHARMOS UMA ACTION NO NOSSO CÓDIGO... (ou seja, se clicarmos 
+ 
+ um dos 4 botões, 'increment', 'decrement', 'add 10' e subtract 15).........
+
+
+
+
+
+ OU ENTÃO SE CLICARMOS EM 'Store result'.... ----------> 
+
+
+
+
+
+
+
+ E O PROFESSOR ENTÃO NOS CONTA QUE 
+
+
+
+ O CÓDIGO 
+
+
+
+ DE 
+
+ 'logger' não é perfeito,
+
+ POIS 
+ ELE SERIA BEM MAIS ÚTIL __SE PUDÉSSEMOS 
+
+
+ __SEMPRE __ OLHAR/EXAMINAR PARA O 'store' de nosso aplicativo,
+
+
+ E NÃO 
+
+ SOMENTE 
+ quando ALGUMA ACTION É DISPATCHEADA... (por algum button)....
+
+
+
+
+ ------------------------------------------------------
+
+
+
+
+
+
+
+
+BEM, LÁ NA SEÇÃO DE 'Debugging', NÓS APRENDEMOS UM POUCO 
+
+SOBRE 
+
+AS 
+
+REACT DEV TOOLS... (difíceis de usar) --------> 
+
+
+
+
+
+
+DENTRO DESSE 'REACT DEV TOOLS',
+
+
+nós podemos 
+
+
+DAR UMA OLHADA 
+
+NOS COMPONENTS,
+
+
+NA COMPONENT 
+
+TREE 
+
+
+E NO 
+
+
+STATE
+
+
+DE 
+
+CADA UM DESSES COMPONENTS...
+
+
+
+
+------------------------
+
+
+PROFESSOR NOS MOSTRA 
+
+
+
+'<Provider store={dispatch: ......}
+    <App>...</App>
+</Provider>'
+
+
+
+---------------------------------
+
+
+
+
+
+PROFESSOR ENTÃO NOS EXPLICA QUE, PARA O 'Provider',
+ 
+ POR EXEMPLO,
+
+
+
+ NÓS __CONSEGUIMOS/obtemos __ a 
+
+ 'store'... ---------> Entretanto, um problema é que 
+
+ dentro 
+
+ desse 
+
+ 'PROVIDER' 
+
+ NÓS 
+ __VAMOS 
+
+ VER 
+
+
+ APENAS 
+
+
+
+ ALGUMAS 'utility functions',
+
+
+
+
+
+ NÃO SENDO POSSÍVEL ENXERGAR/EXAMINAR 
+
+
+ __ A COISA/COISAS _ QUE REALMENTE 
+
+ ESTÃO 
+
+
+ DENTRO 
+
+
+ DE 
+
+ 'store' nesse momento... -----> ISSO SIGNIFICA QUE NOSSO MIDDLEWARE/ESSE SETUP AÍ 
+
+
+
+
+
+
+ __NÃO É ALGO QUE ESTÁ TÃO BOM...___
+
+
+
+
+
+
+
+
+
+
+
+
+ --> PROFESSOR NOS CONTA QUE __É CLARO QUE __ EXISTEM MANEIRAS, 
+
+ WORKAROUNDS 
+
+ que 
+
+ solucionam esse problema específico...... ---> SE NÓS CLICARMOS NO COMPONENT 
+
+
+ 'Counter', lá no 'REACT DEVTOOLS',
+
+
+ veremos 
+
+
+ que 
+
+
+
+ O 'current value' 
+
+
+ DO 
+
+
+
+ PROP 
+
+ 'counter'
+
+
+
+ ESTÁ 
+
+ COMO 
+
+ '4'....
+
+
+ ex:
+
+
+
+ <Counter ctr=4 storedResults=[] onIncrementCounter />
+
+
+ -----------------------------------------
+
+
+
+ MAS AINDA ASSIM,
+  
+
+  professor nos conta que 
+
+
+  AINDA É DIFÍCIL SE NÓS TIVERMOS QUE NAVEGAR ATÉ UM COMPONENT QUE 
+
+  RECEBE UMA DETERMINADA 
+
+  'SLICE'
+
+
+  do 
+
+
+  STATE, 
+
+
+
+  SÓ PARA 
+
+  NÓS PODERMOS ENTÃO VER/OBSERVAR ESSE SLICE.... ------> Em outras palavras,
+
+  seria 
+
+  bem mais legal 
+
+
+
+
+  se fossemos capazes 
+
+  de 
+
+
+  OLHAR/  'LOOK AT THE'
+
+
+
+  a 
+
+
+ STORE COMPLETA (E não em partes...)
+
+
+  e então ATÉ MESMO VER  
+
+  AS 
+
+  ___ACTIONS__ QUE JÁ FORAM 'DISPATCHED' por nosso aplicativo....
+
+
+
+
+
+
+
+  -------> TAMBÉM 
+
+
+
+
+  SERIA 
+
+  LEGAL SE FOSSEMOS CAPAZES DE 
+
+
+
+  'REWIND' as nossas actions... ------> PARA ISSO, É EVIDENTE QUE 
+
+
+
+  ___eXISTEM DEVELOPER TOOLS __ ESPECIAIS.... ---> 
+
+
+
+
+  SÃO 
+
+
+  AS 
+
+  DEVTOOLS ____ DO REDUX___ (NÃO CONFUNDIR COM AS DEVTOOLS 
+  
+  
+  DO 
+  
+  'react', QUE SÃO __OUTRAS DEVTOOLS...).
+
+
+
+
+  ---------------------------------
+
+
+
+  PARA CONSEGUIR AS DEVTOOLS DO REDUX,
+
+
+  vocÊ deve pesquisar no google e então INSTALAR A EXTENSÃO NO SEU CHROME....
+
+
+
+
+
+  --> a que queremos 
+
+  é 
+
+
+  a 
+
+
+https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=pt-BR
+
+
+
+
+
+----------------------- 
+
+
+
+
+
+
+
+
+ESSE NEGÓCIO VAI TE DAR UM __PLUGIN LEGAL_, QUE VAI SEMPRE 
+
+TE 
+
+DEIXAR 
+
+
+DAR UMA OLHADA 
+
+NO 
+
+
+'STORE' aTUAL Do seu APP/PÁGINA DA INTERNET...
+
+
+
+
+--------------------------------------------
+
+
+
+
+--> mais instruções sobre o REDUX DEV TOOLS 
+
+
+pode ser 
+
+encontrada 
+
+no link 'zalmoxisus/redux-devtools-extension'...
+
+
+
+
+------------------------------------
+
+
+Instaladas as devtools do redux,
+
+
+
+
+
+
+
+NÓS ENTÃO 
+
+
+
+AS ABRIMOS...
+
+
+
+
+
+
+
+
+--> ou não, pq por alguma razão, não estou conseguindo as abrir... (não aparecem no console...)
+
+
+
+
+
+
+
+
+
+OK, AGORA FUNCIONOU...
+
+
+
+-------------------
+
+
+A PRIMEIRA COISA QUE 
+
+
+
+VEMOS 
+
+É 
+
+
+'No store found. Make sure to follow the instructions'...
+
+
+
+
+
+
+
+----------------------------------
+
+PROFESSOR DIZ QUE ISSO ACONTECEU PQ 
+
+
+NÃO SEGUIMOS O 'SEGUNDO PASSO',
+
+
+
+
+QUE É BASICAMENTE 
+
+
+A 
+
+ETAPA 
+
+
+EM QUE 
+
+
+'''INFORMAMOS''' ESSA EXTENSION DE QUE EXISTE, SIM, UMA
+
+
+'store'
+
+ no nosso 'WEBAPP'... ----------> 
+
+
+
+
+ PARA  
+
+ ISSO ,
+
+
+ DE ACORDO COM ESSA INSTRUÇÃO AQUI:
+
+
+
+ 1. With Redux
+1.1 Basic store
+For a basic Redux store simply add:
+
+ const store = createStore(
+   reducer, /* preloadedState, */
++  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+ );
+
+,
+
+
+
+
+NÓS 
+
+PRECISAMOS 
+
+
+
+
+ESCREVER ESSA 
+
+__VARIÁVEL ESPECIAL___ DENTRO 
+
+
+
+DO CÓDIGO DE NOSSO PROJETO....
+
+
+
+
+
+
+
+
+
+
+--> PARA SER MAIS PRECISO,
+ 
+ precisamos 
+
+ passar 
+
+ um 
+
+
+''SPECIAL ENHANCER'' (middleware)
+
+AO 
+
+
+NOSSO 
+
+MÉTODO 
+
+
+'createStore'....
+
+
+
+
+
+
+
+
+
+
+---> O PROFESSOR NOS EXPLICA QUE __________ ESSE '''1.1 BASIC STORE''' NÃO VAI ADIANTAR
+
+
+NESSE 
+
+NOSSO CASO, caso desse projeto 'Counter' com o MIDDLEWARE,
+
+
+pq 
+
+
+
+os 
+
+MIDDLEWARES __INTEREFEREM__ NO FUNCIONAMENTO __ do 'store', e por isso 
+
+esse 
+
+'redux devtools' NÃO OS CAPTA TÃO BEM... ----> para que 
+
+ELE 
+
+
+CONSIGA 
+
+
+MOSTRAR O NOSSO 'Store'
+
+
+COM MIDDLEWARES E ENHANCERS
+
+
+
+enfiados no nosso projeto,
+
+
+DEVEMOS 
+
+
+SEGUIR O 
+
+'1.2', 'Advanced Store Setup',
+
+
+que diz:
+
+
+
+
+
+1.2 Advanced store setup
+If you setup your store with middleware and enhancers, change:
+
+  import { createStore, applyMiddleware, compose } from 'redux';
+
++ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
++ const store = createStore(reducer, /* preloadedState, */ composeEnhancers(
+- const store = createStore(reducer, /* preloadedState, */ compose(
+    applyMiddleware(...middleware)
+  ));
+Note that when the extension is not installed, we’re using Redux compose here.
+
+To specify extension’s options, use it like so:
+
+const composeEnhancers =
+  typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+    }) : compose;
+
+const enhancer = composeEnhancers(
+  applyMiddleware(...middleware),
+  // other store enhancers if any
+);
+const store = createStore(reducer, enhancer);
+
+
+ -------------------------------------
+
+
+
+
+
+
+
+
+ PROFESSOR DIZ QUE DEVEMOS 
+
+
+
+
+ __COPIAR__ 
+
+
+
+ Aquela 
+
+ __VARIÁVEL
+
+
+
+ DE NOME estranho,
+
+
+ que contém 
+
+
+ 'window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;'
+
+
+
+
+
+--> ISSO É ESSENCIALMENTE UMA VARIÁVEL __ QUE É INJETADA POR AQUELA 
+
+EXTENSÃO 
+
+
+especial 'redux devtools' do chrome.... -----> é INJETADA 
+
+NO NOSSO CÓDIGO JAVASCRIPT.... (injetada DURANTE O RUNTIME de nosso app...)
+
+
+
+--> isso significa que esse valor estranho de 
+ 'window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;'
+
+
+VAI ESTAR DISPONÍVEL, SEM PROBLEMAS...
+
+
+-------------------------------------------------------
+
+
+
+Como instruído por esse site aí,
+
+
+
+
+o professor 
+
+vai começar 
+
+
+PELA CRIAÇÃO 
+
+
+DE UMA CONSTANTE 
+
+
+
+em 
+
+'index.js',
+
+
+
+A QUAL ELE NOMEARÁ 
+
+
+
+'composeEnhancers'
+
+
+
+
+
+
+
+
+
+
+
+ EX:
+
+
+
+
+
+composeEnhancers 
+
+
+
+
+
+-----------------------------
+
+
+DEPOIS, PROFESSOR ESCREVE:
+
+
+
+------------------------------------------------------------------
+
+composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
+---------------------------------------------------------
+
+
+
+
+
+ESSA 
+
+SERÁ, ESSENCIALMENTE, NOSSA 'VARIÁVEL ESPECIAL'...  --> e aquele código 
+
+
+'|| compose' 
+
+EXISTE 
+PARA 
+
+
+QUE 
+
+
+O NOSSO CÓDIGO 
+
+faça 'FALLBACK' a esse objeto 'compose' 
+
+
+
+CASO NÃO ESTEJA DISPONÍVEL AQUELE VALOR 
+
+
+
+
+'window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'
+
+
+
+
+
+
+
+
+
+
+----> E ESSE OBJETO 'compose' PODE SER FACILMENTE IMPORTADO 
+
+
+DO REDUX 
+por meio 
+
+da sintaxe 
+
+
+
+'import { compose } from 'redux';
+
+
+
+----------------------------------
+
+
+
+
+O PROFESSOR NOS EXPLICA QUE 
+
+
+'compose'
+
+É __BEM PARECIDO COM 'combineReducers'... -----> 
+
+
+
+
+
+
+
+O 'combineReducers' nos PERMITIA/PERMITE __COMBINAR__ REDUCERS em apenas 
+
+1 só,
+
+
+
+E O 
+
+
+'compose'  __NOS PERMITE COMBINAR __ENHANCERS__............. ----->
+
+
+
+
+
+
+
+
+o 'applyMiddleware' É __aPENAS USADO PARA __MIDDLEWARES__,
+
+
+E ISSO SIGNIFICA QUE 
+
+SE NÓS TIVERMOS __OUTROS ENHANCERS__ (como a DEVTOOLS do redux, que 
+nos mostra o STORE DE NOSSO APP),
+
+
+NÓS SOMOS OBRIGADOS A USAR 'compose' (esse objeto/package especial)
+
+PARA 
+
+
+
+___COMPOSAR __ UM 'SET DE ENHANCERS', que 
+
+TERÁ 
+
+
+
+__tANTO ___ AS DEVTOOLS __ como também O MIDDLEWARE que desejamos 
+
+(que é 'logger', esse middleware aí...)
+
+
+
+
+
+
+
+
+E É POR ISSO 
+
+
+QUE 
+
+O PROFESSOR 
+
+VAI ESCREVER:
+
+
+
+
+
+composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+
+--> ISSO SIGNIFICA QUE 
+
+
+'composeEnhancers' 
+
+
+AGORA ESSENCIALMENTE ___ APENAS SEGURA UMA __FUNÇÃO__....
+
+
+
+
+
+
+
+
+
+---> VOLTANDO ÀS INSTRUÇÕES DO DEVTOOLS... ---> 
+observamos:
+
+
+const store = createStore(reducer, /* preloadedState, */ composeEnhancers(
+      applyMiddleware(...middleware)
+  ));
+
+
+
+
+---------------------------------------
+
+
+
+
+OU SEJA,
+
+AS INSTRUÇÕES NOS DIZEM QUE 
+
+
+
+
+___DEVEMOS CRIAR NOSSO 'STORE' e então devemos 
+
+USAR 
+
+ESSA NOVA FUNÇÃO/variável
+
+
+'composeEnhancers'
+
+
+
+DENTRO 
+
+
+DO NOSSO 
+
+Store, dentro daquele
+ 
+
+ 'createStore'....
+
+
+
+FICARÁ ASSIM:
+
+
+
+ex:
+
+
+
+
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger)));
+
+
+
+-------------------------
+
+
+COM ISSO, COM ESSE SETUP AÍ,
+
+
+
+nos tornamos capazes DE MOSTRAR O _sTATE__ DO 'redux' __ NO NOSSO BROWSER...
+
+
+
+
+-------------------------
+
+
+
+
+Meu deus... isso funcionou.
+
+
+
+BEM LEGAL.
+
+
+
+
+---------------------------------
+
+
+
+VEMOS BASTANTES COISAS....
+
+
+
+
+
+'@@INIT'... ----> ISSO VAI NOS DIZER TODAS AS 'ACTIONS' que foram emitidas, caso ocorram...
+
+
+
+
+
+
+
+
+@@INIT --> É A ACTION QUE SEMPRE OCORRE PRIMEIRO. É A INICIALIZAÇÃO DO APP...
+
+
+
+
+
+
+
+
+--> CADA ACTION pode então ser dissecada: você pode ver DE QUAL TYPE ela foi, 
+
+qual seu efeito no state, etc.... 
+
+
+
+
+
+
+
+STATE ---> te diz QUAL É O STATE, nesse determinado momento no tempo...
+
+
+
+
+
+
+
+
+--> DIFF --> MOSTRA COMO ESSa 
+
+'ACTION' MUDOU O STATE...
+
+
+
+
+
+
+
+
+
+
+--> E SE O PROFESSOR APERTA 'SUBTRACT',
+
+
+
+
+vemos outra 
+
+'action' na lista... --> e essa action pode ser examinada...
+
+
+
+
+em
+
+
+'ACTION' --> PODEMOS ver o que A ACTION REALMENTE 'enviou'/dispatcheou de DADOS... (como 'type' e os payloads...)
+
+
+
+
+
+
+
+
+
+
+-------------------
+
+
+
+REDUX DEV TOOLS ---> EXTREMAMENTE ÚTEIS...
+
+
+
+
+
+
+
+
+--> UMA FEATURE MUITO BOA QUE SERÁ MOSTRADA É O 
+
+'TIME-TRAVELLING'... ----> COM O 'REDUX DEV_TOOLS',
+
+
+vocÊ 
+
+
+pode 
+
+VIAJAR NO TEMPO... ----> 
+
+
+
+
+
+O APLICATIVO QUE TEMOS, O 'counter',
+
+
+REFLETE 
+O QUE 
+
+ACONTECE NO STATE 
+PARA 
+
+CADA 
+
+UMA 
+
+DE NOSSAS AÇÕES.... (isso é óbvio).
+
+
+
+
+-------------------------
+
+
+
+
+PARA FAZER 'REWIND' 
+
+a uma das ACTIONS PASSADAS,
+
+basta 
+
+
+clicar na action e então clicar 
+
+
+em 
+
+'Jump'.... ----> 
+ FEITO ISSO, VOCê VAI 
+
+ 'VIAJAR' NO TEMPO, ATÉ 
+
+ AQUELE 
+
+ ESPECÍFICO MOMENTO...
+
+
+
+ -------------------------------------
+
+
+
+
+--> o legal disso é que OS STATES VELHOS __NÃO SÃO PERDIDOS COM ESSE 'JUMP'; você ainda pode 
+
+VIAJAR ATÉ ELES,
+
+
+
+
+é só clicar no 'jump' deles..
+
+
+
+
+
+
+---> já o botão 'skip' serve para quando você 
+
+tem 
+
+3 
+
+actions (ou mais)
+
+
+E 
+aí 
+
+VOCê QUER ___SKIPPAR__ UMA DAS ACTIONS... (A do meio, provavelmente...)
+
+
+
+ex:
+
+
+
+
+SUBTRACT 
+
+
+ADD ---SKIP ---> vai SKIPPAR ESSA ACTION; 
+
+
+DECREMENT 
+
+
+
+---------------------
+
+
+
+
+
+
+OU SEJA,
+
+'SKIP' VAI EFETIVAMENTE ___ANULAR__ OS EFEITOS DAQUELA ACTION/AQUELA ACTION sobre 
+
+
+
+a 'LINHA DO TEMPO' 
+
+do seu state...
+
+(ex: se removermos 'increment', nosso state 
+
+PERDERÁ 
+EXATAMENTE 
+
+'1' --> pq essa ação, que aumenta '1' no nosso counter, terá sido SKIPPADA...)
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+--> feature muito boa, te traz muitas DEBUGGING POSSIBILITIES...
+
+
+
+--> TE DEIXA ASSEGURAR QUE 
+
+APENAS AS ACTIONS 
+
+
+QUE 
+
+VOCÊ QUER QUE SEJAM DISPATCHEADAS sejam 
+
+dispatcheadas,
+
+e também 
+
+PARA 
+
+ENTENDER O CÓDIGO/ACTIONS QUE LEVARAM O 'state' a ter tal e tal valor em determinado 
+
+momento no tempo...

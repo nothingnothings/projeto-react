@@ -1,0 +1,842 @@
+
+
+
+
+AGORA VAMOS RELEMBRAR CLASSES, outra core feature...
+
+
+
+
+
+
+
+---> CLASSES SÃO 'BLUEPRINTS' para objetos... -->  ESSENCIALMENTE SÃO BLUEPRINTS PARA OBJETOS JAVASCRIPT...
+
+
+
+CLASSES PODEM TER TANTO 
+
+
+___PROPRIEDADES_____ 
+
+COMO 
+
+__ MÉTODOS ___ (métodos são simplesmente funções anexadas a classes...)
+
+
+exemplo de classe: 
+
+
+
+
+class Person {
+    name = 'Max'; //////// PROPRIEDADE.
+
+    call = () => {...};   ///MÉTODO
+}
+
+
+
+------------------------------
+
+
+
+
+uma classe é SEMPRE INSTANCIADA POR MEIO 
+
+DA KEYWORD 
+
+'new'...
+
+
+
+ex:
+
+
+'new Person()'....
+
+
+------------------------------------------- 
+
+
+
+
+
+VOCÊ PODE ACHAR A SINTAXE DE INSTANCIAMENTO DAS 
+
+CLASSES FAMILIAR... ---> É A 
+
+MESMA SINTAXE 
+
+
+DAS CONSTRUCTOR FUNCTIONS...  ------> ISSO É PQ, DE FATO, CLASSES 
+
+SÃO BASICAMENTE UMA MANEIRA MAIS CONVENIENTE 
+
+
+DE CRIAR CONSTRUCTOR FUNCTIONS... ----> VOCê 
+
+CRIA OBJETOS 
+
+JAVASCRIPT COM CLASSES (com essas blueprints...)....
+
+
+
+----------------------------------------
+
+
+
+
+
+CLASSES TAMBÉM SUPORTAM 
+
+ALGO CHAMADO 
+
+DE 
+
+'INHERITANCE', que é __MUITO IMPORTANTE___... --> com inheritance,
+
+ 
+ você tem outra classe da QUAL VOCÊ HERDA COISAS.... --> você 
+
+
+ HERDA TODAS AS PROPRIEDADES E MÉTODOS 
+
+
+ da classe de que você herdou....
+
+
+
+ ex:
+
+
+
+
+ 'class Person extends Master { //////---> A CLASSE 'PERSON' vai herdar TODAS AS PROPRIEDADES E MÉTODOS DA CLASSE "MASTER"...
+
+ }'  
+
+
+
+
+
+ ELA VAI HERDAR TODAS AS PROPRIEDADES E MÉTODOS, e ao mesmo tempo 
+
+ PODERÁ 
+
+ ADICIONAR NOVAS PROPRIEDADES E MÉTODOS EM CIMA daqueles que já herdou....
+
+
+ VOCÊ 
+
+ JÁ DEVE 
+
+ TER VISTO ESSE CONCEITO DE INHERITANCE EM AÇÃO ANTES,
+
+ podemos encontrá-lo 
+
+
+
+ NOS __PROTOTYPES___ do javascript...
+
+
+
+ -----------------------------
+
+
+
+
+ O PROFESSOR ABRE O JSBIN 
+
+
+ para nos mostrar 
+
+
+
+ como as classes funcionam...
+
+
+
+ -----------------------------
+
+
+ELE COMEÇA NOS MOSTRANDO COMO ADICIONAR PROPRIEDADES 
+
+A ESSA CLASSE....
+
+
+
+Ele diz que sempre devemos começar pelo ADD de uma CONSTRUCTOR FUNCTION...
+
+
+CONSTRUCTOR FUNCTION ---> É UMA FUNÇÃO/MÉTODO DEFAULT QUE VOCÊ PODE 
+
+ADICIONAR A QUALQUER CLASSE, que  será __eXECUTADO__ sempre que vocÊ 
+
+INSTANCIA A CLASSE...
+
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+ class Person {
+     constructor() {
+
+     }
+ }
+
+
+
+ -------------------------
+
+
+
+
+ DENTRO DO CONSTRUCTOR, 
+
+ PODEMOS 
+
+
+ ADICIONAR PROPRIEDADES 
+
+ POR MEIO 
+
+
+ DA KEYWORD
+
+
+ 'this'...
+
+PROFESSOR MOSTRA ISSO POR MEIO DA CRIAÇÃO DE UMA PROPRIEDADE 'NAME' de valor 'Max'...
+
+
+
+ ex:
+
+
+
+
+
+
+
+ class Person {
+     constructor() {
+         this.name = 'Max';
+     }
+ }
+
+
+
+------------------------------------
+
+
+DENTRO 
+
+DESSA CLASSE, NÓS PODEMOS AGORA TAMBÉM ADICIONAR UM ___MÉTODO__...
+
+
+um método como 'printMyName()'...
+
+
+
+nesse método vamos passar 'this.name', uma referência 
+
+ÀQUELA PROPRIEDADE QUE CRIAMOS NO CONSTRUCTOR...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+ class Person {
+     constructor() {
+         this.name = 'Max';
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+ -------------------------------------------
+
+
+
+
+
+
+ NÓS PODEMOS, ENTÃO, USAR ESSA CLASSE PARA 
+
+ ARMAZENAR UMA INSTÂNCIA DELA 
+
+
+ EM UMA CONSTANTE...
+
+
+
+ ex:
+
+
+
+
+
+ 
+
+ class Person {
+     constructor() {
+         this.name = 'Max';
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+
+
+
+-------------------------------------
+
+
+
+
+FEITO ESSE INSTANCIAMENTO, PODEMOS 
+
+RODAR O MÉTODO 
+
+'printMyName' DENTRO DE PERSON... (por meio da dot notation...)  --> ISSO VAI PRINTAR 'Max'...
+
+
+
+ex:
+
+
+
+
+
+
+ class Person {
+     constructor() {
+         this.name = 'Max';
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName(); ////eis o código em questão.
+
+
+
+
+---------------------------------
+
+
+
+
+SE AGORA RODARMOS O CÓDIGO, VEREMOS 
+
+'MAX' printado no console...
+
+
+ 
+
+
+ Além de usar 
+
+
+ classes,
+  
+  podemos 
+
+
+  nos aproveitar
+   
+
+
+   DE INHERITANCE, TAMBÉM...
+
+
+--------------------------
+
+
+Professor cria uma nova classe 
+
+para mostrar isso, 
+
+a classe 
+
+'Human'...
+
+
+
+
+dentro dessa classe, ele cria um constructor....
+
+dentro do constructor 
+
+ele define uma propriedade 
+
+
+
+de 
+'gender' de valor 'male'...
+
+
+
+
+
+-----------------------------
+
+
+
+
+ex:
+
+
+
+
+class Human {
+    constructor() {
+        this.gender = 'male';
+    }
+}
+
+
+
+
+
+
+
+
+ class Person {
+     constructor() {
+         this.name = 'Max';
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName(); ////eis o código em questão.
+
+
+----------------------------------------------------
+
+
+
+
+
+DEPOIS DISSO, 
+
+
+
+O PROFESSOR 
+
+
+
+cria uma propriedade 
+
+chamada 
+
+'printGender()' 
+
+
+em que 
+
+ele 
+
+FAZ O CONSOLE.LOG 
+
+de 'this.gender'....
+
+
+ex:
+
+
+
+
+
+class Human {
+    constructor() {
+        this.gender = 'male';
+    }
+    printGender() {
+        console.log(this.gender);
+    }
+}
+
+
+
+
+
+
+
+
+ class Person {
+     constructor() {
+         this.name = 'Max';
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName(); ////eis o código em questão.
+
+
+
+-----------------------------------------------------
+
+
+
+
+Agora, no entando, ele vai EXTENDER (é o inherit)
+
+
+a classe 'Human'...
+
+
+
+
+
+
+
+class Human {
+    constructor() {
+        this.gender = 'male';
+    }
+    printGender() {
+        console.log(this.gender);
+    }
+}
+
+
+
+
+
+
+
+
+ class Person extends Human {
+     constructor() {
+         this.name = 'Max';
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName(); ////eis o código em questão.
+
+
+
+------------------------------------------------
+
+
+
+
+SE FIZERMOS 
+
+
+ISSO,
+
+
+'Person' fará
+ 
+
+ __INHERIT____ DA propriedade 
+
+
+ 'gender' 
+
+ e do método 
+
+ 'printGender()' 
+
+
+ em 'Human'...
+
+
+ ----------------------------------
+
+
+
+
+ Ex:
+
+
+
+
+ class Human {
+    constructor() {
+        this.gender = 'male';
+    }
+    printGender() {
+        console.log(this.gender);
+    }
+}
+
+
+
+
+
+
+
+
+ class Person extends Human {
+     constructor() {
+         this.name = 'Max';
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName();
+
+
+person.printGender(); ///////ISSO VAI FUNCIONAR.
+
+
+
+
+-----------------------------------------------------------------------
+
+
+RECEBEMOS UM __ERRO___ ---> 'MUST CALL super constructor in derived class before accessing 'this' or returning from derived constructor'...
+
+
+
+
+
+CERTO... MAS UMA COISA FALTOU, nesse nosso código...
+
+
+
+
+É O ""SUPER()''''
+
+
+O SUPER ESTÁ FALTANDO...  
+
+
+VOCÊ DEVE CHAMAR 'super()' dentro do constructor da classe que está 
+herdando as coisas...
+
+
+------------------------------------------------
+
+
+
+EX:
+
+
+
+
+
+
+
+ class Human {
+    constructor() {
+        this.gender = 'male';
+    }
+    printGender() {
+        console.log(this.gender);
+    }
+}
+
+
+
+
+
+
+
+
+ class Person extends Human {
+     constructor() {
+         super(); ///////EIS O CÓDIGO EM QUESTÃO.
+         this.name = 'Max';
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName();
+
+
+person.printGender(); ///////ISSO VAI FUNCIONAR.
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+SUPER() ----> é uma KEYWORD ----> o super SIMPLESMENTE __ EXECUTA ___ O 
+
+'PARENT CONSTRUCTOR', o constructor da CLASSE A QUAL ESSA CLASSE HERDOU... (nesse caso, 
+super() executa o constructor de 'Human'...) ---> e você precisa que 
+o constructor da classe PARENT seja inicializado para CORRETAMENTE 
+
+INICIALIZAR A PARENT CLASS....
+
+
+
+
+
+
+SE AGORA RODARMOS ESSE CÓDIGO, ELE FUNCIONARÁ.
+
+
+
+-------------------------------------------------
+
+
+
+
+
+E se vocÊ quiser que sua classe ALTERE ALGUMA COISA, alguma propriedade 
+
+da classe QUE HERDOU, na sua instanciação, VOCÊ PODE FAZER ISSO...
+
+
+fazemos 
+
+isso com o 
+
+
+valor de 'gender', aqui, que trocamos para 'female'...
+
+
+
+ex:
+
+
+
+
+
+
+ class Human {
+    constructor() {
+        this.gender = 'male';
+    }
+    printGender() {
+        console.log(this.gender);
+    }
+}
+
+
+
+
+
+
+
+
+ class Person extends Human {
+     constructor() {
+         super(); 
+         this.name = 'Max';
+         this.gender = 'female';  ///////EIS O CÓDIGO EM QUESTÃO.
+     }
+
+
+
+     printMyName() {
+         console.log(this.name);
+     }
+ }
+
+
+const person = new Person();
+
+person.printMyName();
+
+
+person.printGender(); ///////ISSO VAI FUNCIONAR.
+
+
+
+
+--------------------------
+
+
+
+ESSAS SÃO AS CLASSES, e as classes SÃO USADAS PELO 
+
+
+REACT PARA CRIAR COMPONENTS...  ----> E ESSA É UMA 
+
+DAS 2 MANEIRAS DE CRIAR COMPONENTS... --> você verá o professor usando essa 
+
+sintaxe durante o curso.
+
+
+
+
+CLASSES --> SÃO COMPARÁVEIS COM CONSTRUCTOR FUNCTIONS 
+
+
+INHERITANCE --> É COMPARÁVEL COM PROTOTYPES.

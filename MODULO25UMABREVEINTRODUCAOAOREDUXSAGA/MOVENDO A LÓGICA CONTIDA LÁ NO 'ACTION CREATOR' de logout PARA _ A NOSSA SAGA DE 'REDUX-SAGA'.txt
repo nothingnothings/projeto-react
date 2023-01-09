@@ -1,0 +1,1194 @@
+
+
+
+Nós trabalhamos um bocado com sagas,
+
+MAS 
+
+O PROFESSOR 
+entende que 
+
+
+isso ainda pode parecer um pouco CONFUSO.
+
+
+
+
+
+
+
+
+
+
+
+----> MAS LOGO O NEGÓCIO VAI FICAR MAIS CLARO...
+
+
+
+
+
+
+---> lá em 'auth.js',
+
+
+
+TEMOS 
+
+NOSSO 
+
+
+ACTION CREATOR 
+
+de 
+
+'authLogout'...
+
+
+
+
+
+ex:
+
+
+
+
+export const authLogout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('expirationDate');
+  localStorage.removeItem('email');
+  localStorage.removeItem('userId');
+  return {
+    type: authActionTypes.AUTH_LOGOUT,
+  };
+};
+
+
+
+
+-----------------------------
+
+
+
+E NESSE 
+
+ACTION CREATOR AÍ,
+
+O PROFESSOR 
+
+VAI QUERER 
+
+FAZER UMA 
+
+__MUDANÇA BEM IMPORTANTE___ ---> ele vai querer 
+
+
+TIRAR 
+
+A LÓGICA DE 
+
+'localStorage.removeItem', TODAS AS LINHAS,
+
+PARA 
+
+ENTÃO DEIXAR SÓ A LÓGICA DO 
+
+DISPATCH de 
+
+'AUTH_LOGOUT'....
+
+
+
+
+--> SÓ O DISPATCH DA ACTION VAI FICAR:
+
+
+
+
+export const authLogout = () => {
+  return {
+    type: authActionTypes.AUTH_LOGOUT,
+  };
+};
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+--------> CERTO... --> PROFESSOR AINDA VAI DISPATCHEAR ALGO NESSE 'authLogout'...
+
+
+ 
+
+---> E,
+
+ALÉM DISSO,
+
+O PROFESSOR VAI CRIAR 
+
+
+
+UM NOVO ACTIONTYPE 
+
+em 
+
+
+'authActionTypes'
+
+
+PARA 
+
+
+ESSA ACTION... --> 
+
+
+
+ele 
+
+
+vai escrever 
+
+
+
+
+'export const AUTH_INITIATE_LOGOUT = 'AUTH_INITIATE_LOGOUT';'
+
+
+
+
+-------------------------------
+
+
+
+
+
+O PROFESSOR DECIDE NOMEAR ASSIM PQ __ ESSA VAI SER 'THE STEP __BEFORE WE ACTUALLY BEGIN THE LOGOUT PROCEDURE...'.
+
+ 
+
+ ------> certo... e agora,
+
+ O PROFESSOR 
+
+
+
+ VAI 
+
+ SUBSTITUIR 
+
+
+ actionTypes.AUTH_LOGOUT por 'actionTypes.AUTH_INITIATE_LOGOUT'
+
+
+
+
+
+
+ ---------------------
+
+
+
+
+
+ CERTO... COM ESSA TROCA,
+
+ AGORA 
+
+
+
+ SEMPRE QUE 
+
+ DISPATCHEARMOS 
+
+ 'logout',
+
+
+ NÓS NÃO VAMOS FAZER 
+
+ DISPATCH 
+
+ DE UMA ACTION DE 'LOGOUT' PROPRIAMENTE DITA,
+
+ E SIM 
+
+ DISPATCHEAREMOS UMA 
+
+ ACTION QUE 
+
+ VAI 
+ 'INITIATE O  LOGOUT'... -----------> 
+
+
+
+
+
+ E 
+
+ AGORA 
+
+
+ O 
+
+ OBJETIVO 
+
+ É 
+ FAZER 
+
+ LISTEN TO 
+
+
+
+ A ESSE 
+
+
+ RECÉM CRIADO 'action creator'
+
+
+LÁ NO SAGA,
+
+para 
+
+ENTAÕ 
+
+
+
+EXECUTAR 
+
+O 
+
+
+GENERATOR 
+
+
+de 
+
+
+'logout' (de CÓDIGO
+
+
+
+
+'''''''''''''''
+
+export function* logout(action) {
+    yield localStorage.removeItem('token'); //'YIELD' DEVE SER CHAMADO EM CADA 'step' DE __FUNÇÕES DE TIPO 'GENERATOR' (generator functions).... (generator functions === SÃO OBJETOS 'SAGA', na verdade...)
+    yield localStorage.removeItem('expirationDate');
+    yield localStorage.removeItem('email');
+    yield localStorage.removeItem('userId');
+    yield put(
+        {
+            type: authActionTypes.AUTH_LOGOUT
+        }
+    );
+}
+
+'''''''''''''
+
+
+)
+
+
+
+
+
+SEMPRE QUE 
+
+
+
+
+FOR DETECTADO 
+
+ESSE CALL DE 
+
+
+'INITIATE LOGOUT', representado/incorporado 
+
+em 
+
+'authLogout'...
+
+
+
+
+
+
+
+
+--> PARA __RECEBER__ os 'calls' dos action creators/actions em si,
+
+
+
+PROFESSOR 
+
+CRIA UM 
+
+
+ARQUIVO ESPECIAL 
+
+NO FOLDER 
+
+'sagas',
+
+o  qual chamará 
+
+de 
+
+'index.js'...
+
+
+------------------------------
+
+
+
+
+
+EM INDEX.js,
+
+
+PROFESSOR
+
+
+VAI SIMPLESMENTE 
+
+
+
+IMPORTAR 
+
+
+
+ 
+ A NOSSA 'saga' 
+
+ LÁ 
+
+ DO ARQUIVO 
+
+
+ 'auth.js'... (de sagas)...
+
+
+
+
+
+
+
+--> E AÍ ELE TAMBÉM VAI QUERER IMPORTAR __ ALGO _ LÁ DO PACKAGE __ _DO 
+
+'REDUX-SAGA/effects'.... --> o que 
+
+ele vai querer 
+
+importar
+
+
+
+
+
+É O 
+
+
+'takeEvery'....
+
+
+
+ex:
+
+
+
+
+
+import { logout } from './auth';
+
+import { takeEvery } from 'redux-saga/effects';
+
+
+
+------------------------------------
+
+
+
+import { logout } from './auth';
+
+import { takeEvery } from 'redux-saga/effects'; ///SUPER IMPORTANTE. É isto que 'recebe' as actions dos action creators ENVIADAS ao 'redux-saga', ÀS nossas SAGAS...
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+E O 
+
+'takeEvery'
+
+
+
+NOS 
+
+
+PERMITE 
+
+
+
+
+
+FAZER 'LISTEN TO' 
+
+a certas actions, para 
+
+então 
+
+
+
+__FAZER ALGO__ QUANDO 
+
+
+ELAS OCORREREM.... --------> 
+
+
+
+
+CERTO,
+
+
+MAS COMO 
+
+USAMOS 
+
+
+'takeEvery'? ------> PRIMEIRAMENTE,
+
+
+
+PRECISAMOS 
+
+
+DEFINIR 
+
+
+___OUTRO __ GENERATOR/GENERATOR FUNCTION 
+
+LÁ EM 
+
+
+'index.js'... ------>
+
+
+
+
+
+FICARÁ TIPO ASSIM
+
+
+
+
+
+function* xxx() {
+
+}
+
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+CERTO... E O PROFESSOR NOMEARÁ 
+
+
+ESSE GENERATOR COMO 
+
+'watchAuth'...
+
+
+ex:
+
+
+
+
+
+
+function* watchAuth() {
+
+}
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+DENTRO 
+
+
+DESSE GENERATOR, A PRIMEIRA COISA QUE 
+
+O PROFESSOR 
+
+VAI FAZER 
+
+É 
+
+
+
+ESCREVER 
+
+'yield',
+
+pois isso É ALGO QUE SEMPRE
+FAZEMOS 
+
+DENTRO 
+
+DE 
+GENERATORS...
+
+
+-----------------------------------
+
+
+
+
+
+--> DEPOIS DE ESCREVER 
+
+
+'yield',
+
+
+PROFESSOR 
+
+ESCREVE 
+
+'takeEvery'... (a função que importamos) ----> E NÓS VAMOS __eXECUTAR__ ESSA FUNCTION___
+
+
+
+
+ex:
+
+
+function* watchAuth() {
+        yield takeEvery
+}
+
+
+
+
+---------------------------
+
+
+
+
+
+--> COMO __PARÂMETRO ___ DE 'takeEvery',
+
+
+VAMOS 
+
+PASSAR 
+
+
+A 
+
+
+
+'ACTION' A QUAL EU VOU QUERER 
+
+FAZER 
+
+'listen to'... ---> 
+NO 
+CASO,
+
+VAMOS QUERER 
+
+FAZER 
+
+LISTEN TO 
+
+
+
+DA ACTION de 
+
+
+ 
+
+ 'actionTypes.AUTH_INITIATE_LOGOUT'....
+
+
+
+
+
+
+
+
+ É POR ISSO QUE FICARÁ ASSIm:
+
+
+
+
+
+
+ import { logout } from './auth';
+
+import { takeEvery } from 'redux-saga/effects'; ///SUPER IMPORTANTE. É isto que 'recebe' as actions dos action creators ENVIADAS ao 'redux-saga', ÀS nossas SAGAS...
+
+import * as actionTypes from '../actions/authActionTypes';
+
+
+
+function* watchAuth() {
+    yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT)
+}
+
+
+
+-------------------------------------
+
+
+
+
+CERTO.... agora estaremos 
+
+
+
+'listening to '
+
+
+A QUALQUER ACTION DE TIPO 
+
+'AUTH_INITIATE_LOGOUT'... --> 
+
+
+
+
+
+
+
+
+CERTO... 
+
+MAS 
+
+
+
+'takeEvery' ACEITA/EXIGE UM __SEGUNDO PARÂMETRO__... --> 
+
+
+esse 
+
+
+
+
+SEGUNDO PARÂMETRO 
+
+É 
+
+
+
+___ O GENERATOR_, EFETIVAMENTE A '''SAGA''' QUE QUEREMOS QUE 
+
+SEJA 
+
+EXECUTADA 
+
+SEMPRE QUE 
+
+ESSA 'GIVEN ACTION' 
+
+
+É RECEBIDA 
+
+
+POR ESSE NOSSO GENERATOR/saga-generator em 
+
+'index.js'...
+
+
+(no caso, a saga é 'logout', que já importamos há pouco.)
+
+
+
+ex:
+
+
+
+
+
+
+import { logout } from './auth';
+
+import { takeEvery } from 'redux-saga/effects'; ///SUPER IMPORTANTE. É isto que 'recebe' as actions dos action creators ENVIADAS ao 'redux-saga', ÀS nossas SAGAS...
+
+import * as actionTypes from '../actions/authActionTypes';
+
+
+
+
+
+
+
+function* watchAuth() {
+    yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logout); ///EIS O CÓDIGO EM QUESTÃO.
+}
+
+
+
+------------------
+
+
+
+OK... MAS NÃO ACABAMOS 
+
+A EXPLICAÇAÕ... --> 
+
+
+esse 
+
+
+'watchAuth()'
+
+NÃO VAI 
+
+SER INICIALIZADO 
+'DE PRONTO' quando você o escreve, 
+
+em 
+'index.js'... --> não,
+
+em vez disso,
+
+ELE 
+
+É UM 
+
+
+___GENERATOR__ QUE ____ QUANDO É EXECUTADO__ (no lugar em que é executado/quando é executado),
+
+
+
+
+PASSA A FAZER UM 'LISTEN TO' àquela action específica... --> 
+
+ELE 
+
+VAI 
+
+BASICAMETNE 
+
+DEFINIR UM 'LISTENER'
+
+
+ESPERANDO 
+
+
+POR 
+
+
+'AUTH_INITIATE_LOGOUT'....
+
+
+-------------------------
+
+
+
+
+ISSO FEITO,
+
+PODEMOS 
+
+
+IR 
+
+ATÉ 
+O 
+
+INDEX.js 
+
+
+
+de 
+
+NOSSO PROJETO INTEIRO (lá no root de nosso projeto),
+
+
+
+
+E AÍ 
+
+
+
+VAMOS TIRAR/COMENTAR PARA _ FORA__ AQUELE 
+
+CÓDIGO 
+
+DE 
+
+
+'sagaMiddleware.run(logout)',
+
+QUE 
+
+É POUCO ÚTIL,
+
+POIS 
+
+RARAMENTE 
+VAMOS QUERER 
+QUE 
+UMA 
+
+SAGA SEJA 
+EXECUTADA SEMPRE QUE 
+
+NOSSO 
+
+APP FOR INICIALIZADO... (que é o que 'index.js' faz, ele sempre é executado, sempre inicializa o app...)
+
+
+
+
+
+
+---> EM VEZ DISSO,
+
+
+
+VAMOS QUERER RODAR, NO SEU LUGAR,
+
+
+AQUELE 
+
+GENERATOR EM QUE SETTAMOS AQUELE 'watcher',
+aquele 
+
+generator de 
+
+
+'watchAuth()',
+lá 
+
+no index.js 
+
+DE NOSSAS 
+
+'sagas'...
+
+
+
+
+
+
+E É EXATAMENTE POR ISSO QUE O PROFESSOR VAI DEIXAR 
+
+DE IMPORTAR 
+
+'import { logout } from './store/sagas/auth';,
+
+
+
+
+PASSANDO 
+A IMPORTAR 
+
+O 
+
+
+'watchAuth()', no arquivo 'index.js' 
+
+NO NOSSO FOLDER DE SAGAS...
+
+
+( E PARA CONSEGUIR 
+
+
+IMPORTAR ESSE 'watchAuth',
+
+PROFESSOR 
+
+TERÁ 
+
+DE 
+
+ADICIONAR 
+A KEYWORD 
+
+'export' em 
+
+''''''''''''
+export function* watchAuth() {
+
+}
+'''''''''''''
+
+,
+
+
+LÁ EM 'index.js' dos SAGAS....
+)
+
+
+
+
+
+
+
+OK... --> mas estamos com um PROBLEMA... --> o 'AUTH_LOGOUT' __ NÃO ESTÁ SENDO DISPATCHEADo___.... (os sagas não estão funcionando, essencialmente.)
+
+
+
+
+-----------------
+
+
+É um problema 
+
+com 
+
+'@pmmmwh/react-refresh-webpack-plugin',
+
+lá 
+
+no 
+
+
+node_modules ----> rodo 
+
+'npm audit fix --force'
+
+
+para tentar 
+CONSERTAR ESSE PROBLEMA....
+
+
+
+
+--------------------------
+
+
+
+
+SemVer ==== 'Semantic Versioning'.....
+
+
+
+
+
+
+
+
+
+
+SemVer major change ---> 
+
+MUDANÇA __TOTAL__ EM 
+
+ASPECTO SEMÂNTICO DE UM DETERMINADO PACKAGE...
+
+
+
+
+
+
+
+
+-------------------------------
+
+
+
+Certo.... continuando a aula do professor,
+
+
+agora 
+
+temos 
+
+aquele 
+
+'watchAuth()'
+
+
+
+SENDO EXECUTADO 
+
+NO INDEX.js 
+
+
+do nosso projeto...
+
+
+
+
+
+-> E NOSSO APP REALMENTE 
+
+ESTÁ FAZENDO DISPATCH 
+
+de 
+
+'AUTH_INITIATE_LOGOUT',
+
+e, LOGO DEPOIS,
+
+
+de 
+
+'AUTH_LOGOUT'...
+
+
+(sinal que o REDUX-SAGA ESTÁ FUNCIONANDO...)
+
+
+
+
+-------------------------------------
+
+
+
+
+
+--> OU SEJA,
+
+TODA 
+
+A LÓGICA DE 
+
+
+
+'remove item from LOCALSTORAGE' 
+
+FOI REMOVIDA 
+
+DO
+
+
+ACTION CREATOR 
+
+de 
+'authLogout'
+,
+
+QUE AGORA PASSA 
+
+APENAS 
+
+A FAZER 
+
+
+'RETURN' 
+
+da action em si,
+
+
+e não 
+esses códigos 'desvinculados', que acabam sendo executados/escritos LÁ NO 'SAGA' correspondente a esse 
+
+action craetor...
+
+-------------------------------------
+
+
+
+
+
+
+--> ok, nosso saga está funcionando.... --> 
+
+E 
+
+SE 
+
+
+CLICARMOS EM 'logout',
+
+
+VEREMOS __ QUE __ 
+
+
+
+NOSSA TOKEN TAMBÉM SERÁ REMOVIDA__.... --> ou seja,
+
+
+
+REDUX SAGA __fUNCIONOU___...
+
+
+
+
+--> devemos 
+
+mergulhar mais fundo,
+
+
+
+
+
+
+MOVER __tODOS OS CÓDIGOS DE 'SIDE-EFFECTS' 
+
+
+DE DENTRO 
+
+DE NOSSOS ACTION CREATORS 
+
+
+
+
+PARA __DENTRO __dE NOSSAS 
+'sagas'... 
+
+
+(deixar 
+
+os 
+
+action creators REALMENTE __PUROS___...)
+
+
+
+
+
+
+
+
+
+( VOU COPIAR UMA NOVA VERSÃO DE MEU CÓDIGO DO PROJETO BURGERBUILDER,
+
+para 
+
+ver 
+
+se consigo replicar/evitar esses erros 
+
+
+
+
+que estou encontrando agora com o '@pmmmwh' e o 'babel'...)
+
+
+
+
+-----------------------------------------------------
+
+
+

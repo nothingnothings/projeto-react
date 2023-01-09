@@ -1,0 +1,1507 @@
+
+
+
+
+
+
+
+
+
+
+
+
+--> É HORA DE VER O REDUX EM AÇÃO EM UM PROJETO DE VERDADE...
+
+
+
+
+
+
+
+
+
+---> voltamos ao burger builder,
+
+àquele estado que ele estava depois de adicionarmos o ROUTING...
+
+
+
+
+
+
+
+
+---> EM QUE LUGAR DO BURGER BUILDER PODEMOS ADICIONAR UM POUCO DE 'REDUX MAGIC'? ----> queremos fazer O STATE 
+
+MANAGEMENT 
+
+
+DE 
+
+NOSSO APP FICAR UM POUCO MAIS FÁCIL... -------> para isso,
+
+
+
+O PROFESSOR DIZ QUE NESSA PRIMEIRA LIÇÃO ELE QUER 
+
+__eXAMINAR __ NOSSO PROJETO 
+
+PARA 
+
+DETERMINAR 
+
+QUAL TIPO DE STATE 
+VAMOS 
+
+QUERER 
+
+
+'MANAGE'
+ 
+
+ POR MEIO DO REDUX.... 
+
+
+----------------------
+
+
+COMECAREMOS POR NOSSOS CONTAINERs... -----> isso pq NÓS 
+
+JÁ 
+
+TEMOS 
+
+UMA 
+
+ESTRUTURA 
+
+
+EM QUE 
+
+TODO O STATE MANAGEMENT 
+
+SE DÁ 
+
+__POR MEIO DE CONTAINERS____ (containers e seus STATES locais).... ---> graças a isso,
+
+
+
+NÓS 
+
+
+
+__NÃO PRECISAMOS 'MERGULHAR' POR DENTRO DE TODOS OS COMPONENTS... ---> não,
+
+
+é tudo 
+
+uma questão DE VER OS STATES MANAGEADOS 
+
+
+NOS NOSSOS 'CONTAINERS', e entãO 
+
+
+TRANSPLANTAR O CÓDIGO DE 
+
+'STATE MANAGEMENT' 
+
+DESSES CONTAINERS,
+ 
+
+
+ FAZER UMA VERSÃO 
+
+ 'REDUX'
+
+ desse nosso código....
+
+
+
+ -----------------------------
+
+
+
+
+ DEVEMOS COMEÇAR __PELO 'BURGERBUILDER'.... ------->
+
+
+
+
+
+
+ SE inspecionarmos o 
+
+ 'STATE'
+
+
+
+ Dentro do burgerBuilder,
+
+
+ vamos 
+
+
+ ver 
+
+
+
+ um state bem gordo, cheio de propriedades diferentes, DE DIFERENTES TIPOS... 
+
+
+ (ver aquela aula dos 3 diferentes TIPOS DE STATE, lá no módulo 14, do REDUX)...
+
+
+
+
+
+
+
+ 3 DIFERENTES TIPOS DE STATE:
+
+
+
+ 
+1 (Local UI State )--> 'mostly handled within components' 
+
+
+2 (Persistent State )--> 'Stored on Server, relevant slice managed by Redux'
+
+
+3 (Client State) --> 'Managed via Redux'
+
+
+
+
+-----------------------------------------
+
+
+
+
+Ok... e quais são as propriedades 
+
+
+dentro 
+
+do 
+'state' 
+
+de 'BurgerBuilder'?
+
+
+
+
+
+BEM, SÃO ESSAS AS INFORMAÇÕES/states:
+
+
+
+
+  state = {
+    ingredients: null, 
+    totalPrice: 4, 
+    purchasing: false,
+    purchasable: false,
+    loading: false,
+    error: false
+  };
+
+
+
+
+  ------------------------------------------------
+
+
+
+
+
+  Ok... ---> eu ACHO Que 
+
+  'loading' e 'error' 
+
+  SÃO STATES DE 
+
+  TIPO 
+
+  1 (handled within components).... ---> são states de tipo 'local UI state'.... ---> não há necessidade de usar 'REDUX' com eles...
+
+
+
+
+
+
+  'ingredients' e 'totalPrice' ----> são PROVAVELMENTE 
+
+  states de tipo 3, do tipo 'Client State'... ----> ESSES DEVEM SER GERENCIADOS PELO REDUX
+
+
+
+
+
+  'purchasing' e 'purchasable' PROVAVELMENTE SÃO STATES DE TIPO 1, também...
+
+
+
+  ------------------------------------
+
+
+
+
+
+  Professor nos explica que 
+
+
+
+  as 
+
+  propriedades 
+
+
+  'purchasing',
+
+  'loading'
+
+  e 
+
+  'error'
+
+
+  SÃO RELATIVAS 
+
+  A 
+
+  __ESTADOS__ QUE OCORREM __________dURANTE__ O PURCHASE DE NOSSO BURGER... ----> 
+
+
+  ex: 
+
+  'purchasing' É UTILIZADO PARA _MOSTRAR/ESCONDER_ O NOSSO component 'Modal'....
+
+
+
+  --------------------------------------------------------------------
+
+
+
+  ---> Loading ---> é USADO PARA FAZER DISPLAY DO NOSSO SPINNER....
+
+
+
+
+
+
+
+
+
+  --> Error ---> é usado PARA RENDERIZAR CONTEÚDO DIFERENTE, MODAL DE ERROS...
+
+
+
+
+
+
+
+
+
+
+
+  --> isso quer dizer que SE NÓS DERMOS UMA OLHADA NO NOSSO STATE,
+
+
+
+
+  AS PROPRIEDADES 
+
+
+  'purchasing',
+
+  'loading' 
+
+
+  e 
+
+  'error' 
+
+
+
+  __SÃO KINDOF 'LOCAL UI STATE'... ------> Nós as utilizamos aqui para 
+
+  DETERMINAR 
+
+  SE 
+
+  NÓS MOSTRAMOS UM MODAL,
+
+  ou se mostramos UM SPINNER,
+
+  OU UMA ERROR MASSAGE...  ----------> CONTUDO, 
+
+  NÓS PODERÍAMOS FAZER HANDLE DISSO PELO 
+
+  'REDUX'.. ---> e isso não seria 
+
+  exatamente ruim,
+
+
+
+
+MAS 
+
+TALVEZ NÃO EXISTA UMA NECESSIDADE DISSO...
+
+
+-------------------------
+
+
+
+
+AS 
+
+2 PROPRIEDADES QUE 
+
+100% DEVEM SER GERENCIADAS 
+
+
+POR 
+
+
+'REDUX'
+
+
+são 
+
+
+'TotalPrice'
+
+e 
+
+'ingredients'... 
+
+
+-------------------------
+
+
+
+---> JÁ 
+
+'purchasable', 
+
+se dermos uma olhada 
+
+NO LUGAR EM QUE 
+
+ISSO É UTILIZADO,
+
+
+
+
+VEREMOS 
+
+QUE 
+
+
+ele É PASSADO  
+
+
+AO NOSSO COMPONENT 
+
+'BuildControls',
+
+naquele código de 
+
+
+''''''''''''''''''''''''''''''''''
+
+
+
+    if(this.state.ingredients) { //1
+      burger = (<Aux>
+      <Burger ingredients={this.state.ingredients}/>
+      <BuildControls 
+      disabled={disabledInfo} //'disabledInfo' será uma constante que terá aquele objeto com a 'CÓPIA DO STATE DE INGREDIENTS', mas aquela cópia tem uma alteração no INGREDIENT que será/não será removido, que estará tipo assim: 'cheese: false', ou 'bacon: true', etc.....
+      price={this.state.totalPrice}
+      ingredientAdded={this.addIngredientHandler} 
+      ingredientRemoved={this.removeIngredientHandler}
+       purchasable={this.state.purchasable} ////////EIS O CÓDIGO EM QUESTÃO.
+       ordered={this.purchaseHandler} />
+       </Aux>
+      )
+''''''''''''''''''''''''''''''''''''''
+
+
+
+ALI, NESSE 'BuildControls',
+
+
+
+O 
+
+
+'purchasable'
+
+É 
+
+
+UTILIZADO ________PARA DESBLOQUEAR___ O BOTÃO DE 
+
+'Order'... -------->  E 
+
+
+SE NÓS INSPECIONARMOS 
+
+
+O 
+
+
+
+COMPONENT 
+
+'BuildControls' em si,
+
+
+
+VEREMOS QUE 
+
+
+
+ELE É UTILIZADO PARA LIGAR/DESLIGAR O BOTÃO DE 'Order'...
+
+
+ex:
+
+
+            <button className={BuildControlsStyle.OrderButton}
+            disabled={props.purchasable}
+            onClick={() => {props.ordered()}}
+         
+            >ORDER NOW</button>
+
+---------------------------------
+
+
+
+ISSO SIGNIFICA QUE 
+
+
+'purchasable'
+
+TAMBÉM 
+
+É UMA PROPRIEDADE 
+
+MAIS 
+
+DE TIPO 
+
+'LOCAL UI STATE'...
+
+
+
+
+---> COMO ESSAS COISAS SÃO COISAS QUE ALTERAM __ A UI__, essas PROPRIEDADES
+
+NÃO SÃO ALGO A SER 
+
+REALMENTE 
+
+'MANAGED' PELO REDUX em si... (são state de tipo '1')...
+
+
+
+
+
+
+
+
+
+--> CONTUDO, VOCê PODERIA ARGUMENTAR QUE 'purchasable', EM RAZÃO
+DO VALOR QUE ELE RECEBE FAZER PARTE DO BURGER QUE NÓS CONFIGURAMOS, poderia 
+
+ser algo a 
+
+ser handled pelo 'redux'... --> isso significa que TEREMOS QUE VER; TALVEZ 
+
+
+ELE 
+
+SEJA HANDLADO PELO REDUX MSM...
+
+-------------------------------
+
+
+
+
+MAS 
+
+'ingredients' e 'totalPrice' SÃO ___CASOS___ PARA APLICAR O REDUX...
+
+
+--------------------------
+
+
+
+
+Ok, e o container 
+
+de 
+
+'Checkout'? --------> Bem, se formos até lá,
+
+
+
+
+SE SCROLLARMOS ATÉ O TOPO,
+
+
+VEREMOS 
+
+
+_____QUE 
+
+O STATE TERÁ ISTO:
+
+
+
+''''''''''''''''''''''''''
+
+state = {
+  ingredients: null,
+  price: 0
+}
+
+
+'''''''''''''''''''''''''''
+
+
+
+
+OU SEJA,
+
+
+ESSE 
+
+
+__STATE ____ TAMBÉM __ TEM 'ingredients' e 'price' --------> ISSO JÁ É UM ___cASO FORTE __ PARA USAR 
+
+
+O 
+
+REDUX,
+
+
+pq 
+
+
+aquele STATE QUE VAMOS 
+
+
+USAR 
+
+em 
+
+'BurgerBuilder' PODERÁ SER REUTILIZADO/RECICLADO/APONTADO 
+
+PARA 
+
+ESTE LUGAR AQUI, TAMBÉM... --------------> SE FIZERMOS ISSO, TODO AQUELE 
+
+
+CÓDIGO DE __QUERYPARAMS__ (aquele WORKAROUND para passar o state/props de 'BurgerBuilder' 
+a 
+esse 
+
+container 'Checkout', que é OUTRA PÁGINA, tecnicamente) 
+
+
+PODERÁ 
+
+SER REMOVIDO... ------> isso significa que 
+
+todo 
+
+este trecho de código:
+
+
+
+
+
+
+
+
+
+
+'''''''''''''''''''''''''''''
+
+
+
+
+
+  componentWillMount() {
+
+    const query = new URLSearchParams(this.props.location.search);
+
+    console.log(query);
+
+    console.log(query.entries());
+
+    const ingredients = {};
+
+
+    let price = null;
+
+
+    for (let param of query.entries()) {
+      console.log(param);
+      //    ingredients[param[0]]
+
+
+      if (param[0] === 'price') {
+          price = param[1];
+          console.log(price);
+          
+      } else {
+        ingredients[param[0]] = +param[1];
+      }
+
+     
+    }
+
+
+    this.setState({
+      ingredients: ingredients,
+      totalPrice: price
+    });
+
+
+    console.log(this.state.totalPrice)
+    
+
+
+
+
+  }
+
+
+
+
+  ''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  __PODERÁ SER REMOVIDO__...
+
+
+
+
+
+
+
+
+
+  -------------------------------------------
+
+
+
+
+
+
+Mas não é só isso:
+
+
+professor diz que 
+
+
+TBM 
+
+SERIA 
+
+LEGAL 
+
+
+SE NOS TORNÁSSEMOS
+
+
+
+CAPAZES DE, no método 'render()' de 'Checkout',
+
+
+
+
+MUDARMOS __ A MANEIRA PELA QUAL __ AQUELA 
+
+
+
+
+'Route' de 
+
+
+
+'ContactData' é 
+
+
+renderizada no nosso app... ---------> ex:
+
+
+
+
+''''''''''''''''''''''''''''''
+
+        <Route
+          path={this.props.match.path + '/contact-data'}
+           render={() => {     
+                return contactDataWithIngredients;
+           }}                           
+        />
+
+  ''''''''''''''''''''''''''''
+
+
+
+
+  Se 
+
+  pudéssemos 
+
+  só 
+
+  tirar 
+
+
+  esse uso de 
+
+  'render={() => {}}' 
+
+
+  E ENTÃO 
+
+
+
+USAR 
+
+AS INFORMAÇÕES DO REDUX COM UM COMPONENT renderizado aqui (por meio de 'component={}'),
+
+
+SERIA MUITO MELHOR... ---------> FARÍAMOS ISSO, EXPLICA O PROFESSOR,
+
+PARA QUE 
+
+
+NÃO 
+
+
+TENHAMOS QUE USAR ESSE APPROACH 
+
+
+
+CAGADO 
+
+
+de 
+
+'render={}' 
+
+SÓ PARA ___CONSEGUIR __ AS INFORMAÇÕES/PROPRIEDADE
+
+'ingredients' DENTRO DO NOSSO COMPONENT 
+
+'ContactData'... -----------------> EM VEZ DISSO,
+
+
+
+QUANDO FINALMENTE 
+
+CONSEGUIRMOS 
+
+FAZER MANAGE DO 
+
+'INGREDIENT STATE' no 
+
+
+'redux store'/redux state,
+
+
+NÓS PODEREMOS 
+
+
+
+SIMPLESMENTE RENDERIZAR ESSE 
+
+
+COMPONENT DE FORMA 'solta' (sem o uso desse método 'render()', e sem esse pass de ingredients 
+por meio 
+dessa 
+
+sintaxe bizarra),
+
+
+
+E ENTÃO 
+
+VAMOS SER CAPAZES DE FAZER 'GET' DO STATE DE FORMA SIMPLES 
+
+LÁ 
+em 'ContactData', justamente POR MEIO DO 
+
+REDUX.... -------> e vamos 
+
+fazer isso por meio 
+
+do objeto/função 
+
+
+'connect', importada do 'react-redux'.... ---> aí nós vamos CONSEGUIR 
+
+ACESSO 
+
+
+à PROPRIEDADE 
+'ingredients'
+
+
+
+lá 
+
+em
+
+
+'ContactData', também... 
+
+
+
+
+
+
+
+
+---> ISSO PQ, SE DERMOS UMA OLHADA NO STATE DE 'ContactData',
+
+
+veremos ESTE OBJETO GIGANTE:
+
+
+
+  state = {
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+        validation: {  ///AQUI VÃO TODAS AS REGRAS DE NOSSOS components 'Input' em 'ContactData'....
+          required: true  /////USADO NA VALIDATION DE NOSSOS INPUTS... assistir aula 'Adding Custom Form Validation'... ---> ''''required: true'' significa que ESSE FIELD DEVE SER __PREENCHIDO__ PARA QUE USUÁRIO POSSA ENVIAR A 'ORDER'...
+        } ,
+        valid: false,
+        touched: false
+      },
+
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Street',
+        },
+        value: '',
+validation: {  ///ver método 'checkValidity()'....
+  required: true
+} ,
+valid: false,
+touched: false
+      },
+
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+validation: {
+  required: true,
+  minLength: 5,
+  maxLength: 5
+} ,
+valid: false,
+touched: false
+      },
+
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country',
+        },
+        value: '',
+        validation: {
+          required: true
+        } ,
+
+        valid: false,
+        touched: false
+
+      },
+
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+validation: {
+  required: true,
+  
+},
+valid: false,
+touched: false
+      },
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                        value: 'fastest', 
+                        validation: {},
+                        valid: true
+                       
+
+                        // validation: {
+                        //   required: false
+                        // },
+                        // valid: true
+    
+    
+    },
+  },
+    formIsValid: false,
+
+    loading: false,
+  };
+
+
+
+--------------------------------
+
+
+É 
+
+o 
+
+
+
+'orderForm'
+
+ COM TODAS 
+ SUAS 
+
+ PROPRIEDADES/OBJETOS...
+
+
+
+
+
+
+Temos a 'orderForm' e todos seus 'controls'... ---> e o professor 
+
+DIZ QUE 
+
+
+
+DEVE-SE 
+
+DEIXÁ-LOS AQUI.... ----> VÃO SER DEIXADOS 
+
+NESTE LOCAL 
+
+
+
+EXATAMENTE PQ __ELES SÃO 'LOCAL UI STATE' ------> ISSO SIGNIFICA QUE ___NÓS NÃO PRECISAMOS 
+
+DE 
+
+INFORMAÇÃO 'EXTERNA' (state externo) 
+
+
+PARA  LIDAR COM OS ELEMENTOS/COMPONENTS VINCULADOS 
+
+A 
+
+ESSAS PROPRIEDADES... (e nós também NÃO TEMOS 
+
+nenhuma conexão/relação dessas 'FORMS' com nenhum outro 
+
+lugar 
+
+de nosso código...)
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+ENTRETANTO,
+
+NESSE 
+
+
+CONTAINER 
+
+
+
+'CHECKOUT',
+
+
+
+nós 
+
+
+evidentemente AINDA 
+
+__TIRAMOS VANTAGEM
+
+
+
+DE 
+
+
+NOSSOS 
+
+'ingredients'... ----------> MAS ESSES INGREDIENTS 
+
+SÃO OBTIDOS , NESSE COMPONENT,
+
+
+
+POR MEIO DE ___PROPS__, por isso 
+
+eles 
+
+
+
+NÃO 
+
+SÃO VISTOS NO NOSSO STATE PROPRIAMENTE DITO...
+
+
+
+ex:
+
+
+''''''''''''''''''''
+
+    const orderData = {
+      ingredients: this.props.ingredients,
+      price: this.props.price,
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+    };
+
+
+''''''''''''''''''''''',
+
+
+ISSO DENTRO DO 
+
+
+MÉTODO 
+
+
+'orderHandler'...
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+OK, MAS NO STATE DESSE 'ContactData',
+ 
+
+
+ESSENCIALMENTE TEMOS 
+
+SÓ 
+
+
+'local ui' states... --> 
+
+
+
+
+tanto o 'orderFOrm',
+
+
+como o 
+
+
+'formIsValid' 
+
+
+e 
+
+o 
+
+
+'loading'...
+
+
+
+
+--> essas 3 coisas fazem HANDLE DE NOSSA FORM...
+
+--------------------------
+
+
+
+
+
+
+OK, MAS O CÓDIGO DE DENTRO DE 
+
+
+
+'orderHnadler'
+
+
+
+NÓS PROVAVELMENTE VAMOS ALTERAR NO FUTURO,
+
+
+
+
+POIS VAMOS DEIXAR DE USAR AQUELE 
+
+
+workaround de 
+
+
+'render={() => {}}' 
+
+
+NO COMPONENT/CONTAINER 
+
+
+'Checkout'....
+
+
+--------------------------------
+
+
+
+
+
+
+
+
+
+OK............... JÁ NO COMPONENT 
+
+
+
+'ORDERS',
+
+
+
+lá 
+
+
+
+
+Nós temos um state assim:
+
+
+
+
+'''''''''''''''''''''''''''
+
+state = {
+  orders: [],
+  loading: true
+}
+
+
+''''''''''''''''''''''''''
+
+
+
+
+
+Quanto a essas propriedades,
+
+
+sabemos 
+
+que 
+
+
+AS 
+
+
+
+'orders' 
+
+
+SÃO ___fETCHEADAS __ DO SERVIDOR ------> E NÓS REALMENTE __AINDA NÃO APRENDEMOS__ A FAZER FETCH 
+
+DE DADOS 
+
+DE UM 
+
+SERVIDOR (o que é uma EXECUÇÃO DE CÓDIGO ASSÍNCRONO; HTTP REQUESTS SÃO 
+EXECUÇÕES DE CÓDIGO ASSÍNCRONO...) COM 
+
+
+O REDUX (não aprendemos a fazer FETCH DE DADOS DE UM SERVIDOR AO MESMO TEMPO EM QUE 
+
+USAMOS REDUX.... --> usar REDUX para fazer fetch de dados de um servidor... não sabemos 
+
+como fazer isso.)
+
+
+
+
+
+
+
+--> por isso, daremos uma olhada em 'orders' MAIS TARDE, depois que 
+
+estudarmos 
+
+OS HTTP REQUESTS COM O REDUX... (async code com o REDUX)....
+
+
+
+
+
+
+
+
+
+---> JÁ 'loading' é um 'LOCAL UI STATE'... 
+
+
+
+
+-------------------------------------
+
+
+
+
+
+--> POR ENQUANTO, VAMOS FOCAR NO CÓDIGO 'SÍNCRONO',
+
+
+
+E AO LONGO DAS PRÓXIMAS LIÇÕES VAMOS IMPLEMENTAR
+
+
+
+O REDUX,
+
+
+MOVER 
+
+O STATE 
+
+DE NOSSOS COMPONENTS A ELE,
+
+
+e então CONECTAR NOSSOS 
+
+
+
+
+COMPONENTS/CONTAINERS AO REDUX...
+
+
+------------------------------
+
+
+Ok, instalei os 
+
+
+negócios... ----> agora é hora de 
+
+CRIAR OS ARQUIVOS... 
+
+
+
+
+
+
+--> deve-se criar uma pasta 'store' (no nosso 'src', no root folder), com 
+
+
+
+2 REDUCERS (um reducer para o PRICE, outro para os INGREDIENTS),
+
+
+
+e então 
+
+
+
+criar um arquivo 'actions.js'
+
+
+com nossas ACTIONS...
+
+
+---------------------------------
+
+
+
+
+CÓDIGO INICIAL FICOU ASSIM (dos 'reducers'):
+
+
+
+
+
+
+
+
+
+const initialState = {
+        totalPrice: 
+}
+
+
+
+
+
+
+const priceReducer = (state = initialState, action) => {
+    switch(action.type) {
+
+
+        case 
+
+
+
+
+
+        case
+    }
+}
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+MAS TALVEZ SEJA UMA BOA IDEIA IR ATÉ O 
+
+'index.js'
+
+
+E então __CONECTAR__ 
+
+
+
+nosso app __ ao 'redux'__, 
+
+justamente por meio daquela sintaxe e packages bizarros...
+
+
+
+-----------------------------
+
+
+OBS:::: TIVE QUE FAZER ISTO AQUI PARA EVITAR UM ERRO:
+
+
+
+const BurgerBuilderWithHocs = withErrorHandler(BurgerBuilder, axiosOrder);
+
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilderWithHocs);
+
+
+
+
+-----------------------------------------------
+
+
+
+
+---> eu estou passando O __iD__ PELO PAYLOAD_ _ de forma errada...
+
+
+
+
+
+
+
+
+
+
+
+--> ok, consegui consertar tudo... --> a action 
+
+'INGREDIENT_ADD' agora funciona (+ ou -....) --------> ela funciona 
+
+
+'' + ou - '''
+
+
+
+PQ 
+
+
+
+O 
+
+
+BOTÃO 'Order' NÃO É AFETADO POR NOSSO 'Add', e NEM O BURGER VISUAL...
+
+(consegui consertar isso, depois...)
+
+
+
+<Burger ingredients={this.props.ingr} /> ---> este código aqui resolveu.
+
+
+
+
+------------------------------------
+
+
+
+
+-------------------------------

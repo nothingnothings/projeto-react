@@ -1,0 +1,3764 @@
+O próximo passo é tentar 'RESOLVER' o 'PROBLEMA' de PERDER 
+
+O 
+
+STATE (o token, na verdade)
+
+
+QUANDO 
+
+
+REINICIAMOS/RELOADAMOS NOSSA PÁGINA... 
+
+
+
+-------------------------------------
+
+
+
+
+Ainda temos o comportamento DEFAULT do browser,
+
+
+aquele 
+que 
+
+
+SE NÓS 
+
+__REINICIARMOS A PÁGINA POR MEIO DO RELOAD,
+
+
+PERDEMOS O STATE E, JUNTO DELE,
+
+
+O __TOKEN__...
+
+
+
+
+
+--------------------------------------
+
+
+
+
+--> o login state é PERDIDo... -->  A RAZÃO 
+
+
+DE 
+
+PERDERMOS 
+
+
+
+AS INFO DE LOGIN QUANDO REINCIAMOS A PÁGINA É SIMPLES:
+
+
+
+NÓS ACABAMOS FAZENDO DOWNLOAD DA 'SINGLE PAGE APPLICATION'
+ 
+
+mais uma vez,
+
+
+
+e 
+
+
+aí o javascript todo é baixado e executado de novo ------> ISSO SIGNIFICA QUE 
+
+É 
+
+UM APLICATIVO TOTALMENTE NOVO SENDO BAIXADO POR CIMA DO ANTIGO...
+
+
+
+
+
+
+--------> PORTANTO, 
+
+NOSSO 
+
+STATE, ARMAZENADO NO REDUX,
+
+É OBVIAMENTE PERDIDO... ---------> por isso, 
+
+nós precisamos 
+
+
+fazer 
+
+
+'persist' 
+
+DO NOSSO 
+
+'LOGIN STATE'
+
+
+
+
+AO LONGO DE NOSSAS 'SESSIONS'...  ------> e isso, 
+
+essa feature 
+
+de 
+
+fazer 
+
+o 
+
+LOGIN STATE (as tokens e localId) __PERSISTIR 
+
+
+_____REQUER___ UMA BROWSER 
+
+
+API___ -------> UMA 
+
+
+BROWSER API QUE 
+
+
+__dEVEMOS UTILIZAR,
+
+
+__ QUE É A __LOCAL STORAGE___.... -------> e devemos aprender sobre COMO 
+
+PODEMOS 
+
+
+UTILIZAR 
+
+'LOCAL STORAGE'.........
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+vamos até o arquivo de action creators 
+
+
+de 
+
+'auth.js'...  -------> ali nós 
+
+fazemos 
+
+
+
+LOGIN COM SUCESSO, POR MEIO DO DISPATCH DA ACTION DE 
+
+'authSuccess'...
+
+
+ex:
+
+
+
+
+
+    axios
+      .post(url, authData) 
+      .then((response) => {
+        console.log(response);
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email)); ///////////// AQUI...
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(authFail(error.response.data.error));
+      });
+  };
+};
+
+
+
+
+-----------------------------
+
+
+
+
+
+BEM NESSA LINHA AÍ,
+
+NOSSA 
+
+
+__TOKEN__ TAMBÉM É PASSADA... --> 
+
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+                            ^^^^^^^^^^
+
+
+
+
+
+
+
+
+E FARIA MUITO SENTIDO __ARMAZENAR __ ESSA 'TOKEN'___ NA LOCALSTORAGE__ DO NOSSO 
+
+BROWSER, TAMBÉM...
+
+
+
+
+
+
+
+
+
+--> a API do localStorage FAZ PARTE DO BROWSER,
+
+
+POR ISSO PODEMOS 
+
+FACILMENTE 
+
+A UTILIZAR... ----------------> PODEMOS 
+
+
+A UTILIZAR 
+
+
+
+
+DENTRO 
+
+DO NOSSO 
+
+
+ACTION CREATOR 
+
+
+
+
+DE 
+
+'authAttempt',
+
+OU ENTÃO 
+
+
+PODEMOS 
+
+
+A UTILIZAR 
+
+
+DENTRO 
+
+
+DO ACTION CREATOR DE 
+
+'authSuccess'...,
+
+que tem 
+
+este código:
+
+
+
+
+
+
+export const authSuccess = (token, userId, email) => {
+  return {
+    type: authActionTypes.AUTH_SUCCESS,
+    // authData: authData
+    token: token,
+    userId: userId,
+    email: email
+  };
+};
+
+
+
+
+
+-----------------------------------------
+
+
+NÓS FARÍAMOS ESSE ___ARMAZENAMENTO DA TOKEN__ LOGO 
+
+ANTES 
+
+DE 
+
+
+FAZER ESSE 
+
+RETURN/DISPATCH 
+
+
+
+DESSA ACTION aí (a action é esse objeto com o 'TYPE'...)
+
+
+
+
+
+
+
+
+
+--> COMO NOSSA TOKEN __É REALMENTE__ RECEBIDA __ DENTRO DESSA FUNÇÃO 'authSuccess' (parâmetro 'token'),
+
+
+
+NÓS REALMENTE __ PODERÍAMOS __ EXECUTAR UM 'CÓDIGO DE ARMAZENAMENTO'
+
+logo antes 
+
+do return/dispatch daquela action...
+
+
+
+
+
+
+
+
+---> MAS COMO O PROFESSOR __ NÃO QUER TRABALHAR APENAS __ COM A TOKEN (algo mais direcionado),
+
+
+
+COMO ELE QUER TRABALHAR COM MAIS DADOS,
+
+
+como com o __EXPIRATION TIME___ ('response.data.expiresIn'),
+
+
+
+QUE ESTÁ NESTE CÓDIGO AQUI, de 'authAttempt':
+
+
+
+'''''''''''
+      .then((response) => {
+        console.log(response);
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+
+
+
+'''''''''''''''''
+
+,
+
+
+
+COMO 
+
+
+ELE QUER USAR ESSE 'expirationTime',
+
+
+ELE __DECIDE__ FAZER O RUN DESSE CÓDIGO DE ARMAZENAMENTO LÁ EM 
+
+'authAttempt'...
+
+
+
+------------------------------
+
+
+
+
+---> POR ISSO,
+
+ELE 
+
+
+VAI 
+
+SETTAR/ARMAZENAR O TOKEN NA LOCALSTORAGE 
+
+lá 
+
+
+
+dentro 
+
+
+do action 
+
+creator 
+
+de 
+
+'authAttempt'... 
+
+
+
+------------------------------
+
+
+
+
+
+
+---> LÁ DENTRO,
+
+
+
+
+professor vai acessar 'local storage'
+
+POR MEIO 
+
+DA ESCRITA 
+
+DE 
+
+'localStorage'...
+
+
+
+
+
+
+ex:
+
+
+
+    axios
+      .post(url, authData) 
+      .then((response) => {
+        console.log(response);
+        localStorage /////////EIS O CÓDIGO EM QUESTÃO.
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(authFail(error.response.data.error));
+      });
+  };
+
+
+
+
+
+  -------------------------------
+
+
+
+
+  
+
+  ---> ok.... --> vamos usar a parte mais 'geral' de nosso código que faz o 'get' de uma token (o 'authAttempt') 
+  para 
+
+  então 
+
+
+
+  ARMAZENAR 
+
+
+  ESSES DADOS AÍ... (o 'auth state', como chamado pelo professor....) ------> 
+
+
+  vamos 
+
+  fazer 
+
+  isso 
+
+
+ DENTRO DO 
+
+
+
+
+'.then()' block 
+
+
+do
+
+
+axis.post 
+
+
+dentro 
+
+
+do 
+
+'authAttempt'...
+
+
+
+
+
+
+---------------
+
+
+
+
+
+ex:
+
+
+
+
+    axios
+      .post(url, authData) 
+      .then((response) => {
+        console.log(response);
+        localStorage /////////EIS O CÓDIGO EM QUESTÃO.
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(authFail(error.response.data.error));
+      });
+  };
+
+
+
+
+  -------------------------
+
+
+
+  ok...
+
+
+
+
+
+  'localStorage.setItem()' ------------> 
+
+
+
+
+
+  'setItem()' 
+
+  É UM 
+
+  MÉTODO 
+
+
+  existente 
+
+
+  DENTRO 
+
+  DO 
+
+  OBJETO 
+
+  'localStorage',
+
+
+  E 
+
+  ELE NOS PERMITE 
+
+
+
+  ARMAZENAR um item no seu interior... (duhh)....
+
+
+
+
+
+
+  ---> 
+
+
+o primeiro parâmetro é UMA STRING, E ESSA STRING SERÁ __ A KEy___ ,
+
+
+
+A KEY QUE PODEREMOS USAR PARA FETCHEAR AQUELE 'item' (o interior do parâmetro 
+
+
+de '.setItem()', portanto,
+
+FUNCIONA 
+
+
+
+EXATAMENTE COMO 
+
+UM 
+
+
+
+KEY-VALUE PAIR...) ------> já o segundo valor 
+
+
+SERÁ 
+
+
+__ O ITEM EM SI, 
+
+
+
+
+E O ITEM QUE VAMOS COLOCAR, NESSE CASO AQUI, SERÁ 
+
+
+'response.data.idToken'....
+
+
+
+ex:
+
+
+
+
+    axios
+      .post(url, authData) 
+      .then((response) => {
+        console.log(response);
+        localStorage.setItem('token', response.data.idToken) /////////EIS O CÓDIGO EM QUESTÃO.
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(authFail(error.response.data.error));
+      });
+  };
+
+
+
+
+  ---------------------------------
+
+
+
+
+  ou seja,
+
+
+
+  fazemos a mesma coisa que fizemos mais ali embaixo,
+
+
+
+mas para armazenar esse item....
+
+
+
+
+
+
+
+
+
+--> isso é bom, claro,
+
+
+mas 
+
+
+a 
+
+TOKEN EM SI 
+
+NÃO __VAI SER __ TÃO ÚTIL SE NÓS 
+
+A FETCHEARMOS 
+
+
+NO FUTURO (isso pq os valores/keys/items armazenados 
+no localSTORAGE __VAO REALMENTE___ SER FETCHEADOS MAIS TARDE, POR NOSSO BROWSER,
+A PARTIR DO CÓDIGO JAVASCRIPT QUE ESCREVEMOS..;), pq 
+
+nós 
+
+também 
+precisamos 
+
+
+dA 
+
+INFORMAÇÃO ACERCA DO EXPIRE... (mas não sei porque...) -------> 
+
+
+
+E 
+É EXATAMENTE POR ISSO QUE 
+O
+ 
+
+ PROFESSOR VAI QUERER 
+
+
+ __ARMAZENAR __ OUTRA COISA (com outro call de 'localStorage.setItem()'.... ) -------->
+
+
+
+
+
+ E ele diz que 
+
+
+ armazenar 'expiresIn' em si é um ERRO, pq isso 
+ aí 
+
+ É __ SÓ O NÚMERO __ DE SEGUNDOS __ ATÉ QUE 
+
+ NOSSA TOKEN FIQUE INVÁLIDA... (E isso não é mt útil...) -----> 
+
+
+ isso 
+
+
+não vai mudar nossa vida nem um pouco, quando fetchearmos 
+
+essa informação de lá do 
+
+'localStorage'... --------> 
+
+
+
+
+
+
+ARMAZENAR O 'expiresIn' é __iNÚTIL__ pq o 
+
+número de segundos __NÃO É ''''INTERATIVO'''' (ou seja,
+ele não vai magicamente contar para baixo ao longo do tempo; ele vai continuar 
+
+sendo sempre '500', ou '3600', por exemplo...)...
+
+
+
+
+ok, 
+
+então 
+
+OUTRO 'ITEM'/pedaço de informação deve 
+
+ser 
+
+armazenado... ------> É POR ISSO, DIZ O PROFESSOR,
+
+QUE 
+
+
+DEVEMOS 
+
+
+
+ARMAZENAR A ''''EXPIRATION DATE'''' ------> E O VALOR 
+
+
+DESSA 
+
+EXPIRATION DATE,
+
+EM QUESTÃO,
+
+
+
+SERÁ __cALCULADO __ E ARMAZENADO EM UMA CONSTANTE SEPARADA (que será 
+
+então 
+
+
+referenciada nesse novo 'item'... armazenado no localStorage...)
+
+
+
+
+
+
+OK, MAS COMO PODEMOS CRIAR UMA 'DATA'? Como podemos 
+
+FORMULAR UMA EXPIRATION DATE 
+
+para 
+
+o 
+
+nosso token? ---------->  
+
+
+basta 
+
+usarmos 
+
+o objeto 
+
+
+'new Date()' .... -------> vamos 
+
+
+usar 
+
+
+
+ 
+o 
+
+
+'new Date()' 
+
+E ENTÃO 
+
+
+
+ADICIONAR (+) 
+
+o 
+
+
+
+'expirationTime' (que é 'expiresIn', que está em 'response.data.expiresIn'),
+
+tudo 
+
+isso 
+
+
+VEZES 1000 (* 1000),
+
+PQ 
+
+O 
+
+
+OBJETO/PROPRIEDADE 
+
+'expiresIn'
+
+sempre 
+
+
+MARCA SEU VALOR EM SEGUNDOS (3600 segundos),
+
+E NÃO 
+
+
+EM MILISSEGUNDOS, e isso não é bom para o javascript,
+
+pq 
+
+o JAVASCRIPT EM SI __ CONSIDERA__ O TEMPO EM 
+
+____MILISSEGUNDOS___... (e não em segundos)...
+
+
+
+
+
+ex:
+
+
+
+const expirationDate = new Date() + response.data.expiresIn * 1000;
+
+localStorage.setItem('tok'n, response.data.idToken);
+localStorage.setItem('expirationDate', expirationDate);
+
+
+
+--------------------------------------------
+
+
+
+
+
+------> mas 
+
+SÓ ISSO 
+
+AÍ NÃO É O SUFICIENTE... --> aquele call de 'new Date()' ESTÁ MUITO SIMPLES,
+
+
+PROFESSOR 
+
+
+DIZ QUE 
+
+
+DEVEMOS USAR/ESCREVER 
+
+
+o método 
+
+
+'.getTime()',
+
+que 
+
+é um 
+
+MÉTODO 
+
+QUE 
+
+NOS 
+DÁ 
+
+O 
+
+EXATO INSTANTE 
+
+
+
+DO DIA em que 
+
+esse método é chamado....
+
+
+
+
+
+
+
+fica:
+
+
+
+const expirationDate = new Date().getTime() + response.data.expiresIn * 1000;
+
+
+
+----------------------------
+
+
+FICA ASSIM:
+
+
+
+       const expirationDate = new Date().getTime() + response.data.expiresIn * 1000;
+        localStorage.setItem('token', response.data.idToken);
+        localStorage.setItem('expirationDate', expirationDate);
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+Certo, mas não acabamos... não acabamos porque SE 
+
+
+FIZERMOS 
+
+SÓ ISSO AÍ,
+ 
+
+ só 
+
+
+ esse 'const expirationDate', ele NÃO FICARÁ NO FORMATO CORRETO (podemos console.loggar para ver....)
+
+
+(ficará tipo assim: ''''16265697351673600  ''')
+
+
+
+
+
+
+
+
+
+----> ISSO PRECISA SER CONVERTIDO EM UM 'OBJETO' 'DATE', 
+
+
+
+para que 
+
+seja 
+
+
+uma DATA VÁLIDA, compreensível pelo javascript/browser... --> para isso,
+
+precisamos 
+
+usar 
+
+o objeto 
+
+'new Date()' 
+
+MAIS UMA VEZ,
+
+MAS 
+
+DESSA VEZ 
+
+WRAPANDO TODA ESSA EXPRESSÃO 
+
+DE 
+
+'expirationDate'...
+
+
+
+
+
+ex:
+
+
+
+
+ const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+                        ^^^^^^
+
+
+  
+
+  -------------------------------------------------------------------
+
+
+
+
+  OK... RESUMINDO:
+
+
+  'newDate()'  (sem argumentos) --> ISSO NOS __DÁ __ A 'CURRENT DATE'.... ----> e se vocÊ adicionar '.getTime()', ISSO NOS DÁ __ O 'CURRENT TIME'...
+
+
+  'newDate(conteúdoEnvolvidoPelosParênteses)' -------> ISSO VAI CONVERTER A EXPRESSÃO QUE ESTÁ NO INTERIOR DESSE 'new Date' EM UMA DATA________.......
+
+
+-------------------------------------------
+
+
+
+
+
+No caso,
+ 
+
+ esse código inteiro aqui vai representar essencialmente
+  
+
+
+  'a hora em que o token foi criado + 1 hora....'... (1 hora é 3600 segundos/3600000 milissegundos...)
+
+
+
+
+
+
+
+
+
+
+RESULTADO FICA ASSIM:
+
+
+
+
+
+
+
+    axios
+      .post(url, authData) 
+      .then((response) => {
+        console.log(response);
+        const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); ///EIS O CÓDIGO EM QUESTÃO.
+        localStorage.setItem('token', response.data.idToken) /////////EIS O CÓDIGO EM QUESTÃO.
+        localStorage.setItem('expirationDate', expirationDate) /////////EIS O CÓDIGO EM QUESTÃO.
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(authFail(error.response.data.error));
+      });
+  };
+
+
+
+
+
+
+  ---------------------
+
+
+  É CLARO QUE PODEMOS TESTAR SE ISSO FUNCIONOU:
+
+
+  é 
+
+  só 
+
+
+
+  entrarmos/loggarmos com sucesso no nosso app, 
+
+  e então 
+
+  checarmos 
+
+  'localStorage',
+
+  na 
+
+  aba 
+
+
+  'Application',
+
+
+
+  NO 
+
+  BROWSER DEV TOOLS....
+
+
+  ----------------------------
+
+
+
+
+
+  Certo,
+
+
+
+  agora 
+
+  1 
+
+  item 
+
+  que é 
+
+  a TOKEN 
+
+  e 
+  outro que 
+
+  é 
+
+  a 
+
+  DATE 
+  estão sendo armazenados....
+
+
+
+
+  -----------------------------------
+
+
+
+
+
+
+
+
+
+  --> ok.... ----->  o 'expirationDate'
+
+  nos mostra 
+
+
+
+  A 
+
+  __DATE__/a data __que essa token vai expirar...
+
+
+
+
+
+
+
+
+
+  --> e agora podemos tirar 
+
+
+
+  vantagem dessas 2 informações/fields __SEMPRE 
+
+  QUE NOSSO 
+
+
+  APLICATIVO __ CARREGA_, 
+
+  PARA ENTÃO 'log the user in' se nós tivermos uma 
+
+  token,
+
+
+   e se ela ainda estiver válida (se seu expiration date não for anterior a data/momento 
+   
+   atual em que 
+   o 
+   
+   
+   usuário carrega/recarrega o aplicativo...) ------> 
+
+
+   E 
+
+
+
+   SE 
+
+
+   PASSARMOS DA 'expirationDate',
+
+   VAMOS QUERER 
+
+   QUE 
+   ESSA 
+
+   TOKEN 
+
+   SEJA 
+
+   'CLEARED UP'... -------> e vamos querer 
+
+   que 
+
+
+
+   ela seja 'cleared up' POR MEIO 
+
+
+   DA 
+
+
+   ACTION DE 
+
+   'logout',
+
+   que codamos 
+
+   lá 
+
+
+
+   em 
+
+   'Auth.js'....
+
+
+
+   ------------------------
+
+
+
+
+
+   --------> É POR ISSO QUE 
+
+   VAMOS TER QUE 
+
+
+   DAR 
+
+   UMA EDITADA 
+
+
+
+   NA 
+
+
+   ACTION 
+
+   DE 
+
+   'logout' 
+
+
+   em 
+
+   'auth.js'... ------> (colocar mais alguns parâmetros... nessa action.)
+
+
+
+
+
+
+export const authLogout = () => {
+  return {
+    type: authActionTypes.AUTH_LOGOUT,
+  };
+};
+
+
+
+
+
+----------------------
+
+
+
+
+
+
+
+
+
+DENtro do código 'normal' desse 'authLogout',
+
+
+OU SEJA,
+
+__FORA__ DO RETURN DA ACTION__,
+
+
+NÓS VAMOS QUERER ___
+
+
+REMOVER 
+
+
+OS 
+
+
+
+ITEMS 
+
+'token' 
+
+e 
+
+'expirationTime'
+
+
+
+DO NOSSO LOCALSTORAGE... ----> 
+
+
+faremos 
+
+isso por meio do comando 
+
+
+'localStorage.removeItem('token')' 
+
+
+e 
+
+
+'localStorage.removeItem('expirationDate')'
+
+
+
+
+
+
+
+
+
+-----------> FAREMOS ISSO JUSTAMENTE PQ 
+
+OS 
+
+2 ITEMS 
+
+___NÃO SÃO NECESSÁRIOS (sim, nenhum deles é necessário, após ocorrer o 'logout') -----> como 
+
+NÃO SÃO NECESSÁRIOS,
+
+PODEMOS 
+
+E ___DEVEMOS__OS REMOVER DA MEMÓRIA POR MEIO 
+
+
+DE 
+
+'.removeItem()',
+
+
+o que fará a memoria ficar um pouco menos carregada.....
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+export const authLogout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('expirationDate');
+  return {
+    type: authActionTypes.AUTH_LOGOUT,
+  };
+};
+
+
+
+
+
+
+-------------------------
+
+
+
+
+CERTO.. MAS A QUESTÃO, AGORA, É QUE 
+
+ESSA TOKEN 
+
+__DEVERÁ ___ SER FETCHEADA __ QUANDO 
+
+__ NÓS __LOGGAMOS 
+
+__ NO NOSSO APLICATIVO...
+
+
+
+
+
+
+
+
+
+---> bem, e onde devemos checar isso? -----> professor 
+
+diz que 
+
+devemos 
+
+
+checar essa token 
+
+BEM QUANDO 
+ 
+ O APLICATIVO É CARREGADO (loaded),
+  ou seja,
+
+  QUANDO 
+
+  É 
+
+  EXECUTADO 
+
+
+  'App.js' -------------- >
+
+
+
+
+
+  APP.JS É O 
+
+  ROOT COMPONENT DO NOSSO APLICATIVO,
+
+
+
+
+  E POR ISSO ELE É SEMPRE CARREGADO,
+
+
+  NÃO IMPORTANDO QUAL ROUTE É VISITADA POR NÓS -----> e é justamente 
+
+  por isso 
+
+
+que ele é um excelente app/component 
+
+
+
+
+para 
+
+
+CHECAR 
+
+O 
+
+'AUTH STATUS' (authentication status) --------> PARA 
+
+CHECAR 
+
+
+ISSO,
+
+
+
+CHECAR 
+
+
+
+A EXISTÊNCIA DE UMA TOKEN NO 'localStorage' (na verdade, para ___FETCHEAR__ ESSA TOKEN NO LOCALSTORAGE, junto do 'expirationDate'),
+
+
+
+
+
+NÓS __vAMOS PRECISAR__ DE UMA __NOVA ACTION____.... ----> Essa action 
+
+será 
+
+criada 
+
+
+no 
+
+
+
+arquivo de action creators 
+
+
+'auth.js'... ----------> 
+
+LÁ 
+
+
+O PROFESSOR 
+
+
+
+
+
+VAI QUERER DISPATCHEAR 
+
+'authSuccess' QUANDO NOSSO 
+
+
+
+'authAttempt' 
+
+DÁ CERTO,
+
+MAS 
+
+TAMBÉM 
+
+__vAI QUERER __ DISPATCHEAR 
+
+UMA 
+
+OUTRA 
+
+ACTION,
+
+
+
+aquela 
+
+action de 
+
+
+'checkAuthTimeout'...
+
+
+
+
+
+
+ex:
+
+
+
+
+      .then((response) => {
+        console.log(response);
+        const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); ////lembre-se de adicionar '* 1000', pois o JAVASCRIPT SEMPRE CONSIDERA 'TEMPO' EM MILISSEGUNDOS, E NÃO EM SEGUNDOS.... (só o 'expiresIn' que é mostrado em segundos....)
+        console.log(expirationDate);
+        localStorage.setItem('token', response.data.idToken);
+        localStorage.setItem('expirationDate', expirationDate);
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+
+
+
+  ---------------------------------------
+
+
+
+
+
+  Essa 
+
+
+  action de 'checkTimeout' 
+
+  É 
+
+  CRUCIAL 
+
+  __PARA COMEÇAR 
+
+
+  O 'CHECK' 
+
+  do 
+
+
+  tempo 
+
+  de nosso user 
+
+  no aplicativo,
+  para 
+  checar 
+
+  SE 
+
+  SUA 
+
+  TOKEN AINDA ESTÁ VÁLIDA (se ainda não deu timeout, basicamente)...
+
+  ----------------------------
+
+
+
+
+
+
+
+
+
+e para checar 
+
+
+
+SE 
+
+
+
+O TIMER JÁ ACABOU/SE O TOKEN JÁ NÃO É VÁLIDO,
+
+o professor 
+
+vai 
+
+criar um 
+
+NOVO ACTION CREATOR 
+
+
+em 
+
+'auth.js',
+
+
+
+o qual 
+
+
+CHAMARÁ
+ 
+
+
+
+
+
+
+de 
+
+
+'authCheckState'.... -------------- >
+
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+export const authCheckState = () => {
+
+}
+
+
+
+
+--------------------------
+
+
+ISSO 
+
+
+VAI 
+
+
+RETORNAR UMA FUNÇÃO INTERNA (com 'dispatch'),
+
+
+mas uma função interna que não será usada 
+
+para 
+
+fazer 
+
+O RETURN 
+
+DE CÓDIGO ASSÍNCRONO, E SIM 
+
+PARA __ RODAR_ _ MÚLTIPLAS ACTIONS... de dentro dessa 'action'/'action creator'... -----------> 
+
+
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+export const authCheckState = () => {
+    return dispatch => {
+
+    }
+}
+
+
+
+-------------------------------------
+
+
+DENTRO 
+
+DESSA ACTION/ACTION CREATOR,
+
+O PROFESSOR 
+
+vai querer 
+
+
+PRIMEIRAMENTE 
+
+CONSEGUIR 
+
+
+
+
+A 'token' 
+
+DO USUÁRIO... -->  e armazenar em uma 'const'...
+
+
+
+
+
+
+
+
+
+fará isso por meio do código 
+
+
+'localStorage.getItem('token');'....
+
+
+
+
+
+
+-----> E ELE TAMBÉM VAI QUERER O 'expirationDate'....
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+export const authCheckState = () => {
+    return dispatch => {
+          const token = localStorage.getItem('token');
+          const expirationDate = localStorage.getItem('expirationDate);
+    }
+}
+
+
+
+
+----------------------------------------
+
+
+
+
+CERTO.... MAS 
+
+
+NOSSO CÓDIGO NÃO SERÁ TÃO SIMPLES ASSIM... --> vamos precisar 
+
+de 
+
+um 
+
+IF STATEMENT... -----> 
+
+o 
+
+if 
+
+statement 
+
+vai 
+
+dizer 
+
+
+'SE TOKEN FOR NULL/falsy, 
+
+A ÚNICA COISA QUE VOU QUERER FAZER É RETORNAR NADA...' (pq eu não vou querer 
+
+fazer nenhum dispatch nem nada, nesse case específico... ) ------> 
+
+professor 
+
+nos explica que 
+
+ELE VAI ESCREVER um dispatch de logout dentro desse case aí,
+
+mas que 
+
+ISSO 
+
+
+NÃO É NECESSÁRIO, PQ A REMOÇÃO __ DO TOKEN OCORRE AUTOMATICAMENTE 
+
+no browser, uma vez que ele expira....
+
+
+
+
+
+ex:
+
+
+
+
+export const authCheckState = () => {
+    return dispatch => {
+          const token = localStorage.getItem('token');
+          if(!token) {
+            dispatch(logout()); /////////EIS O CÓDIGO EM QUESTÃO.
+          }
+          
+          else {
+
+          const expirationDate = localStorage.getItem('expirationDate);
+          }
+    }
+}
+
+
+------------------------------
+
+
+
+O ELSE CASE 
+
+será 
+
+rodado se o TOKEN N FOR INVÁLIDO... --> se o token n for inválido/expirado,
+
+
+vamos 
+
+querer 
+
+ARMAZENAR 
+
+O 
+
+'expirationDate'/time 
+
+
+EM UMA 
+
+CONSTANTE....
+
+
+-----------------------------------------------------
+
+
+
+
+COM ISSO UPDATADO,
+
+temos 
+
+essas 2 coisas armazenadas em CONSTANTES.... --> e agora 
+
+PODEMOS 
+
+USAR 
+
+
+ESSES 2 PIECES OF INFORMATION... --------> dentro desse 'authCheckState',
+
+PROFESSOR 
+
+VAI QUERER 
+FAZER 
+
+O DISPATCH 
+
+
+
+
+DE NOSSO 
+
+ACTION CREATOR 
+
+
+
+
+'authSuccess'........ -------> ISSO PQ ___NÓS __sABEMOS___ QUE 
+
+NÓS 
+
+ESTAMOS 'LOGGED IN'... (ou seja, vamos poder 'RECICLAR' o nosso 
+
+ACTION CREATOR 
+
+de 
+'authSuccess', que vai 
+
+EFETIVAMENTE 
+
+
+___NOS LOGGAR __ DE NOVO, TODA VEZ QUE 
+
+O 
+
+
+'APP' FOR EXECUTADO DE NOVO... (que é sempre, sempre que qualquer um de nossos 
+
+'containers'/páginas for renderizado...))
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+export const authCheckState = () => {
+    return dispatch => {
+          const token = localStorage.getItem('token');
+          if(!token) {
+            dispatch(logout()); /////////EIS O CÓDIGO EM QUESTÃO.
+          }
+          
+          else {
+
+          const expirationDate = localStorage.getItem('expirationDate);
+          dispatch(authSuccess());
+          }
+    }
+}
+
+
+
+-----------------------------------
+
+
+FICA TIPO ASSIM:
+
+
+
+
+
+
+
+
+
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+      if(!token) {
+        dispatch(authLogout())
+      } else {
+        const expirationDate = localStorage.getItem('expirationDate');
+        const email = localStorage.getItem('email');
+        dispatch(authSuccess(token, expirationDate, email))
+      }
+  }
+}
+
+
+
+
+-----------------------------------------
+
+-----> CERTO...
+
+
+
+MAS 
+
+SÓ 
+
+VAMOS 
+
+QUERER 
+
+FAZER 
+
+
+DISPATCH 
+
+de 
+'authSuccess' 
+
+
+
+SE 
+
+
+O 
+
+'expirationDate'
+
+
+NÃO 
+
+TIVER EXPIRADO JÁ.... -------> e para 
+
+ver/pedir 
+
+para 
+
+o código 
+
+que 
+
+ELE EXAMINE SE ESSE NEGÓCIO JÁ EXPIROU,
+
+
+professor 
+
+diz que 
+
+
+DEVEMOS 
+
+WRAPPAR 
+
+esse 
+
+'localStorage.getItem('expirationDate')' 
+
+
+
+
+EM 
+
+__OUTRO__ OBJETO
+ 
+
+
+ 'new Date'  (isso pq QUANDO ESCREVEMOS  
+''localStorage.getItem('expirationDate')'' 
+
+
+NÓS ACABAMOS RECEBENDO UMA __STRING__ COMO ESSE VALOR AÍ,
+
+e uma string não nos adianta de nada; ela precisa ser convertida por meio 
+
+do 
+ 
+ 
+ objeto 'new Date()' para funcionar em checks e 
+ 
+ usos 
+ 
+ em 
+ 
+ geral.... ) ------------> 
+
+
+
+ CERTO, 
+
+
+ ISSO SIGNIFICA 
+
+ QUE 
+
+ NOSSO CÓDIGO VAI FICAR ASSIM:
+
+
+
+
+
+ 
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+      if(!token) {
+        dispatch(authLogout())
+      } else {
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if(expirationDate > newDate()) { ////////EIS O CÓDIGO EM QUESTÃO.
+                const email = localStorage.getItem('email');
+        dispatch(authSuccess(token, expirationDate, email))
+        } else {
+              dispatch(logout()); //////ISSO VAI FAZER LOGOUT DO USUÁRIO, caso seja constatado que 'expirationDate' é INFERIOR AO TEMPO ATUAL/instante atual (significa que nosso token já expirou...).
+        }
+ 
+      }
+  }
+}
+
+
+
+-----------------------------------
+
+
+
+
+--> CERTO, 
+
+AGORA 
+
+'expirationDate'
+
+FOI REALMENTE 
+
+CONVERTIDO EM UM 'DATE OBJECT'... ---> e aí, podemos O UTILIZAR 
+
+
+
+
+COM 
+
+
+IF CHECKS... --> professor vai 
+
+
+escrever 
+
+
+'se expirationDate É __MAIOR___ DO QUE 
+
+
+'new Date()' (que é ESSENCIALMENTE O MOMENTO DE AGORA),
+
+
+
+VAMOS QUERER QUE O USUÁRIO SEJA RELOGADO, pq o expirationDate ainda é superior,
+
+é um MOMENTO NO FUTURO, ESSENCIALMENTE... '
+
+
+
+
+
+REPRESENTAÇÃO:
+
+
+
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+      if(!token) {
+        dispatch(authLogout())
+      } else {
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate > new Date()) {
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, expirationDate, email))
+        } 
+        else {
+          dispatch(authLogout());
+        }
+  
+      }
+  }
+}
+
+
+
+
+--------------------------------
+
+
+
+
+OK, MAS AQUI TEMOS UM PROBLEMA... ---> 
+
+
+
+em 
+
+'dispatch(authSuccess(token, expirationDate, email))',
+
+
+
+VAMOS 
+PRECISAR 
+
+
+DO 
+
+'userId'.... -----> não basta só A __TOKEN__, VAMOS PRECISAR 
+
+TAMBÉM 
+
+
+
+
+DO 'userId'... ------> E PARA CONSEGUIR O 'userId',
+
+
+PROFESSOR 
+DIZ QUE 
+VAMOS 
+
+PRECISAR O __fETCHEAR__... -------> ELE NOS DIZ 
+
+QUE 
+
+
+PODERÍAMOS, É CLARO, SIMPLESMENTE ARMAZENAR (store)
+
+
+O 
+
+
+
+'userId'
+
+
+EM LOCAL STORAGE.... (e isso não estaria errado, diz ele...) ------> VOCÊ PODE, NO ENTANTO,
+ 
+
+ MANDAR UM REQUEST 
+
+
+ À API 'Auth'  DO FIREBASE PARA ___CONSEGUIR __ ESSE 'userId' direto de lá...
+
+
+
+
+
+
+
+
+
+
+ ---> para ver como fazer isso, deve-se olhar a documentação da 'auth api' 
+
+
+ do 
+
+ firebase... ----> lá podemos 
+
+ ler que 
+
+
+
+a userData dos usuários PODE SER RECEBIDA __POR MEIO ___ DO SEND 
+
+DE UM 
+
+
+POST REQUEST 
+
+
+
+A UM DETERMINADO ENDPOINT, que é este aqui:
+
+
+
+
+
+
+
+
+
+Get user data
+You can get a user's data by issuing an HTTP POST request to the Auth getAccountInfo endpoint.
+
+Method: POST
+
+Content-Type: application/json
+
+Endpoint
+
+https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=[API_KEY]
+
+Request Body Payload
+Property Name	Type	Description
+idToken	string	The Firebase ID token of the account.
+Response Payload
+Property Name	Type	Description
+users	List of JSON objects	The account associated with the given Firebase ID token. Check below for more details.
+
+
+
+
+
+
+
+
+
+CERTO... ENTÃO É ISTO AQUI:
+
+
+https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=[API_KEY]
+
+
+
+
+
+
+
+
+
+devemos colocar o API_KEY __ DE NOSSO APLICATIVO NAQUELE SLOT ALI... ----> 
+
+
+
+e devemos 
+
+
+
+
+colocar O __'idToken' (ou seja, a 'token' mesmo) 
+
+
+DO 
+
+USUÁRIO 
+
+
+COMO ___BODY___ DO PAYLOAD QUE SERÁ ENVIADO...
+
+
+
+
+
+-----------------------
+
+
+
+ok... ---> isso significa que 
+
+vamos 
+
+ter que
+
+
+escrever 
+
+um 
+
+
+'
+axios.post()' 
+
+
+
+
+
+
+com aquela URL como primeiro parâmetro,
+
+
+
+
+e 
+
+aí 
+
+com 
+
+
+um 
+
+
+payload 
+
+
+
+de 
+
+'{
+  idToken: token
+}',
+
+ou algo assim....
+
+
+
+
+
+
+
+
+---------------------
+
+professor diz que é um pouco estranho isso, pq aqui estamos fazendo um 'GET' DE USER DATA, mas 
+
+para isso vamos ter que enviar um Post request.... ---> é coisa do google, mesmo... 
+
+
+
+
+
+
+
+
+
+
+
+---> NA RESPONSE, POR SUA VEZ, RECEBEREMOS 
+
+UM 
+
+OBJETO 
+
+
+COM 
+
+
+
+'kind' (que será sempre o mesmo)
+
+
+
+e 
+
+
+'users', 
+
+
+
+que 
+
+SERÁ 
+
+UMA LISTA (ARRAY) DE OBJETOS 'JSON', representando 
+
+a 
+
+
+CONTA ASSOCIADA COM AQUELA idToken... -----> o PRIMEIRO ___ITEM/ELEMENTO___ DESSE ARRAY É O NOSSO USER___ EM SI.......
+
+
+
+
+
+e aí, 
+
+o resto dos elementos no array,
+
+são 
+
+estes:
+
+
+
+localId	        string          	The uid of the current user.
+email	          string          	The email of the account.
+emailVerified   	boolean	        Whether or not the account's email has been verified.
+displayName       	string        	The display name for the account.
+providerUserInfo    	List of JSON objects        	List of all linked provider objects which contain "providerId" and "federatedId".
+photoUrl              	string                      	The photo Url for the account.
+passwordHash          	string                        	Hash version of password.
+passwordUpdatedAt	          double	                      The timestamp, in milliseconds, that the account password was last changed.
+validSince	                  string	                    The timestamp, in seconds, which marks a boundary, before which Firebase ID token are considered revoked.
+disabled	                    boolean	                    Whether the account is disabled or not.
+lastLoginAt	                    string	          The timestamp, in milliseconds, that the account last logged in at.
+createdAt	                        string	          The timestamp, in milliseconds, that the account was created at.
+customAuth	                        boolean	          Whether the account is authenticated by the developer.
+
+
+
+
+----------------------------------
+
+
+
+OK...
+
+TODAS ESSAS INFORMAÇÕES 
+
+VÃO VOLTAR NA RESPONSE DO SERVIDOR...
+
+
+
+
+----------------------------------
+
+
+
+
+SE VOCÊ QUISESSE 
+
+
+
+PEGAR 
+
+O 
+
+'userId' POR MEIO 
+
+DESSE 
+
+
+APPROACH DO GOOGLE 'firebase auth api',
+
+VOCÊ PODERIA,
+
+COM CERTEZA,
+
+SERIA
+ 
+ SÓ 
+
+
+ ESCREVER UM 
+
+ 'axios.post()' request ao endpoint específico de 'users' do firebase,  
+
+ pedindo 
+
+ o ELEMENTO de indexador '[0]' do array retornado (response) pelo endpoint aquele...... ---> e isso 
+
+
+ realmente 
+
+ funcionaria,
+
+
+ você conseguiria 
+
+ o 
+
+ 'userId'
+
+
+ -------------------------------------
+
+
+
+
+
+
+ --------> O PROFESSOR, ENTRETANTO, DIZ QUE 
+
+
+ PREFERE, NO NOSSO CASO, SIMPLESMENTE 
+
+ __ARMAZENAR__ O USERID __ DIRETAMENTE NA 
+
+ 'localStorage' do usuário, PARA QUE 
+
+ POSSA 
+
+ ENTÃO SER FETCHEADO DEPOIS (é mais fácil e prático, no nosso caso...)
+
+
+
+
+
+
+
+ ---> para isso,
+
+
+ professor 
+
+
+ vai 
+
+ no código 
+
+
+ de 
+
+ 'authAttempt'
+
+
+ DE NOVO,
+
+
+ e 
+
+
+ vai querer 
+
+
+ digitar 
+
+ UM 
+ TERCEIRO
+  
+
+  CÓDIGO DE 
+
+
+  'localStorage.setItem()'
+
+
+
+
+
+
+
+
+
+  --> vai settar uma key de 'userId',
+
+
+
+
+e o objeto/negócio em si 
+
+
+será 
+
+
+'response.data.localId'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+export const authAttempt = (email, password, isSignup) => {
+  return (dispatch) => {
+    dispatch(authStart());
+    const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true,
+    };
+    let url =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; 
+    if (!isSignup) {
+      url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCy31S56NPNXlXSSCTRdE5TccY_QYmtZe4'; 
+    }
+    axios
+      .post(url, authData) 
+      .then((response) => {
+        console.log(response);
+        const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000); 
+        console.log(expirationDate);
+        localStorage.setItem('token', response.data.idToken);
+        localStorage.setItem('expirationDate', expirationDate);
+        localStorage.setItem('userId', response.data.localId); ///////EIS O CÓDIGO EM QUESTÃO.
+        localStorage.setItem('email', response.data.email )
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.email));
+        dispatch(checkTimeout(response.data.expiresIn));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(authFail(error.response.data.error));
+      });
+  };
+};
+
+
+
+--------------------------------------------------------------
+
+
+
+
+
+
+OK... ELE SETTA 
+
+
+O 
+
+
+
+'localId' no nosso local storage, aqui, PARA PODER FETCHEAR DEPOIS, 
+
+
+
+por meio 
+
+(provavelmente) 
+
+da 
+
+
+
+
+action 
+
+'authCheckState'...
+
+
+
+-----------------------
+
+
+
+ANTES DISSO, 
+
+
+É CLARO,
+
+ELE VAI QUERER 
+
+DAR 
+
+UMA EDITADA/ADICIONADA 
+
+
+NA 
+
+
+
+
+ACTION DE 'authLogout', que é 
+
+A ACTION QUE É EXECUTADA/DISPATCHEADA QUANDO 
+
+FAZEMOS 
+
+'LOGOUT'... ---> nela 
+
+ele vai querer 
+
+
+EXECUTAR 
+
+OUTRO 
+
+
+'localStorage.removeItem()',
+
+
+DESSA VEZ 
+
+PARA 
+
+REMOVER 
+
+
+O 
+
+
+item com a key de 'userId', que é o item que recém settamos em 'authAttempt', quando ocorre um 'authSuccess'..
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+
+EX:
+
+
+
+export const authLogout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('expirationDate');
+  localStorage.removeItem('userId'); ///////EIS O CÓDIGO EM QUESTÃO.
+  return {
+    type: authActionTypes.AUTH_LOGOUT,
+  };
+};
+
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+OK.... AGORA, munidos desse 'userId'
+ 
+
+ que 
+
+ficará armazenado na LOCALSTORAGE,
+
+
+podemos 
+
+FETCHEAR 
+
+ESSE 
+
+
+item 
+
+por meio 
+
+
+de um código 
+
+como 
+
+
+
+'const userId = localStorage.getItem('userId');', 
+
+
+
+LÁ 
+
+
+
+NO 
+
+
+'authCheckState()'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+
+      if(!token) {
+        dispatch(authLogout())
+      } else {
+          const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate > new Date()) {
+          const userId = localStorage.getItem('userId'); ////////////EIS O CÓDIGO EM QUESTÃO.
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, expirationDate, email))
+        } 
+        else {
+          dispatch(authLogout());
+        }
+  
+      }
+  }
+}
+
+
+
+
+---------------------------
+
+
+
+(OBS::: JÁ APROVEITAMOS E EDITAMOS O 'authSuccess', que estava com 
+um negócio ERRADO; o segundo parâmetro estava 'expirationDate', quando deve estar 
+
+'userId', esse negócio que recém fizemos SET e GET...)
+
+
+
+ex:
+
+
+
+
+
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+      if(!token) {
+        dispatch(authLogout())
+      } else {
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate > new Date()) {
+          const userId = localStorage.getItem('userId');
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, userId, email)); ///////// esse userId é aquele 'gettado' logo acima....
+        } 
+        else {
+          dispatch(authLogout());
+        }
+  
+      }
+  }
+}
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+CERTO... MAS NÃO ACABAMOS... ---> o professor TAMBÉM VAI QUERER DISPATCHAR 
+
+AQUELA 
+
+NOSSA 
+
+ACTION ESPECIAL,
+
+
+CRIADA 
+
+ESPECIALMENTE 
+
+
+
+
+para essa action de 'authCheckState',
+
+
+QUE 
+
+
+É 
+
+AQUELA 
+
+ACTION 
+
+DE 
+
+'checkAuthTimeout()'.... ----->
+
+
+
+
+
+
+
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+      if(!token) {
+        dispatch(authLogout())
+      } else {
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate > new Date()) {
+          const userId = localStorage.getItem('userId');
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, userId, email)); 
+              dispatch(checkAuthTimeout()); /////////EIS O CÓDIGO EM QUESTÃO.
+        } 
+        else {
+          dispatch(authLogout());
+      
+        }
+  
+      }
+  }
+}
+
+
+
+
+------------------
+
+
+
+
+
+
+
+
+---------> certo... mas há um problema: 
+
+
+esse 
+
+
+'checkAuthTimeout' 
+
+
+__eXIGE___ UM PARÂMETRO... ('expirationDate')... -------> 
+
+
+
+
+E 
+
+
+PROFESSOR EXPLICA QUE ESSE PARÂMETRO DEVE __sER __ A QUANTIDADE __ dE TEMPO 
+
+
+
+ATÉ NOS SERMOS 
+
+'LOGGED OUT'...
+
+
+
+
+
+--> porém,
+
+
+'expirationDate' (a constante, de código ''''''const expirationDate = new Date(localStorage.getItem('expirationDate'));''''''''' )
+
+
+
+
+É 
+
+
+O __TEMPO/MOMENTO EXATO EM QUE 
+
+
+NOSSO 
+
+
+TOKEN/AUTENTICAÇÃO VAI EXPIRAR... -----> provavelmente, o que 
+
+precisa 
+
+ser 
+
+feito 
+
+aqui 
+
+é 
+
+
+SUBTRAIR O 
+
+
+
+'expirationDate' 
+
+__PELO __ 'TEMPO ATUAL',
+conseguido 
+
+por meio 
+
+de 
+
+
+'new Date()'...
+
+
+(e aí wrappar tudo com um objeto 'new Date()', talvez?)
+
+
+
+ex:
+
+
+
+new Date(expirationDate - new Date())
+
+
+
+
+-----------------------------------------
+
+
+
+
+OK, MAS 
+
+EU 
+
+
+
+___eRREI___ --------> o que o professor 
+
+vai querer 
+
+
+fazer 
+
+
+é 
+
+
+
+passar, como argumento,
+
+
+
+
+este código 
+
+aqui:
+
+
+
+
+expirationDate.getSeconds() - newDate().getSeconds()
+
+
+
+
+
+
+
+
+
+(OK, É BASICAMENTE O QUE EU PENSEI, MAS DE FORMA MAIS CORRETA...)...
+
+
+
+
+
+
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+'''''''' dispatch(checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds()));  '''''''''''
+
+
+
+
+
+
+
+
+
+OK, ISSO 
+
+
+BASICAMENTE 
+
+VAI SER A DIFERENÇA ENTRE 
+
+O 
+
+'FUTURO' E O 'PRESENTE',
+em 
+
+segundos...
+
+
+
+
+
+
+a diferença entre os 2 valores VAI SER A 'EXPIRY DATE', basicamente... (que será usada por 'checkAuthTimeout'..)
+
+
+
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+OK... FICOU ASSIM:
+
+
+
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+      if(!token) {
+        dispatch(authLogout())
+      } else {
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate > new Date()) {
+          const userId = localStorage.getItem('userId');
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, userId, email)); 
+          dispatch(checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds())); ////////EIS O CÓDIGO EM QUESTÃO.
+        } 
+        else {
+          dispatch(authLogout());
+        }
+  
+      }
+  }
+}
+
+
+
+
+
+
+
+----------------------------------
+
+
+OK... PROFESSOR 
+
+NOS 
+
+EXPLICA QUE 
+
+
+
+'authCheckState' É 
+
+UM 
+
+
+'PURE UTILITY' ACTION CREATOR,
+
+
+
+o qual 
+
+
+DISPATCHA ___OUTRAS__ ACTIONS DIVERSAS,
+
+
+DE ACORDO 
+
+
+COM 
+
+O NOSSO 'current auth state'... ---------------> 
+
+
+
+
+
+
+
+
+
+E O 'authCheckState' 
+
+É __ UM VERDADEIRO FAZ TUDO___, POIS 
+
+ELE 
+
+
+VAI 
+
+___bASICAMENTE __'LOG THE USER IN' ___ SEMPRE, 
+
+
+SE 
+
+ESSE USUÁRIO TIVER 
+
+UMA 
+
+'VALID TOKEN'
+
+no 
+
+
+LOCAL STORAGE DO SEU BROWSER...
+
+
+
+
+
+
+
+
+
+
+
+---> ok, mas onde vamos rodar/dispatchar essa action/action creator? --> simples,
+
+como explicado antes,
+
+vamos 
+
+
+DISPATCHEAR 
+
+
+EM 
+'App.js',
+
+
+
+
+
+POIS 
+
+SEMPRE 
+
+QUE 
+
+
+NOSSO 
+
+APP for executado (e ele sempre é executado, em todas as routes do nosso app),
+
+
+VAMOS QUERER QUE 
+
+
+ESSE 
+
+'CHECK DE VALIDAÇÃO' ('authCheckState')
+
+seja executado, pq 
+
+aí 
+
+ele 
+
+vai 
+
+'LOG IN THE USER' 
+
+se constatar que 
+
+
+seu 
+
+IDTOKEN ainda 
+
+está 
+
+
+dentro 
+
+
+do localStorage do usuário...
+
+
+
+
+
+
+
+
+para isso, professor vai importar o 
+
+'connect' do react-redux,
+
+
+
+E 
+
+AÍ 
+
+VAI 
+
+FAZER AQUELES 
+
+NEGÓCIOS 
+
+
+
+DE 
+
+'mapDispatchToProps',
+
+
+
+para 
+
+então 
+
+
+
+connectar 
+
+esse component aí...
+
+
+
+
+-----------------------
+
+
+
+
+
+
+ASSIM:
+
+
+
+import * as actionsTypes from '../src/store/actions/index';
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      onTryAutoSignIn: () => dispatch(
+            actionsTypes.authCheckState()
+      )
+    }
+}
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+--> OK, 
+
+
+E ACHO QUE VAMOS EXECUTAR ESSE NEGÓCIO/DISPATCHAR ESSA ACTION DENTRO DO 'render(){}'? 
+
+
+
+
+
+
+---------> ERREI: 
+
+professor vai querer 
+
+
+EXECUTAR __ISSO_  LÁ EM 'componentDidMount' MESMO,
+
+
+
+ANTES MESMO DO COMPONENT/NOSSO APP SER RENDERIZADO...
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+  componentDidMount() {
+        this.props.onTryAutoSignIn();
+  }
+
+  render() {
+
+
+
+   
+
+
+    return(
+        <BrowserRouter>
+        <div>
+       <Layout >
+         {/* {this.state.show ? <BurgerBuilder/> : null} */}
+         {/* <BurgerBuilder />
+         <Checkout /> */}
+         <Switch>
+         <Route path="/checkout" component={Checkout} />
+         <Route path="/orders" component={Orders} />
+         <Route path="/auth" component={Auth} />
+         <Route path="/logout" component={Logout}/>
+        <Route path="/" component={BurgerBuilder} //obs: 'exact' nessa route NÃO É NECESSÁRIO, pois já temos o SWITCH STATEMENT/OBJECT ali em cima; se colocássemos o 'exact' + o 'switch', isso seria redundante...
+        />
+      
+        </Switch>
+       </Layout>
+       </div>
+       </BrowserRouter>
+    )
+  }
+
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      onTryAutoSignIn: () => dispatch(
+            actionsTypes.authCheckState()
+      )
+    }
+}
+
+
+
+
+--------------------------------
+
+
+
+CERTO,
+
+E 
+
+AGORA TESTAMOS NOSSO CÓDIGO...
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+Se executarmos nosso app,
+
+
+abrirmos a página de 'home',
+
+
+
+
+
+
+VAMOS VER 
+
+QUE 
+
+o 
+
+'AUTH_LOGOUT' foi dispatcheado... ------> e isso faz MUITO SENTIDO,
+pq 
+
+
+significa 
+
+que 
+
+
+este código aqui foi executado:
+
+
+
+  componentDidMount() {
+        this.props.onTryAutoSignIn();
+  },
+
+
+
+
+
+
+  E 
+  que 
+
+  esse 
+
+  'onTryAutoSignIn'
+
+  foi dispatcheado,
+
+
+  O QUE 
+
+  RESULTOU 
+
+  EM 
+
+
+  'AUTH_LOGOUT' 
+
+
+  ser dispatcheado, pois 
+
+  NENHUMA 'token' _ FOI ENCONTRADA , 
+
+
+
+  o que 
+
+  resultou naquele 
+
+  if statement de 
+
+  if(!token) {
+        dispatch(authLogout())
+      }
+
+
+
+
+SENDO DISPATCHEADO...
+
+
+
+
+
+
+--------------------------
+
+
+
+
+
+
+
+--> ENTRETANTO,
+
+AGORA 
+
+SURGE __OUTRO PROBLEMA___: NÃO CONSEGUIMOS 
+
+ALCANÇAR
+ 
+
+ O LINK 
+
+
+ DE 
+
+
+ 'AUTHENTICATE',
+
+
+
+ por alguma razão..... ---> o professor nos mostrará o porquê _na próxima aula...
+
+
+
+
+
+
+ (UÉ, MAS EU ESTOU CONSEGUINDO 
+ 
+ 
+ 
+ CHEGAR 
+ 
+ 
+ 
+ AO 
+ 
+ 'Authenticate'... --> acho que era o código do professor que estava errado (ele inverteu 
+ 
+ os 
+ 
+ 
+ códigos
+ de 
+ 
+ 
+ '''''''''''
+
+
+
+        if (expirationDate > new Date()) {
+          const userId = localStorage.getItem('userId');
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, userId, email)); ///////// esse userId é aquele 'gettado' logo acima....
+          dispatch(checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds()));
+        } 
+        else {
+          dispatch(authLogout());
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ''''''''
+ 
+ 
+ 
+ 
+ ))
+
+
+
+
+
+ -----------------------------

@@ -1,0 +1,1622 @@
+Certo, VIMOS 
+
+
+__COMO USAR REFS __ COM 
+
+
+'CLASS-BASED COMPONENTS'..
+
+
+
+
+
+OK, MAS E QUANTO AOS 
+
+
+'FUNCTIONAL COMPONENTS'?
+
+
+
+
+
+--> PODEMOS USAR REFS COM ELES? ----> É POSSÍVEL?
+
+
+
+
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+O 
+
+
+'FUNCTION BASED APPROACH' dos _'refs'_ 
+
+
+
+(ou seja,
+
+
+o approach 
+
+
+que 
+
+
+usa 
+
+
+
+
+código COM ESSE FORMATO/SINTAXE:
+
+""""""""
+
+
+<input 
+
+key"i3"
+ref={(inputElement) => {this.inputProperty = inputElement}}}
+type="text"
+onChange={this.props.changed}
+value={this.props.name}
+
+
+>
+
+""""""
+
+
+)
+
+
+
+NÃO É __UTILIZÁVEL___ NOS FUNCTIONAL COMPONENTS...
+
+
+
+(esse é o approach OLD-SCHOOL, LEMBRE-SE.)
+
+--------------------------------------
+
+
+
+
+
+ENTRETANTO,
+
+
+O
+ SEGUNDO APPROACH, 
+
+
+
+ O ___APPROACH MODERNO___ (Visto na lição 'usando refs') -------> é o APPROACH QUE USA ___ O CONSTRUCTOR ___ DO COMPONENT e um código como 'ref={this.inputProperty}'
+
+
+É ___SUPORTADO__ NOS 
+
+FUNCTIONAL COMPONENTS...  ('kind of supported')....
+
+
+
+
+
+
+ESSE APPROACH MODERNO
+
+
+
+
+É SUPORTADO 
+
+GRAÇAS AO __REACT HOOKS___....
+
+
+
+
+
+
+------------------
+
+
+
+
+PARA TESTAR 
+
+
+O USO DE 'refs' 
+
+
+COM REACT HOOKS, por meio desse segundo approach,
+
+
+
+DEVEMOS 
+
+
+
+IR 
+
+
+ATÉ O NOSSO COMPONENT 
+
+'COCKPIT', 
+
+QUE 
+
+É UM 
+FUNCTIONAL COMPONENT,
+
+
+
+E ENTÃO 
+
+
+
+
+DEVEMOS ESCREVER ALGUMA COISA....
+
+
+
+
+
+
+--> digamos que 
+
+
+
+O PROFESSOR/NÓS QUEIRAMOS 
+
+
+QUE 
+
+
+aquele botão ali 
+
+
+'<button className={btnClass} onClick={props.clicked}>'
+
+
+
+
+SEJA __AUTOMATICAMENTE CLICADO___ 
+
+
+
+______SEMPRE QUE NOSSA 'ENTIRE PAGE' É CARREGADA... -----> é 
+
+evidente 
+
+que 
+
+esse é 
+
+apenas 
+
+
+
+UM 'DUMMY EXAMPLE',
+
+  
+
+  VOCÊ PODE IMPLEMENTAR QUALQUER LÓGICA QUE ENCAIXA NOS SEUS USE-CASES de 
+
+  'refs', para testar...
+
+
+
+----------------------------------
+
+
+
+
+CERTO...
+
+
+
+PARA CONSEGUIRMOS 
+
+
+USAR 'refs' 
+
+
+
+COM 
+
+UM FUNCTIONAL COMPONENT (cockpit),
+
+
+A PRIMEIRA 
+
+COISA QUE 
+
+
+PRECISAMOS FAZER 
+
+
+É __ DEFINIR REFERENCES_ __ NESSE COMPONENT___...
+
+
+
+
+
+
+
+
+
+
+
+---> COMO TRATA-SE DE UM __FUNCTIONAL COMPONENT__,
+ 
+
+ NÓS 
+
+
+ __PROVAVELMENTE__ VAMOS PRECISAR IMPORTAR 
+
+ ALGUM 
+
+
+ ___HOOK ESPECIAL__ NESSE COMPONENT... -------> Provavelmente PQ 
+
+
+ __NÓS ___ NÃO TEMOS ___NENHUM CONSTRUCTOR ____; A ÚNICA COISA 
+
+
+ QUE TEMOS 
+
+
+ EM 'FUNCTIONAL COMPONENTS' 
+
+ É JUSTAMENTE O NOSSO 'FUNCTION BODY'...
+
+
+
+
+
+
+CÓDIGO DE COCKPIT:
+
+
+
+
+
+
+const cockpit = props => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    useEffect(() => {
+        ....
+
+
+
+
+    })
+}
+
+
+
+---------------------------------
+
+
+
+
+
+PROFESSOR 
+
+
+APONTA QUE NÓS DEVEMOS 
+
+ESCREVER 
+
+ESSE CÓDIGO 'DEFINIDOR DE REFERÊNCIAS' LÁ NO INÍCIO 
+
+
+DO COCKPIT...
+
+
+Você deve settar sua referência....
+
+
+
+
+PARA ISSO,
+
+
+PROFESSOR EXPLICA QUE ELE VAI CRIAR __UMA 
+
+'CONSTANT'...
+
+
+
+Ele dará 
+
+um 
+
+
+nome 
+
+
+de 
+
+
+'toggleBtnRef' 
+
+
+
+A ESSA CONSTANTE...
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+const cockpit = props => {
+        const toggleBtnRef = ...
+
+
+
+
+
+
+
+    useEffect(() => {
+        ....
+
+
+
+
+    })
+}
+
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+PROFESSOR EXPLICA QUE, CASO ESSE FOSSE UM 'CLASS-BASED COMPONENT',
+
+NA 
+
+
+DEFINIÇÃO 
+
+DE 
+
+'toggleBtnRef' NÓS PROVAVELMENTE ESCREVERÍAMOS 
+
+'React.createRef();' ------> 'const toggleBtnRef = React.createRef();'
+
+
+
+
+
+
+
+MAS EM UM 'FUNCTIONAL COMPONENT',
+
+ISSO 
+
+__NÃO FUNCIONARÁ__, NÃO É SUPORTADA 
+
+ESSA SINTAXE... 
+
+
+
+
+
+
+
+----> EM VEZ DISSO,
+
+
+AQUI PODEMOS USAR __UM HOOK___ ESPECIAL (react hook)...
+
+
+O HOOK QUE USAREMOS 
+
+É o 
+
+'useRef'... ------------> OU SEJA,
+
+
+
+VOCÊ VAI 
+
+TER QUE 
+
+
+__IMPORTAR___ ESSE HOOK POR MEIO DA SINTAXE
+
+
+
+'import { useRef } from 'react';.....
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+EX:
+
+
+
+import React, { useEffect, useRef } from 'react';
+
+
+
+const cockpit = props => {
+        const toggleBtnRef = ...
+
+
+
+
+
+
+
+    useEffect(() => {
+        ....
+
+
+
+
+    })
+}
+
+
+
+
+
+--------------------------------
+
+
+
+CERTO...
+
+IMPORTADO 
+
+
+O 
+
+HOOK 
+
+
+'useRef',
+
+
+
+
+VOCê PODE 
+
+USÁ-LO 
+
+ALI, NA DEFINIÇÃO 
+
+
+
+DA CONSTANTE
+'
+toggleBtnRef'....
+
+
+
+
+ex:
+
+
+
+
+
+
+import React, { useEffect, useRef } from 'react';
+
+
+
+const cockpit = props => {
+        const toggleBtnRef =  useRef(); ////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+    useEffect(() => {
+        ....
+
+
+
+
+    })
+}
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+----> PROFESSOR EXPLICA QUE VOCÊ PODE PASSAR __ UM 
+
+
+VALOR INICIAL___ ('initial value') 
+
+A 
+ESSE 
+
+
+'useRef();'.... ---------> VOCÊ PODE PASSAR 
+
+UM VALOR 
+
+INICIAL (ao contrário de 'React.createRef()', nos CLASS-BASED COMPONENTS)
+
+pq 
+
+
+___VOCÊ PODE __  USAR REFERENCES/referências 
+
+NOS 
+
+__FUNCTIONAL ___ COMPONENTS ___ PARA 
+
+GANHAR  ACESSO ____ NÃO SÓ ____ A 
+
+
+ELEMENTOS DO ____DOM___, 
+
+mas TAMBÉM
+
+
+
+_______a OUTROS VALORES ARMAZENADOS DENTRO DESSE PARÂMETRO (dentro do '()' do 'useRef()'....) --------> 
+
+
+
+MAS ISSO 
+
+
+É __ALGO MAIS AVANÇADO___, ALGO QUE NÃO VEREMOS AGORA MESMO...
+
+
+
+
+
+
+
+
+
+---> DEIXANDO ISSO DE LADO, 
+
+
+DEVEMOS SABER 
+
+
+
+QUE 
+
+O USE-CASE 
+
+
+
+
+_______MAIS COMUM ____ de 
+
+'useRef()' E SUAS REFERÊNCIAS 
+
+é O __USE-CASE___ 
+
+
+EM QUE 
+
+__VOCê REALMENTE GANHA ACESSO AOS 'DOM ELEMENTS' (e não a VALORES) POR 
+
+
+MEIO DAS REFERENCES... 
+
+
+
+
+
+CERTO.....
+
+
+
+AGORA 
+
+
+TEMOS 
+
+
+UMA 'REFERENCE' CRIADA (por meio de 'useRef()') E ARMAZENADA 
+
+
+DENTRO 
+
+DESSA CONST 
+
+
+'toggleBtnRef'...
+
+
+
+
+
+
+
+-------> FEITO ISSO, 
+
+
+AGORA PODEMOS 
+
+
+
+__CONECTAR ___ ESSA REFERENCE/REFERÊNCIA 
+
+
+___ NO NOSSO DOM/AO NOSSO DOM___....
+ 
+
+
+
+
+
+ ---> antes disso, porém, o professor passa 
+
+ 'NULL' como 
+
+ ___VALOR INICIAL ___ DESSE 
+
+
+MÉTODO 'useRef()'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useRef } from 'react';
+
+
+
+const cockpit = props => {
+        const toggleBtnRef =  useRef(null); ////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+    useEffect(() => {
+        ....
+
+
+
+
+    })
+}
+
+
+
+
+
+------------------------------------------
+
+
+
+ISSO FEITO,
+
+
+
+
+O PROFESSOR 
+
+SCROLLA 
+
+
+ATÉ O RETURN 
+
+DO CÓDIGO 
+
+JSX 
+
+
+DESSE COMPONENT 'COCKPIT'... ---> 
+
+
+DENTRO
+
+DO RETURN 
+
+STATEMENT,
+
+
+PROFESSOR EXPLICA QUE 
+
+ELE VAI QUERER 
+
+PASSAR/SETTAR 
+
+
+
+UMA REFERÊNCIA 
+
+__aO BUTTON___...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button  ////////VAI QUERER SETTAR UMA REFERENCE A ESSE BOTÃO....
+      
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+        </div>
+    );
+
+
+
+
+
+
+
+------------------------------
+
+
+
+PARA ISSO,
+
+DE NOVO,
+
+USAREMOS/USAMOS 
+
+
+
+A KEYWORD/prop/propriedade 
+
+
+
+'ref'... (sim, isso pode ser usado aqui TAMBÉM.)
+
+
+ref={}....
+
+
+
+
+
+E AÍ, 
+
+DENTRO 
+
+
+DESSE 'ref',
+
+O PROFESSOR 
+
+
+VAI SE REFERIR AO
+
+
+
+'toggleBtnRef'... 
+
+
+
+
+
+ex:
+
+
+
+const cockpit = props => {
+
+    const toggleBtnRef = useRef(null);
+
+
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button ref={toggleBtnRef} ////////VAI QUERER SETTAR UMA REFERENCE A ESSE BOTÃO....
+      
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+        </div>
+    );
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+CERTO... 
+
+
+
+
+PENSE BEM...
+
+
+esse 
+
+
+'button' AGORA ESTARÁ 
+
+
+ASSIGNADO como 
+
+
+
+__A 'REFERENCE' ('useRef(null)') 
+
+
+ARMAZENADA 
+
+DENTRO 
+
+DA CONSTANTE 
+
+DE NOME 
+
+'toggleBtnRef', definida láá´´aááa´ em  cima...
+
+
+
+
+------> COM ISSO TUDO 
+
+SETTADO,
+
+
+
+
+
+
+NÓS FINALMENTE PODEMOS 
+
+
+
+TENTAR 
+
+
+FAZER 
+
+UM 
+
+'CLICK'
+
+
+
+NAQUELE 
+
+___BUTTON___ POR MEIO 
+
+
+DO USO 
+
+
+DESSE REFERENCIAL... ---> para isso,
+
+
+o professor 
+
+vai invocar 
+
+
+
+'toggleBtnRef'....
+
+
+DEPOIS DISSO,
+
+
+ELE VAI CHAMAR O MÉTODO/PROPRIEDADE 'current' (para selecionar/optar pelA 
+
+
+__rEFERENCE ATUAL___ de 'toggleBtnRef', que é o BUTTON ELEMENT...).... -------> E SIM, ESSE CALL DE '.current' É NECESSÁRIO, é NECESSÁRIO QUANDO ESTAMOS USANDO 'ref' NO SEGUNDO APPROACH (dos class-based components)/ NO APPROACH MODERNO/ E NO APPROACH DOS FUNCTIONAL COMPONENTS/useRef...
+
+
+
+E DEPOIS 
+
+DISSO,
+
+
+ELE VAI CHAMAR O MÉTODO '.click()'...
+
+
+
+RESULTADO (dessa linha):
+
+
+
+
+
+
+
+
+________toggleBtnRef.current.click();_____________________
+
+
+
+
+
+
+RESULTADO (CÓDIGO COMPLETO):
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useRef } from 'react';
+
+
+
+
+const cockpit = props => {
+
+    const toggleBtnRef = useRef(null); //////EIS O CÓDIGO EM QUESTÃO.
+    toggleBtnRef.current.click(); //////EIS O CÓDIGO EM QUESTÃO
+
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button ref={toggleBtnRef} ////////VAI QUERER SETTAR UMA REFERENCE A ESSE BOTÃO....
+      
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+        </div>
+    );
+
+
+
+
+
+useEffect( () => {
+        ...
+}
+
+)
+
+
+}
+
+
+
+----------------------------------
+
+
+SALVAMOS TUDO ISSO 
+
+
+E VEMOS 
+
+SE O CÓDIGO FUNCIONA...
+
+
+
+
+
+--> NÃO FUNCIONA. GANHAMOS UM 
+
+ERRO GORDO:
+
+''''
+TypeError: Cannot read property 'click' of null
+
+
+''''
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+BEM, O QUE ESTÁ DANDO ERRADO AQUI? O que será?
+
+
+
+
+
+
+----> É MEIO TRICKY... MAS DEVEMOS ENTENDER A RAZÃO DESSE PROBLEMA... --> 
+
+
+
+SE ENTENDERMOS A ORIGEM DESSE PROBLEMA, 
+
+ENTENDEMOS 
+
+
+
+___COMO ___ HOOKS__ FUNCIONAM___... 
+
+
+
+
+
+
+
+
+--> PROFESSOR EXPLICA QUE 
+
+ELE ESTÁ RECEBENDO ESSE ERRO 
+
+
+
+___PQ ___ ELE ESTÁ CHAMANDO 
+
+
+
+
+'.click()' 
+
+
+
+POUCO APÓS 
+
+ELE ___TER ___ INICIALIZADO ___ 
+
+
+A 'REFERENCE' 
+
+
+de 
+
+'toggleBtnRef'... ---> ( ou seja, provavelmente o erro aconteceu devido à __ORDEM DE EXECUÇÃO DAS 'ETAPAS/HOOKS' do nosso functional component)...
+
+
+
+--> ISSO SIGNFICA QUE O REACT __NÃO TEVE CHANCE___ DE ___EXECUTAR __ O CÓDIGO 
+
+
+DEFINIDO LÁÁÁÁÁ embaixo (
+
+    o código de 
+
+
+
+    '
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button ref={toggleBtnRef} ////////VAI QUERER SETTAR UMA REFERENCE A ESSE BOTÃO....
+      
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+        </div>
+    );
+
+    '
+),
+
+
+
+QUE É O 
+
+
+
+CÓDIGO EM QUE 
+
+
+___EU DE FATO__ ASSIGNO UMA REFERÊNCIA/REFERENCE (a reference 'toggleBtnRef')
+
+
+__ a ESSE BOTÃO...    (por meio da linha de código  '  <button ref={toggleBtnRef}>')
+
+
+
+
+
+
+
+
+
+---> E É EVIDENTE QUE 
+
+
+
+
+SE EU ESCREVER O CÓDIGO ASSIM, nesta ordem:
+
+
+
+    const toggleBtnRef = useRef(null); //////1
+    toggleBtnRef.current.click(); //////2
+
+    return ( 
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button ref={toggleBtnRef}  ///////////3
+      
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+        </div>
+    );
+
+
+
+
+-----------------------------------------------
+
+
+
+AQUELA SEGUNDA 
+
+linha, 
+
+
+'toggleBtnRef.current.click();', 
+
+
+VAI 
+
+EXECUTAR 
+
+'.current.click();' SOBRE 
+
+UMA REFERENCE QUE AINDA 
+
+__NÃO TEM NADA__ ASSIGNADO A ELA (não tem o BUTTON assignado a ela,
+
+pois ele só é assignado NAQUELE ___RENDER()___ LÁ DE BAIXO...)
+
+
+
+
+
+
+CERTO.... ----> MAS E COMO PODEMOS MUDAR ESSA SITUAÇÃO?
+
+
+
+
+BEM, PODEMOS MUDAR 
+
+ESSA SITUAÇÃO 
+
+
+COM 
+
+
+
+
+O USAGE 
+
+DE 
+
+'useEffect()' 
+
+
+(OUTRO 'REACTHOOK'...) ----> UÉ, MAS PQ? ---> 
+
+
+PQ NÓS ___APRENDEMOS___ QUE 
+
+
+
+
+O 'useEffect()' 
+
+
+
+COMBINA AS ETAPAS/MÉTODOS DE 
+
+
+ 'componentDidMount' e 'componentDidUpdate'   ----------> ISSO SIGNIFICA QUE 
+
+ __ELE 
+
+
+ EXECUTA ___ BASICAMENTE __ SEMPRE APÓS CADA RENDER CYCLE.... --------> ISSO 
+
+ SIGNIFICA 
+
+
+
+ QUE 
+
+ A FUNÇÃO/FUNÇÕES QUE 
+
+
+ VOCê PASSA 
+
+
+ AO 
+
+ 'useEffect()' 
+
+
+ (ex de código de 
+ 
+ 'useEffect':
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    useEffect(() => { //podemos usar múltiplos 'useEffects', cada um para um DIFERENTE EFEITO, diferente efeito que dependerá de DATAS (dados) diferentes...
+      console.log('[Cockpit.js] useEffect');
+      setTimeout(() => {
+        alert('Saved data to the cloud!');
+      }, 1000);
+ 
+ 
+ 
+ 
+ 
+ 
+ )
+
+
+
+
+____NÃO/NUNCA É EXECUTADA ___IMEDIATAMENTE___....... --> ELA 
+
+
+RODA ___APÓS___  
+
+
+AQUELE 
+
+
+CÓDIGO 
+
+
+JSX 
+
+de 
+
+
+'return (
+
+   <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button ref={toggleBtnRef}  ///////////3
+      
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+        </div>
+
+)
+'
+
+
+
+TER 
+
+
+__SIDO __ RENDERIZADO____.... ------------> E É __POR ISSO__ QUE 
+
+
+VAMOS QUERER 
+
+
+
+ESCREVER 
+
+uma execução 
+
+
+de 
+
+
+toggleBtnRef.current.click();
+ 
+
+
+ ___DENTRO____ DE 
+
+
+
+
+
+UM CALL/O CALL DE 'useEffect'...
+
+
+
+
+
+CERTO.
+
+
+E ISSO REALMENTE __FUNCIONARÁ__...
+
+
+
+
+
+
+
+
+
+VAMOS 
+
+
+ESCREVER 
+
+
+
+NOSSO CÓDIGO DESSA FORMA, INCLUINDO O CÓDIGO DE '''''toggleBtnRef.current.click();'''''
+
+
+dentro 
+
+
+
+da 'ETAPA/HOOK' de 
+
+'useEffect'  (que simula um 'componentDidMount()')....
+
+
+
+
+
+CO´DIGO VAI FICAR ASSIM:
+
+
+
+
+
+
+
+const Cockpit = props => {
+
+
+
+  const toggleBtnRef = useRef(null);  /////// 1 
+
+
+
+  useEffect(() => { 
+    toggleBtnRef.current.click(); //////EIS O CÓDIGO EM QUESTÃO. /////3////(EXECUÇÃO-DEFINIÇÃO NA ORDEM ___CORRETA__)
+  
+
+
+
+  }, []
+  )
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+        ref={toggleBtnRef} ///// 2 
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+       
+        </div>
+    );
+
+
+
+
+}
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+
+Ou seja, 'useEffect()' 
+
+
+
+É UM ___EXCELENTE LUGAR PARA CHAMAR '.click()'...  ------------>  
+
+
+
+
+E O PROFESSOR VAI DEIXAR UM PARÂMETRO DE '[]' COMO 2o ARGUMENTO 
+
+DESSE 'useEffect' ----> (pq quando passamos esse array vazio, o useEffect SÓ __EXECUTARÁ__ 1 
+ÚNICA VEZ O CÓDIGO DO PRIMEIRO PARÂMETRO, E ESSA ÚNICA VEZ SERÁ QUANDO O COMPONENT 
+DELE, o 'cockpit', FOR MONTADO PELA PRIMEIRA VEZ...)
+
+
+
+
+
+
+
+
+
+
+VAMOS VER QUE ISSO TERÁ FUNCIONADO PQ __tODAS AS PERSONS/COMPONENT__ PERSONS 
+
+TERÁ 
+
+SIDO 
+
+ 
+RENDERIZADO (botão 'toggle' foi clicado) AUTOMATICAMENTE,
+
+
+ASSIM QUE O USUÁRIO CARREGOU A PÁGINA... ----> 
+
+
+
+
+
+É ASSIM, PORTANTO, A MANEIRA PELA QUAL VOCÊ PODE DEFINIR 
+
+
+REFERENCES COM O HOOK 'useEffect'.... (quando está usando REACTHOOKS com functional components ) ----------->
+
+
+
+PROVAVELMENTE ISSO TAMBÉM 
+
+TE MOSTROU COMO O 'useEffect' FUNCIONA,
+
+
+e como 
+
+ELE EXECUTA ESSA FUNÇÃO 'toggleBtnRef.current.click()' 
+
+
+____DEPOIS____
+
+
+daquele 
+
+código 
+
+jsx 
+
+
+(
+
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+        ref={toggleBtnRef} ///// 2 
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+       
+        </div>
+    );
+
+
+
+
+)
+
+
+
+TER SIDO 
+
+PARSEADO E 
+
+RENDERIZADO (e criado/executado 
+aquele prop de 'ref', que ATRIBUI a referência 
+'toggleBtnRef' ao elemento BUTTON nesse código 
+jsx).... renderizado ___PELA PRIMEIRA VEZ___ (por causa de '[]' no segundo parâmetro de useEffect)
+
+
+
+
+
+
+

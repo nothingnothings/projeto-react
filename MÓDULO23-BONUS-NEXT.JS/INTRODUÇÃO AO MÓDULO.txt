@@ -1,0 +1,153 @@
+
+
+
+
+
+NEXTJS -------> INDO MUITO ALÉM DE 
+
+
+'CREATE-REACT-APP'....
+
+
+
+
+
+
+
+--> neste módulo,
+
+veremos 
+
+um pouco 
+
+SOBRE 
+
+'NEXT.JS'...  --------> NEXT.JS ==== É UMA 
+LIBRARY QUE 
+
+
+'BUILDS UPON REACT'.. -------> VOCê AINDA ESTARÁ 
+
+
+
+ESCREVENDO UM REACT APP COM ELE.... ---> 
+
+não 
+
+
+é uma 
+
+EXTRA LIBRARY, framework ou syntax...  ----> NEXT.JS,
+
+EM 
+
+
+VEZ DISSO,
+
+
+
+OFERECE/TE OBRIGA A USAR __ UMA 
+
+ESTRUTURA __ DE FOLDERS 
+
+ESPECÍFICA...  ---> E 
+AÍ 
+
+
+
+TE DÁ ALGUMAS COISAS, como 'SERVER-SIDE RENDERING',
+
+
+
+__OUT OF THE BOX____.... ----------------> POR MEIO DAQUELA ESTRUTURA FORÇADA 
+
+DE 
+
+FOLDERS,
+
+
+O NEXT.JS 
+
+
+___GERENCIA __ UM MONTE DE COISAS ___ PARA NÓS__, 
+
+
+para que 
+
+NÃO SEJA 
+
+NECESSÁRIO CONFIGURAR 
+
+ESSAS COISAS MANUALMENTE... ---> ou seja,
+
+
+
+ele faz com que 
+
+a 
+
+CRIAÇÃO DE REACT APPS __SEJA __ BEM MAIS CONVENIENTE,
+
+
+
+ESPECIALMENTE 
+
+A PARTE SOBRE 
+
+'SERVER-SIDE RENDERING'....
+
+
+
+
+
+
+
+
+SERVERSIDE RENDERING... ---> 
+
+É 
+
+UMA PARTE SUPER INTERESSANTE DO REACT,
+
+
+UMA PARTE QUE VOCê TALVEZ NEM PRECISE USAR,
+
+
+MAS QUE 
+
+PODE SER ___MUITO BOA__/HELPFUL 
+
+
+SE VOCê TEM UM 
+
+APLICATIVO QUE 
+
+É 
+
+ALTAMENTE DEPENDENTE DE SER __ENCONTRADO EM 'SEARCH ENGINES', por exemplo (como aplicativos 
+de instagram, por exemplo.... ) -----------> 
+
+
+
+
+ESSE É O NEXT.JS,
+
+
+EM RESUMO. ----> DEVEMOS 
+
+
+
+APRENDER MAIS SOBRE ELE 
+
+NESTE MÓDULO (mas é só uma introdução).
+
+
+
+
+---> NÃO VAMOS COBRIR TODAS AS FEATURES DO NEXT.JS NESTE CURSO,
+
+MAS 
+
+VAMOS 
+
+__COBRIR __ OS CONCEITOS IMPORTANTES...

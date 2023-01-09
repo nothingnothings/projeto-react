@@ -1,0 +1,879 @@
+
+
+
+
+
+CERTO,
+
+
+
+
+NÓS FIZEMOS COM SUCESSO O SETUP 
+
+
+
+DO 
+
+
+
+
+ROUTER com 
+
+
+
+o 'switch' 
+
+
+
+e tals...
+
+
+
+
+(Agora temos aquelas 3 routes... )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> O PROFESSOR APONTA QUE 
+
+AGORA 
+
+
+DEVEMOS 
+
+VOLTAR
+
+
+
+ÀQUELE COMPONENT 
+
+
+de 
+
+
+'posts'... -------> nesse component 
+
+
+
+'Posts',
+
+
+nós 
+
+
+estamos 
+
+usando 
+
+um 
+
+
+'Link' 
+
+
+(
+
+
+    de código 
+
+
+
+    '<Link to={'/' + post.id} key={post.id}>
+            <Component Post wrappado/>
+    </Link>'
+
+
+
+
+
+
+)
+
+
+
+
+
+
+PARA ____CARREGAR 
+
+
+
+
+1 POST (na verdade, são os 4 posts, pq aqui estamos usando '.MAP()"...) -------->
+
+
+
+
+
+
+E NÃO HÁ NADA DE ERRADO COM ISSO, ACTUALLY...
+
+
+
+
+
+
+
+
+
+
+
+CONTUDO, 
+
+
+O PROFESSOR 
+QEUR 
+
+
+NOS MOSTRAR ___UMA ALTERNATIVA___ A ESSE 
+
+
+'LINK',
+
+
+a 
+
+esse 
+
+LINK USADO COMO __WRAPPER___ (na verdade, eles são SEMPRE USADOS COMO WRAPPERS, mas anyway...) --------> 
+
+
+
+
+
+PARA 
+
+
+
+FAZER ISSO,
+
+ELE COMENTA 
+
+ESSE 
+
+
+<Link />
+
+PARA 
+
+FORA 
+
+DO CÓDIGOO,
+
+
+
+E 
+deixa apenas 
+
+o 
+
+'<Post />'...
+
+
+
+
+
+
+
+
+
+
+
+O professor então READICIONA A 'KEY' ao component 
+'Post',
+
+
+pq 
+
+senão 
+
+
+nosso código vai chorar que não temos ela...
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+
+CERTO,
+
+
+
+MAS ISSO FEITO, 
+
+
+O PROFESSOR
+
+VAI 
+
+PRECISAR 
+
+
+
+
+ENCONTRAR 
+
+
+
+__OUTRA MANEIRA ___ DE 'go through that single post'...
+
+
+
+
+
+
+
+
+
+------> ELE ENTÃO NOS RELEMBRA 
+
+
+DA EXISTÊNCIA 
+
+
+DAQUELE 
+
+
+CLICK LISTENER 
+
+
+de 
+
+
+'clicked={
+    () => this.postSelectedHandler(post.id)
+}'
+
+
+
+
+
+
+
+
+
+
+
+--------> ELE DIZ QUE PODEMOS ___UTILIZAR __ JUSTAMENTE ESSE MÉTODO 
+
+
+'postSelectedHandler' 
+
+
+
+
+
+PARA 
+
+
+
+'___GO THROUGH___', ir por dentro DO NOSSO 
+
+
+
+'SINGLE POST'.. ('<Post />')...
+
+
+
+
+
+
+
+
+
+
+-------------> ENTRETANTO, PROFESSOR NOS EXPLICA QUE 
+
+ELE 
+
+NÃO VAI QUERER USAR O APPROACH TRADICIONAL, DO STATE; NÃO,
+
+aqui 
+ele 
+
+
+vai 
+
+QUERER 
+
+
+
+______NAVEGAR___ ATÉ 
+
+
+O COMPONENT 'Post' individual __________PROGRAMATICAMENTE______..... ------> 
+
+
+
+e ele 
+
+
+vai usar 
+
+o 
+
+
+component 'post'
+ 
+ como 
+
+
+ __UMA DEMONSTRAÇÃO __... ----> pq é óbvio que 
+
+ O __USO ___ DE 
+
+ <LINK />
+
+
+
+ É PERFEITAMENTE OK 
+
+
+ para 
+
+ este use-case,
+
+
+ MAS AINDA 
+
+
+ ASSIM O PROFESSOR 
+
+
+ QUER 
+
+ NOS MOSTRAR 
+
+
+
+ esse 
+
+ approach alternativo.... ---------------> 
+
+
+
+
+
+ ESSE APPROACH ALTERNATIVO 
+
+
+
+
+
+
+
+ ________É ÚTIL___ EM CASOS/PARA CASOS EM QUE 
+
+ ___VOCÊ VAI QUERER _____ QUE 
+
+
+ O USUÁRIO __ SEJA 
+
+
+ ______NAVEGADO___ ATÉ ALGO__ NA PÁGINA____ DEPOIS 
+
+
+ DE UM CERTO PROCESSO TER ACABADO.... (como 
+ 
+ 
+ 
+ 
+ APÓS UM __HTTP REQUEST___ TER SIDO ENVIADO, OU COISA DO GÊNERO....)
+
+
+
+
+
+
+
+
+ ---> VAMOS VER MAIS EXEMPLOS DISSO MAIS TARDE... -----> para fazer isso ,
+
+
+
+
+
+
+ PODEMOS 
+
+
+
+ TIRAR 
+
+
+ VANTAGEM 
+
+
+ DAQUELE 
+
+
+ 'Routing-related prop'
+
+
+
+ DE 
+
+
+ 'HISTORY'....  (e esse objeto, como você deve se lembrar, 
+ 
+ FOI RECEBIDO 
+ 
+ 
+ NOS 
+ 
+ PROPS 
+ 
+ DE 
+ 
+ 'posts'...) ------------> 
+
+
+
+ E NESSE 
+
+ COMPONENT 
+
+
+ 'HISTORY' 
+
+
+
+
+ __TEMOS ALGUMAS FUNÇÕES INTERESSANTES, COISAS ÚTEIS___... -------> 
+
+ SÃO FUNÇÕES PARA 
+
+ O 
+
+
+ 'NAVIGATING AROUND',
+
+
+
+ para 
+
+ navegar 
+
+ o usuário por nosso site...
+
+
+
+
+
+ (exemplos disso 
+ 
+ são 
+ 
+ 
+ os métodos 
+ 
+ 
+ 'goBack' 
+ 
+ 
+ e 
+ 
+ 
+ 'goForward'... ----------> ESSES BOTÕES 
+ 
+ 
+ FAZEM EXATAMENTE O QUE OS BOTÕES 'VOLTAR' E 'AVANÇAR' do 
+ 
+ BROWSER FAZEM.. )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ---------> MAS MAIS IMPORTANTE DO QUE ISSO É O MÉTODO 
+
+
+
+
+ '.push'.... 
+
+
+
+
+ (
+
+     ou seja,
+
+
+
+    'this.props.history.push();'  ...........
+
+ )
+
+
+
+
+
+
+
+
+
+
+ PUSH __ TE DEIXa__ 
+
+ 'PUSHAR'/EMPURRAR__  
+
+
+
+
+
+ UMA _______NOVA PÁGINA________ AO ''''STACK DE PAGES'''''___... -----> isso 
+
+
+
+
+ PQ 
+
+
+
+ _______'NAVIGATION' EM SI _ É JUSTAMENTE__ 'ALL ABOUT  A STACK OF PAGES'... -------> 
+
+
+
+ E É __eXATAMENTE POR ISSO QUE ___ OS BOTÕES 
+
+
+ DE 
+
+ 'ir para frente' 
+
+
+ e 
+
+ 'retroceder'
+  
+
+
+
+  no BROWSER funcionam... (devemos pensar em uma PILHA DE PAPÉIS...) --------> 
+
+
+
+
+'BACK': ir para a PÁGINA ANTERIOR, NO STACK, 
+
+
+
+'FORWARD' ---> IR PARA A PÁGINA SUCESSORA, A PÁGINA MAIS PARA CIMA NO 'STACK'... ('on the top')...
+
+ 
+
+
+
+
+
+
+
+
+
+ O PROFESSOR VAI ESCREVER, DENTRO 
+
+ de 
+
+ 'postSelectedHandler = (id) => {
+
+ }'
+
+
+
+
+
+
+ UM CÓDIGO 
+
+
+ DE :
+
+
+
+
+
+ postSelectedHandler = (id) => {
+
+
+            this.props.history.push();
+ }
+
+
+
+
+
+
+ ----------------------------------
+
+
+
+ E ESSE MÉTODO 
+
+
+ '.PUSH()'
+
+
+
+ ACEITA OU:
+
+
+
+
+ 1) UMA STRING 
+
+
+
+
+ 2) UM OBJECT.... 
+
+
+
+
+
+
+ -------------------------------------
+
+
+
+
+
+
+
+ ------> ESSENCIALMENTE, PUSH TEM O MESMO COMPORTAMENTO DE 'to'... (pq a tarefa de 'to' é justamente 'NAVIGATE THE USER __TO__ A PAGE'...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ --> é por isso, por 'push()' ter um comportamento/desempenhar tarefa semelhante 
+
+ à de 'to', 
+
+
+ que 
+
+ o 
+
+ PROFESSOR 
+
+
+ VAI 
+
+
+
+ passar um parâmetro 
+
+ a ele 
+
+
+ de 
+
+
+ '{
+     pathname: '/' + id 
+ }'.....
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+ postSelectedHandler = (id) => {
+
+
+     this.props.history.push({
+         pathname: '/' + id
+     })
+ }
+
+
+
+
+ ------------------------------
+
+
+ ok, mas 
+
+
+
+ o que fará esse código? -------> BEM, ELE FARÁ 
+
+
+ ___EXATAMENTE___ A MESMA COISA QUE 
+
+
+
+ '<Link to={'/' + post.id} key={post.id}>
+    <Post 
+        ...
+        />
+</Link>'
+
+
+,
+
+
+
+MAS FARÁ 
+
+
+ISSO (o 'navigate' do usuário até AQUELE LINK ALI, o link 'localhost:3000/idDinâmico') 
+
+
+
+POR 
+
+
+MEIO 
+
+DE UM HANDLER '''externo''' (esse 'postSelectedHandler'),
+
+
+
+e não 
+
+por MEIO
+
+de 
+
+
+
+um component como 'Link'/'NavLink'...
+
+
+
+
+
+
+
+E ESSE CÓDIGO DE '.push(...)'
+
+
+AINDA 
+
+
+TEM UMA SINTAXE ALTERNATIVA (mais simples, reduzida), QUE É 
+
+
+
+''''''''''''''''''
+
+ postSelectedHandler = (id) => {
+     this.props.history.push('/' + id)
+ }
+
+
+''''''''''''''''''''''''
+
+
+
+
+
+ISSO TAMBÉM FUNCIONARÁ,
+ 
+ É CLARO, 
+
+ e é uma forma mais reduzida 
+
+
+ daquela versão anterior (que é a versão que 
+ 
+ PASSA 
+ 
+ UM PARÂMETRO QUE É UM OBJETO, objeto com várias propriedades,
+ 
+ sendo 
+ 
+ 'pathName' apenas uma delas...)
+
+
+
+
+ ---------------------------------------------
+
+
+
+
+
+Ou seja, nosso código vai funcionar como antes ( se seguirmos esse approach/maneira de 
+
+fazer as coisas),
+
+
+
+MAS 
+
+
+
+___aGORA___ ELE FUNCIONARÁ, FARÁ ESSE 'MOVE'/'NAVIGATION' DO USUÁRIO 
+
+
+PARA 
+
+__a OUTRA_ __ PÁGINA __ DE 
+
+FORMA 
+
+
+
+______PROGRAMÁTICA ____ (sem a interferência do usuário em nada)....
+
+
+
+
+
+
+---> com esse approach, nós fazemos a navegação ocorrer de forma __PROGRAMÁTICA ('navigating PROGRAMATICALLY, sem a interferência/palavra do usuário na questão.)'..... ----> essa 'PROGRAMATIC NAVIGATION' pode ser importante, de tempos em tempos... __É PRINCIPALMENTE__ UTILIZADA PARA __ MOVER __ O USUÁRIO DE UM CANTO PARA O OUTRO DE NOSSA PÁGINA ___APÓS __ UMA OPERAÇÃO TER TERMINADO (ou seja, depois da execução de um código assíncrono; no '.then() block' de UM CÓDIGO ASSÍNCRONO...)

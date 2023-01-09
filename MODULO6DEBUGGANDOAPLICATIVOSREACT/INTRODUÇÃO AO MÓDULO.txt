@@ -1,0 +1,51 @@
+----> NÓS APRENDEMOS MUITAS COISAS SOBRE O REACT... --> também 
+
+
+já vimos VÁRIOS ERROS NOS NOSSOS APLICATIVOS
+
+
+
+
+
+
+
+--> não interessa o quão bom você seja como programador, 
+
+você 
+
+
+SEMPRE VERÁ ERROS 
+
+E MENSAGENS DE ERRO.
+
+
+
+
+
+-------> VOCÊ VERÁ ERROS DE MENSAGENS, ERROS DE SINTAXES, 
+
+
+
+E MUITAS VEZES, PIOR DO QUE TUDO ISSO,
+
+ VOCê VERÁ 
+
+
+ __ERROS DE LÓGICA __ (logical errors).
+
+
+
+ ------------------------------
+
+
+
+ NESTE MÓDULO, O PROFESSOR VAI NOS MOSTRAR 
+
+ O APPROACH PARA LER E ENTENDER ERROS DE MENSAGEM DO REACT, 
+ DEBUGGAR NOSSA APPLICATION, 
+
+
+ E SOBRE COMO CRIAR UMA REACT APPLICATION QUE É 'ERROR FREE'....
+
+
+ HANDLING DE ERROS.

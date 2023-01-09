@@ -1,0 +1,1239 @@
+
+
+
+
+
+
+
+NO ÚLTIMO VIDEO, 
+
+
+O PROFESSOR 
+
+INTRODUZIU 
+
+ALGUMS 
+
+
+'ACTION CREATORS' e sua relação com CÓDIGO __SÍNCRONO__...
+
+
+
+
+
+-------------------------------
+
+
+AGORA O PROFESSOR QUER TIRAR VANTAGEM DOS 'ACTION CREATORS'
+
+
+PARA 
+
+__HANDLAR ___ CÓDIGO REALMENTE ___ ASSÍNCRONO___... (http requests e timeouts, por exemplo).
+
+
+
+
+
+
+
+--> PARA HANDLAR CÓDIGO ASSÍNCRONO (com o redux, por meio dos ACTION CREATORS),
+
+
+
+
+NÓS PRECISAMOS __aDICIONAR UM MIDDLEWARE ESPECIAL____ 
+
+NO NOSSO 
+
+PROJETO 
+
+
+REDUX... ------------> ESSE MIDDLEWARE ESPECIAL 
+
+
+É 
+
+UMA 
+
+TPL (third party library)
+
+
+QUE PODEMOS ADICIONAR, A QUAL É CHAMADA 
+
+DE 
+
+'redux-thunk'...
+
+
+------------------------------
+
+
+
+
+O PROFESSOR ACESSA A PÁGINA DO GITHUB DO REDUX-THUNK...
+
+
+
+
+https://github.com/reduxjs/redux-thunk
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+---> ALI, NESSA PÁGINA, PODEMOS ENCONTRAR MAIS INFORMAÇÕES... ----> 
+
+
+ESSA 
+É UMA LIBRARY 
+
+QUE NOS 
+
+DEIXA 
+
+
+___aDICIONAR UM MIDDLEWARE__ NO SEU PROJETO --> esse MIDDLEWARE
+
+
+PERMITE QUE SEUS __aCTION___ CREATORS __ 
+
+
+NÃO ___ RETORNEM (return)
+
+
+A ACTION EM SI,
+
+
+
+
+E SIM QUE 
+
+RETORNEM UMA  
+
+
+
+____________FUNÇÃO__, FUNÇÃO QUE ___ VAI ________EVENTUALMENTE___ FAZER 
+
+DISPATCH 
+
+de 
+
+uma 'action'... (e é isso que vai ser a parte 'ASSÍNCRONA' do nosso código) ----> 
+
+
+POR MEIO DESSE PEQUENO TRUQUE,
+
+esse truque 
+
+
+DE 
+
+'NÃO RETORNAR A ACTION EM SI, E SIM UMA FUNCTION QUE VAI DISPATCHAR 
+ESSA ACTIOn',
+
+
+NÓS ___ PODEMOS REALMENTE __ RODAR CÓDIGO ASSÍNCRONO... --> isso 
+
+pq 
+
+
+A 'ACTION EVENTUALMENTE DISPATCHEADA' 
+
+
+É 
+
+A 
+PARTE QUE __ VAI SER EXECUTADA/RODADA DE FORMA 
+
+
+ASSÍNCRONA...
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+------> VAI FICAR BEM MAIS CLARO QUANDO MEXERMOS/OBSERVARMOS ISSO NA PRÁTICA...
+
+
+
+
+
+---> PARA ADICIONAR ESSA PACKAGE AO NOSSO PROJETO, DEVEMOS parar o run de nosso server 
+
+e então 
+
+
+instalar 
+
+'npm install --save redux-thunk'....
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+
+
+
+--> ISSO VAI INSTALAR O REDUX-THUNk....
+
+
+
+
+
+
+
+---------------> ISSO FEITO, PODEMOS FINALMENTE __rEGISTRAR __ ESSE 
+
+'redux-thunk'
+
+COMO ___UM MIDDLEWARE__ NO NOSSO PROJETO REDUX...
+
+
+
+
+
+
+
+
+
+
+
+---> O GITHUB dessa package nos dá algumas instruções adicionais... --> 
+
+ELE 
+
+
+NOS DIZ 
+
+QUE DEPOIS 
+
+DE INSTALAR ESSA PACKAGE,
+
+
+NÓS SIMPLESMENTE 
+
+
+
+A 
+
+APLICAMOS 
+
+por meio 
+
+de 
+
+'applyMiddleware'...
+
+
+Ex:
+
+
+
+
+'applyMiddleware(thunk)'....
+
+
+
+
+
+------------------------------------------------
+
+
+
+ex (modelo de exemplo):
+
+
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+
+
+
+const store = createStore(
+    rootReducer,
+    applyMiddleware(logger, thunk) //////EIS O CÓDIGO EM QUESTÃO.
+);
+
+
+
+--------------------------
+
+
+
+
+
+
+CERTO,
+
+
+
+NOSSO MIDDLEWARE FOI ADICIONADO 
+
+
+AO PROJETO DE 'Counter'...
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+COM ISSO, PODEMOS VOLTAR AO 'actions.js',
+
+
+ONDE TEMOS NOSSOS ACTION CREATORS.... -------->
+
+
+
+
+
+
+CERTO... E DIGAMOS, AGORA, QUE QUEREMOS 
+
+
+
+SIMULAR 
+
+A ATUAÇÃO DO 'STORE EM UM SERVIDOR',
+
+
+
+
+naquela action de 
+
+'storeResult'... -----> PARA FAZER ISSO, VAMOS USAR 
+
+
+UM 
+
+
+'setTimeout', que vai fingir ser isso....
+
+
+
+
+
+
+---------------> PROFESSOR DIZ QUE VAMOS QUERER EXECUTAR ALGO ASSIM:
+
+
+
+vamos querer EXECUTAR 
+
+'setTimeout(() => {CÓDIGO DE RETURN}, 3000)' 
+
+
+
+
+
+
+
+
+
+algo assim, basicamente (mas essa sintaxe aí _NÃO É SUPORTADA___)
+
+
+
+
+
+
+
+
+
+--> ESSENCIALMENTE, VAMOS QUERER FAZER 'RETURN' DESSA ACTION AÍ (store_Result, e seus efeitos) 
+
+
+PASSADOS EXATAMENTE 3 segundos....
+
+
+
+
+
+UM SETUP COMO ESTE:
+
+
+''''''''''''
+export const storeResult = (result) => {
+setTimeout(() => {}, 2000);
+
+
+return {
+    type: STORE_RESULT,
+    result: result
+}
+}
+
+''''''''''''
+
+
+
+__NÃO FUNCIONARÁ___...
+
+
+
+
+
+
+
+
+
+
+--> CERTO... MAS COM AQUELE MIDDLEWARE DE 'thunk' ADICIONADO,
+
+
+
+
+O QUE NÓS PODEMOS FAZER É 
+
+
+
+_____ALTERAR ESSE 'RETURN STATEMENT' 
+
+Aí... ------> 
+
+
+
+Vou poder 
+
+ALTERAR 
+
+
+ESSE 
+
+'return' aí, fazer com que ELE RETORNE UMA ___FUNÇÃO___... -----> E __PODEMOS__ USAR 
+
+
+UMA FUNÇÃO ANÔNIMA/arrow function... ---------->  
+
+
+
+E ESSA FUNÇÃO VAI RECEBER 
+
+'dispatch' 
+COMO 
+
+
+ARGUMENTO/PARÂMETRO....
+
+
+
+ex:
+
+
+
+
+export const storeResult = (result) => {
+
+    return dispatch => { ///////////EIS O CÓDIGO EM QUESTÃO.
+
+    } 
+
+    
+
+
+
+setTimeout(() => {}, 2000);
+
+
+
+}
+
+
+-----------------------------------
+
+
+
+
+
+
+OK, MAS COMO DIABOS 
+
+VAMOS 
+
+
+RECEBER 
+'dispatch' ali, naquele slot? ---> professor nos explica que 
+
+NÓS VAMOS RECEBER 
+
+
+'dispatch' NAQUELE SLOT __JUSTAMENTE __ EM RAZÃO DO COMPORTAMENTO/CÓDIGO 
+
+DE 
+
+'redux-thunk'........... -----> basta lembrar-se 
+
+
+QUE 
+
+
+O 
+
+PROFESSOR 
+
+
+
+___ NOS DISSE QUE __ O MIDDLEWARE É 
+
+EXECUTADO 
+
+
+___eNTRE O DISPATCH __ DE UMA ACTION E O RECEIVE DESSA ACTION NO REDUCER...
+
+
+
+
+1) DISPATCH DA ACTION 
+
+            |
+            |
+            |
+         1.5   EXECUÇÃO DE MIDDLEWARES
+            |
+            |
+            V 
+
+
+2) RECEIVE DA ACTION NO REDUCER
+
+
+
+-----------------------------------
+
+
+
+ISSO SIGNIFICA, EM OUTRAS PALAVRAS,
+
+
+
+QUE 
+
+
+DENTRO 
+
+DO __BODY__ DESSA 
+
+
+FUNÇÃO RETORNADA ('return (dispatch) => {aqui}' )
+
+
+
+
+VOCê PODE __ENFIAR CÓDIGO QUE RODA ASSINCRONAMENTE,
+
+CÓDIGOS QUE DEMORAM UM CERTO TEMPO PARA CONCLUIR, como 
+
+http requests 
+
+e 
+
+'setTimeout's...
+
+
+
+
+
+
+
+
+--> ISSO SIGNIFICA QUE 
+
+aqui NÓS AINDA VAMOS DISPATCHAR UMA ACTION, como antes,
+
+
+
+MAS HÁ A DIFERENÇA DE QUE O 'redux-thunk', esse middleware aí,
+
+
+VAI 
+
+'STEP-IN' 
+
+
+E ENTÃO 
+
+
+
+VAI __BASICAMENTE___ 'BLOQUEAR' A ANTIGA 'action', o acesso/entrega 
+
+
+da antiga 'action' original ao 'REDUCER',
+
+
+
+E ENTÃO 
+
+FAZ DISPATCH DESSA ACTION __MAIS UMA VEZ__... (dessa vez __APENAS ___DEPOIS 
+
+QUE SEU CÓDIGO 'ASSÍNCRONO' é executado...) -----> isso significa que 
+
+a 
+
+'NEW ACTION' vai ser capaz de alcançar o reducer regularmente,
+
+MAS 
+
+
+
+__AO MESMO __ TEMPO O 'redux-thunk' vai ser CAPAZ DE 'WAIT', de 
+
+ESPERAR 
+
+O CÓDIGO  Assíncrono
+
+
+DEFINIDO 
+
+
+DENTRO DAQUELE 
+
+'return (dispatch) => {seuCódigoAssíncrono}',
+
+
+LÁ 
+
+
+NA 
+
+
+SUA 
+
+
+ACTION (como 'storeResult') 
+
+
+__TERMINAR___...
+
+
+
+
+
+
+--> isso significa que 
+
+o 
+
+'redux-thunk' PODE ESPERAR, 
+
+pq ele PODE/VAI _dISPATCHAR__ A 
+
+ACTION 
+
+__NA HORA QUE ELE QUISER...____
+
+
+
+
+
+
+
+
+
+
+
+OK, MAS COMO DEVEMOS COLOCAR NOSSO CÓDIGO ASSÍNCRONO 
+
+DENTRO 
+
+
+DE UMA ACTION, com essa sintaxe do 'thunk'? ----> bem, devemos simplesmente 
+
+colocar 
+
+a 
+
+'PARTE ASSÍNCRONA' dentro do BODY DAQUELA FUNÇÃO anônima que fizemos 
+
+'return'... (e que recebe 'dispatch' como argumento...)
+
+
+
+
+
+ex:
+
+
+
+
+
+
+export const storeResult = (result) => {
+    return (dispatch) => {
+        setTimeout(() => {
+
+        }, 2000);
+    } 
+
+    return { 
+        type: STORE_RESULT,
+        result: result
+    }
+}
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+MAS É CLARO QUE NÃO ACABAMOS POR AÍ.... ---> não, 
+
+O PROFESSOR 
+
+DIZ QUE 
+
+___AINDA DEVEMOS ___ COLOCAR ALGO 
+
+DENTRO 
+
+DO FUNCTION BODY DO PRIMEIRO PARÂMETRO 
+
+DO 
+
+'setTimeout',
+
+
+PARA 
+QUE 
+
+
+ISSO TUDO FUNCIONE... -----> 
+
+A COISA 
+
+DENTRO 
+
+DESSA FUNÇÃO 
+
+INTERNA que deve ser escrita 
+
+É UM CALL/EXECUÇÃO DE 
+
+
+'dispatch()',
+
+
+PARA ___dIZER AO 'setTimeout()' QUE, PASSADOS 3 SEGUNDOS,
+
+NOSSA ACTION DEVERÁ SER 'dispatcheada'/disparada...
+
+
+
+
+Ex:
+
+
+
+
+
+
+
+export const storeResult = (result) => {
+    return (dispatch) => {
+        setTimeout(() => {
+            dispatch(); //////////EIS O CÓDIGO EM QUESTÃO.
+        }, 2000);
+    } 
+
+    return { 
+        type: STORE_RESULT,
+        result: result
+    }
+}
+
+
+
+
+
+
+-----------------------------
+
+POR FIM, É EVIDENTE QUE 
+
+ESSE 
+
+'dispatch()'
+
+
+VAI __eXIGIR UMA ACTION____.... ---> E DENTRO 
+
+
+DESSA 
+
+
+___ACTION __ DEVEMOS PASSAR A ACTION QUE VAMOS QUERER QUE SEJA DISPATCHEADA ASSÍNCRONAMENTE...
+
+
+
+
+
+
+
+--> professor então nos conta um PROBLEMA QUE PODERÍAMOS CRIAR:
+
+
+
+
+
+export const storeResult = (result) => {
+    return (dispatch) => {
+        setTimeout(() => {
+            dispatch(storeResult); //////////EIS O __CÓDIGO PROBLEMA__, EM QUESTÃO.
+        }, 2000);
+    } 
+
+    return { 
+        type: STORE_RESULT,
+        result: result
+    }
+}
+
+
+----------------------------------
+
+
+
+
+NÃO DEVEMOS PASSAR 
+
+
+A PRÓPRIA constante 
+
+'CRIADORA DA ACTION' ('action creator')
+
+
+nesse dispatch aí,
+
+
+SENÃO 
+
+VAMOS ACABAR CRIANDO UM LOOP INFINITO...
+
+
+-----------------------------------------
+
+
+
+PARA SOLUCIONAR ESSE PROBLEMA DE CÓDIGO,
+
+O QUE NÓS GERALMENTE FAZEMOS 
+
+É ____cRIAR __ 'ASYNC ACTION CREATORS' 
+
+
+
+QUE ___GERALMENTE, POR SUA VEZ, SÃO 
+
+USADOS 
+
+PARA 
+
+___dISPATCHAR __ ACTIONS QUE ___ SÃO CRIADAS __ POR 
+
+
+'SYNCHRONOUS ACTION CREATORS' ('COMMON ACTION CREATORS', sem o uso de 'thunk' e sem a escrita de UMA SINTAXE ESPECIAL NO SEU INTERIOR QUE EXECUTE CÓDIGO ASSÍNCRONO...).
+
+
+
+
+
+
+
+
+ISSO SIGNIFICA, EM OUTRAS PALAVRAS, QUE O NOSSO CÓDIGO DE 'storeResult', nesse 
+caso específico aí,
+
+VAI FICAR:
+
+
+
+
+
+
+export const storeResult = (result) => { /////CREATOR DE ACTION __SÍNCRONA__ (que é executada de forma SÍNCRONA... --> entretanto, VAMOS ENFIAR ESSE NEGÓCIO EM UM 'ASYNC ACTION CREATOR', que é aquele logo de baixo....)
+                return { 
+        type: STORE_RESULT,
+        result: result
+    }
+}
+
+
+
+export const asyncStoreResult = (result) => {
+    return (dispatch) => {
+        setTimeout(() => {
+            dispatch(storeResult); 
+        }, 2000);
+    } 
+}
+
+
+
+-------------------------------
+
+
+CERTO.... COM ISSO TUDO, 
+
+
+CREIO QUE NOSSO PROJETO VAI FUNCIONAR COM 
+
+ESSA EXECUÇÃO DE CÓDIGO ASSÍNCRONO ('setTimeout'....)
+
+
+
+
+
+
+
+
+
+-----> MAS NÃO FUNCIONOU... CÓDIGO AINDA NÃO ESTÁ FUNCIONANDO... ---> era um probleminha no 
+
+reducer 
+
+de 
+
+
+'result.js',
+
+nada de mais... ----------> CERTO,
+
+
+ESSE 
+
+
+CÓDIGO QUE O PROFESSOR NOS MOSTROU ESTÁ FUNCIONANDO.... 
+
+
+
+
+
+FICOU ASSIM:
+
+
+
+(actions.js)
+
+export const storeResult = (result) => { /////CREATOR DE ACTION __SÍNCRONA__ (que é executada de forma SÍNCRONA... --> entretanto, VAMOS ENFIAR ESSE NEGÓCIO EM UM 'ASYNC ACTION CREATOR', que é aquele logo de baixo....)
+    return { 
+type: RESULT_STORE,
+result: result
+}
+}
+
+
+
+export const asyncStoreResult = (result) => {
+return dispatch => {
+setTimeout(() => {
+dispatch(storeResult(result)); 
+}, 2000);
+} 
+}
+
+
+
+
+
+
+
+
+
+(Counter.js):
+
+
+
+      onResultStored: (result) => {
+        dispatch(
+            actionCreators.asyncStoreResult(result)
+        )
+      }
+
+
+
+-------------------------------------------------
+
+
+
+ISSO FUNCIONOU... 
+
+
+
+
+
+
+
+
+--> E SE EXAMINARMOS O 'REDUX' no devtools,
+
+VEREMOS ___ QUE O STATE DEMORA UM POUCO PARA SER ATUALIZADO (2 segundos),
+agora,
+
+
+
+TUDO GRAÇAS 
+
+A 
+
+ESSA EXECUÇÃO ASSÍNCRONA 
+
+
+DE 'actions', por meio dos 'ACTION CREATORS' e 
+
+ o 
+
+ 'REDUX-THUNK'... (bem interessante, e bem ÚTIL.)
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> A PARTE INTERESSANTE É QUE __NÓS NUNCA VIMOS 
+
+
+
+ESSE OUTRO 
+
+
+'ACTION CREATOR', esse action CREATOR __aSSÍNCRONO__ de 
+
+'asyncStoreResult', 
+
+
+
+APARECER ___ NO 'REDUXDEVTOOLS'...  ------> 
+
+
+ISSO QUER 
+DIZER QUE,
+
+
+DE 
+
+TODAS
+ 
+ ESSAS LINHAS 
+
+
+ DE CÓDIGO AQUI:
+
+
+
+
+ export const storeResult = (result) => { 
+    return { 
+type: RESULT_STORE,
+result: result
+}
+}
+
+export const asyncStoreResult = (result) => {
+return dispatch => {
+setTimeout(() => {
+dispatch(storeResult(result)); 
+}, 2000);
+} 
+}
+
+
+
+
+------------------------------
+
+
+
+A ÚNICA 'FOOTPRINT' QUE TEREMOS,  DE TODAS ESSAS LINHAS DE CÓDIGO,
+
+
+SERÁ 
+
+
+a linha 
+
+'dispatch(storeResult(result));',
+
+
+
+
+ESSA 
+
+É 
+
+A ÚNICA ACTION __ QUE EFETIVAMENTE __ ALCANÇA 
+
+O 
+
+'REDUCER', e que altera nosso state (isso signfica que 
+
+a 
+
+action DE CIMA,
+
+aquela 'storeResult', __ É 'KINDOF' __ENGLOBADA_ por 
+
+essE 
+
+
+
+'asyncStoreResult', esse 'ASYNC ACTION CREATOR'...) ---->  MAS 
+
+
+
+
+ESSA 
+
+
+'storeResult' É A ACTION QUE ACABA SENDO DISPATCHEADA, justamente 
+
+PQ 
+
+APENAS __ ACTIONS ___SÍNCRONAS___ podem acabar 
+
+afetando o reducer (E o store, consequentemente)...
+
+
+
+
+
+
+---> ISSO QUER DIZER QUE OS 'ASYNC ACTION CREATORS' (ou seja, action CREATORS que EXECUTAM CÓDIGO ASSÍNCRONO NO SEU INTERIOR....)
+só 
+
+SÃO POSSÍVEIS 
+
+
+GRAÇAS AO 
+
+
+'redux-thunk'... ------> e esses 'async action creators' 
+
+SÃO 
+
+SEMPRE 
+
+'caught in between'...  --> ou seja, 
+
+
+ELES NUNCA ___aLCANÇAM DE VERDADE __ O REDUCER... --> o que ALCANÇA O REDUCER É A ACTION EM SI; 
+
+esses 
+
+'action creators', por meio do redux thunk,
+
+APENAS 
+
+
+AGEM 
+
+
+COMO 
+
+
+
+UMA 'UTILITY STEP', uma 'stepping stone' PARA EXECUTAR NOSSO CÓDIGO SÍNCRONO, que é as actions em si...
+
+
+
+
+
+
+
+
+
+SE EXAMINARMOS NOSSO CONSOLE,
+
+
+
+
+
+VEREMOS ___QUATRO OUTPUTS__ POR STORE de 'result':
+
+
+
+
+index.js:31 [Middleware] Dispatching ƒ (dispatch) {
+        setTimeout(function () {
+            dispatch(storeResult(result));
+        }, 2000);
+    }
+03:00:41.854 index.js:33 [Middleware] Next state {counter: {…}, results: {…}}
+03:00:43.856 index.js:31 [Middleware] Dispatching {type: "RESULT_STORE", result: 0}
+03:00:43.860 index.js:33 [Middleware] Next state {counter: {…}, results: {…}}
+
+
+
+
+
+
+
+
+ENTRETANTO, O INTERESSANTE É QUE 
+
+
+
+
+1) AQUELE ''''[Middleware] Dispatching ƒ (dispatch) {
+        setTimeout(function () {
+            dispatch(storeResult(result));
+        }, 2000);
+    }''''' 
+
+    É, NA VERDADE,
+
+
+
+A __FUNÇÃO QUE __ É ACTUALLY __ RETORNADA PELA ASYNC ACTION/ACTION CREATOR...
+
+     
+
+
+2)  '''03:00:41.854 index.js:33 [Middleware] Next state {counter: {…}, results: {…}}'''  ---> ESTA LINHA 
+AQUI __NÃO ACABA REALMENTE MUDANDO O STATE, É TIPO UMA 'BAIT', É __NA VERDADE__ A __aCTION__ QUE ACABA SENDO __iNICIALMENTE ___ BLOQUEADA PELO 'redux-thunk', que é um MIDDLEWARE ESPECIAL (é middleware pq É EXECUTADO ENTRE _ O DISPATCH __ DA ACTION E O RECEIVE DESSA ACTION LÁ NO 'reducer'...)
+
+
+
+
+
+
+
+
+
+
+---> É ASSIM, PORTANTO, como podemos TRABALHAR COM ACTION CREATORS 
+
+PARA FAZER HANDLE DE ASYNC CODES __NO NOSSO REDUX STORE (com o thunk, é claro...)
+
+
+

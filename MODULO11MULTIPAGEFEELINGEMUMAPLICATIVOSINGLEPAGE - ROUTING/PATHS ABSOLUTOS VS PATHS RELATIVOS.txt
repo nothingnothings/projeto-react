@@ -1,0 +1,638 @@
+
+
+
+
+
+
+
+
+
+----> UMA INFORMAÇÃO ADICIONAL SOBRE OS LINKS QUE VOCÊ DEFINE 
+
+NOS LINKS ÀS 'ROUTES'... ------> 
+
+
+
+
+
+como 
+
+
+
+em 
+
+
+
+<Link to="/" />
+
+
+
+e 
+
+
+
+<Link to="new-post" />
+
+
+
+
+
+----> a informação que o professor quer dar é que 
+
+
+__a MANEIRA __ PELA QUAL __ VOCê 
+
+ 
+'dá' os seus links aqui  
+
+
+
+______NÃO AFETA____ O ""FATO"" ___ 
+
+
+
+DESSA STRING SER UM 
+
+
+'ABSOLUTE' OU 'RELATIVE' PATH...
+
+
+
+
+
+
+
+
+
+ok, mas qual é a diferença 
+
+
+
+entre 
+
+'absolute' 
+
+e 
+
+
+'relative', de qualquer forma?
+
+
+
+
+
+--> ABSOLUTE PATH ---> É UM PATH __ QUE É SEMPRE APENSO (appended) 
+
+
+AO SEU DOMAIN... ------> ou seja... isso quer dizer que, por exemplo,
+
+
+
+se o professor/usuário
+
+navegasse 
+
+
+até 
+
+
+'example.com/newposts', mas nós só settamos 
+
+'example.com/posts', 
+
+O USUÁRIO 
+
+
+___ACABARIA SEMPRE ___ REDIRECIONADO 
+
+
+AO 
+
+'example.com/posts', 
+
+
+se nós tivessemos definido esse path aí como ABSOLUTE... (Absolute path ---> basicamente vai dizer 'SEMPRE FAÇA APPEND DE 'posts ' LOGO DEPOIS DO DOMAIN/DOMAIN NAME'...)  -------->
+
+
+o 
+
+
+'new-posts' como path seria omitido, e a nossa página optaria por 
+
+'example.com/newposts'...
+
+
+
+
+
+
+
+
+--> PROBLEMA:
+
+
+
+QUANDO VOCÊ ESTIVER 
+
+SETTANDO 
+
+'to={...
+
+pathname: xxx}',
+
+
+
+
+VOCê 
+
+
+
+__NÃO CONSEGUE __ CONTROLAR __ O COMPORTAMENTO DE ABSOLUTE/RELATIVE.... -------> 
+
+
+quando 
+
+
+
+você estiver definindo essa propriedade 
+
+'to', 
+
+
+OS PATHS SERÃO SEMPRE ___aBSOLUTE__, E NUNCA __''''RELATIVE'''.... --------> 
+
+
+
+ISSO QUER 
+
+DIZER QUE 
+
+NÃO INTERESSA 
+
+SE O VALOR 
+
+
+DE 
+SEU 
+
+PATH 
+
+é 
+
+'new-post' 
+
+
+ou 
+
+
+'/new-post', 
+
+
+
+O QUE INTERESSA 
+
+
+É QUE 
+
+ESSE 
+
+PATH SERÁ SEMPRE 'APPENDED' AO SEU 'ROOT DOMAIN'...
+
+
+-----------------------------------
+
+
+
+
+
+OK, MAS 
+
+
+E 
+
+SE QUISÉSSEMOS 
+
+TRANSFORMAR/MUDAR
+ 
+
+ O COMPORTAMENTO 
+
+ de 
+ 
+
+ 'to',
+
+
+ fazer ELE 
+
+
+ INTERPRETAR
+  
+
+  OS VALORES 
+
+  EM 
+
+  'pathname' COMO 
+
+
+
+  ___RELATIVE PATHS, e não 'absolute'...?
+
+
+
+
+
+
+
+
+  acho que entendi.... --> 
+
+
+  com 'ABSOLUTE PATHS', 
+
+  o que 
+
+  é considerado 
+
+
+  é 
+
+
+  o ____ DOMAIN NAME/DOMAIN__....
+
+
+
+
+por exemplo, 
+
+
+se 
+
+
+estivermos na página 
+
+'posts' 
+
+
+
+e então clicamos 
+
+em 
+'new-posts', 
+
+esse 
+
+'new-posts' 
+
+VAI __SUBSTITUIR___ O 'posts' na url --->  a url que estava 'domain.com/posts' vai se tornar 'domain.com/new-posts'...
+
+
+
+
+
+
+
+ISSO SE OPÕE AO COMPORTAMENTO DOS 'RELATIVE PATHS'; quando nosso código trata nossos paths como 'relative paths',
+
+ele vai ADICIONAR O 'path' daquele negócio/página (por exemplo, 'new-post') AO FINAL 
+
+
+DA URL QUE TEMOS NO PRESENTE.... -----> ex: queremos 
+
+trocar 
+
+da página 
+
+
+'posts' para 
+
+a página 
+
+'new-post'... ----> quando clicamos 
+
+
+em 
+
+
+'new-post', 
+
+ESSE 
+
+'new-post' 
+É ADICIONADO 
+
+
+AO FINAL DA NOSSA URL QUE JÁ CONTINHA O 'posts'....
+
+ex:
+
+
+domain.com/posts ---> clicamos em 'new-post' ---> vira 'domain.com/posts/new-post'...
+
+
+
+
+
+------------------------------------
+
+
+
+
+OK... ISSO PARECE SER UMA MERDA E INÚTIL, 
+
+
+MAS COMO ___POSSO OPTAR POR ESSE COMPORTAMENTO 
+
+
+DE 
+
+'RELATIVE PATHS" (na propriedade 'to')?
+
+
+---------------------------------
+
+
+
+
+Ok... se vocÊ quer que 
+
+esse 
+
+negócio (valor de 'pathname') seja considerado como 
+
+UM 
+
+
+___RELATIVE PATH___ (path adicionado ao final da nossa url presente), 
+
+
+
+
+VOCê 
+
+
+
+__***aCTUALLY***___ TERÁ QUE 
+
+CONSTRUIR 
+
+
+ESSE 
+
+PATH QUE VOCÊ QUER QUE SEJA RELATIVO _________DINAMICAMENTE____... ---------->
+
+
+
+você o construirá dinamicamente USANDO PARA SUA VANTAGEM O FATO __ DE QUE __ SABEMOS 
+
+EM QUE 
+
+PÁGINA 
+
+
+O USUÁRIO SE ENCONTRA, naquele momento específico... -----> ok, mas enfim...
+
+
+para 
+
+
+
+fazer esse 'jump' usando um RELATIVE PATH,
+
+você 
+
+
+
+deve 
+
+USAR 
+
+UM DAQUELES
+ 
+
+ MÉTODOS/PROPRIEDAES 'routing-related'... ----> para isso,
+
+
+ vamos 
+
+
+ usar 
+
+ aquela
+  
+
+  propriedade 
+
+  'match' (dentro dos PROPS de um component; é uma propriedade que 
+  
+  FICA DENTRO DOS PROPS DE UM COMPONENT QUE 
+  
+  VOCÊ 
+  
+  UTILIZA EM UMA 'Route'/routing).......
+
+
+
+
+  --> para ACESSAR 
+
+
+  ESSA PROPRIEDADE/usar essa propriedade,
+
+
+  devemos 
+
+  invocar 
+
+
+
+  'this.props.match'.... ('this' pq você o utilizará em um CLASS-BASED COMPONENT)..
+
+
+
+
+  ou seja,
+
+
+  o código do professor vai começar assim:
+
+
+
+
+
+
+  <Link to={
+
+                                {
+                                    pathname: this.props.match'/new-post', ///////////ELE VAI ESCREVER ISSO NO 'pathname' DE NOSSO 'to'...
+                                    hash: '#submit',
+                                    search: '?quick-submit=true'
+                                }
+
+
+
+  } />
+
+
+
+
+
+
+
+
+  CERTO... 
+
+
+  E DENTRO 
+
+  DESSA PROPRIEDADE 
+
+
+  'match'
+
+
+
+  VAMOS ACESSAR 
+
+
+
+  O OBJETO ____'''''URL'''''____... -----> a 'url'/'''this.props.match.url''' É, NO FINAL 
+
+
+  DAS CONTAS,
+
+  O 'CURRENTLY LOADED PATH' 
+
+  DO USUÁRIO... ------------> E PARA 
+
+
+  QUE 
+
+  NOSSO PATHNAME FIQUE CERTINHO, fique definido COMO SE FOSSE UM ABSOLUTE PATH,
+
+  vamos escrever 
+
+
+  'pathname: this.props.match.url + '/new-post' ' ,
+
+
+
+
+  POR EXEMPLO...
+
+
+
+
+
+
+  --> isso ficará, por exemplo, com que 
+
+  fiquemos 
+
+  com 
+
+
+  'localhost:3000/posts/new-post'.............        (e esse link será 'one-way', ele não vai afetar o OUTRO LINK, o 'caminho inverso'; esse 'caminho inverso' CONTINUARÁ TENDO UM VALOR 'relative path'...)
+
+
+
+
+
+
+
+
+
+
+
+  ---> mas enfim, o que interessa é que por meio 
+
+  dessa sintaxe 
+
+
+  bizarra 
+
+
+  do 
+
+
+  'this.props.match.url' + nome do path que você vai querer que seja adicionado ao final da 'currentUrl' representada por 'this.props.match.url',
+
+
+
+  CONSEGUIMOS 
+
+
+  DEFINIR UM RELATIVE PATH 
+
+  para um link settado na nossa página....
+
+
+  ------------------------------------------------------------
+
+
+
+
+
+
+
+  ---> SE EM ALGUM MOMENTO VOCÊ QUISER CONSTRUIR UM LINK 
+
+
+  QUE 
+
+  FAZ 
+  __APPEND___ DO PATH/DE SEU PATH __aO FINAL
+
+  DA __ URL EM QUE __ O USUÁRIO ESTÁ NO PRESENTE ('currentPath'),
+
+
+
+  VOCÊ PODE USAR 
+
+  ESSE 
+
+  MÉTODO/approach AÍ...
+
+
+
+
+
+
+  CASO CONTRÁRIO, CASO ISSO _NÃO SEJA NECESSÁRIO__,
+   
+   use 
+
+
+   A VERSÃO padrão, 
+
+   que é 
+   a DO 
+
+
+
+   ___aBSOLUTE PATH__... ---> não há nenhum 
+
+   'best' ou 'worse' aqui,
+
+
+
+   o que interessa é o BEHAVIOR QUE VOCê DESEJA.... (ou ADICIONAR O 'path' definido em 'to' AO ROOT DOMAIN, de forma LIMPA; ou ADICIONAR O 'path' definido em 'to' AO FINAL DA 'currentUrl'...)
+
+
+
+
+
+Relative Paths
+Sometimes, you might want to create a relative path instead. This is especially useful, if your component is already loaded given a specific path (e.g. posts ) and you then want to append something to that existing path (so that you, for example, get /posts/new ).
+
+If you're on a component loaded via /posts , to="new"  would lead to example.com/new , NOT example.com/posts/new . 
+
+To change this behavior, you have to find out which path you're on and add the new fragment to that existing path. You can do that with the url  property of props.match :
+
+<Link to={props.match.url + '/new'}>  will lead to example.com/posts/new  when placing this link in a component loaded on /posts . If you'd use the same <Link>  in a component loaded via /all-posts , the link would point to /all-posts/new .
+
+There's no better or worse way of creating Link paths - choose the one you need. Sometimes, you want to ensure that you always load the same path, no matter on which path you already are => Use absolute paths in this scenario.
+
+Use relative paths if you want to navigate relative to your existing path.
+

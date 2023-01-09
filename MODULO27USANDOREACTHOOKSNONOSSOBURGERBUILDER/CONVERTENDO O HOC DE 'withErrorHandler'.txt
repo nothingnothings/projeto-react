@@ -1,0 +1,241 @@
+
+
+
+
+
+
+
+---> WITHERRORHANDLER DEVE SER AJUSTADO...
+
+
+
+
+
+
+
+
+
+--> é um HOC QUE 
+
+
+
+RETORNA UMA CLASS-BASED COMPONENT... ------->
+
+
+
+
+ISSO 
+
+PQ 
+
+O CÓDIGO 
+
+
+INTERNO 
+
+
+DELE 
+
+É 
+
+ESTE:
+
+
+
+
+const withErrorHandler = (WrappedComponent, axios) => {
+
+  return class extends Component { /////AQUI ESTÁ O PROBLEMA, O RETURN DE UM CLASS-BASED COMPONENT...
+
+      constructor(props) {
+        super(props);
+        this.state = {
+          error: null
+        };
+
+        axios.interceptors.request.use(
+              req => {
+                this.setState({error: null});
+                return req;
+              }
+        )
+
+        axios.interceptors.response.use(res => res, error => {
+          this.setState({
+            error: error
+          })
+          console.log("Error: " + error.message);
+        })
+      }
+
+    state = {
+      error: null
+  };  
+
+    errorConfirmedHandler = () => {
+        this.setState(
+            {
+                error: null
+            }
+        )
+    }
+
+componentWillMount() {
+
+  this.reqInterceptor = axios.interceptors.request.use(
+              req => {
+                this.setState({error: null});
+                return req;
+              }
+        )
+
+     this.resInterceptor = axios.interceptors.response.use(res => res, error => {
+          this.setState({
+            error: error
+          })
+          console.log("Error: " + error.message);
+        })
+}
+
+componentWillUnmount() {
+ 
+  axios.interceptors.request.eject(this.reqInterceptor);
+
+  axios.interceptors.response.eject(this.resInterceptor);
+}
+
+    render() {
+
+      return ( 
+
+        <Aux>
+        <Modal show={this.state.error} modalClosed={this.errorConfirmedHandler}>
+            
+            {this.state.error ? this.state.error.message : null}
+            
+            </Modal>
+        <WrappedComponent {...this.props} />
+      </Aux>
+      );
+    }
+  };
+};
+
+
+
+
+
+
+------------------------
+
+
+
+
+
+
+
+
+
+FICOU ASSIM:
+
+
+
+const withErrorHandler = (WrappedComponent, axios) => {
+  //versão que RETORNA UM FUNCTIONAL COMPONENT desse withErrorHandler... (versão reacthooks)...
+
+  return props => {
+    const [error, setError] = useState(null);
+
+    const errorConfirmedHandler = () => {
+      setError(null);
+    };
+
+    const reqInterceptor = axios.interceptors.request.use((req) => {
+      setError(null);
+      return req;
+    });
+
+    const resInterceptor = axios.interceptors.response.use(
+      (res) => res,
+      (error) => {
+        setError(error);
+        console.log('Error: ' + error.message);
+      }
+    );
+
+    useEffect(() => {
+      return () => {
+        axios.interceptors.request.eject(reqInterceptor);
+
+        axios.interceptors.response.eject(resInterceptor);
+      };
+    }, [reqInterceptor, resInterceptor]);  /////ISSO TAMBÉM É IMPORTANTE.
+
+    return (
+      <Aux>
+        <Modal show={error} modalClosed={errorConfirmedHandler}>
+          {error ? error.message : null}
+        </Modal>
+        <WrappedComponent {...props} />
+      </Aux>
+    );
+  };
+};
+
+
+
+
+
+(atenção para 
+o 
+
+setup 
+
+dos 
+
+interceptors: eles são settados no contexto global desse 
+
+component hoc, para 
+
+então 
+
+serem 
+
+utilizados 
+
+
+
+
+no
+
+call 
+
+de 
+
+'cleanup' de 
+
+
+'axios.interceptors.request()' 
+
+e 
+
+'axios.interceptors.response()')
+
+
+
+
+
+
+
+
+
+-----------------------
+
+
+
+COM ISSO, TEREMOS UM
+
+
+ERRORHANDLER QUE VAI FUNCIONAR DNV... (dessa vez, com CÓDIGO DE FUNCTIONAL COMPONENT 
+
+NO SEU INTERIOR...)

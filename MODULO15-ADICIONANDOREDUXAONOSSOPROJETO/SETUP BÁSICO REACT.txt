@@ -1,0 +1,121 @@
+
+
+
+
+
+
+
+
+import { Provider } from 'react-redux'... -------->  
+
+
+
+
+
+
+
+VAMOS COLOCAR TUDO DENTRO DO WRAPPER DO PROVIDER, QUE DEVERÁ COBRIR TUDo...
+
+
+ex:
+
+
+
+<Provider>
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+</Provider> 
+
+
+
+----------------------------------
+
+
+
+
+
+
+ENTRETANTO, PROFESSOR NOS ESCLARECE QUE _HÁ ALGO DE ESPECIAL__ NO USO DE 
+
+'REDUX' COM 
+
+O 
+
+
+
+'BROWSER ROUTER',
+
+
+E QUE 
+
+
+ELE 
+
+VAI NOS MOSTRAR NO FUTURO, O QUE ELE QUER DIZER COM ISSO... ------> isso basicamente tem a ver COM 
+
+
+
+
+''FAZER A FUNCIONALIDADE DE ROUTING' E A 'FUNCIONALIDADE DE 'connect' ' 
+
+
+FUNCIONEM JUNTAS, EM HARMONIA... ---> isso pq AMBAS SETTAM UNS 
+
+PROPS ESPECÍFICOS NO COMPONENT WRAPPADO, e temos que assegurar que tudo funciona nesse component...
+
+
+---------------------------------------
+
+
+
+CERTO, NÓS ENTÃO IMPORTAMOS 
+
+
+'createStore' lá do 'redux',
+
+
+
+e 
+
+
+
+TAMBÉM O NOSSO REDUCER, NO FOLDER 'store'...
+
+
+
+armazenamos 
+
+esse store em uma constante 'store'
+
+
+
+E ENTÃO 
+
+
+o passamos ao 'Provider', 
+
+por meio do código 
+
+
+
+<Provider store={store}>
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+</Provider>
+
+
+--------------------------------------
+
+
+
+
+NA PRÓXIMA AULA VEREMOS 
+
+A LÓGICA 
+
+
+DO 
+
+'reducer'...

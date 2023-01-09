@@ -1,0 +1,227 @@
+
+
+
+
+
+
+
+
+
+
+AO LONGO DO CURSO,
+
+USAMOS 
+
+
+'create-react-app' 
+
+
+PARA 
+
+CONSTRUIR NOSSO 
+
+
+
+APLICATIVO REACT... ------> o professor 
+
+nos 
+
+recomenda
+ 
+
+
+
+ USAR 
+
+ SEMPRE 
+
+ 'create-react-app'
+  
+
+  QUANDO 
+
+  QUEREMOS 
+  CODAR 
+
+  SINGLE PAGE APPLICATIONS... ---------> 
+
+
+
+  JÁ
+   
+   QUANDO 
+
+
+   QUEREMOS 
+
+
+   CODAR 
+
+
+
+   __MULTIPLE PAGE APPLICATIONS__,
+
+
+
+
+CRIAR MÚLTIPLOS APPS para 
+
+ 
+
+
+CADA PEÇA DE UMA PÁGINA,
+
+
+isso 
+
+é VIÁVEL,
+
+
+MAS 
+
+LÁ 
+
+VOCÊ 
+
+PROVAVELMENTE 
+
+VAI 
+
+TER 
+
+
+
+SEU PRÓPRIO 'BUILD WORKFLOW' integrado
+
+DENTRO DE SEU 
+
+
+
+'FULLSTACK PROJECT'... -------> certo,
+
+
+mas 
+
+para 
+
+SINGLE PAGE APPLICATIONS PUROS,
+
+
+
+
+
+USAR 
+
+CREATE-REACT-APP 
+
+É UMA EXCELENTE IDEIA...
+
+
+
+
+
+
+
+
+
+
+---------> ISSO TE DÁ UM WORKFLOW MT LEGAL,
+
+COM MTAS
+ 
+
+NEXT-GENERATION FEATURES,
+
+
+
+BEST PRACTICES ACERCA DE OPTIMIZAÇÃO DE CÓDIGO,
+e muito, muito mais...
+
+
+
+
+
+
+
+
+---> MAS VOCÊ DEVE ENTENDER MELHOR O QUE 
+
+ACONTECE 
+
+'POR TRÁS DAS CENAS',
+
+
+
+e também para ter um 
+MELHOR 
+
+ENTENDIMENTO 
+
+ACERCA DAS __COISAS __  QUE O BUILD WORKFLOW 
+
+
+FAZ PARA NÓS,
+
+
+
+O PROFESSOR 
+
+QUER 
+
+SETTAR 
+
+UM BUILD WORKFLOW 
+BÁSICO 
+
+
+CONOSCO,
+
+NESTE MÓDULo...
+
+
+
+
+
+
+
+
+--> PROFESSOR VAI NOS MOSTRAR (de novo ) o WEBPACK,
+
+
+
+
+a TOOL  CORE que é usada 
+
+
+
+pelo react...  ---------> NÓS VAMOS SETTAR 
+
+
+
+
+UM PROJETO QUE 
+
+
+SUPORTA 
+
+O MESMO 
+
+CÓDIGO 
+
+
+ QUE ESCREVEMOS COM O APLICATIVO 'create-react-app',
+
+
+ MAS 
+
+ COM 
+
+ ESTE WORKFLOW ESPECÍFICO,
+  DESTE MÓDULO... 
+
+
+
+
+--> primeiro vamos relembrar 
+
+WEBPACk...

@@ -1,0 +1,1999 @@
+
+
+
+
+
+
+
+
+
+DEVEMOS preencher o nosso reducer com lógica...
+
+
+
+
+
+
+
+---> devemos CODAR AS 2 ACTIONS que definimos 
+
+
+em 
+
+
+'actions.js',
+
+
+
+
+ACTIONS 
+
+
+'ADD_INGREDIENT' 
+
+
+e 
+
+'REMOVE_INGREDIENT'...
+
+
+
+----------------------
+
+
+
+
+
+
+
+
+
+Professor vai colocar um switch statement, coisa bem clássica...
+
+
+
+
+
+
+ex:
+
+
+
+switch(action.type) {
+    case actionTypes.ADD_INGREDIENT:
+    return {
+
+    }
+    break;
+
+    case actionTypes.REMOVE_INGREDIENT:
+    return {
+
+    }
+    break;
+
+    default:
+    return state; ///////////SEMPRE ADICIONE ISTO AQUI
+}
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+AQUELE DEFAULT deve ter 'return state'... --------->  E ERA ISSO QUE ESTAVA DANDO PROBLEMA NO 
+
+MEU CÓDIGO; 
+
+coloquei esse 
+
+'default: 
+return state'
+,
+
+
+E CONSERTOU MEU 
+
+PROBLEMA 
+
+
+DE 
+
+'ingredients is undefined'... (pq realmente, no INÍCIO DO app, essa propriedade VAI ESTAR COMO UNDEFINED, esse é o normal, E __É POR ISSO __ QUE 
+
+ESSE 
+
+''''''
+default: 
+return state
+
+
+
+'''''  É ___TÃO IMPORTANTE___...)
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+---> CERTO.....
+
+
+
+
+--> o professor também denota que _________NÃO PRECISAMOS ___ DE BREAK STATEMENTS
+
+
+
+nesse 'switch-case' statement 
+
+
+
+__PQ NÓS ___ ESTAMOS __fAZENDO 'RETURN'_ DE CADA 
+
+
+'case' de qualquer forma, e isso faz com que A EXECUÇÃO DE CÓDIGO JÁ SEJA INTERROMPIDA 
+
+NESSA FUNÇÃO DE QUALQUER FORma (quando encaixado determinado 'case'...)
+
+
+
+-------------------------------------
+
+
+
+
+
+
+PARA 
+
+ADICIONAR INGREDIENTS,
+
+diz o professor, 
+
+
+é evidente que 
+
+DEVEMOS OS ADICIONAR 
+
+
+AO 
+
+
+NOSSO 
+
+OBJETO/PROPRIEDADE 
+
+
+'ingredients'
+
+
+lá no 
+
+'initialState'.... 
+
+
+
+
+
+
+
+--->  Professor explica que o valor inicial de 'ingredients' estava como 'NULL' 
+
+na nossa '''VERSÃO TRADICIONAL DO STATE MANAGEMENT'''' 
+
+justamente 
+
+PQ __ESTÁVAMOS FETCHEANDO ___ ESSA 
+
+DATA 
+
+do 'ingredients iniciais'
+
+
+LÁ DO NOSSO 
+
+
+
+SERVIDOR/BACKEND,
+
+por meio daquele 
+
+código 
+
+
+
+'componentDidMount() {
+  axios.get('...')
+  .then(
+    response => {
+      this.setState(
+        {
+          ingredients: response.data
+        }
+      )
+      .catch(
+        error => {
+          this.setState({error: true})
+        }
+      )
+    }
+  )
+}',
+
+
+
+
+LÁ EM 
+
+
+
+
+
+'BurgerBuilder'... ------->   E COMO NÓS AINDA NÃO APRENDEMOS A FAZER HANDLE DE ASYNC CODE 
+
+COM O REDUX,
+o professor vai, por enquanto, 
+
+IGNORAR 
+
+ESSE CÓDIGO 
+
+
+
+do 
+
+
+AXIOS em 'BurgerBuilder'... ---> vai comentar para fora esse axios.get,
+
+
+
+
+E ENTÃO 
+
+
+
+
+
+
+vai definir um objeto inicial de 
+
+'ingredients',
+
+lá 
+no 
+
+'initialState',
+
+
+
+COMO 
+
+
+SENDO
+ 
+
+
+ 'ingredients: {
+   salad: 0,
+   bacon: 0,
+   cheese: 0,
+   meat: 0
+ }'
+
+
+
+ ELE NOS RELEMBRA __QUE ___ ESSA MUDANÇA SERÁ APENAS TEMPORÁRIA...
+
+
+
+
+--------------------------
+
+
+O PROFESSOR ENTÃO PASSA 
+
+A ESCREVER 
+
+O CÓDIGO 
+
+DO REDUCER EM SI...
+
+
+
+
+
+MEU CÓDIGO DO REDUCER HAVIA FICADO ASSIM:
+
+
+ex:
+
+const reducer = (state = initialState, action) => {
+switch(action.type) {
+    case actionTypes.INGREDIENT_ADD:
+        const updatedCount = state.ingredients[action.id] + 1;
+        console.log(updatedCount);
+        const updatedIngredients = {
+          ...state.ingredients
+        };
+        updatedIngredients[action.id] = updatedCount;
+        const priceAddition = INGREDIENT_PRICES[action.id];
+        const oldPrice = state.totalPrice;
+        const newPrice = oldPrice + priceAddition;
+        console.log(state);
+        return {
+              
+              ingredients: updatedIngredients,
+              totalPrice: newPrice
+        }
+       
+    case actionTypes.INGREDIENT_REMOVE:
+        return {
+
+        }
+
+        default:
+         return state;
+}
+}
+
+
+
+--------------------------
+
+
+
+
+Certo, EU __DIRIA__ QUE 
+
+ESSE 
+
+NOSSO CÓDIGO ESTÁ ERRADO, MAS NÃO ESTÁ.... -----> não está pq EU TAMBÉM 
+
+UPDATEI O 
+
+
+VALOR 
+
+
+DE 
+
+'totalPrice'... (que é a única outra propriedade dentro de '
+
+initialState' ) -------> será que isso realmente está correto?
+
+
+
+
+
+
+--> NÃO, NÃO ESTÁ... --> não está PQ ___ O NOSSO 
+
+'PRICE' lá no 
+
+
+'BuildControls'
+
+
+
+NÃO __ É UPDATADO QUANDO DISPARAMOS ESSE 'DISPATCH' de 'ADD_INGREDIENT' ---> isso deve ser CONSERTADO.
+
+
+
+
+-------------------------------
+
+
+
+
+
+OK, CONSEGUI CONSERTAR.... --> PARA CONSERTAR ESSE PROBLEMA DE PRICE,
+
+
+
+
+tive que 
+
+ir 
+
+até o component 'BuildControls'  E ENTÃO __ O TRANSFORMAR EM UM __cLASS-BASED COMPONENT____ ----> fiz isso 
+
+
+PARA QUE 
+FOSSE POSSÍVEL 
+
+USAR 
+
+O 
+
+OBJETO 
+
+'connect()()'
+
+A 
+
+
+ELE ------> 
+
+
+
+
+
+
+COM USO DO OBJETO 'connect', 
+
+PUDE 
+
+
+
+USAR AQUELA CONSTANTE/FUNÇÃO 
+
+
+'mapStateToProps' 
+
+PARA 
+
+_VINCULAR ___ O 'PRICE'
+
+
+
+
+A ESSE 
+
+COMPONENT 'BuildControls',
+
+
+
+ESPECIFICAMENTE 
+
+À PARTE DELE 
+
+QUE 
+
+É 
+
+
+
+''''''''''''''''''''''''''''''
+
+       <p style={style}>
+              Current Price: &nbsp; ${' '}
+              {
+                this.props.price.toFixed(2) //VERSÃO REDUX.
+              }{' '}
+            </p>
+
+'''''''''''''''''''''''''''''''
+
+
+
+
+
+
+esse código aí 
+
+de 
+
+'
+this.props.price.toFixed(2)'
+
+
+
+É UMA REFERÊNCIA DIRETA A ISTO:
+
+
+
+
+'''''''''''''''''''''''''''
+const mapStateToProps = state => {
+    return {price: state.totalPrice}
+}
+'''''''''''''''''''''''''''
+
+
+
+
+
+
+COM ISSO, NOSSO PRICE TAMBÉM É UPDATADO, AGORA, QUANDO CLICAMOS EM 
+
+'Add'... -----> e esse valor do seu 'UPDATE' é EXTRAÍDO DIRETAMENTE 
+
+DO NOSSO 
+
+'GLOBAL REDUX STATE'...
+
+(Bem conveniente)...
+
+
+
+--------------------------------
+
+
+
+AGORA DEVO FAZER O MESMO PARA 
+
+O CASO INVERSO,
+ 
+ PARA 
+
+ O CASO 
+
+ DE 
+
+
+ 'REMOVE_INGREDIENT'...
+
+
+
+
+-----------------------
+
+
+ESCREVI A LÓGICA 
+
+DE 
+
+'REMOVE_INGREDIENT' lá no reducer...
+
+
+ficou:
+
+
+    case actionTypes.INGREDIENT_REMOVE:
+
+      const updatedRemovedCount = state.ingredients[action.id] - 1;
+      console.log(updatedCount);
+      const updatedRemovedIngredients = {
+        ...state.ingredients
+      };
+      updatedRemovedIngredients[action.id] = updatedRemovedCount;
+      const priceReduction = INGREDIENT_PRICES[action.id];
+      const oldPriceRemoved = state.totalPrice;
+      const newPriceRemoved = oldPriceRemoved + priceReduction;
+      console.log(state);
+        return {
+              ingredients: updatedRemovedIngredients,
+              totalPrice: newPriceRemoved
+        }
+
+        default:
+         return state;
+
+
+  -----------------------
+
+
+  CONTUDO, 
+
+
+  ESSA ACTION 
+
+
+  'INGREDIENT_REMOVE'
+
+
+  está inutilizada, no momento... -------> está inutilizada 
+
+
+  DEVIDO 
+
+
+
+  A PROPRIEDADE/STATE 
+
+
+  'purchasable', 
+
+
+  que antes/agora 
+
+
+
+  AINDA É __ GERENCIADA POR AQUELE MÉTODO 'updatePurchaseState',
+
+
+  lá no container 
+
+
+  'BurgerBuilder'... ------> PRECISAMOS ALTERAR A LÓGICA DE NOSSO CÓDIGO;
+
+  FAZER COM QUE 
+
+  ESSE MÉTODO exista de uma forma diferente/talvez realizar o 'update' desse purchase state ('purchasing') 
+
+  LÁ 
+
+
+  NO 
+
+
+  STATE GLOBAL DO REDUx...
+
+
+------------------------
+
+
+
+Para isso, acho que vou precisar de uma PROPRIEDADE INICIAL de 'purchasable' definida 
+
+COMO 
+
+'FALSE', 
+
+lá no 'initialState' do redux...
+
+
+
+
+--> vou me aproveitar/copiar esta lógica:
+
+
+
+
+
+
+
+    updatePurchaseState (ingredients) {
+      console.log(ingredients);
+      const sum = Object.keys (ingredients)
+      .map (igKey => {
+        return ingredients[igKey];
+      })
+      .reduce ( (sum, el) => {
+        return sum + el;
+      }, 0);
+      this.setState(
+        {purchasable: sum > 0} 
+      );
+
+    }
+
+
+
+
+
+E DESTA AQUI, TAMBÉM:
+
+
+
+
+addIngredientHandler = (type) => {
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = {
+      ...this.state.ingredients,
+    };
+    updatedIngredients[type] = updatedCount;
+    const priceAddition = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.totalPrice;
+    const newPrice = oldPrice + priceAddition;
+    this.setState({
+      totalPrice: newPrice,
+      ingredients: updatedIngredients,
+    });
+    this.updatePurchaseState( updatedIngredients);
+  };
+
+
+    --------------------------------
+
+
+
+
+
+  ESSA COISA DO 'purchasable' deu problema... tenho que estudar isso melhor... (pq 
+  
+  o 
+  
+  
+  'INGREDIENT_ADD' VAI ESTAR ALTERANDO 
+  
+  3 
+  PROPRIEDADES 
+  
+  NO 
+  
+  
+  STATE DO REDUX:
+  
+  
+  os 
+  
+  'ingredients',
+  
+  o 
+  
+  'price' 
+  
+  
+  
+  e 
+  
+  
+  o 
+  
+  
+  'purchasable'...)
+
+
+
+
+
+
+
+
+
+
+  --> na verdade, o 'purchasable' ESTÁ SENDO SETTADO COMO 'TRUE' quando clico no botão 'add', mas isso , POR ALGUMA RAZÃO,
+
+  NÃO 
+  ESTÁ 
+
+  NEM 1) HABILITANDO O BOTÃO 'ORDER NOW'
+   
+
+
+   2) HABILITANDO O BOTÃO 'Less'...
+
+
+
+
+
+
+
+   -------------------
+
+
+
+
+
+
+
+   __ERA UM ERRO __ DE GRAFIA,
+
+
+   EU coloquei 
+
+   'purchasing', quando era 'purchasable'... -----> OK, AGORA 
+
+   O 
+
+
+   BOTÃO DE 'ORDER NOW' está ativando 
+
+   quando 
+
+   colocamos 'More' 
+
+
+   nos burger items... (ingredients)
+
+
+
+  
+  FICA ASSIM:
+
+
+
+
+  /* eslint-disable no-unreachable */
+import * as actionTypes from '../actions'
+
+
+
+const initialState = {
+    ingredients: {
+      bacon: 0,
+      salad: 0,
+      cheese: 0,
+      meat: 0
+    },
+    totalPrice: 4,
+    purchasable: false
+}
+
+
+const INGREDIENT_PRICES = {
+    salad: 0.5,
+    bacon: 0.7,
+    cheese: 0.4,
+    meat: 1.3,
+  };
+
+
+
+
+
+const reducer = (state = initialState, action) => {
+  const updatePurchaseState = (ingredients) => {
+    const sum = Object.keys(ingredients)
+    .map (igKey => {
+      
+      return ingredients[igKey];
+    })
+    .reduce ( (sum, el) => {
+      return sum + el;
+    }, 0);
+    console.log(sum > 0);
+    return sum > 0
+    
+          // ...state,
+          // purchasable: 
+    // }
+  }
+switch(action.type) {
+  
+    case actionTypes.INGREDIENT_ADD:
+      console.log('test');
+      console.log(state.ingredients);
+      console.log(state.ingredients[action.id]);
+        // const oldCount = state.ingredients[action.id];
+        // console.log(oldCount)
+        const updatedCount = state.ingredients[action.id] + 1;
+        console.log(updatedCount);
+        const updatedIngredients = {
+          ...state.ingredients
+        };
+        updatedIngredients[action.id] = updatedCount;
+        const priceAddition = INGREDIENT_PRICES[action.id];
+        const oldPrice = state.totalPrice;
+        const newPrice = oldPrice + priceAddition;
+        console.log(state);
+        // this.setState({
+        //   totalPrice: newPrice,
+        //   ingredients: updatedIngredients,
+        // });
+        // this.updatePurchaseState( updatedIngredients);
+        // updatePurchaseState(updatedIngredients);
+        console.log(updatePurchaseState(updatedIngredients));
+        console.log(state);
+        return {
+              
+              ingredients: updatedIngredients,
+              totalPrice: newPrice,
+              purchasable: updatePurchaseState(updatedIngredients)
+        }
+       
+    case actionTypes.INGREDIENT_REMOVE:
+
+      const updatedRemovedCount = state.ingredients[action.id] - 1;
+      console.log(updatedCount);
+      const updatedRemovedIngredients = {
+        ...state.ingredients
+      };
+      updatedRemovedIngredients[action.id] = updatedRemovedCount;
+      const priceReduction = INGREDIENT_PRICES[action.id];
+      const oldPriceRemoved = state.totalPrice;
+      const newPriceRemoved = oldPriceRemoved + priceReduction;
+      console.log(state);
+        return {
+              ingredients: updatedRemovedIngredients,
+              totalPrice: newPriceRemoved,
+              purchasing: updatePurchaseState(updatedRemovedIngredients)
+        }
+
+        default:
+         return state;
+}
+
+}
+
+
+
+
+
+
+export default reducer;
+
+
+
+
+
+
+
+------------------------
+
+
+
+
+
+CERTO, 
+
+
+MAS 
+
+O CÓDIGO 
+
+
+
+DE
+
+
+
+APERTAR 'Less' __AINDA NÃO FUNCIONA___ (esse estilo ainda está QUEBRADO, preciso 
+
+o vincular ao __REDUX...__).
+
+
+
+
+
+(ou não, posso o deixar COMO PROPRIEDADE 'MANAGED' PELO REACT/STATE TRADICIONAl...)
+
+
+
+
+
+
+
+
+--> MAS eu ainda acho que devo o vincular ao 'react'... --> principalmente em razão 
+
+
+__DESTE CÓDIGO__, LÁ EM 
+
+'BurgerBuilder' (nosso container):
+
+
+
+
+
+
+    const disabledInfo = {
+      ...this.state.ingredients,
+    };
+
+
+
+-------------------------------
+
+
+
+
+basta substituir essa sintaxe por 
+
+esta:
+
+
+
+
+const disabledInfo = {
+  ...this.props.ingr
+}
+
+
+
+---------------------
+
+
+
+
+CERTO, E ISSO __FUNCIONOU__... ------> agora só 
+
+resta
+ 
+
+ fazer 
+
+ com que 
+
+
+
+ O NEGÓCIO FIQUE 'DISABLED' (esse botão 'Less') FIQUE 
+
+ DISABLED 
+
+
+ quando 
+
+
+ tivermos novamente 0 'INGREDIENTS' na 
+
+ propriedade 
+
+ 'ingredients'...
+
+
+
+
+
+ --> a razão de ele NÃO ESTAR SENDO DESABILITADO parece simples:
+
+ nossos 
+
+
+ INGREDIENTS __NÃO ESTÃO SENDO REMOVIDOS QUANDO CLICAMOS EM 'LESS'...
+
+
+
+ ------------------------
+
+
+ RECEBO UM ERRO ESTRANHO QUANDO CLICO EM 'LESS' ---> recebo:
+
+
+ Burger.js:135 Uncaught RangeError: Invalid array length
+    at Burger.js:135
+    at Array.map (<anonymous>)
+    at Burger.render (Burger.js:132)
+    at finishClassComponent (react-dom.development.js:17485)
+    at updateClassComponent (react-dom.development.js:17435)
+    at beginWork (react-dom.development.js:19073)
+    at HTMLUnknownElement.callCallback (react-dom.development.js:3945)
+    at Object.invokeGuardedCallbackDev (react-dom.development.js:3994)
+    at invokeGuardedCallback (react-dom.development.js:4056)
+    at beginWork$1 (react-dom.development.js:23964)
+    at performUnitOfWork (react-dom.development.js:22776)
+    at workLoopSync (react-dom.development.js:22707)
+    at renderRootSync (react-dom.development.js:22670)
+    at performSyncWorkOnRoot (react-dom.development.js:22293)
+    at react-dom.development.js:11327
+    at unstable_runWithPriority (scheduler.development.js:468)
+    at runWithPriority$1 (react-dom.development.js:11276)
+    at flushSyncCallbackQueueImpl (react-dom.development.js:11322)
+    at flushSyncCallbackQueue (react-dom.development.js:11309)
+    at discreteUpdates$1 (react-dom.development.js:22420)
+    at discreteUpdates (react-dom.development.js:3756)
+    at dispatchDiscreteEvent (react-dom.development.js:5889)
+
+
+
+
+    -----------------------
+
+
+    __ACHO__ que sei a __CAUSA__ DO ERRO... ---> quando 
+
+    estou 
+
+
+    clicando 
+
+
+
+    'Less',
+
+
+
+
+    POR ALGUMA RAZÃO __ AQUELE DETERMINADO INGREDIENT REMOVIDO 
+
+
+    vai constar como 
+
+
+    '-1' no state, 
+
+    E 
+
+    É ISSO QUE VAI 
+
+
+
+    ___gERAR___ O ERRO... -----> para solucionar este problema,
+
+
+    devo alterar 
+
+    um pouco 
+
+    a lógica daquela action de 'REMOVE_INGREDIENT'
+
+
+
+    NO REDUCER....
+
+
+
+---> NA VERDADE, NÃO É ISSO, NÃO... ---> os ingredients ainda 
+
+estão ficando errados....
+
+
+
+
+
+
+
+-----------------------
+
+
+Vou ver um pouco das aulas do professor, ver se 
+
+
+
+vejo alguma forma de corrigir 
+
+esse 
+
+problema 
+
+
+do 
+
+
+'onRemoveIngredient'...
+
+
+
+-----------------------
+
+
+
+Pelo visto professor escreveu um código quase idêntico ao nosso...
+
+
+uma coisa que ele fez que não fizemos, entretanto, foi alterar 
+
+o código 
+
+
+de 
+
+
+'''''
+
+
+
+    if (this.state.ingredients) {
+
+  
+      //1
+      burger = (
+        <Aux>
+          {/* <Burger ingredients={this.state.ingredients} /> */}
+          <Burger ingredients={this.props.ingr} />
+          <BuildControls
+            disabled={disabledInfo} //'disabledInfo' será uma constante que terá aquele objeto com a 'CÓPIA DO STATE DE INGREDIENTS', mas aquela cópia tem uma alteração no INGREDIENT que será/não será removido, que estará tipo assim: 'cheese: false', ou 'bacon: true', etc.....
+            price={this.state.totalPrice}
+            // ingredientAdded={this.addIngredientHandler}
+            ingredientAdded={(ingredientId) => {this.props.onIngredientAdd(ingredientId)}}
+            // ingredientRemoved={this.removeIngredientHandler}
+            ingredientRemoved={(ingredientId) => {this.props.onIngredientRemove(ingredientId)}}
+            // purchasable={!this.state.purchasable}
+            purchasable={this.props.purchasable}
+            ordered={this.purchaseHandler}
+          />
+        </Aux>
+      );
+
+
+'''''' 
+
+
+
+
+
+---> isso vai ficar 
+
+
+
+'if (this.props.ing)', POIS 
+
+
+
+
+
+AGORA VAMOS QUERER ACESSAR 
+
+OS 
+
+'ingredients' como PROPS de nosso STATE GLOBAL REDUX...
+
+
+
+--------------------
+
+
+
+
+ELE TAMBÉM NOS EXPLICA QUE 
+
+esse codigo aqui:
+
+
+{/* <Burger ingredients={this.state.ingredients} /> */}
+
+
+VAI FICAR ASSIm:
+
+
+
+
+<Burger ingredients={this.props.ingr} />
+
+
+---------------------------------
+
+
+
+
+E assim por diante...
+
+
+
+
+
+
+
+
+--> professor nos explica que ele vai trabalhar no 'CÓDIGO/sintaxe' 
+
+dos ingredients
+
+ANTES 
+
+
+DE TRABALHAR 
+
+
+
+COM AQUELES métodos/props
+
+
+'ingredientAdded={this.addIngredientHandler}'
+
+e 
+
+'ingredientRemoved={this.removeIngredientHandler}'...
+
+
+------------------------
+
+
+
+ELE JÁ VAI LÁ E ALTERA o 
+
+'orderSummary' e seus props, tbm...
+
+
+
+ex (Antes):
+
+
+
+
+
+
+        <OrderSummary
+          ingredients={this.state.ingredients}
+          price={this.state.totalPrice}
+          clicked={this.purchaseCancelHandler}
+          success={this.purchaseContinueHandler}
+        ></OrderSummary>
+
+
+
+
+
+
+
+  DEPOIS:
+
+
+
+
+          <OrderSummary
+          ingredients={this.props.ingr}
+          price={this.props.totalPrice}
+          clicked={this.purchaseCancelHandler}
+          success={this.purchaseContinueHandler}
+        ></OrderSummary>
+
+
+
+--------------------------
+
+
+
+AÍ ELE NOS DIZ QUE DEVEMOS TRABALHAR 
+
+
+
+com o 
+
+
+
+'addIngredientHandler' 
+
+
+
+e 
+
+'removeIngredientHandler'...
+
+
+--------------------------
+
+
+
+
+--> ELE NOS DIZ QUE NÃO VAMOS MAIS CHAMAR ESSE 
+
+MÉTODO 
+
+'addIngredientHandler'.. ---> EM Vez disso,
+
+
+
+VAMOS escrever 
+
+
+
+'<BuildControls 
+
+      ingredientAdded={this.props.onIngredientAdded}
+
+/>',
+
+
+
+PARA __ENTÃO __ FAZER DISPATCH DE UMA ACTION AO NOSSO REDUCER,
+
+QUE 
+
+É ONDE 
+
+A LÓGICA 
+
+DE 
+
+'onIngredientAdded' (basicamente a antiga lógica de 'addIngredientHandler', mas lá no reducer)
+
+
+SERÁ EXECUTADA...
+
+
+
+
+
+(mesma coisa com o 'removeIngredientHandler'....)
+
+
+
+
+----------------------------------
+
+
+
+
+
+ENTRETANTO, DIZ O PROFESSOR, AMBAS AS FUNÇÕES/MÉTODOS 
+
+PRECISAM 
+
+
+
+DE 
+
+
+UM ___ARGUMENTO__... 
+
+
+
+
+--> 
+
+e professor 
+
+
+tem algo do gênero definido lá em 
+
+
+
+
+
+
+'const mapDispatchToProps',
+
+
+onde é 
+
+POSSÍVEL
+
+ler:
+
+
+
+
+'const mapDispatchToProps = dispatch => {
+  return {
+    onIngredientAdd: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT,
+                                            id: ingName})
+
+  }
+}'
+
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+
+
+PARA PASSAR esse parâmetro que é o 'ID' do nosso ingredient,
+
+
+PROFESSOR 
+
+DIZ QUE PRIMEIRAMENTE DEVEMOS 
+
+DAR UMA OLHADA NO COMPONENT 
+
+
+
+
+'BuildControls'.....
+
+
+
+
+
+
+
+
+
+--> certo, lá temos códigos como:
+
+'''''''''''''''''
+<BuildControl
+       added={() => {
+                this.props.ingredientAdded(ctrl.type);
+              }}
+      
+/> 
+
+''''''''''''''''
+
+
+
+--> OU SEJA, AQUI PERCEBEMOS QUE 
+
+O 
+
+
+'ctrl.type'
+
+
+JÁ __ERA__ PASSADO__ POR MEIO DESSE 'this.props.ingredientAdded'...
+
+
+
+
+
+professor diz que a única coisa que 
+
+devemos 
+
+
+nos assegurar é que 
+
+
+
+'ctrl'.type' seja exatamente o que queremos....
+
+
+
+E É,
+
+
+pois 
+
+'controls' 
+
+
+é 
+
+aquele
+
+
+
+
+array de 
+
+'const controls = [
+  {label: 'Salad', type: 'Salad'},
+  xxxx,
+  yyyy,
+  zzzz
+]
+
+'
+
+
+
+
+
+QUE 
+
+TEMOS 
+
+EM 
+
+'BuildControls'....
+
+
+
+--------------------------------------------------------------
+
+
+
+
+e esses 'types' aí têm os MESMOS__ NOMES___ DOS 'ingredients' QUE USAMOS 
+
+NO 
+
+NOSSO CÓDIGO 
+
+
+de 
+
+'reducer.js',
+
+lá em 
+
+
+
+'const initialState = {
+  ingredients: {
+    salad: 0,
+    bacon: 0,
+    cheese: 0,
+    meat: 0
+  },
+  totalPrice: 4
+}
+'''''
+
+
+
+------------------------
+
+
+
+CERTO, ISSO QUER DIZER QUE NOSSOS VALORES 
+
+
+
+relativos aos INGREDIENTS estão sendo passados com sucesso 
+
+aos 
+
+nossos 'action dispatchers'...
+
+
+
+---------------------------------------------
+
+
+
+SALVAMOS TODOS OS ARQUIVOS E ADICIONAMOS ALGUNS INGREDIENTS AO NOSSO BURGER.... -----> 
+
+MAS O PRICE NÃO VAI SER UPDATADO... (apesar de que 
+
+EU JÁ 
+
+
+
+__ALTEREI ISSO, JÁ CONSERTEI...)
+
+
+
+
+
+
+
+
+
+OUTROS PROBLEMAS:
+
+
+
+
+
+1) BOTÃO 'ORDER NOW' não se ilumina quando adicionamos 'INGREDIENTS'...
+
+--------------------------------------------------------
+
+
+
+
+É.... MAS PARECE QUE 
+
+
+NOSSO CÓDIGO FICOU __BEM DIFERENTE___ DAQUELE QUE O PROFESSOR USOU,
+
+NA PARTE DO REDUCER... --------> 
+
+
+
+
+o professor 
+
+
+usou 
+
+aquele 
+
+approach de 
+
+
+
+'DEEP COPY',
+
+aquele 
+
+
+
+approach que é difícil de ler,
+
+
+para então 
+
+UPDATAR 
+
+
+O STATE DE NOSSO 'REDUX' 
+
+de forma adequada...
+
+
+
+
+
+
+ele escreveu isso aqui:
+
+
+
+
+
+'''''''''''''''''''''''''''''''''''''''''
+
+const reducer = (state = initialState, action) => {
+
+        switch (action.type) {
+          case actionTypes.ADD_INGREDIENT:
+              return {
+                  ...state,
+                  ingredients: {
+                    ...state.ingredients,
+                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1 /////////ESSA É A PARTE IMPORTANTE...
+                  }
+              }
+        }
+}
+
+
+
+-------------------------------------
+
+
+
+
+O código do professor é BOM PQ É __EFICIENTE___....
+
+
+Ok, mas como deve ser lido esse código? 
+
+
+
+--> veja:
+
+
+
+
+
+----------------------------------------------
+return {
+      ...state,
+        ingredients: {
+                    ...state.ingredients,
+                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1 /////////ESSA É A PARTE IMPORTANTE...
+                  }
+              }
+
+
+    -------------------------------
+
+
+
+    O primeiro 
+
+
+
+    '...state' 
+
+
+
+
+    VAI ___POPULAR ___ esse objeto 'state' novo com 
+
+
+    TODAS AS PROPRIEDADES QUE NÃO SÃO 'ingredients'... (pq ingredients é uma propriedade 
+    
+    QUE SEGURA __ UM OBJETO, por isso não é atingido por nossa 
+    
+    'cópia inicial'/supérflua feita 
+    
+    com 
+    
+    '...state'...) 
+
+
+
+
+
+    --> CERTO... ----> quando escrevemos 
+
+
+    'ingredients: {
+      ...
+    }',
+
+
+A PROPRIEDADE 
+
+'ingredients' DO __ANTIGO__ objeto 'state' ___ VAI 
+
+SER _ OVERWRITADA 
+
+por essa nova...
+
+
+
+ok, e o que terá dentro dessa nova propriedade/state 'ingredients'?
+
+
+
+--> TEREMOS isso aqui:
+
+
+                  {
+                    ...state.ingredients,
+                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1 /////////ESSA É A PARTE IMPORTANTE...
+                  }
+
+
+
+  
+
+
+  OU SEJA,
+
+
+  teremos 
+
+
+  ___tODOS OS VALORES/INGREDIENTS ANTIGOS (inafetados PELA __aDIÇÃO DE UM NOVO INGREDIENT)
+
+  e aí 
+
+  teremos 
+
+
+  O __INGREDIENT AFETADO__, que será 
+
+  representado pelo 
+
+  código 
+
+
+  '[action.ingredientName]' ------------> 
+
+
+
+  OBS:::: 'ingredientName' É O __ NOME __ DO PAYLOAD__ QUE 
+  PASSAMOS 
+
+  POR MEIO DA 
+
+
+  ACTION 
+
+
+  de 
+
+  'onIngredientAdd'...
+
+
+  e essa 
+
+  sintaxe 
+
+  '[action.ingredientName]' 
+
+
+
+
+  É SIMPLESMENTE UMA SINTAXE DINÂMICA, DO ES6, usada 
+
+  PARA 
+
+  INVENTAR UM NOME DE PROPRIEDADE/KEY 
+
+
+que 
+
+será DINÂMICO, será 
+
+esse valor aí, exatamente o valor 
+
+'[action.ingredientName]' (será 'cheese', 'bacon', qualquer que tenha sido o ingredient adicionado....)....
+
+
+
+
+
+
+
+por fim, no lado direito temos 'state.ingredients[action.ingredientName]',
+
+
+
+QUE 
+
+É SIMPLESMENTE O ACESSO ao ingredient DINÂMICO de nome 'action.ingredientName' (de novo, nome DINÂMICO... --> vai ser 'cheese', 'bacon', 'meat', a coisa que foi adicionada, e colocada no NOSSO PAYLOAD DE 'onIngredientAdd'...)
+
+
+
+
+
+
+
+
+
+RESULTADO:
+
+
+   {
+                    ...state.ingredients,
+                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1 /////////ESSA É A PARTE IMPORTANTE...
+                  }
+
+
+
+
+
+
+
+
+
+  
+
+  E ISSO DENTRO DO NOSSO 'SWITCH CASE'
+
+
+  fica:
+
+
+
+
+  case 'INGREDIENT_ADD':
+  return {
+      ...state,
+        ingredients: {
+                    ...state.ingredients,
+                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1 /////////ESSA É A PARTE IMPORTANTE...
+                  }
+              }
+
+
+
+-----------------------
+
+
+
+
+AGORA, PORTANTO, DEVEMOS __EDITAR_ NOSSO CÓDIGO __ PARA QUE FIQUE COMO O DO PROFESSOR...
+
+
+
+------------------------
+
+
+
+
+Editei um pouco... --> mas 
+
+
+o
+
+
+
+
+
+botão order AINDA NÃO SE ILUMINA quando adiciono ingredients,
+
+
+
+e 
+
+os 
+
+
+
+botões 
+
+
+'Less'
+
+
+TAMBÉM NÃO... ----> consertei esse problema:
+
+
+
+
+
+era porque 
+
+eu esqueci o 
+
+
+ 
+
+
+ ' + 1' 
+
+
+
+
+ EM 
+
+
+
+ '''' [action.ingredientName]: state.ingredients[action.ingredientName] + 1''''
+
+
+
+
+ -----------------------------
+
+
+
+ OK, MAS O BOTÃO 
+
+
+ DE 
+
+
+ 'Less' 
+
+ AINDA NÃO FUNCIONA... (ele fica iluminado, mas 
+ se
+ 
+ clicamos 
+ 
+, ganhamos 
+
+aquele 
+
+erro 
+
+
+'invalid array length'.)
+
+
+
+(isso em 
+
+'Burger.js'...).
+

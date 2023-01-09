@@ -1,0 +1,832 @@
+
+
+
+
+---> REESTRUTURAMOS 
+
+
+
+NOSSAS 
+
+
+ACTIONS/ACTIONTYPES 
+
+
+na 
+
+última lição... ----> agora 
+
+o 
+
+professor 
+
+
+QUER 
+
+
+
+NOS MOSTRAR O QUE 
+
+
+EXATAMENTE NÓS 
+
+
+
+
+______ COLOCAMOS__ DENTRO DOS 'ACTION CREATORS' ('what we actually put inside the action creators....').
+
+
+
+
+
+
+
+
+--> É OBVIAMENTE MT SIMPLES SABER ONDE COLOCAR O CÓDIGO ASSÍNCRONO,
+
+DENTRO 
+
+
+DE UM 
+
+
+ACTION CREATOR...
+
+
+
+ex (de async action creator):
+
+
+
+
+
+
+
+export const asyncStoreResult = (result) => {
+  return (dispatch) => {
+    setTimeout(() => { ///////////////
+      dispatch(storeResult(result)); //////////// ESTE É O LOCAL EM QUE PODEMOS/DEVEMOS EXECUTAR/DISPATCHAR NOSSA ACTION... (vai ser executada de modo ASSÍNCRONO pelo redux-thunk...)
+    }, 2000); /////////////
+  };
+};
+
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+--> O REDUX-THUNK É SEMPRE USADO PARA __dISPATCHAR __ ACTIONS DE FORMA ASSÍNCRONA __DE DENTRO DOS 
+
+ACTION CREATORS.... (e essa é a BEST PRACTICE, O MELHOR PADRÃO PARA FAZER ISSO...)
+
+
+
+
+---------------
+
+
+
+
+
+--> SE VOCÊ PRECISA FAZER REACH OUT A UM SERVIDOR, PARA FAZER FETCH DE DADOS DE LÁ 
+
+PARA 
+
+ENTÃO ARMAZENAR 
+
+ESSES 
+
+DADOS 
+
+NO SEU 
+
+'STORE',
+
+vocÊ __dEFINITIVAMENTE __ VAI TER QUE USAR O 'REDUX-THUNK',
+
+e esse 
+
+
+
+padrão que o professor nos ensinou nas últimas lições... (com action creators...)
+
+
+
+
+
+
+
+a única coisa de diferente que você teria/tem de fazer é TROCAR 
+
+esse 
+
+'setTimeout' que escrevemos ali por 
+
+um 
+
+
+
+'axiosInstance.get()',
+ 
+ ou algo do gênero, e aí fazer resolve da promise para 
+
+
+ ARMAZENAR OS DADOS FETCHEADOS (a RESPONSE)
+
+ lá 
+
+ no nosso 
+
+
+
+ STATE/STORE DO REDUX...
+
+
+
+
+
+
+ --> nós veremos isso em ação no NOSSO COURSE PROJECT...
+
+
+
+
+ -----------------------------------------
+
+
+
+
+
+
+
+ ENTRETANTO, É EVIDENTE QUE 
+
+
+ ___VOCê PODE __ COLOCAR MUITO MAIS LÓGICA __ DENTRO 
+
+ DOS SEUS 
+
+
+
+''ACTION CREATORS''... --------> VOCÊ DEVE PENSAR SOBRE 
+
+ESSES 
+
+CÓDIGOS:
+
+
+
+
+
+
+
+export const storeResult = (result) => {   /////CREATOR DE ACTION __SÍNCRONA__ (que é executada de forma SÍNCRONA... --> entretanto, VAMOS ENFIAR ESSE NEGÓCIO EM UM 'ASYNC ACTION CREATOR', que é aquele logo de baixo....)
+  return {
+    type: actionsTypes.RESULT_STORE,
+    result: result,
+  };
+};
+
+export const asyncStoreResult = (result) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(storeResult(result));
+    }, 2000);
+  };
+};
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+aquele 
+
+'storeResult' é a PARTE __SÍNCRONA__ 
+
+de nossa 
+
+'action'... ----> nessa ACTION, nós __SIMPLESMENTE 
+
+
+
+recebemos 
+
+'result' COMO UM ARGUMENTO, argumento que então 
+
+
+passamos como payload 
+
+
+assim:
+
+'result: result', 
+
+
+DENTRO 
+
+DAQUELA
+ 
+
+
+ACTION... ------------> e professor NOS EXPLICA QUE 
+
+
+
+ESSE ACTION CREATOR DE 'storeResult' é 
+
+
+
+UM 
+
+
+
+'VERY DRY ACTION CREATOR'... ----> isso significa que ELE NÃO 
+
+
+FAZ 
+
+NADA MAIS DO QUE RETORNAR UM OBJETO/ACTION com 
+
+uma 
+
+
+'UNCHANGED RESPONSE' ( uma response/argumento que 
+
+NÃO MUDA 
+
+NADA...) -------------------> 
+
+
+
+
+
+É ÓBVIO SÓ DE OLHAR, MAS PERCEBE-SE 
+
+
+
+
+QUE UMA DAS __DIRETRIZES/FACULDADES__ DOS 
+
+
+'ACTION CREATORS' 
+
+
+É ____MANIPULAR___ OS PARÂMETROS QUE SÃO DADOS A ELES,
+
+
+fazer coisas com eles, para então 
+
+CRIAR 
+
+
+
+ACTIONS CUSTOMIZADAS.... (com payloads customizados...)
+
+
+
+
+
+---> como exemplo disso, professor diz que poderíamos escrever algo assim:
+(multiplicar 'result' por 2...)
+
+
+export const storeResult = (result) => {   
+    const updatedResult = result * 2; ////////////ISSO VAI MANIPULAR UM POUCO O ARGUMENTO 'result' recebido por nosso ACTION CREATOR...
+  return {
+    type: actionsTypes.RESULT_STORE,
+    result: updatedResult, ////outra alteração, vai ser aquela constante ali, que é a alteração do parâmetro original...
+  };
+};
+
+
+
+------------------------
+
+
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+PODEMOS FAZER __MUITA COISA, __ ALTERAR MUITAS COISAS __ DENTRO 
+
+DOS ACTION CREATORS... ------> 
+
+
+
+e 
+
+
+NÓS TALVEZ TENHAMOS/TEREMOS 
+
+
+__TRANSFORMAÇÕES__ QUE farão mais sentido... ---> por exemplo,
+
+
+uma 
+
+
+TRANSFORMAÇÃO 
+ 
+
+ QUE 
+
+
+ UPDATA UM ID, 
+
+ ou então 
+
+ ADICIONAR UM 
+
+ 'USERNAME'... 
+
+
+
+
+
+
+ ---> nesse caso, vamos querer 
+
+ UPDATAR esse result aí com a constante 'updatedResult'...
+
+
+
+----------------------------------------
+
+
+SE SALVARMOS ESSE CÓDIGO E TESTARMOS NOSSO APP, CONSTATAREMOS QUE 
+
+NOSSO 
+
+APP AINDA VAI FUNCIONAR COMO ANTES... ---> a função de 'store' 
+
+VAI FUNCIONAR COMO ANTES... ---> só que agora o 'result' vai ser MULTIPLICADO POR 2, tudo graças ao ACTION CREATOR de 'storeResult'....
+
+
+
+--------------------------------------
+
+
+
+---> ok... o importante, aqui, é entender que 
+
+AGORA 
+
+
+NÓS ___TEMOS LÓGICA __ NO INTERIOR DO ACTION CREATOR... -----> 
+
+
+
+
+E 
+
+ESSA LÓGICA GERALMENTE VAI SER ALGO BEM COMPLEXO, QUE FAZ SENTIDO,
+
+EM VEZ DE UMA OPERAÇÃO 
+
+SIMPLES 
+
+E SEM SENTIDO COMO '* 2'...
+
+
+
+-----------------------------
+
+
+
+
+MAS O INTERESSANTE, AQUI, É QUE __VOCê PODERIA __ EXECUTAR ___ A MESMA 
+
+LÓGICA, esse código de '* 2',
+
+
+
+
+LÁ __NO SEU REDUCER__, EM VEZ DISSO....
+
+
+
+
+ex(no reducer):
+
+
+
+
+
+ case actionTypes.RESULT_STORE: 
+
+
+ return {
+            ...state, 
+            results: state.results.concat({
+              value: action.result * 2, //////////EIS O CÓDIGO EM QUESTÃO.
+            resultId: new Date() * Math.random() 
+            }
+            )    
+        };
+
+
+
+----------------------
+
+
+SE FIZERMOS ISSO, O VALOR DE '2x' o valor do result AINDA 
+
+VAI SER ARMAZENADO na STORE,
+
+
+
+
+
+__MAS AGORA __ VAMOS ESTAR ___ UPDATANDO/ALTERANDO O VALOR __ DESSE 
+
+'PARÂMETRO' 'result' 
+
+
+EM __UM LUGAR __ COMPLETAMENTE DIFERENTE 
+
+
+DAQUELE 
+
+visto no 'ACTION CREATOR' de 'storeResult'... 
+
+
+
+---> ISSO PQ __NÓS ALTERAMOS___ O VALOR DO NEGÓCIO __ LÁ NO REDUCER__...
+
+
+
+
+
+
+
+
+----> ESSA OPERAÇÃO EM ESPECÍFICO TALVEZ NÃO FAÇA TANTO SENTIDO; ENTRETANTO,
+
+
+
+EXISTIRÃO MUITOS CASOS EM QUE _vOCÊ PROVAVELMENTE__ VAI QUERER ___ALTERAR ALGUMA 
+COISA __ ANTES DE A ARMAZENAR NO GLOBAL STATE.....  -----> os valores que 
+
+vocÊ recebe 
+
+
+__NEM SEMPRE VÃO SER PASSADOS 'LIMPOS', sem alterações por meio de outros códigos lógicos... 
+
+
+
+
+
+
+
+
+
+
+--> mas a pergunta de 1 milhao de reais, aqui, no caso, é:
+
+
+
+ONDE __ DEVEMOS __ COLOCAR __ ESSA 'DATA TRANSFORMING LOGIC', NO FLOW 
+
+
+DE CÓDIGO 
+
+DO REDUX 
+
+com 
+action creators e o redux thunk?
+
+
+
+
+--------------------------
+
+
+
+--> devemos colocar 
+
+1) NO REDUCER?
+
+
+
+ case actionTypes.RESULT_STORE: 
+
+
+ return {
+            ...state, 
+            results: state.results.concat({
+              value: action.result * 2, //////////EIS O CÓDIGO EM QUESTÃO.
+            resultId: new Date() * Math.random() 
+            }
+            )    
+        };
+
+
+
+
+
+2) NO ACTION CREATOR?
+
+
+
+export const storeResult = (result) => {   /////CREATOR DE ACTION __SÍNCRONA__ (que é executada de forma SÍNCRONA... --> entretanto, VAMOS ENFIAR ESSE NEGÓCIO EM UM 'ASYNC ACTION CREATOR', que é aquele logo de baixo....)
+  const updatedResult = result * 2;
+  return {
+    type: actionsTypes.RESULT_STORE,
+    result: updatedResult
+  };
+};
+
+
+
+
+
+
+
+
+---> BEM, AMBOS FUNCIONAM.... AMBOS APPROACHES SÃO VÁLIDOS.
+
+
+
+
+
+
+
+
+--> MAS QUAL DELES É __MELHOR__?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> 'WHERE TO PUT THE LOGIC?'
+
+
+
+
+
+a) action creators 
+
+
+
+
+b) reducers  ---> esta é a alternativa correta. 
+
+
+
+-----------------------------
+
+
+
+
+
+--> ACTION CREATORS, COMO VOCÊ APRENDEU, SÃO __ÓTIMOS___ PARA 
+
+
+___rODAR CÓDIGO ASSÍNCRONO EM GERAL___... ---> Dispatcham actions de forma 
+
+assíncrona....
+
+
+
+
+
+---> JÁ ___REDUCERS__ SÃO __APENAS CAPAZES __ 
+
+DE RODAR 
+
+___CÓDIGO ___ SÍNCRONO ('pure, sync code only!')... -----> E OS REDUCERS SÃO ____PUROS___: 
+
+
+'pure' === INPUT IN, UPDATEDSTATE OUT...
+
+
+-----------------------------------------
+
+
+
+
+REDUCERS, NO ENTANTO, SÃO OS LUGARES__ EM QUE VOCÊ TIPICAMENTE 
+
+VAI 
+
+APENAS __UPDATAR __ O STATE_____... ---> pq esse é um CONCEITO/CONCEPT 
+
+
+___CORE__ DO REDUX:  os reducers __UPDATAM O STATE___...
+
+
+
+
+
+
+
+
+JÁ OS __ACTION CREATORS_____ NÃO SÃO ____ UM 'CORE REDUX CONCEPT'... -----> 
+
+
+
+A COISA QUE É UM CORE CONCEPT SÃO 
+
+AS ACTIONS (objetos javascript com um TYPE e com um PAYLOAD  ), mas 
+
+os 
+
+ACTION CREATORS __NÃO SÃO CORE CONCEPTS...
+
+
+
+
+
+
+
+----> CERTO, O REDUX É UM 
+
+CORE CONCEPT,
+ 
+ E A MORAL, NO REDUX,
+
+
+ É QUE 
+
+ O __rEDUCER __ É A ÚNICA COISA __ QUE 
+
+ EFETIVAMENTE ALTERA/UPDATA O STATE...
+
+
+
+
+
+------------------> e o professor argumenta que ACTION CREATORS 
+
+NÃO DEVEM PREPARAR O STATE tanto assim, justamente POR ESSA RAZÃO AÍ...  ----> a razão é que 
+
+
+O 'PREPARO' DO STATE PARA ENTÃO O UPDATAR __É ALGO QUE __ DEVE SER FEITO 
+
+PELO REDUCER,
+
+E NÃO 
+
+PELOS 
+
+'ACTION CREATORS'...
+
+
+('Shouldn't prepare the state update too much') 
+
+
+
+
+
+
+ENTRETANTO, HÁ UMA DIFERENÇA 
+
+
+ENTRE 
+
+__UPDATAR O  STATE___ (ou seja, RETORNAR UM NOVO OBJETO QUE SERÁ 
+NOSSO NOVO STATE, EFETIVAMENTE....)
+
+
+
+E 
+
+__ALTERAR __ A 'DATA' __ QUE VAI 
+
+PARA DENTRO DO STATE... ---------> OK...
+
+
+
+HÁ ARGUMENTOS 
+
+
+
+
+PARA AMBOS OS LADOS: ALGUNS ACHAM QUE A 'DATA TRANSFORMING LOGIC' 
+
+deve ir 
+
+
+NOS ACTION CREATORS,
+
+outros acham que deve 
+ 
+IR NOS REDUCERS... -------> E O PROFESSOR ACHA QUE 
+
+
+___dEVE ___ SER COLOCADA 
+
+A LÓGICA 
+
+
+DENTRO DOS REDUCERS, PQ ELE SÃO UM CORE CONCEPT DO REDUX,
+
+
+AO CONTRÁRIO DE 
+
+'action creators', que não são.
+
+
+--------------- 
+
+
+
+
+
+--> SIM, VOCÊ DEVE ENFIAR ASYNC CODE NOS ACTION CREATORS,
+
+MAS 
+
+
+UMA VEZ QUE VOCÊ CONSEGUE O CÓDIGO QUE VOCÊ PRECISA 'reach out' POR MEIO 
+
+DOS ACTION CREATORS, 
+
+O RESTO DA OPERAÇÃO DE __tRANSFORMAÇÃO DA DATA/código__ obtida do servidor 
+
+
+__DEVE SER FEITA __ NO REDUCER, que já está acostumado com esse tipo de trabalho.
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+--> você __PODE__ transformar a data UM __POUCO__ no action creator... entretanto, 
+
+uma vez que vocÊ tem data que 
+
+é 
+
+'RELATIVAMENTE _''CLEAN'''__',
+
+
+
+vocÊ deve a passar ao REDUCER... -->  e se você precisa manipular um passo a mais, como por exemplo 
+
+executar 
+
+'constante * 2', ou coisa do gênero, o professor 
+
+DIZ QUE 
+
+DEVEMOS 
+
+FAZER ISSO NO REDUCER....
+
+
+
+
+
+
+
+Mas é uma questão de preferência, é claro... 
+
+
+
+
+
+
+--> MAS SE VOCÊ ESCOLHER 1 APPROACH ESPECÍFICO,
+
+
+
+SIGA ELE ATÉ O FINAL... (faça isso em todo par 'action-reducer', 
+
+e não fique variando 
+
+
+'muito transform logic no action creator, pouca logic no reducer... mas esse aqui vou querer o contrário, muito data no reducer, pouco data no action creator' --> NÃO FAÇA ISSO.. )
+
+
+
+
+--------------------------------------

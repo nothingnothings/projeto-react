@@ -1,0 +1,253 @@
+
+
+
+---> na última lição, o professor ensinou que react é 
+
+
+ALL ABOUT COMPONENTS, 
+
+e que components são incríveis...
+
+
+
+há 
+
+a página 
+
+'reactjs.org'...
+
+
+
+
+Se dermos uma olhada 
+
+nele, 
+
+
+ELE É CONSTRUÍDO COM O REACT, é óbvio...
+
+
+
+
+---> o site deles se parece com um site normal ---> e É UM SITE NORMAL...
+
+
+
+------------------------------
+
+
+
+NO ENTANTO, ESSE SITE PODE SER DIVIDIDO EM COMPONENTS, BEM COMO O PROFESSOR EXPLICOu...
+
+
+
+
+
+Nós temos a PARTE DE CIMA (o header COMPONENT) ----> dentro do 
+
+HEADER, nós temos todos aqueles componentes 'single navigation items'....
+
+
+
+
+
+NÓS TAMBÉM TEMOS 
+
+
+ESSA 'IMAGEM INICIAL ""CALL TO ACTION"" ''' bem no meio da tela (aquela imagem com 
+'React - A Javascript library for building user interfaces' - Get Started)....
+
+
+
+ 
+
+
+ E ABAIXO DESSA IMAGEM, nós temos TODOS NOSSOS ELEMENTOS ALI EMBAIXO...
+
+ elementos que FAZEM 'ADVERTISING' do react e de tudo que ele faz... 
+
+ (3 caixas com informações...) 
+
+
+
+ --> nós também 
+
+ vemos outros  COMPONENTS MAIS 
+
+ ABAIXO desse advertisement..
+
+
+
+ vemos uns  components 'image code snippets', com algumas descrições do lado deles.... 
+
+
+
+
+ ***TODAS ESSAS COISAS 
+
+ SÃO 'BUILDING BLOCKS', building blocks 
+
+ QUE PODEMOS 
+
+
+ CONSIDERAR ESSENCIALMENTE/FACILMENTE COMO 
+
+
+ 'BUILDING PIECES'...
+
+
+ -----------------------------
+
+
+
+
+
+ E O ELEMENTO QUE ELES ESTÃO REUTILIZANDO É UM MODELINHO/item 
+
+ com 
+
+
+ 'uns  components 'image code snippets', com algumas descrições do lado deles.... '
+
+ (Pq esse mesmo elemento está sendo repetido múltiplas vezes nessa 
+ página...)
+
+
+ ---------------------------------------------------
+
+
+ É CLARO QUE VOCÊ 
+
+
+ PODE REPETIR ESSE CÓDIGO POR MEIO 
+
+ DO CSS, HTML E JAVASCRIPT simples,
+
+
+
+ MAS É MUITO MAIS EFICIENTE 
+
+ REUTILIZAR 
+
+ ESSES 
+
+
+ 'BUILDING BLOCKS' 
+
+
+
+ com o ___rEACt___...
+
+
+(PQ SE VOCÊ USAR 
+
+A SINTAXE PADRÃO DO JAVASCRIPT, sem o REACT, você terá 
+
+que repetir 
+
+SEU CÓDIGO VÁRIAS E VÁRIAS VEZES ---> coisa cansativa e inefetiva...)
+
+
+
+
+
+
+----> aqui, com os components, 
+
+
+VOCÊ CRIA SEUS PRÓPRIOS 
+
+
+
+'HTML ELEMENTS', assim por se dizer... e aí 
+
+
+VOCê APENAS 
+
+REUTILIZA ESSES ELEMENTOS NA SUA PÁGINA...  ---> E, POR TRÁS DAS CENAS,
+
+
+ESSE ELEMENTO HTML TEM TODO O CONTEÚDO DE QUE NECESSITA 
+
+___JÁ NO SEU INTERIOR___ ---> e vamos 
+
+ver mais sobre isso 
+
+em um MÓDULO SEPARADO.
+
+
+
+
+ ------------------------------------- 
+
+
+
+
+ OUTRO EXCELENTE EXEMPLO DE REACT É O UDEMY...  ----> ali, na página do udemy,
+
+ em que 
+
+ o professor procurou por 'vue' (que é uma alternativa ao REACT) ,
+
+
+
+
+ LÁ NÓS VEMOS 
+
+
+ QUE NÓS TEMOS UM MONTE DE 
+
+
+ COMPONENTES, TAMBÉM...
+
+
+
+ Lá nos temos um HEADER COM UMA SEARCH BAR( search bar component)
+
+
+
+
+
+ TEMOS TAMBÉM 'search result summary components....' (em que a página 
+ NOS PERMITE FILTRAR OS RESULTADOS DA PESQUISA... )
+
+
+
+
+
+ --> POR FIM, 
+
+ TEMOS OS SEARCH RESULTS MESMOS, 
+
+
+ que SÃO VÁRIOS 
+
+ LIST ITEM COMPONENTS REUTILIZADOS, um atrás do outro... ---> CADA 
+
+
+ UM DESSES 'LIST ITEM COMPONENTS' tem sua própria 
+
+ imagem e seu próprio título, 
+
+ MAS A BASE É A MESMA... (mesma estrutura)...
+
+
+
+ --------------------------------------
+
+
+
+
+ --> O UDEMY TAMBÉM USA UMA 'JAVASCRIPT FRAMEWORK' PARA CONSEGUIR ESSE RESULTADO, 
+
+ e PARA TER UM 'EASIER TIME' DESENVOLVENDO ESSA PÁGINA, 
+
+ e também deixar mais fácil a MANUTENÇÃO E UPKEEP DESSA PÁGINA...
+
+
+
+ E é por isso que componentes são legais....
+
+
+
+

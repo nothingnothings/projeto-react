@@ -1,0 +1,1005 @@
+
+
+
+
+
+
+
+
+
+
+
+
+----> É ÓTIMO QUE AGORA SOMOS CAPAZES DE __ENVIAR__ REQUESTS ___ ---> e 
+
+
+
+isso é 
+
+UMA PARTE SUPER IMPORTANTE, 
+
+PRESENTE
+ 
+ NA MAIOR PARTE 
+
+ DOS APLICATIVOS..
+
+
+
+
+
+
+
+
+
+
+
+ ---> ENTRETANTO, 
+
+
+ O FATO É QUE ___o REACT___ NEM SEMPRE É 'BEM SUCEDIDO' 
+
+
+ NO SEND DE HTTP REQUESTS.... --------> VOCÊ 
+
+
+
+
+ TAMBÉM 
+
+ TEM QUE 
+
+
+ SABER
+
+
+
+ COMO ___fAZER___ 
+
+
+ HANDLING___ DE ERROS NO REACt__... -------> E 
+
+
+
+ O HANDLING 
+
+ DE ERROS 
+
+ É __tRI SIMPLES___  
+
+
+ COM O AXIOS... (talvez 'try-catch'? ) ----------> 
+
+
+
+
+
+
+ PROFESSOR 
+
+ CRIA UMA SITUAÇÃO HIPOTÉTICA ---> DIGAMOS 
+
+
+ QUE 
+
+ ESTAMOS 
+
+
+ FETCHEANDO UM 
+
+
+
+ POST DE MANEIRA __iNCORRETA (e esse approach  DE ERROR HANDLING QUE 
+ que 
+ 
+ o professor nos mostrará agora FUNCIONA COM TODO TIPO DE REQUEST QUE 
+ 
+ VOCê ENVIA COM O AXIOS...)
+
+
+
+
+
+
+
+
+
+
+
+ --> nesse exemplo aí,
+
+
+ o professor 
+
+
+
+ supõe que 
+
+ nós 
+
+
+ acabamos 
+
+ enviando um 
+
+
+ REQUEST 
+
+ para 
+
+ uma 
+
+
+ URL INVÁLIDA..., 
+
+
+ uma 
+
+ URL 
+
+ como 
+
+
+ 'https://jsonplaceholder.typicode.com/postssssss'.....
+
+
+
+
+
+
+ --> ESSA SERÁ UMA __URL INCORRETA___.... --------> 
+
+
+
+ SE SALVARMOS 
+
+
+
+ NOSSO CÓDIGO 
+
+
+ E TENTARMOS MANDAR 
+
+ ESSE REQUEST AÍ, 
+
+
+
+
+ VEREMOS QUE 
+
+
+ NO CONSOLE SERÁ OUTPUTTADO UM ERRO... --> mas esse 
+
+ erro aí 
+
+ é um 
+
+ erro MERDA, uma mensagem de ERRO MERDA,
+
+
+ pq 
+
+ NÃO FIZEMOS 
+
+
+ UM ERROR HANDLING PARTICULAR,
+
+ ESSE É APENAS O ERROR HANDLING 
+
+
+ ''''DEFAULT''''....             ---> se quisermos 
+
+
+
+ O ERROR HANDLING __ FEITO POR NÓS__, PRECISAMOS 
+
+
+ 
+ ADICIONAR UM CÓDIGO ESPECÍFICO EM 'AXIOS'... ------> queremos 
+
+
+
+ esse 
+
+
+
+ código específico para 
+
+ QUE CONSIGAMOS 
+
+
+ '''HANDLEAR''' 
+
+
+ O ERRO DE AXIOS; 
+
+
+ ou seja, 
+
+
+ NÃO QUEREMOS QUE O ERRO CONTINUE 'UNHANDLED'.......... -------->
+
+
+
+
+ BEM, COMO 
+
+ O AXIOS USA 
+
+ PROMISES, 
+
+
+
+ ELE ABRE BRECHA 
+
+ PARA NÃO SÓ 
+
+
+ A UTILIZAÇÃO DE 
+
+ '.then()' (que são executados depois do RESOLVE da promise principal),
+
+
+
+
+
+ MAS _TAMBÉM___ O MÉTODO 
+
+
+ '.catch()',
+
+
+
+ QUE SERVE __PARA __ CAPTURAR___ ERROS... -> CAPTURAR 
+
+ ERROS 
+
+ E OUTPUTTAR 
+
+
+ MENSAGENS DE ERRO DE ACORDO COM 
+
+
+ O ERRO....
+
+
+
+
+
+
+
+
+ ----> .catch() -----> 
+
+
+
+ O CÓDIGO DE EXEMPLO QUE O PROFESSOR 
+
+ VAI ESCREVER 
+
+
+ SERÁ 
+
+
+ '.catch(error => {
+     console.log(error);
+ })' 
+
+
+
+
+
+ ------------------------------
+
+
+
+
+ É CLARO QUE 
+
+ ___eSSE 'CATCH()' 
+
+ AÍ 
+
+ SERÁ ADICIONADO ___ NO FINAL ___ DA PROMISE CHAIN DO AXIOS,
+
+ PQ 
+
+ ELE 
+
+ VAI FAZER CATCH DE TODOS 
+
+ OS ERROS/ERROR 
+
+ QUE 
+
+ ___oCORRERAM ACIMA DELE___.... (mas não o que ocorreram/ocorrem/ocorrerão ABAIXO DELE)...
+
+
+
+ ex:
+
+
+
+
+     componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/postssssssssss')
+        .then(
+
+
+            (response) => {
+                    const posts = response.data.slice(0, 4);
+                    const updatedPosts = posts.map(post => {
+                        return {
+                            ...post,
+                            author: 'Max' 
+                        }
+                    });
+ 
+                    
+                 this.setState({
+                    posts: updatedPosts
+                })
+            
+            }
+        )
+
+        .catch( error => {
+            console.log(error); ////////////EIS O CÓDIGO EM QUESTÃO.
+        })
+
+        
+    }
+
+
+
+
+
+-----------------------------------
+
+
+
+CERTO...  O PROFESSOR FAZ ISSO 
+
+E SALVA O CÓDIGO...
+
+
+ELE RECARREGA 
+
+
+A PÁGINA;
+
+
+nosso 
+
+REQUEST AINDA VAI FALHAR,
+
+pois 
+
+
+
+A URL AINDA 
+
+ESTARÁ INCORRETA,
+ 
+
+
+ MAS ____dESSA ___ VEZ VAMOS 
+
+
+ FAZER 'HANDLE' DESSE ERRO AÍ, 
+
+
+ aparecerá 
+
+ uma mensagem 
+
+
+ de 
+
+
+
+ 'Error: Request 
+
+ failed with status code 404 at 
+
+ createError (
+     createError.js:16)
+     
+ )' 
+
+
+
+
+
+
+
+
+
+ ---> ESSA MENSAGEM __tAMBÉM ___ APARECIA ANTES, 
+
+ COM A MENSAGEM DE ERRO 'PADRÃO'/UNHANDLED... --------> 
+
+
+ ENTRETANTO, 
+
+
+ ISSO NÃO QUER DIZER QUE 
+
+ O ERROR HANDLING É INÚTIL... ----> não é inútil 
+
+ PQ VOCê 
+
+
+ PODE 
+
+
+ CODAR UM __FAILSAFE___ NESSE 
+
+ LOCAL 
+
+
+ DO 
+
+ 'catch'... --> você pode 
+
+
+ executar 
+
+
+ ALGUM CÓDIGO SUBSIDIÁRIO,
+
+
+ ALGUM CÓDIGO QUE É EXECUTADO 
+
+ EM CASO 
+
+
+ DE ERRO 
+
+ E QUE 
+
+ PODE SER UTILIZADO 
+
+
+ NO LUGAR DA LÓGICA PRINCIPAL,
+
+
+ OU ENTÃO PODE 
+
+
+ FAZER 
+
+
+ O OUTPUT 
+
+ DE UM ALERTA PARA O USUÁRIO,
+
+ AVISANDO QUE 
+
+ ALGO DEU ERRADO,
+
+ OU ALGO DO GÊNERO... (muitas possibilidades).
+
+
+
+ ----------------------------------------
+
+
+
+
+
+ ---> VOCê PODE FAZER MUITO MAIS DO QUE APENAS 
+
+
+ UM CONSOLE.LOG DE UMA MENSAGEM DE ERRO:
+
+
+ VOcê pode 
+
+ 
+
+ (algumas opções):
+
+
+
+
+
+ 1) UPDATAR SUA UI A PARTIR DESSE 'CATCH BLOCK'... --------> VOCÊ FARIA ISSO POR MEIO DE UM UPDATE NO __sTATE_;;; eses update no state FARIA SUA _UI___ SER ATUALIZADA, E ISSO, POR SUA VEZ, PODERIA RENDERIZAR ALGUM CÓDIGO JSX MOSTRANDO QUE ALGO DEU ERRADO...
+
+
+
+
+
+
+--> E O PROFESSOR QUER NOS MOSTRAR ESPECIFICAMENTE ISSO....
+
+
+
+
+
+--> professor vai lá no nosso 
+
+STATE 
+
+
+ de 
+
+ 'Blog'
+
+
+ E ENTÃO 
+
+
+ DEFINE UMA PROPRIEDADE 
+
+
+ de 
+
+
+ 'error: false'... --------> 
+
+
+
+
+
+ESSA PROPRIEDADE 
+
+SERÁ MUDADA PARA 
+
+'true' 
+
+
+CASO UM __ERRO___ (ERROR)
+
+SEJA 
+
+REALMENTE 
+
+'CATCHEADO'
+
+pelo nosso catch block...  --> para que 
+
+essa lógica seja 
+
+aplicada,
+
+
+vamos 
+
+querer 
+
+escrever 
+
+dentro 
+
+
+de 
+
+
+'.catch( error => {
+    ...
+})' 
+
+
+
+
+
+UM CÓDIGO QUE VAI SETTAR O NOSSO STATE, que vai mudar 
+
+o valor daquela propriedade...
+
+
+TIPO ASSIM:
+
+
+
+-----------------------------------------------------------
+
+
+
+
+
+state = {
+
+
+          posts: [
+
+            ],
+            selectedPostId: null,
+
+            error: false //////EIS O CÓDIGO EM QUESTÃO.
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+     componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/postssssssssss')
+        .then(
+
+
+            (response) => {
+                    const posts = response.data.slice(0, 4);
+                    const updatedPosts = posts.map(post => {
+                        return {
+                            ...post,
+                            author: 'Max' 
+                        }
+                    });
+ 
+                    
+                 this.setState({
+                    posts: updatedPosts
+                })
+            
+            }
+        )
+
+        .catch( error => {
+            this.setState(
+                {
+                    error: true /////////EIS O CÓDIGO EM QUESTÃO.
+                }
+            )
+        })
+
+        
+    }
+
+
+
+
+
+    ---------------------------------------
+
+
+
+    ISSO FEITO,
+
+
+    PODEMOS 
+
+    ESCREVER ALGUMA LÓGICA CONDICIONAL 
+
+
+    NO 
+
+    MÉTODO 
+
+
+    'render()'
+
+
+
+    DE 
+
+    'BLOG'
+     
+
+     PARA __RENDERIZAR __  
+
+
+     ALGO DIFERENTE 
+
+     NA NOSSA TELA, EM CASO 
+
+
+     DE 
+
+     'error: true' no nosso state...
+
+
+
+     O CÓDIGO CONDICIONAL FICARÁ assim 
+
+
+
+
+     '
+        render() {
+
+        
+     
+     
+     let posts = <p style={{textAlign: "center"}}>Something went wrong!</p>
+
+     if(!this.state.error) {
+         posts = this.state.posts.map( 
+                (post) => {
+                    return <Post title={post.title} 
+                    body={post.body} 
+                    key={post.id} 
+                    author={post.author} 
+                    clicked={() => this.postSelectedHandler(post.id)}
+                 />
+                }
+            )
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    {posts}
+                </section>
+                <section>
+                    <FullPost id={this.state.selectedPostId}/>
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+
+     }
+
+
+        }
+
+
+
+
+
+------------------------------------
+
+
+
+ESSA É A PARTE DA LÓGICA CONDICIONAL IMPORTANTE:
+
+
+let posts = <p style={{textAlign: "center"}}>Something went wrong!</p> ////////'posts', essa variável aí, será inicialmente esse código JSX de 'deu bosta'...
+
+     if(!this.state.error) { //////////caso 'NÃO TENHA DADO BOSTA', caso o VALOR DE 'ERROR' ESTEJA DEFINIDO COMO 'FALSE' (!this.state.error), VAMOS QUERER QUE O CÓDIGO 'NORMAL' DA NOSSA PÁGINA SEJA EXECUTADO, QUE O '.map()' e o render dos 'posts' SEJA REALIZADo...
+         posts = this.state.posts.map( 
+                (post) => {
+                    return <Post title={post.title} 
+                    body={post.body} 
+                    key={post.id} 
+                    author={post.author} 
+                    clicked={() => this.postSelectedHandler(post.id)}
+                 />
+                }
+            )
+
+
+
+    
+    ------------------------------------
+
+
+
+
+    CÓDIGO COMPLETO:
+
+
+
+
+
+
+
+
+
+
+
+class Blog extends Component {
+
+
+        state = {
+            posts: [
+
+            ],
+            selectedPostId: null
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        postSelectedHandler = (id) => {
+            this.setState(
+                {
+                    selectedPostId: id
+                }
+            )
+        }
+
+
+
+
+
+        
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/postssssssssssss')
+        .then(
+
+
+            (response) => {
+                    const posts = response.data.slice(0, 4);
+                    const updatedPosts = posts.map(post => {
+                        return {
+                            ...post,
+                            author: 'Max' //propriedade EDITADA/ADICIONADA ao nosso 'response'/post OBTIDO PELO USO DO 'AXIOS'...
+                        }
+                    });
+                // this.setState({
+                //     posts: response.data
+                // })
+                
+                    
+                 this.setState({
+                    posts: updatedPosts
+                })
+            
+            }
+        )
+        .catch(
+            error => {
+                console.log(error);
+            }
+        )
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       render () {
+            let posts = <p style={{textAlign: 'center'}}>Something went Wrong!</p>
+            if(!this.state.error){
+                posts = this.state.posts.map( 
+                    (post) => {
+                        return <Post title={post.title} 
+                        body={post.body} 
+                        key={post.id} 
+                        author={post.author} 
+                        clicked={() => this.postSelectedHandler(post.id)}
+                     />
+                    }
+                )
+            }
+            
+
+    
+
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    {/* <Post />
+                    <Post />
+                    <Post /> */}
+                    {posts}
+                </section>
+                <section>
+                    <FullPost id={this.state.selectedPostId}/>
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+export default Blog;
+
+
+
+
+
+
+
+-------------------------
+
+
+CERTO.... Agora, portanto, 
+
+em caso de erros (como UMA URL ERRADA),
+
+
+VEREMOS 
+
+AQUELA MENSAGEM 
+
+'(p)' 
+
+
+DE 
+
+
+
+SOMETHING WENT WRONG... 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-> AS COISAS NEM SEMPRE DÃO CERTO, POR ISSO VOCÊ 
+
+DEVE TER 
+
+
+
+LÓGICA QUE 
+
+
+
+LOGGUE 
+
+O ERRO NO CONSOLE,
+
+
+
+
+
+TAMBÉM LÓGICA QUE __eNVIE/ARMAZENE___ O ERRO 
+
+
+EM ALGUM DATABASE, 
+
+
+
+ALÉM DE UMA LÓGICA QUE 
+
+MOSTRE ALGO 
+
+
+
+AO USUÁRIO, 
+
+QUE RENDERIZE ALGO NA UI, 
+
+OU QUE 
+
+
+MOSTRE/DÊ ALGUMAS INSTRUÇÕES AO USUÁRIO DE COMO PROCEDER...

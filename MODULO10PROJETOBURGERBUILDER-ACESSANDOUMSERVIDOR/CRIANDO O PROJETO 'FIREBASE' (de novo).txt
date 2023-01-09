@@ -1,0 +1,468 @@
+
+
+
+
+
+
+
+
+
+
+
+---> DEVEMOS USAR ESSE SERVIÇO 'FIREBASE'... ------> 
+
+
+
+USAREMOS 
+
+ELE COMO UMA 'DUMMY BACKEND', POIS É FÁCIL DE CONFIGURAR, TAMBÉM 
+
+PQ É __BARATO___.....
+
+
+
+
+
+
+
+
+
+
+--------> O FIREBASE É GRATUITO, SE VOCÊ NÃO VAI USAR DE FORMA PESADA...
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+professor vai na PÁGINA DO FIREBASE E DEPOIS CLICA EM 
+
+'gO TO CONSOLE'...
+
+
+
+
+
+--> devemos usar uma conta google....  ----> 
+
+NO 'CONSOLE', PODEMOS CRIAR UM NOVO 
+
+PROJETO.... ---> 
+
+
+será a conta 
+
+
+
+testestest20012@gmail.com
+
+Juc@pirama1
+
+
+
+
+
+
+
+
+--------------------------------
+
+
+
+QUANDO VOCÊ CRIAR ESSE PROJETO, 
+
+ELE 
+
+
+
+__aUTOMATICAMENTE__ TE DÁ UNS 
+
+ENDPOINTS 'REST API'  (rest api endpoints)....
+
+
+
+
+ele também te dá __UMA 'MONGODB-LIKE' DATABASE...    --> e você 
+
+pode usar 
+
+
+essa database para armazenar dados... --> é conveniente pq 
+
+TE DEIXA FICAR SEM PRECISAR ESCREVER 
+
+SERVERSIDE CODE PARA ARMAZENAR ESSES DADOS (como fizemos no último curso, 
+
+
+em que tivemos que CODAR NOSSA LÓGICA SERVERSIDE, E SETTAR O MONGODB 
+no nosso servidor...)
+
+
+---------------------------------------
+
+
+
+
+---> o firebase tem 2 interfaces: 
+
+
+1) A DO __bROWSER__ (mais simples, de NOOB. É a usada pelo professor, neste curso).
+
+
+2) A DO SEU 'IDE'...
+
+
+
+-------------------------------
+
+
+
+
+Contudo, nesse curso usaremos 
+
+a 
+
+versão do BROWSER... ---> 
+
+
+
+o professor vai clicar no link 'database' (realtime database), no browser.... ---> PQ VAMOS QUERER ARMAZENAR DADOS 
+
+
+EM 
+
+
+
+UM SERVIDOR 'FIREBASE'....
+
+
+
+
+
+
+
+
+
+
+
+--> E O FIREBASE TEM ESSA SYNTAX ESPECIAL EM QUE 
+
+___ OS 'API ENDPOINTS' SÃO __dIRETAMENTE MAPPEADOS___ 
+
+
+A 'ENDPOINTS/TABLES' EM SEU 
+
+DATABASE... (isso significa, em outras palavras,
+
+QUE É 
+
+
+___SUPER FÁCIL DE COMEÇAR A ARMAZENAR DADOS NO DATABASE DE UM SERVIDOR FIREBASE)...
+
+
+
+
+
+('You might be prompted to choose between the 
+
+'realtime database' and 'firestore' ---> choose 'realtime database', its the one i use in this course).
+
+
+
+
+---------------------------------------------
+
+
+
+
+VAMOS RECEBER UM LINKZINHO, COMO 
+
+
+'https://react-my-burger.firebaseio.com/'....
+
+
+
+
+
+
+
+
+ESSE LINK SERÁ O __NOSSO API ENDPOINT ___ QUE VAMOS UTILIZAR....
+
+
+
+No nosso caso, 
+
+é o link
+
+
+
+
+'
+
+https://burgerbuilder201051-default-rtdb.firebaseio.com/'
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+-----------------------> ESSE É O ENDPOINT A QUE PODEMOS ENVIAR DATA,
+
+
+E É O ENDPOINT CUJA ___ DATABASE__ VAI ARMAZENAR NOSSA 'DATA'/DADOS...
+
+
+
+
+
+
+
+
+-------------> IMPORTANTE!!!! --> VOCÊ TEM QUE ENTENDER QUE:
+
+
+
+**** NÓS __NÃO ESTAMOS __ NOS CONECTANDO À DATABASE DO FIREBASE 
+
+DIRETAMENTE.../não vamos nos conectar a ela diretamente -------> 
+
+
+
+NÃO, EM VEZ DISSO , O QUE REALMENTE ACONTECE/ACONTECERÁ 
+
+
+É __O MERO SEND DE HTTP REQUESTS POR NOSSO APP, e é o FIREBASE EM SI 
+
+que faz/fará 
+
+o MAPPING DOS __'HTTP ENDPOINTS' 
+
+
+contidos nos nossos 
+
+
+HTTP REQUESTS, ELE FAZ O MAPPING DESSES HTTP ENDPOINTS ___ AO __ DATABASE...      -------> essa é a parte 
+
+
+
+legal 
+
+
+do 
+
+'firebase'...
+
+
+
+
+
+--------------------------
+
+
+
+
+
+
+ENTRETANTO, ANTES DE FAZERMOS QUALQUER COISA COM O FIREBASE,
+
+
+
+DEVEMOS 
+
+IR até 
+
+a 
+
+aba 
+
+'rules'
+ 
+
+ e então DEFINIR UNS CÓDIGOS ESPECIAIS.... -------> temos que alterar uma pequena coisinha... -------> 
+
+
+ TEMOS QUE 
+
+ ALTERAR 
+
+ AQUELAS 
+
+ REGRAS 
+
+ DE 
+
+ 'read' 
+
+
+ e 
+
+ 'write' 
+
+
+ PARA __tRUE__... (elas estarão, inicialmente, como 'auth!= null'...) (no nosso caso, estavam como 'false'...)
+
+
+
+
+
+
+
+
+
+
+
+ ---> PROFESSOR EXPLICA QUE, POR DEFAULT, 
+
+ ESSE 
+ 'true' 
+
+ AÍ 
+
+
+ __SÓ VAI __eSTAR HABILITADO/SÓ VAI APARECER 'TRUE' 
+
+ NO NOSSO CÓDIGO PARA ESSA PROPRIEDADE 
+
+ AÍ 
+
+ __QUANDO NOSSOS USUÁRIOS/USUÁRIO __ ESTIVER/ESTIVEREM 
+
+
+
+ __AUTORIZADOS __ NA DATABASE... (usuário e senha, etc etc....) --------> 
+
+
+ ISSO 
+
+ É COMUM/OBRIGATÓRIO EM 
+
+
+ 'PRODUCTION-READY APPLICATIONS'....
+
+
+
+
+
+
+
+
+
+
+ ---> ENTRETANTO, 
+
+ NOSSO APLICATIVO AINDA NÃO ESTÁ 'PRODUCTION-READY',
+
+
+ E NÓS 
+
+ AINDA __NÃO APRENDEMOS SOBRE COMO FAZER 'USER AUTHENTICATION',
+
+
+ e nosso projeto não LIDA COM DADOS SIGILOSOS, NEM NADA DO GÊNERO... --> 
+
+
+ e é por isso 
+
+ que o professor 
+
+ vai deixar essas 2 propriedades como 'true'...
+
+
+
+
+
+ ----------------> COMO NÓS __NÃO TEMOS NENHUM 'AUTHENTICATED USER',
+
+
+ professor explica que podemos, 
+
+
+ por enquanto, 
+
+
+
+
+ DEIXAR ESSAS 2 PROPRIEDADES (read e write) como true ----> ISSO SIGNIFICA/SIGNIFICARÁ 
+
+
+ ___ QUE QUALQUER PESSOA PODERÁ LER/ESCREVER__ o código dessa página ---> 
+
+
+
+ PROFESSOR EXPLICA QUE ISSO NEM SEMPRE É BOM, RARAMENTE É IDEAL... (não é ideal em 
+ 
+ APLICATIVOS DE VERDADE. ... -> acesso global ao seu app nunca é bom...)
+
+
+
+
+ ------------------------
+
+
+
+
+
+
+
+
+ ISSO FEITO,
+  
+
+
+
+  SALVAMOS E 'PUBLICAMOS' 
+
+  NOSSAS REGRAS... ------> 
+
+
+  COM ISSO, 
+
+  NOSSO 
+
+  FIREBASE 
+
+  SERVER ESTARÁ 
+
+  __PRONTO __PARA USO....________
+
+
+
+
+
+  --> PODEMOS COMEÇAR PELO __sEND__ DE HTTP 
+
+  REQUESTS AO 
+
+
+  ENDPOINT DE 
+
+  https://burgerbuilder201051-default-rtdb.firebaseio.com/...
+
+
+
+
+
+
+  ( OU, DIZ O PROFESSOR, PODEMOS ENVIAR HTTP REQUESTS 
+  
+  
+  A 'NESTED ENDPOINTS', nesteados nesse endpoint aí...) ------> vamos estudar isso neste módulo...

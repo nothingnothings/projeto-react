@@ -1,0 +1,386 @@
+
+
+
+
+
+
+
+
+Antes de deixar o professor resolver, vou tentar fazer por conta própria...
+
+
+
+--> tudo depende do 
+
+'UPDATEPURCHASESTATE'... ------> 
+
+
+
+antes ele estava assim:
+
+
+  updatePurchaseState(ingredients) {
+      console.log(ingredients);
+      const sum = Object.keys(ingredients)
+      .map (igKey => {
+        return ingredients[igKey];
+      })
+      .reduce ( (sum, el) => {
+        return sum + el;
+      }, 0);
+       this.setState(
+         {purchasable: sum > 0} 
+       );
+    }
+
+
+
+
+
+EU FIZ ELE FICAR ASSIM:
+
+
+
+
+
+  updatePurchaseState(ingredients) {
+      console.log(ingredients);
+      const sum = Object.keys(ingredients)
+      .map (igKey => {
+        return ingredients[igKey];
+      })
+      .reduce ( (sum, el) => {
+        return sum + el;
+      }, 0);
+
+
+       return sum > 0;
+    }
+
+
+
+
+
+
+
+--> ISSO VAI FAZER COM QUE ELE RETORNE OU 'TRUE' OU 'FALSE' dependendo
+ 
+ DO 
+
+ NÚMERO DE 'ingredients'
+
+
+
+ no nosso 
+
+ STATE...
+
+
+ (o que é exatamente o que desejamos, tudo para ativar/desativar o botão 'ORDER NOW''...)
+
+
+
+---------------------------
+
+
+
+
+
+
+Consegui... ---> o código é bem 'finnicky'... ----> 
+
+
+
+
+
+
+ele não funcionou por BASTANTE TEMPO.... 
+
+
+
+
+
+
+ESTE CÓDIGO AQUI __NÃO ESTAVA FUNCIONANDO__:
+
+
+
+
+ <BuildControls
+            disabled={disabledInfo} 
+            price={this.props.price}
+            ingredientAdded={(ingredientId) => {this.props.onIngredientAdd(ingredientId)}}
+            ingredientRemoved={(ingredientId) => {this.props.onIngredientRemove(ingredientId)}}
+            purchasable={() => {this.updatePurchaseState(this.props.ingr)}} ///////////ISSO AQUI NÃO ESTAVA FUNCIONANDO....
+            ordered={this.purchaseHandler}
+          />
+
+
+
+
+
+
+
+
+
+ESSE 
+
+
+
+código 
+
+
+'{() => {this.updatePurchaseState(this.props.ingr)}}' 
+
+
+
+
+ESTAVA 
+__ERRADO__, POIS NÃO ESTAVA SENDO EXECUTADO NUNCA... (ele só vai ser executado, com essa sintaxe, SE OCORRER UM EVENTO/CLICK SOBRE ELE.... --> e isso nunca ocorrerá, pq NÃO VINCULAMOS NENHUM 'onClick' a esse prop de 'purchasable'... --> isso significa que ele só existe 'COMO ESTÁ', não pode ser 'ATIVADO' repentinamente/ a partir de um handler...)
+
+
+
+
+
+POR ISSO, PARA SOLUCIONAR 
+
+
+ESSE BOTÃO QUE __NÃO __ LIGAVA QUANDO ADICIONÁVAMOS INGREDIENTS AO NOSSO CÓDIGO,
+
+
+eu tive que escrevê-lo assim:
+
+
+
+
+'{this.updatePurchaseState(this.props.ingr)}' 
+
+
+
+
+
+
+
+COM ISSO,
+ 
+ com essa sintaxe aí,
+
+
+
+ ESSE CÓDIGO 
+
+
+ de 
+
+ 'updatePurchaseState' 
+
+ VAI SER ___EXECUTADO __ TODA VEZ QUE O COMPONENT 
+
+ 'BuildControls' FOR RE-RENDERIZADO, o que é __eXATAMENTE O QUE DESEJAMOS__.... (nesse caso concreto, caso do 'purchasable', que é uma propriedade QUE ___aTUALIZA ___ O 'LOCAL UI STATE'; QUE FAZ COM QUE NOSSO BOTÃO SE 'ative' do nada...)
+
+
+
+
+
+
+
+
+ ex (resultado):
+
+
+
+
+
+
+ 
+ <BuildControls
+            disabled={disabledInfo} 
+            price={this.props.price}
+            ingredientAdded={(ingredientId) => {this.props.onIngredientAdd(ingredientId)}}
+            ingredientRemoved={(ingredientId) => {this.props.onIngredientRemove(ingredientId)}}
+            purchasable={() => {this.updatePurchaseState(this.props.ingr)}} ///////////ISSO AQUI NÃO ESTAVA FUNCIONANDO....
+            ordered={this.purchaseHandler}
+          />
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+Ok... qual é o próximo passo? ------> PRÓXIMO PASSO É FAZER COM QUE 
+
+
+O 
+
+
+___ 'ORDERSUMMARY' apareça na tela...
+
+
+
+-----------------------------
+
+
+
+
+
+OK.... ----> mas o estranho é _QUE ___ O 
+
+'ORDERSUMMARY' JÁ ESTÁ APARECENDO QUANDO CLICAMOS 
+
+
+
+EM 
+
+'ORDER NOW'....
+
+
+
+
+---------------------
+
+
+
+
+--> NÓS AGORA __CONSTANTEMENTE ESTAMOS CONSEGUINDO/RECEBENDO A INFORMAÇÃO 
+
+
+
+acerca 
+
+
+de 
+
+'PURCHASABLE: TRUE/FALSE'.... (tudo por meio do método 'updatePurchaseState'...).
+
+
+
+
+
+
+
+
+
+
+ISSO, ESSE APPROACH AÍ E ESSA PROPRIEDADE 
+
+
+'purchasable', mesmo NÃO ESTANDO EM NENHUM DOS NOSSOS 'states', PODEM SER 
+
+
+CONSIDERADAS 
+
+
+'local ui state'.... ------------> E É EVIDENTE QUE VOCÊ __PODERIA/PODE___ 
+
+
+FAZER MANAGE DE CASOS COMO ESSE NO REDUX, também... (não há sempre um 
+
+approach '''mais certo''' ou ''''mais errado''...)
+
+
+
+
+
+--> você deve usar o approach que você acha melhor, mais fácil de ser usado...
+
+
+
+
+
+
+----------------------------
+
+
+
+
+
+
+
+COM ISSO, 
+
+fizemos muitas coisas com os nossos ingredients... 
+
+
+
+--> E NOSSO STATE 
+
+DO 
+
+'BurgerBuilder'
+
+
+
+DIMINUIU MT DE TAMANHO...
+
+
+
+
+-----------------
+
+
+
+
+E 
+
+AS 
+
+3 PROPRIEDADES QUE RESTARAM,
+
+
+
+
+'purchasing',
+
+'loading' 
+
+
+
+e 
+
+'error',
+
+
+
+
+SÃO __RELEVANTES ___ APENAS __ PARA O NOSSO 'LOCAL UI' (são LOCAL UI STATE)....
+
+
+
+
+
+
+
+
+
+
+O MODAL DE MENSAGEM DE ERRO, O SPINNER DE LOADING e O DISPLAY DO MODAL DE COMPRA,
+
+
+todas essas são COISAS QUE NÃO PRECISAM SER 
+
+HANDLADAS PELO 
+
+'REDUX', pq NÃO VÃO SER USADAS EM TODOS OS LUGARES DE NOSSO APLICATIVO...
+
+
+
+
+
+
+
+
+
+
+
+RESUMINDO: O STATE LOCAL __PODE COEXISTIR__ COM O REDUX, SEM NENHUM PROBLEMA...
+
+
+
+
+
+--> você pode colocar tudo no redux, MAS NÃO É OBRIGATÓRIO...

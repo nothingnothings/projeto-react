@@ -1,0 +1,185 @@
+
+
+
+Neste módulo, aprendemos muito sobre FAZER O OUTPUT CONDICIONAL DE 
+
+CONTEÚDO, 
+
+
+
+
+e também sobre 
+
+O OUTPUT 
+
+
+DE LISTAS... 
+
+
+
+------------------------------
+
+
+
+
+
+---> DEVEMOS ENTENDER ESSES TÓPICOS, É ALGO CRUCIAL...
+
+
+
+
+
+
+--> APRENDEMOS 2 COISAS 
+
+IMPORTANTES:
+
+
+
+
+
+
+1) NÓS SEMPRE DEVEMOS OUTPUTTAR CONTEÚDO CONDICIONAL (conteúdo que precisa 
+ser outputtado condicionalmente) ___POR MEIO DO ___ JAVASCRIPT PURO... (e não por meio só 
+
+do JSX....) ----> e o MESMO SE APLICA PARA AS LISTS --> ____TUDO É JAVASCRIPT__, BASICAMENTE..... ---->
+
+
+-----> nós podemos outputtar 
+
+esse conteúdo condicionalmente
+TANTO 
+
+POR 
+
+TERNARY EXPRESSIONS (não é óptimo) COMO TAMBÉM 
+
+PELA 
+
+
+
+____CRIAÇÃO DE VARIÁVEIS __ EXTERNAS AO CÓDIGO JSX ___ E ENTÃO 
+
+USAR IF STATEMENTS NORMALMENTE.... (você depois então OUTPUTTA ESSAS VARIÁVEIS 
+NO SEU CÓDIGO JSX, naquele código 
+JSX que vocÊ fará 'return' no final, como vimos com a variável de '{persons}'... )... ----> E 
+ESSAS 
+
+VARIÁVEIS VOCê ENTÃO ___AJUSTA COM IF STATEMENTS__, CASO VOCê QUEIRA 
+
+
+RENDERIZAR ALGO CONDICIONALMENTE...
+
+
+
+
+---> E SE VOCê DESEJA TRANSFORMAR ___ OBJETOS EM UM ARRAY __ EM UMA LIST, 
+
+OU SE VOCÊ 
+
+QUER 
+
+____RENDERIZAR UMA __LIST__, VOCê 
+
+SEMPRE DEVE USAR  
+O MÉTODO 
+
+'.map()',
+ 
+ que é um 
+
+ MÉTODO DEFAULT JAVASCRIPT QUE VOCÊ PODE USAR EM ARRAYS 
+
+ PARA 
+
+ MAPPEAR SEU ARRAY JAVASCRIPT DE OBJETOS/STRINGS/QUALQUER COISA 
+
+
+ EM UM 
+
+ __ARRAY __DE ELEMENTOS JSX__, elementos JSX QUE 
+
+
+ o 
+REACT 
+
+VAI ENTÃO 
+
+'PULL OUT'
+
+
+E RENDERIZAR NA TELA PARA NÓS...
+
+
+
+
+
+
+----> TAMBÉM APRENDEMOS 
+
+
+QUE 
+
+'.map()' 
+
+NÃO NOS 
+
+DÁ 
+
+APENAS 
+
+o 'elemento' em que 
+
+ela está atualmente executando as funções (como 'person' em 
+
+'this.state.persons.map((person, index) => {})'),
+
+
+
+
+
+MAS TAMBÉM 
+
+O 
+
+
+'INDEX' DOS ELEMENTOS... ---> esse 'INDEX' PODE SER USADO 
+
+QUANDO VOCÊ QUER, POR EXEMPLO, REMOVER UM ELEMENTO... (processo que você fará com a ajuda de um 'handler', como o 'deletePersonHandler' usado no nosso aplicativo, que foi chamado com '() => {this.deletePersonHandler(index)'...})
+
+
+
+
+
+
+
+
+---> ALÉM DISSO, VOCê SEMPRE DEVE 
+
+ADICIONAR AQUELE 
+
+PROP/PROPRIEDADE 
+
+
+DE 
+
+'key' no seu elemento, pois ele AJUDA O REACT A 'KEEP TRACK OF' 
+
+DOS NOSSOS ELEMENTOS, para que ele seja capaz de updatar 
+
+nosso conteúdo das listas mais eficientemente...
+
+
+
+
+
+
+
+---> E VIMOS TAMBÉM QUE TEMOS UM MONTE 
+
+DE FERRAMENTAS PARA MUDAR COISAS COMO a propriedade 'NAME'  de um elemento 
+
+
+
+
+--> AGORA VAMOS PRATICAR TUDO ISSO.

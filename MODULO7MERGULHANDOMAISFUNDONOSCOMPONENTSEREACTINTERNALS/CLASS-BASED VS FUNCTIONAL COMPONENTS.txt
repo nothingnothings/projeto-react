@@ -1,0 +1,941 @@
+
+
+
+
+
+
+COM CLASS-BASED E FUNCTIONAL COMPONENTS, 
+
+
+
+
+
+DEVE-SE SABER O QUE 
+
+CADA UM DELES FAZ,
+ 
+ SUA HISTÓRIA E SEU FUTURO....
+
+
+
+
+
+
+
+ class-based ====   'class XY extends Component'...    (ELES ESTENDEM AQUELE OBJETO 'COMPONENT' IMPORTADO DE 'react'...)
+
+
+
+
+
+
+ FUNCTIONAL COMPONENTS --> SÃO SIMPLESMENTE FUNÇÕES QUE ACEITAM/EXIGEM PROPS E RETORNAM CÓDIGO JSX.....
+
+
+
+
+
+
+
+
+
+
+
+ CLASS-BASED --> TEM ACESSO AO STATE/MANAGES STATE.. ('setState')....
+
+
+
+
+
+
+ FUNCTIONAL --->  TEM ACESSO AO STATE ATRAVÉS DO 'useState()' E OUTROS REACTHOOKS...
+
+
+
+
+
+
+ ----------------------------------------------------------------
+
+
+
+
+
+
+
+ ESSES 
+
+ 2 TIPOS DE COMPONENT 
+
+ TAMBÉM 
+
+
+POSSUEM UMA RELAÇÃO COM
+
+ 'LIFECYCLE HOOKS'...
+
+
+
+
+
+
+
+
+
+-----> VEREMOS LIFECYCLE HOOKS MAIS TARDE...
+
+
+
+
+
+
+
+
+
+
+
+
+FUNCTIONAL COMPONENTS -----> NÃO PODIAM FAZER MANAGE DO STATE NO PASSADO, MAS HOJE PODEM, POR MEIO DO 'useState()'...
+
+
+
+-------------------------------
+
+
+
+CERTO... MAS OS 2 DIFEREM DE VERDADE NA QUESTÃO DO 'LIFECYCLE HOOKS'...
+
+
+
+
+
+
+
+CLASS-BASED ---> SUPORTAM LIFECYCLE HOOKS..
+
+
+
+
+
+FUNCTIONAL ----> __NÃO__ SUPORTAM LIFECYCLE HOOKS____...
+
+
+
+
+-----------------------------
+
+
+
+
+FUNCTIONAL COMPONENTS ---> SÃO/ESTÃO MUITO MAIS PODEROSOS DO QUE ERAM NO PASSADO... 
+
+
+
+------------------------------
+
+
+
+
+
+CLASS-BASED VS FUNCTIONAL ---> a diferença entre os 2 HOJE É BEM MENOR...
+
+
+
+
+
+---------------------------
+
+
+
+
+É IMPORTANTE ENTENDER, 
+
+CONTUDO, 
+
+QUE 
+
+NEM TODOS OS PROJETOS 
+
+EM QUE 
+
+
+VOCÊ TRABALHAR, EM EQUIPES,
+
+USARÃO 
+
+
+A VERSÃO MAIS 
+
+RECENTE DO REACTHOOKS...  --------> É POR ISSO QUE 
+
+
+É MUITO IMPORTANTE ENTENDER QUE ANTIGAMENTE (e em versões mais antigas do react) 
+
+
+O MANAGEMENT DE STATE 
+
+
+SÓ É POSSÍVEL 
+
+
+EM CLASS-BASED COMPONENTS...
+
+
+(você sempre tinha que transformar OS FUNCTIONAL COMPONENTS 
+
+EM CLASS-BASED COMPONENTS PARA CONSEGUIR FAZER MANAGE DO STATE,..... )
+
+-----------------------------------------------------
+
+
+
+
+
+--> NESTE CURSO, O PROFESSOR TERÁ ESSE 'SPLIT'; ele vai, no início, 
+
+APENAS 
+
+MUDAR 'STATE' EM CLASS-BASED COMPONENTS... -->
+
+
+
+MAS LÁ PARA O FINAL DO CURSO, 
+
+
+
+ELE TAMBÉM VAI NOS MOSTRAR SOBRE COMO 
+
+CONVERTER TODO O NOSSO PROJETO 
+
+
+EM UMA 
+
+
+VERSÃO 
+
+
+'REACTHOOKS' (que usa FUNCTIONAL COMPONENTS QUE ALTERAM STATE).
+
+
+--------------------------------
+
+
+
+
+QUANTO À MANEIRA PELA QUAL ACESSAMOS 
+
+'STATE' E 'PROPS',
+
+
+é importante 
+
+entender/SABER que 
+
+
+
+
+EM 
+
+
+'CLASS-BASED COMPONENTS'
+
+você 
+
+
+SEMPRE PRECISARÁ 
+
+
+DA 
+KEYWORD 
+
+
+'THIS'... ------------> VOCÊ 
+
+PRECISA 
+
+USAR 
+
+
+'this'
+
+PQ 
+
+'state' (this.state) e 'props' (this.props)
+ 
+
+ SÃO 
+
+
+ _______PROPRIEDADES___ DA 
+
+ 
+
+ CLASSE 
+
+ 'COMPONENT'   ( {Component})...
+
+
+
+
+
+
+ (E NÓS AINDA NÃO USAMOS 'this.props' EM LUGAR ALGUM DO NOSSO CÓDIGO, 
+ 
+ MAS O USAREMOS NESTE VÍDEO...)
+
+
+
+ex:
+
+
+this.state.XY &  this.props.XY
+
+
+
+ ----------------------------------
+
+
+
+
+
+ FUNCTIONAL COMPONENTS ---> VOCê SEMPRE RECEBE/GANHA 
+
+
+
+ 'props' 
+
+ COMO ARGUMENTO, 
+
+
+ E POR ISSO 
+
+ VOCÊ 
+
+ PODE SIMPLESMENTE 
+
+O INVOCAR 
+
+SEM 
+
+A KEYWORD 
+
+
+
+'this'...
+
+
+
+
+ex:
+
+
+
+props.XY.
+
+
+
+
+
+
+--------------------------------------------
+
+QUAL DOS 2 APPROACHES VOCê DEVE USAR?
+
+
+QUANDO VOCÊ NÃO ESTIVER USANDO UMA VERSÃO DO REACT QUE SUPORTA REACTHOOKS,
+você 
+
+
+deve usar o approach antiquado, COMUM.
+
+
+
+--> E QUANDO VOCÊ ESTIVER EM UM PROJETO QUE FAZ MANAGE DO STATE E USA 
+
+'LIFECYCLE HOOKS',
+
+você deve usar 
+
+o APPROACH TRADICIONAL...
+
+
+
+
+
+
+
+-----> SE VOCê ESTIVER EM UM PROJETO QUE USA 'REACTHOOKS',
+
+a resposta é MENOS SIMPLES... -----> VOCÊ TALVEZ QUEIRA 
+USAR 
+
+
+SÓ 
+FUNCTIONAL COMPONENTS, MAS ÀS VEZES É EXCELENTE SPLITTAR 
+
+SEU CÓDIGO 
+
+EM COMPONENTS ENVOLVIDOS COM STATE MANAGEMENT E OUTROS 
+
+
+ENVOLVIDOS SÓ COM A 'PRESENTATION'... (dumb)... e por isso o approach da divisão entre class-based e functional pode ser melhor, também.
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+CLASS-BASED ---> USE IF YOU NEED TO MANAGE STATE, OR IF YOU NEED ACCESS TO 
+LIFECYCLE HOOKS. ALSO USE if YOU DON'T WANT TO USE REACTHOOks..
+
+
+
+
+FUNCTIONAL ---> USE IN ALL OTHER CASES... --> neste módulo VAMOS VER A FEATURE DOS REACTHOOKS QUE SUBSTITUI OS 'lifecycle hooks', nessa versão da sintaxe. 
+
+
+
+------------------------------------------------------
+
+
+
+
+
+----> SE VOCÊ 
+
+ESTIVER USANDO 
+
+UMA VERSÃO VELHA DO REACT, USE TANTO CLASS-BASED COMO FUNCTIONAL COMPONENTS...
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+QUANTO AO 
+
+'THIS.STATE' 
+
+e 
+O 
+
+
+'THIS.PROPS',
+ 
+
+
+ O PROFESSOR AINDA NÃO NOS MOSTROU O QUE 
+
+ ELE QUERIA DIZER POR 
+
+
+ isso aí.... 
+
+
+
+
+
+
+----> até agora,
+
+NÓS 
+
+SOMENTE 
+ACESSAMOS 
+
+'this.state' .... --> podemos ver isso no 'App.js', 
+
+
+em que 
+
+ACESSAMOS 
+
+'this.state.persons' para passar um prop de 'persons' (que representa esse STATE)
+
+
+AO COMPONENT 'Cockpit'...
+
+
+
+-----------------------------------
+
+
+
+
+
+
+------------> bem,
+
+
+
+O COMPONENT 'APP' (que é class-based) 
+
+_NÃO__ RECEBE 
+
+NENHUM PROP (ou 'props')... ELE NÃO RECEBE NENHUM PROP ___NESSE EXEMPLO__.... -------> 
+
+
+
+
+MAS PODEMOS 
+
+MUDAR ESSA SITUAÇão:
+
+
+
+
+
+NO NOSSO ARQUIVO 
+
+'INDEX.JS',
+
+
+
+
+NÓS PODEMOS __SIMPLESMENTE ___ ENVIAR UM 'PROP' 
+
+AO NOSSO 
+
+
+COMPONENT 'App'...
+
+
+UÉ, MAS COMO?
+
+
+
+
+
+VEJA O CÓDIGO DE INDEX.JS:
+
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './containers/App';
+import registerServiceWorker from './registerServiceWorker';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();
+
+
+
+---------------------------------------------------
+
+
+
+
+
+NAQUELA LINHA 
+
+'ReactDOM.render(<App />, document.getElementById('root'));',
+
+
+
+PODEMOS 
+
+PASSAR UM ___PROP___ DENTRO 
+
+
+
+DAQUELA 
+
+INVOCAÇÃO DO ELEMENTO 
+
+'<App />'...         (que será renderizado em 'root' POR MEIO DESSA MESMA LINHA/COMANDO DE CÓDIGO...)
+
+
+
+
+
+
+PROFESSOR NOS MOSTRA COM UM EXEMPLO, 
+
+ELE PASSA 
+
+UM PROP DE 
+
+'AppTitle={...}'
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './containers/App';
+import registerServiceWorker from './registerServiceWorker';
+
+ReactDOM.render(<App appTitle="Person Manager" />, document.getElementById('root')); /////////EIS O CÓDIGO EM QUESTÃO.
+registerServiceWorker();
+
+
+
+
+------------------------------------------------
+
+
+
+
+OU SEJA,
+
+
+POR MEIO DE 
+
+
+'appTitle', esse prop aí, 
+
+
+O PROFESSOR 
+
+ESTÁ ENVIANDO 
+
+
+A STRING 
+
+"Person Manager" 
+
+
+AO 
+
+
+OBJETO/COMPONENT 
+
+'App'...
+
+
+
+
+-------------------------
+
+
+
+CERTO, 
+
+
+E AGORA, 
+
+
+SE O PROFESSOR QUISER USAR ESSE VALOR/PROP DENTRO 
+
+
+DO 
+
+
+COMPONENT 
+
+'App',
+
+ELE DEVERÁ 
+
+USAR A KEYWORD 
+
+
+'this' + 'props'...
+
+
+
+-------------------------
+
+
+
+EX:
+
+
+
+
+
+
+class App extends Component {
+  state = { 
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+
+
+
+
+....
+
+
+
+this.props.appTitle = "MUDEI"; ///////////SIM, PODERÍAMOS INVOCAR ESSE PROP EM QUALQUER LUGAR NO INTERIOR DO 'App', pois 'appTitle', esse negócio, É RECEBIDO COMO PROP... (que é então chamado por 'this.props.xxxx')...
+
+
+
+
+
+
+}
+
+
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+
+ 
+
+ PROFESSOR DIZ QUE PODERÍAMOS 
+
+
+
+ COLOCAR
+  
+
+  'appTitle',
+
+  esse 
+
+  PROP 
+
+  passado 
+
+
+
+  PELO 
+
+  __INDEX.JS___ AO component 'App', 
+
+
+
+  EM QUALQUER LUGAR 
+
+
+  DE 'App'... ----------> CONTUDO, 
+
+  PROFESSOR 
+
+
+  DIZ QUE 
+
+
+  ELE VAI QUERER 
+
+  USAR 
+
+
+  ESSE PROP EM UM LUGAR BEM ESPECÍFICO: ELE VAI QUERER 
+
+  USAR/PASSAR/FORWARDAR ESSE NEGÓCIO 
+
+
+  COMO SENDO 
+
+
+  UM __PROP____ DE 
+
+  'Cockpit' (do elemento 'Cockpit' INVOCADO NESSE COMPONENT 'App')...
+
+
+É por isso 
+
+
+que 
+
+ele vai 
+
+CRIAR UM NOVO 'prop'( chamado de 'title') E ENTÃO passar esse 'PROP' de 'appTitle' 
+
+DENTRO DESSE PROP...
+
+
+
+
+
+
+
+  ex (como visto no código de App.js...):
+
+
+
+
+return (
+
+  <div className={classes.App}>
+  <Cockpit 
+  title={this.props.appTitle} ////////////EIS O CÓDIGO EM QUESTÃO.
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+  </Cockpit>
+  {persons}
+  </div>
+);
+
+
+
+
+------------------------------------------
+
+
+
+
+CERTO.... MAS NÓS REALMENTE PODEMOS FAZER ISSO? 
+
+
+
+PODEMOS PASSAR 'UM PROP DENTRO DE OUTRO PROP'? PASSAR UM PROP POR MEIO DE OUTRO PROP? 
+
+
+
+(pq é exatamente isso que estamos fazendo aqui, estamos REPASSANDO UM PROP por meio 
+
+de OUTRO PROP...)
+
+
+
+
+
+
+ISSO FEITO,
+
+
+
+AGORA PODEREMOS 
+
+USAR 
+
+
+'props.title' (que é, na verdade, 'props.appTitle', dentro do 'App.js')
+
+
+
+
+LÁ NO NOSSO COMPONENT 'COCKPIT'...
+
+
+
+----------------------------------
+
+
+
+OK, MAS ONDE DIABOS 
+
+O PROFESSOR 
+USARÁ 
+
+
+ESSE PROP 
+
+
+de 
+
+'title', lá on componente 'Cockpit'? --------> ELE USARÁ 
+
+
+NAQUELA 
+
+
+<H1> TAG 
+
+
+de 
+
+
+'Hi, I'm a React App' -------> ele vai SUBSTITUIR ESSA STRING POR AQUELE PROP LÁ...
+
+
+
+
+ex:
+
+
+
+
+const cockpit = (props) => {
+
+
+    return (
+        <div className={Cockpit.Cockpit}>
+        <h1>{props.title}</h1> //////EIS O CÓDIGO EM QUESTÃO. 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+        </div>
+    );
+
+
+}
+
+-----------------------------
+
+
+
+
+
+SEMPRE LEMBRE-SE 
+
+QUE 
+
+'props' NÃO PRECISA SER 
+
+
+CHAMADO 
+
+com 
+
+'this.props'
+
+
+EM FUNCTIONAL COMPONENTS (como  'Cockpit'...)
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+CERTO,
+
+VOLTAMOS AO NOSSO APP E RECARREGAMOS A PÁGINA,
+
+TUDO FUNCIONA COMO ANTES....

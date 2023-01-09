@@ -1,0 +1,56 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+ESTAMOS NOS APROXIMANDO DO FINAL DAS 'CORE REACT FEATURES'...
+
+
+
+
+
+
+
+
+
+
+
+--> já construímos 
+
+
+nosso aplicativo react ao longo do curso,
+
+e já 
+
+testamos um pouco....
+
+
+
+
+---> AGORA DEVEMOS DEPLOYAR 
+
+
+ESSE 
+
+APLICATIVO 
+
+REACT 
+
+NA INTERNET....
+
+
+
+
+
+
+---> professor diz que é super simples, e que ele nos mostrará 
+
+as etapas e um exemplo....

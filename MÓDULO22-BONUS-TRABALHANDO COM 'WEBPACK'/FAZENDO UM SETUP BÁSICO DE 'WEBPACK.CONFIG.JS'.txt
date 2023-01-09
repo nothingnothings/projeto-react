@@ -1,0 +1,1349 @@
+
+
+
+NA ÚLTIMA LIÇÃO,
+
+
+INSTALAMOS ALGUMAS CORE DEPENDENCIES das quais precisaremos,
+
+como 
+
+REACT 
+
+
+
+e 
+
+
+WEBPACK...
+
+
+
+
+
+
+
+
+--> AGORA DEVEMOS TRABALHAR COM A WEBPACK CONFIG (webpack.config.js)....
+
+
+
+
+
+
+
+
+
+
+---> NÓS JÁ TEMOS O WEBPACK,
+
+e agora o professor 
+
+diz que 
+
+vamos fazer 
+
+'MANAGE' DO build workflow 
+
+por 
+
+
+MEIO 
+
+DOS SCRIPTS 
+
+
+
+
+
+LÁ NO ARQUIVO 
+
+
+'package.json',
+
+
+dentro 
+
+do nódulo 
+
+'scripts.'...
+
+
+
+
+
+
+
+
+
+--> o script 'npm start' 
+
+É AQUELE 
+
+QUE 
+
+
+DÁ LAUNCH NO SERVIDOR DE DESENVOLVIMENTO...
+
+
+
+
+
+
+
+
+---> PROFESSOR quer criar um novo script,
+
+chamado de 
+
+start...
+
+
+
+
+
+
+ex:
+
+
+
+'start: "webpack-dev-server";
+
+
+
+
+
+
+
+
+
+---> ESSE SCRIPT, A ÚNICA COISA QUE ELE FAZ É 
+
+
+
+-__EXPOR A FUNÇÃO__ QUE VOCÊ EXECUTA COM 'webpack-dev-server' no terminal...
+
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server"
+  },
+
+
+
+
+------------------------------------
+
+
+
+ISSO VAI INICIAR O DEV-SERVEr...
+
+
+
+
+
+
+
+
+--> MAS O DEV-SERVER, SEMPRE, OUT OF THE BOX __NÃO FUNCIONARÁ__... --> PRECISAMOS 
+
+O 
+
+CONFIGURAR____----->  E PARA O CONFIGURAR,
+
+
+PROFESSOR 
+
+VAI 
+
+ADICIONAR 
+
+UM NOVO ARQUIVO,
+
+DO LADO DO 'package.json',
+
+que 
+
+será 
+
+
+o arquivo 
+
+
+'webpack.config.js'
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+
+
+--> DEVE SER EXATAMENTE ESSE NOME AÍ... --> O WEBPACK 
+
+vai automaticamente 
+
+
+procurar por 
+
+esse arquivo 
+
+quando rodarmos 
+
+webpack/webpack-dev-server...
+
+
+
+
+
+
+
+
+
+
+---> DENTRO DESSE ARQUIVO VAMOS SETTAR NOSSO 
+
+'DEVELOPMENT WORKFLOW'... ---> 
+
+mais 
+
+tarde 
+
+vamos 
+
+
+querer definir um 
+
+'PRODUCTION WORKFLOW',
+
+que 
+usará 
+
+
+coisas diferentes 
+
+daquele de 
+'development'...
+
+
+
+------------------------
+
+
+
+
+
+
+
+---> PRODUCTION WORKFLOW --> VAMOS APLICAR 
+
+optimizações extras...
+
+
+
+-------------------------
+
+
+
+OK...
+
+
+
+
+no 
+
+
+'webpack.config.js'... ---> 
+
+DEVEMOS 
+
+
+
+EXPORTAR UM 
+
+NEGÓCIO QUE O WEBPACK VAI UTILIZAR....
+ 
+
+
+
+ -> para isso,
+
+ devemos 
+ usar A SINTAXE 
+
+ DE 
+ EXPORTS 
+
+ DO 
+ NODE.JS...
+
+
+
+ vamos 
+
+ escrever 
+
+
+
+
+ 'module.exports = {
+
+
+ }
+ ' 
+
+
+
+
+
+
+
+ESSA É A SINTAXE/OBJETO QUE O WEBPACK.CONFIG.JS
+
+ENTENDE,
+
+ELE SEMPRE 
+
+Lê OS NEGÓCIOS QUE SÃO ESCRITOS 
+
+DENTRO 
+
+DESSE OBJETO...
+
+
+
+
+
+--------------------------
+
+
+
+
+QUANDO CONFIGURAMOS 
+
+
+
+ESSE 
+
+'module.exports',
+
+DEVEMOS 
+
+NOS 
+
+LEMBRAR 
+
+DOS 
+
+4 
+
+ASPECTOS
+ 
+
+ DO 
+
+ WEBPACK 
+
+ QUE 
+ O PROFESSOR 
+
+
+ NOS EXPLICOU MAIS CEDO NESTE MÓDULO:
+
+
+
+
+ 
+1) QUEREMOS SUPPORTAR 'NEXT-GEN JAVASCRIPT FEATURES'....
+
+
+---> PRECISAMOS SER CAPAZES DE 'TRANSPILE' ESSES CÓDIGOS 
+
+MAIS MODERNOS EM 'CURRENT GEN JAVASCRIPT CODE'... (para que esse código CONSIGA RODAR EM TODOS OS MAJOR BROWSERS, browsers usados hoje em dia...)
+
+
+
+
+
+
+2)  PRECISAMOS SER CAPAZES 
+DE FAZER 
+
+'HANDLE' DE JSX... ------> QUEREMOS 
+
+
+PODER USAR 
+
+JSX NO NOSSO PROJETO, POIS ELE É UM PROJETO REACT...
+
+
+
+
+
+
+
+3) PRECISAMOS 
+
+SER CAPAZES DE 
+USAR 
+
+'CSS AUTOPREFIXING'... ---> QUEREMOS ISSO PARA QUE 
+
+POSSAMOS ESCREVER 
+
+REGRAS CSS SIMPLES,
+
+
+
+PARA CONSEGUIR PREFIXING AUTOMÁTICO,
+
+PARA QUE 
+
+CONSIGAMOS SEMPRE CONSEGUIR AS MELHORES SINTAXES PARA CADA BROWSER,
+
+coisas como 'webkit-moz', etc etc... (isso é obtido por meio do prefixing... )
+
+
+
+
+
+
+4) TAMBÉM QUEREMOS SER CAPAZES 
+
+DE 
+
+__IMPORTAR IMAGENS__... ('support image imports')... --> QUEREMOS 
+SER 
+
+CAPAZES 
+
+
+DE 
+
+__IMPORTAR 
+IMAGES 
+
+
+COMO FIZEMOS 
+
+NO 
+
+'create-react-app',
+
+
+E ENTÃO 
+
+PODER 
+
+
+AS UTILIZAR 
+
+
+DENTRO DO NOSSO 'TEMPLATE'...
+
+
+
+
+
+
+
+5) QUEREMOS __OPTIMIZAR __ O NOSSO CÓDIGO___... ---> antes 
+
+
+DE SER FORMULADO/CUSPIDO O __BUNDLE_,
+
+
+ELE DEVE
+
+SER 
+
+
+
+___OPTIMIZADO___... ---> NOSSO CÓDIGO JAVASCRIPT DEVE 
+
+SER ENCOLHIDO AO LIMITE... 
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+
+--> devemos começar pELO 
+
+
+
+
+___ENTRYPOINT___ ('entry')... ----> DEVEMOS 
+
+
+INDICAR NOSSO ARQUIVO 
+
+
+'index.js',
+ 
+
+
+ que 
+
+ é 
+ o início de nosso 
+
+ REACT APP...
+
+
+
+
+
+
+ VAMOS ESCREVER:
+
+
+
+
+
+
+ module.exports = {
+     entry: './src/index.js'
+ }
+
+
+
+ -------------------------
+
+
+
+
+
+ ISSO 
+
+
+
+ DIZ PARA O WEBPACK QUE ELE DEVE ANALISAR ESSE ARQUIVO PRIMEIRO,
+
+ deve ANALISAR TODAS AS DEPENDENCIES ESCRITAS DENTRO DESSE ARQUIVO... (em outras palavras, TODOS OS IMPORTS...)
+
+
+
+
+
+
+
+ ENTRETANTO,
+  
+  PARA 
+
+  QUE 
+
+
+  O 
+
+  WEBPACK 
+
+  SE TORNE CAPAZ 
+
+  DE FAZER 
+
+  'HANDLE' DO CSS 
+
+  (ou qualquer outra linguagem QUE NÃO SEJA JAVASCRIPT, ATÉ MESMO IMAGENS),
+
+
+
+
+
+
+  NÓS DEVEMOS ADICIONAR UM SETUP EXTRA AO WEBPACK...  ----> MAS UM SETUP EXTRA 
+
+
+  DEVE SER ADICIONADO AO WEBPACK TBM PQ ESTAMOS USANDO JSX (next-gen javascript),
+
+
+  e 
+
+  também outras next-gen javascript features,
+   
+   e imports 
+
+   de images... ----> VAMOS TER QUE ADICIONAR TUDO ISSO POR MEIO DE LOADERS (no webpack config),
+
+   MAIS TARDE...
+
+
+
+
+
+
+
+
+   ---> antes de fazer isso,
+
+
+   DEVEMOS ADICIONAR UMA PROPRIEDADE/CONFIGURAÇÃO EXTRA AO WEBPACK CONFIG.... ---> 
+
+
+
+
+   É 
+
+
+
+   a propriedade 
+ 
+   'devtool:' --> DEVEMOS 
+
+
+   COLOCAR/ESPECIFICAR 
+
+   QUAIS 
+
+
+   SOURCE-MAPS O 
+
+
+
+   WEBPACK VAI USAR/SE UTILIZAR/GERAR... --> no caso do professor,
+
+   ele vai querer 
+
+
+
+
+   GERAR 
+
+
+
+   'cheap-module-eval-source-map'... ---> 
+
+
+
+   ESSE É UM TERMO CONFUSO,
+
+
+   MAS 
+
+   É 
+
+   O __MELHOR __ TIPO DE SOURCE __ MAPS QUE VOCÊ PODE GERAR PARA DESENVOLVIMENTO:
+
+   são muito detalhados e possuem boa performance...
+    (minifying)....
+
+
+
+
+
+--> ESSES SOURCE MAPS TE DEIXAM DEBUGGAR SEU CÓDIGO ORIGINAL, NO BROWSER...
+
+
+
+
+
+
+
+
+OK, ESTÁ FICANDO ASSIM:
+
+
+
+
+
+ module.exports = {
+    entry: './src/index.js',
+    devtool: 'cheap-module-eval-source-map',
+
+}
+
+
+---------------------
+
+
+
+
+
+oK,
+
+
+COM 
+
+ESSAS 
+
+2 PROPRIEDADES,
+
+DEFINIMOS 
+
+NOSSO 
+
+'ENTRY'... 
+
+
+
+
+--> AGORA É HORA DE DEFINIR NOSSO __OUTPUT__... --> a key 
+
+
+de 'output'... ---> E AQUI, NESSE CASO,
+
+O PROFESSOR 
+
+QUER 
+
+CRIAR UM 
+
+__NOVO FOLDEr__.... --> para isso,
+
+o valor 
+
+
+
+do 
+
+'output' NÃO SERÁ 
+
+
+SÓ 
+
+
+UMA STRING,
+
+e sim será um OBJETO... ---> 
+
+dentro desse objeto ({}) nós 
+
+
+t
+eremos 
+
+um 
+
+
+'path' ( o caminho onde aquele arquivo será armazenado),
+
+
+e então 
+
+um 
+
+'filename' (que nome o output deverá ter)...
+
+
+
+---> e também deverá ter um 
+
+'PUBLICPATH'.... --> o publicPath 
+
+É IMPORTANTE 
+
+
+PARA O WEBPACK,
+
+POIS 
+
+
+
+É ASSIM QUE 
+
+
+ELE SABE O LOCAL EM QUE 
+
+NOSSOS ARQUIVOS 
+
+SÃO POSICIONADOS ('put into')... ---> O PUBLIC 
+
+
+PATH 
+
+SERVE 
+
+PARA 
+
+COMUNICAR 
+
+AO 
+
+
+WEBPACK 
+
+SE 
+
+O 
+
+
+FOLDER EM QUE 
+DEPOSITAMOS 
+NOSSOS 
+
+ARQUIVOS 
+
+É 
+
+O 
+
+'ROOT FOLDER'
+
+ou se é 
+
+um 
+
+'nested folder'...
+
+
+(AQUI, NO NOSSO CASO, 
+
+
+ESSE FOLDER DEVERÁ SER O ___ROOT FOLDER__, E É POR ISSO 
+
+
+QUE 
+
+O 
+
+
+
+VALOR DE ESSE 'publicPath' VAI SER UMA EMPTY STRING...)
+
+
+
+
+OBS: vocÊ __ARMAZENA__ OS ARQUIVOS EM UM FOLDER ESPECÍFICO,
+
+E VOCÊ 
+
+NÃO PRECISA 
+
+AJUSTAR 
+
+
+NADA DA FOLDER STRUCTURE DOS COMPONENTS DO SEU APP,
+
+ela 
+
+vai continuar a mesma,
+ 
+ só o local do output é que vai mudar...
+
+
+
+
+
+
+
+
+tipo assim:
+
+
+
+
+
+
+
+
+ module.exports = {
+    entry: './src/index.js',
+    devtool: 'cheap-module-eval-source-map',
+    output: {
+      path: ,
+      filename: '',
+      publicPath: ''
+    }
+
+}
+
+
+------------------------------
+
+
+
+
+
+
+MAIS IMPORTANTE É O 
+
+'filename' --> ali nós DEFINIMOS __QUAL DEVERÁ SER O NOME ___ DO 
+
+
+NOSSO ARQUIVO... ---> e o professor 
+
+quer 
+
+
+
+USAR 
+
+
+
+UM NOME DE 
+
+'bundle.js' ----> ESSA É UMA CONVENÇÃO NO MUNDO DO WEBPACK... ---> usamos 
+
+'bundle.js'
+
+
+PQ 
+
+
+ISSO É EXATAMENTE ISSO, UM BUNDLE DE JAVASCRIPT... --------> 
+
+
+
+
+OK,
+
+
+MAS VOCÊ PODE ESTAR SE PERGUNTANDO: O QUE ACONTECE COM O CSS E AS IMAGES? --------> 
+
+
+BEM, 
+
+
+ESSAS COISAS SÃO 'HANDLED DIFFERENTLY',
+
+
+são handlados POR ALGUNS LOADERS 
+
+QUE 
+
+ADICIONAMOS,
+
+E SÃO OS LOADERS QUE DEFINEM 
+
+OS LOCAIS 
+
+EM QUE 
+
+O CSS E IMAGES 
+
+SÃO 
+
+COLOCADOS....
+
+
+
+--------------------
+
+
+
+
+--> O 'path' TAMBÉM _É IMPORTANTE___ ---> nele, vocÊ especifica 
+
+
+O LOCAL 
+
+EM QUE 
+
+OS 
+
+'ASSETS' DEVERÃO 
+
+SER 
+ARMAZENADOS.... ----> ali,
+
+o professor 
+
+
+vai querer 
+
+
+
+__IMPORTAR 
+
+
+UM 
+
+
+
+'NODE MODULE',
+
+
+
+por meio 
+
+da sintaxe de IMPORTS 
+DO NODE.JS,
+
+
+
+
+por meio 
+
+
+de um código como 
+
+
+
+
+
+'const path=require('path');'
+
+
+
+
+
+
+
+
+---------------> ISSO VAI IMPORTAR O MÓDULO DE 'path', que É NECESSÁRIO PARA O WEBPACK....
+
+
+
+
+
+--> O 'path' é um DEFAULT NODE MODULE,
+
+QUE DEVE SER IMPORTADO
+ 
+ PARA PODERMOS USAR WEBPACk...
+
+
+
+
+
+
+ ---> certo... 
+
+
+
+
+
+
+
+
+ e esse módulo/node 
+
+
+ 'path' 
+
+ TEM UM MÉTODO ESPECIAL,
+
+
+
+
+ '.resolve()',
+
+ que 
+
+
+ NOS 
+
+ PERMITE GERAR UM 
+
+
+ 'absolute path',
+
+ no final das contas... ----> 
+
+
+
+
+
+ FICARÁ TIPO ASSIM:
+
+
+
+
+
+ publicPath: path.resolve(); 
+
+
+
+
+
+
+
+ -------------------> aqui,
+
+
+ ISSO 
+
+
+ NOS DEIXA ACESSAR UMA VARIÁVEL ESPECIAL,
+
+ a qual fica disponível em SISTEMAS COM NODE (E o webpack trabalha 
+ com node.js 
+ por trás das cenas...) ------> 
+
+
+
+ E 
+  
+  o 
+  PARÂMETRO 
+
+  DESSE NEGÓCIO/variável que 
+
+  será o parâmetro 
+
+  desse neg´cio 
+
+  vai 
+
+  ser 
+
+
+
+
+' __dirname'... ------> e '__dirname' SE REFERE JUSTAMENTE AO DIRETÓRIO 
+
+EM QUE 
+
+
+ESSE 
+
+'path.resolve()' É EXECUTADO...
+
+
+ex:
+
+
+'publicPath: path.resolve(__dirname, ...)' 
+
+
+
+
+
+
+
+
+
+OK,
+
+MAS 
+
+FALTA O SEGUNDO PARÂMETRO DESSE RESOLVE,
+
+QUE 
+
+É 
+
+
+JUSTAMENTE 
+
+O FOLDER EM QUE 
+
+VAMOS QUERER CRIAR 
+
+
+ESSE 
+
+'resolve'.... ----> E, NO CASO,
+
+VAMOS 
+
+QUERER 
+
+
+
+UM FOLDER DE NOME 'dist'...
+
+
+
+
+
+
+
+ fica assim:
+
+
+
+
+
+
+'publicPath: path.resolve(__dirname, 'dist')' 
+
+
+
+
+----------------------
+
+
+
+OK,
+
+RESOLVE VAI CRIAR UM ABSOLUTE PATH TOMANDO 
+
+
+O  'full path of our current folder' (representado por '__dirname') 
+
+
+E ENTÃO 
+
+
+VAI 
+
+
+
+ADICIONAR 
+
+'dist' 
+AO final 
+DESSE 
+
+PATH AÍ...
+
+
+
+
+-------------------------------------
+
+
+
+oK... 
+
+MAS O PROFESSOR NOS EXPLICA (por meio de uma nota) 
+
+QUE 
+
+
+
+
+ELE FEZ UM ERRO; 
+
+O 
+
+CÓDIGO 
+
+DE 
+
+'path.resolve(__dirname, 'dist') ' 
+
+
+
+DEVE SER ENFIADO 
+
+EM 
+
+'path',
+
+E NÃO 
+
+EM 
+
+'publicPath'...
+
+
+
+
+
+
+ex:
+
+
+
+const path = require('path');
+
+
+ module.exports = {
+    entry: './src/index.js',
+    devtool: 'cheap-module-eval-source-map',
+    output: {
+        publicPath: '',
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist');
+    }
+}
+
+
+
+
+---------------------------------------
+
+
+
+COMO REFERÊNCIA,
+
+podemos 
+
+observar o código do webpack.config.js do nosso antigo projeto,
+
+que era:
+
+
+'''
+
+  output: {
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist', 'assets', 'scripts'),
+    publicPath: 'assets/scripts/'
+  },
+
+.....
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+PROFESSOR 
+
+EXPLICA QUE 
+
+
+'dist'
+
+
+É UM FOLDER QUE 
+
+NÃO EXISTE AINDA....  (o webpack vai criar esse folder automaticamente, por meio daquele código, E AÍ 
+
+VAI 
+
+ENFIAR AQUELE 
+
+OUTPUT DE 
+
+'bundle.js' 
+
+DENTRO DELE... )
+
+
+
+
+
+--------------------
+
+
+
+ESSE É O SETUP BÁSICO DE NOSSO webpack....
+
+
+
+ENTRETANTO, NOSSO 
+
+
+
+
+WEBPACK AINDA __NÃO TRANSFORMA/TRANSPILA NADA ___ DE NOSSO CÓDIGO ORIGINAL,
+
+E ISSO 
+
+É ALGO QUE TEREMOS QUE VER NA PRÓXIMA LIÇÃO.

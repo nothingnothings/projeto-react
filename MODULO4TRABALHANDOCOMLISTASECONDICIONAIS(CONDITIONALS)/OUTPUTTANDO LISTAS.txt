@@ -1,0 +1,187 @@
+
+
+
+NAS ÚLTIMAS LIÇÕES, aprendemos sobre COMO OUTPUTTAR 
+
+CONTEÚDO DE FORMA CONDICIONAL ('how to output content conditionally')...
+
+
+
+---> Aprendemos, naquelas lições, que nós devemos SIMPLESMENTE NOS APROVEITAR 
+
+
+DO FATO DE QUE ___TUDO ___ AQUI NO REACT É __ SIMPLESMENTE JAVASCRIPT__, um javascript 
+
+firulento, mas que ainda é javascript
+
+
+
+
+
+
+------> AGORA VOU QUERER __RENDERIZAR ___ MINHA LISTA DE PERSONS... ---> até agora,
+
+
+
+nós não estivemos fazendo isso de uma forma realmente/verdadeiramente dinâmica... 
+
+
+
+
+Como assim?
+
+
+
+
+
+
+Bem, nós 
+
+temos algumas 
+
+'person', alguns objetos 'person' 
+
+
+
+lá no nosso state, 
+
+
+lá neste código:
+
+
+
+state ={
+
+persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 26 }
+    ]
+
+}
+---------------------------------------------
+
+
+
+E isso, esse ARRAY DE PERSONS, explica o professor, 
+
+
+DEVERÁ __SER ___ O NOSSO 'SINGLE SOURCE OF TRUTH'.... --------> por isso,
+
+
+ele quer dizer que 
+
+ESSE DEVERÁ SER O NOSSO 'DATA SOURCE'...
+
+
+
+
+
+--> como assim, 'data source'? ----> em aplicativos DE VERDADE, APLICATIVOS 
+
+
+MAIORES,
+
+esse array poderá/pode 
+
+
+
+estar POPULADO COM DATA FETCHEADA ('fetched') DE UM SERVIDOR... ('with data you fetch from a server')...
+
+
+
+
+
+
+
+-----> certo, isso quer dizer que NÓS TEMOS UM 
+
+
+ARRAY DE PERSONS... mas no JSX QUE NÓS RETORNAMOS, naquele 'CONTEÚDO CONDICIONAL' 
+
+da div...
+
+(ex:
+
+
+
+
+if (this.state.showPersons) {
+  
+  persons = (<div>
+  <Person 
+  name={this.state.persons[0].name}
+  age={this.state.persons[0].age} />
+  <Person 
+  name={this.state.persons[1].name} 
+  age={this.state.persons[1].age}
+  changed={this.nameChangedHandler} 
+  click={this.switchNameHandler.bind( this, 'Max!' )}>  
+  My Hobbies: Racing</Person>  
+  <Person 
+  name={this.state.persons[2].name} 
+  age={this.state.persons[2].age}/>
+
+
+
+  </div>)
+}
+
+
+
+
+
+
+)
+
+
+
+-------> nesse lugar, nós FIZEMOS O SIMPLES 
+
+___HARDCODE___ DE 3 'PERSON' (person components) E ENTÃO ___ MANUALMENTE___ ASSIGNAMOS 
+
+OS DADOS DAS DIFERENTES 'person' NO NOSSO ARRAY... 
+
+
+
+
+---> isso, é claro, é 
+
+
+__SUPER INFLEXÍVEL___ -----> se nós algum dia/em algum momento 
+
+MUDARMOS 
+
+ALGO, ADICIONARMOS OU REMOVERMOS UMA PESSOA, ISSO VAI 
+ 
+ ____bASICAMENTE ____ 
+
+ ___QUEBRAR___.... esse código vai basicamente quebrar.
+
+
+
+ E nós não podemos, ademais,
+
+
+ESCOLHER ('address') UMA 
+ÚNICA 
+
+PESSOA QUANDO FAZEMOS O UPDATE (isso é visto com o 'click', e com o 'changed' que segura o 'this.nameChangedHandler'...).
+
+
+
+
+
+--> ISSO TUDO ___NÃO ESTÁ FUNCIONANDO__ DA MANEIRA QUE DEVERIA FUNCIONAR...
+
+
+
+--> é por isso que DEVEMOS APRENDER ___SOBRE COMO PODEMOS __ OUPUTTAR___
+
+
+
+LISTAS DE DATA (arrays, basicamente).... e também sobre como podemos INTERAGIR 
+
+COM ELAS, UPDATÁ-LAS E MUDAR ARRAYS CORRETAMENTE NO NOSSO 'state'...
+
+--------------------------------------------------------------------------

@@ -1,0 +1,1253 @@
+
+
+
+
+
+
+------> DE VOLTA AO NOSSO PROJETO INICIAL,
+ 
+
+
+ devemos 
+
+
+ MELHORAR 
+
+
+ SUA ESTRUTURA....
+
+
+
+
+
+
+
+
+------> até agora, 
+
+NÓS SÓ USAMOS 2 
+
+COMPONENTS:
+ 
+
+
+
+ 'App' 
+
+
+
+ e 
+
+
+ 'Person'... 
+
+
+
+
+
+
+
+
+
+ APP ------> É O NOSSO 'MAIN COMPONENT', NOSSO ''CONTAINER'', QUE contém o 'STATE'...
+
+
+
+
+
+
+
+ PERSON ----> É UM FUNCTIONAL COMPONENT, QUE FAZ O SIMPLES OUTPUT DE 1 ÚNICA PERSON por vez....
+
+
+
+
+
+ --------------------------------------
+
+
+
+
+
+
+
+ COM ESSES 2 COMPONENTS UNIDOS/JUNTOS, 
+
+ TEMOS NOSSO APP BÁSICO...
+
+
+
+
+
+
+
+
+ E não há nada de errado Com esse aplicativo, 
+
+ ele está funcionando ok... mas por trás 
+
+ das cenas,
+
+
+
+ PODEMOS TWEAKAR 
+
+
+ ALGUMAS DAS COISAS DELE...
+
+
+
+
+
+
+
+ ------------------------------------------
+
+
+
+
+
+
+
+
+ Uma coisa que pode ser melhorada, 
+
+ explica o professor, é a DIVISÃO DE COMPONENTS... ---------> tipicamente,
+
+
+
+
+ em um projeto REACt NÓS ___TEMOS BEM MAIS COMPONENTS DO QUE APENAS 2, como 
+
+ nesse nosso 
+
+ projeto básico....
+
+
+
+
+
+
+
+
+
+ ------> A PERGUNTA-CHAVE É: quais códigos devem ser enfiados em seus 
+
+ próprios components, 
+
+ e quais 
+
+
+ códigos não? 
+
+
+
+
+ E QUAIS CÓDIGOS DEVEM SER AGRUPADOS EM UM COMPONENT 'higher order'...,
+
+
+
+
+
+ em um 'root component',
+
+ por exemplo...
+
+
+ --------------------------------
+
+
+
+
+ BEM, SE ANALISARMOS 
+
+ NOSSOS COMPONENTS,
+
+
+
+ PERCEBEREMOS 
+
+
+ QUE 
+
+ NOSSO COMPONENT 
+
+
+ 'person'
+
+ É 
+
+
+
+ BEM 
+
+ ''''FOCADO''''... -------> ELE FAZ O DISPLAY DO 
+
+ CARD DE 1 ÚNICA PERSON, E FAZ O HANDLE DO/de um evento 'CLICK' 
+
+ nesse card....
+
+
+
+
+
+
+ ex:
+
+
+
+const person = (props) => {
+
+
+
+
+  return (
+    
+  
+  <div className={Pessoa.Person}>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+
+-----------------------------------
+
+
+
+
+ISSO QUER DIZER, ESSENCIALMENTE, QUE ESSE COMPONENT 
+
+
+
+NÃO PRECISA DE MAIS NENHUM 'SPLITTING UP'.... ------> o que poderíamos fazer (mas não faremos) 
+
+
+É O OUTSOURCE 
+
+
+
+DAQUELE 
+
+'INPUT'  (<input type="text") 
+
+
+EM 
+
+SEU PRÓPRIO COMPONENT,
+ 
+
+
+
+
+ISSO TALVEZ FAÇA SENTIDO (às vezes fará) SE  VOCê 
+
+QUER 
+
+OUTPUTTAR 
+
+
+UM 
+
+
+COMPONENT 'INPUT' GENÉRICO 
+
+AO LONGO DE 
+
+TODO SEU APLICATIVO/PÁGINAS DO SEU APLICATIVO,
+
+
+
+UM 
+
+
+COMPONENT 'INPUT' GENÉRICO QUE VOCÊ REUTILIZA VÁRIAS VEZES,
+
+E CUJO 
+
+STYLING VOCÊ VAI MUDANDO 
+
+DE ACORDO COM O LUGAR EM QUE ELE É INVOCADO.... ------------> 
+
+
+
+MAS ISSO, NO NOSSO PROJETO ATUAL, 
+
+NÃO FAZ MUITO SENTIDO...
+
+
+
+
+
+
+----> A mesma coisa se aplica PARA OS NOSSOS '<P>'... -------> 
+
+
+se vocÊ QUISESSE/QUISER CRIAR UM 'CUSTOM PARAGRAPH WRAPPER COMPONENT',
+ 
+
+ o qual DARIA A TODOS OS SEUS PARAGRAPHS UM ESTILO E COMPORTAMENTO ESPECÍFICOS,
+
+
+
+talvez fosse jogo fazer isso... --> ISSO SE VOCÊ PRECISAR DE UM ESTILO ____E ___ COMPORTAMENTO... pq 
+
+se você 
+
+quer APENAS 
+
+APLICAR UM ESTILO ESPECÍFICO A TODOS OS '<P>' do seu texto, faz muito mais SENTIDO
+
+apenas usar uma GLOBAL STYLESHEET.... (.css)...  (por exemplo, colocar um estilo global 
+
+'p' lá no arquivo 'index.css'...)
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+
+
+
+CERTO,
+
+
+É POR ISSO QUE O COMPONENT 'PERSON' ESTÁ PRATICAMENTE ACABADO...
+
+
+
+
+---> ENTRETANTO, NÓS COM CERTEZA _____PODEMOS SPLITTAR ____  O NOSSO CÓDIGO 
+
+
+DE 
+
+'App.js'... ---------> PQ EM APP.JS 
+
+
+
+
+
+
+Nós fazemos MANAGE DO NOSSO STATE,
+
+e além 
+
+disso 
+
+
+NÓS FAZEMOS 1 MILHAO  DE OUTRAS COISAS,
+
+
+
+como as funções/métodos 
+
+
+de 
+
+'deletePersonHandler'
+ 
+
+
+ e 
+
+
+
+ 'togglePersonHandler'...
+
+
+
+ ----------------------------------------
+
+
+
+
+ SE DERMOS 
+
+
+ UMA OLHADA 
+
+
+ NO NOSSO 
+
+
+ MÉTODO 
+
+
+
+ 'RENDER', que é o que NO FINAL DAS CONTAS DETERMINA/MANDA 
+
+ NO COMPONENT, 
+
+ DIZ AS COISAS PELAS QUAIS ELE SE RESPONSABILIZA, QUE ELE DEVERÁ RENDERIZAR...
+
+
+  
+  CÓDIGO DE RENDER:
+
+
+
+
+
+
+
+
+
+  render() {
+
+
+
+
+
+let persons = null;
+
+let btnClass = '';
+
+
+
+
+
+
+
+if (this.state.showPersons) {
+
+
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        
+        // return <ErrorBoundary
+        // key={person.id}>
+        
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+      // {/* </ErrorBoundary> */}
+      })}
+
+
+    
+    </div>
+  );
+
+  btnClass = classes2.red;
+
+
+
+
+
+  }
+
+
+
+
+----------------------------
+
+
+
+
+
+
+ALI, É POSSÍVEL IDENTIFICAR QUE 
+
+
+O RENDER RENDERIZA A LISTA DE PERSONS
+
+(
+
+
+
+
+if (this.state.showPersons) {
+
+
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        
+        // return <ErrorBoundary
+        // key={person.id}>
+        
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+      // {/* </ErrorBoundary> */}
+      })}
+
+
+    
+    </div>
+  );
+
+  btnClass = classes2.red;
+
+
+
+
+
+  }
+
+
+
+
+
+
+),
+
+
+
+MAS TAMBÉM QUE 
+
+
+ELE SE RESPONSABILIZA 
+
+
+POR AQUELE 
+
+
+
+__BOTÃO DE TOGGLE__, 
+
+
+de código 
+
+
+
+'<button 
+    //style={style}
+    className={btnClass}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    {persons}'
+
+
+
+
+-------------------------------
+
+
+
+
+TIPICAMENTE CONTAINERS COMO 
+
+
+'APP.JS', OU SEJA, COMPONENTES QUE TAMBÉM FAZEM 'MANAGE DO STATE' 
+
+NÃO DEVEM FAZER COISAS RELACIONADAS AO RENDERING DE ELEMENTOS DA UI... (pelo menos não muito...)
+
+
+
+--->  isso quer dizer que nosso 
+
+método 'render()' dentro do 
+
+nosso class-based component deve SEMPRE SER 
+
+
+'rather lean' (meio magrinho), E DEVE SEMPRE conter 
+
+pouco código JSX (nada mais do que o necessário)... --------> 
+
+
+
+OU SEJA,
+
+
+
+APESAR DE 
+
+NÃO SER A PIOR DAS PRÁTICAS 
+
+TER CÓDIGOS COMO ESTE:
+
+
+
+
+''''''''''''''''''''''''
+
+class App extends Component {
+
+
+
+
+
+return (
+  <div className={classes.App}>
+  <h1>Hi, I'm a React App</h1>
+    <p className={classes.join(' ')}>This is really working!</p>
+    <button 
+    //style={style}
+    className={btnClass}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    {persons}
+  </div>
+)
+
+
+
+
+}
+
+
+
+'''''''''''''''',
+
+
+
+
+É MAIS ACONSELHÁVEL QUE VOCê __NÃO TENHA__ esse 
+
+tipo de return 
+
+
+de código JSX em excesso 
+
+
+dentro do 
+
+
+seu 'CLASS-BASED COMPONENT' (dentro do component que FAZ MANAGE DO __sTATE__
+DO SEU APLICATIVO/dentro de um component QUE FAZ 
+MANAGE 
+
+DO STATE DE UM COMPONENT...)
+
+
+
+
+
+
+
+
+RESUMINDO: para aplicativos MENORES, ter APP COMPONENTS COMO O NOSSO,
+
+que FAZEM O __RETURN___ DE CÓDIGO JSX___ DENTRO DO 
+
+
+'CLASS-BASED COMPONENT' (component que faz manage do STATE do nosso aplicativo),
+
+
+É OK USAR ESSE FORMATO/ESTRUTURA DE 'RETURN' E DE CÓDIGO....
+
+
+------------------------------
+
+
+
+
+
+
+CONTUDO,
+ 
+
+
+ É SEMPRE __MUITO MELHOR__ SPLITTAR 
+
+ NOSSO CÓDIGO 
+
+ EM ___MÚLTIPLOS COMPONENTS...____ -----> por exemplo, 
+
+
+
+
+ no nosso projeto, 
+ poderíamos 
+
+
+SPLITTAR/OUTSOURCEAR 
+
+
+AQUELE 
+
+
+CÓDIGO 
+
+
+QUE FAZ O OUTPUT DE UMA __LISTA__ DE PERSON COMPONENTS...  (por isso,
+
+o professor 
+
+diz que 
+
+FARIA MUITO SENTIDO CRIAR UM 
+
+COMPONENTE 'PERSON LIST'... ---> tipo um 'person list component'...) ------> esse component poderia ser chamado de 'persons', ou algo do gênero.
+
+
+
+
+(Professor está falando do código neste trecho:
+
+
+
+
+''''''''''''''''''''''''''''''''
+
+
+if (this.state.showPersons) {
+
+
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        
+        
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+
+      })}
+
+
+    
+    </div>
+  );
+
+
+
+
+
+
+
+
+)
+
+
+
+'''''''''''''''''''''''''''''''''
+
+
+
+
+FEITO ISTO , 
+
+
+poderíamos SIMPLESMENTE 
+
+
+
+PASSAR ESSE 'ARRAY DE PESSOAS' (esse array 'this.state.persons') PARA 
+
+DENTRO ('into this') DESTE COMPONENT,  E AÍ SERIA 
+
+DENTRO DESSE COMPONENT QUE 
+
+NÓS FARÍAMOS O __MAPPING___ 
+
+E O RENDER DA LISTA... ------> ISSO 
+
+NOS PERMITIRIA BASICAMENTE FAZER O OUTSOURCE 
+
+
+DE TODAS ESSAS LINHAS DE CÓDIGO:
+
+
+
+{this.state.persons.map( (person, index) => {
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+      })}
+
+
+
+,
+ 
+
+
+ E DEPOIS DE OUTSOURCEADOS TODOS ESSES NEGÓCIOS, FARÍAMOS IMPORT DESSE COMPONENT 
+
+ 'Persons' 
+
+ PARA DENTRO DO COMPONENTE 'App'..... --> feito isso,
+
+
+ nós provavelmente 
+
+
+ FARÍAMOS RENDER desse componente 'persons' SE 'this.state.showPersons'  
+ ESTIVESSE COMO 
+
+ 'TRUE', 
+
+
+
+ e DEIXARÍAMOS DE FAZER RENDER ('null') 
+
+ CASO 'showPersons' ESTIVESSE COMO 'FALSE'...
+
+
+ -----------------------------------
+
+
+
+
+
+ ESSA É A PRIMEIRA MELHORIA.
+
+
+
+
+
+
+
+ OUTRA MELHORIA QUE PODERÍAMOS APLICAR NO NOSSO CÓDIGO, OPCIONAL,
+
+
+ É ___OUTSOURCEAR___ nosso 
+
+
+ ''''COCKPIT'''' (
+
+
+   o código 
+
+
+
+
+
+
+'''''
+
+return (
+
+
+
+ 
+  <div className={classes2.App}>  
+    <h1>Hi, I'm a React App</h1>
+    <p className={classes.join(' ')}>This is really working!</p>
+    <button 
+    className={btnClass}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    {persons}
+
+   
+
+  </div>
+  
+);
+
+
+
+
+'''''''''''''''''
+
+ )
+
+
+
+ NO SEU PRÓPRIO COMPONENT... ----> FARÍAMOS 
+
+
+
+ ISSO 
+
+
+
+ PARA QUE, NO FINAL DAS CONTAS,
+
+
+
+ NOSSO APP 
+
+
+ APENAS 
+
+ TIVESSE/TENHA 
+
+
+
+ essa 'wrapping div' ('div className={classes.App}') 
+
+
+e então 
+
+
+
+Um 'cockpit component' (
+
+
+'''
+   <h1>Hi, I'm a React App</h1>
+    <p className={classes.join(' ')}>This is really working!</p>
+    <button 
+    className={btnClass}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    
+'''''
+
+
+
+)
+
+
+
+
+
+E ENTÃO UM COMPONENTE 
+
+'{persons}', ao final....
+
+
+
+---------------------------------
+
+
+
+
+
+COMO SEMPRE NA VIDA,
+
+ISSO É OPCIONAL, MAS É UMA ÓTIMA 'PRACTICE'... ----> é uma good practice 
+
+
+PQ VAI FAZER NOSSO 
+
+
+APP COMPONENT SER MAIS 'FOCUSED', e vai fazer 
+
+
+TODOS ESSES OUTROS COMPONENTS __tER UM PROPÓSITO BEM DEFINIDO__, 
+
+EM VEZ DE DEIXAR TODOS ELES '''SOLTOS'''' 
+
+
+DENTRO DO 
+
+
+component 'App'...
+
+
+
+
+
+
+---> É POR ISSO QUE DEVEMOS __cRIAR ESSES NOVOS COMPONENTS____....
+
+
+
+
+
+
+
+
+--> PARA ISSO, NO FOLDER 
+
+'src',
+
+
+o professor vai 
+
+CRIAR 
+
+
+
+UM NOVO FOLDER E UM NOVO COMPONENTE NO SEU INTERIOR,
+
+
+ 'Persons.js'...
+
+
+
+
+ ------------------------
+
+
+
+ E NA OPINIÃO DO PROFESSOR,
+
+
+ TAMBÉM 
+
+
+ FAZ SENTIDO MOVER O FOLDER 
+
+
+
+ 'Person' e o arquivo 'Person.js'
+
+
+
+ PARA DENTRO 
+
+
+ DESSE FOLDER DE 'Persons'....
+
+
+
+
+
+
+
+ --> QUEREMOS TER EXATAMENTE ISSO, ESSE 'NESTING'... ----> queremos 
+
+
+ ter um nesting PQ UMA 'PERSON' É, NA VERDADE, 
+
+ 1 ÚNICO ELEMENTO,
+
+ um elemento/component singular QUE 
+
+ SERÁ 
+
+ RENDERIZADO EM 'PERSONS', a qual FARÁ 
+
+ o RENDER ___ DE UMA __LISTA___ DESSES COMPONENTES 
+
+ 'Person'....
+
+
+
+
+
+----> esse 'move' é OPCIONAL, mas ter esse tipo de organização faz muito sentido.
+
+ ------------------------------------------------- 
+
+
+
+ ---> NÓS PODEMOS MELHORAR NOSSA ORGANIZAÇÃO 
+
+
+ ____aINDA MAIS___: 
+
+
+ NO nosso 
+
+
+
+ folder 
+
+
+
+ 'src', 
+
+
+
+ podemos 
+
+
+
+ AINDA ADICIONAR UM 
+
+
+ FOLDER 
+
+
+ CHAMADO DE 
+
+ 'assets', QUE PODERÁ/DEVERÁ CONTER 
+
+ IMAGENS E COISAS DO GÊNERO.... ---------> e fazemos isso, críamos um folder chamado de 'assets'...
+
+
+
+
+
+
+FAZEMOS ISSO,
+
+
+CRÍAMOS ESSE FOLDER DE 'assets',
+
+
+PARA QUE ENTÃO POSSAMOS 
+
+CRIAR UM FOLDER 
+
+
+DE 
+'components',
+
+
+onde serão METIDOS ___OS COMPONENTS DO NOSSO CÓDIGO, 'persons' e 'person'...
+
+
+
+
+
+
+
+ASSETS --> CONTERÁ AS 'IMAGES'...
+
+
+
+
+
+
+
+também 
+
+
+TEREMOS 
+
+UM 
+
+FOLDER CHAMADO
+
+
+
+'CONTAINERS'
+
+
+
+DENTRO 
+
+
+DO 
+
+FOLDER 
+
+
+'src'... ------> ESSE 'CONTAINERS' 
+
+VAI SEGURAR 
+
+
+TODOS OS NOSSOS CONTAINERS/CLASS-BASED COMPONENTS, como 
+
+
+
+o 'App.js' 
+
+
+E TODOS OS ESTILOS REFERENTES A ELE...
+
+
+
+
+
+--------------------------------
+
+
+
+
+PORTANTO, AGORA NÓS __REESTRUTURAMOS__ NOSSO APLICATIVO.... --> AGORA 
+
+
+APENAS 
+
+
+TEREMOS/TEMOS 
+
+
+O ARQUIVO 
+
+
+
+'index.js' DIRETAMENTE 
+
+
+NO FOLDER 'src'... (no root do 'src folder'...) ----------> 
+
+
+
+
+
+AÍ, DENTRO DE 
+
+
+
+'CONTAINERS',
+ 
+
+ temos uma LISTA DOS CONTAINERS QUE CONHECEMOS NESSE NOSSO PROJETO...
+
+
+
+
+
+ ------------------------------------
+
+
+
+ E NOS 'COMPONENTS',
+  
+  TEMOS UMA LISTA 
+
+  DOS FUNCTIONAL COMPONENTS QUE CONHECEMOS...
+
+
+
+
+  (professor diz que isso VAI QUEBRAR NOSSO APP POR ENQUANTO, POIS TODOS 
+  
+  NOSSOS IMPORTS FICARÃO ERRADOS ---> mas ele está equivocado, pois 
+  
+  o VISUAL STUDIO CODE AGORA TEM UMA NOVA FEATURE QUE 
+  AJEITA 
+  
+  TODOS OS IMPORTS AUTOMATICAMENTE QUANDO MOVEMOS OS ARQUIVOS...)
+
+
+
+
+
+
+--> professor diz que devemos CONSERTAR OS IMPORTS... ---->
+  ------------------------------------------------
+
+
+
+
+
+
+
+
+PROFESSOR TAMBÉM DIZ QUE DEVEMOS 
+
+
+CRIAR UM NOVO COMPONENT, um component 
+
+'cockpit' (folder com arquivo de mesmo nome, 'cockpit'), 
+
+
+QUE SERÁ 
+
+
+ONDE VAMOS INSERIR OS NOSSOS/NOSSO 'CONTAINER/CONTAINERS'...
+
+
+
+
+----------------------------------
+
+
+
+
+CErto..... ----> importamos tudo de forma correta... ------> 
+
+
+
+
+
+
+VAMOS VER O 'MEAT' DOS COMPONENTS 'persons' e 'cockpit'...

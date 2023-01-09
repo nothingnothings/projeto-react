@@ -1,0 +1,114 @@
+
+
+
+
+
+
+
+
+----> AO LONGO DAS ÚLTIMAS LIÇÕES,
+
+MOVEMOS TODO 
+
+O NOSSO ASYNC CODE (E ATÉ O 'SYNCHRONOUS SIDE-EFFECT CODE') 
+
+
+PARA 
+
+DENTRO 
+
+DAS NOSSAS 
+
+SAGAS...  (tiramos tudo isso dos nossos action creators) ------> 
+
+
+
+
+ A ''''VANTAGEM''''' (pq não é necessariamente melhor)
+
+ É 
+
+ QUE 
+
+ NOSSOS 
+
+
+ ACTION CREATORS
+ FICAM 
+
+
+ BEM 
+
+ MAIS 
+
+ 'LEAN',
+
+ E BEM MAIS LEGÍVEIS... ---> todo nosso 
+
+
+ SIDE EFFECT CODE FICA NOS SAGAS... (código que não é vinculado a REDUCERS/ACTIONS) -> é aqui 
+
+
+
+ que 
+
+ executamos 
+
+ nossos: 
+
+
+
+ 1) API CALLS 
+
+
+
+ 2) LOCAL STORAGE CALLS 
+
+
+
+ 3)  ATÉ MESMO MUDANÇAS DA 'ROUTE' EM QUE O USUÁRIO ESTÁ ATUALMENTE....
+
+
+ ------------------------
+
+
+
+ OS SAGAS SÃO UM PADRÃO QUE 
+
+
+ 
+
+ NÃO É OBRIGATÓRIO, 
+
+ MAS QUE 
+ PODE NOS 
+
+ AJUDAR...
+
+
+
+
+
+
+
+
+
+ --> HÁ MAIS COISAS QUE O PROFESSOR QUER MOSTRAR COM O 'REDUX-SAGA'
+
+
+ que 
+
+
+ VOCê TAMBÉM 
+
+ DEVE 
+
+ TER CIÊNCIA DE... --> coisas que 
+
+ võa 
+
+ te deixar
+  
+
+  escrever 
+  aplicativos muito poderosos....

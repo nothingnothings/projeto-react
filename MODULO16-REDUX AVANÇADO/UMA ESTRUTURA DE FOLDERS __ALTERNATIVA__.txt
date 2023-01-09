@@ -1,0 +1,347 @@
+
+
+---------> COM OS AJUSTES DAS ÚLTIMAS AULAS, AGORA 
+
+TEMOS 
+
+'LEANER REDUCER FILES'...
+
+
+
+
+
+
+
+
+--> NÓS SPLITTAMOS NOSSAS ACTIONS, ACTIONTYPES E REDUCER/REDUCERS __ AO LONGO DE MUITOS E MUITOS 
+
+ARQUIVOS_,
+
+
+
+E CRÍAMOS UM MONTE DE 'BOILERPLATE CODE', aqui... 
+
+
+
+
+
+--> para um projeto mais pequeno, essa divisão 
+
+extrema 
+
+
+de código é 
+
+__aLGO TOTALMENTE OVERKILL...___
+
+
+
+
+
+
+
+
+Boilerplate code means a piece of code which can be used over and over again. On the other hand, anyone can say that it's a piece of reusable code.
+
+The term actually came from the steel industries.
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+-------> ainda assim, é bom pq o professor PODE NOS MOSTRAR AS POSSIBILIDADES DO REACT ---> 
+
+
+E MUITAS DESSAS FEATURES SE TORNARÃO IMPORTANTES QUANDO CONSTRUÍRMOS 
+
+APLICATIVOS MAIORES...
+
+
+
+
+
+-----> NÓS JÁ VEREMOS ALGUMAS DESSAS VANTAGEMS 
+
+NO NOSSO BURGER BUILDER APP,
+
+quando 
+
+implementarmos essas features nele...
+
+
+
+
+---> O PROFESSOR QUER FAZER 'HIGHLIGHT' 
+
+
+
+
+
+NESSES IMPROVEMENTS/REESTRUCTURINGS 
+
+
+para 
+
+que 
+
+NÓS CONSIGMAOS 
+
+
+
+ESCREVER 
+
+
+OS CÓDIGOS E APPS REACT O MAIS LEAN E UNDERSTANDABLE POSSÍVEIS...
+
+
+
+
+
+
+
+
+
+
+
+--> MAS UMA COISA QUE O PROFESSOR QUER NOS MOSTRAR, ANTES DE ACABARMOS ESTE MÓDULO,
+
+
+
+é uma 
+
+'ALTERNATIVE FOLDER STRUCTURE'...
+
+
+
+
+
+
+
+--> FOLDER STRUCTURE --> VOCÊ PODE ENCONTRAR __MILHARES __ DE DIFERENTES 
+
+APPROACHES___--> a Approach 
+que 
+
+o professor 
+
+
+
+usou DURANTE ESTE CURSO É UMA DAS MAIS COMUNS, 
+
+é uma 
+
+que você verá EM INÚMEROS CURSOS.... ------> a diferenciação 
+
+
+entre 
+
+
+'components' 
+
+e 
+
+'containers'
+
+
+
+É BEM BOA...  -------------->  É BOA TBM POR CAUSA 
+
+DO FOLDER 
+
+'store'... -----> MAS CONFORME SEU APP VAI CRESCENDO,
+
+
+VOCê 
+
+
+VAI 
+
+VER 
+
+SUA 
+
+'STORE' CRESCENDO TBM... --> e aí você vai VER 
+
+
+CADA __VEZ __ MAIS E MAIS 
+
+
+ARQUIVOS 
+
+'ACTION' 
+
+E 
+
+'REDUCER'... ----> e você vai perceber, nesse nosso caso, 
+
+QUE 
+
+ALGUNS 
+
+
+DOS 
+
+SEUS ARQUIVOS 
+
+'reducer'
+
+VÃO SE REFERIR 
+
+
+A UM 
+
+__CONTAINER__,
+ 
+
+
+
+ ENQUANTO 
+
+ QUE 
+
+ OUTROS ARQUIVOS 
+
+ 'reducer' 
+
+ VÃO SE REFERIR __a  OUTRO CONTAINER DE SEU PROJETO.... (E ISSO PODE FICAR BEM CONFUSO)....
+
+
+
+
+
+
+
+
+
+
+
+
+ ---> é por isso que uma organização/estruturação/disposição ALTERNATIVA 
+
+
+ dos 
+
+
+
+ folders 
+
+ é 
+
+
+
+ COLOCAR 
+
+ O 
+
+ 'STORE'
+
+
+ como 
+
+ __SUBFOLDER__ EM 
+
+ CADA 
+
+
+ 'CONTAINER'......... E aí dentro desse folder 'store', DENTRO DO 'CONTAINER', VOCê COLOCARIA 
+
+
+
+um arquivo/arquivos 
+
+'actions' E 'reducer' 
+
+
+
+EXCLUSIVOS A ESSE CONTAINER.... (e isso faríamos para CADA UM DOS CONTAINERS...)
+
+
+
+
+
+
+
+ou seja,
+
+ficaria algo assim:
+
+
+
+
+
+
+containers >
+    container1 >
+            store >
+            reducerContainer1
+            actionsContainer1
+
+
+
+    container2 >
+        store >
+            reducerContainer2
+            actionsContainer2
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+MESMO COM 
+
+UM MONTE DE REDUCERS EM PASTAS DIFERENTES (1 em cada folder 'store', 1 em cada 'container'),
+
+
+
+VOCÊ AINDA CONSEGUE OS COMBINAR, LÁ NO ARQUIVO 'index.js' do seu projeto, TUDO GRAÇAS 
+
+
+À SINTAXE 
+
+DO 
+
+'import reducerblablabla from '....';
+
+
+E 
+
+TAMBÉM 
+
+GRAÇAS 
+
+AO 
+
+'combineReducers()'  
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+VOCÊ PODE FAZER FINE-TUNE DISSO TUDO... 
+
+
+
+
+
+
+
+--> ENTRETANTO, ESSE APPROACH NOSSO, DO STORE 'central', é um APPROACH PERFEITAMENTE FINE...

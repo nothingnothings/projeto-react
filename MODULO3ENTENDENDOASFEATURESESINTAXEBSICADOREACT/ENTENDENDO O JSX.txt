@@ -1,0 +1,1071 @@
+
+
+
+
+
+
+
+----> NA ÚLTIMA LIÇÃO O PROFESSOR NOS MOSTROU os 
+
+COMPONENTS, 
+
+
+E SUA ESTRUTURA BÁSICA...
+
+
+
+
+----> AGORA DEVEMOS VER ESSA 'COISA' 'jsx'...
+
+
+
+
+
+CÓDIGO 
+
+
+
+DE 
+
+
+'App.js':
+
+
+
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+      </div>
+    );
+  }
+}
+
+
+
+
+-------------------------------
+
+
+
+
+
+Certo...
+
+
+Agora o professor vai COMENTAR PARA 
+
+FORA o código 
+
+
+no interior do método 
+'render()'....
+
+
+
+ex:
+
+
+
+
+
+class App extends Component {
+  render() {
+
+
+
+  }
+}
+
+
+
+-------------------------------
+
+
+
+
+
+
+CERTO... E DENTRO DESSE 'render(){}',
+
+
+O PROFESSOR 
+
+
+FARÁ O 'RETURN' de uma OUTRA COISA...
+
+
+
+
+
+ex:
+
+
+import React, { Component } from 'react';
+
+
+
+class App extends Component {
+  render() {
+
+
+      return;
+  }
+}
+
+
+
+
+---------------------------------
+
+
+
+Ele diz que ele pode usar 
+
+o 
+
+
+OBJETO 'REACT' QUE ESTAMOS IMPORTANDO 
+
+
+NESSE ARQUIVO 'App.js'...
+
+
+
+
+EX:
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+class App extends Component {
+  render() {
+
+
+      return React;
+  }
+}
+
+
+----------------------------------
+
+
+
+
+
+
+MAS ELE NÃO FARÁ 
+
+APENAS ISSO; 
+
+
+ele também 
+
+CHAMARÁ 
+
+
+UM __MÉTODO ___ NESSE OBJETO...
+
+
+
+
+ele chamará 
+
+o método
+
+
+'.createElement()'...
+
+
+
+
+
+EX:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+class App extends Component {
+  render() {
+
+
+      return React.createElement();
+  }
+}
+
+
+---------------------------------------------
+
+
+
+
+
+PROFESSOR EXPLICA ___QUE ESSA É UMA DAS RAZÕES DE NÓS ___ SERMOS 
+
+OBRIGADOS A IMPORTAR O 'OBJETO GERAL' 'REACT'... (por meio da sintaxe de import...) ----> 
+
+
+precisamos importar o objeto 'React', aquele objeto gordo, 
+
+pois 
+
+
+
+ESTE CÓDIGO AQUI:
+
+
+'return (
+    <div className="App">
+        <h1>Hi, I'm a React App</h1>
+    </div>
+)' 
+
+
+
+É, NO FINAL DAS CONTAS,
+
+
+COMPILADO 
+
+
+
+NO CÓDIGO QUE ESTAMOS ESCREVENDO 
+
+
+em 
+
+'return React.createElement()'...   ("that code is compiled into this code right here...")
+
+
+
+
+
+
+--> esse fenômeno aí em cima acontece AINDA QUE NÓS NÃO CONSIGAMOS 
+O ENXERGAR...
+
+
+
+
+
+---->.....
+
+
+
+CERTO. '.createElement()'
+
+
+É UM _MÉTODO__...
+
+
+
+E ele 
+
+
+
+ACEITA/EXIGE ___3 ARGUMENTOS___...
+
+
+
+
+
+Na verdade, explica o professor, ele ACEITA UM NÚMERO ___INFINITO___ DE ARGUMENTOS, 
+
+mas ___PELO MENOS 3 SEMPRE DEVEM SER PASSADOS_____....
+
+
+
+-----------------------------------------
+
+
+.createElement()
+
+
+
+1º parâmetro --> É O ___ELEMENTO__ QUE DESEJAMOS RENDERIZAR NO DOM... nesse exemplo, vamos querer uma <div>.... portanto, 'React.createElement('div')'...
+                ---> esse elemento pode SER UM ELEMENTO HTML NORMAL, COMO UMA RELES <div>.... MAS ELE TAMBÉM PODERIA SER __SEU PRÓPRIO COMPONENT (react component), SE VOCÊ O TIVER DISPONÍVEL, AQUI... ---> ENTRETANTO, NÓS ___NÃO PODEMOS FAZER ISSO____ NESSE EXEMPLO, POIS NÓS ___JÁ ESTAMOS DENTRO DE UM COMPONENTE ('App'), E O 'CREATE' DE UM 'ELEMENTO-COMPONENTE' DENTRO DE UM REACT COMPONENT É __IMPOSSÍVEL____....
+
+
+
+
+
+2º parâmetro ---> É BASICAMENTE ___  A CONFIGURAÇÃO PARA ESSE ___ ELEMENTO QUE SERÁ CRIADO ___... 
+                ---> é o 'config' --> aqui, nós PASSAMOS UM __OBJETO __ JAVASCRIPT __ COM KEYNAME PAIRS __ que definem as configurações desse elemento que será criado.
+                --> esse parâmetro É __OPCIONAL___... podemos simplesmente passar 'null' em vez de escrever algo aqui... (pq nós não queremos configurar nada...)
+
+
+
+3º argumento -->  É __QUALQUER QUANTIDADE __ DE __CHILDREN ____... ---> professor explica que poderíamos  TER MÚLTIPLAS CHILDREN, todas separadas por ','... ---> children = AQUILO QUE ESTARÁ NESTEADO DENTRO DESSA DIV que será criada...
+                 ----> nesse nosso exemplo inicial, vamos querer 
+                 nestear APENAS 1 ÚNICO ELEMENTO, a tag '<h1>' com valor de 'Hi, I'm a React App'...
+
+                ---> se quisermos adicionar esse elemento aí com esse valor,
+                vamos ter que 
+
+                passar o TIPO DE ELEMENTO QUE SERÁ NESTEADO (nesse caso, 'h1'), 
+
+                E DEPOIS DISSO O __VALOR__ QUE DEVERÁ SER ATRIBUÍDO A ESSE TIPO DE ELEMENTO... (a string de 'Hi I'm a React App...')
+
+
+
+
+
+    
+
+
+
+    RESULTADO:
+
+
+
+
+    return React.createElement('div', null, 'h1', "Hi, I'm a React App");
+
+
+
+    SINTAXE ALTERNATIVA (com '\', o ESCAPE, que faz o "'" adquirir O SIGNIFICADO NÃO SINTÁTICO...):
+
+
+
+
+return React.createElement('div', null, 'h1', 'Hi, I\'m a React App!!!');
+
+
+
+-----------------------------------------------------------
+
+
+
+
+
+
+CÓDIGO COMPLETO:
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+
+
+class App extends Component {
+  render() {
+        //
+        //
+        //
+        //
+        //
+
+      return React.createElement('div', null, 'h1', 'I\'m a React App!!!');
+  }
+}
+
+
+export default App;
+
+
+
+
+----------------------------
+
+
+PROFESSOR SALVA ESSE CÓDIGO....
+
+
+
+
+PROFESSOR SALVA O CÓDIGO DAQUELE RETURN 
+
+
+do 'React.createElement()' 
+
+com os 4 parâmetros....
+
+
+Voltamos 
+
+
+
+e rodamos 'npm start'...
+
+
+
+
+VAMOS VER 
+
+'Hi, I'm a React App' na página do chrome...
+
+
+-----------------------
+
+
+
+
+Na verdade, 
+
+vamos 
+
+ver 
+
+
+
+h1Hi, I'm a React App...
+
+
+
+
+
+
+----> professor diz que SE NÓS 
+
+INSPECIONARMOS 
+
+ESSA PÁGINA 
+
+NO DEVTOOLS,
+ 
+ veremos que 
+
+ ELA TERÁ 
+
+
+ 2 NODES 
+
+ 'h1'... DENTRO 
+
+
+ DO ELEMENTO '<div>'...
+
+
+
+
+ ele estará desse jeito:
+
+
+
+ '<div>
+    h1
+    Hi, I'm a React App!!!
+</div>'
+
+
+
+--------------------------
+
+
+ISSO QUER DIZER, BASICAMENTE, EXPLICA O PROFESSOR,
+ 
+ QUE COM 
+
+ AQUELE CÓDIGO DE 
+
+
+
+
+return React.createElement('div', null, 'h1', 'I\'m a React App!!!');
+
+
+
+NÓS ACABAMOS RENDERIZANDO 
+
+
+NÃO UM ELEMENTO 'H1', e sim 
+
+___TEXTO__, 'PLAIN TEXT'.... (um TEXTO com o valor 'h1'...) --> e NÃO 
+
+
+É ISSO QUE QUEREMOS, 
+
+AQUI... -----> ENTRETANTO, 
+
+PROFESSOR NOS EXPLICA 
+
+
+QUE 
+
+__ESSE É O COMPORTAMENTO DEFAULT___  
+
+
+desse método/do React com esse método...
+
+
+
+'h1' AQUI É 
+
+
+__INTERPRETADO___ COMO __TEXTO__, E POR ISSO 
+
+NÃO É RENDERIZADO COMO UM ELEMENTO NO INTERIOR 
+
+DE 'div'....
+
+
+-----------------------------------
+
+
+
+--> SE QUEREMOS RENDERIZAR __OUTRO ELEMENTO___ NO INTERIOR 
+
+DA DIV CRIADA A PARTIR DE 'createElement()',
+
+
+O QUE NÓS TEMOS 
+
+
+QUE FAZER 
+
+
+
+__É SUBSTITUIR__ 
+
+
+O TRECHO DE CÓDIGO 
+
+
+'h1', 'Hi, I\'m a React App!!!' 
+
+
+
+
+___POR ___OUTRA CALL ___ AO 'REACT.createElement',
+
+
+MAS DESSA 
+
+VEZ COM UMA CALL QUE PASSARÁ 
+
+___ESSE 'CHILD'/CHILDREN 
+
+
+___COMO PARÂMETRO____...
+
+
+
+
+
+DENTRO DESSE NEGÓCIO NÓS VAMOS 
+
+PASSAR 
+
+'h1' 
+
+
+E DEPOIS, no segundo elemento,
+
+passamos 
+
+'NULL' (como antes, como fizemos com a criação 
+do elemento 'div'...)
+
+
+
+
+
+E DEPOIS, 
+
+COMO TERCEIRO PARÂMETRO,
+
+
+O 
+
+___TEXTO/STRING__ QUE VAMOS QUERER RENDERIZAR....
+
+
+
+
+Colocamos uma string de 'Does this work now?'
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+
+
+class App extends Component {
+  render() {
+        //
+        //
+        //
+        //
+        //
+
+      return React.createElement('div', null, React.createElement('h1', null, 'Does this work now?'));
+  }
+}
+
+
+export default App;
+
+
+
+----------------------------------
+
+
+
+CERTO, 
+
+
+
+AGORA 
+
+
+NOSSO ELEMENTO NESTEADO (o elemento 'h1' dentro da 'div') 
+
+É CRIADO COM SUCESSo....
+
+
+
+
+
+---------------------------------
+
+
+ENTRETANTO,
+
+
+O QUE 
+
+
+NÓS ___NÃO VEMOS AQUI____ 
+
+
+é o 
+
+
+'css styling'  sendo aplicado ao 'h1'...
+
+
+Nós não vemos 
+
+nenhum styling no 
+
+h1 PQ 
+
+NÓS NÃO VEMOS 
+
+
+NENHUMA CLASSE SENDO ADICIONADA 
+
+
+
+A ESSE ELEMENTO...
+
+
+
+Bem, se dermos uma olhada na versão ANTIGA 
+
+de nosso REACT COMPONENT 'App', 
+
+
+
+vemos isso:
+
+
+
+
+
+    // return (
+    //   <div className="App">
+    //     <h1>Hi, I'm a React App</h1>
+    //   </div>
+    // );
+
+
+
+--------------------------------------
+
+
+
+OU seja, 
+
+vemos 
+
+
+que 
+
+havia o return 
+
+
+DE UMA 
+
+
+DIV 
+
+com um 
+
+'className'   (E NÃO 'CLASS', PRESTE BEM ATENÇÃO...) --> professor depois nos ensinará a razão de usar 'className' em vez de 'class'.... (class é um RESERVED NAME no javascript...)
+
+
+de 'App'...
+
+
+
+Certo...
+
+
+tínhamos 
+
+
+esse 
+
+'className="App" '....
+
+
+
+
+
+PARA QUE 
+
+ESSE ESTILO DE 'App'
+ 
+
+ SEJA APLICADO 
+
+ A ELEMENTOS 
+
+
+ QUE CRÍAMOS 
+
+ COM 
+
+ 'React.createElement()', 
+
+ BASTA PASSARMOS 
+
+ ___ UM ARGUMENTO DE VERDADE__ NO 
+
+ SEGUNDO 
+
+ PARÂMETRO DESSA FUNÇÃO__ 
+
+
+ ou seja,
+
+
+ basta PASSARMOS UM OBJETO CONFIG (2o parametro)
+
+
+
+COM ESSE STYLING SENDO DEFINIDO...
+
+
+
+ex:
+
+
+
+
+
+return React.createElement('div', { className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
+
+
+
+
+--------------------------------------
+
+
+
+
+DENTRO 
+
+
+DESSE OBJETO 'CONFIG', PODEMOS 
+
+
+
+DEFINIR 
+
+
+'className' e então como seu valor 
+
+__PODEMOS ASSIGNAR ___ QUALQUER CLASSE CSS QUE 
+
+QUISERMOS... 
+
+
+aqui, por exemplo, colocaremos 'App' como seu valor....
+
+
+
+
+
+--> SE AGORA RECARREGARMOS NOSSA PÁGINA,
+ 
+
+
+ VEREMOS O STYLING DAQUELE ELEMENTO ATUALIZADO DIREITINHO.... (o texto estará centrado direitinho... e ESSE STYLING ESTARÁ APLICADO NA DIV PARENT, também...  )
+
+
+
+
+
+ --> ISSO É SUPER IMPORTANTE DE ENTENDER: 
+
+ O código que acabamos de escrever aqui, 
+
+
+ em que escrevemos
+  
+
+  um 
+
+
+  'React.createElement()' 
+
+
+
+NESTEADO 
+
+DENTRO DE OUTRO 
+
+
+'React.createElement()',
+
+
+
+
+
+É ____ O EQUIVALENTE ___ EXATO 
+
+
+AO CÓDIGO ANTIGO QUE TÍNHAMOS DENTRO DE 
+
+'render() {}'....
+
+
+
+ou seja 
+
+
+
+ESSES 
+
+
+CÓDIGOS:
+
+
+
+return (
+  <div className="App">
+  <h1>Hi, I'm a React App</h1>
+  </div>
+); 
+
+
+
+E 
+
+
+
+return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi, 'I/'m a React App'));
+
+
+
+
+
+
+SÃO 
+
+
+
+___O EXATO MESMO CÓDIGO____....
+
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+ESSES 2 CÓDIGOS SÃO 2 CÓDIGOS 
+
+__QUE SIGNIFICAM A MESMA COISA___...
+
+
+
+ENTRETANTO, 
+
+aquele código 
+
+
+
+
+return (
+  <div className="App">
+  <h1>Hi, I'm a React App</h1>
+  </div>
+); 
+
+
+
+
+
+É O QUE DEVEREMOS SEMPRE ESCREVER....
+
+
+
+Esse código, no final das contas, é 
+
+TRADUZIDO 
+
+
+E ___LIDO____ PELO 
+
+REACT 
+
+
+
+como 
+
+
+
+'return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi, 'I/'m a React App'));'
+
+
+
+....
+
+
+
+
+SIM.... essa é a distinção entre as 2 sintaxes, a primeira é mais fácil de escrever E É A VERSÃO 'CRUA', 
+
+
+a segunda é A TRADUÇÃO QUE O REACT FAZ ANTES DE EXECUTAR O NOSSO CÓDIGo (é a versão 'refinada' daquele código JSX...) ---> 
+
+
+isso quer 
+
+
+dizer que O PRIMEIRO CÓDIGO É COMPILADO até virar essa versão POR VÁRIAS 
+
+BUILD TOOLS que ganhamos 'out of the box' 
+
+nesse nosso projeto...... ----> E ESSA É 
+
+A RAZÃO 
+
+
+PARA NÓS 
+
+TERMOS 
+
+
+DE IMPORTAR 
+
+
+'React' (o objeto geral) 
+NO NOSSO 
+
+CÓDIGO --> (pq antes nós havíamos nos perguntado: 'Pq diabos importamos 
+
+'React', esse objeto geral, no nosso código, se nunca o utilizamos? BEM, NÓS 
+
+O UTILIZAMOS, SIM; UTILIZAMOS NESSE 
+
+
+PROCESSO DE CONVERSÃO DO 'PSEUDOHTML'/JSX code EM
+
+
+CÓDIGO REALMENTE UTILIZÁVEL PELO REACT...) ---> 
+
+
+
+
+Resumindo, precisamos do objeto 'REACT' para COMPILAR nossa 
+
+ 
+sintaxe JSX.... 
+
+
+---------------------------------
+
+
+
+
+
+
+---> escrever o código dessa forma 
+
+
+'.createElement()'
+
+É ___MUITO CUMBERSOME, PRINCIPALMENTE 
+
+DEPOIS QUE VOCê 
+
+COMEÇA 
+
+
+A NESTEAR MAIS E MAIS ELEMENTOS....
+
+
+
+
+É por isso que 
+
+tipicamente 
+
+usamos
+
+
+este formato de código:
+
+
+
+
+
+
+return (
+  <div className="App">
+  <h1>Hi, I'm a React App</h1>
+  </div>
+); 
+
+
+------------------------------
+
+
+
+
+ISSO SE PARECE COM HTML, MAS NÃO É... É UM PSEUDOHTML 
+
+QUE 
+
+ACABA COMPILADO PARA 
+
+SER 
+
+
+
+ESSE TIPO DE CÓDIGO:
+
+
+return React.createElement('div', { className: 'App'}, React.createElement('h1', null, 'Does this work now?'));

@@ -1,0 +1,328 @@
+
+
+
+
+NA ÚLTIMA LIÇÃO, 
+
+
+nós começamos a ____REMOVER____ 'persons'... (1 por 1) ...
+
+
+
+
+
+NÓS FAZÍAMOS/FAZEMOS ISSO POR 
+
+
+MEIO DO 
+
+
+CÓDIGO 
+
+
+DE 
+
+
+
+'
+  deletePersonHandler = (personIndex) => {
+    const persons = this.state.persons;
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons});
+  }
+
+
+
+'
+
+
+
+----------------------------------------
+
+
+
+
+ESSE CÓDIGO 
+
+CONSEGUIA ACESSO 
+
+A TODAS AS PERSONS 
+
+
+por meio de 'const persons = this.state.persons',
+
+
+ELE ENTÃO 
+
+REMOVIA O ELEMENTO QUE 
+
+QUERÍAMOS 
+
+REMOVER 
+
+por meio 
+
+
+do código de 'persons.splice(personIndex, 1)' ---> esse código remove o ELEMENTO/COMPONENT COM O INDEXADOR QUE QUEREMOS REMOVER....
+
+
+
+Por fim, ESSE MÉTODO 
+
+
+
+UPDATAVA/UPDATA O STATE 
+
+com 
+
+o 'persons' que SOFREU O EFEITO DE 
+
+'splice()'...
+
+
+
+----------------------------
+
+
+
+A FALHA/FLAW DESSE APPROACH 
+
+É QUE, EM JAVASCRIPT, 
+
+
+___OBJETOS___ E ARRAYS __ SÃO ___ REFERENCE TYPES___...
+
+
+
+
+
+--> ISSO SIGNIFICA QUE 
+
+
+__QUANDO O PROFESSOR GANHA ACESSO 
+
+
+A 'persons', como ele faz aqui, por meio 
+
+
+de 
+
+'const persons = this.state.persons',
+
+
+
+
+ELE NA VERDADE __GANHA UM POINTER___ 
+
+
+___AO OBJETO ORIGINÁRIO 'persons'__ GERENCIADO ('managed')  (na verdade, ao STATE ORIGINAL, gerenciado pelo REACT)
+
+
+PELO REACT... 
+
+
+
+
+
+
+
+--> se/QUANDO o professor 
+
+SPLICEAR esse código aqui, o código do array,
+
+
+
+ELE __JÁ TERÁ __ MUTADO ('mutated') ESSA 
+
+'ORIGINAL DATA' do nosso 
+
+
+state...  -------------------------> E APESAR 
+
+
+DE ISSO FUNCIONAR SEM NOS DAR O THROW DE UM ERRO,
+ 
+ESSE __NÃO É O APPROACH__ QUE VOCê QUER SEGUIR... ----> esse approach 
+
+
+PODE LEVAR A APPS ___IMPREVISÍVEIS__,  e é claramente 
+
+UMA 'BAD PRACTICE'... 
+
+
+
+
+
+
+---------> UMA 'GOOD PRACTICE' seria __CRIAR UMA ___CÓPIA__ 
+
+DO SEU ARRAY DE PERSONS, antes de o manipular com SPLICE (ou com qualquer outro método de arrays...).
+
+
+
+
+
+Certo, mas como podemos fazer isso? COmo podemos 
+
+
+CRIAR UMA __CÓPIA___ DE UM ARRAY??? -------> BEM SIMPLES,
+ 
+
+ podemos/devemos 
+
+
+ utilizar 
+
+
+ aquele approach que 
+
+
+ o professor nos ensinou no módulo
+  
+
+DE 
+
+
+
+'REMEMBERING JAVASCRIPT', 
+
+aquele 
+
+
+negócio 
+
+
+de 
+
+
+
+USAR o ___SPREAD OPERATOR___ para 
+
+criar um 
+
+novo 
+
+array, copiado do primeiro.
+
+
+
+
+Como fazemos isso?
+
+
+
+tipo assim:
+
+
+
+
+'const numbers = [1, 2, 3];
+const newNumbers = [...numbers];'
+
+
+
+
+-----------------------------------------
+
+
+Então, aqui, 
+
+o código ficaria assim:
+
+
+
+
+
+
+
+
+'
+  deletePersonHandler = (personIndex) => {
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons});
+  }
+
+
+
+'
+
+
+
+
+
+------------------------------------
+
+
+
+E, de fato, eu estava certo.
+
+
+
+Usamos o spread operator para 
+
+alcançar 
+
+
+
+e fazer spread dos elementos do array 
+
+'
+this.state.persons' 
+
+
+
+em UM NOVO ARRAY....
+
+
+
+-----------------------------
+
+
+
+
+--> agora teremos um ARRAY COM OS MESMOS OBJETOS DO ANTIGO ARRAY, MAS QUE 
+
+NÃO É O ARRAY ANTIGO EM SI....
+
+
+
+--> ESSA É BASICAMENTE UMA APPROACH __EQUIVALENTE__ 
+
+À APPROACH DO 'SPLICE', MAS MAIS __MODERNA__ e útil.... (às vezes 
+
+vamos querer usar 
+
+o primeiro approach, às vezes vamos querer usar este... depende da situação, do use-case...)
+
+
+
+----------------------------------------
+
+
+
+COM ISSO, 
+
+
+AGORA TEMOS O MESMO BEHAVIOUR DE ANTES....
+
+
+e ainda temos aquela mensagem de erro merda... --> 
+
+
+
+código/app funciona como antes, mas ESSE APPROACH É MELHOR DO QUE O ANTERIOR... ---> é melhor 
+
+
+pq, explica o professor, VOCÊ SEMPRE DEVE TENTAR __UPDATAR O STATE___ DE UMA 
+
+MANEIRA 'IMUTÁVEL' (ou seja, SEM __ACABAR __ MUTANDO O STATE ORIGINAL; VOCÊ QUER 
+
+DEIXAR O STATE ORIGINAL INTACTO, SUA 'IMAGEM' INTACTA... é para isso que 
+
+usamos o spread operator com o react, e com a criação de arrays/cópias 
+de arrays originários) ---> PARA ISSO, VOCÊ DEVE USAR 
+
+O SPREAD OPERATOR, E ENTÃO ATUALIZAR O STATE COM 
+
+O método 'this.setState()'...

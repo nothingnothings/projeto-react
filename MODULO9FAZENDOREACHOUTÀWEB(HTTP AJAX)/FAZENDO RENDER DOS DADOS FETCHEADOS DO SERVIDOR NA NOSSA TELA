@@ -1,0 +1,1126 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----> NA ÚLTIMA LIÇÃO, 
+
+
+
+
+
+COLOCAMOS O CÓDIGO 
+
+
+
+PARA 
+
+
+CONSEGUIR 
+
+FAZER 
+
+'FETCH'
+
+
+de data 
+
+lá da página 
+
+
+'jsonplaceholder'...
+
+
+
+
+
+
+
+EX:
+
+
+
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+
+            (response) => {
+                
+                
+                const listOfPosts = response.data
+                console.log(listOfPosts);
+            
+            
+            }
+        )
+
+        
+    }
+    
+
+
+-----------------------------------------
+
+
+
+
+
+MAS SERIA LEGAL SE CONSEGUÍSSEMOS 
+
+ESCREVER/RENDERIZAR 
+
+
+ESSA 'DATA' 
+
+NA NOSSA TELA...
+
+
+
+
+
+
+
+--> OU SEJA,
+
+SERIA LEGAL SE PUDÉSSEMOS 
+
+
+RENDERIZAR 
+
+ESSAS INFORMAÇÕES 
+
+DAQUELE 
+
+
+ARRAY 
+
+DE OBJETOS 
+
+EM 
+
+ELEMENTOS HTML/JSX 
+
+
+
+NA NOSSA TELA... ----> e podemos fazer isso,
+ 
+
+ é só pensar um pouco.
+
+
+
+
+
+
+
+
+
+
+
+
+ ---> PARA CONSEGUIRMOS 
+
+
+ ALTERAR
+  
+
+  AQUELES
+
+
+
+  ELEMENTOS 
+
+  'POST'
+
+
+
+  E COLOCAR NELES OS DADOS FETCHEADOS DO SERVIDOR,
+
+  O PROFESSOR EXPLICA QUE 
+
+  É ÓBVIO QUE 
+
+
+  VAMOS TER QUE FAZER MANAGE DO STATE... --> 
+
+
+
+  por isso 
+
+  ele vai 
+
+
+
+  escrever 
+
+
+
+  'class Blog extends Component {
+      state = {
+          posts: []
+      }
+  }' 
+
+
+
+
+
+
+  ------------------------------------
+
+
+
+  ESSE STATE TERÁ UMA PROPRIEDADE 
+
+
+  'posts', que terá um valor 
+
+  inicial 
+
+
+  de 
+
+
+  UM __ARRAY __ VAZIO___...
+
+
+
+
+  -----------------------------
+
+
+
+
+
+
+
+  ---> CERTO... O QUE O PROFESSOR 
+
+
+  VAI QUERER FAZER 
+
+  É ___UPDATAR___ O STATE____ ASSIM 
+
+  QUE 
+
+
+  O ___FETCH __ DE DADOS___ DO SERVIDOR__ TIVER ACABADO.... (componentDidMount).... -------->
+
+
+
+  PORTANTO, 
+
+
+  O lugar 
+
+
+
+  PARA 
+
+
+  CHAMAR 
+
+  'this.setState()' 
+
+
+  É 
+
+
+
+  ___DENTRO ____ DO MÉTODO 
+
+
+  '.then()', 
+
+
+
+  LÁ 
+
+
+  NO COMPONENTDIDMOUNT...
+
+
+  ex:
+
+
+
+  componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+
+            (response) => { 
+                this.setState();
+                console.log(response);
+
+
+            }
+  }
+
+
+--------------------------------------------
+
+
+
+
+
+PROFESSOR __QUASE__ SE CONTRADISSE AGORA... ---> ele disse que 
+
+NÃO PODEMOS UPDATAR STATE DENTRO DE 
+
+'componentDidMount' ---> isso é uma MEIA VERDADE... ---> 
+
+
+
+nós podemos updatar state dentro dele, sim, 
+
+MAS SÓ 
+
+SE ESTIVERMOS 
+
+DENTRO 
+
+DE UM 
+
+'.THEN() block'... (ou seja,
+
+dentro da parte 
+
+'SÍNCRONA' do código ASSÍNCRONO das promises)... -----------> SE TENTÁSSEMOS 
+
+
+CHAMAR 
+
+
+'this.setState()' 
+
+
+__fORA____ DESSE '.then() block',
+
+
+DARIA TUDO ERRADO, 
+
+POIS AINDA NÃO TERÍAMOS 
+
+
+
+A RESPONSE DO SERVIDOR (por causa do javascript em si ser SÍNCRONO, de execução SÍNCRONA...)...
+
+
+
+----------------------
+
+
+
+
+
+
+Certo...
+
+
+
+
+ELE VAI ESCREVER ESSE NEGÓCIO ASSIM, PORTANTO:
+
+
+
+
+
+
+
+
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+
+            (response) => {
+                
+                this.setState({
+                    posts: response.data ///////EIS O CÓDIGO EM QUESTÃO.
+                })
+            
+            
+            }
+        )
+
+        
+    }
+
+
+
+
+
+------------------------------
+
+
+
+'response.data' ---> isso vai enfiar nosso ARRAY DE POSTS (daqueles objetos malucos)
+
+
+DENTRO 
+
+
+DA PROPRIEDADE 
+
+
+'posts' 
+
+
+DE NOSSO STATE...
+
+
+
+
+
+---> ISSO FEITO,
+
+AGORA PRECISAMOS 
+
+OUTPUTTAR
+
+
+ESSES 
+
+POSTS 
+DINAMICAMENTE
+
+lá 
+
+nos nossos components 
+
+
+'<Post />
+<Post />
+<Post />'
+
+
+
+--------------------------
+
+
+
+
+PARA ISSO O PROFESSOR CRIARÁ UMA NOVA 
+
+CONSTANTE 
+
+
+DENTRO DO RENDER METHOD,
+
+chamada de 
+
+
+
+
+'posts'.... -------> E ESSA CONSTANTE 
+
+
+DEVERÁ SER/SERÁ __UM 
+
+___ARRAY___ DE ELEMENTOS JSX___....
+
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+class Blog extends Component {
+
+
+        state={
+            posts: [
+
+            ]
+        }
+
+
+
+
+
+
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+
+            (response) => {
+                
+                this.setState({
+                    posts: response.data
+                })
+            
+            
+            }
+        )
+
+        
+    }
+    
+
+
+
+
+
+
+
+    render () {
+        const posts = ...; //////EIS O CÓDIGO EM QUESTÃO.
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    <Post />
+                    <Post />
+                    <Post />
+
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+POR ISSO O PROFESSOR 
+
+VAI 
+
+ESCREVER 
+
+
+'const posts = this.state.posts'....
+
+
+
+
+E DEPOIS VAI CHAMAR 
+
+'.map()'
+
+
+em cima 
+
+dessa referência do STATE (que terá sido updatado
+ 
+ 
+ POR MEIO DO FETCH DE DADOS DAQUELE SERVIDOR...)
+
+
+
+
+ ex:
+
+
+
+ 
+class Blog extends Component {
+
+
+        state={
+            posts: [
+
+            ]
+        }
+
+
+
+
+
+
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+
+            (response) => {
+                
+                this.setState({
+                    posts: response.data
+                })
+            
+            
+            }
+        )
+
+        
+    }
+    
+
+
+
+
+
+
+
+    render () {
+        const posts = this.state.posts.map(); //////EIS O CÓDIGO EM QUESTÃO.
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    <Post />
+                    <Post />
+                    <Post />
+
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+-----------------------------------
+
+
+O IMPORTANTÍSSIMO 
+
+MÉTODO 
+
+
+.MAP() 
+
+
+VAI CONVERTER __ OS POSTS DAQUELA 
+PÁGINA 
+
+EM COMPONENTS REACT...
+
+
+
+
+certo....
+
+
+vamos escrever 
+
+
+'
+render() {
+    const posts = this.state.posts.map()
+}'
+
+
+
+
+--> o 'map()'
+
+
+vai mapear 
+
+os nossos objetos 
+
+
+em 
+
+
+
+UM ARRAY DE __ELEMENTOS JSX____...  
+
+
+
+
+
+
+
+'.map()' ---> gera um NOVO ARRAY, armazenado na constante 'posts'...
+
+
+
+
+
+
+
+
+----> dentro 
+
+do método 
+
+'map',
+
+
+
+professor 
+
+vai escrever 
+
+
+
+
+'(post) => {
+
+
+return
+
+}
+
+
+-----------------------
+
+
+
+
+
+E ELE VAI RETORNAR UM 
+
+
+COMPONENT 
+
+JSX 
+
+
+POR MEIO 
+
+DESSE 
+
+'return'... ------------> 
+
+
+
+ELE VAI QUERER 
+
+
+RETORNAR 
+
+1 'SINGLE POST'... (na verdade, são TODOS OS POSTS, mas o 'map' faz return 1 DE CADA VEZ...) --> 
+
+
+
+E LÁ EMBAIXO, 
+
+no lugar dos 
+
+
+'<Post />
+<Post />
+<Post />'
+
+
+VAMOS 
+
+SIMPLESMENTE 
+
+SÓ 
+
+COLOCAR 
+
+'{posts}'... (a nossa constante, que é esse ARRAY DE COMPONENTS 'JSX'...)
+
+
+
+
+
+
+
+
+VAI FICAR ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+class Blog extends Component {
+
+
+        state={
+            posts: [
+
+            ]
+        }
+
+
+
+
+        
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+
+            (response) => {
+                
+                this.setState({
+                    posts: response.data
+                })
+            
+            
+            }
+        )
+
+        
+    }
+    
+
+
+
+
+
+
+
+    render () {
+            const posts = this.state.posts.map( post => {
+                return <Post /> //////EIS O CÓDIGO EM QUESTÃO.
+            })
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                        {posts} ///////EIS O CÓDIGO EM QUESTÃO.
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+------------------------------------------
+
+
+
+
+
+
+CERTO, 
+
+
+MAS AINDA 
+
+FALTA __CONFIGURAR__ ESSES POSTS... ---> 
+
+
+COLOCAR __PROPS___ DENTRO DELES...
+
+
+
+
+
+
+
+
+
+
+
+
+talves  escrever algo como:
+
+
+
+    render () {
+            const posts = this.state.posts.map( post => {
+                return <Post title={post.title}  content={post.content}/> 
+            })
+
+
+
+----------------------------
+
+
+
+EX:
+
+
+
+
+
+       render () {
+            const posts = this.state.posts.map( 
+                (post) => {
+                    return <Post title={post.title} body={post.body} />
+                }
+            )
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    {/* <Post />
+                    <Post />
+                    <Post /> */}
+                    {posts}
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+---------------------------------
+
+
+
+
+E LÁ NO COMPONENT 
+
+'Post',
+
+ficará assim:
+
+
+
+
+
+
+
+
+
+const post = (props) => {
+    
+    return <article className={PostStyle.Post}>
+        <h1>{props.title}</h1>
+        <div className="Info">
+            <div className={PostStyle.Author}>
+                {props.body}
+            </div>
+        </div>
+    </article>
+}
+
+
+
+
+----------------------------------
+
+
+
+Certo... nosso código funcionou...
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+
+
+---> certo.... e agora? ---> professor diz que 
+
+agora nós 
+
+temos 
+
+TODOS OS 'POSTS' 
+
+
+na nossa página, 
+
+o que talvez seja UM POUCO DEMAIS... ( a bit too much)
+
+
+
+
+
+
+
+
+
+---> CERTO, E TAMBÉM 
+
+NÃO SETTAMOS 
+
+
+A PROPRIEDADE/PROP 
+
+'key'
+
+nesse render do component 
+
+
+'Post'.... ------> podemos facilmente consertar esse problema. ------> CONSERTAMOS 
+
+POR MEIO DO PASS 
+
+
+
+DE 
+
+
+Um prop 
+
+'key' de 
+
+
+
+'key={post.id}'....
+
+
+
+EX:
+
+
+
+
+
+
+
+   render () {
+            const posts = this.state.posts.map( 
+                (post) => {
+                    return <Post title={post.title} body={post.body} key={post.id} />
+                }
+            )
+
+
+-------------------------------------
+
+
+
+
+
+
+
+
+
+
+--> o 'id' daqueles posts da página do jsonplaceholder é perfeito 
+
+
+PQ 
+
+É ÚNICO,
+
+
+e é exatamente isso que 
+nossa 
+
+'key' precisa ser....
+
+
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+CERTO... MAS E QUANTO 
+
+
+AO __sTYLING___ E 
+
+
+AO _NÚMERO__ DE POSTS,
+
+
+professor diz que 
+
+devemos 
+
+ir 
+
+até 
+
+'Post.module.css'
+
+
+e então 
+
+devemos 
+
+
+mudar 
+
+
+a 
+
+'width'
+ 
+
+ para '250px' (isso vai deixar as coisas mais bonitas....) ---> teremos mais espaço para o 'title' e o 'body' de cada post....
+
+
+
+
+
+

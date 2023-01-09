@@ -1,0 +1,1690 @@
+
+
+
+
+
+
+--> NÓS JÁ CONSEGUIMOS CARREGAR 
+
+OS INGREDIENTS NO SERVER 
+
+E CONSTRUIR UM BURGER INICIAL A PARTIR DELES... ---> 
+
+agora 
+
+
+devemos 
+
+
+
+
+
+
+
+
+
+
+
+CONCLUIR A REFORMATAÇÃO DO 'checkout proccess'... ( que é o negócio que CRIA NOSSAS ORDERS/envia nossas orders criadas nessa página...)
+
+
+
+
+
+EM 
+
+
+'checkout/contactData',
+
+
+
+
+ALI, NAQUELE LOCAL EM QUE colocamos toda a 'ContactData', 
+
+
+
+nós queremos 
+
+fazer com que 
+
+
+o botão 
+
+'Order' 
+
+
+
+
+REALMENTE __ENVIE __ UMA ACTION DE TIPO 'POST' 
+
+
+AO NOSSO SERVER... -----> Vamos precisar 
+
+
+
+
+1) DO AXIOS 
+
+
+
+
+2) de uma propriedade 'order' especial, no nosso reducer 
+de 
+
+
+'orderReducer'( provavelmente)
+
+3) um 
+
+ACTION IDENTIFIER ESPECIAL EM 'orderActionTypes'...
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+O PROFESSOR QUER FAZER O HANDLE DO SEND DESSA 'ORDER' via redux.... (e mais algumas coisas, também...)
+
+
+
+
+
+
+
+---------------------------------- 
+
+
+O PROFESSOR VAI ATÉ 'Checkout.js'
+
+
+e começa 
+
+a nos dizer 
+
+que 
+
+
+
+
+
+ALI NÓS NÃO FAZEMOS NADA PROPRIAMENTE COM 'Checkout',
+
+
+pq 
+
+nós 
+
+imediatamente já 
+
+
+carregamos 
+
+
+aquele 
+
+component 
+
+
+
+'ContactData'...
+
+(
+
+por meio deste código:
+
+
+
+        <Route
+          path={this.props.match.path + '/contact-data'}        
+           component={      ///USADO COM O  __rEDUX_, nesse projeto... (pois não precisamos dos queryParams, nesse caso, com o uso do REDUX....s)
+            ContactData
+       } 
+        />
+
+
+
+)
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+
+
+E O CONTAINER 'ContactData'
+
+
+É 
+
+
+
+UM CONTAINER __BEM GRANDE__; É GRANDE PQ 
+
+
+DENTRO DELE TEMOS TODO O 'STATE MANAGEMENT' DE NOSSA FORM... -------> 
+
+
+e lá temos 
+
+aquele 
+
+
+
+
+'orderHandler', que é onDE NÓS (por enquanto FAZEMOS O reachout AO 
+
+BACKEND DE NOSSO PROJETO, O DATABASE DO FIREBASE.....)
+
+
+
+
+
+Nós temos que 
+
+
+
+transplantar a lógica desse 'orderHandler' para uma ACTION... (na verdade, para uma ACTION __CRIADA POR UM ACTION CREATOR, usando o redux... --> só assim podemos escrever código assíncrono QUE FUNCIONA..)
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+--> VAMOS COMEÇAR COM ISSO... ----> professor diz para 
+
+
+começarmos definindo uns 
+
+'actionTypes'.... -----------> PROFESSOR 
+
+
+PEGA 
+
+
+O CÓDIGO DE 
+
+'orderHandler' e o analisa:
+
+
+
+
+
+ orderHandler = (event) => {
+    event.preventDefault(); ///VAI PREVENIR O RELOAD DA PÁGINA.(e sim, precisamos do parâmetro 'event' para acessar esse método especial, método que PREVINE O COMPORTAMENTO DEFAULT DO BROWSER DE __RECARREGAR___ PÁGINAS QUANDO UM 'SUBMIT' OCORRE DENTRO DE UMA FORM...)
+
+
+this.setState({
+      loading: true,
+    });
+
+    const orderData = {
+      ingredients: this.props.ingr, //código que agora está usando o REDUX.
+      price: this.props.price, //código que agora está usando o REDUX.
+      name: this.state.orderForm.name.value,
+      email: this.state.orderForm.email.value,
+      street: this.state.orderForm.street.value,
+      postalCode: this.state.orderForm.zipCode.value,
+      country: this.state.orderForm.country.value,
+      deliveryMethod: this.state.orderForm.deliveryMethod.value,
+    };
+
+
+
+
+    axiosOrder
+      .post('/orders.json', orderData)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          loading: false,
+        });
+      });
+  };
+
+
+
+  validInputChecker = (formElement) => {
+    if (!formElement.valid) {
+      return false;
+    }
+     
+}
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+TODA A LÓGICA DESSE 'orderHandler' pode ser splittada EM UM PUNHADO DE ACTIONS DIFERENTES,
+
+AS QUAIS 
+
+VAMOS QUERER 
+
+
+DISPATCHAR...
+
+
+
+
+
+---> o usuário/o código vai TENTAR COMPLETAR A ORDER,
+
+
+por isso podemos 
+
+nomear 
+
+nossa 
+
+action identifier como algo 
+
+
+como 
+
+
+'TRY_PURCHASE_ORDER'... ---------------> 
+
+
+
+
+
+CERTO, 
+
+MAS 
+
+NÓS TAMBÉM __vAMOS PRECISAR DE 'ACTIONS' PARA __ O 'SUCCESS CASE'
+
+
+
+e 
+
+para 
+
+
+
+O 'FAILURE' ('.catch(error => {this.setState({loading: false})})' ) -----> 
+
+
+
+
+
+NESSE 
+
+FAILURE NÓS PROVAVELMENTE VAMOS QUERER SETTAR ALGUM ERRO, 
+
+
+
+ou então simplesmmente definir 'loading' como 'FALSE', por meio de uma ACTION (aquela action que já criamos),
+
+
+SE NÃO QUISERMOS FAZER NADA COM O 'error'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> RESUMINDO:
+
+
+
+
+3 ACTION TYPES, 
+
+esse é o número que provavelmente faz mais sentido...
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+ele cria um identifier 
+
+
+de 
+
+
+
+'export const PURCHASE_BURGER_SUCCESS = 'PURCHASE_BURGER_SUCCESS';
+
+
+
+
+
+
+
+e também 
+
+
+de 
+
+
+
+'export const PURCHASE_BURGER_FAILED = 'PURCHASE_BURGER_FAILED';
+
+
+
+------------------------------------
+
+
+
+
+
+
+--> ENTRETANTO, O PROFESSOR 
+
+
+NÃO 
+
+
+TEM 
+
+
+A 
+
+ACTION DE 
+
+
+'TRY_PURCHASE' aqui, ISSO PQ NÓS __NÃO PRECISAMOS DE UM IDENTIFIER PARA ESSA AÇÃO,
+
+
+PQ 
+
+
+ESSE 'TRY_PURCHASE' 
+
+
+
+
+
+VAI 
+
+
+SER __ UM ASYNC ACTION CREATOR QUE VAMOS USAR 
+
+
+PARA ___ DISPATCHEAR__ ASSÍNCRONAMENTE UMA ACTION,
+
+
+e nunca 
+
+será  propriamente uma 
+
+ACTION 
+
+QUE 
+
+
+VAMOS 
+
+DISPATCHAR 
+
+PARA 
+
+
+ALCANÇAR O REDUCER... (ela será realmente ASYNC....)   (fizemos a mesma coisa lá no 'burgerActionTypes'... ---> lá, por exemplo, não é possível ver um identifier de 'asyncOrderInitialIngredientsGet', justamente por conta disso....)
+
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+O PROFESSOR DIZ QUE 
+
+
+
+DEVEMOS 
+
+ir 
+
+ATÉ 
+
+O 
+
+ARQUIVO 
+
+
+'order.js',
+
+o 
+
+
+ARQUIVO EM QUE FICARÃO 
+
+
+OS ACTION CREATORS 
+
+relacionados a 'order'...
+
+
+------------------------
+
+
+
+
+FICARÁ ALGO ASSIM (em 'order.js'):
+
+
+
+import * as actionTypes from './orderActionTypes';
+
+
+export const purchaseBurgerSuccess = () => {
+        return {
+                type: actionTypes.PURCHASE_BURGER_SUCCESS
+        };
+};
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+Mas o professor faz algo meio estranho.... ---> ele coloca um 'expect' 
+
+de um argumento 
+
+'id', 
+
+que diz que será 
+
+
+
+O 'ID' DA ORDER QUE FOI RECÉM CRIADA NO DATABASE, no backend de nosso aplicativo...
+
+
+
+
+
+
+
+ficou assim:
+
+
+
+
+
+import * as actionTypes from './orderActionTypes';
+
+
+export const purchaseBurgerSuccess = (id) => { /////////EIS O CÓDIGO EM QUESTÃO.
+        return {
+                type: actionTypes.PURCHASE_BURGER_SUCCESS
+        };
+};
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+ele 
+
+vai 
+
+
+esperar 
+
+esse 
+
+'id' 
+
+aí 
+
+
+
+PQ __ELE PRETENDE PASSAR 
+
+ESSE ID 
+
+COMO 
+
+__PAYLOAD__ DA ACTION QUE 
+
+ELE 
+
+VAI CRIAR 
+
+DE VERDADE 
+
+
+
+NESSE 
+
+'purchaseBurgerSuccess'....
+
+
+
+
+ex:
+
+
+
+
+
+import * as actionTypes from './orderActionTypes';
+
+
+export const purchaseBurgerSuccess = (id) => {
+        return {
+                type: actionTypes.PURCHASE_BURGER_SUCCESS,
+                id: id    /////////EIS O CÓDIGO EM QUESTÃO.
+        }; 
+};
+
+
+
+------------------------------------------------------------
+
+
+
+
+
+ELE VAI 
+
+
+
+PASSAR ESSE 
+
+
+'id' 
+
+AÍ 
+
+
+__PARA __ QUE 
+
+NÓS CONSIGAMOS __ 
+
+
+USAR 
+
+ESSA ACTION COM ESSE 'id' (de payload) 
+
+
+PARA __aCTUALLY__ ADICIONAR nossa 
+
+'order' 
+
+
+
+ao 
+
+
+___ARRAY___ DE ORDERS (no state), LÁ NO REDUCER... (por meio do reducer....)...
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+--> ademais, professor diz que PROVAVELMENTE ELE VAI PRECISAR MAIS DO QUE APENAS o 'id',
+
+que 
+
+ele 
+
+vai provavelmente PRECISAR TAMBÉM 
+
+DE ALGO COMO 
+
+'orderData'....
+
+
+
+
+
+
+ex:
+
+
+
+
+
+import * as actionTypes from './orderActionTypes';
+
+
+export const purchaseBurgerSuccess = (id, orderData) => { /////////EIS O CÓDIGO EM QUESTÃO.
+        return {
+                type: actionTypes.PURCHASE_BURGER_SUCCESS,
+                orderId: id,
+                orderData: orderData    
+        }; 
+};
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+--> ISSO FEITO,
+
+
+AGORA 
+
+O PROFESSOR 
+
+PROVAVELMENTE 
+
+VAI
+
+QUERER 
+
+
+ADICIONAR 
+
+
+O 
+
+ACTION CREATOR 
+
+
+
+____DE 'FAIL' -------> 
+
+
+ele vai 
+
+
+
+
+nomear 
+
+esse negócio 
+
+de 
+
+'purchaseBurgerFail'...
+
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+export const purchaseBurgerFail = () => {
+
+}
+
+
+
+--------------------------------------
+
+
+
+
+
+
+ELE NOS EXPLICA QUE 
+
+ESSE NEGÓCIO AÍ VAI PROVAVELMENTE RECEBER 
+
+
+A 
+MENSAGEM DE ERRO como parâmetro... (por isso escreve 'error')...
+
+
+
+ex:
+
+
+
+
+
+
+export const purchaseBurgerFail = (error) => {
+
+}
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+MAS POR MEIO DESSE 
+
+
+
+'purchaseBurgerFail',
+
+
+O PROFESSOR 
+
+VAI QUERER 
+
+SIMPLESMENTE 
+
+FAZER 
+
+O 
+
+RETURN 
+
+DE UM 
+NOVO 
+
+OBJETO 'ACTION', um objeto que terá 
+
+
+UM 'type' QUE SERÁ 'PURCHASE_BURGER_FAIL'...
+
+
+
+ex:
+
+
+
+
+
+
+export const purchaseBurgerFail = (error) => {
+            return {
+                type: actionTypes.PURCHASE_BURGER_FAIL
+            }
+}
+
+
+
+
+---------------------------------
+
+
+
+
+--> ELE TAMBÉM VAI PASSAR O 'error' que recebeu como parâmetro... 
+
+
+
+ex:
+
+
+
+
+export const purchaseBurgerFail = (error) => {
+            return {
+                type: actionTypes.PURCHASE_BURGER_FAIL, 
+                error: error
+            }
+}
+
+
+-----------------------------------------
+
+
+
+
+ESSES 
+
+SÃO 
+
+OS 
+
+
+2
+
+
+
+'SYNCHRONOUS ACTION CREATORs'...
+
+
+
+
+
+
+--> AGORA 
+
+DEVEMOS 
+
+
+CRIAR 
+
+
+O 
+
+
+'ACTION CREATOR' 
+
+__ASYNC__, aquele 
+
+que 
+
+será o 
+
+
+'TRY_PURCHASE_ORDER' (apesar de esse identiifer NÃO SER NECESSÁRIO)... ------>
+
+
+
+
+esse 
+
+
+
+'tryPurchaseOrder' 
+
+
+VAI 
+
+
+SER 
+
+O NEGÓCIO 
+
+QUE 
+
+
+VAI 
+
+
+RODAR 
+
+O CÓDIGO 
+
+
+DE 
+
+'axios.post',
+
+
+E QUE 
+
+
+VAI 
+
+
+
+FAZER HANDLE DA RESPONSE... ------> de acordo com a response,
+
+vamos 
+
+
+executar/chamar 
+
+
+OU 
+
+
+'purchaseBurgerSuccess' 
+
+ou 
+
+'purchaseBurgerFail'....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import * as actionTypes from './orderActionTypes';
+
+
+export const purchaseBurgerSuccess = (id, orderData) => { /////////EIS O CÓDIGO EM QUESTÃO.
+        return {
+                type: actionTypes.PURCHASE_BURGER_SUCCESS,
+                orderId: id,
+                orderData: orderData    
+        }; 
+};
+
+
+
+
+
+export const purchaseBurgerFail = (error) => {
+            return {
+                type: actionTypes.PURCHASE_BURGER_FAIL, 
+                error: error
+            }
+}
+
+
+
+
+export const purchaseBurgerAttempt = () => {
+
+}
+
+
+
+-----------------------------------
+
+
+
+
+CERTO...
+
+
+
+vamos 
+
+
+tentar fazer isso sozinhos...
+
+
+
+
+
+
+
+
+
+
+
+--> parei por aqui:
+
+
+
+export const purchaseBurgerAttempt = () => {
+        return (dispatch) => {
+                        purchaseBurgerSuccess();
+        }
+}
+
+
+
+
+
+--------------------------
+
+
+
+
+PROVAVELMENTE ESTÁ ERRADO... 
+
+
+
+
+
+
+
+
+
+
+--> o importante é que 
+
+
+'purchaseBurgerAttempt' DEVE ___sER DISPARADO___ LÁ DO CONTAINER 
+
+
+DE 
+
+'ContactData' QUANDO CLICAMOS 
+
+
+
+NO BOTÃO 'Order'...
+
+
+------------------------------
+
+
+
+
+PARA CONSEGUIR FZER ESSA PARTE INICIAL, ESCREVEMOS ISTO, LÁ EM 'ContactData':
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      onOrderAttempt: () => {
+          dispatch(purchaseBurgerAttempt())
+      }
+  }
+}
+
+
+---------------------------
+
+
+ISSO FEITO,
+
+BASTA VINCULAR 
+
+
+
+'onOrderAttempt' 
+
+
+
+AO BOTÃO DE 'ORDER'...
+
+
+
+
+(por meio da sintaxe 
+
+'this.onOrderAttempt'.... --> colocar isso em 'onClick'...)
+
+
+
+------------------------------
+
+
+
+
+
+
+
+OK... AGORA PRECISAMOS __ DA LÓGICA '''DE VERDADE''' 
+
+
+
+De 
+
+
+nosso 
+
+action creator assíncrono...
+
+
+
+--------------------
+
+
+lá em 
+
+'order.js',
+
+
+
+
+
+naquele 
+
+
+'''''''''''''''''''''''''
+
+
+export const purchaseBurgerAttempt = () => {
+        return (dispatch) => {
+                      
+        }
+}
+
+
+'''''''''''''''''''''',
+
+
+
+
+PROFESSOR 
+DIZ QUE 
+
+
+DE 
+
+
+FATO 
+
+
+VAI 
+
+'EXPECT' um argumento 
+
+dentro desse action creator assíncrono,
+
+
+
+
+e o argumento será 
+
+
+'orderData'.... (isso será os dados de usuário, os ingredients, etc etc.... -------------> SÃO INFORMAÇÕES QUE SERÃO __rEPASSADAS__ AO 'ACTION CREATOR SÍNCRONO' de 'purchaseBurgerSuccess'/'purchaseBurgerFail'... )
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+export const purchaseBurgerAttempt = (orderData) => { ///////EIS O CÓDIGO EM QUESTÃO
+        return (dispatch) => {
+                      
+        }
+}
+
+
+
+
+
+----------------------
+
+
+
+LEMBRE-SE: 
+
+esse 'action creator assíncrono' 
+
+
+NÃO VAI FUNCIONAR SEM O 'REDUX-THUNK'...
+
+
+
+
+
+
+---> e professor também tem de importar 'axios', aquela INSTÂNCIA DO AXIOS, aqui,
+
+PARA 
+
+
+QUE 
+
+CONSIGAMOS 
+
+
+utilizá-lo...  
+
+
+
+
+
+
+
+
+-------> NESSE ACTION CREATOR ASSÍNCRONO AÍ,
+
+professor 
+
+vai simplesmente executar 
+
+o 
+
+
+código 
+
+de 
+'.post'
+
+do axios...
+
+
+
+ex:
+
+
+
+
+
+
+export const purchaseBurgerAttempt = (orderData) => { 
+        return (dispatch) => {
+                        axios.post()  ///////EIS O CÓDIGO EM QUESTÃO
+        }
+}
+
+
+
+
+----------------------------------
+
+
+
+LEMBRE-SE DO CÓDIGO VELHO DE 
+
+
+'axios', que havíamos em 
+
+'ContactData':
+
+
+
+
+
+    axiosOrder
+      .post('/orders.json', orderData)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          loading: false,
+        });
+      });
+  };
+
+
+
+---------------------------
+
+
+
+
+
+
+
+
+vamos usar 
+
+provavelmente 
+
+
+esta linha aqui:
+
+
+
+
+.post('/orders.json', orderData)
+
+
+
+
+para 
+
+
+
+POSTAR 
+
+
+dados 
+
+no nosso 
+
+backend...
+
+
+
+
+
+
+
+--> só precisamos alterar um pouco esse código de 
+
+axios... --> precisamos 
+
+tirar 
+
+os 
+
+'this.setState's....
+
+
+
+
+
+--------------------
+
+
+
+ex:
+
+
+export const purchaseBurgerAttempt = (orderData) => { 
+        return (dispatch) => {
+                        axios.post('/orders.json', orderData)
+                        .then(response => {
+                                console.log(response);
+                              
+                        })
+                        .catch(
+                            error => {
+
+                            }
+                        )
+        }
+}
+
+
+
+-------------------------------
+
+
+
+
+
+PODE-se observar que o professor não vai chamar 
+
+'this.setState({loading})',
+
+
+
+e que 
+
+ELE TAMBÉM 
+
+
+__NÃO VAI CHAMAR __ 
+
+'this.props.history.push('/')'... ---------> ELE NÃO VAI FAZER ISSO __PQ N PODE__... ---> n pode 
+
+pq 
+
+
+NÓS NÃO TEMOS ACESSO 
+
+AO 
+
+REACT ROUTER 
+
+nesse arquivo 'order.js'...  -------> ele diz que poderíamos 
+
+passar 
+
+'this.props.history.push('/')' 
+
+
+COMO 
+
+ARGUMENTO nesse action creator,
+
+mas 
+
+que 
+
+nós não vamos fazer isso, 
+
+vamos 
+
+
+tomar uma ROUTE DIFERENTE... ---> vamos redirecionar o usuário __DEPOIS,
+
+talvez no reducer...
+
+
+
+
+
+
+
+
+
+---> em vez disso,
+
+QUANDO 
+
+CONSEGUIRMOS 
+
+A RESPONSE, SE FORMOS 
+
+'SUCCESSFUL' nessa tarefa,
+
+
+PROFESSOR 
+
+VAI QUERER 
+
+
+FAZER 
+
+UM 
+
+
+'dispatch()'
+
+
+
+da action 
+
+'purchaseBurgerSuccess'...
+
+
+
+ex:
+
+
+
+
+
+export const purchaseBurgerAttempt = (orderData) => { 
+        return (dispatch) => {
+                        axios.post('/orders.json', orderData)
+                        .then(response => {
+                                console.log(response);
+                              dispatch(purchaseBurgerSuccess(response.data, orderData)); /////////EIS O CÓDIGO EM QUESTÃO.
+                        })
+                        .catch(
+                            error => {
+
+                            }
+                        )
+        }
+}
+
+
+
+------------------------------------------
+
+
+
+
+
+
+dispatch(purchaseBurgerSuccess(null, orderData)); -------> ESSE É O CÓDIGO IMPORTANTE...
+
+
+
+
+
+'response.data' ---> vai ser o __ID___ de nossa 'order'....
+
+
+
+
+'orderData' --> vai ser a ___ORDER DATA EM SI__....  (recebida lá em 'purchaseBurgerSuccess', como segundo parâmetro...)
+
+
+
+
+
+ISSO FEITO,
+
+
+VAMOS 
+
+
+FAZER 
+
+A MESMA COISA 
+
+
+COM 
+
+'purchaseBurgerFail', mas no ERROR CASE, no '.CATCH() block'....
+
+
+
+ex:
+
+
+
+
+export const purchaseBurgerAttempt = (orderData) => { 
+        return (dispatch) => {
+                        axios.post('/orders.json', orderData)
+                        .then(response => {
+                                console.log(response);
+                              dispatch(purchaseBurgerSuccess(response.data, orderData)); /////////EIS O CÓDIGO EM QUESTÃO.
+                        })
+                        .catch(
+                            error => {
+                                dispatch(purchaseBurgerFail(error.message));
+                            }
+                        )
+        }
+}
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+E, NESSE call de 'purchaseBurgerFail', 
+
+devemos, é claro,
+
+
+PASSAR 
+
+o argumento 
+
+
+'error.message',
+
+QUE SERÁ 
+
+
+NOSSA MENSAGEM DE ERRO (a propriedade 'message' dentro do ERROR...)
+
+
+-------------------------------
+
+
+
+
+
+
+
+COM ISSO, OS ACTION CREATORS DE 'orders.js'
+
+
+estão acabados... --> na próxima lição vamos CONECTAR ELES 
+
+AO CONTAINER... (mas eu já conectei... ) ----> e aí vamos ASSEGURAR __ QUE 
+
+A ORDER 'GOES THROUGH REDUX'....
+
+
+
+
+
+FICOU ASSIM:
+
+
+
+
+export const purchaseBurgerAttempt = (orderData) => {
+        return (dispatch) => {
+                        axiosOrder.post(
+                                '/orders.json', orderData
+                        )
+                        .then(
+                                response => {
+                                        console.log(response);
+                                        dispatch(purchaseBurgerSuccess(response.data, orderData));
+                                }
+                        )
+                        .catch(
+                                error => {
+                                        dispatch(purchaseBurgerSuccess(error.message));
+                                }
+                        )
+        }
+}

@@ -1,0 +1,1349 @@
+
+
+
+
+
+
+
+
+
+Nosso aplicativo está com erros pesados... --> quando loggamos 
+
+
+no nosso aplicativo,
+
+
+
+
+o STATE DE AUTENTICAÇÃO DELE __NÃO PERSISTE__...
+
+
+
+
+
+
+
+
+--> PROVAVELMENTE É PORQUE 
+
+
+
+'AUTH_LOGOUT' está sendo dispatcheado ___TODA VEZ __ QUE 
+
+
+RELOADAMOS NOSSA PÁGINA... (o que faz com que percamos 
+
+o 
+
+STATE de auth/o token no nosso localStorage...)
+
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+
+
+--> O PROFESSOR NOS EXPLICA QUE 
+
+O 
+
+ERRO 
+
+
+DE NÃO 
+
+
+
+CONSEGUIRMOS 
+
+ALCANÇAR 
+
+'Authenticate' (a página) AGORA, 
+
+
+
+
+
+
+
+OCORRE EM __RAZÃO ___ DO FATO _ DE NÓS 
+
+ESTARMOS __WRAPPANDO __ NOSSO 
+
+
+CONTAINER 
+
+'
+App'
+
+
+
+com 
+
+
+AQUELE 
+
+OBJETO 
+
+
+
+'connect()'....
+
+
+
+
+
+
+
+
+
+----------------> o fato de nós wrapparmos 
+
+'App' com 
+
+
+
+esse 
+
+'connect()',
+
+simplesmente faz NOSSO __REACT ROUTER __ QUEBRAR__...
+
+
+
+
+
+
+
+
+-------------> (mas nosso aplicativo não está quebrado, por alguma razão... só o do professor está)..
+
+
+
+
+
+
+
+
+professor nos explica que para CONSERTAR ESSE ERRO,
+
+
+devemos 
+
+
+
+IMPORTAR 
+
+O 
+
+COMPONENT/objeto 
+
+
+
+'withRouter' lá do 
+
+
+
+
+'react-router-dom'... ---------------> E SE VOCÊ TIVER QUALQUER PROBLEMA 
+
+RELACIONADO 
+
+A 
+
+
+ISSO,
+
+
+QUE 
+
+TEM RELAÇÃO COM 
+
+
+
+O COMPONENT 'connect' INTERFERINDO COM OS COMPONENTS QUE JÁ 
+
+ESTÃO 
+
+
+SENDO WRAPPADOS/AFETADOS POR 'ROUTING', 
+
+
+
+
+você deve USAR ESTE APPROACH... --> este problema acontece 
+
+JUSTAMENTE 
+
+PQ 
+
+SEU COMPONENT/CONTAINER 
+
+
+NÃO CONSEGUE RECEBER OS 'ROUTING RELATED PROPS' por causa 
+
+
+da existência do wrap de 'connect'...
+
+
+
+
+
+
+----> PARA ___CONSERTAr__ O PROBLEMA,
+
+
+VOCê 
+
+DEVE 
+
+__WRAPPAR __'connect' com o 
+
+
+'withRouter'...
+
+
+ex:
+
+
+
+
+
+
+
+'''''export default withRouter(connect(null, mapDispatchToProps)(App))''''''
+
+
+
+
+
+
+
+
+--------> ISSO VAI FORÇAR O 'withRouter' 
+
+
+A __PASSAR OS 'ROUTING RELATED PROPS' 
+
+
+
+ao seu container...
+
+
+
+
+-----------------------------------
+
+
+Nosso aplicativo não estava funcionando, por isso 
+
+
+
+
+reverti para o wrap antigo de <BrowserRouter><BrowserRouter/> --> nossa página 'authenticate' é alcançada normalmente...
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+PROFESSOR NOS MOSTRA QUE SE NÓS 
+
+
+RECARREGARMOS 
+
+O 
+
+APP,
+
+
+ 
+ há o problema do 'AUTH_LOGOUT',
+
+ que 
+
+ acaba limpando nosso 'auth state', o que é ruim, pois 
+
+ o 
+
+
+
+ usuário perde sua autenticação/token no localStorage....
+
+
+ -----------------------------------
+
+
+
+
+
+
+
+ -------> O PROBLEMA É A LINHA 
+
+
+
+ if (!token) {
+     dispatch(logout());
+ }
+
+
+
+ ---------------------------------------------
+
+
+
+OU, DIZ O PROFESSOR, PODE SER ESTA LINHA AQUI:
+
+
+
+'''''''''''''''''''''
+
+if (expirationDate > new Date()) {
+    dispatch(logout());
+}
+
+
+''''''''''''''''''''
+
+
+
+
+
+--------> professor diz que devemos DEBUGGAR esse negócio....
+
+
+
+
+
+---> ele vai na aba 'sources',
+
+
+
+em 'store', 
+
+
+
+
+'actions',
+
+E aí 
+
+vai 
+
+no arquivo 
+
+'auth.js',
+
+
+onde temos as actions relativas À authentication do usuário... ------> O PROFESSOR 
+
+
+
+
+ENTÃO COLOCA UM BREAKPOINT 
+
+
+NAQUELA
+ 
+ 
+
+
+
+ action de 
+
+
+ 'authCheckState',
+
+
+
+ bem na linha 
+
+
+
+ de 
+
+
+ 'if (!token)'...
+
+
+
+
+
+
+
+-----> o professor então faz login e aí faz reload da página,
+
+para
+ver bem o que 
+
+acontece 
+
+quando 
+
+
+
+essa linha específica é lida/executada...
+
+
+
+
+
+----------> 
+
+
+
+
+aí o professor percebe que 
+
+
+a 
+TOKEN ESTÁ SENDO FETCHEADA COM SUCESSO 
+
+
+
+nesse 
+
+'if(!token)'... (isso signfica que 
+o 
+
+
+
+IF BLOCK 
+
+de 
+
+'if (!token)' 
+
+
+NÃO FOI 'ENTRADO', 
+
+pulou-se para 
+
+
+a próxima linha,
+
+
+do 
+
+
+'else {
+        const expirationDate = new Date(....);
+
+
+}
+
+
+
+)
+
+
+
+
+
+------------->   professor então nos esclarece que está tudo errado aqui, 
+
+que ele inverteu 
+
+os 
+if blocks,
+
+
+que ele colocou 
+
+
+
+'
+
+
+'else {
+        const expirationDate = new Date(....);
+        dispatch(logout());
+
+
+}
+
+'
+,
+
+
+e que isso está ERRADO. ---> está errado pq esse é o case 
+
+
+EM QUE 
+
+SABEMOS 
+
+QUE 
+A TOKEN É VÁLIDA,
+
+E SE A TOKEN É VÁLIDA/ESTÁ VÁLIDA,
+
+vamos querer 
+
+a execução deste código aqui:
+
+
+
+
+        if (expirationDate > new Date()) {
+          const userId = localStorage.getItem('userId');
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, userId, email)); ///////// esse userId é aquele 'gettado' logo acima....
+          dispatch(checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds()));
+        }
+
+
+-------------------------
+
+
+
+OK,
+ 
+
+
+
+ ISSO ERA UM ERRO DE LÓGICA... --> o professor 
+
+
+ vai em frente e  o conserta.
+
+
+
+
+
+
+ ----> mas ele conserta de um JEITO DIFERENTE...
+
+
+
+ ele escreve 
+
+
+
+
+ 'if (expirationDate <= new Date()) {
+     dispatch(logout());
+ }',
+
+
+
+
+ o que CONSERTA O PROBLEMA DE ANTES...
+
+
+
+
+
+
+ ------------------
+
+
+ CERTO, AGORA TEMOS O 'AUTH_SUCCESS', MAS ELE AINDA ESTÁ SENDO SUCEDIDO POR 
+
+
+ 'AUTH_LOGOUT', que não é o que desejamos... (perdemos nosso token/auth state...)
+
+
+
+
+
+
+
+ ----> de novo, vamos debuggar isso aí...
+
+
+
+
+ o professor coloca um BREAKPOINT 
+
+ em 
+
+
+ 'if (expirationDate <= newDate()) {
+     dispatch(logout())
+ }' 
+
+
+
+
+
+
+
+
+ --> e aí o devtools 
+
+
+
+
+ vai 
+
+
+
+ para dentro 
+
+
+ de 
+
+ 'authSuccess'..
+
+
+
+
+
+
+
+
+
+
+ --> ok, mas pq diabos 'logout' está sendo executado/dispatcheado, então? 
+
+
+
+
+
+
+
+
+
+
+ --> professor nos explica que 
+
+
+
+ provavelmente há uma relação com 'checkAuthTimeout', que tem 
+
+ este código:
+
+
+
+
+ export const checkAuthTimeout = (expirationTime) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(authLogout());
+    }, expirationTime * 1000);
+  };
+};
+
+
+
+
+--------------------------
+
+é por isso que o professor 
+
+
+também
+
+coloca um breakpoint 
+
+
+em 
+
+
+'dispatch(logout())'...., para 
+
+
+ver 
+
+SE ISSO ESTÁ SENDO DISPARADO 'preemptively'...  --> de fato, isso está 
+
+sendo 
+
+DISPARADO PRECOCEMENTE.... (e isso não pode ser disparado...) ------> 
+
+
+o problema, no caso, 
+
+provavelmente 
+
+ocorre 
+
+por causa 
+
+
+do 
+
+'expirationTime' passado como parâmetro 
+
+a essa action... ----> queremos descobrir QUAL 
+
+
+É O VALOR QUE ESTÁ SENDO SETTADO/PASSADO 
+
+
+COMO SENDO 
+
+o 'expirationTime'... --------> 
+
+vamos 
+
+
+perceber,
+
+por meio 
+
+
+DOS BREAKPOINTS DO DEVTOOLS,
+
+
+que 
+
+o 
+
+
+'expirationTime'
+
+está 
+
+
+sendo 
+passado 
+
+
+COMO ___' -10' (
+  menos 10...
+)
+
+
+
+
+
+
+--> e quando ele está como '-10',
+
+isso IMEDIATAMENTE 
+
+
+V
+AI 
+
+TRIGGAR 
+
+O 'authLogout()',
+
+pois 
+
+nosso 
+
+
+
+if statement 
+
+é 
+
+
+de 
+
+'expirationDate <= newDate()'
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+----------------> MAS PROFESSOR NOS DIZ QUE 
+
+FAZ SENTIDO ESSE VALOR 
+
+SER 
+DE 
+
+'-10'... --------> 
+
+
+
+
+ele nos diz que 
+
+
+TEMOS UM PUNHADO DE ERROS 
+
+NO NOSSO CÓDIGO,
+
+E QUE 
+
+DEVEMOS OS CONSERTAR...
+
+
+
+
+
+
+----------------
+
+
+
+ok, qual é o problema?
+
+
+
+
+
+BEM,
+
+
+PARA 
+
+CHECAR 
+
+o 
+
+
+'auth timeout',
+
+por meio 
+
+de 
+
+'checkAuthTimeout',
+
+Nesta linha 
+
+aqui:
+
+
+
+
+
+
+
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+      if(!token) {
+        console.log('test');
+        dispatch(authLogout())
+      } else {
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate <= new Date()) {
+          dispatch(authLogout());
+
+         
+        } 
+        else {
+          const userId = localStorage.getItem('userId');
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, userId, email)); 
+          dispatch(checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds()));  //<<<<<<<<<<<<< ESTA LINHA AQUI
+        }
+  
+      }
+  }
+}
+
+
+------------------------
+
+
+
+
+
+NESSA LINHA AÍ,
+
+O PROFESSOR 
+
+ESTÁ 
+
+PASSANDO COMO PARâMETRO 
+
+''' A DIFERENÇA ENTRE A FUTURE DATE E O DIA DE HOJE....'''' -----> e o problema 
+
+
+ocorreu 
+
+JUSTAMENTE 
+
+PQ 
+
+O 
+PROFESSOR 
+USOU 
+
+
+
+o método 
+
+
+'.getSeconds()',
+
+
+E NÃO 
+
+
+'.getTime()'.... ---------------->
+
+
+
+
+ISSO 
+
+PQ 
+
+
+
+'getSeconds()' VAI NOS DAR O NÚMERO EM __SEGUNDOS__, ENQUANTO QUE 
+
+
+'getTime' 
+
+
+
+VAI 
+
+ME 
+DAR 
+
+
+O 
+
+TEMPO __ EM MILISSEGUNDOS____....
+
+
+
+
+EX:
+
+O método getTime() retorna o valor numérico correspondente ao horário da data especificada de acordo com o horário universal.
+
+Você pode usar este método para atribuir uma data e horário a outro objeto Date. Este método é funcionalmente equivalente ao método valueOf().
+
+Sintaxe
+dateObj.getTime()
+Retorna
+Um número representando os milissegundos passados entre 1 de Janeiro de 1970 00:00:00 UTC e a data atual.
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+É POR ISSO QUE 
+
+O MÉTODO 
+
+
+'getTime()' 
+
+É MUITO MAIS UTILIZADO 
+
+DO QUE 
+
+
+'getSeconds'... ------> E É EXATAMENTE 
+
+POR ISSO QUE 
+
+O 
+
+PROFESSOR 
+
+
+VAI ESCREVER 
+
+
+
+
+'checkAuthTimeout(expirationDate.getTime() - new Date().getTime());' -----------> 
+
+
+
+e COM ISSO,
+
+TEREMOS 
+
+
+A __DIFERENÇA__, DESSA VEZ EM MILISSEGUNDOS, 
+
+ENTRE 
+
+ESSES 
+
+2 VALORES/DATES/TEMPOS....
+
+
+
+
+
+----------------------------
+
+
+
+EX:
+
+
+
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+      if(!token) {
+        console.log('test');
+        dispatch(authLogout())
+      } else {
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate <= new Date()) {
+          dispatch(authLogout());
+
+         
+        } 
+        else {
+          const userId = localStorage.getItem('userId');
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, userId, email)); ///////// esse userId é aquele 'gettado' logo acima....
+          // dispatch(checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds()));  ////este código NÃO VAI FUNCIONAR... vai introduzir um PROBLEMA NO NOSSO CÓDIGO: nosso código vai sempre executar 'auth_logout'... ---------> ao usar 'getTime()' em vez de 'getSeconds()', nós vamos obter A DIFERENÇA ENTRE O 'FUTURO' E O 'PRESENTE' (que é o tempo até a token expirar, basicamente) EM __MILISSEGUNDOS___, que é exatamente o que queremos (pq a unidade de tempo usada GERALMENTE no javascript é MILISSEGUNDOS.... os timers/setTimeouts também funcionam com ms, e é por isso que vamos utilizar '.getTime()' aqui....)
+          dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime())); ////eis o código em questão.
+        }
+  
+      }
+  }
+}
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+
+CERTO... MAS HÁ OUTRO ERRO/IMPROPRIEDADE 
+
+
+EM NOSSO 
+
+CÓDIGO QUE DEVEMOS AJUSTAR... ----> professor nos diz que 
+
+LÁ 
+
+
+EM 
+
+'checkAuthTimeout' 
+
+
+NÓS 
+JÁ TEMOS UM 
+
+CÓDIGO QUE MÚLTIPLICA 
+
+O 
+
+
+ 'expirationTime' por 1000
+ 
+        (
+
+            ex:
+
+            export const checkAuthTimeout = (expirationTime) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(authLogout());
+    }, expirationTime * 1000); ////eis o co´digo em questão.
+  };
+};
+
+
+        )
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ ,
+
+ E QUE ESSA MULTIPLICAÇÃO AÍ VAI DEIXAR NOSSOS NÚMEROS MT GRANDES.... ----> e é 
+
+
+ exatamente 
+
+
+ por isso 
+
+
+ que 
+
+ O PROFESSOR 
+
+
+ DECIDE 
+
+  
+
+  WRAPPAR 
+
+
+  O 
+
+  CÁLCULO
+   
+
+   de 
+
+
+   'expirationDate.getTime() - new Date().getTime()'
+
+
+
+
+   VAI SER  __WRAPPADO __ POR UM PARÊNTESES, 
+
+
+   vai ser wrappado PQ O PROFESSOR 
+
+   ENTÃO 
+
+   VAI 
+
+   QUERER DIVIDIR 
+
+   ESSA EXPRESSÃO TODA POR '1000' (isso pq logo depois, em 'checkAuthTimeout', essa expressão/valor extraído dessa expressão 
+   
+   VAI SER MULTIPLICADO POR '1000'...)
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+(expirationDate.getTime() - new Date().getTime()) / 1000 
+
+
+
+
+
+
+-----------------
+
+
+
+
+RESULTADO COMPLETO:
+
+
+
+
+
+
+
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+      if(!token) {
+        console.log('test');
+        dispatch(authLogout())
+      } else {
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate <= new Date()) {
+          dispatch(authLogout());
+
+         
+        } 
+        else {
+          const userId = localStorage.getItem('userId');
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, userId, email)); ///////// esse userId é aquele 'gettado' logo acima....
+          // dispatch(checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds()));  ////este código NÃO VAI FUNCIONAR... vai introduzir um PROBLEMA NO NOSSO CÓDIGO: nosso código vai sempre executar 'auth_logout'... ---------> ao usar 'getTime()' em vez de 'getSeconds()', nós vamos obter A DIFERENÇA ENTRE O 'FUTURO' E O 'PRESENTE' (que é o tempo até a token expirar, basicamente) EM __MILISSEGUNDOS___, que é exatamente o que queremos (pq a unidade de tempo usada GERALMENTE no javascript é MILISSEGUNDOS.... os timers/setTimeouts também funcionam com ms, e é por isso que vamos utilizar '.getTime()' aqui....)
+          dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime())) / 1000);  ////devemos WRAPPAR essa expressão em parênteses PARA PODER ENTÃO A DIVIDIR por 1000... ---> e dividimos por 1000 pq LOGO DEPOIS ELA SERÁ MULTIPLICADA por '1000', lá na action de checkAuthTimeout()...
+        }
+  
+      }
+  }
+}
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+--> SE AGORA REINICIARMOS NOSSO APLICATIVO,
+
+VEREMOS 
+
+QUE 
+
+a FUNÇÃO DE 'AUTO-LOGIN' (ou seja o 'PERSIST' do authstate do usuário) 
+
+ESTARÁ 
+
+
+FUNCIONANDO.... ----------> nosso 
+
+TOKEN 
+
+
+__REALMENTE___ VAI PERMANECER ____ 
+
+
+NO 
+
+
+'localStorage' 
+
+DO BROWSER DO NOSSO USUÁRIo.... --> e ele vai poder RECARREGAR E FECHAR A PÁGINA (sem fechar o browser) 
+
+
+SEM 
+
+PERDER O 
+
+'authState'...
+
+
+
+
+--------------------------------------
+
+
+
+
+EXCETO NA NOSSA VERSÃO DO CÓDIGO.... -> na nossa versão do código,
+
+RECEBEMOS UM ERRO FEIO... ---> 
+
+
+'
+Error: Actions must be plain objects. Use custom middleware for async actions'...
+
+
+
+
+
+
+
+
+
+--> ISSO ACONTECEU PQ 
+
+
+
+
+AQUELE 
+
+
+CÓDIGO DE 
+
+'
+
+dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 )); '''
+
+
+
+ESTAVA MAL-ESCRITO,
+
+estavam faltando alguns ()...
+
+
+
+----------------------
+
+
+--> CERTO, AGORA 
+
+NOSSA FUNCIONALIDADE 
+
+DE 
+
+
+'AUTO-LOGIN' está funcionando... --------> e o user continuará loggado na página,
+
+desde que 
+
+SUA 
+
+TOKEN NÃO ESTEJA EXPIRADA...
+
+
+
+
+
+
+-----> entretanto, ainda vejo um problema... ---> 
+
+
+
+se 
+
+nós 
+
+
+REINICIAMOS A PÁGINA (reload)
+
+
+ENQUANTO ESTAMOS 
+
+
+NO CONTAINER 
+
+DE 
+
+'Orders',
+
+NÓS 
+
+
+VAMOS 
+
+RECEBER UM ERRO DE 
+
+'Request failed with status code 401'... -----> tipo: a página 
+
+
+VAI 
+
+
+'carregar', mas 
+
+NENHUMA ORDER VAI APARECER,
+
+
+
+
+MAS O USUÁRIO CONTINUARÁ LOGGADO... -----> e aí recebemos o tal erro, naquele ERROR MODAL.... --> veremos a solução disso na PRÓXIMA AULA...

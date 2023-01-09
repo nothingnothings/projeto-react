@@ -1,0 +1,1671 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> DE VOLTA AO NOSSO ARQUIVO 'APP.JS' (copiamos o nosso código antigo, nosso projeto antigo...)
+
+
+
+
+
+
+--> LÁ, NESSE ARQUIVO 'App.js',
+
+
+dentro do 
+
+
+método 
+
+
+'render()',
+
+
+o qual aprendemos 
+
+
+QUE __ É USADO __ QUANDO NÓS TEMOS/CRÍAMOS UM 
+
+COMPONENTS 
+por meio 
+
+
+do EXTEND do objeto 
+
+'Component'....
+
+
+ex:
+
+
+
+class App extends Component {
+    ...
+
+
+
+    render() {
+
+    }
+}
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+DENTRO DE 'RENDER', 
+
+
+nós fizemos o OUTPUT 
+
+
+de 3 
+
+PERSONS...
+
+
+
+
+ex:
+
+
+<Person 
+
+  name={this.state.persons[0].name}
+  age={this.state.persons[0].age}
+    />
+<Person 
+
+  name={this.state.persons[1].name}
+  age={this.state.persons[1].age}
+  click={this.switchNameHandler.bind(this, 'Max!')}
+  changed={this.nameChangedHandler} >My Hobbies: Racing</Person>
+    />
+<Person
+  name={this.state.persons[2].name}
+  age={this.state.persons[2].age}
+    />
+
+</div>
+
+
+-----------------------------------------------------
+
+
+
+
+
+E ISSO,
+
+
+ESSE CÓDIGO AÍ, explica o professor, 
+
+
+É 'kindof a list'... ---> É UMA LIST 
+
+
+PQ NÓS 
+
+
+___TAMBÉM _____ TEMOS 'Person's 
+
+
+GERENCIADAS ('managed') 
+
+
+NO NOSSO 
+
+
+'state', 
+
+
+em 
+
+
+'
+ state = { ///////MUITO IMPORTANTE.
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value' /////ISSO É UM EXEMPLO. ESSA PROPRIEDADE NÃO SERÁ AFETADA PELO NOSSO NOVO STATE DEFINIDO POR 'setState()', pois naquele objeto ({}) que passamos como argumento ao 'setState()', nós APENAS REFERENCIAMOS O ARRAY DE 'persons', e não falamos nada sobre essa propriedade 'otherState'...
+  }
+  ' 
+
+
+------------------------------------
+
+
+
+
+
+FARIA SENTIDO 
+
+
+FAZER OUTPUT DESSE STATE/persons COMO UMA LIST... (na forma de uma list...).
+
+
+
+
+MAS ANTES DE VERMOS ISSO,
+
+
+
+DEVEMOS APRENDER SOBRE 
+
+
+COMO ____ OUTPUTTAR___ CONTEÚDO
+
+___CONDICIONALMENTE___.... --> 
+
+
+
+DIGAMOS QUE QUANDO NÓS 
+
+
+CLICAMOS 
+
+NAQUELE 'button'....
+
+
+
+ex:
+
+
+
+
+
+return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button  ///////BOTÃO
+        style={style}
+    ///'onxxx' que faz com que aquela função seja executada    onClick={this.switchNameHandler.bind(this, 'Maximillian')}>Switch Name</button> {/*ESSA É A PRIMEIRA MANEIRA ('.bind()' de this e do argumento que você quer passar) DE PASSAR UM PARÂMETRO/ARGUMENTO a uma FUNÇÃO QUE SE ENCONTRA EM UM OUTRO LUGAR... --> passamos o método 'switchNameHandler' como ARGUMENTO 'props' lá no component 'Person'... ---> fazemos isso para então podermos o utilizar lá... */}
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={() => this.switchNameHandler('MAXIMILLIAN!!!')}> {/*ESSA É A SEGUNDA MANEIRA DE PASSAR UM PARÂMETRO/ARGUMENTO A UMA FUNÇÃO QUE SE ENCONTRA EM OUTRO LUGAR...  ---> essa versão usa UMA ARROW FUNCTION e 'this.suafunçãohandler()', tudo em uma única linha, dentro do function body da arrow function*/}
+          My Hobbies: Racing</Person>  
+        {/* aqui vemos o uso de uma gambiarra COMUM com MÉTODOS e propriedades, em que passamos essa propriedade ao nosso component, ao 'props' de nosso component, onde essa propriedade 'click' é utilizada...  */}
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+      </div>
+    );
+
+
+
+--------------------------------------------------
+
+
+
+
+DIGAMOS QUE QUANDO NÓS CLICAMOS NAQUELE BOTÃO,
+
+
+NÓS NÃO VAMOS QUERER ____QUE OS NOMES ___ SEJAM TROCADOS (que é o que nosso código faz, por enquanto),
+
+
+E SIM, EM VEZ DISSO, 
+
+
+VAMOS QUERER 
+
+
+
+
+'SHOW/HIDE'
+
+
+AS PESSOAS QUE 
+
+
+TEMOS LÁ 
+
+EMBAIXo....
+
+
+(os 3 elementos 'person'...)
+
+
+
+
+
+
+---> PARA ISSO, NÓS PODEMOS, POR EXEMPLO,
+
+
+
+__WRAPPAR___ TODAS ESSAS 'Person' 
+
+em UMA DIV.... (professor vai provavelmente usar o truque DO __STYLING__ para esconder esses elementos... colocar 'display: none', ou algo assim)...
+
+
+
+
+----> professor vai fazer 'SHOW/HIDE' dessa 
+div de acordo com o botão....   --------> e isso vai AUTOMATICAMENTE ESCONDER/MOSTRAR 
+
+TUDO AQUILO QUE EXISTE DENTRO DA DIV (que é as persons)...
+
+
+
+
+
+------------------------------------
+
+
+ex:
+
+
+
+
+
+return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button  ///////BOTÃO
+        style={style}
+    ///'onxxx' que faz com que aquela função seja executada    onClick={this.switchNameHandler.bind(this, 'Maximillian')}>Switch Name</button> {/*ESSA É A PRIMEIRA MANEIRA ('.bind()' de this e do argumento que você quer passar) DE PASSAR UM PARÂMETRO/ARGUMENTO a uma FUNÇÃO QUE SE ENCONTRA EM UM OUTRO LUGAR... --> passamos o método 'switchNameHandler' como ARGUMENTO 'props' lá no component 'Person'... ---> fazemos isso para então podermos o utilizar lá... */}
+
+        <div> /////////EIS O CÓDIGO EM QUESTÃO.
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={() => this.switchNameHandler('MAXIMILLIAN!!!')}> {/*ESSA É A SEGUNDA MANEIRA DE PASSAR UM PARÂMETRO/ARGUMENTO A UMA FUNÇÃO QUE SE ENCONTRA EM OUTRO LUGAR...  ---> essa versão usa UMA ARROW FUNCTION e 'this.suafunçãohandler()', tudo em uma única linha, dentro do function body da arrow function*/}
+          My Hobbies: Racing</Person>  
+        {/* aqui vemos o uso de uma gambiarra COMUM com MÉTODOS e propriedades, em que passamos essa propriedade ao nosso component, ao 'props' de nosso component, onde essa propriedade 'click' é utilizada...  */}
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+         </div>///eis o código.
+         </div>
+    );
+
+
+
+----------------------------------------------------
+
+
+ 
+CERTO.... A SEGUNDA 
+
+ETAPA É PROVAVELMENTE 
+
+COLOCAR 
+
+
+UMA 
+
+'CLASSNAME'
+
+nessa div...
+
+
+
+(errei... professor diz que primeiro 
+
+DEVEMOS 
+
+MUDAR 
+
+
+O QUE 
+
+O MÉTODO 
+
+'this.switchNameHandler()' 
+
+FAZ....)
+
+
+-------------------------------
+
+
+
+
+eis o método 'switchNameHandler()':
+
+
+
+
+
+
+
+
+  switchNameHandler = (newName) => {
+    
+    
+    this.setState({  
+      persons: [
+        { name: newName, age: 28 }, ////ISSO VAI ACABAR UPDATANDO O 'state' em relação a esse objeto, pois 'Max', do primeiro state, acabou sendo mudado para 'Maximillian'.... --> e ele sempre será mudado para 'Maximillian' quando o botão for pressionado, pois esse é o fluxo de nosso código.
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 22 }
+    ]
+    })
+  }
+
+
+
+  --------------------------------------
+
+
+
+  Esse método, como podemos observar,
+
+
+  É __MUITO SIMPLES___. Ele está 
+
+  apenas 
+
+  recebendo um 
+
+  argumento de 'newName' (que é o novo nome, cujo gatilho é o CLICK de 'onClick'...)
+
+
+  E ENTÃO updatando o state de acordo com isso...
+
+
+
+
+  Entretanto, 
+
+
+  professor decide deixar esse 
+
+  método QUIETO, 
+
+  ele decide 
+
+
+  CRIAR OUTRO MÉTODO e então 
+
+  INSERÍ-LO no lugar 
+
+
+  do 'this.switchNameHandler' em '
+
+ ' onClick{}' no button....
+
+
+
+
+Ele vai lá e dá o nome de 
+
+
+'togglePersonsHandler' a esse método....
+ -------------------------------------------
+
+
+
+
+
+ ex:
+
+
+
+
+
+return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button  ///////BOTÃO
+        style={style}
+    onClick={this.togglePersonsHandler}>Hide/Show Name</button> ///EIS O CÓDIGO EM QUESTÃO.
+
+        <div> /////////EIS O CÓDIGO EM QUESTÃO.
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={() => this.switchNameHandler('MAXIMILLIAN!!!')}> {/*ESSA É A SEGUNDA MANEIRA DE PASSAR UM PARÂMETRO/ARGUMENTO A UMA FUNÇÃO QUE SE ENCONTRA EM OUTRO LUGAR...  ---> essa versão usa UMA ARROW FUNCTION e 'this.suafunçãohandler()', tudo em uma única linha, dentro do function body da arrow function*/}
+          My Hobbies: Racing</Person>  
+        {/* aqui vemos o uso de uma gambiarra COMUM com MÉTODOS e propriedades, em que passamos essa propriedade ao nosso component, ao 'props' de nosso component, onde essa propriedade 'click' é utilizada...  */}
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+         </div>///eis o código.
+         </div>
+    );
+
+
+
+--------------------------------------------------------
+
+
+
+
+Certo...
+
+
+
+
+Com isso, 
+
+
+o professor 
+
+
+decide 
+
+
+VOLTAR ÀQUELA SINTAXE 
+
+
+'VELHA'  DE __NÃO USAR ____ UMA 
+
+
+ARROW FUNCTION AQUI, não usar mais esse formato '() => {this.nomedoMétodo(parâmetro)}'....
+
+
+
+
+
+ELe 
+
+
+vai, agora, 
+
+
+apenas 
+
+escrever
+ 
+
+
+ 'onClick={this.togglePersonsHandler}'
+
+
+
+ ------------------------------------------
+
+
+
+ OU SEJA,
+
+ AQUI 
+
+
+ ELE ___SÓ PASSOU UMA REFERÊNCIA___... é essa a sintaxe que ele vai utilizar, aqui...
+
+
+
+
+
+ ELE VAI 
+
+ CRIAR 
+
+ AGORA UM MÉTODO 
+
+ chamado 
+
+
+ 'togglePersonsHandler()'...
+
+
+
+
+ Ele o cria dentro 
+
+
+ do componente 
+
+ 'App', 
+
+
+ com a sintaxe 
+
+
+
+
+
+ togglePersonsHandler = () => {
+
+ }
+
+
+
+ELE FAZ ISSO PARA EVITAR PROBLEMAS COM A KEYWORD 'this'....  --------> e nós VAMOS 
+
+
+ter que usar 'this' com esse método ('this.togglePersonsHandler'), 
+
+
+POIS ELA SEMPRE SERÁ ATIVADA A PARTIR DE UM EVENTO 
+
+
+DISPARADO LÁ DO DOM.... (e é por isso que devemos usar uma arrow function para definir 
+esse método...)
+
+
+
+
+(agora o 'this' vai se referir à classe 'Component'...)
+
+
+
+
+-------> ok....
+
+------------------------------
+
+
+
+
+AGORA O PROFESSOR VAI QUERER 
+
+
+USAR 
+
+AQUELE 
+
+MÉTODO 
+
+JAVASCRIPT
+ 
+
+ '.toggle'...
+
+
+
+
+ ELE VAI FAZER ISSO 
+
+
+ PARA 
+
+
+ DAR __TOGGLE___ em uma classe 
+
+ QUE SERÁ DEFINIDA 
+
+
+ NAQUELA '<div'>...
+
+
+
+
+
+
+
+
+ ---> professor diz que ele vai querer FAZER TOGGLE DE ALGUMA 
+
+ PROPRIEDADE 
+
+ que vai comunicar/decidir SE QUEREMOS 
+
+
+ FAZER DISPLAY DAQUELA DIV ou não...
+
+
+
+
+ ---------------------------------
+
+
+
+ ANTES DE MAIS NADA, 
+
+
+
+ o professor 
+
+
+ vai até 
+
+o 
+
+
+
+
+____STATE____ e define uma propriedade nova...
+
+
+
+
+ele coloca um nome de 'showPersons'...
+
+
+ex:
+
+
+
+
+class App extends Component {
+
+
+
+    state = {
+        persons: [...],
+
+        otherState: 'some other value',
+
+
+        showPersons: ///EIS O CÓDIGO EM QUESTÃO.
+    }
+}
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+E, INICIALMENTE, O PROFESSOR 
+
+
+VAI DEFINIR 
+
+
+O VALOR 
+
+
+DESSA PROPRIEDADE COMO SENDO 'false'...
+
+
+
+
+--> se esse valor for 'false', o professor NÃO VAI QUERER 
+
+QUE ESSA PERSON/PERSONS SEJA MOSTRADA....
+
+
+
+EX:
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+    state = {
+        persons: [...],
+
+        otherState: 'some other value',
+
+
+        showPersons: false ///EIS O CÓDIGO EM QUESTÃO.
+    }
+}
+
+
+
+-----------------------------------------------------------
+
+
+
+
+
+CERTO, MAS E AGORA,
+ 
+ COMO PODEMOS 
+
+ FAZER O RENDER DINÂMICO DESSA CARACTERÍSTICA?
+
+
+
+
+ Bem, nós devemos 
+
+ IR ATÉ 
+ A 
+
+ NOSSA DIV........... ----------> (OBS: SE ESTIVÉSSEMOS EM OUTROS __FRAMEWORKS___, 
+ 
+ COMO 'REACT' E 'VUE', NÓS AGORA COLOCARÍAMOS UMA 
+ 
+ 'DIRECTIVE' NESSA DIV...) --> por exemplo, em 'vue.js', nós colocaríamos um '<div v-if>', colocaríamos um 'v-if'...
+
+
+
+ ---------------------------------------------------------
+
+
+
+
+
+ MAS O ___rEACT___ FUNCIONA DE FORMA DISTINTA... ----> aqui, 
+
+ nós 
+
+
+ devemos SEMPRE NOS LEMBRAR QUE ___ AINDA ESTAMOS TRABALHANDO APENAS COM JAVASCRIPT___... ---> o código 
+
+ pode se PARECER COM HTML, mas no final das contas ELE É ___JAVASCRIPT___... (JSX = AÇÚCAR SINTÁTICO)...
+
+
+
+
+----> JUSTAMENTE PELO FATO DE 'JSX' AINDA SER CÓDIGO JAVASCRIPT, 
+
+AINDA PODEMOS 
+
+
+ESCREVER COISAS AQUI COMO SE ESTIVÉSSEMOS ESCREVENDO 
+
+CÓDIGO JAVASCRIPT... ----> isso quer 
+
+
+DIZER QUE SE NÓS QUEREMOS 
+
+
+___RENDERIZAR ___ ESSA DIV/PERSONS 
+
+de forma 
+
+DINÂMICA (dynamically), 
+
+
+NÓS PODEMOS 
+
+
+FAZER 'ENCLOSE '(we can 'enclose it') 
+
+
+DA NOSSA DIV EM 
+
+__ CURLY BRACES___ (professor diz 'quotation marks')...
+
+
+
+
+Como assim?
+
+
+
+
+
+
+BEM, ASSIM:
+
+
+
+
+
+return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button  
+        style={style}
+    onClick={this.togglePersonsHandler}>Hide/Show Name</button> 
+
+        {<div> //////EIS O CÓDIGO EM QUESTÃO.
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={() => this.switchNameHandler('MAXIMILLIAN!!!')}> 
+          My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+         </div>} ///////////EIS O CÓDIGO EM QUESTÃO
+         </div>
+    );
+
+
+-----------------------------
+
+
+
+
+
+OU SEJA, 
+
+podemos 
+
+fazer isso:
+
+
+{<div>....CÓDIGO INTEIRO NO MEIO.....</div>}
+
+
+
+
+
+
+
+
+ENTENDA: AQUI QUEREMOS __FAZER 'ENCASE' __  APENAS DA 
+
+___INNER DIV__, E NÃO DA 'OUTER DIV'.... 
+
+
+
+
+
+
+
+
+
+
+
+---> E AGORA, no meio das quotation marks/curly braces que aprendemos,
+
+
+NÓS PODEMOS AGORa  
+
+
+
+_____ESCREVER ____ JAVASCRIPT EXPRESSIONS... ---------->
+
+
+
+
+como assim 
+
+
+'escrever javascript expressions'? ---> 
+
+isso quer 
+
+
+dizer que 
+
+NÓS 
+
+ALÉM DE 
+
+PODER FAZER COISAS 
+
+SIMPLES 
+
+
+COMO UM CÁLCULO DE '2 + 2 ', 
+
+ou então 
+
+
+um 'reach out' à propriedade 
+
+STATE por meio de '{this.state.persons[0].name}',
+
+
+
+
+PODEMOS TAMBÉM FAZER OUTRAS COISAS...   -------------> PODEMOS 
+
+
+
+____RENDERIZAR ___ CONTEÚDO ___ CONDICIONALMENTE __ POR MEIO DE 
+
+___ TERNARY EXPRESSIONS__ , por exemplo...
+
+
+
+
+
+
+
+
+----> O QUE VOCê __NÃO __ PODE FAZER, NO ENTANTO, 
+
+
+É ___ ADICIONAR ___ IF __ STATEMENTS____...
+
+
+
+
+
+---> if statements são VETADOS pelo react, dentro do código JSX... ------->
+
+
+
+'if () { ////
+    <div>
+        <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={() => this.switchNameHandler('MAXIMILLIAN!!!')}> 
+          My Hobbies: Racing</Person>  
+        <Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+         </div>
+}' --------------> ISSO __ NÃO VAI FUNCIONAR___....
+
+
+
+
+
+
+---> VOCÊ NÃO PODE USAR IF STATEMENTS; A ÚNICA COISA QUE 
+
+
+VOCê PODE ESCREVER 
+
+SÃO 'SIMPLE STATEMENTS', com ternary expressions.... ---> você 
+
+
+ESTÁ PROIBIDO DE ___eSCREVER ___ BLOCK STATEMENTS__ (como os if statements/com os if statements)....
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+OK...
+
+
+
+
+
+TEMOS DE USAR UMA TERNARY EXPRESSIOn...
+
+
+
+
+ternary expressions são:
+
+
+
+xxx ? yyyyy : zzzzz
+
+
+
+(se 'xxx' for true, rode 'yyyy'... caso 'xxxx' for FALSE, rode 'zzz'...)
+
+
+
+
+
+
+NESSE CASO ESPECÍFICO, DAS DIVS,
+
+
+vamos 
+
+querer 
+
+
+colocar:
+
+
+
+
+
+'this.state.showPersons ?   :       '
+
+
+
+
+
+
+
+OBS: SEMPRE TENHA EM MENTE QUE 'this.state.showPersons' aqui, nesse primeiro slot, 
+
+SERÁ UM __BOOLEAN__ de 'true' ou 'false'... ------------> INICIALMENTE,
+
+
+ESSE BOOLEAN SERÁ DE VALOR 'false', pois definimos o STATE 
+
+inicial 
+
+do 'showPersons' de nossa página como 
+
+__fALSE___...
+-----------------------------
+
+
+
+
+
+--> SE 'showPersons' for TRUE, VAMOS QUERER 
+
+
+__OUTPUTTAR___ A NOSSA DIV, certo...?
+
+
+
+
+
+
+OK, então o que colocamos após o 
+
+
+'?'  ---> devemos colocar A PARTE 
+
+QUE VAMOS QUERER RENDERIZAR.... ---> O QUE QUEREMOS RENDERIZAR? ----> 
+
+
+
+A 'DIV' com as PERSONS ---> E É EXATAMENTE ISSO QUE VAMOS FAZER, VAMOS 
+
+__ESCREVER/INSERIR __ ESSA DIV LOGO DEPOIS DO '?', POIS É ELA QUE DEVERÁ SER EXECUTADA/ADICIONADA 
+
+A NOSSA PÁGINA caso o 'showPersons' RENDA 'true'...
+
+
+
+('this.state.showPersons ? DIV INTEIRA : else case que queremos que seja executado')...
+
+
+
+
+
+
+OK, FICARÁ ASSIM:
+
+
+
+{ this.state.showPersons ? 
+
+<div>
+ <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+
+<Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={() => this.switchNameHandler('MAXIMILLIAN!!!')}> 
+          My Hobbies: Racing</Person>  
+<Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+
+</div>
+
+:
+
+
+
+}
+
+
+
+
+------------------------------
+
+
+
+O QUE VAMOS QUERER BOTAR DEPOIS 
+
+
+DO ':', 
+
+
+nesse caso, será 
+
+
+'null', POIS ESSE 'null' FARÁ COM QUE 
+
+
+
+_NADA ___ SEJA RENDERIZADO NESSE ESPAÇO... (no espaço em que deveriam ficar os persons... ---> assim ACABAMOS ESCONDENDO A 'DIV'/as persons...)
+
+------------------------
+
+
+
+
+OK, MAS O QUE ACONTECE POR TRÁS DAS CENAS DISSO?
+
+
+
+
+Bem, se a primeira condição ('this.state.showPersons') FOR TRUE,
+
+
+
+esse código aqui 
+
+
+
+<div>
+ <Person 
+        name={this.state.persons[0].name}
+        age={this.state.persons[0].age} />
+
+<Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        changed={this.nameChangedHandler} 
+        click={() => this.switchNameHandler('MAXIMILLIAN!!!')}> 
+          My Hobbies: Racing</Person>  
+<Person 
+        name={this.state.persons[2].name} 
+        age={this.state.persons[2].age}/>
+
+</div>
+
+
+
+É EXECUTADO 
+
+__ E TRADUZIDO__ para 
+
+
+React.createElement('div louca') 
+
+
+
+POR TRÁS DAS CENAS...
+
+
+
+
+---------------------------------------
+
+
+
+
+
+CERTO... ISSO FUNCIONOU... --> no entanto, agora o 
+
+BOTÃO 
+
+'Show/hide persons' 
+
+SÓ __FUNCIONA 1 ÚNICA VEZ.... ---> ele não retorna para o 'STATE ORIGINAL' quando 
+
+clicamos nele...
+
+
+
+---------------------------------------------------------
+
+
+
+'null' --> renderiza NADA/'null'... 
+
+
+
+
+
+
+
+
+----> esse código faz PERFEITO SENTIDO depois que 
+
+aprendemos sobre 
+
+
+como o react funciona...  
+
+
+
+--------------------------------
+
+
+
+
+
+CERTO... ISSO FUNCIONOU... --> no entanto, agora o 
+
+BOTÃO 
+
+'Show/hide persons' 
+
+SÓ __FUNCIONA 1 ÚNICA VEZ.... ---> ele não retorna para o 'STATE ORIGINAL' quando 
+
+clicamos nele...
+
+
+
+--------------> PARA CONSERTAR ISSO, PRECISAMOS 
+
+
+COLOCAR CÓDIGO EM 'togglePersonsHandler'...
+
+
+
+
+Até agora, nosso código em 
+
+
+'togglePersonsHandler'
+
+está assim:
+
+
+
+
+
+  togglePersonsHandler = () => {
+    this.setState(
+      {
+        showPersons: true
+      }
+    )
+  }
+
+
+
+---------------------------------
+
+
+
+
+TALVEZ PRECISEMOS COLOCAR UM 
+
+'IF STATEMENT' dentro dele?
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+  togglePersonsHandler = () => {
+
+      if(!showPersons) {
+           this.setState(
+      {
+        showPersons: true
+      }
+    )
+      } else {
+          this.setState(
+              showPersons: false
+          )
+      }
+   
+  }
+
+
+--------------------------------------
+
+
+
+
+Esses códigos estão totalmente errados, e uma merda.
+
+
+
+
+
+
+  togglePersonsHandler = () => {
+      if (!this.showPersons) {
+        this.setState({
+          this.showPersons: true
+        }
+          
+        )
+      } else {
+        this.setState({
+          this.showPersons: false
+        }
+      }
+  }
+
+
+
+
+Este também.
+
+
+
+
+-----------------------------------------------
+
+
+
+Professor nos mostra como devemos escrever 
+
+este nosso método 'togglePersonsHandler()'....:
+
+
+
+
+ELE CRIA UMA NOVA CONSTANTE, DE NOME 'doesShow'.... ------> essa constante terá um valor de 'this.state.showPersons' ---> esse valor será tanto TRUE ou FALSe (é o CURRENT STATE, basicamente).
+
+
+
+togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+}
+
+
+
+-----------------------------------------
+
+
+
+
+DEPOIS DISSO,
+
+
+adicionamos 
+
+
+a escrita 
+
+
+'this.setState({})'
+
+
+PARA QUE POSSAMOS 
+
+AJUSTAR 
+
+
+O STATE DE NOSSO COMPONENTE/APLICATIVO...
+
+
+
+
+dentro desse objeto, vamos 
+
+escrever 
+
+
+'showPersons: !doesShow'..................
+
+
+
+
+
+ISSO VAI SIGNIFICAR BASICAMENTE 
+
+
+
+'defina o valor de showPersons como sendo o 
+
+CONTRÁRIO do valor que a constante 'doesShow' (que é 'showPersons', na verdade) 
+
+tem no presente momento'....
+
+
+
+
+ex
+
+
+
+
+togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({
+        showPersons: !doesShow
+    })
+}
+
+
+
+
+----------------------------------
+
+
+
+
+
+CERTO... ISSO VAI __FUNCIONAR PERFEITAMENTE____ ----> 
+
+
+
+e essa sintaxe que o professor nos mostrou É 
+
+___MUITO ÚTIL___ PARA APLICATIVOS REACT.... (é boa para esconder/mostrar 
+coisas na página...) --> você define 
+
+
+um VALOR inicialmente 'FALSE/TRUE' lá no STATE, e depois, em algum método 
+
+aleatório/método 'handler' que você definir 
+
+
+VOCÊ VAI LÁ 
+
+E DEFINE O __CONTRÁRIO__, define aquele mesmo valor MAS 
+
+
+__AO CONTRÁRIO__... (com a ajuda do BANG operator ('!')...)
+
+
+
+
+
+
+
+--> se 'doesShow' ('this.state.showPersons') estiver como true, 
+
+O CÓDIGO DESSE HANDLER VAI FAZER COM QUE ELE SEJA DEFINIDO COMO FALSE.... (e vice-versa)...
+
+
+
+
+
+
+
+DE NOVO, É IMPORTANTE 
+
+
+
+RESSALTAR/LEMBRAR/APONTAR 
+
+
+que 
+
+
+
+o código/novo state 
+
+
+de 
+
+
+
+'{showPersons: !doesShow}' 
+
+
+
+ACABA SENDO 'MERGEADO' (merged) 
+
+
+COM O STATE ANTERIOR (com o state velho, definido com 'state = {}')...
+
+
+
+
+---------------------------------------
+
+
+
+
+setState() 
+
+
+
+Com um OBJEto de 
+
+'showPersons'
+
+
+NÃO QUER DIZER/NÃO VAI FAZER COM QUE 
+
+O RESTO DO 
+
+STATE seja 
+
+substituído, 
+
+
+apenas 
+
+o 'showPersons' será substituído... ---> as outras propriedades/objetos, como 'persons' e 'otherState', CONTINUAM INTACTAS....
+
+
+
+
+-------------------------------------
+
+
+
+
+---> ABRIMOS NOSSA PÁGINA E AGORA TESTAMOS... --> 
+
+
+NOSSO APLICATIVO VAI FUNCIONAR:
+
+
+
+
+podemos apertar o botão para mostrar/esconder elementos... ----> 
+
+
+
+RECEBEMOS AQUELE MESMO ERRO/WARNING 
+
+
+que vimos no último módulo,
+
+aquele 
+
+
+de 
+
+'Failed form propType'....
+
+
+
+
+ex:
+
+
+
+
+index.js:2178 Warning: You provided a `value` 
+prop to a form field without an `onChange` handler. 
+This will render a read-only field. If the field should be mutable use 
+`defaultValue`. Otherwise, set either `onChange` or `readOnly`.
+
+
+
+
+
+
+---------------------------------------------------------------
+
+
+
+
+---> ESSE WARNING NOS DIZ QUE 
+
+ALGUMAS 'PERSONS' nós não settamos o binding 
+corretamente....  ------------------------------> MAS É 
+
+
+BOM DE TER ESSE ERRO AQUI, DIZ O PROFESSOR.... --> ele 
+
+
+JA´NOS MOSTRA 
+
+
+CLARAMENTE QUE 
+
+__REACT___ NÃO ESTAVA ESCONDENDO OS VALORES ANTERIORMENTE.... não, 
+
+
+ele não estava DE FATO escondendo, e SIM 
+
+___ELE ___ NÃO HAVIA RENDERIZADO ___ OS ELEMENTOS... --------> ELE SÓ PASSOU 
+
+A RENDERIZAR 
+
+
+OS ELEMENTOS QUANDO A CONDIÇÃO QUE IMPOMOS À DIV (ao jsx)SE TORNOU 'TRUE'...  (portanto, ISSO QUER DIZER QUE OS ELEMENTOS ___NÃO EXISTEM NA PÁGINA PREVIAMENTE___, ELES SOMENTE PASSAM A EXISTIR QUANDO O BOTÃO 'HIDE/SHOW' É REALMENTE CLICADO...)---->
+
+
+
+
+PODEMOS CONSTATAR ISSO 
+
+
+NAS DEVTOOLS DA PÁGINA: elas nos MOSTRAM, na aba elementos, 
+
+QUE 
+
+
+___NÃO EXISTE __ NADA ABAIXO DAQUELE 
+
+
+'button'... ----------> AS COISAS (a div com as PERSONS) SÓ PASSAM A EXISTIR 
+
+
+QUANDO O BOTÃO FOR CLICADO.... (quando a condição foi satisfeita, QUANDO A CONDIÇÃO RENDEU 'TRUE')... --->
+ 
+
+
+É ASSIM QUE ISSO FUNCIONA NO 'REACT'... ---------> AGORA 
+
+
+TEMOS UM 
+
+
+
+'WORKING CONDITIONAL CHECK' -----> escrever 
+
+
+ CONDITIONALS DESSA FORMA QUE O PROFESSOR NOS MOSTROU 
+
+ __ É POSSÍVEL__, mas PODE SE TORNAR MUITO CONFUSA SE VOCê 
+
+
+ COMEÇAR A FAZER __MUITOS E MUITOS __ NESTED 'IF CHECKS' (de ternary expressions)... --> é por isso que 
+
+ O PROFESSOR NOS MOSTRARÁ UMA ALTERNATIVA A ISSO NA PRÓXIMA LIÇÃO.

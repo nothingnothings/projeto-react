@@ -1,0 +1,676 @@
+
+
+
+
+
+
+
+
+---> bem,
+ 
+ CHEGA DE ROUTE PARAMETERS E NESTED ROUTES... ----> agora devemos falar 
+
+
+ SOBRE 
+
+
+
+
+
+
+ ___rEDIRECIONAR__ O USUÁRIO__... ----> àS VEZES 
+
+  
+
+
+  VOCê VAI QUERER ___REDIRECIONAR __ O USUÁRIO___.....
+
+
+
+
+
+
+
+
+
+  --> em quais casos? 
+
+
+
+
+
+  bem, digamos que 
+
+
+
+  VOCê TAMBÉM QUER 
+
+
+  ___ LEVAR O USUÁRIO__ a 
+
+
+  '/posts/' 
+
+
+
+  se 
+
+
+  ele 
+
+  DIGITA 
+
+  
+
+  APENAS 
+
+  '/'...
+
+
+  (
+
+isso levando em consideração o código do professor sendo 
+
+
+''''
+<Route path="/new-post" component={NewPost} />
+<Route path="/posts" component={Posts} />
+
+
+'''''
+
+
+
+
+
+
+
+
+
+
+
+
+
+  )
+
+
+
+
+
+  Bem, no nosso caso, digamos que 
+
+
+  QUEREMOS 
+
+
+  REDIRECIONAR O USUÁRIO 
+
+PARA 
+
+
+'localhost:3000/' 
+
+
+( ou seja, para '/') 
+
+
+SE ELE DIGITAR 
+
+
+
+'localhost:3000/posts'...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> para isso (para qualquer um desses casos, o do '/' e o do '/posts'),
+
+
+o professor começa
+
+assim:
+
+
+
+
+
+<Route path="/new-post" component={NewPost} />
+<Route path="/posts" component={Posts} />
+<Route path="/" component={Posts} />
+
+
+
+
+
+
+
+
+----> se você escrever assim, 
+
+
+
+quando o usuário 
+
+acessar 
+
+qualquer um desses links/paths,
+
+
+tanto 
+
+'/'
+
+
+como 
+
+
+'/posts',
+
+
+
+
+ele VERÁ AQUELA PÁGINA EM QUE OS POSTS SERÃO RENDERIZADOS (ou seja, ''''dá na mesma''')... ------> 
+
+
+
+
+E O PROFESSOR APONTA QUE 
+
+ESSE ''''APPROACH''' AÍ FUNCIONA,
+
+e que 
+
+NÃO HÁ NADA DE ERRADO COM ISSO (
+
+    pq com esse approach aí, o usuário 
+
+    é '''redirecionado''' para 
+
+    a nossa página, para a '''página''' que renderiza 
+
+    aquele component, tanto faz qual URL/PATH 
+
+
+    ele inseriu; 
+
+
+
+    ---> não há 'paths' ''''ERRADOS'''', ESSENCIALMENTE...
+)
+
+
+
+
+
+
+
+
+
+
+--> ou seja, podemos ter MÚLTIPLOS PATHS QUE __RENDERIZAM O MESMO CONTEÚDO__...
+
+
+(e  vamos deixar isso no nosso código, como um exemplo do que podemos fazer...)
+
+
+
+
+
+
+
+
+
+
+
+
+--> ENTRETANTO, 
+
+
+PROFESSOR APONTA QUE 
+
+PODEMOS __USAR ___ UMA SOLUÇÃO ALTERNATIVA A ESSE PROBLEMA... ------> podemos 
+
+
+USAR 
+
+UM OBJETO/COMPONENT
+
+ESPECIAL 
+
+DO 
+
+'REACT-ROUTER-DOM'... ---------> É O COMPONENT 
+
+
+
+'Redirect'...
+ 
+
+
+
+ --> vocÊ 
+
+
+ deve importá-lo no COMPONENT 
+
+
+ ONDE EXISTEM 
+
+ SUAS 
+
+ ROUTES 
+
+
+
+ com 
+
+ a sintaxe 
+
+
+ 'import { Redirect } from 'react-router-dom'; '   ..........
+
+
+
+
+
+
+
+
+ ESSE COMPONENT 
+
+ '
+ REDIRECT' 
+
+
+ É SIMPLESMENTE USADO 
+
+
+
+
+ __NO SEU CÓDIGO JSX __ DAS 'ROUTES'...
+
+
+
+
+
+
+
+ ---> isso significa que VOCÊ DEVE 
+
+
+
+ ADICIONAR ESSE COMPONENT___ DENTRO 
+
+
+ DO 
+
+ SEU 'SWITCH STATEMENT'...
+
+
+
+
+
+ EX:
+
+
+
+<Switch>
+ <Route path="/new-post" component={NewPost} />
+<Route path="/posts" component={Posts} />
+<Redirect    />
+</Switch>
+
+
+
+
+--------------------------------
+
+
+
+CERTO.... AÍ, DENTRO DO 'Redirect', que FICARÁ 
+
+
+
+dentro 
+
+do 
+
+SWITCH STATEMENT,
+
+
+
+VOCÊ DEVERÁ 
+
+
+
+ESPECIFICAR 
+
+UMA PROPRIEDADE/prop 
+
+
+
+chamada de 
+
+
+'from='...   ----------> 
+
+
+e essa PROPRIEDADE 
+
+
+É 
+
+
+___ESPECIFICAMENTE UTILIZADA __ PARA 
+
+
+REDIRECIONAR ___ 'from' algum lugar....
+
+
+
+
+
+ex: 
+
+
+
+
+
+''''quero que todos os paths de '/' acabem redirecionados para '/posts' ''''' ------->
+
+
+ISSO VAI RENDER 
+
+
+UM CÓDIGO DE 
+
+
+
+'<Redirect from="/" to="/posts" />
+
+
+ 
+
+
+
+ EX(CÓDIGO COMPLETO):
+
+
+
+
+
+
+
+
+
+<Switch>
+ <Route path="/new-post" component={NewPost} />
+<Route path="/posts" component={Posts} />
+<Redirect from="/" to="/posts"  /> //////////EIS O CÓDIGO EM QUESTÃO.
+</Switch>
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+OK, MAS PQ DIABOS 
+
+
+
+
+DEVEMOS 
+
+__SEMPRE ___ USAR ESSE OBJETO/COMPONENT
+
+'Redirect' 
+
+
+
+
+__DENTRO ___ DO OBJETO 'Switch'...? -------------> pq 
+
+
+só quando ele fica dentro 
+
+do 
+
+SWITCH 
+
+é 
+
+que 
+
+
+podemos 
+
+usar/definir
+
+
+aquela propriedade 
+
+de 
+
+'from' nele... 
+
+
+
+---------------------
+
+
+
+OU SEJA:
+
+
+se definirmos 
+
+
+'Redirect' 
+
+__FORA __ DO SWITCH STATEMENT,
+
+
+
+só poderemos 
+
+usar 
+
+
+'to', 
+
+e esse 
+
+
+'to={}', 
+
+nesse caso específico, 
+
+
+
+
+__NUNCA VAI RESPEITAR __ O 'PATH' PELO QUAL VOCÊ ESTAVA NAVEGANDO ( ou seja,
+
+ele vai 
+
+
+SEMPRE REDIRECIONAR __ÀQUELE__ PATH PASSADO 
+
+EM 
+
+'to={}', independentemente 
+
+
+do path/url
+
+em que 
+
+o usuário 
+
+estava 
+
+antes 
+
+de encontrar 
+
+essa linha de código/Redirect 
+
+no nosso aplicativo...
+
+
+) ------------> O PROFESSOR 
+
+
+VOLTARÁ 
+
+
+AOS 
+
+
+'CONDITIONAL REDIRECTS FORA DO SWITCH STATEMENT'  EM UMA 
+
+
+DAS PRÓXIMAS LIÇÕES...
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+Certo... essencialmente, agora 
+
+temos 
+
+
+
+AQUELE 
+
+'REDIRECT STATEMENT' 
+
+
+___DENTRO DO COMPONENT/STATEMENT__ 'Switch' --------> 
+
+
+
+e 
+
+esse 
+
+'Redirect' é quase 
+
+
+COMO QUALQUER OUTRA ROUTE,
+
+
+
+mas a única 
+diferença, de verdade,
+
+É QUE 
+
+
+
+______ ESSE 'REDIRECT' _____ NÃO ___ 
+
+
+
+RENDERIZA CONTENT/CONTEÚDO PROPRIAMENTE DITO,
+
+O que ele faz, na verdade, é APENAS 
+
+__MUDAR___ A URL/PATH ___ PARA QUE 
+
+SEJA ALCANÇADA OUTRA ROUTE 
+
+(a route de '/posts'  ou  '/',  nesse caso...)
+
+
+
+
+
+
+
+
+
+
+
+--> podemos testar isso com nosso código: 
+
+
+se escrevermos 
+
+
+'localhost:3000/',
+
+
+
+seremos
+
+
+REDIRECIONADOS 
+
+para 
+
+a página 
+
+
+
+'localhost:3000/posts' ....
+
+
+
+
+(sinal de que esse objeto/component 'Redirect' ESTÁ FUNCIONANDO...)
+
+
+
+
+
+
+
+
+---> É ASSIM QUE PODEMOS 'NAVEGAR'/MOVER O USUÁRIO PARA 
+
+AS PÁGINAS 
+
+EM QUE 
+
+QUEREMOS 
+QUE 
+
+ELE PERMANEÇA/VISITE...  ----------> ESSE É O 'REDIRECTING' PURO...
+
+
+
+
+
+
+
+ENTRETANTO, O PROFESSOR APONTOU ANTES QUE 
+
+
+EXISTE ALGO CHAMADO DE 
+
+'CONDITIONAL REDIRECTING'... ----> VEREMOS ISSO NA PRÓXIMA LIÇÃO...
+
+-------------------------

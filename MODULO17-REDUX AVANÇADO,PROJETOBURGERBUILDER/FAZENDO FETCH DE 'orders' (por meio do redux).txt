@@ -1,0 +1,1048 @@
+
+
+
+
+
+
+
+
+
+
+-> professor limpou o firebase... --> ele diz que devemos trabalhar com a página de 'orders'... 
+
+
+
+
+
+
+
+
+--> mas nossa página 
+
+de 
+
+ORDERS 
+
+já 
+
+
+está funcionando....
+
+
+----------------------
+
+
+
+
+
+
+
+A página 'orders' 
+
+
+
+
+inicialmente NÃO ESTAVA USANDO REDUX... -----> nós estávamos fazendo 'reach out to the web' 
+
+
+dentro 
+
+daquele 
+
+
+'componentDidMount' 
+
+
+
+em 
+
+'Orders.js'
+
+
+
+
+
+
+
+
+
+--> o professor quer fazer FETCH DAS ORDERS por meio de um action creator... ---> e ele quer 
+
+fazer 
+MANAGE 
+
+DE NOSSAS 
+
+'ORDERS'
+ por meio do redux, também...
+
+
+
+
+
+ JÁ FIZEMOS ISSO, POR MEIO DESTE CÓDIGO:
+
+
+
+-------------------------------------------------------
+
+ 
+export const fetchBurgerOrders = (orders) => {
+        return {
+                type: actionTypes.FETCH_BURGER_ORDERS,
+                orderList: orders
+        }
+}
+
+
+
+export const asyncFetchBurgerOrders = () => {
+        return (dispatch) => {
+                dispatch(purchaseBurgerLoading());
+                axiosOrder.get('/orders.json')
+                .then(
+                    (response) => {
+                        const orders = response.data;
+                        console.log(orders);
+                        console.log(Object.entries(orders));
+                        dispatch(fetchBurgerOrders(orders))
+                    }
+                )
+                .catch()
+        }
+}
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+Uma coisa que faltou NA NOSSA VERSÃO __ DO CÓDIGO DE 'FETCH ORDERS' 
+
+é 
+
+justamente 
+
+
+
+O ___eRROR HANDLING___ (o error case, é claro...
+)
+
+
+
+
+
+------------------------------
+
+
+
+
+
+
+A sintaxe do professor é completamente distinta da nossa... ---> 
+
+ele foi lá e criou 
+
+
+__TRÊS___ 'actionTypes' 
+
+
+PARA 
+
+3 
+
+ACTIONS DIFERENTES, relativas aos processos de 'orders'...
+
+
+
+
+
+
+
+ex:
+
+
+
+export const FETCH_ORDERS_START = 'FETCH_ORDERS_START';
+export const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
+export const FETCH_ORDERS_FAIL = 'FETCH_ORDERS_FAIL';
+
+
+
+
+
+
+
+---------------------------------
+
+
+--> LÁ EM 
+
+'order.js',
+
+PROFESSOR 
+
+
+VAI SEGUIR 
+O MESMO 
+
+PADRÃO 
+
+QUE USAMOS 
+
+
+NAQUELE 
+
+'PURCHASE' DO BURGER.... --> ou seja,
+
+ele 
+
+
+vai 
+
+ter 
+
+
+
+
+1 ACTION CREATOR PARA ___INICIAR __ O PROCESSO DE FETCH,
+
+
+
+1 ACTION CREATOR PARA _ o CASO DE SUCCESS DESSE FETCH, 
+
+
+1 ACTION CREATOR PARA O CASO DE __fAIL__ DESSE FETCH...
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+os action creators ficarão assim:
+
+
+
+
+ex:
+
+
+export const fetchOrdersSuccess = (orders) => {
+
+}
+
+
+
+
+---------------------------------
+
+(OBS::: ESSE ACTION CREATOR VAI ESPERAR AS 'orders' COMO PARÂMETRO...)
+
+
+
+ex:
+
+
+
+
+export const fetchOrdersSuccess = (orders) => {
+        return {
+            type: actionTypes.FETCH_ORDERS_SUCCESS,
+            orders: orders
+        }
+}
+
+
+----------------------------------------------
+
+
+
+CERTO...
+
+
+
+FAZEMOS A MESMA COISA, MAS AGORA 
+
+PARA O CASO DE __fAIL___.. (que vai receber um 'error' COMO PARÂMETRO..)
+
+
+
+
+
+ex:
+
+
+
+
+
+export const fetchOrdersFail = (error) => {
+        return {
+            type: actionTypes.FETCH_ORDERS_FAIL,
+            error: error
+        }
+}
+
+
+-------------------------------------------
+
+
+
+
+
+POR FIM, TEREMOS AQUELE ACTION CREATOR SÍNCRONO (que será usado no ACTION CREATOR ASSÍNCRONO...),
+
+DE CODIGO
+ 
+
+
+
+
+
+ export const fetchOrdersStart = () => {
+        return {
+            type: actionTypes.FETCH_ORDERS_START,
+
+        }
+ }
+
+
+ ----------------------------------------
+
+
+
+
+
+
+
+
+ PARA O ACTION CREATOR ASSÍNCRONO,
+  
+  TEMOS:
+
+
+
+
+
+
+
+ export const AsyncFetchOrdersStart = () => {
+     return dispatch => {
+         axios.get('/orders.json')
+         .then(
+            
+         )
+     }
+ }
+
+
+
+
+
+ ----------------------------
+
+
+ O PROFESSOR NOS EXPLICA QUE 
+
+
+
+ ESSE CÓDIGO DE 'axios.get' vai ser o mesmo código que estava 
+
+ em 
+
+ 'Orders.js', no container,
+
+
+
+
+ MAS 
+
+
+ ALGUMAS ALTERAÇÕES SERÃO FEITAS.... (por exemplo, o 'this.setState({loading: false, orders: fetchedOrders})'  SERÁ REMOVIDO, E NO SEU LUGAR SERÁ EXECUTADO UM DISPATCH daquelas action 'fetchOrdersSuccess' e 'fetchOrdersFail'....)...
+
+
+
+
+
+
+
+Ex:
+
+
+
+
+
+
+
+
+ export const AsyncFetchOrdersStart = () => {
+     return dispatch => {
+         axios.get('/orders.json')
+         .then(
+            res => {
+                const fetchedOrders = [];
+                for (let key in res.data) {
+                    fetchedOrders.push(
+                        {
+                            ...res.data[key],
+                            id: key
+                        }
+                    )
+                }
+                dispatch(fetchOrdersSuccess(fetchedOrders)); ///AQUI É DISPATCHADA A ACTION DE 'fetchOrdersSuccess', com um pass de 'fetchedOrders' como payload (propriedade 'orders')...
+            }
+         )
+     }
+ }
+
+
+------------------------------------------
+
+
+
+
+PROFESSOR 
+
+
+FALA BREVEMENTE DOS LOCAIS ONDE DEVEMOS TRANSFORMAR 
+
+NOSSOS 
+
+DADOS 
+
+RECEBIDOS 
+
+
+DO 
+
+SERVER... --> ele nos explica que 
+
+ele 
+
+prefere
+
+
+
+
+TRANSFORMAR NESTE LOCAL:
+
+
+
+       res => {
+                   const fetchedOrders = [];
+                   for (let key in res.data) {
+                       fetchedOrders.push(
+                           {
+                               ...res.data[key],
+                               id: key
+                           }
+                       )
+                   }
+
+
+
+
+
+        (DENTRO DO ACTION CREATOR, lá no arquivo das actions, EM VEZ DE LÁ NO REDUCER... )
+
+
+
+
+
+
+
+
+
+---> PROFESSOR DIZ QUE É MELHOR ASSIM PQ __sempre que nós quisermos mudar nossa 'backend data',
+
+
+
+NÓS TERÍAMOS 
+
+
+DE MUDAR 
+
+
+NOSSO REDUCER... (e isso é pior do que 
+
+mudar 
+
+os 
+
+ACTION CREATORS...) ---> faz mais sentido 
+
+
+ter um 
+
+REDUCER MEIO FIXO,
+ 
+
+
+
+que não faz mtas transformações de dados; deixar essas transformações de dados 
+
+
+com 
+
+
+os 
+
+action creators...
+
+
+
+
+
+
+
+
+-------------------------
+
+
+CERTO.... AGORA O PROFESSOR 
+
+
+
+
+VAI QUERER FAZER O 
+
+write 
+
+
+
+
+do 
+
+
+
+'orderReducer'...  ---> ele vai lá e adicionas uns NOVOS ACTION CASES.... --> 
+
+
+
+ele 
+
+
+coloca 
+
+
+
+ 'case actionTypes.FETCH_ORDERS_START:'...
+
+
+
+
+
+
+
+ ISSO VAI FAZER UM RETURN 
+
+
+
+ de 
+
+
+
+ 'return {
+     ...state
+ }
+ ' ,
+
+
+ MAS 
+
+
+ TAMBÉM 
+
+
+ VAI DEIXAR 
+
+
+ 'loading' 
+
+ com um 
+
+ valor 
+
+
+
+ de 
+
+ 'TRUE'....
+
+
+
+ (e esse 'loading' É A MESMA PROPRIEDADE 'loading' QUE UTILIZAMOS 
+ 
+ LÁ 
+ 
+ NA PÁGINA 'Checkout', mas como 
+ 
+ NÓS 
+ 
+ 
+ SÓ PODEMOS ESTAR EM 1 DESSAS PÁGINAS EM 1 DETERMINADO MOMENTO,
+ 
+ podemos 
+ 
+ reutilizar esse state 
+ 
+ aí sem problemas, em ambas as páginas...... )
+
+
+
+
+
+
+
+
+
+
+
+--> O PROFESSOR TAMBÉM VAI QUERER 
+
+COLOCAR 
+
+
+UM 
+
+CASE 
+
+para 
+
+
+'actionTypes.FETCH_ORDERS_SUCCESS'...
+
+
+
+--> isso vai fazer 
+
+um 
+
+return 
+
+
+
+
+
+de 
+
+
+'return {
+
+    ...state,
+    loading: false
+}',
+
+
+
+
+
+MAS 
+
+
+ELE 
+
+
+TAMBÉM 
+
+VAI QUERER ___ARMAZENAR__ AS 
+
+ORDERS QUE NÓS FIZEMOS 
+
+'fetch',
+ 
+
+ lá 
+
+
+
+
+
+de 
+
+'action.orders'...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+O REDUCER FICOU ASSIM, NO FINAL DAS CONTSA:
+
+
+
+
+
+
+               case orderActionTypes.FETCH_ORDERS_START:
+            console.log(state.orders);
+                return {
+                    ...state, 
+                    loading: true,
+                   
+                    
+                };
+
+                case orderActionTypes.FETCH_ORDERS_SUCCESS:
+                        return{
+                            ...state,
+                            orders: {
+                                ...action.orders
+                            },
+                            loading: false
+                        };
+
+
+
+            case orderActionTypes.FETCH_ORDERS_FAIL:
+                    return {
+                        ...state,
+                        loading: false,
+                    }
+
+            default:
+        return state;
+
+
+
+
+---------------------------------
+
+
+
+
+Certo... agora só precisamos 
+
+VINCULAR 
+
+o 
+
+
+'FETCH_ORDERS_START' 
+
+
+
+A 
+
+ALGUM LUGAR DE NOSSO CÓDIGO, PROVAVELMENTE 
+
+NO 
+
+
+'componentDidMount' 
+
+
+DO 
+
+
+
+CONTAINER 
+
+'Orders.js'...
+
+
+
+
+------------------------
+
+
+
+---> CERTO, ISSO FUNCIONOU... --> nossas orders estão sendo retrievadas com sucesso, lá em 'Orders.js'...
+
+
+------------------------
+
+
+
+
+
+Um único problema que havia era que 
+
+
+__NÃO ESTAVA SENDO MOSTRADO UM 'SPINNER' NA NOSSA PÁGINA ENQUANTO AS 
+
+ORDERS 
+
+ESTAVAM SENDO 
+
+
+fetcheadas.... -----> a razão para tal é simples,
+
+
+
+Era dentro de 
+
+
+'AsyncFetchOrdersStart'.....
+
+
+
+
+
+
+
+estava assim:
+
+
+
+
+ export const asyncFetchOrdersStart = () => {
+        return dispatch => {
+                
+            axiosOrder.get('/orders.json')
+            .then(
+               res => {
+                   const fetchedOrders = [];
+                   for (let key in res.data) {
+                       fetchedOrders.push(
+                           {
+                               ...res.data[key],
+                               id: key
+                           }
+                       )
+                   }
+                   dispatch(fetchOrdersSuccess(fetchedOrders)); ///AQUI É DISPATCHADA A ACTION DE 'fetchOrdersSuccess', com um pass de 'fetchedOrders' como payload (propriedade 'orders')...
+               }
+            )
+            .catch(error => {
+                    dispatch(fetchOrdersFail(error));
+            })
+        }
+    }
+
+
+
+-------------------------------------
+
+
+
+
+O PROBLEMA DO __FLOW__ DESSE NEGÓCIO ERA QUE __ele __ INICIAVA O 'FETCH', mas __NÃO FAZIA_ _ NADA 
+
+A RESPEITO 
+
+DA PROPRIEDADE 
+
+'loading' no state... -------> 
+
+
+
+
+E, DE FATO, 
+
+A ACTION RESPONSÁVEL POR DEFINIR 'loading' como sendo 'true' 
+
+É ____'fetchOrdersStart' (a versão NÃO ASSÍNCRONA...) ---> 
+
+
+
+
+E, JUSTAMENTE POR ISSO, DEVEMOS SOLUCIONAR 
+
+ESSE PROBLEMA POR MEIO DA ___eSCRITA DE 
+
+
+'dispatch(fetchOrdersStart())' 
+
+DENTRO 
+
+
+DO INÍCIO DESSE ACTION CREATOR DE 
+
+'asyncFetchOrdersStart'....
+
+
+
+
+tipo assim:
+
+
+
+
+-------------------------------------------------------
+
+
+ export const asyncFetchOrdersStart = () => {
+        return dispatch => {
+                dispatch(fetchOrdersStart()); ////////////////EIS O CÓDIGO EM QUESTÃO
+            axiosOrder.get('/orders.json')
+            .then(
+               res => {
+                   const fetchedOrders = [];
+                   for (let key in res.data) {
+                       fetchedOrders.push(
+                           {
+                               ...res.data[key],
+                               id: key
+                           }
+                       )
+                   }
+                   dispatch(fetchOrdersSuccess(fetchedOrders)); 
+               }
+            )
+            .catch(error => {
+                    dispatch(fetchOrdersFail(error));
+            })
+        }
+    }
+
+
+---------------------------------------------------
+
+
+
+esse fetch aí muda TUDO,
+
+basta vocÊ 
+
+
+
+dar uma olhada na progressão do valor de 'loading' ao longo 
+
+da execução desses actions aí...
+
+
+
+ex:
+
+
+
+
+ export const asyncFetchOrdersStart = () => { //começa com 'loading: false', que é O VALOR ORIGINÁRIO DE 'loading'...
+        return dispatch => {
+                dispatch(fetchOrdersStart());  //isso  (essa action) vai mudar LOADING PARA 'true'....
+            axiosOrder.get('/orders.json')  //true 
+            .then(                       //true 
+               res => {                     //true
+                   const fetchedOrders = [];            //true
+                   for (let key in res.data) { ///true
+                       fetchedOrders.push(  ///true
+                           {
+                               ...res.data[key], //true 
+                               id: key //true
+                           }
+                       )
+                   }
+                   dispatch(fetchOrdersSuccess(fetchedOrders)); ///AQUI VAI FICAR 'FALSE' (essa action 'fetchOrdersSuccess' faz isso, justamente por causa da REAÇÃO A ELA, no reducer....)
+               } 
+            )
+            .catch(error => {
+                    dispatch(fetchOrdersFail(error)); ///ISSO AQUI TAMBÉM VAI DEFINIR 'loading' como sendo FALSE...
+            })
+        }
+    }
+
+
+-----------------------------
+
+
+
+
+
+
+
+
+
+--> A PEÇA-CHAVE, que define 
+
+o 'loading' como false, é o reducer, que 
+
+tem ESSES CASES E ESTA LÓGICA:
+
+
+
+
+         case orderActionTypes.FETCH_ORDERS_START: ///essa é a '''action assíncrona'''...
+            console.log(state.orders);
+                return {
+                    ...state, 
+                    loading: true,
+                   
+                    
+                };
+
+                case orderActionTypes.FETCH_ORDERS_SUCCESS:  //ACTION SÍNCRONA QUE ACABA COM O LOADING
+                        return{
+                            ...state,
+                            orders: {
+                                ...action.orders
+                            },
+                            loading: false
+                        };
+
+
+
+            case orderActionTypes.FETCH_ORDERS_FAIL: ////ACTION SÍNCRONA QUE ACABA COM O LOADING...
+                    return {
+                        ...state,
+                        loading: false,
+                    }
+
+            default:
+        return state;
+
+
+
+
+----------------------------
+
+
+
+e o action creator que 
+
+DÁ INÍCIO A ISSO TUDO 
+
+E´JUSTAMENTE 
+
+
+
+
+'asyncFetchOrdersStart'...
+
+
+
+
+
+
+---------------------------
+
+
+CERTO,
+
+
+ISSO SIGNIFICA QUE 
+
+AS ORDERS ESTÃO SENDO FETCHEADAS 
+
+PELO 
+
+
+REDUX....
+
+
+---OK...
+
+
+
+
+agora devemos 
+
+
+dar olhada em outra coisa..

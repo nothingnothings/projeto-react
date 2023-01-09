@@ -1,0 +1,678 @@
+OK, PRECISAMOS FAZER FETCH DOS DADOS (orders) de nosso 
+
+SERVIDOR... (do backend, do servidor firebase...)
+
+
+
+
+
+
+
+
+
+
+---> vou tentar fazer um pedaço por conta própria, usando código do módulo 9.... (reachout to the web.)
+
+
+
+
+
+
+
+
+
+
+
+--> certo, eu fiz MUITA COISA____. Muita coisa mesmo.... -----> já 
+
+consegui 
+
+
+fazer 
+
+fetch 
+
+de 
+
+todas 
+
+as orders 
+
+de nosso 
+
+servidor por conta própria (bastas examinar o código de 
+
+'Orders' e de 'Order', que é onde temos o código deles...)
+
+
+
+
+
+
+
+
+-------------------> Certo.... EU TAMBÉM__ CONSEGUI ____ 
+
+FAZER COM QUE 
+
+
+OS INGREDIENTS E 
+
+O 'PRICE' 
+
+
+FOSSEM 
+
+MOSTRADOS
+ 
+ EM 
+
+ CADA 
+
+ UM DOS 
+
+
+
+ COMPONENTS 'Order' 
+
+ RENDERIZADOS EM 
+
+ 'Orders' (na PÁGINA 'orders')...
+
+
+
+
+ ----------------------------------
+
+
+
+
+
+
+ --> AGORA DEVEMOS APENAS DAR UMA OLHADA NO CÓDIGO DO PROFESSOR 
+
+ E AJUSTAR 
+
+ ALGUMAS COISAS,
+
+ como 
+
+
+ o 
+
+
+ CÓDIGO QUE MOSTRA O 'LOADING' (por meio de 'setState' e aquele spinner, tudo isso em 
+ 
+ 'componentDidMount'...)
+
+
+
+
+
+
+
+
+
+ --> para isso, lá no 
+
+
+
+ component 
+
+
+ 'Orders',
+
+
+ O PROFESSOR VAI ESCREVER...:
+
+
+
+
+------------------------------------
+
+
+ state = {
+
+        orders: [],
+        loading: true
+ }
+
+
+
+
+ componentDidMount() {
+     axios.get('/orders.json')
+     .then(
+         response => {
+             this.setState(
+                 {loading: false}
+             )
+         }
+     )
+ }
+
+
+
+
+ ----------------------------
+
+
+ E AÍ, É CLARO,
+
+
+ ELE VAI QUERER __vINCULAR__ ESSE NEGÓCIO AO 
+
+
+ RENDER 
+
+
+
+ DE NOSSO COMPONENT 
+
+ 'Orders'...
+
+
+
+ ---> ele também coloca um CATCH BLOCK, para capturar quaisquer erros.....
+
+
+ ex:
+
+
+
+
+
+  state = {
+
+        orders: [],
+        loading: true
+ }
+
+
+
+
+ componentDidMount() {
+     axios.get('/orders.json')
+     .then(
+         response => {
+             this.setState(
+                 {loading: false}
+             )
+         }
+     )
+     .catch(
+         err => {
+             console.log(error);
+             this.setState(
+                 {
+                     loading: false
+                 }
+             )
+         }
+     )
+ }
+
+
+ ----------------------------------------------
+
+
+
+
+
+
+ --> AÍ ELE DIZ QUE TBM VAI QUERER __ARMAZENAR__ AS ORDERS.... (e eu já fiz isso, tudo por conta própria...)
+ 
+
+ --------------------------
+
+
+
+
+ CÓDIGO FICOU ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+ import React, { Component } from 'react';
+
+
+import Order from '../../components/Order/Order'
+
+
+import axiosOrder from '../../axios-orders';
+
+import Spinner from '../../components/UI/Spinner/Spinner'
+
+
+
+
+class Orders extends Component {
+
+
+    state = {
+            // ingredients: null,
+            // totalPrice: null
+
+            orders: [],
+            loading: true
+    }
+
+
+        componentDidMount() {
+            axiosOrder.get('/orders.json')
+            .then(
+                (response) => {
+                    console.log(response);
+                    console.log('test');
+
+                    const orders = response.data;
+                    console.log(orders);
+                    console.log(Object.entries(orders));
+
+                    // let updatedOrders = null;
+
+
+                    // for (let order in orders) {
+                    //      updatedOrders = orders;
+                    //      console.log(orders);
+                    //      console.dir(orders);
+
+                    // }
+
+                    this.setState(
+                        {
+                            orders: orders,
+                            loading: false
+                        }
+                    )
+
+
+
+                    console.log(this.state);
+                    console.log(Object.entries(this.state.orders).map(
+                        order => {
+                            console.log(order);
+                            console.log(order[1])
+                            return (
+                            
+                            <Order ingredients={order[1].ingredients} price={order[1].price}  />
+                            
+                            )
+                        }
+                    ));
+
+                })
+                .catch(
+                    error => {
+                        this.setState(
+                            {
+                                loading: false
+                            }
+                        )
+                        console.log(error);
+                    }
+                )
+
+                
+         
+
+                    // const orderList = Object.entries(orders)[0][1].map(order => {
+
+
+                    //     return {
+                    //         ...order
+                    //     }
+
+                  
+             
+
+        
+        }
+
+
+
+
+
+
+
+
+    render() {
+
+        // Object.entries(this.state.orders).map(
+        //     order => {
+        //         console.log(order);
+        //         console.log(order[1])
+        //         return (
+                
+        //         <Order ingredients={order[1].ingredients} price={order[1].price}  />
+                
+        //         )
+        //     }
+        // )
+
+
+     
+
+        let orderList = (
+            <Spinner />
+        )
+
+
+
+
+        if (!this.state.loading) {
+            orderList = Object.entries(this.state.orders).map(
+                order => {
+                    console.log(order);
+                    console.log(order[1]);
+                    console.log(order[0]);
+                        
+                    return (
+                        <Order ingredients={order[1].ingredients} price={order[1].price} key={order[0]} />
+                    )
+                }
+            )
+        }
+
+
+  
+
+
+
+            return (       
+                <div>
+
+     
+                        {orderList}
+       
+                    
+
+                </div>
+                
+            );
+    }
+}
+
+
+
+
+
+
+export default Orders;
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------
+
+
+
+
+
+
+QUANTO 
+
+
+AO CÓDIGO DE FETCH 
+
+DAS 
+
+'ORDERS' do professor,
+
+ele ficou um pouco diferente do nosso, mas algumas coisas ficaram parecidas....
+
+
+
+
+
+
+ficou assim:
+
+
+
+
+
+componentDidMount() {
+
+
+
+
+
+    axios.get('/orders.json')
+    .then(
+        response => {
+            const fetchedOrders = [];
+            for (let order in response.data) {
+                fetchedOrders.push(
+                    {
+                        ...response.data[key],
+                        id: key
+                    });
+            }
+            this.setState(
+                {
+                    loading: false
+                }
+            )
+        }
+    )
+}
+
+
+
+
+--------------------------------
+
+
+É BASICAMENTE A MESMA COISA QUE FIZEMOS 
+
+
+NO NOSSO CÓDIGO, MAS COM UMA SINTAXE DIFERENTE, E COM USO DE 
+
+'.push' para EMPURRAR 
+
+ESSES OBJETOS com 
+
+
+a 'response.data' (todos os ingredients, address, etc, etc, de cada order)
+
+
+
+E COM 
+
+O 
+
+'id' de 'key' (e essa 'key' são aqueles nomes ALEATÓRIOS fornecidos PELO FIREBASE 
+
+para 
+
+cada objeto 'order'... que vimos antes...)
+
+
+
+
+
+por fim, professor setta nosso state assim:
+
+
+
+
+
+componentDidMount() {
+
+
+
+
+
+    axios.get('/orders.json')
+    .then(
+        response => {
+            const fetchedOrders = [];
+            for (let order in response.data) {
+                fetchedOrders.push(
+                    {
+                        ...response.data[key],
+                        id: key
+                    });
+            }
+            this.setState(
+                {
+                    loading: false,
+                    orders: fetchedOrders ////eis o código em questão.
+                }
+            )
+        }
+    )
+}
+
+---------------------------------------------
+
+
+
+
+
+
+O PROFESSOR NOS EXPLICA QUE 
+
+__eLE TAMBÉM QUER __ FAZER HANDLE DE QUAISQUER ERROS,
+
+por isso 
+
+ele vai importar 
+
+O 
+
+
+HOC PRÓPRIO DELE,
+ 
+
+ aquele 
+
+ negócio que ele criou bem mais cedo,
+
+
+ aquele HOC 
+ que 
+
+
+ faz HANDLING DE NOSSOS ERROS,
+
+ o HOC 
+
+
+ 'withErrorHandler'... (ele vai o importar no component 'Orders'....) ------> 
+
+
+
+ E DEPOIS 
+
+
+ ELE WRAPPA 
+
+ O EXPORT 
+
+ de 
+
+ 'Orders',
+
+ com o código 
+
+
+
+ 'export default withErrorHandler(Orders);'
+
+
+
+
+
+
+ ----------------------------------------------------------
+
+
+
+
+
+
+
+ --> ELE NOS EXPLICA QUE __É CLARO___ QUE NÓS TAMBÉM PRECISAMOS PASSAR 
+
+ NOSSA INSTANCE DE AXIOS ('axiosOrder') 
+
+ DENTRO 
+
+ DESSE 'withErrorHandler', CASO CONTRÁRIO ELE ___NÃO VAI FUNCIONAr__...
+
+
+
+
+
+
+
+
+
+ --> PARA TESTAR O ERROR HANDLER, professor vai no método 
+
+ 'axios.get' 
+
+ E REMOVE 
+
+ O 
+
+ '.json/' 
+
+
+ DA URL/path fetcheado... ------> 
+
+
+ e, de fato, vemos um console.log 
+
+
+ no console, uma mensagem 
+
+ de 
+
+ 'Network error'.... (contudo, não aparece aquele modal especial de errorHandling que havíamos 
+ 
+ criado,
+ 
+ 
+ o que é estranho... qual será a causa da ausência dele....?)
+
+
+
+
+
+
+
+
+
+
+ --> não sei a causa disso....  
+
+
+
+
+
+
+
+ --> professor reitera que JÁ __eSTAMOS CONSEGUINDO FAZER 'FETCH' DE NOSSAS ORDERS, e que 
+
+ agora só falta 
+
+ outputtar 
+
+ essas orders/renderizar essas orders na nossa tela( o que eu já fiz...)

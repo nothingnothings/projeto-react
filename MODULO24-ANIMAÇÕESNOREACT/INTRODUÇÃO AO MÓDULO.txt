@@ -1,0 +1,103 @@
+
+
+
+
+NESTE MÓDULO,
+
+VEREMOS 
+
+ANIMAÇÕES EM 
+
+REACT APPS...
+
+
+
+
+
+
+---> nós já usamos (poucas) animações 
+
+
+
+
+no nosso projeto do burger builder 
+
+(
+
+    ex: 
+
+    botão de  'order now'... (ELE 'bumps up' quando fica ACTIVE...)
+)
+
+
+
+
+
+
+
+
+
+--> O OVERALL GOAL DESTE MÓDULO É TE MOSTRAR 
+
+AS 
+DIFERENTES 
+
+MANEIRAS
+ 
+ QUE 
+ VOCÊ 
+
+ PODE CODAR 
+
+ ANIMAÇÕES EM REACT APPS....
+
+
+
+
+
+ --> animações são IMPORTANTES... ---> são algo que você deve sempre 
+
+
+ ___CONSIDERAR__...  ---> ANIMAÇÕES SÃO MT IMPORTANTES PQ 
+
+ ELAS 
+
+ 'GUIDE THE USER'S ATENTTION'.. ---> ELAS 
+
+
+ MOSTRAM 
+
+
+ AO 
+
+ USUÁRIO ___ O QUE MUDOU NA PÁGINA,
+
+
+
+
+e são 
+
+'nice on the eyes'...
+
+
+
+
+
+--> SÃO UM CONCEITO IMPORTANTE,
+
+
+
+
+
+POR ISSO DEVEMOS VER AS DIFERENTES MANEIRAS 
+
+
+
+DE 
+
+
+ANIMAR 
+
+
+
+REACT APPS...

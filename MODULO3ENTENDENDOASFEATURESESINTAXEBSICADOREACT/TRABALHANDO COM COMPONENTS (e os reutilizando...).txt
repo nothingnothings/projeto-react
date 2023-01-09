@@ -1,0 +1,208 @@
+
+
+
+
+
+
+----> NA ÚLTIMA LIÇÃO,
+
+
+
+CRÍAMOS 
+
+
+NOSSO PRÓPRIO COMPONENTE, O COMPONENT 'Person'...
+
+
+
+
+
+A pergunta é:
+
+
+
+QUal é a grande vantagem disso?
+
+
+
+
+
+---> BEM, COMPONENTS SÃO DEMAIS PQ PODEMOS 
+
+
+
+___FOCAR___ NOSSO CÓDIGO EM CADA ARQUIVO, e isso o torna bem mais 
+
+MAINTAINABLE 
+
+(pq colocar 
+
+TUDO no arquivo 
+
+'App.js'
+
+
+DEIXARIA O NEGÓCIO UMA FUCKING BAGUNÇA....) --> isso ficaria MUITO 
+
+CROWDED 
+
+
+em apps maiores...
+
+
+
+
+
+
+OUTRA ___VANTAGEM___ de um 'React component' clássico (em vez de simplesmente dumpar TODO NOSSO CÓDIGO EM 1 ÚNICO COMPONENT e então 'call it a day')
+
+É QUE 
+
+
+ELE __É TOTALMENTE ___REUTILIZÁVEL___ --> e isso é MUITO PRÁTICO... ---> ELE 
+
+
+É ___REUTILIZÁVEL___ E ___ CONFIGURÁVEL___...
+
+
+
+
+--> REUTILIZAR 
+
+UM REACT COMPONENT É MUITO SIMPLES... --> 
+
+
+basta COPIAR E COLAR O COMPONENT...
+
+
+
+
+ex(com 'Person'...):
+
+
+
+return (
+    <div className="App">
+    <h1>Hi, I'm a React App</h1>
+    <p>This is really working</p>
+    <Person />
+    <Person />
+    <Person />////EIS O CÓDIGO EM QUESTÃO.
+)
+
+
+
+
+-------------------------------------------------------------------
+
+
+
+
+
+SE FIZERMOS ISSO E RECARREGARMOS, 
+
+TEREMOS 
+
+
+3 elementos '<p>' (tirados da const 'Person', desse REACT COMPONENT) 
+
+na nossa página...
+
+
+
+
+
+
+---> MANEIRA MT FÁCIL DE 
+
+REUTILIZAR ESSE COMPONENT EM DIVERSOS LUGARES 
+
+DE NOSSO WEBAPP.... 
+
+
+
+-----------> USAR ESSES COMPONENTES EM QUALQUER 
+
+LUGAR DO NOSSO APP...
+
+
+
+
+--> ALÉM DISSO, 
+
+TAMBÉM 
+
+
+__PODEMOS ___ CONFIGURAR___ esses components...
+
+
+
+
+----> ANTES DE FAZER ISSO, 
+
+
+
+DEVEMOS 
+
+
+MUDAR UMA COISINHA DO NOSSO CÓDIGO REACT.... 
+
+
+
+
+--> temos que mudar nosso código react 
+
+
+PQ ATÉ 
+
+
+
+AGORA ELE AINDA É TODO 'ESTÁTICO' (static)...
+
+
+
+
+
+
+
+
+----> COmo assim?
+
+
+
+
+---> bem, nós temos o nosso react component, 
+
+MAS DENTRO DELE NÓS SÓ TEMOS 
+
+
+UM 'STATIC HTML TEXT', aquele '<p>' simples...
+
+
+
+
+E qual o problema disso? ---> BEM, FREQUENTEMENTE 
+
+
+OS SEUS TEMPLATES (seus códigos jsx) __DEVERÃO ___ SER 
+
+____DINÂMICOS___ ----> eles 
+
+deverão 
+
+OUTPUTTAR 
+
+__DIFERENTES COISAS___ DEPENDENDO DO ____ ''''STATE'''''____ do seu 
+
+aplicativo,  OU DEPENDENDO DO ___USERINPUT____ do usuário... ---> vamos FAZER 
+
+ISSO MUITAS 
+
+
+VEZES AO LONGO DO CURSO, mas por enquanto 
+
+
+DEVEMOS 
+
+
+SETTAR AS FUNDAÇÕES PARA ISSO, para esses conceitos... 

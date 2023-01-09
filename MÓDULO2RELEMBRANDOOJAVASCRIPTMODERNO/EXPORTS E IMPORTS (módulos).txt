@@ -1,0 +1,298 @@
+ 
+
+ UMA OUTRA FEATURE QUE 
+
+ O JAVASCRIPT NEXT-GEN OFERECE 
+
+
+ É A POSSIBILIDADE DE ESCREVER ___CÓDIGO___ EM MÚLTIPLOS MÓDULOS/ARQUIVOS...
+
+
+
+
+ --> e é evidente que podemos importar múltiplos arquivos, NÓS 
+
+ SÓ TEMOS QUE OS IMPORTAR NA ORDEM CORRETA 
+
+
+ NO NOSSO HTML... ---> dentro de um arquivo 
+
+ javascript, podemos 
+
+
+ IMPORTAR CONTEÚDO DE OUTRO ARQUIVO JAVASCRIPT... ---> isso faz os arquivos 
+
+ JAVASCRIPT EM SI entenderem que ELES POSSUEM OUTRAS DEPENDENCIES (outros arquivos 
+ dos quais dependem)
+
+
+
+
+
+ ----> Ex:
+
+
+
+
+ arquivo 'person.js.'...
+
+
+
+
+ código 
+
+
+ 'const person = {
+     name: 'Max'
+ }
+
+
+ export default person'
+
+
+
+
+
+ ---------------------------
+
+
+ 'default'  ----> TAMBÉM É UMA KEYWORD... ELA MARCA ESSE EXPORT COMO 'O EXPORT DEFAULT' DESSE ARQUIVO...
+
+
+
+
+----> DEFAULT ---> ISSO SIGNIFICA QUE SE NÓS IMPORTARMOS 
+
+
+____ALGO COM QUALQUER NOME _____ no arquivo em que queremos usar aquela coisa exportada,
+
+O EXPORT DEFAULT DO ARQUIVO SERÁ UTILIZADO...
+
+
+ex:
+
+
+'export default person'  em 'person.js'...
+
+
+
+
+'import prs from './person.js'   em   'app.js'... -----------> ISSO VAI ACABAR IMPORTANDO 'person', mesmo que o nome 'prs' SEJA DISTINTO DE 'person'...
+
+
+
+
+
+
+ ----------------------------
+
+
+ ISSO FEITO, PODEMOS 
+
+ IMPORTAR 
+
+
+ ESSE OBJETO EM ALGUM OUTRO LUGAR... 
+
+
+ (POR MEIO da sintaxe de import...)
+
+
+
+ --------------------------------------------
+
+
+
+
+
+
+ NÓS TAMBÉM PODEMOS TER UM ARQUIVO em que 
+
+
+
+ EXPORTAMOS MÚLTIPLAS COISAS... ----> 
+
+
+ ex:
+
+ arquivo 
+
+ 'utility.js'...
+
+
+ código:
+
+
+ export const clean = () => {...}
+
+ export const baseData = 10;
+
+
+
+---------------------------------
+
+
+
+
+
+
+EM UM TERCEIRO ARQUIVO, 
+
+
+
+TALVEZ TENHAMOS QUE IMPORTAR COISAS TANTO DE 
+
+'person.js'
+
+
+como de 
+
+'utility.js'...
+
+
+
+
+
+tipo em 'app.js'...
+
+
+
+Bem, em app.js 
+
+
+teríamos 
+
+
+de ESCREVER 
+
+algo 
+
+
+como 
+
+
+
+'
+
+
+import person from './person.js';
+import prs from './person.js'; -------> ISSO TAMBÉM VAI IMPORTAR 'person' de 'person.js', POIS O OBJETO 'person' que foi exportado lá FOI EXPORTADO COMO 'DEFAULT EXPORT' (isso significa que SE IMPORTARMOS algo com um nome aleatório/arbitrário no nosso app.js, o export retirado de 'person.js' SERÁ SEMPRE O DEFAULT, SE O DEFAULT estiver definido...)
+
+
+
+
+
+
+import { baseData, clean } from './utility.js'; ---> em 'utility.js' nós não marcamos nada como default export, por isso devemos especificar cada um desses imports....
+
+
+
+
+
+
+------------------------------------------------------------
+
+
+
+
+
+
+TODAS ESSAS FEATURES NEXT-GEN não 
+
+
+SÃO RODADAS ASSIM NO BROWSER... ---> nem o browser mais moderno 
+
+de todos suporta 
+
+
+TODAS ESSAS FEATURES NEXT-GEn...
+
+
+
+
+--> no próximo módulo o professor vai nos mostrar como podemos 
+
+usar todas essas features next-gen NOS NOSSOS PROJETOS 
+
+sem que 
+
+
+nós acabemos shippando código que não roda em lugar nenhum (moderno até demais)...
+
+
+
+
+
+VOCÊ 
+
+
+PODE TAMBÉM VER 
+
+ALGUMAS VARIANTES
+
+
+DESSA SINTAXE DE EXPORTS/IMPORTS...
+
+
+
+
+
+
+---> COMO 'ALIAS' (
+
+
+
+    tipo 
+
+    escrever 
+
+
+    'import { smth as Smth } from './utility.js'
+)
+
+
+
+-----------------------------------------------------------------
+
+
+POR FIM, VOCÊ 
+
+PODE IMPORTAR 
+
+TUDO DE UM ARQUIVO 
+
+
+POR MEIO 
+
+DA SINTAXE 
+
+
+'import *'...
+
+
+
+ex (nesse exemplo, nós assignamos o nome 'bundled' como alias DE TODAS AS FUNÇÕES 
+IMPORTADAS DO ARQUIVO 'utility.js'...):
+
+
+'import * as bundled from './utility.js'...
+
+
+
+
+--> 'bundled' se transforma um GRANDE OBJETO em que todas as funções/métodos/objetos 
+do arquivo  --> aí você usa a DOT NOTATION (.) para acessar as coisas dentro dele... 
+
+
+
+
+
+--> MAS A SINTAXE MAIS USADA É 
+
+
+'import { xxx } from ...'...
+----------------------------------------------------------------
+
+
+
+

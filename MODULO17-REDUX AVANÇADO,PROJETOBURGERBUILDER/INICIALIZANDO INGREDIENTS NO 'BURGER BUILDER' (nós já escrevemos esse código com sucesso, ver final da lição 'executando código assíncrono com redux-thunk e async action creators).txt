@@ -1,0 +1,390 @@
+
+
+
+
+
+
+
+
+---> professor nos mostra que o spinner vai inicialmente ficar girando para sempre... ---> 
+
+
+
+
+Isso pq a lógica 
+
+DO REDUCER  'burgerBuild'  AINDA NÃO HAVIA SIDO ESCRITA/não está escrita...
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+
+--> Entre o código do professor e o nosso há uma pequena diferença:
+
+
+  
+
+  ---> no caso de '  case actionTypes.ORDER_INITIAL_INGREDIENTS_GET:',
+
+
+
+
+  PROFESSOR
+
+  ESCREVE 
+
+
+  uma redefinição de error, que ele coloca como 'false'... ----> 
+
+
+
+  ex:
+
+
+
+
+  const orderInitialIngredientsGet = (state, action) => {
+
+    return updateObject(state, {
+      burger: { totalPrice: 6.9,
+        error: false,  ////////EIS O CÓDIGO EM QUESTÃO... (isso vai RESETTAR o status de nossa propriedade 'error' no state do redux...)
+      ingredients: {
+        ...action.ingredients
+      }}
+    })
+}
+
+
+
+---------------------------------------------------------------------
+
+
+
+
+
+
+NOSSO 
+
+CONTAINER 
+
+
+PRECISA 
+
+ESTAR 
+
+CONECTADO
+ 
+
+ Ao 
+
+
+ 'error'.... (
+
+
+
+
+''''''''''''''''''''''''''''
+     const mapStateToProps = state => {
+         return {
+             ings: state.ingredients,
+             price: state.totalPrice,
+             error: state.error ///////EIS O CÓDIGO EM QUESTÃO.
+         }
+     }
+ )
+
+ ''''''''''''''''''''''''''''
+
+
+
+
+
+
+
+ --> já o dispatch de 
+
+
+ 'asyncOrderInitialIngredientsGet()',
+
+
+
+
+ disparado por meio 
+
+ do código 
+ de 
+
+
+
+ '  onIngredientGet: () => {
+                dispatch(
+                      actionsCreators.asyncOrderInitialIngredientsGet()
+                )
+              }',
+
+
+
+
+
+
+SERÁ 
+
+
+
+
+ESCRITO
+ 
+
+ DENTRO DO 'componentDidMount' 
+
+ de nosso 
+
+ Burger Builder...
+
+
+
+ ex:
+
+
+
+
+
+
+ componentDidMount() {
+      this.props.onIngredientGet()
+  }
+
+
+
+
+
+  -----------------------------------
+
+
+
+
+  ISSO VAI 
+
+
+  1) EXECUTAR ESSE CÓDIGO,
+
+  2) DISPATCHEAR ESSA 'ACTION'
+
+
+    3) CONSEGUIR NOSSAS INGREDIENTS, extraídas LÁ DO __SERVER__/BACKEND de nosso aplicativo (firebase)....
+
+
+-----------------------------------
+
+
+
+
+--> JÁ A PROPRIEDADE 
+
+
+
+
+'error'
+
+
+
+deve 
+
+
+ser vinculada (por meio da escrita 
+'this.props.error')
+
+
+AO 
+
+NOSSO 
+
+CONTAINER... ---> é por isso que 
+
+
+nosso 
+
+
+'mapStateToProps' vai ficar 
+
+assim:
+
+
+
+const mapStateToProps = state => {
+        return {
+            ingr: state.burger.burger.ingredients,
+            price: state.burger.burger.totalPrice,
+            purchasable: state.burger.burger.purchasable,
+            // initialIngr: state.order.initialIngr.ingredients
+            error: state.burger.error
+        }
+
+}
+
+
+
+
+
+
+
+E É POR ISSO 
+
+
+QUE 
+
+VAMOS 
+
+SUBSTITUIR 
+
+TODAS AS OCORRÊNCIAS 
+
+de 
+
+'this.state.error'
+ 
+ no nosso código 
+
+
+
+ POR __'this.props.error'...
+
+
+
+ ex:
+
+
+
+
+
+ 'let burger = this.state.error ? (<p>Ingredients cant be loaded</p>) : <Spinner />'
+
+
+
+
+
+VAI FICAR 
+
+
+
+ 'let burger = this.props.error ? (<p>Ingredients cant be loaded</p>) : <Spinner />'
+
+
+
+
+
+
+
+ -------------------------------------------------
+
+
+
+
+CERTO... VOLTAMOS AO NOSSO APLICATIVO,
+
+
+e então 
+
+
+percebemos
+ 
+
+ QUE DEU TUDO CERTO...
+
+
+
+ -----------------------------
+
+
+
+
+
+O professor esculhamba 
+
+nossa 
+
+url 
+
+em 
+
+
+'axios.get(
+                            'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json'
+                          )',
+
+
+
+
+                          DEIXA 
+
+                          COMO 
+
+                          'axios.get(
+                              https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.
+                          )'
+
+
+                          ( OU SEJA, SEM 
+                          
+                          
+                          O 
+                          
+                          '.json' no final da url...) --> isso vai fazer 
+
+
+                          COM QUE 
+
+                          RECEBAMOS UM __eRRO__ ---> e aí aparece a mensagem 
+
+
+                          'Ingredients couldnt be loaded'...  (isso significa que 
+                          
+                          
+                          
+                          NOSSA MENSAGEM DE ERRO ESTÁ FUNCIONANDO...)
+
+
+
+
+
+
+
+                          ENTRETANTO, UMA COISA QUE PERCEBI É QUE __ O MODAL DE ERRO __NÃO ESTÁ APARECENDO....___ ---> 
+
+
+                          e isso é um problema...
+
+
+
+                          (e eu não sei como consertar isso...)
+
+
+
+                          -----------------------------
+
+
+
+
+
+
+
+                          ENTRETANTO, PROFESSOR DIZ QUE AGORA DEVEMOS FOCAR 
+
+
+                          NO ASYNC CODE 
+
+
+                          DE 
+
+                          'ORDER' (ou seja, da action de identifier 'ORDER_POST', ou algo do gênero...)

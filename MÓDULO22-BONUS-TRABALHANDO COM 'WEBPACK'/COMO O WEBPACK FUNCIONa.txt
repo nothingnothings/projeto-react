@@ -1,0 +1,364 @@
+
+
+
+
+
+
+
+
+
+
+----> O PROFESSOR QUER NOS MOSTRAR 
+
+COMO 
+
+O 
+
+WEBPACK 
+
+FUNCIONA 
+
+POR 
+TRÁS 
+
+DAS 
+CENAS...
+
+
+
+
+-------------------------------
+
+
+
+
+
+POR TRÁS DAS CENAS,
+
+O 
+
+WEBPACK 
+TEM 
+
+
+4 
+IMPORTANTES 
+
+FEATURES....
+
+
+
+
+
+
+1 ) O WEBPACK SEMPRE PRECISA DE PELO MENOS 1 (um) ENTRYPOINT...  (EX: 'app.js')...  ------> CONTUDO, VOCÊ PODE TER MÚLTIPLOS ENTRY POINTS, ISSO É POSSÍVEL...
+
+---> ISSO É NOSSA 'ROOT JAVASCRIPT FILE' QUE __MONTA (mounts) NOSSO APLICATIVO REACT NO DOM... ---> É A COISA QUE CHAMA O 
+'ReactDOM.render()', por exemplo... 
+
+
+----> O WEBPACK 
+
+PRECISA 
+
+DESSE ARQUIVO 'root'/entry __ PQ ___ELE PRECISA __ ANALISAR AS 'DEPENDENCIES' desse arquivo.... --> e a 'ROOT ENTRY FILE' VAI TER UMA 
+DEPENDENCY A UM OUTRO ARQUIVO,
+QUE POR SUA VEZ TERÁ 
+DEPENDENCIES A OUTROS ARQUIVOS... (exatamente como nosso aplicativo react...).
+
+
+
+
+
+
+---> ISSO SIGNIFICA QUE O WEBPACK FAZ ISSO PARA QUE ELE POSSA CONSTRUIR UM 
+
+'DEPENDENCY GRAPH',
+começando 
+
+COM AQUELA 
+
+'ROOT ENTRY FILE'... -> faz isso para que CONSIGA __ENTENDEr__ QUAIS ARQUIVOS 
+COMPÕEM
+ NOSSO 
+
+ APLICATIVO....... e tudo isso por meio do 'entry root js file'...
+
+
+
+
+
+
+
+
+
+2) ELE ENTÃO BUNDLA TUDO, todas as dependencies,
+
+
+'TOGETHER' EM 1 BUNDLE ÚNICO, QUE É UM 'OUTPUT' que 
+
+nós 
+
+ESPECIFICAMOS PREVIAMENTE... (
+
+
+    'Correctly ordered, concatenated output' --->  'output (e.g. dist/bundle.js)'
+)
+
+
+
+
+O EXEMPLO CLÁSSICO DISSO É UM ARQUIVO 
+
+'bundle.js'
+
+
+LÁ 
+
+
+NO FOLDER 'dist', como visto no nosso projeto antigo...
+
+
+
+
+
+--> E ___NÓS ESPECIFICAMOS___ O FILENAME__ E O LUGAR EM QUE 
+ESSE ARQUIVO __DEVERÁ IR __... --------> E O WEBPACK VAI COLOCAR TODAS 
+
+ESSAS DEPENDENCIES 'CORRECTLY ORDERED', IN A CONCATENATED OUTPUT FILE..
+
+
+
+
+
+
+
+ESSAS 2 FEATURES SÃO AS 'MAIN FEATURES'... -----> MAS NÃO SÃO AS ÚNICAS.. 
+
+
+TEMOS OUTRAS 2:
+
+(que podem ser utilizadas, é claro.)
+
+-----------------------------------------
+
+
+
+
+
+3) UMA FEATURE EXCELENTE, OS __LOADERS___... -------> OS LOADERS 
+
+SÃO APLICADOS 
+
+
+'ON A PER-FILE LEVEL'...  ----> ISSO QUER DIZER, ESSENCIALMENTE,
+
+QUE NÓS PODEMOS 
+
+COMUNICAR 
+
+AO NOSSO CÓDIGO 
+
+
+'TODOS OS ARQUIVOS JAVASCRIPT DEVERÃO SER HANDLADOS PELO 
+LOADER X, ENQUANTO TODOS OS ARQUIVOS CSS DEVERÃO SER HANDLADOS 
+PELO LOADER Y'....  ------------------> EXEMPLOS MAIS 
+
+COMUNS 
+
+
+SÃO 
+
+O 
+
+
+'babel-loader' 
+
+
+E O 
+
+
+'css-loader'... -------------> ESSES 2 SÃO USADOS __EM MUITOS E MUITOS PROJETOS__...
+
+
+
+
+-------------------------------------
+
+
+OK, 
+
+LOADERS APLICAM
+ 
+ 
+ 'FILE-DEPENDENT TRANSFORMATIONS', essencialmente... ('file-type dependent transformations')...
+
+ ------------------------------------------------
+
+
+
+
+
+
+
+4A FEATURE, TAMBÉM IMPORTANTE,
+
+
+OS 
+
+
+__PLUGINS___... ------------>  PLUGINS ---> 
+
+
+
+ENQUANTO QUE OS LOADERS 
+
+SÃO 
+
+
+APLICADOS 
+
+
+EM 
+
+UMA 'per-file basis',
+
+
+
+
+OS PLUGINS 
+
+
+
+
+__PEGAM SEMPRE __ AS 'CONCATENATED FILES' 
+
+e 
+
+
+AS ALTERAM POR INTEIRO... -------> ISSO SIGNIFICA QUE ELES 
+
+
+___ALTERAM O BUNDLE___... ------> MAS 
+
+
+ 
+
+
+ELES 
+
+ALTERAM 
+
+O BUNDLE ____ ANTES DE ELE __ SER ESCRITO/TRANSFORMADO/COMPILADO 
+
+NO 
+
+'OUTPUT' pelo webpack...-----------------> 
+
+
+
+E 
+
+É 
+
+NOS PLUGINS/NA ETAPA DOS PLUGINS EM QUE 
+
+PODEMOS 
+
+
+APLICAR 
+
+
+ALGUMAS 
+
+OPTIMIZAÇÕES/TRANSFORMAÇÕES 
+
+__gERAIS__..... ----------> optimizações/transformações 
+
+COMO 
+
+POR EXEMPLO 
+
+
+
+'uglify' --> É O ___UGLYFYING___ ---> 
+
+
+E 
+ISSO 
+
+
+ACONTECE 
+
+EM UM NÍVEL GLOBAL,
+
+
+
+ 
+
+ UglifyJS is a JavaScript parser, minifier, compressor and beautifier toolkit.
+
+
+
+
+
+--------------------------------------------
+
+
+
+A ETAPA 
+
+DOS 
+
+'PLUGINS' OCORRE EM UM NÍVEL GLOBAL,
+
+
+E 
+
+
+______dEPOIS___ DOS LOADERS __ FAZEREM
+ 
+
+ SEU TRABALHO SUJO...
+
+
+ -----------------------------
+
+
+ E 
+
+ É 
+
+ ASSIM 
+
+ QUE 
+
+ O 
+
+ WEBPACK 
+
+ FUNCIONA,
+
+
+
+
+ E TUDO POR TRÁS DAS CENAS.... ---------> E TUDO ISSO É SETTADO 
+
+
+
+ DENTRO 
+
+
+ DE UM ARQUIVO 
+
+ 'webpack.config.js',
+
+
+
+ QUE 
+
+ JÁ VIMOS ANTES,
+
+ E QUE 
+
+ OLHAREMOS AGORA DE NOVO...

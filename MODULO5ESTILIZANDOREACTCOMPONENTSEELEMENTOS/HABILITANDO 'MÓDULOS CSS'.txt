@@ -1,0 +1,57 @@
+MUST READ (at least the first few paragraphs ... ;-))
+
+In the next lecture, we'll use a styling solution named "CSS modules". I'll explain what it is and how it works over the next lectures.
+
+The way we unlock it changed a little bit though.
+
+In the past, you needed to "eject" from your project as created with create-react-app (CRA) so that you can edit the underlying Webpack config. That's what we do in the videos.
+
+***
+
+In more recent project versions created by CRA, support for CSS modules is already built-in and you can use that feature without ejecting, please see: https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet
+
+If you use this approach, you DON'T need to eject. But please don't skip the next videos though, I do explain what CSS modules are and why + how we use them there!
+
+***
+
+Optional:
+
+If you still want to eject and manually adjust the Webpack config (as we do it in the new videos - which you don't need to do if you follow the approach described in the link above), you should take the below comments into account in case your webpack config (after ejecting) doesn't look the same as it does in my videos:
+
+After ejecting, we edit a Webpack config file that's made available by ejecting. This file might look slightly different for you.
+
+In the video, I'll look for an entry that starts like this (in the webpack.config.js file):
+
+{
+  test: /\.css$/,
+  ...
+}
+and I then edit this entry.
+
+This entry now looks slightly different. You'll have to find the following part in your webpack.config.js file:
+
+{
+  test: cssRegex,
+  exclude: cssModuleRegex,
+  ...
+}
+and then edit that entry.
+
+Finally, it should look like this:
+
+{
+  test: cssRegex,
+  exclude: cssModuleRegex,
+  use: getStyleLoaders({
+      importLoaders: 1,
+      modules: true,
+      localIdentName: '[name]__[local]__[hash:base64:5]'
+  }),
+}
+You can ignore me editing the webpack.config.prod.js file - with the latest version of create-react-app, ejecting only gives you ONE webpack config file (which you edit as described above).
+
+
+
+
+
+-------------------------------------

@@ -1,0 +1,309 @@
+
+
+
+
+
+
+
+
+
+
+--> Nós demos uma olhada 
+
+em 
+'built with react' 
+
+e 
+
+
+'react.rocks'...
+
+
+
+
+
+
+
+
+
+
+--> AGORA CHEGA DE EXAMINAR DEMO PROJECTS,
+
+
+hora 
+
+
+de 
+
+
+DAR UMA OLHADA 
+
+NO 
+
+'Gatsby.js'...  ---------> 
+
+
+
+GATSBY --> NA VERDADE 
+
+É 
+
+
+__UMA LIBRARy__ , 
+
+UMA 
+
+LIBRARY COMO 
+
+'next.js',
+
+MAS QUE 
+
+SERVE 
+
+UM 
+
+
+
+PROPÓSITO BEM DIFERENTE...
+
+
+
+
+
+
+
+
+
+
+
+
+-> é uma library bem interessante.... ------> GATSBY 
+
+É 
+
+UMA 
+
+LIBRARY QUE 
+
+TE 
+
+DEIXA
+ 
+ CRIAR 'STATIC WEBSITES'
+
+ COM O REACT.... ---------> 
+
+
+
+
+
+
+
+ 'STATIC WEBSITE' --> é uma 
+
+ PÁGINA 
+ QUE 
+
+ USA 
+
+
+ SÓ 
+
+
+
+
+ 'HTML, CSS, E JAVASCRIPT'.... ------> BEM, ISSO SE APLICA 
+
+ TAMBÉM 
+
+
+ A 
+
+
+ APPS 'SPA' (single page application) do react,
+
+
+ MAS 
+
+
+ O 
+
+ GATSBY 
+
+
+
+
+TEM UMA COISA ESPECIAL ACERCA DELE.... ------> VOCÊ 
+
+
+NORMALMENTE 
+
+
+
+
+_______NÃO USA ____ 'REACT-ROUTER' com ele... (pelo menos não diretametne) --> 
+
+EM VEZ DISSO,
+
+
+O QUE 
+
+VOCÊ 
+
+
+UTILIZA 
+
+É 
+
+__UMA ESTRUTURA __ DE FOLDERS (como 'Next.js'),
+
+
+
+EM QUE 
+
+
+
+CADA 
+
+
+FOLDER 
+
+TEM UM 
+
+'index.js' __ E __ OS ASSETS QUE 
+
+PERTENCEM 
+
+A 
+
+
+cada index.js... 
+
+
+
+
+
+
+
+
+
+-----> A COISA LEGAL DO GATSBY É QUE 
+
+VOCê CONSTRÓI 
+
+SITES 
+
+BEM COMO VOCÊ 
+
+OS 
+
+
+CONSTRUÍA 
+NA 
+
+DÉCADA 
+
+DE 
+90,
+
+
+
+mas 
+
+__VOCê USA __ O REACT,
+
+você 
+
+constrói 
+o negócio 
+
+como 
+UM 
+
+REACT APP... --> E AÍ O GATSBY FAZ O RESTO DO TRABALHO PARA VOCÊ,
+
+ele 
+SPLITTA 
+
+TUDO, E 
+
+AÍ, A PARTIR DE UM COMANDO,
+
+
+CRIA ESSA 
+
+ESTRUTURA DE FOLDERS com arquivos 
+
+'index.js' e HTMLs 
+
+CRIADAS 
+
+A PARTIR 
+
+
+
+DO REACT APP QUE VOCÊ CONSTRUIU... ------> É UMA LIBRARY MUITO BOA... --> merece seu próprio curso... 
+
+
+
+
+
+-------------------------------------------
+
+
+--> VOCÊ PODE LER OS DOCS PARA ENTENDER COMO ELE FUNCIONA...
+
+
+
+
+
+
+
+
+-----> HÁ ALGUMAS ALTERNATIVAS AO GATSBY,
+
+
+como o 
+
+'Jekyll'  (traditional static site generators),
+
+
+
+E 
+
+ o 
+
+ 'Wordpress'... -------> ali, no entanto, VOCÊ PRECISA 
+
+ ESCREVER 
+
+ SERVERSIDE CODE, SEQUEL DATABASE e etc, 
+
+
+
+ ... você não precisa de nada 
+
+ disso 
+
+ com 
+
+ o 
+
+ gatsby,
+
+ PQ ELE FUNCIONA 
+
+ COM 
+
+
+
+ react,
+
+
+
+
+ E traz bastantes vantagens...
+
+
+ 

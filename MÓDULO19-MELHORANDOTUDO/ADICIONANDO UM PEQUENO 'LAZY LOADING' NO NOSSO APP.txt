@@ -1,0 +1,3879 @@
+
+
+
+
+
+--> ok, fizemos um monte de pequenas optimizações...
+
+
+
+
+
+
+
+------> MAS HÁ UMA OPTIMIZAÇÃO QUE DEVE DEFINITIVAMENTE SER ADICIONADA...
+
+
+
+
+
+
+
+
+---------> a optimização de que estamos falando é o LAZY LOADING...
+
+
+
+
+
+
+---> O LAZY LOADING PODE SER INTRODUZIDO, NO NOSSO APLICATIVO,
+
+____NA FORMA __ PELA QUAL __ NOSSAS ROUTES __ SÃO CARREGADAS__....
+
+
+
+
+
+----------------------------
+
+
+
+
+
+LÁ NO ARQUIVO 
+
+'App.js',
+
+
+NÓS 
+
+
+
+TEMOS 
+
+
+O SEGUINTE CÓDIGO:
+
+
+
+
+
+      let routes = (
+        
+        <Switch>
+        <Route path="/auth" component={Auth} />
+          <Route path="/" exact component={BurgerBuilder} />
+          <Redirect to="/" />
+        </Switch>
+      )
+
+
+
+
+
+      if (this.props.token) {
+        routes = (
+          <Switch>
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/auth" component={Auth} /> 
+          <Route path="/logout" component={Logout} />
+          <Route path="/" exact component={BurgerBuilder}/>
+          <Redirect to="/" />
+          </Switch>
+        )
+      }
+
+
+
+
+
+    return (
+      <BrowserRouter>
+        <div>
+          <Layout>
+            {routes}
+          </Layout>
+        </div>
+      </BrowserRouter>
+    );
+  }
+}
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+---> CERTO.... ALI NÓS 
+
+
+TEMOS, 
+
+
+NO 
+
+'CASE' 
+
+dA TOKEN EXISTIR,
+
+
+
+
+AS ROUTES 
+
+
+DE 
+
+'CHECKOUT'  e 
+
+
+
+'ORDERS'... --> e, bem,
+
+
+ 
+
+
+ ESSAS ROUTES _NÃO SÃO __ NECESSARIAMENTE VISITADAS POR NÓS/USUÁRIOS... --> isso quer 
+
+ dizer, essencialmente,
+
+ que 
+
+ o 
+
+ usuário/nós 
+
+
+ __TALVEZ__ NUNCA ACABEMOS ___ VISITANDO 
+
+ ESSAS PÁGINAS 
+
+ DE 
+
+ 'CHECKOUT' 
+
+ e 
+
+ 'ORDERS',
+
+ E É 
+
+ EXATAMENTE 
+
+ POR ISSO 
+
+
+ QUE 
+
+
+
+ O LAZY LOADING PODE SER IMPLEMENTADO AQUI (são páginas 'OPCIONAIS'/ALTERNATIVAS/que não são TOTALMENTE OBRIGATÓRIAS/core...)
+
+
+
+
+
+
+ ---> OUTRA PARTE QUE 
+
+ __TALVEZ NUNCA ACABE ___ SENDO VISITADA __ É 
+
+ A PARTE/PÁGINA 
+ DE 
+
+
+ 'Auth'.... ------> ISSO QUER 
+
+ DIZER QUE 
+
+
+ ___tODAS ___eSSAS 
+
+
+ ROUTES/PÁGINAS __PODEM 
+
+ SER 
+
+ CARREGADAS, POR NÓS__,
+
+
+ DE FORMA 
+
+
+ ___aSSÍNCRONA__... (asynchronously/lazily) 
+
+
+
+
+
+
+
+ --> BURGERBUILDER NÃO PODE SER CARREGADO DE FORMA 'LAZY',
+
+ mas 
+
+ as 
+
+ outras 
+
+
+ routes 
+
+ CERTAMENTE PODEM...
+
+
+
+
+
+
+
+
+
+ --> E NÓS APRENDEMOS SOBRE COMO __ ADICIONAR LAZY LOADING 
+
+ POR MEIO DE/ NO REACT 
+
+ ROUTER,
+
+
+
+ e o professor vai nos dar uma oportunidade 
+
+ para 
+
+ fazermos isso 
+
+ sozinhos...
+
+
+ -----------------
+
+
+
+ RELEMBRE ESTA AULA:
+
+
+ 
+
+
+
+
+
+
+
+
+---> ESTAMOS NO FIM DO MÓDULO SOBRE 
+
+
+ROUTING... 
+
+
+
+
+
+--> 
+
+MAS HÁ MAIS UM CONCEITO AVANÇADO... ---> é um conceito que não é tão difícil de implementar.......
+
+
+
+
+
+
+
+
+
+--> DEVEMOS VOLTAR AO NOSSO APP E...
+
+
+
+PARA QUE O PROFESSOR 
+
+REALMENTE 
+
+CONSIGA 
+
+nos mostrar o que 
+
+ele quer dizer,
+
+
+ 
+
+
+
+
+ELE VAI DEFINIR AQUELA PROPRIEDADE 
+
+'auth' 
+
+
+
+no STATE DE NOSSO COMPONENT/CONTAINER 
+
+
+
+'Blog'
+ 
+
+
+ COMO SENDO 
+
+
+ 'true'....
+
+
+ ex:
+
+
+
+
+
+
+state = {
+
+    auth: true
+}
+
+
+
+-----------------------------
+
+
+
+ELE FARÁ 
+
+ESSA ALTERAÇÃO __pARA QUE __ NOS TORNEMOS CAPAZES __ DE ACESSAR __ AQUELE 
+
+
+LINK 
+
+
+DE 
+
+'New Post'... (para que possamos acessar a route de '/new-post'...)
+
+
+
+
+
+
+
+
+
+
+
+Certo, com isso, perceberemos que o container/component 'NewPost' 
+
+poderá 
+
+SER CARREGADO DE NOVO....
+
+
+
+
+----------------------------
+
+
+ISSO FEITO,
+
+
+VAMOS 
+
+ATÉ 
+
+
+A 
+
+ABA 
+
+
+
+'Network' 
+
+
+
+
+NO DEVTOOLS ------> 
+
+lá, 
+
+
+podemos 
+
+
+
+dar uma olhada 
+
+
+
+
+EM __tODOS OS REQUESTS___ de coisas 
+
+
+no nosso aplicativo...
+
+
+
+
+
+
+
+
+
+
+--> SE FIZERMOS ISSO, 
+
+
+
+se recarregarmos nossa página 
+
+
+'posts',
+
+VAMOS VER QUE 
+
+
+UM ARQUIVO 
+
+'''bundle.js''' 
+
+ESTARÁ 
+
+
+
+SENDO BAIXADO, 
+
+
+SEMPRE QUE CARREGAMOS 
+
+'posts'...
+
+
+
+
+
+---> bundle.js ------> ISSO CONTÉM ___tODO O NOSSO SOURCE CODE_,
+
+
+
+e ele é RELATIVAMENTE GRANDE EM TAMANHo PQ __NÓS ESTAMOS NO 'DEV MODE'... -----> ELE FICARÁ 
+
+
+BEM MENOR 
+
+QUANDO 
+
+NÓS 
+
+
+'SHIP OUR CODE FOR PRODUCTION'... ----> ele será optimizado pelo nosso build workflow automaticamente,
+
+
+mais tarde.. (professor falará disso mais tarde, quando fizermos DEPLOY 
+DE NOSSO APLICATIVO...)
+
+
+
+
+
+
+
+
+---> ainda assim,
+
+
+CARREGAR ESSE 'BUNDLE INTEIRO',
+
+
+COM ___tODO O CÓDIGO__ DE NOSSO APLICATIVO, 'upfront',
+
+
+
+__PODE SER  _____RUIM_____ se tivermos um aplicativo grande;
+
+
+um aplicativo grande com 
+
+
+ FEATURES DISTINTAS, E COM 
+
+ ÁREAS DISTINTAS NO APLICATIVO......
+
+
+ (e com tantas áreas, é capaz de um usuário NUNCA VISITAR ALGUMAS ÁREAS DESSE APP....)
+
+
+
+
+
+
+
+
+
+
+ ---> como o usuário pode acabar NUNCA VISITANDO ALGUMAS ÁREAS DE NOSSO APP,
+
+
+ o mais óptimo seria 
+
+
+ DIVIDIR UM POUCO ESSE CÓDIGO AÍ, o código desse 'bundle'...
+
+
+
+
+
+
+
+
+ ---> isso pode ser visto claramente no nosso app dos posts... ------> 
+
+
+
+ nós temos os 
+
+
+ 'posts'... --> mas se o usuário 
+
+
+ __NUNCA VISITAR __ 
+
+
+ 'New Post',
+
+
+ não seria essa página/component/route meio inútil? ---->   pq carregar 
+
+
+ o código 
+
+
+ RESPONSÁVEL PELO CONTEÚDO DE 'NEW POST', quando o usuário 
+
+ PROVAVELMENTE 
+
+
+
+ __NUNCA VERÁ__ ESSA PÁGINA (tvz por causa da necessidade de 'AUTHENTICATION' (''''auth: true''')),
+
+
+NÃO É ALGO QUE FAZ MUITO SENTIDO (faz nosso código pesar mais para todos 
+
+os usuários, por razão alguma...)
+
+
+
+
+
+
+
+--------> ou seja,
+
+o component 
+
+
+'newPost', 
+
+seu código 
+
+
+vai ser sempre baixado/carregado 
+
+pelo usuário,
+
+mesmo pelos 
+
+usuários 
+
+que 
+
+NUNCA O UTILIZARÃO... -----------> PROFESSOR 
+
+
+EXPLICA QUE 
+
+
+ESSE 
+
+
+'NEW POSTS', nesse nosso caso específico,
+
+
+
+SOMENTE DEVERÁ ___SER CARREGADO__ QUANDO 
+
+O USUÁRIO EFETIVAMENTE ___ NAVEGAR ___ ATÉ 
+
+
+
+'localhost:3000/new-post'... ---------> CASO CONTRÁRIO,
+
+
+
+
+
+
+'NewPost' (e todas as outras POTENCIAIS 'CHILDREN' DE NOSSO 'Blog', do component/container 'geral' de nosso app...) 
+
+NÃO SERÃO 
+
+
+NECESSÁRIOS... -----> é por isso que 
+
+BAIXAR
+
+
+__tODO O CÓDIGO, CÓDIGO DE TODAS AS ROUTES __UPFRONT__, 
+
+é desnecessário... ---------> 
+
+
+
+SERIA MELHOR 
+
+NÃO BAIXAR ESSAS ROUTES/ESSES COMPONENTS E SUAS ROUTES,
+
+
+assim fazendo  com que 
+
+
+o 'chunk inicial' 
+
+a 
+
+ser 
+
+baixado pelo 
+
+usuário FIQUE MENOR... -------->  ou seja, 
+
+
+QUEREMOS 
+
+
+
+
+___FAZER COM QUE __ NOSSO APLICATIVO __bAIXE __ O CÓDIGO RESPONSÁVEL por 
+
+
+'FullPost' 
+
+
+E SUAS CHILDREN ___ APENAS__ QUANDO NECESSÁRIO...
+
+
+
+
+
+
+
+
+--------------> OBS:::::: PARA APLICATIVOS MENORES, COMO NOSSO APLICATIVO DOS 'POSTS',
+
+essa feature de lazy loading ___rARAMENTE___ É NECESSÁRIA... -----> ela só 
+
+
+será 
+usada 
+
+em aplicativos 
+
+
+MAIORES,
+
+aplicativos CUJOS 
+
+
+COMPONENTS,
+
+SE FOSSEM
+ 
+ BAIXADOS 'UPFRONT' todos eles,
+
+
+ 
+ DEIXARIAM O APLICATIVO (O SEU CARREGAMENTO) MUITO LENTO...
+
+
+
+
+ ------------------------------
+
+
+
+
+ Ué, mas pq n fazer isso no nosso aplicativo? 
+
+ pq 
+
+
+
+ n escrever 
+
+
+
+ esse 
+
+ 'lazy loading', que 
+
+ faz com que 
+
+
+ os 
+
+ components só sejam carregados quando realmente sua 
+ presença é necessária? ------->  
+
+
+ PQ NÃO É MT ÚTIL...; FAZER UM REQUEST EXTRA PARA UM COMPONENT MINÚSCULO COMO O NOSSO, 
+
+ DE 
+ '1 kb' ou menos, 
+
+ não é muito útil...
+
+
+
+
+ -------------------------------
+
+
+
+
+
+MAS É IMPORTANTE SABER ESSA TÉCNICA PARA ___aPLICATIVOS __ MAIORES,
+
+
+APLICATIVOS 
+
+
+
+EM QUE 
+
+O LAZY LOADING (carregamento do código do seu app POR PARTES, de acordo 
+
+com a necessidade do usuário.... ---> routes e components renderizados pelas routes vão sendo 
+carregados de acordo com os clicks do usuário...)
+
+
+
+
+REALMENTE IMPORTA...
+
+
+
+
+
+
+
+
+
+---> A TÉCNICA DE 'CARREGAR APENAS O QUE VOCÊ PRECISA' 
+
+é conhecida como 
+
+
+__lAZY LOADING__/CODE SPLITTING.... ---------->  essa técnica 
+
+
+basicamente 
+
+
+vai querer que 
+
+vocÊ 
+
+
+
+SÓ CARREGUE O COMPONENT __QUANDO VOCÊ REALMENTE PRECISA DELE__... 
+
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+OK, MAS COMO ISSO FUNCIONA...?  (eu já vi como isso funciona no curso anterior, mas era um pouco diferente...)
+
+
+
+
+
+
+ERA ASSIM:
+
+
+
+
+
+
+
+
+
+
+''''''''''''''''''''''''
+
+
+
+
+
+
+
+ESSA FUNÇÃO 
+
+
+'import()' É SUPORTADA 
+
+
+
+TANTO PELO JAVASCRIPT COMO PELO WEBPACK...
+
+
+essa função é LIDA PELO WEBPACK QUANDO ELE ANALISA E BUNDLA O NOSSO CÓDIGO....
+
+
+
+
+----> nessa função, o professor vai querer importar  (esse é, como talvez você se lembre, um import ___DINÂMICO____ de módulo... ele é usado QUANDO QUEREMOS IMPLEMENTAR LAZY LOADING/CARREGAMENTO DINÂMICO DE SCRIPTS, E NÃO ESTÁTICO/INICIAL/DE STARTUP....)
+
+o módulo de 
+
+
+'product-management.js'...
+
+
+
+
+ex:
+
+
+
+
+
+
+import  { initProducts } from './product-management'; 
+
+const addProduct = (event) => {
+
+    import('./product-management.js'); /////EIS O CÓDIGO EM QUESTÃO...
+
+}
+
+
+
+const addProductForm = document.getElementById('new-product');
+
+initProducts();
+
+
+
+addProductForm.addEventListener('submit', addProduct);
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+'import()' SEMPRE NOS RETORNA UMA ___PROMISE___ com 
+
+aquele módulo... ou seja, devemos RESOLVER essa promise com CÓDIGOS 
+EXECUTADOS A PARTIR DELA... ('.then()' blocks....)
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+import  { initProducts } from './product-management'; 
+
+const addProduct = (event) => {
+
+    import('./product-management.js').
+    .then(() => {
+
+    });
+
+}
+
+
+
+const addProductForm = document.getElementById('new-product');
+
+initProducts();
+
+
+
+addProductForm.addEventListener('submit', addProduct);
+
+
+---------------------------------------------------------
+
+
+
+
+PROFESSOR EXPLICA QUE PODERÍAMOS USAR 'ASYNC/AWAIT', mas que aqui utilizaremos o clássico 
+
+
+promise com then blocks....
+
+ESSA PROMISE RETORNADA POR MEIO DO 'import' VAI SEMPRE 
+
+
+NOS DAR UM 
+
+
+OBJETO/PROMISE de 
+
+
+'module'...
+
+
+é por isso que o professor nomeia o parâmetro daquela função interna do 
+
+
+
+'then() block' como 
+
+sendo 'module'...
+
+
+
+ex:
+
+
+
+
+
+
+import  { initProducts } from './product-management'; 
+
+const addProduct = (event) => {
+
+    import('./product-management.js').
+    .then(
+        module => {
+
+    });
+
+}
+
+
+
+const addProductForm = document.getElementById('new-product');
+
+initProducts();
+
+
+
+addProductForm.addEventListener('submit', addProduct);
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OK, MAS SERÁ QUE NO REACT NÓS TAMBÉM USAMOS 'import()' 
+
+para 
+
+
+conseguir 
+
+
+implementar código dinâmico/carregado dinâmicamente?
+
+
+
+
+
+---------------------------------
+
+
+
+OK, COMO FAZER ISSO... 
+
+
+
+
+Professor começa 
+
+
+
+
+
+''para implementar lazy loading/code splitting  com 
+
+
+
+'create-react-app' e 'react-router-v4'.... '''''' 
+
+
+
+
+
+
+(PQ ESSA TÉCNICA VAI FUNCIONAR COM ESSES NEGÓCIOS AÍ, VAI FUNCIONAR 
+
+
+COM 
+
+O 
+
+
+'create-react-app' e com o 'react-router-v4'...)  ------------->
+
+
+
+
+IMPORTANTE!!!!!! ---------> CODE SPLITTING 
+
+
+SEMPRE __dEPENDE___ 
+
+
+
+DA VERSÃO __ DO WEBPACK __ QUE VOCÊ ESTÁ USANDO... ------> ele depende da versão do webpack pq,
+
+
+AFINAL DE CONTAS, 
+
+ELE __rEALMENTE __ É 
+
+
+UM CONCEITO AVANÇADO... (nada fácil)....  ---------------> 
+
+
+
+
+A MANEIRA/APPROACH QUE 
+
+
+O PROFESSOR 
+
+
+
+NOS MOSTRARÁ 
+
+
+É O APPROACH 
+
+
+QUE 
+
+FUNCIONA 
+
+
+COM 
+
+
+
+O 
+
+
+'create-react-app'   (e não com código VANILLA JAVASCRIPT... aí é diferente, é aquela coisa que aprendemos no passado...).
+
+
+
+
+
+
+
+
+
+---> mas esse approach que o professor vai nos mostrar, que usa 
+
+o 
+
+'create-react-app', 
+
+
+É UMA CONFIGURAÇÃO 
+
+MODERNA E BOA... --------------> e por isso é ALTAMENTE PROVÁVEL QUE 
+
+
+ESSE APPROACH 
+
+FUNCIONARÁ 
+
+
+EM 
+
+
+PROJETOS VELHOS WEBPACK, pelo menos os projetos DECENTES...
+
+
+
+
+
+
+
+
+---> o professor recomenda fortemente que 
+
+utilizemos 'create-react-app',
+
+
+de qualquer forma....
+
+
+
+
+
+
+
+
+
+
+---> ok, 
+
+
+para 
+
+
+que 
+
+
+O LAZY LOADING FUNCIONE
+
+
+em  nosso setup, 
+
+
+
+
+
+
+
+
+
+_________SEMPRE VAMOS PRECISAR __ DE UM HIGHER-ORDER COMPONENT___.... ----> para isso, vamos 
+
+criar um novo folder 
+
+
+
+dentro do 'src' do nosso projeto... ---> o folder 
+
+
+'hoc', como sempre... --------> E DENTRO 
+
+
+
+DESSE FOLDER O PROFESSOR VAI CRIAR UM 
+
+
+NOVO COMPONENT 'hoc',
+
+
+chamado 
+
+
+de 
+
+
+'AsyncComponent.js'...
+
+
+
+
+
+
+
+-------> ESSE COMPONENT/código 
+
+
+
+DEVERÁ 
+
+
+
+__NOS AJUDAR __ A CARREGAR UM COMPONENT __ ASSÍNCRONAMENTE (ou seja, 
+
+SÓ QUANDO A PRESENÇA DESSE COMPONENT FOR NECESSÁRIA)
+
+__ EM 
+
+'Blog.js'...
+
+
+
+
+
+
+
+
+
+----> Certo, então ali, 
+
+nesse arquivo 
+
+
+
+'asyncComponent.js',
+
+
+
+
+O PROFESSOR 
+
+
+VAI CRIAR UMA NOVA CONST, QUE ARMAZENARÁ UMA NOVA FUNÇÃO... 
+
+
+
+
+
+
+
+e a sintaxe desse negócio será um pouco bizarra....
+
+
+
+
+
+
+
+professor começa assim:
+
+
+
+
+
+
+
+
+
+const asyncComponent = () => {
+
+}
+
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+CERTO.... DENTRO 
+
+DO PARÂMETRO, ele vai esperar (expect) um 
+
+argumento 
+
+de 
+
+
+'importComponent' 
+
+
+(sim, esse será seu nome...)
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const asyncComponent = (importComponent) => {
+
+}
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+O professor nos explica que 
+
+
+esse 
+
+
+'importComponent', esse argumento aí,
+
+NO FINAL DAS CONTAS 
+
+
+
+__vAI SER ___ UMA ____FUNÇÃO__.... --------> E O PROFESSOR LOGO VAI NOS EXPLICAR 
+
+
+COMO 
+
+
+
+DEVEMOS 
+
+UTILIZAR 
+
+ESSA FUNÇÃO 
+
+
+'asyncComponent', e também vai nos dizer 
+
+
+o que devemos 
+
+passar, qual função devemos passar 
+
+
+nesse slot 
+
+
+'importComponent'...
+
+
+
+
+
+
+
+
+
+
+Certo.... no BODY dessa função 'asyncComponent',
+
+
+O PROFESSOR 
+
+
+EXPLICA QUE 
+
+ELE 
+
+
+__VAI TER QUE __RETORNAR ALGUMA COISA... ____  e a coisa que 
+
+ele retornará 
+
+
+
+SERÁ 
+
+
+ 
+
+
+
+
+ _______UMA CLASSE (class) QUE 
+
+
+ EXTENDERÁ 
+
+
+ 'Component'... (coisa padrão)...
+
+
+
+
+
+
+
+
+
+
+ E COMO ESTAMOS ___EXTENDENDO 'Component', coisa do REACT,
+
+ devemos 
+
+ importar 
+
+ o objeto '{Component}' de 'react' 
+
+
+ nesse nosso arquivo...
+
+
+
+
+
+Professor diz que nós também vamos importar 'React', pq vamos RENDERIZAR UNS CÓDIGOS JSX NESSE 
+
+NOSSO COMPONENT...
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+ const asyncComponent = (importComponent) => {
+
+        return class extends Component {
+
+        }
+
+
+
+}
+
+
+
+
+-----------------------------------
+
+
+
+
+
+CERTO... aí, então,
+
+nesse 
+BODY 
+
+
+dessa CLASSE ANÔNIMA INTERNA,
+
+
+
+
+O professor explica que 
+
+
+É 
+
+
+EVIDENTE QUE 
+
+___ELE VAI PRECISAR __ DE UM 
+ 
+
+MÉTODO 
+
+
+
+'render() {}'...
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+ const asyncComponent = (importComponent) => {
+
+        return class extends Component {
+
+
+                    render() {
+
+                    }
+
+
+
+        }
+
+
+
+}
+
+
+
+-----------------------------------------
+
+
+
+
+MAS ANTES 
+
+DE CODARMOS ALGUMA COISA 
+
+EM 
+
+'render()',
+
+
+
+
+O PROFESSOR EXPLICA QUE 
+
+
+__eLE VAI DEFINIR UM __STATE___ NESSA 
+
+
+CLASSE ANÔNIMA INTERNA (que, na verdade, é um component....) -------->
+
+
+
+
+E FICARÁ ASSim:
+
+
+
+------------------------------------------------------
+
+
+import React, { Component } from 'react';
+
+
+
+ const asyncComponent = (importComponent) => {
+
+        return class extends Component {
+
+                state = {
+
+                }
+
+                    render() {
+
+                    }
+
+
+
+        }
+
+
+
+} 
+
+
+--------------------------------------------------
+
+ 
+
+DENTRO DO 'state',
+
+
+PROFESSOR 
+
+TERÁ UMA PROPRIEDADE 
+
+
+
+DE 
+
+
+'component:' ,
+
+
+que 
+
+terá um valor 
+
+INICIAL DE 
+
+
+'null'...
+
+
+
+ex:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+ const asyncComponent = (importComponent) => {
+
+        return class extends Component {
+
+                state = {
+                            component: null
+                }
+
+                    render() {
+
+                    }
+
+
+
+        }
+
+
+
+} 
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+essa 
+
+propriedade/state 
+
+de 
+
+
+'component'
+
+
+(que está como 'null', inicialmente) 
+
+
+
+SERÁ __ SETTADA__, EVENTUALMENTE___ AO 
+
+
+
+
+COMPONENT CARREGADO DINAMICAMENTE NESSA FUNÇÃO asyncComponent.... --> (e esse component carregado dinamicamente nessa função, é claro, é '''''''''importComponent''''''''''''''''......)
+
+
+
+
+
+
+
+
+
+
+Ou seja... -----> se eu entendi bem,
+
+
+o que 
+
+
+a função 
+
+'asyncComponent' vai fazer é 
+
+
+RECEBER O COMPONENT QUE VAMOS QUERER CARREGAR DE FORMA 'LAZY LOADING' e então 
+
+VAI 
+
+
+SETTAR ESSE COMPONENT RECEBIDO no parâmetro ('importComponent') 
+
+COMO 
+
+SENDO 
+
+
+
+___O  VALOR ___ DE 
+
+'component', definido dentro do __STATE____ 
+
+daquela sua classe anônima/component interno.... -------------------->
+
+
+
+OK, MAS 
+
+
+N ACABAMOS POR AQUI.... ----------> 
+
+
+
+
+O professor 
+
+explica que 
+
+
+
+
+O CÓDIGO DO COMPONENT/O COMPONENT EM SI 
+
+
+___SERÁ IMPLEMENTADO __ NO ÚLTIMO DOS 'LIFECYCLE HOOKS' 
+
+desse component interno/classe anonima interna,
+
+
+
+o 
+
+
+'''componentDidMount''' (que é onde EXECUTAMOS CÓDIGO ASSÍNCRONO/MANDAMOS HTTP REQUESTS....)
+
+
+
+
+
+
+
+
+
+
+
+RESULTADO (até agora):
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+ const asyncComponent = (importComponent) => {
+
+        return class extends Component {
+
+                state = {
+                            component: null
+                }
+
+
+
+                    componentDidMount() {
+
+                    }
+
+
+
+
+
+                    render() {
+
+                    }
+
+
+
+        }
+
+
+
+} 
+
+
+
+
+
+---------------------------------------
+
+
+
+ou seja:
+
+
+o 
+
+
+'component' terá seu valor de 'null' trocado, será trocado 
+
+PARA 
+
+
+__sER AQUELE COMPONENT CARREGADO/PASSADO DINAMICAMENTE 
+
+
+A ESSA FUNÇÃO 'asyncComponent' (esse component será passado por meio do slot 'importComponent'...) -------> 
+
+
+
+
+E 
+
+ESSA TROCA 
+
+
+DE VALORES de 'component:' 
+
+
+OCORRERÁ 
+
+
+
+
+EM 
+
+
+'componentDidMount()', 
+
+
+
+OU SEJA, 
+
+
+
+
+
+____________NO EXATO MOMENTO ___ EM QUE 
+
+
+O COMPONENT 
+
+
+
+'asyncComponent' 
+
+
+FOR CARREGADO/MONTADO NO DOM.... --------> e esse 'asyncComponent' 
+
+
+É _______UM HIGHER-ORDER COMPONENT__, UM COMPONENT 
+
+QUE 
+
+
+__WRAPPA___ OUTROS COMPONENTS__...
+
+
+
+
+
+
+
+
+
+
+
+
+---> E, COMO O PROFESSOR MENCIONOU, 'importComponent' DEVERÁ __SER 
+
+UMA ___ FUNÇÃO____, uma 'FUNCTION REFERENCE',
+
+
+no final das contas... ---------------> 
+
+
+
+
+---> 
+
+
+e justamente 
+
+por 
+
+
+
+'importComponent' 
+
+SER UMA FUNÇÃO,
+
+
+ser uma 
+
+
+
+REFERÊNCIA ___a UMA FUNÇÃO__, o que o professor 
+
+
+vai QUERER
+
+
+fazer, dentro 
+
+de componentDidMount,
+
+
+
+
+é 
+
+
+
+
+
+
+
+____eXECUTAR__ 'importComponent'.... (que é uma função, no final das contas....)
+
+
+
+
+
+
+
+
+OU SEJA,
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+ const asyncComponent = (importComponent) => {
+
+        return class extends Component {
+
+                state = {
+                            component: null
+                }
+
+
+
+                    componentDidMount() {
+                            importComponent(); ////////EIS O CÓDIGO EM QUESTÃO.
+                    }
+
+
+
+
+
+                    render() {
+
+                    }
+
+
+
+        }
+
+
+
+} 
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+E ESSE 'importComponent()', 
+
+
+essa função aí, 
+
+SERÁ __UMA FUNÇÃO __ QUE 
+
+
+VAI NOS RETORNAR ____ UMA 
+
+
+PROMISE ..... ----------> e É POR ISSO QUE 
+
+
+VAMOS TER QUE 
+
+ADICIONAR UM 
+
+
+
+
+'.then()' block 
+
+DEPOIS 
+
+
+DE SUA ESCRITA....
+
+
+
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+ const asyncComponent = (importComponent) => {
+
+        return class extends Component {
+
+                state = {
+                            component: null
+                }
+
+
+
+                    componentDidMount() {
+                            importComponent()
+                            .then(); ////////EIS O CÓDIGO EM QUESTÃO.
+                    }
+
+
+
+
+
+                    render() {
+
+                    }
+
+
+
+        }
+
+
+
+} 
+
+
+
+---------------------------------------
+
+
+O professor diz que 
+
+
+SABE QUE 
+
+
+ESSE NEGÓCIO VAI RETORNAR UMA PROMISE pq 
+
+
+
+ELE SABE QUE É EXATAMENTE ASSIM QUE VAMOS USAR 
+
+
+
+esse 
+
+
+'asyncComponent', vamos O UTILIZAR DE FORMA ___ASSÍNCRONA__... -----> certo...
+
+
+
+
+E DENTRO 
+
+
+DESSE '.THEN()' block
+
+
+VAMOS 
+
+PASSAR UMA FUNÇÃO INTERNA (arrow function) 
+
+
+
+
+
+...... essa função interna vai RECEBER UM ARGUMENTO... --> professor vai chamar esse argumento de 
+
+'cmp' (short for 'component')... 
+
+
+
+
+
+
+
+--------> E ESSE COMPONENT/esse argumento 'cmp' que vamos receber aqui 
+
+
+
+__vAI TER __ UMA PROPRIEDADE importante,
+
+
+a propriedade 
+
+'DEFAULT',
+
+
+
+
+QUE ___ SERÁ__ EFETIVAMENTE __ O COMPONENT QUE __ CARREGAMOS DINAMICAMENTE (que vamos querer carregar dinamicamente)....
+
+
+
+
+
+
+
+
+--> e o código que consegue essa propriedade 
+'default' dentro de component........  ----> 
+
+
+ou seja,
+
+é escrito assim: 
+
+
+
+'cmp.default'...
+
+
+
+
+
+OK, mas como vamos utlizar essa propriedade...? Bem, devemos 
+
+o utilizar com 
+
+'setState' PARA __SUBSTITUIR___ O VALOR DE 'null' _ de 
+
+'component', em 'state', 
+
+para 
+
+SER O NOSSO COMPONENT CARREGADO DINAMICAMENTE....
+
+
+
+tipo (
+
+        'this.setState(
+                {
+                        component: cmp.default
+                }
+        )
+)
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+const asyncComponent = (importComponent) => {
+
+
+
+    return class extends Component {
+        state = {
+            component: null
+        }
+    
+
+        componentDidMount() {
+                    importComponent()
+                    .then(
+
+
+                        cmp => {
+                            this.setState({
+                                    component: cmp.default /////////EIS O CÓDIGO EM QUESTÃO.
+                            })
+                        }
+                    )
+        }
+
+
+    render() {
+
+    }
+
+}
+}
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+Ou seja,
+
+
+este é o setup de que vamos precisar,
+
+
+
+
+quando estamos falando de 'create-react-app'....
+
+
+
+ex:
+
+
+
+cmp => {
+                            this.setState({
+                                    component: cmp.default /////////EIS O CÓDIGO EM QUESTÃO.
+                            })
+
+
+---------------------------------------------
+
+
+
+
+
+E é claro que 
+
+
+
+esse setup vai depender FORTEMENTE 
+
+
+DA FUNÇÃO A QUE 
+
+'importComponent()'
+
+vai se referir... ---> (essa função é A ___sEGUNDA PARTE DE NOSSO SETUP)....
+
+
+
+
+
+
+
+
+
+certo... aí, agora,
+
+em algum momento,
+
+
+
+nós vamos ter 
+
+
+carregado o 
+
+
+
+'ACTUAL COMPONENT' 
+
+
+
+que queremos/vamos querer
+
+utilizar... ----------------> 
+
+
+
+E ESSE COMPONENT 
+
+AÍ 
+
+
+ESTARÁ/FICARÁ 
+
+
+
+__ARMAZENADO __ NO STATE DESSA CLASSE 
+
+ANÔNIMA/COMPONENT ANÔNIMO 
+
+
+retornado 
+
+por 
+
+
+'asyncComponent'...
+
+
+
+
+
+
+
+---------> é por isso que dentro do método 
+
+
+
+'render()'
+
+
+
+
+NÓS VAMOS QUERER _______RENDERIZAR______ 
+
+
+ESSE COMPONENT DENTRO DO 'state'.... -------> para isso 
+
+
+
+o professor 
+
+
+vai criar uma CONSTANTE DENTRO DO 'render',
+
+e ele vai a chamar 
+
+de 
+
+
+
+'C'...
+
+
+
+
+
+ex:
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+const asyncComponent = (importComponent) => {
+
+
+
+    return class extends Component {
+        state = {
+            component: null
+        }
+    
+
+        componentDidMount() {
+                    importComponent()
+                    .then(
+
+
+                        cmp => {
+                            this.setState({
+                                    component: cmp.default
+                            })
+                        }
+                    )
+        }
+
+
+    render() {
+         const C = ...
+    }
+
+}
+}
+
+
+
+----------------------------------------
+
+
+
+
+
+
+E ESSA CONSTANTE 'C' deverá/vai ser 
+
+
+
+'this.state.component'...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+const asyncComponent = (importComponent) => {
+
+
+
+    return class extends Component {
+        state = {
+            component: null
+        }
+    
+
+        componentDidMount() {
+                    importComponent()
+                    .then(
+
+
+                        cmp => {
+                            this.setState({
+                                    component: cmp.default
+                            })
+                        }
+                    )
+        }
+
+
+    render() {
+         const C = this.state.component;
+
+
+
+    }
+
+}
+}
+
+
+
+
+
+------------------------------------
+
+
+
+
+ISSO FEITO, O PROFESSOR 
+
+
+VAI QUERER 
+
+
+
+RETORNAR 
+
+
+
+
+'JSX' nesse método 'render'; ele vai querer retornar 
+
+
+'C', 
+
+
+basicamente... ------------>
+
+
+
+
+
+MAS ANTES DISSO, PROFESSOR VAI ESCREVER UMA TERNARY EXPRESSION, UMA 
+
+TERNARY EXPRESSION QUE 
+
+CHECARÁ 
+
+
+'IS C  ALREADY SET?'  (ou seja, ''''POR ACASO 'C' ESTÁ COMO __NÃO-NULL???"""")
+
+
+
+
+
+SE O C ESTIVER 'SET', nós vamos querer que 
+
+esse return statement 
+
+
+RETORNE UM 
+
+
+component, o component 
+
+
+'<C />'...  ---->  CASO CONTRÁRIO, VAMOS QUERER 
+
+QUE ESSE RETURN STATEMENT RETORNE 'NULL'... 
+
+
+
+
+Certo, mas isso n é tudo,  
+
+
+PQ O PROFESSOR DIZ ____QUE TAMBÉM____ VAMOS QUERER__ QUE TODOS OS PROPS 
+
+
+QUE TALVEZ PRECISEMOS NESSE COMPONENT SEJAM PASSADOS A ELE, TAMBÉM... (e vamos fazer isso por meio daquele truque do SPREAD OPERATOR, aquele código  de '{...this.props}'...)
+
+
+
+
+ou seja,
+
+ficará algo assim:
+
+
+return C ? <C {...this.props} /> : null 
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+const asyncComponent = (importComponent) => {
+
+
+
+    return class extends Component {
+        state = {
+            component: null
+        }
+    
+
+        componentDidMount() {
+                    importComponent()
+                    .then(
+
+
+                        cmp => {
+                            this.setState({
+                                    component: cmp.default
+                            })
+                        }
+                    )
+        }
+
+
+    render() {
+         const C = this.state.component;
+
+         return C ? <C  {...this.props}  /> : null;
+
+
+
+    }
+
+}
+}
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+OU SEJA,
+
+ESSE RETURN STATEMENT RETORNARÁ 'NULL' __SE O C NÃO ESTIVER SETTADO AINDA....  (ou seja,
+
+
+PARA O CASO DE O COMPONENT __ NÃO TIVER SIDO 'RESOLVED' ainda....)
+
+
+
+
+
+
+--> por fim, vamos exportar 
+
+
+esse 
+
+
+
+component/função 
+
+'asyncComponent'...
+
+
+ex:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+const asyncComponent = (importComponent) => {
+
+
+
+    return class extends Component {
+        state = {
+            component: null
+        }
+    
+
+        componentDidMount() {
+                    importComponent()
+                    .then(
+
+
+                        cmp => {
+                            this.setState({
+                                    component: cmp.default
+                            })
+                        }
+                    )
+        }
+
+
+    render() {
+         const C = this.state.component;
+
+         return C ? <C  {...this.props}  /> : null;
+
+
+
+    }
+
+}
+}
+
+
+
+
+export default asyncComponent;
+
+
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+
+Ok.... a próxima questão é: 
+
+
+
+COMO USAR ESSA FUNÇÃO AÍ, esse modelinho de função? 
+
+
+
+
+Obviamente é um HOC, 
+
+por isso deve ser IMPORTADO 
+
+E
+
+
+deverá 
+
+ENGLOBAR/wrappar 
+
+
+O COMPONENT QUE 
+
+QUEREMOS 
+
+QUE 
+
+SEJA 
+
+CARREGADO DINAMICAMENTE (lazy loading)....
+
+
+
+
+
+no nosso caso, esse component é 'NewPost'...
+
+
+
+
+
+
+
+
+
+
+
+
+Professor responde nossa pergunta:
+
+
+
+nós vamos 
+
+voltar 
+
+
+ao component 
+
+
+'Blog.js' (em que importamos, antes, o 'NewPost'... pq o definimos em uma das ROUTES... )
+
+
+
+
+
+
+
+
+
+
+Lá, em 'Blog.js',
+
+
+VOU QUERER __cARREGAR___ 
+
+'NewPost' 
+
+
+
+____dINAMICAMENTE___...
+
+
+
+
+
+
+
+
+--> professor nos esclarece um detalhe:::::
+
+
+
+
+SEMPRE QUE VOCÊ IMPORTA ALGO COM A SINTAXE 
+
+
+
+'import algo de tal lugar/pacote' 
+
+(ex: import Posts from './Posts/Posts'),
+
+
+
+
+
+VOCÊ __bASICAMENTE___ INFORMA O ___WEBPACK__ QUE 
+
+
+VOCê VAI QUERER USAR ESSA  DEPENDENCY (esse objeto/pacote/coisa),
+
+E 
+
+
+ESSA COMUNICAÇÃO AO WEBPACK FAZ COM QUE 
+
+ELE A INCLUA, INCLUA ESSA COISA IMPORTADA,
+
+NO 'GLOBAL BUNDLE'... ------------------------> ISSO QUER 
+
+DIZER, ESSENCIALMENTE,
+
+
+
+QUE 
+
+
+SE VOCê 
+
+
+IMPORTAR 
+
+
+'NewPost'
+
+
+
+COM A SINTAXE NUA E CRUA DOS IMPORTS ( ou seja,
+
+com o código 
+
+
+
+'import NewPost from './NewPost/NewPost' ),
+
+
+
+
+ESSE PACOTE/COMPONENT 
+
+'NewPost' 
+
+
+
+
+ACABARÁ __sEMPRE SENDO __ CARREGADO/ENFIADO NA SUA PÁGINA (e no seu carregamento inicial)
+
+
+BEM NO PROCESSO DE SUA INICIALIZAÇÃO (ou seja, NÃO SERÁ UM CARREGAMENTO PROPRIAMENTE DINÂMICO, 
+
+NÃO SERÁ UM LAZY LOADING, EM OUTRAS PALAVRAS.)
+
+
+
+
+
+
+
+
+--> É POR ISSO QUE VAMOS TER QUE __cOMENTAR ESSE 'IMPORT PADRÃO' de 'NewPost'__ 
+
+
+PARA __ FORA DO CÓDIGO__...
+
+
+
+
+
+---> ainda assim, nada disso é automático:
+
+
+
+PRECISAMOS 
+
+INFORMAR O WEBPACK, FAZER ELE SE PREPARAR PARA IMPORTAR 
+
+
+ESSE COMPONENT 'NEWPOST' 
+
+dinamicamente...
+
+
+
+
+
+
+
+
+
+--------> CERTO... PARA ISSO, O PROFESSOR CRIARÁ UMA NOVA CONSTANTE,
+
+
+A QUAL 
+
+ELE 
+
+
+NOMEARÁ 
+
+
+
+'AsyncNewPost'  (mas ele esclarece que podemos ESCOLHER QUALQUER NOME...) -----> 
+
+
+FICARÁ ASSIm:
+
+
+
+
+
+
+const AsyncNewPost = ....
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+CERTO... ENTÃO O PROFESSOR NOS EXPLICA QUE 
+
+ESSA FUNÇÃO 
+
+
+
+VAI AGORA UTILIZAR 
+
+
+
+aquela 
+
+função 
+
+'asyncComponent'
+
+
+
+QUE RECÉM CRÍAMOS,
+
+
+AQUELE HOC LÁ... -------> para isso, precisamos O IMPORTAR NESSE COMPONENT/CONTAINER/ARQUIVO 'Blog.js'....
+
+
+
+--------> e o professor vai então CHAMAR/INVOCAR 
+
+ESSE 
+
+COMPONENT/FUNÇÃO DE 
+
+'asyncComponent'
+
+
+NESSA 
+
+RECÉM CRIADA CONSTANTE,
+
+
+E ENTÃO VAI A EXECUTAR... (' () ' )....
+
+
+
+
+
+
+
+ex:
+
+
+
+
+import asyncComponent from '../../hoc/asyncComponent';
+
+
+
+const asyncNewPost = asyncComponent();
+
+
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+CERTO....
+
+
+
+E SE 
+
+EXAMINARMOS O CÓDIGO DE 
+
+'AsyncComponent'
+
+
+MAIS UMA VEZ,
+
+
+VAMOS PERCEBER QUE 
+
+
+
+
+ele ___EXIGE UMA FUNÇÃO___ 
+
+
+'importComponent'
+
+
+
+___COMO PARÂMETRO/ARGUMENTO PARA SER INICIALIZADA...
+
+
+
+
+
+
+
+ESSE ARGUMENTO DEVE SER UMA FUNÇÃO, REALMENTE... --------> 
+
+
+CERTO, 
+
+
+MAS QUE 
+
+FUNÇÃO DEVERÁ SER PASSADA A ESSA EXECUÇÃO DE 
+
+
+
+'asyncComponent'? ------------> PROFESSOR DIZ 
+
+
+
+QUE ESSA FUNÇÃO 
+
+
+
+
+
+__DEVERÁ __ SER UMA ___ FUNÇÃO ANÔNIMA____.... (arrow function tipicamente)....
+
+
+
+
+
+
+
+VAI FICAR ASSIM:
+
+
+
+
+ex:
+
+
+
+
+import asyncComponent from '../../hoc/asyncComponent';
+
+
+
+const asyncNewPost = asyncComponent(
+        () => {
+
+        }
+);
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+CERTO, MAS O INTERESSANTE É A _COISA QUE NÓS VAMOS RETORNAR 
+
+DENTRO 
+
+
+DO BODY DESSA FUNÇÃO...  ------> a coisa que 
+
+
+o professor vai fazer 
+
+
+
+É 
+
+
+
+__USAR__ 
+
+
+A KEYWORD
+
+
+'import()'   (mesma coisa que usamos PARA FAZER LAZY LOADING EM UM PROJETO JAVASCRIPT VANILLA, COMUM....)
+
+
+
+
+
+
+
+
+NÓS VAMOS RETORNAR ESSE MÉTODO/KEYWORD 
+
+
+'import()'.... 
+
+
+
+ELE SERÁ 
+
+RETORNADO COMO UMA ''FUNÇÃO'', BASICAMENTE....
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+import asyncComponent from '../../hoc/asyncComponent';
+
+
+
+const asyncNewPost = asyncComponent(
+        () => {
+                return import(); /////////EIS O CÓDIGO EM QUESTÃO. 
+        }
+);
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+'import();' ---------> É UMA SINTAXE ESPECIAL, chamada 
+
+de 
+
+
+
+''DYNAMIC IMPORT SYNTAX''...  ---> ela é assim chamada 
+
+
+PQ A COISA QUE 
+
+FOR DIGITADA 
+
+
+DENTRO 
+
+
+
+DOS () do 'import()'
+
+
+
+___SÓ___ VAI SER EXECUTADA __________qUANDO ___ A FUNÇÃO 
+
+
+EXTERNA A ELA (ou seja,
+
+'() => {}', essa 
+
+
+ARROW FUNCTION QUE A REVESTE
+
+)
+
+___FOR EXECUTADA___... ---------------> 
+
+
+
+
+E ESSA FUNÇÃO 
+
+
+EXTERNA AÍ, EXTERNA À 'import()', SÓ 
+
+
+____SERÁ ___ EXECUTADA __ QUANDO NÓS EFETIVAMENTE RENDERIZARMOS 
+
+
+'asyncNewPost' A NOSSA TELA.... ------------> 
+
+
+
+
+PARA COMPLETAR A ESCRITA DE NOSSO CÓDIGO,
+
+
+VAMOS 
+
+
+PASSAR AO SLOT DE PARÂMETRO DE 
+
+
+'import()'
+
+
+O PATH DE NOSSO COMPONENT QUE QUEREMOS QUE SEJA 
+
+
+CARREGADO/IMPORTADO DINAMICAMENTE NO NOSSO APLICATIVO...
+
+
+
+
+
+
+
+ficará assim:
+
+
+
+
+
+
+
+
+
+import asyncComponent from '../../hoc/asyncComponent';
+
+
+
+const asyncNewPost = asyncComponent(
+        () => {
+                return import('./NewPost/NewPost); /////////EIS O CÓDIGO EM QUESTÃO. 
+        }
+);
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+
+
+
+certo.... agora, com isso, 
+
+
+EU 
+
+
+SÓ 
+
+
+VOU IMPORTAR 
+
+
+ESSE 
+
+
+'NewPost' (importado pelo método 'import('./NewPost/NewPost')' )
+
+
+QUANDO 
+
+
+ESSE MÉTODO 
+
+'AsyncNewPost' (que segura esse método em UMA ARROW FUNCTION) 
+
+
+
+
+FOR __ USADO__ EM ALGUMA PARTE DE NOSSO CÓDIGO___.... --------> 
+
+
+
+
+
+E É EVIDENTE, DIZ O PROFESSOR, QUE VAMOS QUERER 
+
+CARREGAR 
+
+
+ESSE COMPONENT ('asyncNewPost') EM ALGUM LUGAR... ------> VAMOS QUERER
+
+
+
+CARREGÁ-LO 
+
+
+LÁ NA NOSSA 
+
+'ROUTE VIP',
+
+
+NA NOSSA ROUTE 
+
+QUE NECESSITA DE AUTORIZAÇÃO, LÁ EMBAIXO 
+
+
+NO 
+
+
+
+'Blog.js',
+
+dentro do COMPONENT 'Switch'....
+
+
+
+
+
+
+ex (CÓDIGO ANTIGO):
+
+
+
+
+
+      <Switch>
+                  { this.state.auth     ?        <Route path="/new-post" component={NewPost}  /> : null   }
+                <Route path="/posts" component={Posts} />
+                <Redirect from="/" to="/posts" />
+                </Switch>
+                 
+
+----------------------------------------------------------
+
+
+
+
+
+OU SEJA, VAMOS QUERER ENFIAR 
+
+
+ESSE 
+
+'AsyncNewPost'
+
+
+
+
+NO LUGAR DAQUELE 'component={NewPost}', naquela route ali, com a ternary expression....
+
+
+
+
+
+ex (CÓDIGO COM O NOSSO COMPONENT 'AsyncNewPost' inserido...):
+
+
+
+
+   <Switch>
+                  { this.state.auth     ?        <Route path="/new-post" component={AsyncNewPost}  /> : null   }
+                <Route path="/posts" component={Posts} />
+                <Redirect from="/" to="/posts" />
+                </Switch>
+
+
+
+-----------------------------------
+
+
+
+
+CERTO, FIZEMOS ESSA TROCA... -------> professor explica que agora, portanto
+,
+
+
+ESSE 
+
+COMPONENT 
+
+
+'asyncNewPost'
+
+
+
+
+__NÃO SERÁ CARREGADO __ NO 'STARTUP' DE NOSSA PÁGINA, E SIM 
+
+apenas 
+
+
+será 
+
+carregado 
+
+
+quando 
+
+
+o USUÁRIO CLICAR EM 
+
+'New Post', naquele link lá... (e quando ele for autorizado, quando seu 'auth' for 'true'...)
+
+
+
+
+
+
+
+
+
+
+
+
+---> 'AsyncComponent'
+
+
+
+___reTORNA UM COMPONENT, AFINAL DE CONTAS... (pq ele retorna uma 
+
+
+CLASSE ANÔNIMA COM UM MÉTODO 'render()'... ou seja, um COMPONENT.) -----> 
+
+
+
+e esse component retornado por ela VAI EVENTUALMENTE 
+
+
+RENDERIZAR UM 
+
+
+
+COMPONENT DINAMICAMENTE CARREGADO (visto naquele código de 'return C ? <C {...this.props} /> : null')
+
+
+
+
+
+
+
+
+
+
+
+
+--> NO FINAL DAS CONTAS, NÓS PODEMOS 
+
+
+
+___eSCOLHER___ QUAL COMPONENT ___ESSA FUNÇÃO 
+
+
+'asyncComponent'
+
+
+VAI CARREGAR DINAMICAMENTE 
+
+
+
+___POR MEIO ___ DAQUELE MÉTODO/função 
+
+
+
+'return import(xxxxx)', dentro DO CALL DE 'asyncComponent()' ARMAZENADO 
+
+
+
+NA CONSTANTE QUE TERÁ 
+
+UM NOME DE NOSSA ESCOLHA....
+
+
+
+
+
+
+
+
+
+
+ex (de outro component que poderia ser renderizado condicionalmente):
+
+
+
+const AsyncPosts = asyncComponent( () => {
+        return import('./Posts/Posts');
+})
+
+
+
+<Route component={AsyncPosts} />
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+PARA VER SE ISSO FUNCIONOU, É SÓ NÓS RECARREGARMOS NOSSA PÁGINA E ENTÃO TENTARMOS 
+
+ACESSAR 
+
+
+O LINK/ROUTE
+
+DE 
+
+'New Post' ------> quando eu clicar lá,
+
+
+
+VEREI 
+
+
+
+QUE O MEU APP TERÁ BAIXADO (na aba network) 
+
+UM 
+
+
+ARQUIVO DE 
+
+NOME 
+
+'1.chunk.js'....     (esse arquivo É UM ____'EXTRA BUNDLE' __ QUE 
+
+O WEBPACK  CRIOU PQ ELE DETECTOU/VAI DETECTAR 
+
+AQUELA SINTAXE 
+
+
+DINAMICA DE 'import(xxxx)' dentro do nosso component 
+
+'AsyncNewPost'... )
+
+
+
+
+
+
+---> esse 'extra bundle', o '1.chunk.js',
+
+VAI CONTER O COMPONENT 'NEW-POST'..( e todos os child components dele, se ele tivesse 
+
+
+algum...) ---> e realmente, ele é um 'extra bundle' PQ _NÃO É ___ CONECTADO AO BUNDLE PRINCIPAL (apesar de funcionar em conjunto com ele....)
+
+
+
+
+
+
+
+
+
+---> E É ASSIM QUE 
+
+
+
+RENDERIZAMOS 
+COMPONENTS/CONTAINERS/PÁGINAS __aSSINCRONAMENTE___.... (muito útil em aplicativos maiores, em que 
+
+há 
+
+maiores CHUNKS DE CODE, áreas que nem mesmo serão visitadas tanto assim por seus usuários, e em que 
+
+você pode economizar 
+
+recursos 
+
+por meio desse lazy loading... )
+
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+CONSEGUI. O código ficou assim:
+
+
+
+
+
+
+(asyncComponent, o hoc usado no LAZY LOADING DE 'ROUTES' no react....):
+
+
+
+
+import React, { Component } from 'react';
+
+const asyncComponent = (importComponent) => {
+  return class extends Component {
+    state = {
+      component: null,
+    };
+
+    componentDidMount() {
+      importComponent().then((component) => {
+        this.setState({
+          component: component.default,
+        });
+      });
+    }
+
+    render() {
+      const C = this.state.component;
+      return C ? <C {...this.props} /> : null;
+    }
+  };
+};
+
+export default asyncComponent;
+
+
+-------------------------------
+
+
+
+
+(App.js):
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import BurgerBuilder from '../src/containers/BurgerBuilder/BurgerBuilder';
+
+import { BrowserRouter } from 'react-router-dom';
+
+import { Redirect } from 'react-router-dom';
+
+import Layout from '../src/hoc/Layout/Layout';
+
+import { Route } from 'react-router';
+
+import { Switch } from 'react-router-dom';
+
+
+import Logout from '../src/containers/Auth/Logout/Logout';
+
+
+import { connect } from 'react-redux';
+
+import * as actionsTypes from '../src/store/actions/index';
+
+
+
+import  asyncComponent  from '../src/hoc/AsyncComponent/AsyncComponent'; ///USADO PARA LAZY LOADING.
+
+
+
+
+const AsyncOrders = asyncComponent(
+  () => {
+    return import('../src/containers/Orders/Orders');
+  }
+);
+
+
+const AsyncAuth = asyncComponent(
+  () => {
+    return import('../src/containers/Auth/Auth');
+  }
+);
+
+const AsyncCheckout = asyncComponent(
+  () => {
+    return import('../src/containers/Checkout/Checkout');
+  }
+);
+
+
+class App extends Component {
+
+  componentDidMount() {
+
+
+  render() {
+
+
+      let routes = (
+        
+        <Switch>
+        <Route path="/auth" component={AsyncAuth} />
+          <Route path="/" exact component={BurgerBuilder} />
+          <Redirect to="/" />
+        </Switch>
+      )
+
+
+
+
+
+      if (this.props.token) {
+        routes = (
+          <Switch>
+          <Route path="/checkout" component={AsyncCheckout} /> 
+          <Route path="/orders" component={AsyncOrders} />
+          <Route path="/auth" component={AsyncAuth} /> 
+          <Route path="/logout" component={Logout} />
+          <Route path="/" exact component={BurgerBuilder}/>
+          <Redirect to="/" />
+          </Switch>
+        )
+      }
+
+
+
+
+
+
+    return (
+      <BrowserRouter>
+        <div>
+          <Layout>
+            {routes}
+          </Layout>
+        </div>
+      </BrowserRouter>
+    );
+  }
+}
+
+
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.token !== null
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTryAutoSignIn: (token) => dispatch(actionsTypes.authCheckState(token)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+// export default withRouter(connect(null, mapDispatchToProps)(App)); /////////FIX __PARA __ PROBLEMAS ADVINDOS DO CONFLITO ENTRE O WRAP DE 'CONNECT' e a existência de ROUTINg no seu projeto... (no seu container, na verdade... ----> esse problema ocorre quando você tem o wrap de seu container por 'connect', pq o CONNECT ___IMPEDE__ QUE OS 'ROUTING RELATED PROPS' vindos do ROUTING consigam chegar ao seu container...) --> só que, por alguma razão, isso não funciona neste projeto (usei o approach do wrap de 'Browser Router' com o component '<BrowserRouter></BrowserRouter>'...)
+
+
+
+
+---------------------------
+
+
+
+
+CERTO,
+
+CONSEGUI, O LAZY LOADING ESTÁ FUNCIONANDO...
+
+
+(isso pode ser visto por meio 
+
+da 
+
+ABA 
+'network' enquanto vocÊ mexe no seu aplicativo...)
+
+
+
+
+-- >é uma grande melhoria, isso aí... (só carregamos as páginas de nosso aplicativo 
+
+QUANDO É NECESSÁRIO... )
+
+
+
+
+
+
+
+
+
+--> mas lazy loading nem sempre é a melhor opção... ----> se os 'lazy-loaded 'modules são 
+
+mt pequenos, talvez você não ganhe nada com o tal lazy loading...
+
+
+

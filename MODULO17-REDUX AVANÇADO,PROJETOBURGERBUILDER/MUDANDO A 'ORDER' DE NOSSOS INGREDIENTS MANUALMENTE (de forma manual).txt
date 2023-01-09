@@ -1,0 +1,94 @@
+
+
+
+
+
+
+
+---> NÓS DE FATO ADICIONAMOS LÓGICA PARA ___ CARREGAR__ NOSSOS INGREDIENTS___...
+
+
+
+
+
+
+--> E, BTW, SE VOCê ESTÁ SE PERGUNTANDO A RAZÃO 
+
+PARA 
+
+
+A 
+
+
+'salad' ESTAR SENDO CARREGADA NO FINAL da lista... ----> 
+
+
+DEVEMOS 
+
+AJUSTAR
+
+
+
+
+NOSSO CÓDIGO MANUALMENTE 
+
+
+
+
+(
+
+
+    ALTERNATIVAMENTE, PODERÍAMOS
+
+
+
+
+    EDITAR 
+
+
+    NOSSA 
+
+    ACTION (no reducer)
+
+    PARA 
+
+    ALGO ASSIM:
+
+
+'case actionTypes.SET_INGREDIENTS:
+    return {
+        ..state,
+        ingredients: {
+            salad: action.ingredients.salad,
+            meat: action.ingredients.meat,
+            etcetc...
+        }
+    }
+
+'
+
+
+)
+-----------------------------------------------------------
+
+
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+
+MAS NÓS JÁ HAVÍAMOS SOLUCIONADO ISSO ANTERIORMENTE.... (mexemos manualmente na ORDER dos components...).
+
+

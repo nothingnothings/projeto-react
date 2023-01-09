@@ -1,0 +1,941 @@
+
+
+
+
+
+
+
+--> NÓS TERMINAMOS O 'DEVELOPMENT SETUP'
+
+AO LONGO DAS ÚLTIMAS LIÇÕES....
+
+
+
+
+
+
+
+
+---> consertamos alguns BUGS,
+
+mas 
+
+agora 
+
+
+TEMOS UM 'WORKING SETUP',
+
+o que 
+
+é ótimo..
+
+
+
+--> AGORA O PRÓXIMO PASSO 
+
+
+É  
+
+TRABALHAR 
+
+
+SOBRE O 
+
+
+'PRODUCTION WORKFLOW'...
+
+
+
+
+
+
+---> lá no arquivo 
+'package.json',
+
+ 
+
+ O PROFESSOR 
+
+ QUER 
+
+ TER UM 
+
+ SEGUNDO 
+
+ SCRIPT,
+
+
+o qual 
+
+só vai querer 
+
+RODAR 
+O WEBPACK...
+
+
+
+ex:
+
+
+
+
+
+"build": "webpack"
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+---> E (JÁ SABEMOS DISSO)
+
+
+SE 
+
+
+RODARMOS 
+
+
+ESSE SCRIPT 
+
+DESSA FORMA AÍ,
+
+
+VAMOS 
+
+
+RODAR 
+
+O 
+
+
+SETUP/CONFIG 
+de 
+'webpack.config.js'... (servidor de DESENVOLVIMENTO...)
+
+
+
+
+
+
+
+
+
+-------------> PODEMOS RODAR 'webpack' 
+
+APENAS 
+
+PARA VER O OUTPUT (pq o webpack-dev-server FAZ A MESMA COISA QUE O 
+'webpack' normal, mAS TUDO 
+NA MEMÓRIA...), 
+
+
+ver 
+
+as 
+FILES DE VERDADE...
+
+
+
+
+
+
+
+
+
+
+
+--->  npm run build
+
+
+
+-----------------------
+
+
+
+OK, 
+
+SERÁ 
+
+
+RODADO 
+
+
+O WEBPACK... --> SERÁ A MESMA COISA DE ANTES, O WEBPACK VAI RODAR,
+
+MAS 
+
+AGORA 
+
+VAMOS OBTER UM 
+
+FODLER 
+
+
+chamado 
+
+'dist',
+
+
+
+
+EM QUE VEREMOS 
+
+
+A IMAGEM da pizza,
+
+E AÍ 
+
+
+
+ARQUIVOS JAVASCRIPT... (como 
+
+'0.js' 
+
+e 
+'bundle.js'        --> mas, no meu caso, vejo 'src_containers_Pizza_js.js' e 'bundle.js') -------> NÓS TAMBÉM VEMOS 
+
+O 
+
+ARQUIVO 
+
+'index.html'
+
+COPIADO PELO WEBPACK ( o index.html em que O WEBPACK INJETOU O SEU CÓDIGO, lá naquela linha de ''''' <script defer src="bundle.js"></script></body>''''),
+
+
+
+
+
+
+
+CERTO,
+
+E 
+
+ISSO 
+
+É TODO O CÓDIGO QUE TEMOS .... -----> 
+
+E 
+
+ESSE 
+
+CÓDIGO 
+
+EM 
+
+'bundle.js'
+
+
+NÃO ESTÁ NEM UM POUCO OPTIMIZADO... --> queremos 
+
+SUPER OPTIMIZAR 
+
+ESSE NEGÓCIO, REDUZI-LO,
+
+ANTES 
+
+
+DE SHIPPAR AO SERVIDor...
+
+
+
+
+
+
+-----------------------
+ 
+
+ O PROFESSOR DELETA ESSES ARQUIVOS... --> 
+
+
+
+ O 
+
+ OBJETIOV, AGORA, 
+
+
+
+ É TER UM 'DEDICATED WORKFLOW'
+  
+  PARA 
+
+
+
+  A 
+
+  CRIAÇÃO DE UM OUTPUT 
+
+  DE 'PRODUCTION'... -----> E ESSE BUILD PARA PRODUCTION ___VAI FAZER __ OPTIMIZAÇÕES, É CLARO___ --> 
+
+
+
+
+  TUDO 
+
+  DEPENDE 
+
+  DO 
+  
+
+  ARQUIVO 
+
+  'webpack.prod.config.js'...
+
+
+
+
+
+
+
+
+  -----------> VOU COPIAR O SETUP 
+
+
+  DO DEV WORKFLOW,
+
+  para que 
+
+  possamos 
+
+  ir 
+
+
+  o ajustando para ser o setup do PRODUCTION WORKFLOW....
+
+
+
+
+
+
+
+
+
+
+  ''''   devtool: 'eval-cheap-module-source-map',''''' ---> ESSA É A PRIMEIRA COISA QUE 
+
+  O PROFESSOR 
+
+
+  AJUSTA... --> ELE REMOVE 
+
+  o 
+
+  'eval',
+
+
+
+  PARA QUE 
+
+
+  SOURCE-MAPS MAIS ___OPTIMIZADOS__ SEJAM CRIADOS__... (less resource-intensive)... --> 
+
+  É BOM 
+  TER SOURCE-MAPS 
+
+  RÁPIDOS, LEVES...
+
+
+
+
+
+
+
+  -> a entry file AINDA VAI SER 'index.js',
+
+  como antes...
+
+
+
+
+
+
+
+
+
+  O OUTPUT TAMBÉM SERÁ O MESMO:
+
+
+
+    output: {
+        publicPath: '',
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+        chunkFilename: '[id].js' ///////USADO NO 'LAZY LOADING'. (você precisa disso para CONSEGUIR NOMEAR OS ARQUIVOS/BUNDLES EXTRAS QUE SÃO CRIADOS QUANDO VOcÊ SETTA SEU REACT APP COMO 'LAZY LOADInG'...)
+    }
+
+
+
+-----------------------
+
+
+OK, 
+
+MAS E QUANTO AOS 'LOADERS'?
+
+
+
+
+
+
+
+--> bem,
+
+
+
+NÓS QUEREMOS __APLICAR __ AS MESMAS TRANSFORMAÇÕES __QUE EXECUTAMOS 
+
+NO MODO 
+
+DE 
+
+'DEVELOPMENT,'
+
+
+
+POR ISSO NÃO PRECISAMOS ENCOSTAR NELES...
+
+
+
+
+
+
+
+
+
+
+
+
+O QUE TEREMOS DE ALTERAR É A SEÇÃO 
+
+DE 
+
+'PLUGINS',
+
+em que 
+
+
+temos:
+
+
+
+    plugins: [
+        new HtmlWebpackPlugin(
+            {
+        template: __dirname + '/src/index.html',                     /////////SIM, ESTE CÓDIGO É NECESSÁRIO PARA CONFIGURAR O 'HtmlWebpackPlugin'... ---> vai definir nosso 'index.html' dentro de 'src' COMO O __bASIS__ PARA as alterações produzidas por esse pacote....
+         inject: 'body',   
+            filename: 'index.html'        }              
+        )
+    ]
+
+
+
+
+----------------------------
+
+
+
+TEMOS 
+
+ESSE PLUGIN AÍ,
+
+USADO 
+
+PARA 
+
+
+'CONECTAR' 
+
+O 
+
+ARQUIVO INDEX.HTML NOSSO,
+
+
+
+E QUEREMOS MANTER ISSO... -------------> ENTRETANTO,
+
+
+O PROFESSOR 
+
+VAI QUERER ADICIONAR ALGO A ISSO AÍ,
+
+VAI QUERER 
+
+
+__ADICIONAR __ ALGO ALÉM.... ---> por 'além',
+
+ele quer 
+
+dizer que
+VAI 
+QUERER 
+
+TAMBÉM FAZER 
+
+'UGLIFY' 
+
+__ DE NOSSO OUTPUT... ('uglify OUR OUTPUT').. ---> OU SEJA,
+
+QUER 
+
+OPTIMIZAR 
+
+
+O 
+NOSSO OUTPUT- --> por sorte,
+
+
+
+esse 
+é um 
+
+PLUGIN 
+
+
+QUE JÁ 
+
+É 
+
+'BUILT IN' NO WEBPACK.... --> ou SEJa,
+
+
+
+NÃO PRECISAMOS 
+
+O INSTALAR,
+
+JÁ VEM 
+
+NA PACKAGE 
+
+DO 
+
+WEBPACK...  ----> e para 
+
+que 
+
+
+consigamos o chamar/utilizar,
+
+
+DEVEMOS 
+
+
+
+escrever um import,
+
+
+um import com sintaxe do node.js...
+
+
+
+
+
+
+
+VAMOS TER QUE IMPORTAR O 'WEBPACK' __EM SI__ no nosso 
+
+arquivo 
+
+de 
+
+'webpack.config.prod.js',
+
+
+
+
+POR MEIO 
+
+
+DE UMA 
+
+ESCRITA 
+DE 
+
+
+'const webpack = require('webpack');'
+
+
+
+
+
+
+
+
+
+ISSO FEITO,
+
+PODEMOS USAR ESSE PLUGIN DE 'uglify',
+
+
+QUE 
+
+É 
+
+
+BUILTIN...
+
+
+O CÓDIGO VAI FICAR ASSIM:
+
+    plugins: [
+        new HtmlWebpackPlugin(
+            {
+        template: __dirname + '/src/index.html',                     /////////SIM, ESTE CÓDIGO É NECESSÁRIO PARA CONFIGURAR O 'HtmlWebpackPlugin'... ---> vai definir nosso 'index.html' dentro de 'src' COMO O __bASIS__ PARA as alterações produzidas por esse pacote....
+         inject: 'body',   
+            filename: 'index.html'        }              
+        ),
+        new webpack.optimize.UglifyJsPlugin() /////////EIS O CÓDIGO EM QUESTÃO.
+    ]
+
+
+---------------------------------
+
+
+
+
+O PROFESSOR 
+NOS EXPLICA QUE 
+
+__É CLARO QUE __ ESSE PLUGIN 
+
+__ É CAPAZ DE SER CONFIGURADO...___
+
+
+
+
+
+----> você sempre pode checar as páginas OFICIAIS DESSES PLUGINS E LOADERS PARA DESCOBRIR MAIS SOBRE 
+
+ELES...
+
+
+
+
+
+
+
+-----------> OK.... COM ISSO,
+
+
+PROFESSOR 
+
+
+TEM 
+
+O SEU 
+
+PRODUCTION WORKFLOW 
+
+DEFINIDO,
+
+
+production workflow 
+
+em 
+QUE 
+
+
+ELE TAMBÉM 
+
+VAI OPTIMIZAR/MINIFAR 
+
+
+
+OS 
+
+ARQUIVOS, 
+
+PARA 
+
+SHIPPAR 
+
+a MENOR QUANTIDADE DE CÓDIGO POSSÍVEL...
+
+
+
+
+
+
+
+
+
+--> professor cria, em 'package.json',
+
+um 
+
+
+negócio 
+
+
+
+chamado 
+
+
+"build:production": "webpack --config webpack.prod.config.js "
+
+
+----------------------
+
+
+
+ALÉM 
+
+
+DISSO,
+
+ELE 
+TAMBÉM 
+
+ADICIONA 
+
+UMAS OPTIONS EXTRAS,
+
+COMO 
+
+
+'--progress'  '-profile' e '--colors' ,
+
+
+TUDO 
+
+
+PARA 
+
+
+AJUSTAR 
+
+
+O __ CONSOLE OUTPUT DO WEBPACK BUILD WORKFLOW DE PRODUÇÃO___-----> 
+
+
+E
+ 
+
+ ELE 
+
+ TAMBÉM 
+
+ VAI ADICIONAR/INSTALAR UM 
+
+ PACKAGE
+ ADICIONAL
+  
+
+
+  NO NOSSO PROJETO,
+
+  UMA 
+
+
+  PACKAGE 
+
+
+
+  CHAMADA 
+
+
+
+  de 
+
+  'rimraf'...
+
+
+  ex:
+
+
+
+
+  npm install --save-dev rimraf -----------> ISSO 
+
+
+  NOS 
+
+  PERMITE 
+
+
+
+  __DELETAR_ _UM FOLDER_,
+   
+   OU DELETAR__
+
+   UNS ARQUIVOS... --------> E O PROFESSOR 
+
+
+   __QUER __ DELETAR __ ESPECIFICAMENTE 
+
+
+   O FOLDER 
+
+   'dist' 
+
+
+   NO INÍCIO DE TODO E QUALQUER BUILD PROCCESS,
+
+
+   PARA 
+
+   QUE 
+
+   CONSIGAMOS CRIAR 
+
+
+'A brand new dist folder' 
+
+
+A 
+
+PARTIR 
+
+
+DE CADA 
+
+EXECUÇÃO 
+
+
+DE 'build'...
+
+---------------------------------------
+
+
+
+
+
+ISSO FEITO, 
+
+
+PROFESSOR 
+
+CONFIGURA 
+
+O 
+
+'build:Prod' 
+
+
+PARA QUE 
+
+
+SEJA 
+
+
+
+'''rimraf dist && webpack --config webpack.prod.config.js --progress -profile --colors'''
+
+
+-----------------------
+
+
+
+
+CERTO... (isso aí de 'rimraf' é novo, eu nunca havia usado...)
+
+
+
+
+'''rimraf dist && webpack --config webpack.prod.config.js --progress -profile --colors''' ------> 
+
+
+O CÓDIGO 
+
+DE 
+WEBPACK 
+será 
+
+
+sempre executado __DEPOIS___ de 'rimraf dist' TERMINAR (depois do dist anterior ter sido deletado, essencialmente)....
+
+
+
+
+OK,
+
+EXECUTAMOS 
+
+
+'
+ 
+ npm run build:Prod'
+
+
+
+
+ -----------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+ ---------> RODAMOS O NPM RUN BUILD:PROD -_> isso
+
+
+ faz 
+
+ BUILD DO PROJETO,
+
+
+ e nos 
+
+ dá 
+
+ o 
+
+ DIST 
+
+ FOLDER,
+
+ vamos 
+
+
+ ter 
+
+
+
+ 'bundle.js' 
+
+ e 
+
+
+ '697.js'... -->mas se EXAMINARMOS ESSES BUNDLES, VEREMOS QUE ELES ESTÃO 
+
+ 'MINIFADOS' (minify...) -----------> É UM MONTE 
+
+ DE CÓDIGO,
+
+ PQ 
+
+
+ INCLUI TODA A LIBRARY DO REACT,
+
+
+ MAS 
+
+ ESTÁ 
+
+ MINIMZADO (minified).... ------> E SÃO ESSES ARQUIVOS QUE VAMOS UPLOADAR 
+
+ A UM 
+
+ SERVIDOR.... (o conteúdo inteiro do 
+ 
+ 
+ folder 'dist'...) ---> E ESSE 
+
+ É 
+
+
+ O NOSSO WORKFLOW 
+
+ COMPLETO...

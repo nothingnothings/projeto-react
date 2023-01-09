@@ -1,0 +1,1874 @@
+
+
+
+
+
+
+
+
+
+
+--> CERTO... AO LONGO DAS ÚLTIMAS LIÇÕES,
+
+FALAMOS 
+
+MUITO 
+
+
+SOBRE 
+
+
+'<Transition />'
+
+
+e 
+
+
+
+'<CSSTransition />'... ------> 
+
+
+
+ISSO 
+
+PQ 
+
+
+ESSES 
+
+2
+ 
+
+ COMPONENTS
+  
+  SÃO 
+
+  __sUPER IMPORTANTES___... ------> MAS E QUANTO 
+
+
+  à 
+
+  NOSSA 
+
+  'LIST' ? ------> na nossa list,
+
+  NO 
+
+  EXEMPLO,
+
+
+  SERIA 
+
+
+  LEGAL 
+
+
+
+  SE PUDÉSSEMOS 
+
+
+  ADICIONAR/REMOVER ITEMS  
+
+
+  E 
+
+  ENTÃO 
+
+  PUDÉSSEMOS 
+
+  ANIMAR 
+
+  ISSO 
+  TAMBÉM...  ----> isso pq a´te agora,
+   
+
+
+   se eu adicionar um item,
+
+
+   ele SÓ APARECE ESTATICAMENTE, SEM ANIMAÇÃO.... --> mesma 
+
+   coisa 
+
+   para 
+   o 
+
+   'REMOVE', 
+
+   o 
+   item 
+   só 
+
+    é removido instantaneamente... 
+
+
+
+
+
+    ----------------------------
+
+
+
+    CÓDIGO DE 'listItems' é este:
+
+
+
+
+
+
+          return (
+            <div>
+                <button className={ListStyle.Button} onClick={this.addItemHandler}>Add Item</button>
+                <p>Click item to Remove.</p>
+                <ul className={ListStyle.List}>
+                    {listItems}
+                </ul>
+            </div>
+        )
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+OK.... AGORA DIGAMOS QUE 
+
+
+__QUEREMOS ____ ANIMAR __ ESSE ADD/REMOVE__ de items, 
+
+dos 
+
+items 
+
+
+
+nesse 
+
+'listItems'...
+
+
+
+
+
+
+
+
+
+
+CÓDIGO COMPLETO EM 'list':
+
+
+
+
+
+    render() {
+
+
+        const listItems = this.state.items.map( (item, index) => {
+
+           return <li 
+                key={index}
+                className={ListStyle.ListItem}
+                onClick={() => this.removeItemHandler(index)}
+                >{item}</li>
+        })
+        return (
+            <div>
+                <button className={ListStyle.Button} onClick={this.addItemHandler}>Add Item</button>
+                <p>Click item to Remove.</p>
+                <ul className={ListStyle.List}>
+                    {listItems}
+                </ul>
+            </div>
+        )
+    }
+
+
+
+------------------------------------
+
+
+
+
+
+EU __cHUTO___ que é NECESSÁRIO WRAPPAR 
+
+'<li></li>'
+ 
+ COM 
+
+
+ NOSSO COMPONENT 
+
+ 'CSSTransition'...
+
+
+
+
+
+
+
+
+
+
+->>>> ERREI.... --> PROFESSOR NOS DIZ QUE 
+
+
+ISSO, ESSE ANIMAÇÃO DA 'LIST',
+
+__NÃO É POSSÍVEL__ SÓ 
+
+
+COM USO 
+
+DE 
+
+'<Transition />'
+
+e 
+
+'<CSSTransition />'... --> ISSO __NÃO FUNCIONARIA____....
+
+
+
+
+
+
+---> PARA FAZER A ANIMAÇÃO DA LIST/LISTITEMS NA LIST,
+
+
+PRECISAMOS 
+
+ADICIONAR 
+
+MAIS 
+
+UM COMPONENT,
+
+IMPORTAR 
+
+MAIS UM COMPONENT 
+
+
+DE 
+
+
+'raect-transition-group'....
+
+
+
+
+
+
+
+---> O COMPONENT É CHAMADO DE 
+
+'TransitionGroup'....
+
+
+
+ex (VAMOS IMPORTAR ISSO EM 'List.js'...):
+
+
+
+
+
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+
+
+
+
+---------------------------------------------------------------
+
+
+
+
+
+CERTO... ---> E O 
+
+'TransitionGroup' 
+
+PODE/DEVE SER 
+
+USADO 
+
+
+__EM LUGARES EM QUE ___ VOCê ___ OUTPUTTA__ LISTAS (lists)... ----> OU SEJA, 
+
+
+
+EM LUGARES EM QUE 
+
+
+VOCÊ 
+
+TEM UMA 
+
+'DYNAMIC LIST OF ELEMENTS'...
+
+ 
+
+
+
+
+
+
+
+
+ --> ou seja,
+
+ PRECISAMENTE NA nossa ''''<ul>{listItems}</ul>''''
+
+
+
+
+--> LÁ,
+
+
+
+
+NESSA UL,
+
+NÓS PODEMOS 
+
+__SUBSTITUIR__ A OPENING E CLOSING TAGS DE '<ul className="List" />'
+
+
+
+POR 
+
+'<TransitionGroup>'...
+
+
+
+ex:
+
+
+
+
+
+
+
+ISTO:
+
+    render() {
+
+
+        const listItems = this.state.items.map( (item, index) => {
+
+           return <li 
+                key={index}
+                className={ListStyle.ListItem}
+                onClick={() => this.removeItemHandler(index)}
+                >{item}</li>
+        })
+        return (
+            <div>
+                <button className={ListStyle.Button} onClick={this.addItemHandler}>Add Item</button>
+                <p>Click item to Remove.</p>
+                <ul className={ListStyle.List}>
+                    {listItems}
+                </ul>
+            </div>
+        )
+    }
+
+
+
+
+
+VIRA ISTO:
+
+
+
+
+
+
+
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+
+
+    render() {
+
+
+        const listItems = this.state.items.map( (item, index) => {
+
+           return <li 
+                key={index}
+                className={ListStyle.ListItem}
+                onClick={() => this.removeItemHandler(index)}
+                >{item}</li>
+        })
+        return (
+            <div>
+                <button className={ListStyle.Button} onClick={this.addItemHandler}>Add Item</button>
+                <p>Click item to Remove.</p>
+                <TransitionGroup>  /////////EIS O CÓDIGO EM QUESTÃO.
+                    {listItems}
+                </TransitionGroup>
+            </div>
+        )
+    }
+
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+------> CERTO... MAS UM PROBLEMA INICIAL, AQUI, É QUE 
+
+
+'<TransitionGroup />'
+
+VAI SEMPRE, POR DEFAULT,
+
+DEFINIR __UMA 
+
+'<DIV>' 
+
+no lugar do ul que vocÊ substituiu.... --> e isso NÃO É BOM.... --> 
+
+para 
+
+evitar
+ 
+
+ esse comportamento,
+
+ professor 
+
+ escreve
+  um
+
+
+  prop 
+  de 
+
+  'component',
+
+  o qual 
+
+  PREENCHE COM UM VALOR de 
+
+  "ul",
+
+
+
+  PARA __ QUE REALMENTE __ SEJA CRIADA UMA <ul>, e não UMA DIV...
+
+
+
+  ex:
+
+
+
+
+
+
+  
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+
+
+    render() {
+
+
+        const listItems = this.state.items.map( (item, index) => {
+
+           return <li 
+                key={index}
+                className={ListStyle.ListItem}
+                onClick={() => this.removeItemHandler(index)}
+                >{item}</li>
+        })
+        return (
+            <div>
+                <button className={ListStyle.Button} onClick={this.addItemHandler}>Add Item</button>
+                <p>Click item to Remove.</p>
+                <TransitionGroup component="ul" >  /////////EIS O CÓDIGO EM QUESTÃO.
+                    {listItems}
+                </TransitionGroup>
+            </div>
+        )
+    }
+
+
+------------------------------
+
+
+
+
+
+
+
+OU SEJA,
+
+o 
+
+'TransitionGroup'
+
+VAI ESSENCIALMENTE SUBSTITUIR 
+
+AQUELA 
+
+<ul> POR 
+
+UMA <ul> equivalente,
+
+MAS 
+
+
+
+QUE CONSEGUIRÁ __ ANIMAR ___ OS LISTITEM na list...
+
+
+
+
+
+
+
+
+--> OK, MAS E QUANTO À CLASSE/className que tínhamos,
+
+de 
+
+'{ListStyle.List}'? --------> PROFESSOR NOS EXPLICA QUE 
+
+PODEMOS 
+
+SIMPLESMENTE 
+
+ADICIONAR UM 
+
+'className={ListStyle.List}'
+
+
+DENTRO 
+
+DESSE COMPONENT 
+
+'TransitionGroup'... (mesma coisa de antes, basicamente)...
+
+
+ex:
+
+
+
+
+
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+
+
+    render() {
+
+
+        const listItems = this.state.items.map( (item, index) => {
+
+           return <li 
+                key={index}
+                className={ListStyle.ListItem}
+                onClick={() => this.removeItemHandler(index)}
+                >{item}</li>
+        })
+        return (
+            <div>
+                <button className={ListStyle.Button} onClick={this.addItemHandler}>Add Item</button>
+                <p>Click item to Remove.</p>
+                <TransitionGroup 
+                component="ul"
+                className={ListStyle.List} >                  /////////EIS O CÓDIGO EM QUESTÃO.
+                    {listItems}
+                </TransitionGroup>
+            </div>
+        )
+    }
+
+
+-----------------------------
+
+
+
+SE EXECUTARMOS 
+
+ESSE NEGÓCIO NO BROWSER,
+
+
+
+O APP VAI FUNCIONAR COMO ANTES,
+
+MAS 
+
+
+VAMOS 
+
+RECEBER ALGUNS 
+
+WARNINGS,
+
+como 
+
+'Unknown event handler property onExited. It will be ignored....'
+
+
+
+
+e 
+
+
+'Received 'true' for non-boolean attribute 'in'. If this is expected,
+
+cast the value to be a STRING..'
+
+------------------------------------------
+
+
+
+
+--> BEM, PROFESSOR NOS EXPLICA QUE 
+
+ESTAMOS 
+
+
+RECEBENDO ESSES ERROS 
+
+PQ,
+
+COM 
+
+ESSE 
+
+'TransitionGroup',
+
+
+nós __AINDA __ ESTAMOS __ FAZENDO __ 
+
+
+
+'WRAP 
+
+
+dE 
+
+uma __LIST/lista 
+
+DE 
+PEQUENOS ITEMS....
+
+
+
+ex:
+
+
+
+
+           return <li 
+                key={index}
+                className={ListStyle.ListItem}
+                onClick={() => this.removeItemHandler(index)}
+                >{item}</li>
+        })
+
+
+
+
+
+
+
+
+----------------------------
+
+
+
+
+--> E 'TransitionGroup' pode, DE FATO,
+ 
+
+ SER USADO 
+
+ PARA 
+
+ 'ANIMATE LISTS'... .--> MAS ELE SÓ __TEM ESSA CAPACIDADE__ 
+
+ SE 
+ ELE 
+
+
+ TRABALHAR JUNTO COM 'CSSTransition' ou 'Transition'...
+
+
+
+
+
+ -------------------------------------------
+
+
+
+
+ E 
+ É EXATAMENTE POR ISSO QUE 
+
+ O PROFESSOR 
+
+
+ VAI 
+
+ IMPORTAR 
+
+
+'CSSTransition'
+
+
+NESSE COMPONENT 
+
+DE 
+
+'List.js'....
+
+
+ex:
+
+
+
+
+import React, { Component } from 'react';
+import Transition from 'react-transition-group/Transition';
+
+import Transition from 'react-transition-group/Transition';
+
+
+
+
+
+---------------------------
+
+
+
+
+
+E AÍ WRAPAMOS 
+
+
+
+NOSSO 
+
+array de 
+
+'<li>'
+
+
+com 
+
+
+esse 
+
+'<CSSTransition />'...
+
+
+
+ex:
+
+
+
+        const listItems = this.state.items.map( (item, index) => {
+        
+           return 
+           
+           <CSSTransition> 
+           <li 
+                key={index}
+                className={ListStyle.ListItem}
+                onClick={() => this.removeItemHandler(index)}
+                >{item}</li>
+            </CSSTransition
+        })
+
+
+
+----------------------------
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+class List extends Component {
+    state = {
+        items: [1, 2, 3]
+    }
+
+    addItemHandler = () => {
+        this.setState((prevState) => {
+            return {
+                items: prevState.items.concat(prevState.items.length + 1) 
+            }
+        })
+    }
+
+
+    removeItemHandler = (selIndex) => {
+        this.setState((prevState) => {
+            return {
+                items: prevState.items.filter((item, index) => index !== selIndex)
+            }
+        })
+    }
+
+
+
+    render() {
+
+
+        const listItems = this.state.items.map( (item, index) => {
+                    //esse component DEVE ___ WRAPPAR __ O LISTitem/ListItems que __VOCÊ QUER _ QUE TENHA/TENHAM ANIMAÇÕES na sua list.... (animações que serão gerenciadas por '<ReactTransitionsGroup />'...)
+           return <CSSTransition> ///EIS O CÓDIGO EM QUESTÃO.
+           <li 
+                key={index}
+                className={ListStyle.ListItem}
+                onClick={() => this.removeItemHandler(index)}
+                >{item}</li>
+                </CSSTransition>
+        })
+        return (
+            <div>
+                <button className={ListStyle.Button} onClick={this.addItemHandler}>Add Item</button>
+                <p>Click item to Remove.</p>
+                <TransitionGroup> ////EIS O CÓDIGO EM QUESTÃO.
+                    {listItems}
+                    </TransitionGroup>
+            </div>
+        )
+    }
+}
+
+
+
+
+---------------------------
+
+
+CERTO...
+
+
+
+-----------------------------
+
+
+
+
+
+MAS NÃO ACABAMOS POR AQUI... --> pq 
+
+
+NÓS DEVEMOS 
+
+
+MOVER ALGUMAS COISAS,
+
+como 
+
+o prop 
+
+de 
+
+'key={index}' 
+
+NAQUELE 
+
+'<li>',
+
+
+TRANSPLANTAR ESSE NEGÓCIO PARA __DENTRO _dE 'CSSTransition',
+
+justamente
+PQ 
+
+ESSE ELEMENTO ESTÁ ___wRAPPANDO___ os '<li>' (e sempre a propriedade 
+
+'key' deve 
+EXISTIR NO 'TOPMOST LEVEL' de um ITEM EM UM ARRAY/LIST QUE ESTAMOS 'looping through'...)
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+           return <CSSTransition 
+                        key={index}> ///EIS O CÓDIGO EM QUESTÃO.
+           <li 
+                
+                className={ListStyle.ListItem}
+                onClick={() => this.removeItemHandler(index)}
+                >{item}</li>
+                </CSSTransition>
+        })
+
+
+
+----------------------
+
+
+COM ISSO,
+
+
+SE SALVARMOS 
+
+ISSO 
+
+DAÍ,
+
+VEREMOS 
+
+__ QUE VAOMS __ RECEBER __ DIFERENTES AVISOS/ERROS NO CONSOLE... 
+
+(como
+
+
+
+'Failed prop type: the prop 
+
+'timeout' is marked as required in 'CSSTranstion', but its 
+
+value is 'undefined'...
+
+
+
+,
+
+MÚLTIPLAS VEZES...
+
+)
+
+
+
+
+
+--------------------
+
+
+
+CERTO... E, DE FATO,
+
+NÃO DEFINIMOS NENHUM PROP 
+
+DE 
+
+'timeout' 
+
+NESSE COMPONENT 
+
+'CSSTransition'
+
+que 
+
+WRAPPAMOS 
+
+AO 
+
+REDOR 
+
+DE 
+
+NOSSOS <li>....
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+CERTO... E SE CLICARMOS 'ADD ITEM', aquele botão QUE ADICIONA UM 
+
+ITEM 
+
+
+AO NOSSO ARRAY/LISTA DE ITEMS,
+
+A 
+
+
+
+TELA
+ 
+ VAI FICAR 
+
+ EM 
+ BRANCO 
+
+
+ E 
+
+ VAMOS 
+
+ RECEBER UM ERRO 
+
+ NO CONSOLE... --> console vai dizer 
+
+
+
+''''''VOCÊ NÃO TEM NENHUMA PROPRIEDADE 'enter'/'enter' está COMO __UNDEFINED__ em 
+'CSSTransition'''''
+
+
+
+
+OU SEJA,
+
+
+
+___o CSSTransition NÃO CONSEGUE 
+
+ENCONTRAR 
+
+A CLASSE 
+
+'enter', que tenta adicionar 
+
+À CLASSE de ' className={ListStyle.ListItem} '
+---------------------------------
+
+
+
+
+
+
+
+
+
+---> A RAZÃO PARA TODOS ESSES ERROS,
+ 
+ É 
+
+ CLARO,
+  É QUE 
+
+  'CSSTransition' NÃO __ESTÁ CONFIGURADO __ CORRETAMENTE....
+
+
+
+
+
+--> devemos tentar CONFIGURAR __ MANUALMENTE__, POR CONTA PRÓPRIA,
+
+
+LEVANDO EM CONSIDERAÇAO OS ENSINAMENTOS DO PROFESSOR ATÉ AGORA....
+
+
+
+
+----------------------
+
+
+
+
+CERTO...
+
+
+
+CONSEGUI...
+
+
+OS CÓDIGOS FICARAM ASSIM:
+
+
+
+
+
+'List.module.css':
+
+
+.List {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 280px;
+}
+
+.ListItem {
+  margin: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 1005;
+  border: 1px solid #521751;
+  background-color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
+.ListItem:hover,
+.ListItem:active {
+  background-color: #ccc;
+}
+
+@keyframes listItemAdd {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes listItemRemove {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.ListItemEnter {
+}
+
+.ListItemEnterActive {
+  animation: listItemAdd 0.4s ease-out forwards;
+}
+
+.ListItemExit {
+}
+
+.ListItemExitActive {
+  animation: listItemRemove 0.4s ease-out forwards;
+}
+
+/* 
+forwards	The element will retain the style values that is set by the last keyframe (depends on animation-direction and animation-iteration-count) */
+
+
+
+
+
+
+
+
+
+
+'List.js':
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import ListStyle from './List.module.css';
+
+import TransitionGroup from 'react-transition-group/TransitionGroup'; 
+
+import CSSTransition from 'react-transition-group/CSSTransition';
+
+class List extends Component {
+  state = {
+    items: [1, 2, 3],
+  };
+
+  addItemHandler = () => {
+    this.setState((prevState) => {
+      return {
+        items: prevState.items.concat(prevState.items.length + 1), 
+      };
+    });
+  };
+
+  removeItemHandler = (selIndex) => {
+    this.setState((prevState) => {
+      return {
+        items: prevState.items.filter((item, index) => index !== selIndex),
+      };
+    });
+  };
+
+  render() {
+    const listItems = this.state.items.map((item, index) => {
+      return (
+        <CSSTransition
+          mountOnEnter ////CONFIGURAÇÃO DE NOSSA ANIMAÇÃO.
+          unmountOnExit
+          key={index}
+          timeout={400}
+          classNames={{
+            enterDone: ListStyle.ListItemEnter,
+            enterActive: ListStyle.ListItemEnterActive,
+            exitDone: ListStyle.ListItemExit,
+            exitActive: ListStyle.ListItemExitActive,
+          }}
+        >
+          <li
+            className={ListStyle.ListItem}
+            onClick={() => this.removeItemHandler(index)}
+          >
+            {item}
+          </li>
+        </CSSTransition>
+      );
+    });
+    return (
+      <div>
+        <button className={ListStyle.Button} onClick={this.addItemHandler}>
+          Add Item
+        </button>
+        <p>Click item to Remove.</p>
+        <TransitionGroup className={ListStyle.List}> ////CONFIGURAÇÃO DE NOSSA 'LIST', do estilo geral dela....
+          {listItems}
+        </TransitionGroup>
+      </div>
+    );
+  }
+}
+
+export default List;
+
+
+
+
+
+
+
+
+----------------------------
+
+
+
+NOSSOS 
+
+
+
+'listItem' 
+
+AGORA 
+
+ESTÃO SENDO ANIMADOS... ---> cada vez que um é adicionado/removido,
+
+há 
+
+uma animação 
+
+
+
+de fade-in/fade-out...
+
+
+
+
+
+
+
+
+
+
+
+--> PROFESSOR DIZ QUE 
+
+TALVEZ TENHAMOS 
+
+PERCEBIDO 
+
+
+A FALTA 
+
+DAQUELE PROP 
+
+DE 
+
+'in={state}', ou 'in={state.showBlock}', ou algo do gênero,
+
+
+EM 
+
+'CSSTransition'... -->   
+
+
+
+
+
+ESSA PROPRIEDADE ERA USADA 
+
+PARA __cONTROLAR ___ O 'STATE' DE 
+
+
+NOSSA 
+TRANSITION... 
+
+
+
+(
+como visto em 
+
+
+
+''''''
+
+
+return (
+    
+    <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={props.show} ////AQUI.
+        timeout={animationTiming}
+        classNames={
+            {
+                enterActive: ModalStyle.ModalEnterActive,
+                enterDone: ModalStyle.ModalEnter,
+                exitActive: ModalStyle.ModalExitActive,
+                exitDone: ModalStyle.ModalExit
+            }
+        }
+    >
+                <div className={ModalStyle.Modal}>
+                <h1>A Modal</h1>
+                <button className={ModalStyle.Button} onClick={props.closed}>Dismiss</button>
+            </div>
+    </CSSTransition>
+    )
+
+
+
+
+''''''
+
+
+
+
+)
+
+
+
+
+
+---------------------
+
+
+
+BEM... O PROFESSOR 
+
+NOS EXPLICA, AGORA,
+
+QUE 
+
+A 
+
+
+COISA IMPORTANTE 
+
+DE 
+
+'<TransitionGroup />',
+
+esse 
+
+COMPONENT 
+ESPECIAL,
+
+
+
+
+e ESSENCIALMENTE ___A ÚNICA COISA QUE ELE FAZ__,
+
+É 
+
+QUE 
+
+ELE 
+CONSEGUE __FAZER 'HANDLE' DE MÚLTIPLOS ITEMS (como list items)... --> POR 'HANDLE',
+
+QUEREMOS 
+
+
+DIZER QUE 
+
+
+ele fica basicamente dando 'WATCH' nos 
+
+múltiplos items em uma list.... ---->  e quando um desses 
+
+ITEMS É __ALTERADO__ (adicionado/removido do DOM),
+
+
+O 
+
+'<TransitionGroup />'
+
+
+___AUTOMATICAMENTE___ ADICIONA ___, manualmente, UM 
+
+
+
+PROP de 
+
+
+'in={state}' 
+
+
+
+
+NO 
+
+ELEMENTO 
+
+
+
+QUE VOCÊ WRAPPOU COM   
+
+
+'<Transition>' ou '<CSSTransition />' 
+
+
+(aqui,
+
+nesse nosso exemplo, seria 
+
+este 
+
+
+<li> 
+
+aqui:
+
+
+------------------------------
+
+        <CSSTransition
+          mountOnEnter
+          unmountOnExit
+          key={index}
+      ///////////    in={state}  ////////////////////// A PROPRIEDADE 'in' É ADICIONADA AUTOMATICAMENTE, AQUI, POR FORÇA DO '<TransitionGroup />'...
+          timeout={400}
+          classNames={{
+            enterDone: ListStyle.ListItemEnter,
+            enterActive: ListStyle.ListItemEnterActive,
+            exitDone: ListStyle.ListItemExit,
+            exitActive: ListStyle.ListItemExitActive,
+          }}
+        >
+          <li
+            className={ListStyle.ListItem}
+            onClick={() => this.removeItemHandler(index)}
+          >
+            {item}
+          </li>
+        </CSSTransition>
+
+
+--------------------------
+
+
+)
+
+
+
+
+
+
+
+
+--> ISSO EXISTE, O '<TransitionGroup />',
+PARA 
+
+
+QUE 
+
+SEJA 
+
+CONTROLADO __ O STATE__ DESSES ELEMENTOS EM UMA LIST, PQ ESSES ELEMENTOS, POR SEREM 
+
+DINÂMICOS,
+
+VOCÊ __NÃO CONSEGUE __ CONTROLAR O STATE DE CADA UM DELES... --> essa tarefa 
+passa 
+
+a 
+ser 
+de 
+'<TransitionGroup />',
+
+QUE 
+
+FAZ A INSERÇÃO DO PROP 'in={state}' 
+
+no 
+
+'<CSSTransition />'/ '<Transition />' 
+QUE 
+
+WRAPPA CADA UM DELES....
+
+
+
+-----------------------------
+
+
+
+COM ISSO,
+
+O PROFESSOR 
+
+VAI 
+
+EM 
+
+FRENTE 
+
+
+
+E SIMPLESMENTE 
+
+
+
+DEFINE UM ESTILO BÁSICO 
+DE 
+
+'fade-in'/'fade-out',
+
+USANDO 
+
+
+
+
+
+'exemploEnterActive' ('ListItemEnterActive')
+
+e 
+
+'exemploExitActive' ('ListItemExitActive')
+ 
+
+
+
+
+
+
+
+
+ -> ENTRETANTO, NESSE EXEMPLO,
+
+ PROFESSOR 
+
+ USA 
+
+
+ 'exemploEnter' 
+
+ e 
+
+ 'exemploExit' 
+
+ PARA __ INICIALIZAR ___ 
+
+ a nossa animação,
+
+ por meio 
+
+ do 
+ set 
+
+ de 
+ um 
+
+ ESTILO 
+
+ DE 
+
+ 'opacity: 0' 
+
+ e 
+
+ 'opacity: 1'...
+
+
+ -------------------------
+
+
+
+
+ O professor 
+
+ não usou 'animation' como nós... em vez disso,
+
+
+ ele 
+
+
+
+ usou 
+
+
+
+ algo como 
+
+ '.ExemploExitActive {
+     opacity: 0;
+     transition: opacity 0.3s ease-out;  ////É UM SHORT-HAND... -->basicamente especifica 'quero que a OPACITY transicione até 0 em um intervalo de 0.3 segundos...'
+ }
+ ' 
+
+
+
+ --------------------
+
+
+
+
+
+
+ CERTO... O PROFESSOR TAMBÉM 
+
+ ADICIONOU/ADICIONA 
+
+ UNS BOOLEAN PROPS DE 
+
+
+ 'mountOnEnter' 
+
+ e 
+
+ 'unmountOnExit' 
+
+
+ LÁ 
+
+ NO 
+
+ '<CSSTransition />'...
+
+
+
+
+
+ ----> CERTO.... MAS 
+
+
+ AINDA 
+ HÁ UM PROBLEMA NA NOSSA ANIMAÇÃO... --> 
+
+
+ o problema é que 
+
+ QUANDO CLICAMOS 
+
+ EM 
+
+ ALGUM ELEMENTO 'ListItem',
+
+
+ __ SEMPRE O __ÚLTIMO ELEMENTO 
+
+ É 
+
+REMOVIDO,
+
+
+E NUNCA 
+
+
+É REMOVIDO O ELEMENTO EM QUE 
+
+ESPECIFICAMENTE CLICAMOS.... ---> PROFESSOR DIZ QUE 
+
+
+ISSO 
+
+
+ACONTECE 
+
+DEVIDO 
+
+À MANEIRA PELA QUAL FAZEMOS 
+
+'manage' dessa 
+
+
+
+LIST, 
+
+
+por meio deste código aqui:
+
+
+
+
+
+
+
+
+
+
+
+
+    const listItems = this.state.items.map((item, index) => {
+      return (
+        <CSSTransition
+          mountOnEnter
+          unmountOnExit
+          key={index}
+          timeout={800}
+          classNames={{
+            enter: ListStyle.ListItemEnter,
+            enterActive: ListStyle.ListItemEnterActive,
+            exit: ListStyle.ListItemExit,
+            exitActive: ListStyle.ListItemExitActive,
+          }}
+        >
+
+
+
+
+
+COMO NESSE CÓDIGO 
+
+AÍ 
+
+NOSSA 
+
+
+
+'key' 
+
+É EFETIVAMENTE O 'index',
+
+É ISSO 
+
+QUE 
+ESTÁ CAUSANDO O ERRO...
+
+
+
+
+
+
+
+
+--> PROFESSOR NOS DIZ QUE __ SE TIVÉSSEMOS UMA __ KEY__ QUE 
+
+FOSSE MELHOR__, 
+
+
+esse update de nosso 
+
+
+
+
+ARRAY 
+
+de list items 
+
+
+aconteceria de forma correta,
+
+e não veríamos esse problema...
+
+
+
+
+
+
+(na próxima vez, devemos ter uma 
+
+LIST QUE TENHA UMA 
+
+'KEY' MELHOR... -----> 
+
+
+
+o problema é a KEY,
+ 
+ e não 
+ 
+ o 
+ 
+'TransitionGroup'...
+
+) -------> NO FINAL DAS CONTAS,
+
+
+
+
+
+
+
+O 'TransitionGroup'
+ 
+
+ É 
+
+ APENAS 
+
+ UM 
+
+ ___HELPER__,
+
+ UM HELPER  
+
+
+QUE 
+
+AUTOMATICAMENTE 
+
+SETTA 
+
+
+
+A PROPRIEDADE 
+
+'in' 
+
+
+
+NOS COMPONENTS 
+
+
+'CSSTransition' e 'Transition' QUE 
+
+__WRAPPA__.... --> e aí 
+
+
+
+
+
+
+VOCÊ TRABALHA COM ESSES COMPONENTS ESPECIAIS 
+
+
+
+de acordo com o que aprendemos nas últimas lições...
+
+
+

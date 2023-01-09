@@ -1,0 +1,713 @@
+
+
+
+
+---> eu imagino que tenhamos de usar uma 
+
+função/método 
+
+
+'toggle'... 
+
+
+'toggleModalHandler', ou algo do gênero, lá em 'BuildControls'.... (e com um 
+
+
+'doesShowModal: false', lá no STATE de burgerbUILDER...)
+
+
+
+
+
+
+
+
+
+
+
+----> OK, EU FALHEI.
+
+
+Tenho que ver como o professor fez isso.
+
+
+
+
+
+
+--> O modal está enfiado no burger builder, e isso é uma boa coisa. Boa coisa pq 
+
+
+LÁ 
+
+É ONDE TEMOS NOSSO 'STATE'... --> e é no STATE em que podemos determinar se 
+
+
+
+o 'order now' button foi clicado ou não... ---> podemos facilmente adicionar 
+
+A lógica 
+
+nesse lugar.... ---------> 
+
+
+
+Professor escreve 
+
+um 
+
+
+' purchasing: false'     --> isso deverá mudar para 
+
+'true'
+
+
+QUANDO O BOTÃO 
+
+
+'Order now' FOR CLICADO...
+
+
+
+
+
+
+
+
+
+
+PARA ISSO, O PROFESSOR VAI CRIAR UM NOVO HANDLER.... --> ele dará 
+
+o nome 
+
+de 
+
+
+
+
+'purchaseHandler'... ------> isso 
+
+será um método normal, 
+
+
+e 
+ele deverá ser triggado SEMPRE 
+
+QUE NÓS 
+
+CLICARMOS NESSE BOTÃO DE 'ORDER NOW'...
+
+
+
+
+
+
+
+
+---> dentro do 
+
+
+
+'purchaseHandler() {}',
+
+
+
+em 'BurgerBuilder',
+
+
+o professor 
+
+
+
+escreve 
+
+
+'
+this.setState(
+    {purchasing: true}
+)'
+
+
+
+
+
+
+
+
+
+purchaseHandler () {
+  this.setState(
+    {
+      purchasing: true
+    }
+  )
+
+}
+
+
+
+
+------------------------------
+
+
+
+DEPOIS ELE VAI PASSAR ESSE purchaseHandler
+
+como 
+
+
+__PROP___ ao elemento 'buildControls', pois é lá que está o botão 
+
+'order now'...
+ 
+
+
+ ele passa isso por meio de um prop de nome 'ordered'...
+
+
+
+
+
+
+ .... certo, agora o método 'purchaseHandler' será executado 
+
+ quando aquele botão for clicado.
+
+
+
+
+ ------------------------------
+
+
+
+
+
+ ---> É LEGAL QUE NÓS TENHAMOS 
+
+
+
+ FEITO ESSA ESCRITA DE 'purchasing: true', que é alterada para FALSE a partir daquele button press,
+
+
+
+ MAS ISSO POR SI SÓ __NÃO VAI ALTERAR __ O 'DISPLAY' DO NOSSO MODAL....
+
+
+
+
+
+ ---> PROFESSOR EXPLICA QUE __ELE PODERIA ___ FAZER UM 'RENDER CONDICIONAL' DESSE MODAL (
+
+
+     ternary expression lá no render de 'BurgerBuilder'....
+ ) --------> 
+
+
+ MAS ELE DIZ QUE __SERIA AINDA MAIS LEGAL__ SE 
+
+ NÓS 
+
+ CONSEGUÍSSEMOS 
+
+
+ TOCAR UMA BREVE ANIMAÇÃO NESSE MODAL... ------> 
+
+
+
+
+ NO ARQUIVO 
+
+ CSS DO MODAL,
+
+
+ já temos uma animação 
+
+
+
+
+
+ de 
+
+ 'transition: all 0.3s ease-out'....
+
+
+
+
+
+ DEVEMOS UTILIZAR ESSA ANIMAÇÃO, que já foi preparada pelo professor.
+
+
+
+
+
+
+
+
+ --------> SE NÓS SIMPLESMENTE __ADICIONARMOS/REMOVERMOS___ O 
+
+
+ MODAL DO DOM, NO ENTANTO (por meio de ternary expressions), 
+
+ NÓS 
+
+
+ _______NÃO VEREMOS___ ESSA ANIMAÇÃOZINHA.... --------> ISSO 
+
+ SIGNIFICA QUE 
+
+
+ __NÓS PRECISAMOS 
+
+
+ LIGAR/DESLIGAR __ UMA PROPRIEDADE __ JAVASCRIPT __, NESSE COMPONENT 'MODAL',  PARA 
+
+ __CONSEGUIR 
+
+ QUE A ANIMAÇÃO TOQUE__.... ------> é por isso que, em vez disso,
+
+
+
+
+ VAMOS PASSAR UMA PROPRIEDADE 
+
+Àquele modal... 
+
+
+
+
+um prop de 'show'.... -----> E VAMOS BINDAR 
+
+
+ESSE 'prop' ao 
+
+
+state de 'purchasing'...
+
+
+
+
+
+
+
+REPRESENTAÇÃO:
+
+
+
+
+
+
+
+
+   return (
+      <Aux>
+        <Modal show={this.state.purchasing}> ///////EIS O CÓDIGO EM QUESTÃO.
+        <OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice}></OrderSummary>
+        </Modal>
+        <Burger ingredients={this.state.ingredients}/>
+        <BuildControls 
+        disabled={disabledInfo} 
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}
+         ordered={this.purchaseHandler} ////////EIS O CÓDIGO EM QUESTÃO.
+      
+         />
+        
+      </Aux>
+    );
+
+
+
+--------------------------------------
+
+
+
+ISSO VAI FUNCIONAR PQ...
+
+
+veja o flow:
+
+
+
+cara clica em 
+
+'ORDER NOW' ----> isso vai TRIGGAR o 'purchaseHandler' ---> PURCHASEHANDLER VAI 
+
+TROCAR 
+
+o 'state' de 'purchasing' de 'false' para TRUE... ------> aí, esse 
+
+
+prop de 'show' em 'Modal' VAI 
+
+
+PASSAR UM VALOR DE 
+
+'true'/'false' ____ DE ACORDO COM O PURCHASEHANDLER, SE ELE FOI APERTADO OU NÃO...
+
+
+
+ok....
+
+
+MAS O QUE FAZEMOS COM 
+
+
+ESSE 
+
+
+
+'true/false'?
+
+
+
+
+-------------------------
+
+
+
+PARA QUE ESSE 'TRUE/FALSE'
+
+
+do 'purchasing '
+
+
+RESULTE EM ALGUMA COISA,
+
+
+O PROFESSOR DIZ QUE 
+
+DEVEMOS IR 
+
+
+ATÉ O COMPONENT 
+
+
+'Modal' 
+
+
+
+E ENTÃO AJUSTAR O MODAL LÁ 
+
+
+DE ACORDO COM O STATE 
+
+desse 
+
+'purchasing'... (mas sem ADICIONAR IF CHECKS/TERNARY EXPRESSIONS, POIS 
+VAMOS QUERER 
+
+A ANIMAÇÃO DEFINIDA NO ARQUIVO DE ESTILO DE MODAL...)
+
+
+--------------------------------------------
+
+
+PROFESSOR EXPLICA QUE ELE JÁ TEM UMA CLASSE APLICADA NESSE 
+
+
+'MODAL'...
+
+
+
+código:
+
+
+
+
+
+
+
+
+const modal = (props) => {
+
+
+
+    
+  return  <div className={ModalStyle.Modal} > //classe.
+        {props.children}
+            </div>
+
+
+
+    
+}
+
+------------------------------------
+
+
+
+
+
+ELE EXPLICA QUE AGORA ELE ___VAI QUERER APLICAR UM 'INLINE STYLE' 
+
+a esse elemento 'modal'...
+
+
+
+
+
+
+será que vai ser um 
+
+'display: none/block'? ----------> ERRADO.
+
+
+
+VAI SER ALGO BEM MAIS MALUCO...
+
+
+
+
+---> ele vai escrever/usar a propriedade 'TRANSFORM' do css... ------> 
+
+
+
+'''''''''''''''''''''''''
+
+
+style={
+    {
+        transform: ....
+    }
+}
+
+
+'''''''''''''''''''''''''''''
+
+
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+MAS NÃO É SÓ ISSO... ELE VAI LIGAR/DESLIGAR 
+
+ESSA POSSIBILIDADE DE 'transform' ser aplicado DE ACORDO COM O TRUE/FALSE 
+
+do 
+
+'show'.... -----> POR ISSO ELE VAI ESCREVER UMA __TERNARY EXPRESSION___....
+
+
+
+
+
+A ternary expression ficará:
+
+
+
+
+transform: props.show ? 'translateY(0)'.....
+
+
+
+
+
+
+
+
+OU SEJA,
+
+
+
+'translateY(0)' ------> DITA A POSIÇÃO QUE O NEGÓCIO DEVERÁ TER...
+
+
+
+
+
+
+
+
+transform: props.show ? 'translateY(0)' : 'translateY(-100vh)';
+
+
+
+
+
+
+'translateY(-100vh)'   -- (VH = VIEWPORT HEIGHT)
+
+
+
+
+O QUE SIGNIFICA ESSE CÓDIGO?
+
+
+
+
+''bem, se props.show for TRUE, TRAGA O MODAL PARA A FRENTE, TRAGA AOS 
+
+
+OLHOS DO USUÁRIO.... se for FALSE (:), RETIRE 
+ESSE MODAL DA VISTA DO USUÁRIO, jogue ele para fora da tela....(-100vh)'...
+
+
+
+
+
+ex:
+
+
+
+const modal = (props) => {
+
+
+
+    
+  return  <div className={ModalStyle.Modal} 
+            style={
+                {
+                    transform: props.show ? 'translateY(0)' : 'translateY(-100vh)'
+                }
+            }
+  >
+        {props.children}
+            </div>
+
+
+
+    
+}
+
+
+
+
+
+--------------------------
+
+
+CERTO.
+
+
+SALVAMOS E RECARREGAMOS NOSSO CÓDIGO.
+
+
+
+
+
+
+CERTO, MAS O PROFESSOR NÃO ACABOU: 
+
+ele TAMBÉM VAI QUERER ANIMAR A __OPACIDADE__ (OPACITY),
+
+
+por isso 
+
+
+
+ele 
+
+vai definir 
+
+
+
+também 
+uma 
+
+propriedade css 
+
+
+de 
+
+
+
+'opacity: props.show ? '1' : '0''   -------------> ISSO SIGNIFICA 'SE PROPS.SHOW FOR TRUE, MOSTRE O MODAL. SE NÃO FOR TRUE, DEIXE O MODAL TRANSPARENTE GRADUALMENTE'....
+
+
+
+
+
+
+
+
+SALVAMOS TUDO E RECARREGAMOS, CLICAMOS 
+
+NO BOTÃO... --> professor ganha um 
+
+ERRO:
+
+
+'cannot read property of setState()' ---> em BURGERBUILDER... -------> 
+
+
+
+
+ 
+
+
+ O CÓDIGO QUE CAUSOU O ERRO FOI :
+
+
+
+ 'purchaseHandler () {
+     this.setState(
+         {purchasing: true}
+     )
+ }'
+
+
+
+ ---------------------------------------------
+
+
+ PQ ISSO DEU ERRO? ----> FALHOU POR CAUSA DA __MANEIRA __ PELA QUAL O PROFESSOR 
+
+ ESTÁ CRIANDO/ESCREVENDO ESSE MÉTODO 
+
+ 'this.setState()' --> PROFESSOR 
+
+ EXPLICA QUE 
+
+ O PROBLEMA ESTÁ ACONTECENDO POR CAUSA DA 'THIS' keyword
+
+
+ em relação a esse método....
+
+
+
+
+
+ ---> CERTO, ALTERAMOS A SINTAXE 
+
+
+
+ DE 
+
+
+ 'purchaseHandler', transformamos esse método em uma ARROW FUNCTION, 
+
+ e agora 
+
+ NOSSO CÓDIGO ESTÁ FUNCIONANDO, O MODAL ESTÁ SENDO MOSTRADO 
+
+ QUANDO CLICAMOS 
+
+ NO 
+
+ BOTÃO DE 'ORDER NOW'...
+
+
+
+
+
+
+
+
+ CERTO... 
+
+ AGORA SERIA MUITO BOM SE TIVÉSSEMOS UM BACKDROP, um backdrop interativo,
+
+
+ que se nós clicarmos,
+
+ faz o modal SUMIR.

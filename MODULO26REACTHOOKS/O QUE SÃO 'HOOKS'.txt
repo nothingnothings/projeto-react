@@ -1,0 +1,249 @@
+
+
+
+
+
+
+
+
+
+
+--> O QUE SÃO HOOKS?
+
+
+
+
+
+
+--> BEM, HOOKS SÃO UMA 
+
+NOVA MANEIRA/PROPOSTA
+
+
+DE 
+
+ESCREVER 
+NOSSOS 
+
+COMPONENTS...
+
+
+
+
+
+
+
+
+
+--> ATÉ AGORA,
+
+
+TEMOS 
+
+2 
+TIPOS 
+
+DE COMPONENTS... --> 
+
+
+
+
+
+
+FUNCTIONAL === RECEBEM PROPS, COSPEM JSX...
+                *ÓTIMOS PARA 'PRESENTATION' (render da UI) 
+                *TIPICAMENTE FOCADOS EM 1 OU POUCOS PROPÓSITOS POR COMPONENT...
+
+
+
+
+
+CLASS-BASED === TAMBÉM SÃO COMPONENTS EM QUE RECEBEMOS 'PROPS',
+                MAS ELES TAMBÉM POSSUEM ESSE STATE INTERNO, que usamos pesadamente...
+                (uses 'props' and 'state')...
+
+                ---> SÃO OS COMPONENTS QUE SEGURAM A MAIOR PARTE DE NOSSA 
+                    'BUSINESS LOGIC' --> por BUSINESS LOGIC,
+
+                    PROFESSOR QUER DIZER COISAS COMO 
+                    '
+                    fazer um http request, e aí FAZER HANDLE DA RESPONSE 
+                    E TROCAR O STATE INTERNO DO APP...'
+
+
+
+                    (OUTRO EX: UM USUÁRIO PREENCHE UMA FORM,
+                    
+                    e aí QUEREMOS MOSTRAR ISSO EM ALGUM LUGAR DA TELA,
+
+                    E AÍ __PRECISAMOS__ DE STATE PARA ISSO, PRECISAMOS 
+                    DE CLASS-BASED COMPONENTS PARA ISSO... 
+                    )
+
+                *CLASS-BASED COMPONENTS SÃO TIPICAMENTE UTILIZADOS 
+
+                PARA __ ORQUESTRAR __ OUTROS COMPONENTS_ E PARA ENTÃO 
+                    'PASS STATE DOWN AS PROPS' A FUNCTIONAL COMPONENTS 
+                    VINCULADOS A ELES...
+
+
+
+
+
+
+
+
+                --> UM PROBLEMA QUE 
+
+                TEMOS COM ESSA SEPARAÇÃO ENTRE 'FUNCTIONAL' e 'CLASS-BASED'
+
+                É QUE 
+
+                ___a CONVERSÃO _ENTRE 
+
+                'CLASS-BASED' E 'FUNCTIONAL 'É __ IRRITANTE (annoying) ´-> 
+
+
+
+
+                é um mal necessário,
+                MAS É BEM CHATO... -----> 
+
+
+
+                SE VOCÊ 
+
+
+
+                NÃO GOSTA DE FICAR CONVERTENDO UM FUNCTIONAL COMPONENT 
+
+                EM 
+
+                CLASS-BASED COMPONENT,
+
+
+
+                O REACTHOOKS PODE TE AJUDAR.... (pq 
+                
+                sempre vamos escrever A MESMA COISA quando convertemos um 
+                
+                FUNCTIONAL COMPONENT em um CLASS-BASED, e vice-versa...)
+
+
+
+
+
+
+
+
+---> MAS UM PROBLEMA MAIOR É O FATO DE QUE 
+'LIFECYCLE HOOKS' PODEM SER __DIFÍCEIS__ DE SEREM 
+
+UTILIZADOS DE FORMA 
+
+'CORRETA'...
+
+
+
+--> OBVIAMENTE NÃO É DIFÍCIL 
+
+
+ADICIONAR O CÓDIGO DE 
+
+'componentDidMount' 
+
+E AÍ EXECUTAR UNS CÓDIGOS DENTRO 
+
+DESSE MÉTODO;
+
+
+
+ENTRETANTO,
+
+SABER QUE __ LIFECYCLE UTILIZAR __, ONDE E QUANDO,
+
+PODE 
+
+SER CHALLENGING,
+
+PRINCIPALMENTE 
+
+EM APPS MAIORES..
+
+
+
+(LIFECYCLE hooks can be hard to use)...
+
+
+
+
+
+
+
+
+
+--> É POR ISSO QUE SERIA NICE SE NÓS TIVÉSSEMOS UMA MANEIRA 
+
+DE CRIAR COMPONENTS 
+
+
+
+E  ENTÃO ESSE 'SUPER COMPONENT' pudesse 
+
+fazer 
+
+TANTO 
+
+O HANDLE 
+
+DE 
+SIDE-EFFECTS/STATE 
+
+e 
+
+TAMBÉM
+
+
+
+FAZER O RENDER DO ASPECTO 'presentational' (UI) do nosso app?
+
+
+
+
+
+
+-> BEM, É EXATAMENTE ISSO QUE OS HOOKS NOS DEIXAM FAZER...
+
+
+
+
+
+
+
+
+--> HOOKS NOS DEIXAM CRIAR FUNCIONAL COMPONENTS DE MANEIRA DIFERENTE...
+
+
+
+
+--> E ISSO É IMPORTANTE --> nós usaremos o FUNCTIONAL APPROACH de criar components...
+
+
+
+
+
+
+--> HOOKS SÃO 'EXTRA FEATURES' QUE CHAMAMOS 
+
+NOS NOSSOS FUNCTIONAL COMPONENTS 
+
+PARA 
+SUBSTITUIR 
+
+
+'CLASS-BASED-ONLY FUNCTIONALITIES'...
+
+
+
+
+---> 

@@ -1,0 +1,525 @@
+
+
+
+
+
+
+
+
+
+
+
+
+--> VAMOS CRIAR A PÁGINA 'MY-ORDERS'... -------> ela será criada 
+
+
+no 
+
+folder 
+
+de 
+
+
+
+CONTAINERS....  -----> vou criar um folder chamado 
+
+
+de 
+
+'Orders',
+
+com um 
+
+'Orders.js'...
+
+
+
+
+
+
+
+--> vou criar um class-based component,
+
+coisa padrão...
+
+
+
+ASSIM:
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+
+
+
+class Orders extends Component {
+
+
+
+    render() {
+            return (
+                
+            )
+    }
+}
+
+
+
+
+
+
+export default Orders;
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+DEPOIS DISSO, PROFESSOR VAI ATÉ 
+
+
+
+
+
+
+os nossos components (não os containers)
+
+
+
+e então 
+
+
+
+cria um component 
+
+'Order', 
+
+
+que 
+
+será provavelmente 
+
+embutido em 
+
+'Orders'... --------->
+
+
+
+
+
+
+
+
+EIS O CÓDIGO DE 'Order':
+
+
+
+
+
+
+import React from 'react';
+
+
+import OrderStyle from './Order.module.css';
+
+
+
+
+const order = (props) => {
+
+
+    render() {
+
+
+        return (
+                    <div>
+                        <p>Ingredients: Salad(1)</p>
+                        <p>Price: <strong>{`${}USD`}</strong> </p>
+
+                    </div>
+        )
+    }
+
+
+
+}
+
+
+
+export default Order;
+
+
+
+
+
+-------------------------------
+
+
+
+
+Professor explica que 
+
+provavelmente 
+
+vamos 
+
+recebe 
+
+os 
+
+ingredients 
+
+
+
+e 
+
+o 
+
+price 
+
+
+
+por meio 
+
+
+
+de props,
+
+props 
+
+extraídos 
+
+do 
+
+container 
+
+'Checkout'.
+
+
+
+
+
+
+
+
+Contudo, antes de mais nada, 
+
+precisaremos 
+
+
+estilizar 
+
+o component 
+
+
+'Order.js'...  -----> 
+
+
+
+
+Por isso vamos até o arquivo css....
+
+
+
+
+
+
+
+
+A order deverá 
+
+
+
+compreender a width completa do elemento 
+
+'orders', 100%....
+
+
+
+
+ex:
+
+
+
+
+
+.Order {
+
+
+    width: 100%;
+}
+
+
+
+
+-----------------------
+
+
+
+PROFESSOR DIZ QUE TAMBÉM DEVEMOS 
+
+TER UMA 
+
+BORDER 
+de 
+
+
+1px solid #ccc...
+
+
+
+
+
+Adiciona box-shadow e padding, também...
+
+
+
+----------
+
+
+
+
+Agora vamos importar o component 
+
+'Order' 
+
+
+no component 'Orders'... -------> O PROBLEMA, AGORA, 
+
+É QUE VAMOS QUERER 
+
+
+__IMPORTAR __ MÚLTIPLAS 'ORDER' nesse component 'Orders'... (vamos querer 
+
+
+IMPORTAR 
+
+O NÚMERO DE 'Order' que for necessário, vamos querer 
+
+todas as 
+
+orders 
+
+armazenadas no nosso servidor, afinal de contas....) -----> as orders 
+
+
+de que 
+preciso/quero visualizar 
+
+
+DEVEM, É CLARO, SER FETCHEADAS 
+
+DE NOSSO 
+
+
+BACKEND (por meio de um get request feito com 'axios.get'...) ----> 
+
+
+
+
+
+
+
+
+
+
+
+--> o professor coloca/escreve apenas 
+
+2 elementos 
+
+'Order'
+
+dentro de 
+
+
+'Orders', apenas para que possamos ver como ficará o layout...
+
+
+
+---> MAS ANTES 
+
+
+DE 'POPULATE'
+
+
+
+ESSE 
+
+
+
+
+CONTAINER 
+
+
+DE 
+
+ORDER 
+
+
+COM DADOS(datA),
+
+
+
+devemos 
+
+
+
+
+VINCULAR ESSE COMPONENT 'Orders' 
+
+A UMA __ROUTE__... -------> 
+
+
+E 
+
+
+
+ESSE COMPONENT/CONTAINER 
+
+'ORDERS'
+
+
+DEVE 
+SER 
+
+
+RENDERIZADO NO LUGAR DE 
+
+'Checkout' 
+
+
+e 
+
+
+'BurgerBuilder',
+
+quando 
+
+for necessário (quando clicarmos 
+
+no link para sua página...) ---------> OU SEJA,
+
+
+
+
+
+VAMOS 
+
+TER QUE 
+
+DEFINIR 
+
+
+ESSA 'ROUTE' 
+
+DE 
+
+'My Orders' (component 'Orders')
+
+LÁ 
+
+
+
+NO COMPONENT 
+
+'App.js',
+
+
+
+NAQUELE LOCAL 
+
+EM QUE 
+
+TEMOS 
+
+
+<Layout>
+    <Switch>
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/" component={BurgerBuilder} />
+    </Switch>
+</Layout>
+
+
+
+-------------------------------------------
+
+
+
+
+---> NÓS VAMOS SETTAR UMA ROUTE PARA AS ORDERS, AÍ, TAMBÉM....
+
+
+
+
+
+
+PARA ISSO, IMPORTAMOS 
+
+'Orders'
+
+Lá no container de 
+
+'App.js'....
+
+
+
+-----------------------------
+
+
+E ENTÃO ESCREVEMOS UMA ROUTE para ele, nesse lugar aí....
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+         <Switch>
+         <Route path="/checkout" component={Checkout} />
+         <Route path="/orders" component={Orders} />
+        <Route path="/" component={BurgerBuilder}
+        />
+      
+        </Switch>
+       </Layout>
+
+
+
+
+ ----------------------------------------------------------
+
+
+
+
+
+
+
+PARA CONSEGUIRMOS EFETIVAMENTE ___ENXERGARMOS/ACESSARMOS __ ESSA ROUTE,
+
+
+VAMOS PRECISAR FAZER UMA COISA QUE ___NÓS AINDA NÃO FIZEMOS __ (provavelmente 
+
+é definir 
+
+um 
+
+'LINK' no nosso código, ou um 'NavLink', lá na nossa TOOLBAR/ou nos 
+navigationItems......)

@@ -1,0 +1,1746 @@
+
+
+
+Agora que mexemos um pouco mais com 
+
+
+
+'useState' 
+
+
+e 
+
+
+
+'useEffect',
+
+
+PODEMOS 
+
+MEXER
+ 
+
+ UM POUCO MAIS COM __OUTRO HOOK___... ---> É OUTRO HOOK IMPORTANTE...
+
+
+
+
+
+
+
+
+
+
+ ----> É UM HOOK QUE AJUDA A NOS __LIVRARMOS__ DE ITEMS__.... -------> 
+
+
+
+ isso pq 
+
+
+ ATÉ 
+
+ AGORA 
+
+ NÓS 
+
+ SÓ FIZEMOS 
+
+
+ 'ADD' DE ITEMS,
+
+ e nunca os removemos... 
+
+
+
+
+
+
+
+ ---> PROFESSOR EXPLICA QUE PODERÍAMOS 
+
+ FAZER ISSO COM UM SIMPLES 'clickhandler'
+
+
+ EM QUE 
+
+ ENVIAMOS UM 
+
+ 'DELETE REQUEST' ---------> 
+
+ nesse handler,
+
+ executaríamos 
+
+ o método 
+
+
+ '.filter()' 
+
+
+ EM CIMA 
+
+
+ DE NOSSA LIST,
+
+ e isso 
+
+
+ JÁ FILTRARIA 
+
+ TODOS OS 'todos',
+
+
+ EXCETO AQUELE QUE GOSTARÍAMOS DE REMOVER... -------> 
+
+
+
+ ESSA 
+
+ SERIA UMA IMPLEMENTAÇÃO 
+
+ PERFEITAMENTE 
+
+ NORMAL DE 
+
+ 'remove'.... ----------- certo.... mas 
+
+ OBVIAMENTE,
+
+
+
+ O PROFESSOR 
+
+ QUER 
+
+ NOS MOSTRAR 
+
+ MAIS HOOKS DO QUE 
+
+
+
+ ESSES QUE JÁ VIMOS...
+
+
+
+
+
+ --------------------------
+
+
+
+ (E realmente, eu consegui escrever um código RÚSTICO que remove items com '.filter()' 
+ 
+ 
+ sobre esse array de 'todoList'... ---> ele só não REMOVE 
+ 
+ ITEMS LÁ DO 
+ 
+ MEU 
+ 
+ SERVER FIREBASE, só remove do DOM, mas isso poderia ser feito...)
+
+
+
+
+
+
+ --------------------------
+
+
+
+ OK, CONTINUANDO...
+
+
+
+
+
+
+
+
+
+
+ --> agora veremos o hook de USEREDUCER()....
+
+
+
+
+
+
+
+ --------> JÁ SABEMOS 
+
+ O QUE 
+
+ É UM REDUCER... --> é uma funçaõ 
+
+ que lida 
+
+ com alguns 
+
+ CASES,
+ 
+ com algumas CONDITIONS,
+
+
+ E QUE  
+
+
+ ENTÃO UPDATA 
+ O STATE 
+
+ DE MANEIRAS DIFERENTES 
+
+ DE ACORDO 
+
+ COM 
+
+ AS 
+
+ 'ACTIONS'
+
+ que 
+
+ ele 
+
+
+ recebe...
+
+
+
+
+ -----------------------------
+
+
+
+
+
+
+
+
+ --> USEREDUCER 
+
+
+ NOS 
+
+ DEIXA 
+
+ 'BUNDLAR' A LÓGICA 
+
+
+
+ de update 
+
+ DO 
+
+ STATE __ EM 
+
+ 1 
+ SIMPLES 
+
+
+
+FUNÇÃO... --------> 
+
+
+
+E COMO PODEMOS 
+USAR 
+
+
+'useReducer()'
+
+
+
+
+
+NO NOSSO CÓDIGO 
+
+DE 
+
+'Todo.js'? -----> bem, O PROFESSOR 
+
+DIZ QUE 
+
+DEVEMOS 
+
+PRIMEIRAMENTE 
+
+SETTAR 
+
+UMA 
+
+FUNÇÃO EXTRA,
+
+
+QUE 
+
+SERÁ 
+
+
+
+___JUSTAMENTE __ O NOSSO REDUCER... --------> 
+
+
+
+
+vamos 
+
+
+dentro 
+
+de 
+
+Todoe  escrevemos 
+
+
+
+
+
+
+
+
+' const todoListReducer = () => {
+
+}
+
+
+' 
+
+
+
+
+
+-------------------------
+
+
+
+ESSA 
+
+SERÁ 
+
+UMA FUNCTION QUE 
+
+
+
+___ VAI RECEBER __ 2 ARGUMENTOS:
+
+
+
+
+
+1) O STATE ___ 
+
+
+
+2) UMA ACTION... 
+
+
+
+
+(ou seja,
+
+é bem parecido 
+
+com um 
+
+'REDUCER COMUM'...)
+
+
+
+
+
+
+
+--> A DIFERENÇA 
+
+
+
+PARA 
+
+O 'state' 
+
+e 
+
+'action' 
+
+
+EM UM CLASS-BASED COMPONENT COMUM, EM QUE VOCÊ USARIA O REDUX,
+
+
+É 
+
+QUE 
+
+
+
+NO REDUCER 
+
+DE 
+
+'useRedcer'
+
+
+
+O 
+
+__REACT___ VAI AUTOMATICAMENTE PASSAR 
+
+
+OS VALORES 
+
+DESSES PARÂMETROS 
+
+
+'state' 
+
+e 
+
+'action'...
+
+para 
+
+nós...
+
+
+
+
+
+
+ok..
+
+
+fica assim:
+
+
+------------------------------------------
+
+
+const todoListReducer = (state, action) => {
+
+}
+
+------------------------------------
+
+
+
+
+
+
+
+
+A ACTION, COMO SEMPRE, SERÁ 'A INFORMAÇÃO DO QUE QUEREMOS FAZER',
+
+e o 
+
+state 
+
+
+VAI SER 
+
+
+
+
+__ O NOSSO 'LATEST STATE', que queremos 
+
+EDITAR 
+
+A PARTIR 
+
+
+DAQUELA 'ACTION'...
+
+
+
+
+
+
+e nós vamos adicionar um SWITCH CASE 
+DENTRO 
+
+DESSE REDUCER, COMO SEMPRE...
+
+
+ex:
+
+
+
+
+
+
+const todoListReducer = (state, action) => {
+
+
+            switch(action.type) {
+
+            }
+}
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+USAMOS 
+O NOME 
+
+DE 
+'type'
+
+
+Para 
+
+
+'keep in line' com aquilo que aprendemos ao longo do curso... ---> entretnato,
+
+
+O PROFESSOR 
+
+
+REITERA 
+
+que 
+
+
+
+'useReducer()'
+
+
+É __ TOTALMENTE __ INDEPENDENTE__ DE 
+
+
+
+REDUX OU REACT-REDUX.... ---> ELE É 
+
+
+'BUILT-IN' NO core do react, E É 
+
+
+simplesmente 
+
+uma função 
+
+
+QUE 
+
+
+NOS 
+
+DEIXA 
+
+
+
+
+MANIPULAR STATE DE FORMA CONVENIENTE... --------> 
+
+
+
+
+
+
+dentro 
+
+
+desse 
+
+switch statement,
+
+
+teremos nossos 
+
+cases... ---> 
+
+
+PROFESSOR 
+
+COLOCA 
+
+UM 
+
+
+CASE 
+
+de 
+
+
+
+'ADD' 
+
+
+
+e 
+
+'REMOVE'
+
+
+
+
+
+
+
+
+
+--> NO CASE DE 'ADD', professor vai querer PROVISORIAMENTE 
+
+querer
+ 
+ retornar 
+
+ o 'state' (como em um reducer comum...)...
+
+
+
+
+
+ TIPO ASSIM:
+
+
+     const todoListReducer = (state, action) => {
+        switch(action.type) {
+          case 'ADD':
+            return state;
+
+            case 'REMOVE':
+            return state;
+
+
+            default: 
+            return state;
+        }
+    }
+
+
+
+
+---------------------------------------
+
+
+
+
+OK... -> porém, por enquanto, essa reducer function não faz muita coisa... --> devemos mudar isso..
+
+
+
+
+
+
+
+
+
+
+
+
+---> PARA O CASO DE 
+
+'ADD',
+
+
+O 
+
+PROFESSOR 
+
+VAI QUERER 
+
+
+
+'.concat()'
+
+
+UM NOVO 
+
+VALOR 
+
+AO NOSSO 
+
+STATE..... -----> 
+
+
+
+
+ELE VAI QUERER CONCAT UM VALOR DE 
+
+'action.payload'... (payload dentro da ACTION QUE VAMOS PASSAR...)
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+     const todoListReducer = (state, action) => {
+        switch(action.type) {
+          case 'ADD':
+            return state.concat(action.payload); ////EIS O CÓDIGO EM QUESTÃO.
+
+            case 'REMOVE':
+            return state;
+
+
+            default: 
+            return state;
+        }
+    }
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+EU VOU 'EXPECT' QUE ESSA ACTION OBVIAMENTE TENHA UM FIELD 
+
+de 'type', e então os fields do PAYLOAD (que pode ser qualquer nome/nomes que quisermos...)
+
+
+
+
+
+
+
+
+
+---> O PAYLOAD ME DÁ A 
+
+'DATA' de que 
+
+necessito 
+para 
+
+essa 'action'... -------->  
+
+
+
+
+
+COMO NÓS ESTMAOS FAZENDO 'return state.concat(action.payload)'
+
+
+
+E 
+
+PRETENDEMOS __USAR ISSO NA NOSSA LIST (pq o nome é 'todoListReducer'),
+
+
+
+o 
+
+
+STATE 
+
+vai REALMENTE SER A 'todoList'.. 
+
+
+
+
+
+
+
+
+--> no caso de 
+
+'REMOVE',
+
+
+VAMOS QUERER
+
+
+
+RETORNAR 
+
+'state.filter((todo) => {
+        todo.id !== id do ITEM QUE QUEREMOS REMOVER..
+})'
+
+
+
+
+
+no lugar desse slot de 
+
+'id do ITEM QUE QUEREMOS REMOVER',
+
+vamos 
+
+
+provavelmente escrever 
+
+'action.payload.id', ou 'action.payload'...)
+
+
+
+
+
+
+
+
+
+
+--> ISSO FEITO,
+
+
+
+__SÓ PRECISAMOS __ REGISTRAR___ ESSE REDUCER __ NO NOSSO _ COMPONENT 
+
+'Todo', e então 
+
+O UTILIZAR CORRETAMENTE... --> 
+
+PARA 
+
+ISSO,
+
+VAMOS 
+
+ESCREVER 
+
+'useReducer()'
+
+
+
+
+
+E ENTÃO 
+
+
+DEVEMOS __PASSAR AQUILO QUE SE CHAMA DE 
+
+'reducer function'... ---> NO CASO,
+
+
+PASSAREMOS 
+
+JUSTAMENTE 
+
+
+ESSA FUNÇÃO QUE RECÉM CRIAMOS,
+
+ESSE 
+
+'const todoListReducer'...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+    const todoListReducer = (state, action) => {
+        switch(action.type) {
+          case 'ADD':
+            return state.concat(action.payload);
+
+            case 'REMOVE':
+            return state.filter((todo) => { return todo.id !== action.payload.id});
+
+
+            default: 
+            return state;
+        }
+    }
+
+
+
+
+
+
+useReducer(todoListReducer); ////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+CERTO, MAS NÃO ACABAMOS POR AQUI... --> 
+O PRIMEIRO ARGUMENTO É NOSSA FUNÇÃO REDUCER EM SI,
+
+mas o segundo 
+
+DEVERÁ 
+
+SER O NOSSO 
+
+'STARTING STATE'... ------> 
+
+
+LEMBRE-SE:
+
+
+
+NÓS VAMOS QUERER 
+
+TER NOSSA 
+
+
+'todoList'
+
+
+AQUI COMO STATE,
+
+
+
+POR ISSO VAMOS PASSAR 
+
+UM 
+
+
+
+__ARRAY__ VAZIO COMO VALOR INICIAL (pq, nesse caso aí,
+
+EU PRECISO QUE 
+
+
+O VALOR INICIAL DO MEU STATE SEJA __ UM ARRAY VAZIO__, PQ ESSE ARRAY VAZIO VAI 
+
+__SER PREENCHIDO PELA 
+
+MINHA 
+
+'todoList'...)
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+    const todoListReducer = (state, action) => {
+        switch(action.type) {
+          case 'ADD':
+            return state.concat(action.payload);
+
+            case 'REMOVE':
+            return state.filter((todo) => { return todo.id !== action.payload.id});
+
+
+            default: 
+            return state;
+        }
+    }
+
+
+
+
+
+
+useReducer(todoListReducer, []); ////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+POR FIM,
+
+VOCÊ TEM A OPÇÃO DE UM __TERCEIRO__ ARGUMENTO...----> 
+
+
+o 
+
+__TERCEIRO__ 
+argumento 
+
+é utilizado por você quando 
+
+VOCÊ 
+QUER 
+
+UM
+
+
+'INITIAL ACTION TO EXECUTE'.... ---> isso significa, em outras palavras, que poderíamos escrever algo como '{type: 'ADD', {arquivoDefault}}' }, MAS É EVIDENTE QUE NÃO QUEREMOS FAZER ISSO, NESTE CASO ESPECÍFICO...
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+CERTO...
+
+
+MAS NÃO BASTA SÓ EXECUTAR 
+
+'useReducer()'
+
+
+assim... --------> 
+
+
+PQ 
+
+
+O 
+
+'useReducer()'
+
+
+TEM UM COMPORTAMENTO __SIMILAR __ A OUTROS HOOKS,
+
+
+
+HOOKS COMO O DE 'useState' (que é aquele QUE _TEMOS DE ARMAZENAR EM CONSTANTES POR MEIO 
+DE ARRAY DESTRUCTURING...) ------> 
+
+
+
+
+
+ASSIM COMO 
+
+'useState()",
+
+
+AQUI NÓS __ TAMBÉM ___ RECEBEMOS 
+
+UM 
+ARRAY 
+
+DE VOLTA,
+
+UM 
+
+__ARRAY___ COM EXATAMENTE 
+
+2 ELEMENTOS....
+
+
+
+
+
+
+
+--> USAMOS A MESMA SINTAXE DE DESTRUCTURING USADA 
+EM 
+
+'useState()'....
+
+
+AS COISAS/CONSTANTES 
+
+
+SERÃO 
+
+
+'state' 
+
+
+e 
+
+'DISPATCH'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+'''''''''const [state, dispatch] = useReducer(todoListReducer, []);      ''''''''''''
+
+
+
+
+-------------------
+
+
+
+
+CERTO,
+
+VAMOS 
+
+CONSEGUIR 
+
+DE VOLTA 
+
+
+
+UM 'STATE' 
+
+e um 
+
+
+'DISPATCH'... ----> 
+
+
+É 
+
+EVIDENTE QUE 
+
+
+
+SÓ USAR A PALAVRA 'state' FICARIA MT CONFUSO,
+
+por isso
+
+o professor 
+
+renomeia isso para ficar 
+
+'todoList'...
+
+
+
+
+
+
+----> fica assim:
+
+
+
+const [todoList, dispatch] = useReducer(todoListReducer, []); 
+
+
+
+
+
+
+
+
+------------------------
+
+ISSO FEITO,
+
+
+VAMOS COMENTAR PARA FORA DO ´COIDGO 
+
+
+
+
+
+A 'todoList'
+
+QUE HAVÍAMOS ANTES,
+
+aquela
+ 
+
+ QUE TINHA/TEM ESTE CÓDIGO:
+
+
+
+''''                                        '''
+   const [todoList, setTodoList] = useState([]);
+
+
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+USEREDUCER(),
+
+
+REALMENTE__,
+
+
+É UMA _ALTERNATIVA __A ESSA SINTAXE AÍ... (graças a deus, PQ EU __ ODIEI ESSA SINTAXE do 'useState'...)....
+
+
+
+
+
+
+
+--> É UMA ALTERNATIVA MAIS PODEROSA, MAIS PODEROSA 
+
+PQ 
+
+NOS DEIXA 
+
+'ENCODE' TODAS 
+
+
+AS 
+
+
+ACTIONS POSSÍVEIS 
+
+___DENTRO __ DA 'REDUCER FUNCTIOn', em vez 
+
+
+DE TER 
+
+
+DE AS ESCREVER 
+
+DE FORMA 'COMUM', 'largada', nesse 
+
+FUNCTIONAL COMPONENT...
+
+
+
+
+
+
+-------------------------
+
+
+
+
+CERTO... E DEPOIS DESTA LINHA AQUI:
+
+
+const [todoList, dispatch] = useReducer(todoListReducer, [] ); 
+
+
+
+
+PODEMOS 
+
+
+COMEÇAR A DISPATCHEAR ACTIONS 
+
+
+NO NOSSO COMPONENT...
+
+
+
+
+
+
+
+
+--> POR EXEMPLO,
+
+
+VAMOS QUERER 
+
+FAZER DISPATCH DE UMA ACTION 
+
+DENTRO 
+
+DESTE 
+
+'useEffect' aqui:
+
+
+
+
+
+
+  useEffect(() => {
+    //É EXECUTADO__ BEM NO INÍCIO DO 'LOAD' DESSE COMPONENT 'Todo' NA PÁGINA...
+
+    axios
+      .get(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+      )
+      .then((result) => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+
+        for (const key in todoData) {
+          todos.push({
+            id: key,
+            todoName: todoData[key].todoName,
+          });
+        }
+        console.log(todos);
+        setTodoList(todos);
+      });
+      
+    return () => {
+      console.log('cleanup function, inside the first parameter'); ////ESSA FUNÇÃO VAI SEMPRE SER EXECUTADA __ANTES___ do ''''primeiro parâmetro de verdade''' do useEffect, aquele código mais acima, nos runs SUBSEQUENTES AO PRIMEIRO LOAD DO COMPONENT NA PÁGINA.... --> por isso é __USADO __ COMO CLEANUP FUNCTION, pq vai 'LIMPAR' os resíduos da última execução daquele código do primeiro parâmetro ANTES DE ENGATAR UMA NOVA EXECUÇÃO desse mesmo código...
+    };
+  // }, []);
+}, [todoName]);
+
+
+
+
+
+
+
+-----------------------------------
+
+
+AQUELE 
+
+'setTodoList'
+
+JÁ ESTÁ OBSOLETO,
+
+DEVEMOS O SUBSTITUIR 
+
+
+
+
+PELA SINTAXE APROPRIADA 
+
+AO 
+
+
+'useReducer'... ---> provavelmente 
+
+vamos 
+
+escrever 
+
+
+
+
+
+'dispatch()' --------> 
+
+
+
+
+E DISPATCH,
+
+
+É CLARO,
+
+NOS DEIXA __ DISPATCHEAR UMA 
+
+ACTION...
+
+
+
+
+
+
+--> vamos escrever algo assim:
+
+
+
+
+
+
+
+  useEffect(() => {.
+
+    axios
+      .get(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+      )
+      .then((result) => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+
+        for (const key in todoData) {
+          todos.push({
+            id: key,
+            todoName: todoData[key].todoName,
+          });
+        }
+        console.log(todos);
+        /////////setTodoList(todos);
+
+        dispatch(
+            {
+                type: 'ADD',
+                payload: ....
+            }
+        )
+      });
+      
+    return () => {
+      console.log('cleanup function, inside the first parameter');
+    };
+
+}, [todoName]);
+
+
+
+
+------------------------------
+
+
+ 
+ OK,
+
+ MAS 
+
+ aGORA 
+ SURGE UM PROBLEMA:
+
+
+
+
+ VOU QUERER 
+
+ ADICIONAR __TODOS OS ITEMS__ na minha página/na list de minha página.. ---> 
+
+
+ entretanto,
+
+
+ a função que temos lá no REDUCER 
+ de 
+
+ 'todoListReducer'
+
+
+
+ É UMA FUNÇAO QUE ADICIONA SÓ 1 ITEM,
+
+ é 
+
+  função de 'state.concat(action.payload)'.... --> 
+
+
+
+
+
+  OK... ---> PARA CONTORNAR O PROBLEMA,
+
+
+
+  PROFESSOR ADICIONA UM 
+
+  NOVO CASE NO REDUCER,
+
+
+  case de 
+
+  'SET',
+
+
+  QUE FARÁ 
+  O RETURN DE UMA LISTA __ COMPLETAMENTE NOVA__, 
+
+  lista com todos nossos items 
+
+  adicionados na 
+
+  'list'...
+
+
+
+  EX:
+
+
+
+
+      const todoListReducer = (state, action) => { 
+        switch(action.type) {
+          case 'ADD':
+            return state.concat(action.payload);
+
+            case 'SET': 
+                return action.payload; //////////EIS O CÓDIGO EM QUESTÃO.
+
+            case 'REMOVE':
+            return state.filter((todo) => { return todo.id !== action.payload.id});
+
+
+            default: 
+            return state;
+        }
+    }
+
+
+---------------------
+
+OU SEJA,
+
+VAMOS QUERER 
+
+
+RETORNAR 
+
+O 
+
+'PAYLOAD'
+
+INTEIRO __ COMO  ___ ___O STATE/NOVO STATE__ DE 
+
+
+'todoList'...
+
+
+
+
+
+E PARA ISSO,
+
+O 
+
+PAYLOAD SERÁ '''todos'''':
+
+
+
+
+  useEffect(() => {.
+
+    axios
+      .get(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+      )
+      .then((result) => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+
+        for (const key in todoData) {
+          todos.push({
+            id: key,
+            todoName: todoData[key].todoName,
+          });
+        }
+        console.log(todos);
+        /////////setTodoList(todos);
+
+        dispatch(
+            {
+                type: 'ADD',
+                payload: todos
+            }
+        )
+      });
+      
+    return () => {
+      console.log('cleanup function, inside the first parameter');
+    };
+
+}, [todoName]);
+
+
+
+=-------------------------------
+
+
+
+
+
+EX:
+
+
+
+  useEffect(() => {
+    //É EXECUTADO__ BEM NO INÍCIO DO 'LOAD' DESSE COMPONENT 'Todo' NA PÁGINA...
+
+    axios
+      .get(
+        'https://reacthooks21901290291-default-rtdb.firebaseio.com/todos.json'
+      )
+      .then((result) => {
+        console.log(result);
+        const todoData = result.data;
+
+        const todos = [];
+
+        for (const key in todoData) {
+          todos.push({
+            id: key,
+            todoName: todoData[key].todoName,
+          });
+        }
+        console.log(todos);
+        // setTodoList(todos); 
+        dispatch(
+          {
+            type: 'SET',
+            payload: todos
+          }
+        )
+
+
+
+
+
+
+      });
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+OK, ISSO FARÁ 
+'SET' DOS ITEMS.... --> 
+
+
+
+
+
+
+O PRÓXIMO PASSO 
+
+É 
+
+
+
+EDITAR/REFORMATAR
+ 
+ A PARTE 
+
+ DO 
+
+
+ CÓDIGO QUE 
+
+ FAZ ___ ADD __ DE NOVOS ITEMS,
+
+ lá 
+
+
+
+ naquele 
+
+
+
+ CÓDIGO 
+
+
+ DE 
+
+
+
+
+
+   useEffect(
+    () => {
+      if (submittedTodo) { ///só vamos entrar Nesse bloco __ DEPOIS DO PRIMEIRO LOAD DO COMPONENT 'Todo' na página, O QUE É EXATAMENTE O QUE QUEREMOS... --> isso 'FIXA' o 'FIX', por assim dizer...
+        setTodoList(todoList.concat(submittedTodo))
+      }
+ 
+  },
+      [submittedTodo]
+  )
+
+
+
+
+-----------------------------------------
+
+
+
+
+(pq esse é o código que efetivamente ADICIONA UM ITEM AO NOSSO ARRAY DE 'todoList'...)
+
+
+
+
+
+CÓDIGO FICARÁ ASSIM:
+
+
+
+
+  useEffect(
+    () => {
+      if (submittedTodo) { 
+        dispatch({
+          type: 'ADD', /////////ESSE É O CÓDIGO EM QUESTÃO. O dispatch de nossa 'action'...
+          payload: submittedTodo ////esse é o 'SINGLE ITEM' que será adicionado ao nosso array de  'todoList'....
+        })
+      }
+ 
+  },
+      [submittedTodo]
+  )
+
+
+
+  --------------------
+
+
+  COM ISSO,
+
+
+  SALVAMOS
+   
+
+   TUDO E DAMOS UMA TENTEADA...
+
+
+
+
+
+
+   Isso feito,
+
+
+   vamos perceber que 
+
+
+   NOSSA LIST ESTARÁ FUNCIONANDO, DESSA VEZ COM AQUELE __REDUCER__ fazendo manage das actions de 'set' e 'add'....
+
+
+
+
+   ----------------------------------
+
+
+
+--> AGORA DEVEMOS USAR 'useReducer()'
+PARA 
+
+
+__tAMBÉM ___ DELETAR__ ITEMS....
+
+
+

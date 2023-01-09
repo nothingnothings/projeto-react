@@ -1,0 +1,560 @@
+
+
+
+
+--> na última lição, 
+
+o professor 
+
+
+nos falou sobre 'STATE', e que ele É ESPECIAL,
+
+
+e que nós 
+
+
+
+ainda não vimos nada de suas características especiais até agora...
+
+
+
+
+
+
+---> o que fizemos até agora é GERENCIAR NOSSOS DADOS nele (no state) E 
+
+ENTÃO OS ACESSAR
+ 
+ no nosso código JSX 
+
+ no nosso arquivo 
+
+ 'App.js'...
+
+
+
+
+
+
+ --> AGORA DEVEMOS FAZER 'HANDLE' (handling )
+
+
+DE UM CLICK/o click 
+
+NESSE 
+
+
+'button' de nossa página...
+
+
+
+
+---> NÓS 
+
+
+FAZEMOS O 'HANDLING' DESSE BOTÃO 
+
+
+POR MEIO DA ADIÇÃO 
+
+
+de um 'onClick'' EVENT ATTRIBUTE 
+
+
+no nosso button, NO CÓDIGO 'JSX'....
+
+
+
+ex:
+
+
+
+
+
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick>Switch Name</button> /////////EIS O CÓDIGO EM QUESTÃO.
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+
+
+-----------------------------------------
+
+
+
+
+IMPORTANTE!!!! ---> NO 
+
+
+JAVASCRIPT NORMAL (E NO HTML NORMAL, PARA SER MAIS PRECISO;),
+
+
+ 
+
+ O  'onClick' seria 
+
+
+ escrito 
+
+ 'onclick'( com letras MINÚSCULAS...)
+
+
+
+
+ ---> já no 'JSX', o onclick
+
+ é 
+
+ escrito 
+
+ como 
+
+
+ 'onClick' (com C maiúsculo...)....
+
+
+
+
+
+ AINDA ASSIM, depois 
+
+ desse 
+
+ 'onClick'
+
+
+ NÓS ASSIGNAMOS O CÓDIGO QUE VAMOS QUERER 
+
+ QUE 
+
+ SEJA EXECUTADO 
+
+ ''UPON A CLICK'' (a partir do evento click...)
+
+
+
+ ex:
+
+
+ 'onClick=....'
+
+
+ ------------------------------------
+
+
+
+ PARA INSERIR O CÓDIGO QUE QUEREMOS QUE SEJA EXECUTADO, 
+
+ DEVEMOS 
+
+ WRAPPÁ-LO EM CURLY BRACES, logo após o '{}'....
+
+
+
+
+ ex:
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={}>Switch Name</button> /////////EIS O CÓDIGO EM QUESTÃO.
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+
+
+--------------------------------
+
+
+
+PRECISAMOS 
+
+DOS {} PARA QUE 
+
+UM CÓDIGO DINÂMICO SEJA EXECUTADO....
+
+
+
+
+
+---> CERTO... tipicamente VOCÊ 
+
+
+VAI QUERER 
+
+
+___EXECUTAR ___ UMA FUNÇÃO 
+
+
+
+DE SUA CLASSE... (aquilo que chamamos de 'método') (e quando falamos de 'sua classe', estamos querendo dizer ESSA CLASSE-COMPONENTE EM QUE VOCê ESTÁ CHAMANDO O MÉTODO 'render()'.... )
+) NESSE 
+
+LUGAR AÍ....
+
+
+
+
+---> e HÁ UMA CONVENÇÃO PARA O __NAMING___ desse método/função que vocÊ 
+
+terá 
+
+na sua 'classe-componente'...  --> aqui, se formos de acordo com a convenção,
+
+
+daremos a esse método 
+
+
+o nome de 
+
+'switchNameHandler()'... (convenção é 'xxxxx' + handler... como 'switchNameHandler'....)
+
+
+
+
+O IMPORTANTE É 'HANDLER' --> handler INDICA que ESSE É UM ___MÉTODO ___ QUE __VOCÊ 
+
+___NÃO ESTÁ ___ ATIVAMENTE __ CHAMANDO __, mas que vocÊ ESTÁ ___ASSIGNANDO ___ COMO 
+
+UM 'EVENT HANDLER', ou seja, como um NEGÓCIO QUE VOCÊ DEIXA PARA O JAVASCRIPT/A MÁQUINA EXECUTAR 
+
+quando o tal evento (nesse caso, 'onClick') ocorre...
+
+
+
+
+É uma boa practice dar nomes como esses....
+
+
+
+ex:
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+  state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ]
+  }
+
+
+
+switchNameHandler = () => { ///////EIS O CÓDIGO EM QUESTÃO...
+
+}
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={}>Switch Name</button> /////////
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+
+-----------------------------------------
+
+
+
+
+esse 'switchNameHandler' deverá 
+
+SER 
+
+
+__UMA FUNÇÃO___... para
+
+escrever 
+
+uma função/método (pq é escrito dentro de uma classe)
+
+no react,
+
+
+devemos 
+
+
+USAR 
+
+
+A SINTAXE 
+
+
+DE ARROW FUNCTIONS DO 
+
+ES7 (ecmascript 7)...
+
+
+
+que é 
+
+
+switchNameHandler = () => {
+
+}
+
+
+-------------------------------------------
+
+
+METHOD = É UMA PROPRIEDADE QUE SEGURA UMA FUNÇÃO, UMA FUNÇÃO 
+
+QUE PODE SER EXECUTADa...
+
+
+
+------------------------------------
+
+
+DENTRO DESSE MÉTODO/FUNÇÃO, agora, eu vou querer, 
+
+explica o professor,
+
+adicionar 
+
+o meu 'state'....
+
+
+MAS ANTES DE FAZERMOS ISSO,
+
+
+
+DEVEMOS TESTAR ESSE MÉTODO, ver se conseguimos o executar com sucesso.... ---> 
+
+para isso, professor 
+
+faz um simples console.log de 'Button was clicked'  ---> isso vai nos dizer se o eventhandler está funcionando... e se nossa função 'switchNameHandler' é executada a partir dele...
+
+
+
+
+
+Para que esse negócio seja assignado com sucesso 
+
+
+ao 'onClick' do button, 
+
+
+naquele espaço '{}', nós 
+
+
+DEVEMOS 
+
+REFERENCIAR 
+
+
+'this.switchNameHandler' ---> isso fará com que ele seja chamado de forma adequada, pois o 'this' faz com que o switchNameHandler de 'App' seja selecionado...
+
+
+
+Ex:
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+  state = {
+    persons: [
+      { name: 'Max', age: 28 },
+      { name: 'Manu', age: 29 },
+      { name: 'Stephanie', age: 30 }
+    ]
+  }
+
+
+
+switchNameHandler = () => {
+  console.log('Was clicked!');
+}
+
+
+
+
+  return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <button onClick={}>Switch Name</button> /////////
+        {/*<Person name="Max" age="28" />
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>
+    <Person name="Stephanie" age="30"/> */}  {/* é assim que colocamos comentários em código jsx */}
+        <Person name={Object.values(this.state.persons[0])[0]} age={Object.values(this.state.persons[0])[1]} />
+        <Person name={Object.values(this.state.persons[1])[0]} age={Object.values(this.state.persons[1])[1]}>My Hobbies: Racing</Person>
+        <Person name={Object.values(this.state.persons[2])[0]} age={Object.values(this.state.persons[2])[1]}/>
+
+    
+      </div>
+    );
+
+
+
+
+
+
+
+----------------------------
+
+
+DE FATO, 
+
+ESSE CÓDIGO FUNCIONA... o 'this.switchNameHandler' no '{}' do 'onClick'....
+
+
+
+
+
+e devemos 
+
+
+chamar 'this.switchNameHandler', e não 'this.switchNameHandler()' (OU SEJA, SEM OS PARÊNTESES, POIS QUEREMOS QUE 
+ESSE CÓDIGO __SÓ SEJA__ EXECUTADO __ QUANDO 'onClick' ocorrer...)  ---> RESUMINDO: nós apenas queremos PASSAR UMA REFERENCE Àquele método de 'switchNameHandler', NÃO QUEREMOS QUE ELE SEJA EXECUTADO NO PRIMEIRO PARSING DA PÁGINA...
+
+
+------------------------------------
+
+
+
+
+IMPORTANTE ---> se você 
+
+
+não 
+
+usar 
+
+
+essa sintaxe 
+
+
+especial 
+
+
+
+de 
+
+
+
+'switchNameHandler = () => {
+  console.log('Was clicked!');
+}'.
+
+
+
+EM QUE VOCê ____ASSIGNA UMA FUNÇÃO ___ A UMA PROPRIEDADE, 
+
+por assim 
+
+se dizer (SINTAXE ES7), VOCê 
+
+
+
+ENCONTRARÁ __ERROS____....
+
+
+
+vocÊ encontrará 
+
+
+erros relativos a 'this.xxxx' 
+
+
+dentro 
+
+
+dessa função 
+
+
+'switchNameHandler'... --------------------> PQ SE VOCê FIZER ISSO, NÃO USAR ESSA SINTAXE, 
+
+O 'THIS' VAI SE REFERIR NÃO A CLASSE 'App' QUE ABRIGA nossa propriedade/método 
+
+durante o RUNTIME, e sim VAI SE REFERIR AO __BUTTON___ (devido ao funcionamento do javascript no ES5 --> obsoleto...) --> 
+
+
+POR MEIO 
+
+DESSA SINTAXE ES6/7, NÓS PASSAMOS 
+
+POR CIMA 
+
+DESSE PROBLEMA --> e isso vai nos ajudar 
+
+
+BASTANTE 
+
+mais tarde....  -----> CERTO..
+
+
+
+SALVAMOS ESSE ARQUIVO 
+
+
+E ABRIMOS O CONSOLE... ---> observamos a mensagem 
+
+'was clicked' no console...
+
+
+
+
+
+---> ISSO TUDO É NICE, CLARO, 
+
+
+MAS AGORA __dEVEMOS___ APRENDER __ SOBRE __ COMO __MUDAR ___ O 'STATE'.... 

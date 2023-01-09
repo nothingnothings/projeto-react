@@ -1,0 +1,936 @@
+--> 
+
+JÁ APRENDEMOS 
+
+
+
+MUITO SOBRE O BÁSICO 
+
+
+DO REACT NAS ÚLTIMAS LIÇÕES...
+
+
+
+
+
+
+--> contudo, nosso aplicativo PODE 
+
+
+USAR ALGUM STYLING EXTRA, ELE ESTÁ MUITO POBRE. 
+
+
+
+
+-> Por exemplo, esses componentes 'Person' 
+
+
+ficariam bem melhores se eles fossem 
+
+mais bonitos ---> eles devem se PARECER COMO 'CARDS', 
+
+
+e não como essa porcaria feia.... ------->
+
+
+
+
+SE ELES SE PARECEREM 'CARDS', eles parecerão 
+
+
+OBJETOS FECHADOS, e portanto mais DISCERNÍVEIS. ------> não conseguimos 
+
+
+ver as bordas dos componentes, até agora...
+
+
+
+
+
+
+
+
+------> O STYLING DE COMPONENTES __ É ALGO __ SUPER IMPORTANTE___...
+
+
+
+
+
+---> PROFESSOR EXPLICA QUE, AGORA, HÁ 
+
+
+2 MANEIRAS DE __STYLING___ QUE PODEMOS 
+
+IMPLEMENTAR...
+
+
+
+
+---> Antes de usar 
+
+qualquer uma 
+
+dessas maneiras, 
+
+
+
+DEVEMOS ADICIONAR UM ARQUIVO 
+
+
+'Person.css' NO FOLDER 
+
+
+
+DE 'Person'... (ou seja, o mesmo nome do arquivo .JS, mas com uma extensão '.css'...)
+
+
+
+
+
+--> UMA COISA IMPORTANTE:
+
+
+
+QUALQUER CÓDIGO CSS QUE O CÓDIGO 
+
+ESCREVE 
+
+Em 'Person.css' 
+
+
+
+___NÃO É___  SCOPADO (''focado'')
+
+
+SÓ NAQUELE ARQUIVO 'Person.js'.... (isso quer dizer QUE NÓS PODEMOS USAR OS ESTILOS DEFINIDOS EM 'Person.css' EM QUALQUER LUGAR DO NOSSO APLICATIVO; ATÉ MESMO EM 'App.js' e 'index.js', por exemplo...)
+
+
+
+-------------------------------
+
+
+
+Person.css (e QUALQUER ARQUIVO CSS) ---> É CONSIDERADO 
+
+__UM ARQUIVO CSS ___ _GLOBAL____, usável em qualquer parte de nosso 
+código.
+
+
+------------------------
+
+
+Certo, 
+
+
+o professor vai 
+
+nesse 
+
+
+arquivo 
+
+
+
+'Person.css'
+ 
+
+
+ e define 
+
+
+ uma classe de 
+
+
+ '.Person'...
+
+
+
+
+
+ ---> ELE EXPLICA QUE ELE PODERIA TER COLOCADO/DEFINIDO 
+
+ ESSE ESTILO DE 'Person'
+
+
+
+ EM QUALQUER LUGAR DE NOSSO APLICATIVO;
+
+
+
+ mas se colocarmos os estilos de 
+
+
+ 'Person' 
+
+ em um ARQUIVO DE MESMO NOME, mas com extensão '.css',
+
+
+ FACILITAMOS NOSSA VIDA... ----> elimino o RISCO DE ACABAR USANDO ESSE ESTILO EM OUTRO LUGAR...
+
+
+
+ -----------------------------------------------
+
+
+
+
+
+ Certo...
+
+
+
+
+ O professor 
+
+
+ então vai até o código de 'Person.js'...
+
+
+ ex:
+
+
+
+
+ const person = (props) => {
+  
+  
+  
+  return (
+    
+  
+  <div>
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+-----------------------------------
+
+
+
+
+ELE VAI NAQUELA 'div' que segura 
+
+as tags 
+
+
+E COLOCA 
+
+UMA 
+
+'className' (e não 'class', pois 'CLASS'__ NÃO É SUPORTADA, ESSE TERMO CONFLITA COM A KEYWORD DE 'class', usada na criação de CLASSES)...
+
+
+
+certo...
+
+
+
+'className='Person' ' .... ---> ISSO VAI FAZER COM QUE 
+
+USEMOS 
+
+AQUELE ESTILO DEFINIDO EM 
+
+'Person.css'....
+
+
+
+ex:
+
+
+
+
+
+ const person = (props) => {
+  
+  
+  
+  return (
+    
+  
+  <div className="Person"> {/* EIS O CÓDIGO EM QUESTÃO */}
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+
+-----------------------------------------
+
+
+
+
+
+Certo...
+
+
+
+
+Lá no arquivo 
+
+
+
+'.css', 
+
+
+eu posso 
+
+
+
+
+COLOCAR ALGUNS ESTILOS... ---.> 
+
+
+
+
+professor coloca 
+
+
+uma width de 
+
+
+'60%', 
+
+
+e uma 'margin' de 'auto'... (isso fará com que esse elemento SEJA __CENTRALIZADO__ na nossa página)...
+
+
+
+
+
+ELE TAMBÉM COLOCA 
+'
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    '
+-----------------------------------------
+
+
+
+
+Por fim, coloca uma padding de 16px,
+
+
+
+e text-align de 'center'
+
+para centralizar todo o texto desse elemento...
+
+
+
+ex:
+
+
+
+
+
+.Person {
+    width: 60%;
+    margin: auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 16px;
+    text-align: center;
+}
+
+--------------------------------
+
+
+
+
+PROFESSOR SALVA OS 2 
+
+ARQUIVOS,
+
+
+'Person.js'
+
+
+
+e 
+
+'Person.css'....
+
+
+---------------------------
+
+
+
+NADA ACONTECE --> MAS VOCÊ SABE O ___PQ __ DE NADA TER ACONTECIDO, O PQ 
+
+DE NENHUM ESTILO TER SIDO APLICADO?
+
+-----------------------------------
+
+RESPOSTA:
+
+
+
+Bem, é pq 
+
+NÓS 
+
+CRÍAMOS NOSSA 
+
+CLASSE 'Person' no arquivo de estilo 'Person.css',
+
+
+
+MAS __POR DEFAULT__ (e isso tvz seja algo que 
+
+VOCÊ NÃO SABE/NÃO SABIA, POIS NÃO É NADA INTUITIVO), NENHUM ARQUIVO 
+
+DE ESTILO 
+
+É INCLUÍDO NO SEU PROJETO, NO CÓDIGO QUE ACABA SENDO CRIADO 
+
+PELO ___BUILD WORKFLOW___... ---> isso quer 
+
+dizer, essencialmente, QUE 
+
+VOCê 
+
+
+SEMPRE ___ TEM QUE IMPORTAR ARQUIVOS__ para 'add them to the game'... ------> ISSO 
+
+
+QUER DIZER QUE VOCÊ TAMBÉM __PRECISA __ IMPORTAR ____ OS ARQUIVOS 
+
+DE ESTILO 
+
+NOS SEUS ARQUIVOS '.js'...
+
+
+(nós vemos isso já em 'App.js', em que é possível encontrar 
+
+'import './App.css' no meio dos imports...)
+
+
+
+
+
+PODE PARECER __ESTRANHO__ ENCONTRAR 
+
+UM IMPORT 
+
+
+DE UM ARQUIVO 
+
+'.css'
+ 
+
+
+ EM UM ARQUIVO JAVASCRIPT, 
+
+ MAS GRAÇAS 
+
+ AO 'WEBPACK' (que é, no final das contas, a ferramenta utilizada 
+ 
+ pelo 'react scripts package' que estamos implicitamente usando aqui... )
+
+
+
+
+ GRAÇAS AO WEBPACK, NÓS PODEMOS, NA VERDADE, IMPORTAR '.CSS' em arquivos 
+
+ JAVASCRIPT......          ------> ENTRETANTO, 
+
+ ISSO NÃO VAI REALMENTE 
+
+ 'Merge' OS 2 ARQUIVOS ou qualquer coisa do gênero, a única coisa que 
+
+ o webpack faz 
+
+ É FAZER COM QUE O REACT/ARQUIVO JAVASCRIPT FIQUE CIENTE DA EXISTÊNCIA 
+
+ DO ARQUIVO '.css', fazendo COM QUE ELE O TRATE DE FORMA DIFERENTE... ('handle it differently')
+
+
+
+ como assim 
+
+ 'handle it differently?' ----> bem, o que o professor quer dizer é que 
+
+ O WEBPACK FORÇA O REACT/JAVASCRIPT A ___APLICAR___ AQUELE IMPORT DE '.css' 
+
+ __no código javascript___ DIRETAMENTE NO CÓDIGO HTML DA SUA PÁGINA...
+
+
+
+ -----------------------------------
+
+
+
+ Para que o CÓDIGO DE ESTILO DE 'Person.css' SEJA APLICADO,
+
+ nós devemos 
+
+
+ IMPORTAR 
+
+ 'Person.css'
+
+
+ LÁ NO 
+
+ 'Person.js'...
+
+
+ ex:
+
+ 'import ./Person.css;'
+
+
+
+ (AQUI NÓS REALMENTE PRECISAMOS DA EXTENSÃO DO ARQUIVO, do '.css' no final...) --> pq nós SÓ PODEMOS OMITIR O '.js' PARA ARQUIVOS JAVASCRIPT...
+
+
+
+
+
+----------------------------------------------------
+
+
+
+
+ex:
+
+
+
+
+import React from 'react';
+
+
+import './Person.css'; ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+const person = (props) => {
+  
+  
+  
+  return (
+    
+  
+  <div className="Person">
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+
+export default person; 
+
+
+
+--------------------------------
+
+
+
+
+
+-----> COM ISSO, 
+
+
+
+Você faz com que o webpack 
+
+fique 
+
+ciente 
+
+desse arquivo 
+
+'Person.css'... -------> ele vai adicioná-lo ao seu arquivo html...
+
+
+
+
+---> Você tbm poderá ver, se você inspecionar o seu código nas devtools,
+
+
+QUE UMA CLASSE 
+
+
+DE 
+'Person' 
+
+
+terá sido 
+
+____ADICIONADA__ 
+
+às 'div's de 'Person' (que é, na verdade, um de nossos components/um dos component calls)
+
+
+------------------------------
+
+
+
+E SE VOCÊ SCROLLAR ATÉ A SEÇÃO
+ 
+
+ 'head' 
+
+
+ do seu arquivo, no devtools,
+
+ você verá 
+
+ que 
+
+
+ LÁ 
+
+
+ NÓS TEMOS/TEREMOS 
+
+ UMAS 'style tags'...
+
+
+ ex:
+
+
+
+ <style type="text/css">body {
+     margin: 0;
+     padding: 0;
+     font-family: sans-serif;
+ }
+ </style>
+
+
+
+
+ ---------------------------------------------
+
+
+
+ ESSES ESTILOS QUE APARECEM NO 'head', se você observar bem, 
+
+
+ __NÃO APARECEM__/NÃO EXISTEM NO NOSSO 'index.html' 
+
+ QUE ESTÁ 
+
+ LÁ NO FOLDER 'public' (o folder que é SERVIDO pelo react)... ---> 
+
+
+
+LÁ, NESSE 'ARQUIVO ORIGINÁRIO', nós 
+
+NÃO TEMOS 
+
+
+NENHUM 'STYLE TAG' na seção 'head'...... as únicas coisas que vemos 
+
+
+são links ao 'manifest' 
+
+
+e 
+
+etc... 
+
+(OU SEJA, não vemos nada, nenhuma style tag, e NENHUMA REFERÊNCIA 
+
+A UM ARQUIVO CSS...)
+
+
+----------------------------------------------
+
+
+
+
+A RAZÃO DE ISSO ACONTECER É QUE __ TODOS ESSES ESTILOS QUE ACABARAM 
+
+SENDO APLICADOS AOS 'PERSON' components __FORAM __INJETADOS___ PELO WEBPACK___  ('webpack manages the imports we add to our javascript files')...
+
+
+
+
+E ESSA __ÚLTIMA ___ 'STYLE TAG' no 
+
+head,
+
+
+essa tag 
+
+de 
+
+
+'<style type="text/css">
+
+.Person {
+    width: 60%;
+    margin: auto;
+    border: 1px solid #eee;
+    -webkit-box-shadow: 0 2px 3px #ccc;
+            box-shadow: 0 2px 3px #ccc;
+    padding: 16px;
+    text-align: center;
+}
+
+</style>'
+
+
+
+
+
+DEVERÁ
+
+
+'ACTUALLY'
+ 
+ SEGURAR 
+
+ SUA CLASSE 
+
+
+ '.Person'...  ----------> e aqui pode-se observar que, de fato, 
+
+
+ É UMA 
+
+
+ ___GLOBAL CSS CLASS____... -------> outra coisa que 
+
+ percebemos, 
+
+
+ também, 
+
+
+ É AQUELE
+
+ 'AUTOMATIC PREFIXING' que o professor mencionou há algumas aulas...
+
+
+ (ou seja, aquelas regras QUE SÃO ADICIONADAS A DETERMINADOS BROWSERS ESPECÍFICOS 
+ 
+ PARA TER O MELHOR SUPORTE, 
+ 
+ como 
+ 
+ '-webkit-box-shadow'....) ----------> 
+
+
+
+ ESSE AUTOMATIC PREFIXING É MUITO BOM __PQ ELE NOS __ DEIXA __ ESCREVER 
+
+ __ O MENOR __ CÓDIGO CSS POSSÍVEL/necesário, visto que 
+
+ ESSE CÓDIGO SERÁ ENTÃO TRADUZIDO/PRE-FIXADO PARA 
+
+ __FUNCIONAR ___ NA MAIOR QUANTIDADE DE BROWSERS POSSÍVEL..
+
+
+
+ -------------------------------------------
+
+
+
+
+CERTo...
+
+
+esse era o nosso styling...
+
+
+Professor decide adicionar 
+
+
+uma 
+
+
+'margin' de '16px auto'
+
+para deixar os Person components  mais separados
+
+
+
+
+
+
+
+ex:
+
+
+
+
+.Person {
+    width: 60%;
+    margin: 16px auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 16px;
+    text-align: center;
+}
+
+
+----------------------------------------------
+
+
+
+
+CERTO, TEMOS AS 'PERSONS' na nossa página...
+
+
+
+AGORA DEVEMOS ESTILIZAR O 'BUTTON', MAS AGORA VAMOS ESTILIZÁ-LO 
+
+DE OUTRA FORMA... (VEREMOS A __SEGUNDA MANEIRA___ DE ESTILIZAR ___ ELEMENTOS)
+
+
+
+
+OK... --> MAS ESSE BOTÃO 
+
+
+___NÃO MUDA__ QUANDO FAZEMOS 'HOVER' DO MOUSE SOBRE 
+
+O BOTÃO... ---------> E O PROFESSOR 
+
+
+__ADMITE___ QUE 
+
+DEFINIR 
+
+EFEITOS 'HOVER' POR MEIO DO APPROACH 
+
+DOS 'INLINE STYLES' É __BEM DIFÍCIL___... ---> essa é UMA DAS RESTRIÇÕES DOS 'inline styles'...
+
+
+------------------------------------
+
+
+
+MAS O PROFESSOR TEM UM MÓDULO INTEIRO NESSE CURSO 
+
+SOBRE SOLUÇÕES 
+
+INTELIGENTES 
+
+PARA O STYLING DE 
+
+
+REACT COMPONENTS... --> styling de react components é ALGO QUE PODE SER BEM COMPLEXO... ---> 
+
+sempre tenha em mente QUE 
+
+
+__VOCÊ ___ PODE ___ USAR UM ARQUIVO .css (bem conveniente) --> se você o fizer,
+
+
+TODOS OS ESTILOS QUE VOCê DEFINE NESSE ARQUIVO PODERÃO SER USADOS EM QUALQUER 
+
+LUGAR DO SEU CÓDIGO (é global), BASTA QUE VOCÊ IMPORTE 
+
+ESSE ARQUIVO NOS LUGARES EM QUE VOCÊ VAI QUERER OS UTILIZAR... -------> 
+
+
+
+
+
+justamente PELO FATO DE SER __GLOBAL___, um arquivo 
+
+.css Às vezes pode acabar fazendo coisas que não queremos....
+
+
+ex:
+
+
+se definirmos 'button {
+    ..;
+}' 
+
+
+no arquivo .css 
+
+
+
+E ENTÃO IMPORTARMOS ESSE ARQUIVO NO NOSSO CÓDIGO,
+
+
+TODOS OS 'button' de nossa PÁGINA 
+
+ACABARÃO 
+
+AFETADOS 
+
+pelo 
+
+
+
+estilo 'button {...}' ---------> ENTRETANTO, VOCÊ PODE USAR 
+
+
+A SINTAXE NORMAL DO CSS PARA CONTORNAR ESSE PROBLEMA (Ids e classes, toda aquela coisa)... ---> 
+
+
+ALTERNATIVAMENTE, SE VOCÊ REALMENTE QUISER ISSO, VOCÊ PODE USAR 
+OS TAIS 
+
+'INLINE STYLES', que são muito úteis
+ 
+ POIS SÃO ___SCOPED___ __NO ELEMENTO/COMPONENT____ 
+
+ EM QUE VOCê REALMENTE ADICIONOU o atributo 'style={referência À constante em que estão os estilos no método 'render()' }' .... ----> 
+
+ ainda assim, se vocÊ optar 
+
+
+ pelos INLINE STYLES,
+
+
+ vocÊ terá ALGUMAS RESTRIÇÕES, restrições AO PODER COMPLETO DO CSS... (perdemos coisas como 'hover'... ) ----> 
+
+
+ ENTRETANTO, O PROFESSOR NOS MOSTRARÁ UM 
+
+ 'GOLDEN APPROACH', 
+
+ um approach que nos PERMITE ___SCOPAR___ os 
+
+ styles 
+
+ E AINDA 
+
+ USAR TODAS AS FEATURES DO CSS (como 'hover')...
+
+
+
+
+OK, MAS ATÉ 
+
+AGORA TEMOS 
+
+
+
+'INLINE STYLES' ---> usados QUANDO QUEREMOS __SCOPAR ___ UM ESTILO ESPECÍFICO EM UM DETERMINADO ELEMENTO___...
+
+
+e 
+
+'STYLE IMPORTS' --> quando queremos que aquele estilo/estilos/arquivo de estilo fique DISPONÍVEL À INTEGRALIDADE DE NOSSO CÓDIGO.
+
+-------------------------------------------

@@ -1,0 +1,814 @@
+
+
+
+
+
+
+
+
+--------> QUASE ACABAMOS ESTE MÓDULO SOBRE ROUTING.... 
+
+
+
+
+
+
+
+
+
+
+---> HÁ UMA COISA IMPORTANTE QUE DEVEMOS SABER 
+
+sobre 
+
+
+'Routing'... (e o react router)....
+
+
+
+
+
+
+-----> É SOBRE O __DEPLOY__ DE SEU APLICATIVO A UM SERVIDOR DE VERDADE.... ------->
+
+isso pq você NÃO VAI PERCEBER ESSE DETALHE QUE O PROFESSOR NOS EXPLICARÁ AGORA 
+
+NO DEVMODE, pq no devmode isso já estará configurado corretamente....  ------------> 
+
+
+
+para 
+
+pensar 
+
+
+sobre como o deployment de um app com 'react-router' funciona 
+
+
+em um servidor DE VERDADE,
+
+
+você 
+
+
+
+DEVE 
+
+PENSAR 
+
+
+
+SOBRE 
+
+
+A MANEIRA PELA QUAL 
+
+
+__REQUESTS__ FUNCIONAM NA INTERNET (com servidores em geral...)
+
+
+
+
+
+
+
+
+
+
+
+
+Certo...
+
+
+
+
+Professor diz que 
+
+
+
+TEMOS 
+
+
+
+
+
+
+
+
+UM USUÁRIO,
+ 
+
+ UM 
+
+
+ SERVIDOR,
+
+
+ E 
+ UM
+
+
+ REACT APP....
+
+
+
+
+
+
+
+
+
+        request
+User    -->            Server                  React App
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+
+Certo... o importante de entender aqui é QUE TEMOS UM 
+
+'REACT APP' que faz o LOAD do código HTML apropriado (por meio do JSX) 
+
+
+NA NOSSA 
+
+PÁGINA 
+
+
+'index.html'
+
+
+servida ao usuário, no startup... 
+
+
+
+
+
+
+---------> CERTO, MAS ANTES DE PODERMOS SERVIR AS PARTES (components) do 
+
+REACT APP ao usuário, 
+
+O 
+
+SERVIDOR PRECISA SABER/DESCOBRIR ___QUAL PÁGINA__ O USUÁRIO
+
+QUERIA REALMENTE VISITAR.... -------> 
+
+
+isso acontece pq,
+ 
+ é óbvio,
+
+ O
+  ____SERVIDOR____ SEMPRE ___ FAZ HANDLE 
+
+
+
+  __dOS REQUESTS/DE REQUESTS ____________ANTES_________ 
+
+
+
+  DO REACT APP propriamente dito... (e o react app faz o handle desses '''''requests'''' por meio das routes, é claro...)
+
+
+
+
+  ------------------------------
+
+
+
+É o servidor que vai handlar os requests,
+
+É ASSIM QUE A INTERNET FUNCIONA...
+
+
+
+
+
+
+
+---------> MAS O PROBLEMA AQUI É ___QUE ___ QUEM CONHECE
+
+AS ___ ROUTES___ PROPRIAMENTE __ DITAS
+ 
+
+É __ O REACT APP__, e não o servidor...
+
+
+
+
+
+
+
+
+
+
+
+O ESQUEMA, ENTÃO, ESTÁ FICANDO:
+
+
+
+
+
+
+
+
+        request
+User    -->            Server                  React App
+
+                       ( Handles                   (Knows the Routes!)
+                        Requests 
+                        First! )
+
+
+
+---------------------------------------------------
+
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+
+SE NÓS, POR EXEMPLO,
+
+
+VISITARMOS 
+
+
+
+'localhost:3000/posts',
+
+
+
+
+
+NÃO EXISTIRÁ NATIVAMENTE ('do nada') UMA 
+
+
+ROUTE 
+
+
+'localhost:3000/posts' 
+
+
+
+NO ___ NOSSO SERVIDOR__.... ----------> ISSO OCORRERÁ PQ ___ ESSA ROUTE/PATH 
+
+___ É DEFINIDA NO 
+
+
+CÓDIGO JAVASCRIPT __ QUE É __ CARREGADO/INSERIDO ___ NO ARQUIVO 
+
+'index.html' (aquele index.html vazio) 
+
+SERVIDO PELO SERVIDOR AO USUÁRIO... --------> e AÍ RESIDE 
+
+O PROBLEMA...
+
+
+
+
+
+
+
+
+O PROBLEMA É QUE 
+
+ESSE ARQUIVO 
+
+'index.html' 
+
+
+
+NUNCA VAI SER RECEBIDO PELO USUÁRIO 
+
+se ele 
+
+digitar '''de cara''' 
+
+
+'localhost:3000/posts'... --------> MAS PQ ELE NUNCA RECEBERÁ 
+
+
+ESSE ARQUIVO 'INDEX.HTML?' ------> ele nunca RECEBERÁ 
+
+PQ 
+
+
+O SERVIDOR VAI RETORNAR UM 
+
+'ERRO 404' (unknown request; ou 'UNKNOWN ROUTE TO THE SERVER...') 
+
+
+A ELE .... ------> servidor vai enviar esse erro pq 
+
+
+ELE, O SERVIDOR, DESCONHECE UM PATH/URL 
+de 
+
+'localhost:3000/posts'.... ----> nós tentamos ALCANÇAR UMA 
+
+ROUTE QUE 
+
+__CLARAMENTE__ NÃO É CONHECIDA/NÃO É DO CONHECIMENTO DO SERVIDOR... 
+
+
+
+
+
+
+
+
+
+
+
+---> é claro, esse 'erro 404' do servidor 
+
+
+NÃO __ FOI O QUE VOCÊ VIU DURANTE O MODO DE DEVELOPMENT DO __ REACT, 
+
+pq, COMO O PROFESSOR MENCIONOU, 
+
+
+O 
+
+
+___dEVELOPMENT __ SERVER DO REACT_ (modo padrão do react) 
+
+
+JÁ __ É/JÁ ESTÁ ___SETTADO/CONFIGURADO 
+
+CORRETAMENTE 
+
+
+____PARA ___ RECONHECER AS ROUTES QUE 
+
+
+VOCÊ 
+
+
+DEFINE 
+
+
+no 'React App' em si...
+
+
+
+
+
+
+
+
+----> RESUMINDO: isso tudo, essa explicação aí,
+
+
+QUER 
+
+DIZER QUE 
+
+
+___NÓS __ TEMOS QUE CONFIGURAR NOSSO SERVIDOR DE UMA MANEIRA QUE 
+FAÇA 
+
+
+
+____COM QUE __ ELE SEMPRE __FORWARDE ('in a way that he ALWAYS FORWARDS')
+
+REQUESTS, 
+
+não importando 
+se ele 
+
+OS ENTENDE (os requests) OU NÃO  (ou seja, NÃO INTERESSA SE 
+ELES SÃO REQUEST VÁLIDOS OU '404 REQUESTS', NÓS VAMOS QUERER QUE ELE OS FORWARDE 
+MESMO ASSIM 
+
+AO 'REACT APP'... );
+
+
+
+
+
+
+
+
+
+
+ou seja,
+
+VAMOS QUERER 
+
+QUE 
+
+ELE SEMPRE FORWARDE 
+
+OS 
+
+REQUESTS (tanto 'KNOWN' como 'UNKNOWN'/erro 404)
+
+AO 
+
+'CLIENT' ->>>>
+
+
+QUEREMOS QUE 
+
+ESSE 'FORWARD' ACONTEÇA __PARA QUE __ SEMPRE ___SEJA 
+
+RETORNADO 
+
+ O ARQUIVO 'INDEX.HTML' 
+
+ ao usuário... (até mesmo para CASOS DE 'ERRO 404'/unknown requests...)
+
+
+
+
+
+
+
+
+
+ --> VAMOS QUERER QUE ESSE 'FORWARDING' DOS REQUESTS OCORRA pq vamos querer 
+
+
+ QUE 
+
+ O '''REACT TOME AS RÉDEAS''' da administração do SERVIDOR; e se 
+o react 'toma as rédeas', ele pode, finalmente,
+
+
+PARSEAR OS REQUESTS __ DE ACORDO COM AS 'ROUTES'___ QUE ELE CONHECE/tem escritas no seu código,
+
+que é o que 
+
+DESEJAMOS... ---------------> 
+
+
+
+
+
+isso significa, em outras palavras, que 
+
+VAMOS SEMPRE 
+
+
+QUERER 
+
+
+___rETORNAR____ 'index.html' ao usuário... ------> e, se por ventura existirem 
+
+
+alguns 
+
+
+404 REQUESTS, nós já SABEMOS 
+
+
+COMO FAZER HANDLE DELES, por meio do REACT ROUTER....
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+OK.
+
+
+
+
+SABEMOS:
+
+
+
+
+1) QUE O SERVIDOR DE DESENVOLVIMENTO DO REACT JÁ VEM CONFIGURADO, ELE JÁ 
+
+ESTÁ CONFIGURADO PARA AUTOMATICAMENTE FORWARDAR os requests (tanto known como unknown) 
+
+AO REACT CLIENT, que então os administra nas ROUTES...... ele faz esse forwarding 
+
+PELO ___'ALWAYS LOADING' do INDEX.HTML no browser do usuário...
+
+
+
+
+
+
+
+2) QUE ___ ESSE 'FORWARDING'''' PRECISA, CONTUDO, SER FEITO __MANUALMENTE__ POR NÓS 
+
+NO NOSSO PRÓPRIO SERVIDOR DE DEPLOYMENT... (não é moleza q nem no react devserver...)
+
+
+--> no nosso DEV SERVER, precisamos fazer o 'always load' do index.html no browserside, no 
+browser do usuário... -------> O INDEX.HTML DEVE ___sEMPRE__ SER RETORNADO PELO SERVIDOR, até mesmo (na verdade, ESPECIALMENTE)
+em casos de '404 error cases/requests'...
+
+
+
+
+
+
+
+
+
+ESQUEMA:
+
+
+
+
+
+
+
+
+        request
+User    -->            Server                  React App
+
+                       ( Handles                   (Knows the Routes!)
+                        Requests                                
+                        First! )                        (Always load index.html!)
+
+                        (404 error)
+
+--------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+3) HÁ UMA OUTRA COISA QUE VOCê DEVE SABER, QUANDO ESTIVER HOSTEANDO SEU APP... (no seu servidor)... ----->
+
+
+
+essa coisa é:
+
+
+
+
+
+imagine que vocÊ está usando 
+
+'example.com/'     (example.com slash NOTHING...) ---------> se essa é a página 
+
+
+'ROOT', 
+
+
+A 
+
+'ROOT LANDING' PAGE 
+
+de nosso site/REACT APP,
+
+
+ 
+
+ NÓS NÃO PRECISAMOS SETTAR __NADA __ ESPECIAL__ para hostear seu servidor.... (Além daquele return padrão de 'index.html'...)
+
+
+
+
+
+ ---> mas DIGAMOS QUE VOCÊ 
+
+
+ ESTÁ SERVINDO 
+
+
+ SEU APp 
+
+
+ DE UM 'root path'/'root route' 
+
+ de 
+
+
+ 'example.com/my-app'... -------> ou seja, vocÊ vai querer 
+
+
+
+ 'example.com/my-app/posts', ou algo assim, ROUTES QUE PARTIRÃO 
+
+ DESSE 'root' aí, esse root que não é SÓ O DOMAIN NAME,
+ 
+pq também 
+
+inclui 
+
+esse '/my-app' no 'root'... ---------> SE VOCÊ QUISER FAZER ISSO,
+
+
+
+VOCÊ __PRECISA___ DIZER AO REACT ROUTER/COMUNICAR AO REACT APP  QUE 
+
+
+ESSE 
+
+SERÁ 
+
+O 
+
+SEU 
+'ROOT', sua 'home-page', essencialmente... -----------> ISSO SIGNIFICA QUE VOCê VAI 
+
+
+TER QUE 
+
+
+'SETTAR UM BASE PATH'.....  (um base path para o react router).... ---------> E 
+
+
+
+O PROFESSOR 
+
+
+
+QUER 
+
+
+NOS MOSTRAR, RAPIDAMENTE,
+
+
+COMO PODEMOS FAZER ISSO, COMO PODEMOS 
+
+SETAR 
+
+UM 
+
+'BASE PATH', que será 
+
+algo 
+
+diferente de '/' (slash nothing)...
+
+
+
+
+
+
+
+
+
+
+
+---> vocÊ deve ir até o LUGAR EM QUE VOCê USA/SETTA O 
+
+
+'<BrowserRouter><BrowserRouter/>'... --------------> 
+
+
+
+
+É 
+
+
+NELE QUE VOCÊ PODE SETTAR 
+
+
+
+
+ESSE nome/url 
+
+
+
+de site 'composto' ( ou seja, 'domain.com/algumPathQueVocêQuerQueSejaORoot')
+
+
+
+
+
+
+
+
+A PROPRIEDADE QUE GOVERNA ISSO, SEU NOME É 
+
+'basename'...
+
+
+
+
+
+O DEFAULT DE 'basename' é ____'/'_______ (ou seja, 'slash nothing'...)
+
+
+
+
+
+
+
+ex (ESSE É O DEFAULT...):
+
+
+<BrowserRouter basename="/">
+        <div className="App">
+                <Blog />
+        </div>
+</BrowserRouter>
+
+
+----------------------------------------
+
+
+
+
+
+mas 
+
+
+se 
+
+vocÊ quiser 
+
+algo mais complexo,
+ 
+
+ algo como '/algumaCoisa',
+
+
+ basta você escrever:
+
+
+
+
+ <BrowserRouter basename="/algumaCoisa">
+        <div className="App">
+                <Blog />
+        </div>
+</BrowserRouter>
+
+
+
+Se você fizer isso,
+ficará 
+
+
+
+'domain.com/algumaCoisa'... --------> É CLARO QUE ISSO 
+
+
+
+PODE (E VAI)) influenciar 
+
+o resto do SEU CÓDIGO... --------> ex:
+
+
+um código/comando como 
+
+
+'this.props.history.push('/posts/' + id);' ---------> ISSO 
+
+
+
+VAI 
+
+
+
+
+_____EMPURRAR___ ESSE 'path'/route de 
+
+
+
+'/posts/' __LOGO ___ DEPOIS DO 'DOMAIN NAME'... ----->        (OU SEJA, ficará 'domain.com/algumaCoisa/posts'... ---> isso se o basename realmente estiver settado como 'basename="/algumaCoisa"....)
+
+
+-------------------------------------------------------------
+
+
+
+
+
+
+OU SEJA, SEMPRE QUE VOCê PLANEJAR SERVIR SEU HOME DE UM SUBDIRECTORY, 
+
+
+ASSEGURE-SE DE QUE VOCÊ FEZ 
+
+
+O SET DE 'className'

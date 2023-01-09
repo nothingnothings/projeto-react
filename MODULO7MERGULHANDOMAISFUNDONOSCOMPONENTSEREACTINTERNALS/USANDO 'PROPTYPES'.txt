@@ -1,0 +1,1104 @@
+
+PROP TYPES.
+
+
+
+
+
+
+
+------> AGORA QUE SABEMOS COMO _UPDATAR___ O STATE DE FORMA CORRETA,
+
+
+
+DEVEMOS 
+
+
+EXPLORAR TAMBÉM 
+
+
+A __MANEIRA__ PELA QUAL NÓS 
+
+__RECEBEMOS __ PROPS___ nos nossos components... ------>
+
+
+
+
+PARA ISSO,
+
+
+DEVEMOS EXAMINAR O CÓDIGO DO NOSSO COMPONENT 
+
+'Person':
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p
+        key="i2">{this.props.children}</p>,
+
+        <input
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+-------------------------------------------------------
+
+
+
+
+LÁ NO COMPONENT 
+
+
+
+'PERSONS',
+
+estamos usando 
+
+UM PUNHADO DE 'PROPS'... --> 
+
+
+estamos 
+
+
+usando 
+
+
+'this.props.name',
+
+
+'this.props.age',
+
+
+'this.props.changed'
+
+
+
+e 
+
+
+'this.props.children'...
+
+
+----------------------------------------------------------
+
+
+
+
+
+'this.props.children' ---->  É ___UM PROP ESPECIAL___....
+
+
+
+
+
+
+
+
+
+
+
+CERTO, NÃO HÁ NADA DE ERRADO COM A MANEIRA PELA QUAL ESTAMOS SETTANDO 
+
+
+ESSE CÓDIGO, aqui... ------> MAS VOCê PODE, NA VERDADE, 
+
+
+MELHORAR ESSE CÓDIGO, VOCê 
+
+
+
+PODE DEIXAR  __MAIS CLARO__ QUAIS PROPS SEU COMPONENT USA, 
+
+
+
+e tbm 
+
+
+ATIRAR/THROW um 
+
+
+
+_WARNING___ 
+
+
+
+SE VOCÊ/O USUÁRIO 
+
+__PASSAR 
+
+
+
+'INCORRECT PROPS'... -------------> SE VOCÊ ESTIVER TRABALHANDO
+
+
+
+__NO SEU PRÓPRIO APLICATIVO, TRABALHANDO SOZINHO, ISSO AÍ 
+
+
+NUNCA SERÁ UMA PREOCUPAÇÃO SUA,
+
+POIS VOCÊ 
+
+
+
+___NUNCA VAI PASSAR __ OS 'PROPS ERRADOS'/ERRAR OS PROPS ,
+
+
+
+
+VOCÊ OBVIAMENTE SABE/SABERÁ QUAIS 
+
+
+
+___PROPS__ SEU COMPONENT __RECEBE__... ('Takes')........
+
+
+
+
+
+--> MAS SE VOCÊ 
+
+
+ESTIVER 
+
+CRIANDO, POR EXEMPLO, UMA LIBRARY QUE 
+
+VOCê VAI DISTRIBUIR A OUTRAS 
+
+PESSOAS pelo NPM, ou 
+
+
+SE 
+
+VOCÊ 
+ESTIVER 
+
+TRABALHANDO EM UMA EQUIPE MAIOR...... -----> nesses casos,
+ 
+
+ VOCê VAI TER CENÁRIOS EM QUE 
+
+ AS PESSOAS VAO USAR 
+
+ __SEUS____ COMPONENTS 
+ 
+
+ DE FORMA __INCORRETA___ (estão passando NOMES DE PROPS errados, por exemplo) ----> 
+
+
+ PQ ELES 
+
+
+ NÃO SABEM, POR EXEMPLO, QUE 'age' 
+
+ DEVE SER UM 'NUMBER' (passam uma string, em vez disso).... 
+
+
+
+
+
+ --> TBM PODE ACONTECER ALGO COMO 
+
+
+ ELES TENTAREM PASSAR UM 'HOBBY' AO USER, quando 
+
+
+o 
+
+
+'WORK' com esse prop de 'HOBBY' é __IMPOSSÍVEL__ no local 
+
+em que é necessário 'user', pois você 
+
+NÃO VAI PRECISAR DELE...
+
+
+
+----------------------------------
+
+
+
+EM
+CASOS COMO ESTES (e outros), 
+
+
+AJUDA MUITO VOCÊ PROVIDENCIAR INFORMAÇÃO/INSTRUÇÕES 
+
+SOBRE 
+
+
+__QUAIS PROPS___ ESSE COMPONENT (qualquer component)
+
+ACEITA,
+
+
+E SOBRE __QUAL TIPO/TYPE___ DE PROP 
+
+CADA 
+
+PROP DEVERÁ SER (prop deve ser string, number, boolean, etc etc...) 
+
+
+
+
+
+
+----------> E VOCê PODE FAZER ISSO,
+
+
+PODE 
+
+
+ADICIONAR ESSA FEATURE DE 
+
+
+'INSTRUÇÕES' NO SEU CÓDIGO, 
+
+
+POR MEIO DO _______INSTALL___ 
+
+
+DE UMA PACKAGE EXTRA NO SEU CÓDIGO...
+
+
+
+
+VOCê 
+
+
+ESCREVE, NO TERMINAL, 
+
+O SEGUINTE CÓDIGO:
+
+
+
+'npm install --save prop-types' --------------> ESSE PACOTE 
+
+
+É/FOI 
+
+
+
+
+PRODUZIDO 
+
+
+
+___PELA REACT COMMUNITY__/TEAM, 
+
+
+
+e ELA NÃO É 'BUILTIN' no 'REACT CORE',
+
+
+MAS FAZ PARTE DO REACT, POR ASSIM DIZER... ------------>  ela está 
+
+'EMBUTIDA' em uma instalação extra PQ __ELA É OPCIONAL_, SEU USO É OPCIONAL...
+
+
+
+
+
+
+ESPERAMOS O INSTALL ACABAR... 
+
+
+(e o negócio nos DÁ UM GORDO ERROR... --> conflito de dependencies...)
+
+
+
+------------------------------------
+
+
+
+CERTO...
+
+
+TIVE QUE 
+
+
+'''REINSTALAR''' MEU APLICATIVO DOS PERSONS,
+
+
+DESSA VEZ 
+
+
+
+NO FOLDER 
+
+'projetoreact4' -------> É __EXATAMENTE ___ O MESMO PROJETO DE ANTES, 
+
+
+MAS DESSA 
+
+
+VEZ 
+
+
+COM 
+
+__ O PROPTYPES INSTALADO___ (eu fiz um 'workaround' do problema do CONFLITO entre o BABEL instalado pelo REACT e o PROPTYPES...)....
+
+
+
+
+
+Certo,
+
+
+agora ,FINALMENTE, POSSO USAR 
+
+
+A FEATURE DO 'PROPTYPES' sem erros horríveis...
+
+
+
+
+
+
+
+---> AGORA PRECISAMOS IMPORTAR 
+
+
+OS 'proptypes' (essa PACKAGE e seu OBJETO)
+
+
+dentro do nosso código...
+
+
+
+
+
+
+---> CERTO... AGORA, 
+
+
+lá no 
+
+
+
+
+'Person.js',
+
+
+O COMPONENT 
+
+EM QUE VOCÊ 
+
+
+VAI QUERER USAR/ADICIONAR 
+
+
+ALGUNS 
+
+
+'PROPTYPES' E NOTATIONS,
+
+
+
+
+você deve 
+
+
+ESCREVER 
+
+
+
+'import PropTypes from 'prop-types'; 
+
+
+
+
+
+
+
+
+CERTO....  
+
+
+
+
+SE VOCÊ FIZER ISSO, VOCê 
+
+
+
+
+
+CONSEGUIRÁ/FICARÁ DISPONÍVEL
+ 
+
+ NO SEU ARQUIVO 
+
+
+ UMA 
+
+
+ PROPRIEDADE/A PROPRIEDADE  ESPECIAL (dos proptypes)...
+
+
+
+
+
+
+
+
+
+
+ ----> E ESSA PROPRIEDADE ESPECIAL ___ PODE SER USADA __ TANTO COM 
+
+ CLASS-BASED COMPONENTS, COMO 
+
+ em 
+
+ 'FUNCTIONAL COMPONENTS'... ----------> no caso dos FUNCTIONAL COMPONENTS, você UTILIZA ESSA PROPRIEDADE ___dEPOIS __ DE DEFINIR A FUNÇÃO/COMPONENT E DEPOIS DE TER O ARMAZENADO em uma constante (const)....
+
+
+ex(de FUNCTIONAL COMPONENTS):
+
+
+
+
+
+
+
+const persons = (props) =>  {
+  
+
+  console.log('[Persons.js] rendering...');
+  return props.persons.map( (person, index) => {
+        
+      
+      
+        return (<Person 
+        click={() => props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => props.changed(event, person.id)}/>  
+        )
+    
+      }
+
+
+
+);
+
+    }
+
+
+
+
+
+  person.propTypes = {}; ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+
+ ------------------------------------------------
+
+
+
+
+
+
+ NO CASO DE 'Person.js',
+ 
+
+
+ nós 
+
+
+
+ vamos 
+
+
+
+
+ __ACESSAR/INVOCAR___ o component 'Person' 
+
+
+
+ E ENTÃO 
+
+
+
+
+ACESSAR A propriedade 'propTypes' (criada pelo IMPORT de 'prop-types'...)
+
+
+
+DENTRO 
+
+DESSE COMPONENT...
+
+
+
+
+EX(representação de seu uso com CLASS-BASED COMPONENTS):
+
+
+
+
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p
+        key="i2">{this.props.children}</p>,
+
+        <input
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+
+Person.propTypes = {}; //////////EIS O CÓDIGO EM QUESTÃO...
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+CERTO,
+
+
+ MAS O QUE DEVEMOS 
+
+ DEFINIR 
+
+ COMO __VALOR__ 
+
+
+ DESSA 'PROPRIEDADE',
+  
+  o que 
+
+  devemos definir 
+
+  DENTRO DAQUELE OBJETO? ('{}')...
+
+
+
+
+  -------------------------------------
+
+
+
+
+  Certo...
+
+
+  temos esse OBJETO JAVASCRIPT...
+
+
+
+
+
+
+  --> e 'PropTypes' É UMA __PROPRIEDADE ESPECIAL__ 
+
+
+  QUE VOCÊ ADICIONA A QUALQUER OBJETO JAVASCRIPT/QUALQUER 'JAVASCRIPT COMPONENT OBJECT' (mais correto)...
+
+
+  se você adicionar 
+
+  essa PROPRIEDADE ESPECIAL em algum COMPONENT OBJECT do javascript,
+
+
+  O ___REACT___ VAI 'WATCH OUT FOR' aquele component,
+
+   
+
+
+   MAS ELE SÓ VAI 
+
+   'WATCH FOR' OCORRÊNCIAS NAQUELE COMPONENT __DURANTE___ O 'DEV MODE'... ----------> 
+
+
+
+   E, ENTÃO, SE ALGUÉM FAZ BOSTA/PASSA ___PROPS___ INCORRETOS__ DURANTE 
+
+
+   O 'DEV MODE',
+
+   ESSE OBJETO/PACKAGE ____ATIRA/THROW___ UM ERRO __ A ESSA PESSOA.... 
+
+
+
+
+   ----> PQ DENTRO DESSE OBJETO ({}) 
+
+
+
+   VOCÊ DEFINE QUAIS  __PROPS___ O COMPONENT 
+
+   'Person'
+    
+
+
+    VAI USAR... -------> E VOCÊ 
+    ____TAMBÉM____ DEFINE QUAL/QUAIS 
+
+
+    TIPOS DE '__DATA___' CADA TIPO 
+
+    DE PROP DEVERÁ SER...
+
+
+
+    --------------------------------
+
+
+SIMPLIFICANDO:
+
+
+
+dentro 
+
+
+de 
+
+'PropTypes' você 
+
+SIMPLESMENTE 
+
+PASSA VÁRIOS KEY-VALUE PAIRS... ------> AS KEYS === SÃO OS SEUS 'PROP NAMES' (como 'click', 'name' e 'age', no caso de PERSONS... )
+
+
+
+
+Certo...
+
+
+
+ex:
+
+
+Person.propTypes = {
+  click:  ,
+  age:  ,
+  name:  
+}
+
+
+
+----------------------
+
+
+CERTO.
+
+E AÍ, 
+
+NO CAMPO DO 'VALUE' vocÊ ___DEFINE QUAL TIPO DE VALUE ESSE PROP DEVERÁ 
+
+SER (qual 'dataType' ele deverá ser...) ----------> E PARA __CONSEGUIR ___ ESCREVER
+
+O TIPO 
+
+
+DE 'VALUE/DATA' permitido em cada PROP, nós 
+
+devemos primeiramente 
+
+
+chamar/invocar o 
+
+objeto 
+
+'PropTypes'  (Com o P  inicial maiúsculo...) --------->  E QUANDO 
+
+FIZERMOS ISSO,
+
+
+
+
+ESSE OBJETO __vAI NOS DEIXAR __ OPTAR POR QUAIS 
+
+'DATATYPES' vamos querer aceitar/usar...
+
+
+
+
+ex:
+
+
+
+Person.propTypes = {
+  click: PropTypes.func , /////// ESSES SÃO APENAS ALGUNS EXEMPLOS...
+  age: PropTypes.bool , /////////
+  name: PropTypes.string ////////////  
+}
+
+
+
+-----------------------------------------
+
+
+
+ESSES SÃO APENAS ALGUNS DOS DATA TYPES QUE PODEMOS DEFINIR/ESCOLHER 
+
+assignar nosso 'PropTypes'... ------->
+
+
+
+OBS: professor colocou '.func' (function) PARA 
+
+
+O 'CLICK' __ PQ É ISSO___ QUE ELE VAI RECEBER, 
+
+
+VAI RECEBER A FUNÇÃO 'this.deletePersonsHandler' DEFINIDA LÁ em 'App.js'...
+
+
+
+
+
+
+
+'click: PropTypes.func' ------> ISSO INDICA QUE, PARA O PROP 'click',
+
+EU VOU SEMPRE ESPERAR ___GANHAR__ UM POINTER A UMA FUNÇÃO.... (e não a uma STRING, ou UM NÚMERO, não.... o que eu quero aqui/vou querer aqui é uma FUNÇÃO.. )...
+
+
+
+
+
+
+certo...
+
+
+
+Já 
+
+
+
+'name' FICARÁ 
+
+
+'name: PropTypes.string'...
+
+
+
+
+------------------------------------
+
+
+
+e age ficará 
+
+
+
+
+'age: PropTypes.age'.....
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+Person.propTypes = {
+  click: PropTypes.func , /////// ESSES SÃO APENAS ALGUNS EXEMPLOS...
+  age: PropTypes.number , /////////
+  name: PropTypes.string ////////////  
+}
+
+
+
+---------------------------
+
+
+
+
+
+////////////TODOS OS DATATYPES PODEM SER DEFINIDOS AQUI (Até booleans e arrays, por exemplo).... ----> VOCê ATÉ PODE DEFINIR PROPTYPES MAIS AVANÇADOS, como 'hey, esse proptype deverá ser de uma FUNÇÃO QUE ACEITA/EXIGE ARGUMENTOS X E Y e retorna coisa Z...' ---> você pode ser bem avançado, aqui...
+
+
+
+
+
+
+
+
+
+
+--> BEM,
+
+ESQUECEMOS 
+
+
+O PROP 
+
+de 
+
+'changed'...
+
+
+
+
+
+Vamos escrever ele assim:
+
+
+
+'changed: PropTypes.func'   (assim como CLICK)....
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+SE FIZERMOS ISSO E SALVARMOS O CÓDIGO, NÃO VEREMOS MUDANÇA NO NOSSO APLICATIVO.... --> mas 
+
+
+o professor quer nos mostrar o DIFERENCIAL DE TER ISSO NO CÓDIGO, POR ISSO 
+
+ELE 
+
+
+__VAI QUEBRAR__ UM PEDAÇO DO NOSSO CÓDIGO, VAI PASSAR UM PROP COM UM VALOR INVÁLIDo. ----> 
+
+
+PARA ISSO,
+
+
+ELE 
+
+
+VAI ATÉ 
+
+
+O 
+
+
+'App.js', no código 
+
+
+do 
+
+STATE
+
+
+
+E ENTÃO 
+
+
+TROCA 
+
+
+o "age: 28" no PRIMEIRO OBJETO 'person' 
+
+
+POR 
+
+
+UM "age: '28'  " (ou seja, VAI COLOCAR UM 28 COMO __STRING_....) ----------> 
+
+
+
+E ISSO IMEDIATAMENTE 
+
+
+VAI PROVOCAR O EFEITO 
+
+
+
+
+DO 
+
+
+
+'PROPTYPES'
+
+
+NO NOSSO APLICATIVO ------> COMO RESULTADO DESSA TROCA, NÓS VAMOS ENXERGAR 
+
+
+O SEGUINTE CÓDIGO DE ERRO NO CONSOLE:
+
+''''
+index.js:1 Warning: Failed prop type: Invalid prop `age` of type `string` supplied to `Person`, expected `number`.
+    at Person (http://localhost:3000/static/js/main.chunk.js:526:1)
+    at Persons (http://localhost:3000/static/js/main.chunk.js:830:1)
+    at div
+    at App (http://localhost:3000/static/js/main.chunk.js:1018:5)
+
+
+''''
+
+
+------------------------------------------------------
+
+
+
+
+
+
+'FAILED PROPTYPE'.... --------> ISSO É MOSTRADO SÓ NO CONSOLE... (isso é mostrado 
+
+
+PQ HAVÍAMOS DEFINIDO 
+
+
+'age: PropTypes.number' LÁ NO OBJETO DE 'Person.propTypes'..) ----> E ISSO QUER DIZER QUE NÓS __ESPERÁVAMOS__/QUERÍAMOS UM __NUMBER__, e não uma STRING, nesse prop aí, nesse prop que foi passado aos CHILD ELEMENTS DE 'App.js'...
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+CERTO....
+
+
+
+VIMOS O FUNCIONAMENTO DE 
+
+
+
+'PROPTYPES'... --> e eles são BEM ÚTEIS.
+
+
+
+
+
+---------------------------------------
+
+
+
+PROPTYPES --> SÃO ESPECIALMENTE ÚTEIS EM CENÁRIOS EM QUE 
+
+VOCÊ 
+
+
+DISTRIBUI SEUS COMPONENTS COMO __PACKAGES___ A OUTROS DESENVOLVEDORES ('propTypes' FUNCIOAN 
+
+__COMO INSTRUÇÕES/MANUAL DE INSTRUÇÕES__...) ------->  SÃO ÚTEIS TAMBÉM 
+
+
+QUANDO VOCÊ TRABALHA EM UMA EQUIPE MAIOR... ---> pq quando 
+
+ALGUÉM 
+
+USAR SEUS COMPONENTS 
+
+
+DE FORMA INCORRETA,
+
+
+DURANTE O DESENVOLVIMENTO,
+
+
+ELES VÃO __RECEBER___ UM WARNING NO CONSOLE,
+
+e então 
+
+
+ELES PODERÃO CONSERTAR O TAL ERRO...
+
+
+
+
+
+
+
+
+
+
+
+--> CERTO,
+
+ESSES SÃO OS PROPTYPES... -------> MAS VOCÊ DEVE USAR 'PROPTYPES' 
+
+
+EM ___CADA COMPONENT__ DO SEU CÓDIGO? --------> aí depende 
+
+
+de você... -------> O PROFESSOR NÃO VAI FAZER ISSO DURANTE O CURSO, 
+
+
+MAS ELE 
+
+QUERIA INTRODUZIR ESSE CONCEITO A NÓS... -------> SINTA-SE LIVRE PARA UTILIZAR 
+
+
+PROPTYPES 
+
+
+NOS COMPONENTS MAIS CRÍTICOS DO SEU CÓDIGO... ----> CENÁRIOS EM QUE OUTRAS PESSOAS 
+
+
+
+VÃO USAR SEUS COMPONENTS (E em que 
+
+NÃO É TÃO CLARO DETERMINAR QUAIS PROPS SEU APLICATIVO RECEBE/EXIGE,
+
+E EM QUE NÃO SE SABE QUAL DATATYPE 
+
+ESSES PROPS DEVEM SER... )

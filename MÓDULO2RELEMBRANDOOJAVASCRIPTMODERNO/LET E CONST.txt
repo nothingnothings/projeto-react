@@ -1,0 +1,207 @@
+
+
+
+
+
+
+--> let e const 
+
+
+---> são diferentes maneiras de criar VARIÁVEIS...
+
+
+
+
+
+var --> cria um variável
+
+
+
+
+
+
+---> no entanto, algumas variáveis __NUNCA MUDAM__ (por isso 
+
+nós as criamos como CONSTS...)
+
+
+
+
+
+
+
+--> CONSTANTES ---> são variáveis QUE NUNCA MUDAM --> 
+
+
+
+
+
+
+let e const --> foram introduzidos pelo ES6...
+
+
+
+
+
+
+let ---> É O NOVO 'VAR' --> voc~e o usa para valores variáveis...
+
+
+
+CONST 
+
+
+
+------------------------------------------
+
+
+
+
+
+
+let e const também mudam ALGO POR TRÁS DAS CENAS, 
+
+que é o SCOPE DAS VARIÁVEIS.... ---> mas o takeaway mais 
+
+
+importante É:
+
+
+
+---> USAR LET SE VOCÊ VAI CRIAR UMA VARIÁVEL __QUE REALMENTE É VARIÁVEL___...
+
+
+
+
+--> USE CONST SE VOCÊ PLANEJA EM USAR UM 'CONSTANT VALUE', uma coisa que você define 1 única vez 
+e então NUNCA MUDA...  ---> e isso acontece com BASTANTE FREQUÊNCIA...
+
+
+
+
+
+
+'let' é a exceção, const é a regra... (const === variável nunca vai receber um novo valor...)
+---------------------------------
+
+
+
+
+PARA VER 
+
+
+
+A DIFERENÇA ENTRE LET E CONST, podemos 
+
+usar 
+
+'jsbin.com'... -->  É UM WEB EDITOR...
+
+
+
+Ele é muito bom para vocÊ digitar algum código javascript e então 
+
+receber um output...
+
+
+
+---> clique 
+
+na opção javascript e console...
+
+
+
+
+na direita vemos o nosso output...
+
+
+
+PROFESSOR DIGITA O CÓDIGO:
+
+
+
+
+
+var myName = 'Max';
+console.log(myName);
+
+
+
+
+myName = 'Manu';
+console.log(myName);
+
+
+
+
+
+--------------> O OUTPUT NO 'CONSOLE' SERÁ DE 'Manu', obviamente... (a segunda definição substituiu a primeira...)
+
+-------------------------------
+
+
+
+
+SE VOCÊ TROCAR 
+
+ESSE CÓDIGO POR (por 'let')
+
+ESSE CÓDIGO:
+
+
+
+
+let myName = 'Max';
+console.log(myName);
+
+
+
+
+myName = 'Manu';
+console.log(myName);
+
+
+
+
+
+, SEU RESULTADO AINDA SERÁ O MESMO, SERÁ O OUTPUT 
+
+de 'Max'...
+
+
+-----------------------------------
+
+
+
+
+
+
+AGORA, SE VOCê ESCREVER ESSE CÓDIGO DESSA FORMA, COM O CONST:
+
+
+
+
+
+const myName = 'Max';
+console.log(myName);
+
+
+
+
+myName = 'Manu';
+console.log(myName);
+
+
+
+
+
+
+SE VOCê FIZER ISSO, O CONSOLE VAI TE DAR 
+
+___UM ERRO____ 'TypeError: Assignment to constant variavble' ------> VAI TE DAR UM ERRO 
+
+PQ VOCÊ TENTOU REDEFINIR (reassign) UMA '''VARIÁVEL''' QUE FOI CRIADA COMO UMA CONSTANTE ('const')....
+
+
+
+---> as const NOS AJUDAM A MELHORAR O NOSSO CÓDIGO.

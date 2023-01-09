@@ -1,0 +1,446 @@
+
+
+
+
+
+
+
+
+---> ao longo das últimas lições, aprendemos bastante sobre o NEXT.JS...
+
+
+
+
+
+
+--> MAS HÁ BEM MAIS COISAS PARA SE APRENDER SOBRE ELE....
+
+
+
+
+
+
+--> podemos visitar o 
+
+
+github page 
+
+do 
+
+next.js
+
+
+
+
+
+
+
+---------->  'learnnextjs.com'... 
+
+
+
+
+
+---------------------------
+
+
+
+
+
+
+COM ISSO,
+
+
+VOCÊ PODE USAR 
+
+
+
+OS CONHECIMENTOS DE REACT 
+
+
+
+para 
+
+
+construir um 
+
+
+
+aplicativo com next.js 
+
+QUE 
+
+
+
+
+FAZ SERVERSIDE RENDERING... (por default), e em que 
+
+VOCÊ 
+
+
+
+
+não precisa SETTAR O 
+
+
+LAZY LOADING E O ROUTING (já é feito automaticamente)...
+
+
+
+
+--> ISSO FACILITA SUA VIDA, FACILITA A CRIAÇÃO 
+
+DE 
+
+
+UM REACT APP....
+
+
+
+
+
+
+--> VAMOS TERMINAR ESTE MÓDULO COM 
+
+
+O SHOW 
+
+ED __COMO ___ PREPARAR 
+
+NOSSO APLICATIVO PARA 'DEPLOYMENT'... ---> 
+
+
+VAMOS 
+
+ATÉ 
+
+O 
+
+'package.json'... 
+
+
+
+
+
+
+---> 'build' ---> É O SCRIPT QUE 
+
+VOCÊ QUER 
+
+RODAR 
+
+PARA 
+
+'build your project for deployment'...
+
+
+
+
+
+
+
+
+--> rodo npm run build... --> ISSO COMPILA 
+
+E OPTIMIZA
+ 
+
+ NOSSO CÓDIGO,
+
+
+
+ que 
+
+ é 
+
+ atirado 
+
+
+ no 
+
+ folder 
+
+ de 
+
+ '.next'... ---> ESSE FOLDER 
+
+ TERÁ 
+
+ __tODO 
+
+
+ O 
+
+
+ 'BUILD CONTENT'....
+ 
+
+
+
+
+
+
+ ---> CERTO.... MAS 
+
+
+ A 
+
+ VERSÕA DE NEXT.JS 
+
+
+ do professor é um pouco diferente da nossa....
+
+
+
+
+
+
+ -----> a nossa tem 'cache',
+
+ 'server' 
+
+
+ e 
+
+ 'static'... --> 
+
+
+ dentro 
+
+ de 
+
+
+ 'SERVER '
+
+ temos 
+
+
+ 'pages' 
+
+ e 
+
+ 'chunks'... 
+
+
+
+
+
+
+
+
+
+ ---> PROFESSOR NOS EXPLICA QUE 
+
+ __a COISA QUE É DEPLOYADA,
+
+ EM 
+
+
+ PROJETOS 'next',
+
+ 
+ seria 
+
+ __tEORICAMENTE__ só o folder de '.next'... ---> ENTRETANTO, 
+
+ VOCÊ 
+
+
+
+ ___NUNCA FARÁ ISSO__... ---> EM PROJETOS NEXT.JS,
+
+ VOCÊ 
+
+ SEMPRE 
+
+ __PRECISA___ UPLOADAR ________________ TODA A PASTA DO SEU PROJETO (sim, tudo mesmo...) --> 
+
+ ISSO 
+
+ SIGNIFICA QUE 
+
+
+ __ ATÉ MESMO 
+
+
+ SUA PASTA DE 'node_modules' 
+
+ PRECISA 
+
+
+ SER 
+
+ _UPLOADADA__, POIS 
+
+ ELA É USADA 
+
+ NO SERVERSIDE RENDERING,
+
+ e nas funções
+  
+
+
+  do 
+
+
+
+
+.next... ------------> OK, 
+
+
+
+
+DEPLOYAMOS/FAZEMOS DEPLOY 
+
+
+DO 
+
+FOLDER 
+
+__INTEIRO __ DE 
+
+NOSSO 
+
+PROJETO 
+
+
+A UM 
+
+
+HOST COMO:
+
+
+
+
+AWS ELASTIC BEANSTALK  / HEROKU...
+
+
+
+
+
+
+
+ 
+E ISSO É __IMPORTANTE... ------> VOCÊ 
+
+
+PRECISA 
+
+DE UM HOST/ UM SERVIÇO DE HOSTING __ QUE 
+
+É 
+
+CAPAZ __ DE RODAR 
+
+'NODE.JS'... -----> PQ 
+
+
+'NEXT.JS'
+
+
+
+_USA __ NODE.JS,
+
+E SÓ FUNCIONa COM NODE.JS.... 
+
+
+
+--> isso PQ __TODOS OS ARQUIVOS QUE VOCÊ USA __ SÃO __ARQUIVOS 
+JAVASCRIPT___... --> é por isso que 
+
+você 
+
+precisa de um 
+
+host 
+'NODEJS-READY'... ---> E AÍ 
+
+VOCÊ 
+
+SHIPPA 
+
+
+TODO 
+
+SEU 
+
+
+
+CÓDIGO 
+
+
+DE PROJETO (todos os arquivos e pastas)
+PARA 
+
+DENTRO 
+
+
+DESSE SEVER,
+
+E AÍ 
+
+VOCÊ 
+
+SÓ 
+
+DIGITA 
+'npm start' ('next start')...
+
+nesse servidor,
+
+
+
+
+
+
+
+
+---------->  SE NÓS FIZERMOS ISSO __NA NOSSA MÁQUINA, RODARMOS 
+
+'npm start',
+
+
+NÓS 
+
+___AINDA VAMOS HOSTEAR__ NOSSO APP LOCALMENTE_, 
+
+mas 
+
+
+
+O APP QUE SERÁ 
+
+__HOSTEADO __ SERÁ 
+
+NOSSA 
+
+VERSÕA 
+
+
+DO APP 'ready for deployment',
+
+E NÃO 
+
+A OUTRA,
+
+de 
+
+development...
+
+(
+
+    e isso mostra que tudo FUNCIONA... ---------> 
+)
+
+
+
+
+
+npm dev --> npm build --> npm start  (isso no nosso pc, para testar nosso aplicativo...)
+
+----------------------
+
+
+
+
+Next.js Repo & Docs: https://github.com/zeit/next.js/

@@ -1,0 +1,63 @@
+
+
+
+
+COM O LAZY LOADING ADICIONADO,
+
+TERMINAMOS A OPTIMIZAÇÃO DO NOSSO PROJETO.... 
+
+
+
+
+
+
+
+
+
+
+
+
+---> podemos fazer mais outsourcing de funções, se assim o desejarmos...
+
+
+
+
+
+
+
+--> nosso aplicativo já está funcionando bem... 
+
+
+
+
+
+
+---> já usamos muitas das features que o react nos dá....
+
+
+
+
+
+--> nos próximos módulos vamos fazer FINETUNE desse aplicativo para que 
+
+ele fique pronto para 
+
+'deployment'... ----> O professor quer 
+
+nos 
+
+mostrar 
+
+como  
+
+podemos 
+
+TESTAR 
+
+ESSE APLICATIVO AUTOMATICAMENTE... ---> isso feito,
+
+vamos 
+
+fazre 
+
+deploy, e aí teremos um aplicativo react TOTALMENTE PRONTO.

@@ -1,0 +1,2966 @@
+
+
+
+
+
+
+
+
+
+AGORA QUE APRENDEMOS SOBRE COMO ___rEESTRUTURAR___ NOSSO 
+
+REDUCER... (transformar sua sintaxe de 'if statements' em um 'switch' statement com vários 'case'),
+
+
+
+
+
+
+NÓS 
+
+
+DEVEMOS 
+
+
+VER MAIS UM POUCO 
+
+
+
+SOBRE 
+
+
+STATE MANAGEMENT NO REDUX... --------> 
+
+
+
+
+
+LÁ EM 'reducer.js',
+
+
+
+DEVEMOS 
+
+
+
+ADICIONAR UMA 
+
+NOVA PROPRIEDADE AO initialState/ao state....
+
+
+
+
+--> essa propriedade será chamada de 'results'... ---> INICIALMENTE, ESSA 
+
+PROPRIEDADE, 'results',
+
+TERÁ UM VALOR 
+
+DE 
+
+UM ARRAY VAZIO...
+
+
+
+
+ex:
+
+
+
+
+const initialState = {
+    counter: 0,
+
+    results: []
+}
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+
+
+
+
+---> ISSO FEITO,
+
+
+PROFESSOR VAI QUERER 
+
+ADICIONAR UM 
+
+NOVO __BUTTON___ no nosso container 
+
+'Counter'... 
+
+
+
+
+-----------> ELE VAI ADICIONAR UMA LINHA HORIZONTAL SIMPLES,
+
+com 
+
+'<hr></hr>'...
+
+
+
+
+
+---> ele vai adicionar um BOTÃO COMUM, sem ser um component...
+
+
+
+
+
+
+
+----> esse botão terá uma caption de 
+
+
+'Store Result'...
+
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+import { connect } from 'react-redux'; ///ESSENCIAL PARA PODER USAR A FEATURE DO 'REDUX'... --> deve-se sempre importar esse objeto/função/hoc/pacote NO CONTAINER EM QUE VOCÊ PLANEJA USAR O STATE DO REDUX/STATE ARMAZENADO NO 'CENTRAL STORE' do redux....
+
+import CounterControl from '../../components/CounterControl/CounterControl';
+import CounterOutput from '../../components/CounterOutput/CounterOutput';
+
+
+
+class Counter extends Component {
+  state = {
+    counter: 0,
+  };
+
+  counterChangedHandler = (action, value) => {
+    switch (action) {
+      case 'inc':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + 1 };
+        });
+        break;
+      case 'dec':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - 1 };
+        });
+        break;
+      case 'add':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + value };
+        });
+        break;
+      case 'sub':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - value };
+        });
+        break;
+
+      default:
+        return;
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        {/* <CounterOutput value={this.state.counter} />  //////////USO INTERNO DE 'STATE'. COISA COMUM... (ver código logo abaixo, que é a mesma coisa, MAS __UTILIZANDO O STATE GLOBAL DE 'REDUX', que é armazenado no seu 'CENTRAL STORE'...*/}
+        <CounterOutput value={this.props.ctr} /> 
+        {/* <CounterControl 
+          label="Increment"
+          clicked={() => this.counterChangedHandler('inc')} //////////SINTAXE ''ANTIGA''...
+        /> */}
+                                  {/* vvvvvvv ------> SINTAXE DE USO DAS 'ACTIONS' do redux.... ---------> aqui, estamos usando A PROPRIEDADE/MÉTODO 'onIncrementCounter', definida LÁ NAQUELE 'mapDispatchToProps', naquele return daquele objeto javascript, return interno... */}
+            <CounterControl 
+          label="Increment"
+          clicked={this.props.onIncrementCounter}
+        />
+        {/*                 ^^^^^^^--------> SIM, É EXATAMENTE ESTA A SINTAXE A SER UTILIZADA.... devemos chamar 'this.nomeDaPropriedadeNoReturnDeMapDispatchToProps'... ----> e devemos chamar SEM EXECUTAR, ou seja, sem escrever assim: 'this.onIncrementCounter()'... ------> ISSO ESTÁ ERRADO. -------> forma correta: 'this.onIncrementCounter'.... */}
+        <CounterControl
+          label="Decrement"
+          clicked={this.props.onDecrementCounter}
+        />
+        <CounterControl
+          label="Add 10"
+          clicked={this.props.onAddCounter}
+        />
+        <CounterControl
+          label="Subtract 10"
+          clicked={this.props.onSubtractCounter}
+        />
+        <hr/>
+        <button>Store Result</button> ////////////EIS O CÓDIGO EM QUESTÃO.
+      </div>
+    );
+  }
+}
+
+
+const mapDispatchToProps = dispatch => { ///////////DEVE SER SEGUIDO ESTE FORMATO.... -------> (sempre usar 'dispatch' como PARÂMETRO DESSA FUNÇÃO... ex: 'const mapDispatchToProps = dispatch => { return ...}' ...)
+  return {
+      onIncrementCounter: () => {
+        
+        dispatch(
+        {
+            type: 'INC_COUNTER'
+        }
+      )
+      },
+      onDecrementCounter: () => {
+        dispatch({
+          type: 'DEC_COUNTER'
+        })
+      },
+      onAddCounter: () => {
+        dispatch({
+          type: 'ADD_COUNTER',
+          value: 10
+        })
+      },
+      onSubtractCounter: () => {
+        dispatch({
+          type: 'SUB_COUNTER',
+          value: 10
+        })
+      }
+  }
+}
+
+
+
+
+const mapStateToProps = state => { ///////obs:::: é sempre 'const mapStateToProps', e nunca 'mapStateToProps = () => {}' (PQ ISSO AÍ NÃO É UM MÉTODO, E SIM UMA '''''CONSTANTE __ QUE SEGURA __ UMA FUNÇÃO QUE RETORNA UM OBJETO com 'prop names'... '''')
+        return {
+            ctr: state.counter
+        }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter); /////////SIM, A SINTAXE É ESSA MESMA...
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+E ESSE 'RESULT' aí, 
+
+
+
+esse valor,
+
+
+DEVERÁ 
+
+
+SER 
+
+ADICIONADO/ESCRITO 
+
+
+EM UMA 
+
+
+'unordered list' (<ul/>),
+
+
+
+QUE SERÁ CRIADA LOGO ABAIXO DO 'button'...
+
+
+ex:
+
+
+
+
+
+import React, { Component } from 'react';
+import { connect } from 'react-redux'; ///ESSENCIAL PARA PODER USAR A FEATURE DO 'REDUX'... --> deve-se sempre importar esse objeto/função/hoc/pacote NO CONTAINER EM QUE VOCÊ PLANEJA USAR O STATE DO REDUX/STATE ARMAZENADO NO 'CENTRAL STORE' do redux....
+
+import CounterControl from '../../components/CounterControl/CounterControl';
+import CounterOutput from '../../components/CounterOutput/CounterOutput';
+
+
+
+class Counter extends Component {
+  state = {
+    counter: 0,
+  };
+
+  counterChangedHandler = (action, value) => {
+    switch (action) {
+      case 'inc':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + 1 };
+        });
+        break;
+      case 'dec':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - 1 };
+        });
+        break;
+      case 'add':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + value };
+        });
+        break;
+      case 'sub':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - value };
+        });
+        break;
+
+      default:
+        return;
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        {/* <CounterOutput value={this.state.counter} />  //////////USO INTERNO DE 'STATE'. COISA COMUM... (ver código logo abaixo, que é a mesma coisa, MAS __UTILIZANDO O STATE GLOBAL DE 'REDUX', que é armazenado no seu 'CENTRAL STORE'...*/}
+        <CounterOutput value={this.props.ctr} /> 
+        {/* <CounterControl 
+          label="Increment"
+          clicked={() => this.counterChangedHandler('inc')} //////////SINTAXE ''ANTIGA''...
+        /> */}
+                                  {/* vvvvvvv ------> SINTAXE DE USO DAS 'ACTIONS' do redux.... ---------> aqui, estamos usando A PROPRIEDADE/MÉTODO 'onIncrementCounter', definida LÁ NAQUELE 'mapDispatchToProps', naquele return daquele objeto javascript, return interno... */}
+            <CounterControl 
+          label="Increment"
+          clicked={this.props.onIncrementCounter}
+        />
+        {/*                 ^^^^^^^--------> SIM, É EXATAMENTE ESTA A SINTAXE A SER UTILIZADA.... devemos chamar 'this.nomeDaPropriedadeNoReturnDeMapDispatchToProps'... ----> e devemos chamar SEM EXECUTAR, ou seja, sem escrever assim: 'this.onIncrementCounter()'... ------> ISSO ESTÁ ERRADO. -------> forma correta: 'this.onIncrementCounter'.... */}
+        <CounterControl
+          label="Decrement"
+          clicked={this.props.onDecrementCounter}
+        />
+        <CounterControl
+          label="Add 10"
+          clicked={this.props.onAddCounter}
+        />
+        <CounterControl
+          label="Subtract 10"
+          clicked={this.props.onSubtractCounter}
+        />
+        <hr/>
+        <button>Store Result</button> ////////////EIS O CÓDIGO EM QUESTÃO.
+        <ul>
+            <li></li>
+        </ul>
+      </div>
+    );
+  }
+}
+
+
+const mapDispatchToProps = dispatch => { ///////////DEVE SER SEGUIDO ESTE FORMATO.... -------> (sempre usar 'dispatch' como PARÂMETRO DESSA FUNÇÃO... ex: 'const mapDispatchToProps = dispatch => { return ...}' ...)
+  return {
+      onIncrementCounter: () => {
+        
+        dispatch(
+        {
+            type: 'INC_COUNTER'
+        }
+      )
+      },
+      onDecrementCounter: () => {
+        dispatch({
+          type: 'DEC_COUNTER'
+        })
+      },
+      onAddCounter: () => {
+        dispatch({
+          type: 'ADD_COUNTER',
+          value: 10
+        })
+      },
+      onSubtractCounter: () => {
+        dispatch({
+          type: 'SUB_COUNTER',
+          value: 10
+        })
+      }
+  }
+}
+
+
+
+
+const mapStateToProps = state => { ///////obs:::: é sempre 'const mapStateToProps', e nunca 'mapStateToProps = () => {}' (PQ ISSO AÍ NÃO É UM MÉTODO, E SIM UMA '''''CONSTANTE __ QUE SEGURA __ UMA FUNÇÃO QUE RETORNA UM OBJETO com 'prop names'... '''')
+        return {
+            ctr: state.counter
+        }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter); /////////SIM, A SINTAXE É ESSA MESMA...
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+A IDEIA É QUE QUANDO 
+
+
+
+'Store Result' (esse button) 
+
+
+É 
+
+CLICADO,
+
+
+
+O PROFESSOR VAI QUERER SIMPLESMENTE 
+
+
+___aDICIONAR ___ O VALOR ATUAL 
+
+DE 
+
+'Counter'
+
+
+
+ÀQUELA 
+
+
+LISTA 
+
+'Result List', que 
+
+temos 
+
+logo abaixo do button....
+
+-----------------------------------
+
+
+
+
+
+--> PARA ISSO, É EVIDENTE QUE O PROFESSOR VAI QUERER 
+
+
+___dISPATCHAR__ UMA ACTION__ SEMPRE QUE 
+
+ESSE 
+
+
+'Button' for clicado... ----------> E ESSA ACTION VAI 
+
+
+
+'PUSHAR' (empurrar) 
+
+
+
+ESSE VALOR ATUAL DO 
+
+
+'counter'
+
+
+
+
+ÀQUELA propriedade
+
+
+'results', que segura aquele array............ (
+
+
+    e isso, é claro, __VAI ACABAR UPDATANDO O ARRAY 
+
+    de 
+
+    'results' com 
+
+    esses valores/valor tirado do 'counter' (propriedade no STATE)..... -----> é evidente que isso DEMANDA que o 'current Counter' seja ENFIADO COMO INPUT dessa action.... (acho que é isso...)
+
+
+
+) 
+
+
+
+--------------------------------
+
+
+
+Vou tentar um pouco, sozinho...
+
+
+
+Consegui fazer algo....
+
+
+
+
+
+
+
+
+Consegui fazer 
+
+ESSE ARMAZENAMENTO DO VALOR 
+
+
+de 
+
+'state'
+
+NAQUELE ARRAY 
+
+DE 
+
+
+
+'results'...
+
+
+(
+
+    mas é só um store em UMA ÚNICA LINHA, naquela LI,
+
+    e nada mais...
+)
+
+
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+E O PROFESSOR PEDIU UMA COISA AINDA MAIS COMPLEXA:
+
+
+
+
+
+adicionalmente,
+
+
+se 
+
+UM 
+
+DESSES 
+
+'LIST ITEMS' 
+
+é 
+
+CLICADO,
+
+
+O PROFESSOR QUER QUE __NÓS O REMOVAMOS___ DO ARRAY ( e do DOM)....
+
+
+
+
+
+
+Ok, isso já é um pouco mais difícil...
+
+
+
+
+
+
+
+
+Devemos sempre começar pela escrita da 'ACTION', no nosso container...
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+MAS O PROFESSOR 
+
+
+JÁ NOS DÁ UMA DICA:
+
+
+cada 
+
+um 
+
+desses 
+
+
+
+'li'
+ 
+
+ DEVE 
+
+ TER UM 
+
+
+ 'id', ou coisa do gênero, para poder o diferenciar dos outros... (e para que 
+ 
+ eles possam ser deletados, quando clicados...) ------------> PROVAVELMENTE 
+
+
+ TEREMOS 
+
+
+
+ DE 
+
+ CRIAR UM 
+
+
+ COMPONENT 
+
+ 'list'...
+
+
+ --------------------------------
+
+
+
+
+ Professor faz que nem nós:
+
+
+
+ vai 
+
+
+ no 
+
+
+
+ 'mapDispatchToProps' 
+
+
+
+
+ E ENTÃO 
+
+
+ DEFINE 
+
+
+ 2 
+
+
+ NOVOS 
+
+
+ 'props'/actions... -----> isso pq NÓS VAMOS PRECISAR DE 2 NOVAS 'FUNÇÕES'/ 2 novos dispatches...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ FUNÇÕES SERÃO:
+
+
+
+
+ 1) onResultStored: () => dispatch(
+     {
+         type: 'RESULT_STORE'
+     }
+ )
+
+
+
+
+
+
+ ----------------------------------------
+
+
+
+
+ Certo...
+
+
+
+ e 
+
+
+ professor nos diz que _VAMOS PRECISAR DO 'CURRENT VALUE' 
+
+ da 
+
+ propriedade 
+
+ 'counter', lá no state do redux... --------> E ELE NOS DIZ QUE 
+
+
+ NÓS NÃO PRECISAMOS DO PAYLOAD PARA CONSEGUIR 
+
+ ESSA DATA/INFORMAÇÃO,
+ que nós 
+
+
+ PODEMOS 
+
+ JUSTAMENTE 
+
+ USAR 
+
+
+ O 
+
+
+ ___sTATE __ DO REDUX __ PARA OBTER ESSE VALOR.... (e esse valor está 
+ 
+ lá no meu 
+ arquivo 
+ 
+ 
+ 
+ do 
+ 
+ 'reducer.js'...)
+
+
+
+
+ -----------------------------------------
+
+
+
+ MAS É CLARO QUE 
+
+ EXISTEM USE-CASES EM QUE VOCÊ VAI ___QUERER ARMAZENAR __ INPUTS DO USUÁRIO (user input),
+
+ e 
+
+ aí 
+
+
+É BEM ÚTIL ESSE NEGÓCIO DO 'PAYLOAD'...
+
+
+
+ex:
+
+
+
+onStoreUserResult: (valorInputtadoPeloUsuário ) => dispatch(
+    {
+        type: 'STORE_USER_RESULT',
+        value: valorInputtadoPeloUsuário
+    }
+)
+
+
+-----------------------------------------------------------
+
+
+
+
+PROFESSOR TAMBÉM CRIARÁ UMA OUTRA PROPRIEDADE/DISPATCH,
+
+que 
+
+chamará 
+
+
+de 
+
+
+
+'onDeleteResult'....
+
+
+
+
+
+ex:
+
+
+
+
+onDeleteResult: () => dispatch(
+    {
+        type: 'DELETE_RESULT'
+    }
+)
+
+
+--------------------------------
+
+
+
+
+
+AGORA, PORTANTO, 
+
+O PROFESSOR
+
+
+
+TEM 
+
+
+
+ESSES 
+
+
+
+2 
+
+
+'PROPS', 
+
+
+
+
+e ele vai 
+
+CONECTAR 
+
+O 
+
+
+PROP 
+
+
+DE 
+
+'onResultStored'
+
+
+
+NAQUELE 
+
+
+'BUTTON' 
+
+
+em 
+
+'
+Counter.js'...
+
+
+
+
+
+
+
+
+ex:
+
+
+ <button onClick={this.props.onResultStored}>Store Result</button>
+        <ul style={
+          {
+            listStyle: 'none'
+          }
+        }> 
+
+------------------------------------------------------------------
+
+
+
+
+
+onClick={this.props.onResultStored} --------> ESTE É O CÓDIGO.
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+NO LIST ITEM O PROFESSOR TAMBÉM VAI ADICIONAR UM 
+
+
+'onClick',
+
+
+
+
+
+DESSA VEZ 
+
+
+para rodar 
+
+'this.props.onDeleteResult'...
+
+
+
+-----------------------
+
+
+
+
+
+O PROFESSOR TAMBÉM ESCREVE 
+
+'this.props.results' no 'li'....
+
+
+PARA 
+
+CONSEGUIR  
+
+um simples 
+
+
+'store' do valor 
+
+
+do
+'
+COUNTEr', nesse 
+
+list item aí..
+
+
+
+
+--------------------------------
+
+
+
+
+
+CONTUDO, ELE DIZ PARA FOCARMOS NO BOTÃO DE 
+
+
+
+'onStoreResult'....
+
+
+
+
+
+QUANDO CLICARMOS NESSE BOTÃO,
+
+
+__NADA ACONTECERÁ__ (mas nós também _NÃO RECEBEREMOS ERRO ALGUM)...
+
+
+
+
+
+
+
+-------> E ISSO, ESSA AUSÊNCIA DE ERROS, É IMPORTANTE... --> é importante PQ 
+
+NOS MOSTRA QUE _______VOCê PODE ___ DISPATCHAR __ ACTIONS _______ QUE 
+
+
+_________NÃO _______ SÃO HANDLADAS NO REDUCER....  (isso não vai dar erro nenhum 
+
+no código, SÓ 
+
+NÃO ACONTECERÁ NADA... )
+
+
+
+
+
+
+
+
+
+
+--> isso significa que 
+
+
+
+a 
+
+
+'action' 
+
+
+de 
+
+type
+
+
+
+'STORE_RESULT' 
+
+está 
+
+
+SENDO DISPATCHEADA (por meio do 'BUTTON' e seu 'onClick')
+
+ao 
+
+'reducer',
+
+
+
+
+
+MAS 
+ELE 
+
+NÃO FOI CONFIGURADO PARA A RECEBER... (e por isso, não faz nada com essa 'action' que fora dispatcheada )
+
+
+
+
+
+
+
+
+
+
+
+OK, MAS PQ DIABOS O REDUCER __NÃO NOS ENTREGOU/ATIROU UM ERRO/QUEBROU? 
+
+
+ele não quebrou/deu erro 
+
+
+JUSTAMENTE 
+
+PQ 
+
+
+TEMOS 
+
+AQUELA LINHA 
+
+
+
+'DEFAULT' no seu 'switch Case statement',
+
+
+aquela 
+
+linha de 
+
+
+
+'default:
+
+return state;'  ----------> ISSO QUER DIZER QUE QUANDO 
+
+
+UMA 
+
+ACTION INVÁLIDA/DESCONHECIDA FOR ENVIADA,
+
+
+
+NOSSO REDUCER VAI ___AUTOMATICAMENTE __ RETORNAR 
+
+
+O VELHO/CURRENT  STATE (e isso dá a aparência DE QUE __ NADA ACONTECEU NO NOSSO APP,
+
+continua igual...) ------> ISSO VAI SEMPRE RETORNAR O 'CURRENT STATE'...
+
+
+
+--------------------------------
+
+
+
+
+
+
+MAS AGORA DEVEMOS REALMENTE HANDLAR 
+
+esse 
+
+case de 
+
+
+'onResultStored'... ------> professor cria um novo case para isso...
+
+
+
+
+
+--> dentro desse state, o professor vai QUERER 
+
+RETORNAR 
+
+__UMA VERSÃO UPDATADA_ DO NOSSO 
+
+
+
+STATE... ------> E DEVEMOS FAZER ISSO DE FORMA 'IMMUTABLE'...
+
+
+
+
+----------------------------------------------------------------------
+
+
+ 
+
+
+ NA versão do professor, todos os outros 'cases' estão sendo retornados de forma 'mutable', mas isso 
+
+ é 
+
+ pq 
+ NÓS __aPENAS__ TINHAMOS A PROPRIEDADE 'counter' dentro do 'initialState' (por isso não importava/não fazia diferença, pq 
+ 
+ nós 
+ 
+ simplesmente escrevíamos 
+ 
+ 
+ 'return {
+   counter: state.counter + 1
+ }',
+ 
+ 
+ 
+ e o state era APENAS ESSA PROPRIEDADE 'counter', por isso não havia problema...)
+
+
+
+
+ ----------------------------------
+
+
+
+
+ --> MAS AGORA, COMO NÓS TEMOS UMA PROPRIEDADE 
+
+
+ 'results', que _taMBÉM_  É UM __aRRAY__, no nosso state.... 
+
+
+
+ E 
+
+
+ SE AGORA NÓS 
+
+
+
+REALIZARMOS ALGUMA DAQUELAS 'action', como 
+
+'ADD_COUNTER', 'SUB_COUNTER', 'INC_COUNTER', etc etc,
+
+
+NÓS 
+
+
+_vAMOS BASICAMENTE _____ REMOVER ___ AQUELA PROPRIEDADE 
+
+
+de 
+
+'results' se NÓS __ UPDATARMOS O STATE DE FORMA 'MUTABLE'____ ----->>> e é EXATAMENTE 
+
+POR ISSO 
+
+
+QUE 
+
+
+PRECISAMOS 
+
+
+
+UPDATAR O STATE DE FORMA 'IMMUTABLE', ou seja,
+
+com 
+
+USO 
+
+
+DO 
+
+'spread operator' 
+
+
+PARA 
+
+
+ESPALHAR TODAS 
+
+
+
+AS PROPRIEDADES QUE NÃO SÃO 'counter' (no caso, 'results') DENTRO 
+
+
+DE NOSSO 
+
+
+OBJETO RETORNADO NOS 
+
+
+CASES 
+
+do 
+
+switchStatement, no reducer....
+
+
+
+
+ex:
+
+
+
+  switch (action.type) {  
+    case 'INC_COUNTER':
+      return {
+        ...state, //////////EIS O CÓDIGO EM QUESTÃO.
+        counter: state.counter + 1,
+      };
+      break;
+    case 'DEC_COUNTER':
+      return {
+        ...state,
+        counter: state.counter - 1,
+      };
+      break;
+      case 'ADD_COUNTER':
+        return {
+          ...state,
+          counter: state.counter + action.value,
+        };
+        break;
+        case 'SUB_COUNTER':
+          return {
+            ...state,
+            counter: state.counter - action.value,
+          };
+        break;
+        case 'RESULT_STORE': 
+        return {
+            ...state, 
+            results: state.counter
+
+        };
+        break;
+        case 'DELETE_RESULT':
+            return {
+                ...state, 
+                results
+            }
+        break;
+    default:
+      return state;
+  }
+};
+
+
+
+-----------------------------------------------
+
+
+
+
+--> OK.... MAS AQUI HÁ UM DETALHE... -------> 
+
+
+AO CONTRÁRIO 
+
+
+
+DO 
+
+QUE VÍAMOS 
+
+COM 
+
+'setState()', no REACT '''comum''',
+
+
+
+
+QUE FAZIA __MERGE___ DA 'PROPRIEDADE NOVA' com 
+
+as 
+
+'PROPRIEDADES DO STATE VELHO' em um 
+
+
+
+
+'novo state',
+
+
+
+
+AQUI,
+
+COM 
+
+
+O 
+
+
+'REDUX' NO REACT,
+
+
+
+
+
+ESSE 'MERGE' AUTOMÁTICO _______NÃO ACONTECE_____.......... --------> Isso significa, basicamente,
+
+
+
+que 
+
+
+
+
+
+esse 
+
+
+
+'case 'INCREMENT':
+    return {
+      counter: state.counter + 1
+    }
+  '
+
+
+
+
+
+  VAI ________rEALMENTE____ RETORNAR UM ___sTATE___ COMPLETAMENTE NOVO, INDEPENDENTE 
+
+  DO ÚLTIMO.... (e é por isso que precisamos 
+  
+  COPIAR AS PROPRIEDADES DO STATE ANTIGO POR MEIO 
+  
+  DO 
+  
+  'spread operator'...)
+
+
+
+
+
+
+
+  E É EXATAMENTE POR ISSO QUE DEVEMOS 
+
+  ESCREVER:
+
+
+  
+'case 'INCREMENT':
+    return {
+      ...state,
+      counter: state.counter + 1
+    }
+  '
+
+
+------------------------ 
+
+
+
+
+
+
+
+
+OU SEJA: DEVEMOS ___cOPIAR___ AS PROPRIEDADES ANTIGAS___ E APENAS ___ UPDATAR __ AS PROPRIEDADES 
+
+QUE 
+
+PRECISAM __SER UPDATADAS... (e isso deve ocorrer DE FORMA 'IMMUTABLE', com SPREAD OPERATORS...)
+
+
+
+
+
+
+
+
+-->exemplo de coisa/código que VOCÊ _NÃO DEVE FAZER___:
+
+
+
+
+
+'
+case 'INCREMENT':
+const newState = state;
+newState.counter = state.counter + 1;
+return newState;'
+
+
+
+
+
+----------------------------------
+
+
+NÓS REALMENTE NÃO DEVEMOS USAR/ESCREVER ESSE CÓDIGO LOGO ACIMA... ---> não devemos usá-lo 
+
+PQ ESTAREMOS ALTERANDO O STATE DE FORMA 'MUTABLE'... (aquele 
+
+
+'newState', aquela constante, estará 
+
+
+SEGURANDO UM VALOR ___REFERENCIAL__, VAI ESTAR SEGURANDO UM __POINTER__ AO OBJETO 
+
+'state' QUE __JÁ EXISTE NA MEMORY/MEMÓRIA__ DO REDUX...) -----------> 
+
+
+
+
+
+
+EM VEZ DISSO,
+
+vamos 
+
+escrever 
+
+um código que COPIA o 'oldState', AS PROPRIEDADES DO STATE ANTIGO...
+
+
+ex:
+
+
+  
+'case 'INCREMENT':
+    return {
+      ...state,
+      counter: state.counter + 1
+    }
+  '
+
+
+-----------------------------------------------------------
+
+ESSA É UMA DAS FORMAS....
+
+
+
+MAS 
+
+HÁ 
+
+OUTRA:
+
+
+
+2a forma DE COPIAR O OLD STATE ---> 
+
+
+
+
+vamos escrever:
+
+
+
+
+
+const reducer = ( state = initialState, action) => {
+        switch (action.type) {
+          case 'INCREMENT': 
+                const newState = Object.assign();
+
+
+        }
+}
+
+
+----------------------------------------------
+
+
+
+
+
+OU SEJA,
+
+
+VAMOS 
+
+USAR 
+
+
+ESSA FUNÇÃO/MÉTODO 
+
+
+
+'Object.assign()'... ---------> 
+
+
+e 
+
+esse método/função 
+
+
+
+VAI 
+
+EXIGIR 
+
+
+
+2 PARÂMETROS,
+
+
+que 
+
+
+serão 
+
+
+
+1) UM OBJETO JAVASCRIPT ('{}') ____VAZIO___ COMO PRIMEIRO ARGUMENTO/PARÂMETRO...
+
+
+
+
+
+
+2) ANTIGO OBJETO JAVASCRIPT, QUE QUEREMOS COPIAR__, COMO SEGUNDO PARÂMETRO...
+
+
+
+
+ex:
+
+
+
+'const newState = Object.assign({}, state);'
+
+
+
+
+ex:
+
+
+
+const reducer = ( state = initialState, action) => {
+        switch (action.type) {
+          case 'INCREMENT': 
+                const newState = Object.assign({}, state); ////////EIS O CÓDIGO EM QUESTÃO.
+                newState.counter = state.counter + 1; ///////
+                return newState;
+          break;
+          case ....
+
+        }
+}
+
+
+--------------------------------------
+
+
+
+ISSO 
+
+VAI 
+
+
+ESSENCIALMENTE __CLONAR_ __ O ANTIGO OBJETO 'state', clonar 
+
+
+de uma 
+
+MANEIRA 
+
+___IMMUTABLE_, nos dando 
+
+UM 
+
+
+NOVO OBJETO JAVASCRIPT, que terá 
+
+
+
+TODAS 
+
+AS PROPRIEDADES DO ANTIGO OBJETO 'STATE'... (como 'counter' e 'results'),
+
+MAS 
+
+
+QUE 
+
+SERÁ ___tECNICAMENTE___ UM OBJETO DIFERENTE__.... -------> E ISSO É IMPORTANTE, É CLARO, 
+
+
+
+DEVIDO 
+
+À MANEIRA PELA QUAL OBJETOS 
+ 
+E ARRAYS FUNCIONAM EM JAVASCRIPT... (reference types vs primitive types)....
+
+
+
+
+
+------------------------------------------
+
+
+
+
+COM ISSO, COM A LINHA DE CÓDIGO DE 
+
+
+'Object.assign()', 
+
+
+
+NÓS 
+
+
+
+__RECEBEMOS UMA __CÓPIA___ DO STATE ANTIGO... -------> ENTRETANTO, 
+
+
+__iMPORTANTE::::::::: __________ --------> ESSA CÓPIA _________NÃO É UM 'DEEP CLONE'____..... -------> 
+
+
+
+ISSO SIGNIFICA QUE 
+
+
+AS PROPRIEDADES/objetos beeeem no fundo das propriedades 'surface' (como 'counter' e 'results') 
+
+NÃO 
+
+
+SERÃO COPIADOS/COPIADAS.... ---------> isso significa que 
+
+
+NOSSO 
+
+
+OBJETO 
+
+
+
+'results' SERÁ/TERÁ
+
+O MESMO ARRAY 
+
+DEFINIDO 
+
+
+NO 
+
+'initialState'... (justamente por ser uma 'SHALLOW COPY'...) ---------> embora 
+
+aqui,
+
+nesse nosso exemplo 
+
+
+
+com 
+
+'INCREMENT', isso NÃO IMPORTE EM NADA... (pq a única coisa que 
+
+vamos 
+
+alterar no case 
+
+de 
+
+
+'INCREMENT' é a propriedade 'counter'... a propriedade 'results' restará 
+inafetada 
+
+por nossa alteração/update...)
+
+
+
+
+
+
+
+---> e esse 'newState' ('return newState' )
+
+
+__VAI REALMENTE SE TORNAR O __NOVO STATE__ NO  GLOBAL STORE 
+
+DO REDUX... (e esse novo STATE __ SERÁ TECNICAMENTE UM NOVO OBJETO (e isso é importante...))
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------
+
+
+
+
+
+PROFESSOR ADMITE/APONTA QUE, sim, podemos ESCREVER 
+
+ASSIM:
+
+
+
+
+
+
+
+const reducer = ( state = initialState, action) => {
+        switch (action.type) {
+          case 'INCREMENT': 
+                const newState = Object.assign({}, state); ////////tipo assim
+                newState.counter = state.counter + 1; ///////
+                return newState;
+          break;
+          case ....
+
+        }
+}
+
+----------------------------
+
+
+PODEMOS ESCREVER ASSIM, É CLARO, 
+
+
+MAS 
+
+
+A 
+
+
+
+MANEIRA MAIS __CURTA__ (e rápida) É __MELHOR__...
+
+
+
+
+
+
+
+
+A maneira mais rápida já conhecemos,
+
+é assim:
+
+
+
+
+'return {
+  ...state, 
+  counter: state.counter + 1
+}
+'
+
+
+
+
+
+
+
+MAS, DE NOVO, ISSO __SERÁ UMA 'SHALLOW COPY'... --------> nós já vimos COMO 
+
+
+
+___FAZER UMA COPY 'DEEP' MAS FAZ BASTANTE TEMPO...____
+
+(vou tentar encontrar...)
+
+
+
+
+----------------------------------
+
+
+
+ACHO QUE ENCONTREI:
+
+
+
+
+''''''''''''''''''''''''''''''''
+
+
+
+const updatedOrderForm = { ////VER AULA 'FAZENDO HANDLE DE USER INPUT'. --> aqui professor usa UMA GRANDE GAMBIARRA para poder UPDATAR O STATE DE 'ContactData' de forma IMUTÁVEL.... (ele faz isso PQ SEMPRE QUE NÓS QUEREMOS UPDATAR UM STATE E VAMOS QUERER USAR OS DADOS DO STATE ANTERIOR, É MUITO MELHOR UPDATAR NOSSO STATE DE FORMA IMUTÁVEL, COM A AJUDA DOS SPREAD OPERATORS...) -----> entretanto, aqui surgiu um problema, pois OS SPREAD OPERATORS CRIAM CÓPIAS 'shallow' ( e não 'deep', que tem todas as propriedades e seus valores representados na cópia) --> isso significa que a ''''NOVA CÓPIA'''' não vai ser uma cópia total, algumas propriedades bem internas (como 'placeholder' e  'type' ) VÃO CONTINUAR SENDO 'pointers' ao OBJETO 'state' original, o que é péssimo... ------> para evitar isso aí, professor escreve as linhas abaixo de 'updatedOrderForm'.... (ele CLONA VERDADEIRAMENTE a propriedade 'value' dentro de nossos 'inputIdentifier' (que são os elementos 'name', 'street', 'email', 'country', no nosso state....))
+      ...this.state.orderForm
+    }
+
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    }
+
+    updatedFormElement.value = event.target.value;
+
+    console.log(updatedFormElement.touched);
+
+
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
+
+    updatedFormElement.touched = true;
+
+
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+
+    let formIsValid = false; //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+    this.setState(
+      {
+        orderForm: updatedOrderForm
+      }
+    )
+
+
+  console.log(this.state);
+  }
+
+
+''''''''''''''''''''''''''''''''''''''''''''''
+
+
+
+
+
+^^^^ é esse código logo acima...
+
+
+
+
+
+
+
+
+
+obs:
+
+
+
+
+'return {
+  ...state, 
+      counter: state.counter - 1 ////////AQUI ACONTECE A MÁGICA... ---> se o redux/react identifica que ESSA PROPRIEDADE JÁ EXISTE NAQUELA REFERÊNCIA de '...state', ele VAI SIMPLESMENTE SUBSTITUIR ESSA PROPRIEDADE no state antigo (no caso 'counter') PELA PROPRIEDADE NESSE NOVO STATE (o 'counter' escrito mais abaixo, logo abaixo do '...state'...)
+}
+'
+
+
+
+
+---> ISSO SIGNIFICA QUE 
+
+o valor de 
+
+
+
+'results' RESTA __INTOCADO__ PELA 
+
+AÇÃO/alteração 
+
+
+do valor 
+
+de 
+
+'counter' no NOVO 'state'/objeto......
+
+
+---------------------------------
+
+
+
+
+
+
+--> E É ASSIM QUE DEVEMOS UPDATAR O STATE, EM TODOS OS CASOS: 
+
+DEVEMOS 
+
+
+SEMPRE UPDATÁ-LO DE FORMA 'IMMUTABLE',
+
+
+SEM TOCAR/ALTERAR O VELHO STATE  (ou seja, escreva '{...state}' ANTES DE COMEÇAR A ALTERAR PROPRIEDADES DO VELHO STATE) -------> 
+
+
+SE 
+
+VOCÊ NÃO FIZER ISSO, ESSA ESCRITA BÁSICAS,
+
+
+vocÊ 
+
+VAI ACABAR __DELETANDO PROPRIEDADES __ DO ANTIGO STATE___... (na verdade, você estará CRIANDO 
+
+CÓPIAS DO STATE SEM ___ TODAS AS SUAS PROPRIEDADES ANTIGAs__, o que é péssimo)
+
+
+
+-----------------------------
+
+
+
+
+--> CERTO... E EM 
+
+'STORE_RESULT' 
+
+
+___NÓS TAMBÉM __ VAMOS RETORNAR UM OBJETO JAVASCRIPT,
+
+
+
+
+OBJETO JAVASCRIPT EM QUE 
+
+_MANTEREMOS O ANTIGO COUNTEr....
+
+
+
+ex:
+
+
+
+case 'RESULT_STORE': 
+
+return {
+  ...state,
+  results: 
+}
+
+
+------------------------
+
+
+
+CERTO,
+ 
+
+
+ MAS AQUI 
+
+ VAMOS SETTAR
+  
+  'results', essa propriedade 
+
+  aí ,
+
+
+
+  COMO 
+
+  SENDO 
+
+
+
+  IGUAL 
+
+
+  a 
+
+
+  'state.results' (ou seja, A PROPRIEDADE 'results DO __ANTIGO STATE)....
+
+
+
+
+
+  --> mas não é só isso:
+
+
+  VAMOS 
+
+  TAMBÉM 
+
+  chamar 
+  '.concat()'
+
+
+  EM CIMA 
+
+  __dESSE __'results', PARA __ ENTÃO FAZER TIPO UM 'PUSH'...
+
+
+
+
+
+
+  MAS 
+
+
+PUSH()
+
+
+
+e 
+
+
+CONCAT() 
+
+
+são 
+
+
+um pouco diferentes... 
+
+
+
+
+
+
+
+PUSH --> MANIPULA O VALOR ORIGINAL, ENFIA-O EM UM 
+ARRAY/OBJETO...
+
+
+
+'Concat' ------> RETORNA UM __NOVO ARRAY__ ------> ESSE NOVO ARRAY SERÁ 
+
+__ 'VELHO ARRAY + ARGUMENTO QUE VOCÊ ADICIONA POR MEIO DE 'concat()'...'  ----------->
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+___É UMA MANEIRA __ 'IMMUTABLE'__ DE UPDATAR __ UM ARRAY, por meio 
+
+DA __aDIÇÃO__ DE UM ITEM (ao novo array/objeto)....
+
+
+
+
+
+
+
+--> E COMO ELE __rETORNA _ UM NOVO ARRAY, isso é muito bom... -----> é mt bom 
+
+
+JUSTAMENTE PQ 
+
+ARRAYS SÃO 
+
+'REFERENCE TYPES'... 
+
+
+
+
+(OBS:::: SE USÁSSEMOS '.push()' aqui, em cima de 'state.results', NÓS ESTARÍAMOS ___ ENCOSTANDO/EMPURRANDO 
+
+COISAS PARA DENTRO DE 'results' (essa propriedade) LÁ NO ORIGINAL STATE, MESMO 
+
+USANDO 
+
+ESSE '...state' pouco antes... ------> ESSE '...state' NÃO VAI TE PREVENIR 
+
+DE FAZER ESSA CAGADA ... ------> E NÓS ___REALMENTE __ NÃO QUEREMOS ISSO... ) ----------> NÃO USE 
+
+
+'.PUSH()' para 'STATE MANAGEMENT',
+
+
+SEU 
+
+STATE MANAGEMENT FICA 
+
+IMPREVISÍVEl....
+
+
+-----------------------
+
+
+OK,
+
+
+
+DEVEMOS 
+
+USAR 
+
+'.concat()'...
+
+
+
+
+
+ex:
+
+
+
+
+case 'RESULT_STORE':
+  return {
+    ...state,
+    results: state.results.concat() ////////EIS O CÓDIGO EM QUESTÃO.
+  }
+
+
+-------------------------
+
+
+OK... QUAL É O PRÓXIMO PASSO?
+
+
+
+
+professor explica que devemos 'PUSHAR' (só que não, hahaha)/CONCATENAR 
+
+QUALQUER 
+
+COISA 
+
+QUE 
+
+QUEREMOS 
+
+
+
+___ADICIONAR ___ NESSE 
+
+ARRAY 
+
+
+de 
+
+'results'... -------> POR EXEMPLO,
+
+
+AQUI 
+
+PODERÍAMOS/VAMOS __ 
+
+
+
+ADICIONAR 
+
+
+'state.counter', que é JUSTAMENTE O 
+
+'current value'
+
+
+
+DE NOSSA PROPRIEDADE 
+
+'counter'
+
+
+NO 
+
+STATE 
+
+GLOBAL DO REDUX...
+
+
+
+ex:
+
+
+        case 'RESULT_STORE': 
+        return {
+            ...state, 
+            results: state.results.concat(state.counter);
+
+        };
+
+  
+  ------------------------
+
+
+  Certo, nós executamos nosso PROJETO,
+   
+   mas 
+
+   nada 
+
+   acontece quando clicamos no 'button'.. ---------> AH É CLARO, É PQ 
+
+
+
+   __NÃO HAVÍAMOS PASSADO PARÂMETRO ALGUM A 'concat()'...
+
+
+(não havíamos passado 'state.counter'...).
+
+
+
+
+
+
+
+
+
+
+
+'state.counter' VAI __SER UMA SNAPSHOT__ DO VALOR 
+
+
+DE 'counter' no state antigo,
+
+e 
+
+essa SNAPSHOT 
+
+será 
+
+ENTÃO 'EMPURRADA'/ATIRADA
+ 
+ por meio 
+
+
+ de 
+
+ 'concat()' no nosso 
+
+
+ array 
+
+ 'results'....
+
+ ---------------------------------------
+
+
+
+
+
+ Certo... ISSO __FUNCIONOU___.... 
+
+
+
+
+
+É possível enxergar, agora,
+
+vários 
+
+
+números sendo adicionados àquele item '<li>',
+
+quando 
+
+
+clicamos 
+
+em
+
+'store'... e esses números são justamente 
+
+os 
+
+valores 
+
+'counter', sempre o counter ''atual'''... 
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+---> feitas essas alterações todas,
+
+
+agora ESTAMOS UPDATANDO O STATE DE FORMA 'IMMUTABLE'
+
+
+EM TODOS OS 'cases' 
+
+nesse 
+
+switch statement no 'reducer'... -------> E TAMBÉM 
+
+
+APRENDEMOS 
+
+A 
+
+___UPDATAR__ UM ___aRRAY__/PROPRIEDADE QUE 
+SEGURA UM ARRAY NO SEU STATE __ DE FORMA 
+'IMMUTABLE'__, JUSTAMENTE POR MEIO 
+
+DESSE 
+
+'.concat()' sendo chamado em cima do array.... ----> e isso ADICIONA UM 
+
+NOVO 
+
+ITEM/ELEMENTO/VALOR __ DE FORMA __IMMUTABLE__...
+
+-------------------------------------
+
+
+
+
+E 
+
+
+COMO 
+
+
+esse 
+
+
+case 
+
+
+de 
+
+'RESULT_STORE' 
+
+
+
+nos retorna ESSE STATE 
+
+com 
+
+o 
+
+'results' updatado, 
+
+NÓS PODEMOS 
+
+O UTILIZAR 
+
+
+NO COMPONENT 
+
+'Counter.js'... -----> professor nos explica que 
+
+BINDAMOS 
+
+
+ESSE 
+
+
+'results'
+
+
+
+na função/coisa 
+
+
+de 
+
+
+'const mapStateToProps',
+
+QUE 
+
+FICARÁ COM UM CÓDIGO 
+
+DE 
+
+
+
+
+
+'const 
+
+
+
+mapStateToProps = state => {
+  return {
+    ctr: state.counter,
+    storedResults: state.results /////////////////EIS O CÓDIGO EM QUESTÃO...
+  }
+}
+
+''''''''''
+
+
+
+
+--> isso 
+
+feito,
+
+
+PODEMOS 
+
+USAR 
+
+
+
+
+'this.props.results', que vai se referrir a esse 'storedResults', QUE VAI SE REFERIR a 'state.results'...
+
+
+
+
+
+
+
+
+ex:
+
+
+
+<li>{this.props.storedResults}</li>
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+
+
+SIM.... MAS É EVIDENTE QUE 
+
+O PROFESSOR 
+
+VAI 
+
+FAZER ALGO UM POUCO DIFERENTE,
+
+VAI 
+
+FAZER 
+
+
+O DISPLAY 
+
+DESSES 
+
+
+valores/elementos 
+
+'result' no 'results'
+
+
+DE UMA 
+
+__MANEIRA UM POUCO DIFERENTE___...
+
+
+
+
+
+ELE VAI ESCREVER/UTILIZAR '.map()' PARA __CONVERTER__ A LISTA DE 
+ELEMENTOS 'result' EM __ UMA SÉRIE DE LIST ITEMS__, isso dentro do 'RETURN' dentro do 'RENDER' 
+de 
+'Counter.js'...
+
+
+TIPO ASSIM:
+
+
+
+
+<ul>
+  {this.props.storedResults.map()} ///////////EIS O CÓDIGO EM QUESTÃO.
+  <li onClick={this.props.onDeleteResult}}</li>
+</ul>
+
+
+
+
+----------------------------------------------
+
+
+É EVIDENTE QUE 
+
+ESSE 
+
+'.map()'
+
+
+vai 
+
+ACEITAR/EXIGIR AQUELA FUNÇÃO INTERNA,
+
+
+que vamos 
+
+escrever tipo...
+
+
+
+
+'this.props.storedResults.map(
+  (result) => {
+    return (
+      <li>{result}</li>
+    )
+  }
+)
+'
+
+
+
+
+
+TIPO ASSIM,
+
+CREIO EU...
+
+
+
+
+ex:
+
+
+<ul>
+  {this.props.storedResults.map((result) => { ///////////EIS O CÓDIGO EM QUESTÃO.
+    return (
+      <li>{result}</li>
+    )
+  })} 
+  <li onClick={this.props.onDeleteResult}}</li>
+</ul>
+
+
+------------------------------------
+
+
+
+
+
+
+E 
+
+ISSO REALMENTE FUNCIONOU! ----> 
+
+eis 
+
+
+o código:
+
+
+
+
+
+
+
+  render() {
+    return (
+      <div>
+        <CounterOutput value={this.props.ctr} /> 
+            <CounterControl 
+          label="Increment"
+          clicked={this.props.onIncrementCounter}
+        />
+        <CounterControl
+          label="Decrement"
+          clicked={this.props.onDecrementCounter}
+        />
+        <CounterControl
+          label="Add 10"
+          clicked={this.props.onAddCounter}
+        />
+        <CounterControl
+          label="Subtract 10"
+          clicked={this.props.onSubtractCounter}
+        />
+        <hr></hr>
+        <button onClick={this.props.onResultStored}>Store Result</button>
+        <ul style={
+          {
+            listStyle: 'none'
+          }
+        }>
+          {this.props.storedResults.map((result) => { ////////EIS O CÓDIGO EM QUESTÃO.
+                 return (
+                   <li onClick={this.props.onDeleteResult}>{result}</li>)
+            }
+          )}
+        </ul>
+      </div>
+    );
+  }
+}
+
+
+----------------------------------------------
+
+
+
+
+
+Professor faz exatamente o que fazemos... -----> e isso, esse código aí do map,
+
+
+vai 
+
+fazer com que 
+
+VÁRIOS 
+
+LIST 
+ITEMS 
+
+(cada um com o 'RESULT' atual do COUNTER) 
+
+
+
+
+
+APAREÇAM 
+
+EM 'result' (serão todos <li>s  baseados em <li>{strResult}</li>) --------> 
+
+
+
+
+E 
+
+ELES VÃO GRADUALMENTE SENDO ADICIONADOS, À MEDIDA QUE 
+
+VAMOS PRESSIONANDO 
+
+o botão 'store' 
+
+
+nesse nosso aplicativo... ----------------->
+
+
+
+
+
+
+
+
+
+
+ENTRETANTO, PROFESSOR DECIDE ESCREVER MAIS UMA PEQUENA COISINHA,
+
+ELE 
+
+DECIDE 
+
+
+
+
+MUDAR UM POUCO O REDUCER 
+
+EM 
+
+'reducer.js'.... ------------> 
+
+
+LÁ NO CASE 
+
+
+DE 
+
+
+
+'RESULT_STORE',
+
+
+
+
+
+que é 
+
+
+
+'
+
+
+case 'STORE_RESULT': 
+
+        return {
+            ...state,
+            results: state.results.concat(state.counter)
+        }
+'
+
+,
+
+
+
+O PROFESSOR AFIRMA QUE ELE NÃO VAI QUERER APENAS 
+
+FAZER O STORE DE O NUMBER relativo ao 'counter atual' 
+
+
+
+NO 'results'.... ----> não, ele TAMBÉM VAI QUERER ________cRIAR UM OBJETO ('{}'),
+
+
+PQ 
+
+
+
+EM CADA 'list item' o PROFESSOR NÃO VAI APENAS QUERER TER O VALOR ('value') 
+
+do 'state.counter' atual,
+
+MAS 
+
+TAMBÉM vai querer 
+
+
+______cRIAR UM _________ID__________ --> ele vai querer 
+
+
+
+ESSE ID __JUSTAMENTE ___ PARA QUE ESSE ITEM POSSA SER DELETADO, NO FUTURO, 
+POR MEIO DE 
+
+
+'onDeleteResult', aquela action que temos lá no container 'Counter'...
+
+
+
+
+--------> e esse id é provisório, por isso vamos apenas digitar 'state.counter'  e então 
+
+
+executar uma multiplicação de 'Math.random()' em cima dele, só para garantir...
+
+
+
+
+ex:
+
+
+
+case 'STORE_RESULT': 
+
+        return {
+            ...state,
+            results: state.results.concat( {
+             
+             
+             value: state.counter,
+             id: state.counter * Math.random() //////////eis o código em questão. 
+              
+              
+            }
+              
+              )
+        }
+
+  ------------------------------------------------
+
+
+
+
+
+
+  O MÉTODO QUE O PROFESSOR USA É MAIS ELEGANTE,
+
+
+  é 
+
+
+  usar 
+
+  'id: new Date()' ----------------> ''''new Date()'''' é um constructor/objeto que É SIMPLESMENTE __ UM PRINT___ DA DATE EM QUE ESSE VALOR FOI ADICIONADO...
+
+
+
+
+
+
+
+  EX:
+
+
+  new Date(); ------> retorna:
+
+  Tue Jun 29 2021 15:30:08 GMT-0300 (Horário Padrão de Brasília)
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+ex:
+
+
+
+case 'STORE_RESULT': 
+
+        return {
+            ...state,
+            results: state.results.concat( {
+             
+             
+             value: state.counter,
+             id: new Date() //////////eis o código em questão. 
+              
+              
+            }
+              
+              )
+        }
+
+
+----------------------------------------------------
+
+
+
+
+
+
+CERTO, ISSO FUNCIONOU...
+
+
+
+FICOU ASSIM, em 'Counter.js':
+
+
+
+          {this.props.storedResults.map((result) => {
+                 return (
+                   <li id={result.id} onClick={this.props.onDeleteResult}>{result.value}</li>) //////////EIS O CÓDIGO EM QUESTÃO.
+            }
+          )}
+
+
+------------------------------------------------
+
+
+---> mas não acabamos por aí...  --> nós cometemos um ERRO... --- >
+
+
+
+não era para termos colocado um prop de 'id', e sim um prop de 'key', POIS É 
+
+ISSO QUE É IMPORTANTE 
+
+
+NO RENDER DE LIST  ITEMS NO REACT,
+
+e não 
+
+
+
+'ids' propriamente ditos (apesar de que a presença de IDs extras não é ruim...).
+
+
+
+
+ex:
+
+
+
+
+          {this.props.storedResults.map((result) => {
+                 return (
+                   <li key={result.id} onClick={this.props.onDeleteResult}>{result.value}</li>) //////////EIS O CÓDIGO EM QUESTÃO.
+            }
+          )}
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+--> agora estamos armazenando vários valores, mas quando CLICAMOS NELES, nada acontece (e queremos que eles SEJAM DELETADOS AO SEREM CLICADODS.... --> isso em razão da action 'onDeleteResult'... ) 
+
+
+
+
+
+
+--> FAREMOS ISSO NA PRÓXIMA AULA, DELETAR O ELEMENTO '<li>'
+
+A PARTIR DE UM CLICk nele...
+
+
+
+
+------------------------------------
+
+
+
+PROFESSOR EXPLICA QUE HÁ UM PUNHADO DE MANEIRAS 
+
+
+DE UPDATAR
+
+
+
+ARRAYS 
+
+
+no react redux 
+
+de forma IMMUTABLE,
+
+e que 
+
+ele vai nos mostrar 
+
+DUAS MANEIRAS....

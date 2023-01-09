@@ -1,0 +1,56 @@
+APRENDEMOS SOBRE O SEND DE HTTP REQUESTS... 
+
+
+
+
+
+---> APRENDEMOS QUE O SEND DE HTTP REQUESTS NO REACT FUNCIONA POR MEIO 
+
+
+DO 
+
+
+SEND DE AJAX REQUESTS.... 
+
+
+
+
+
+---> aprendemos sobre 
+
+custom instances de axios 
+
+
+e e etc etc...
+
+
+
+
+
+
+
+
+
+
+--> aprendemos que o axios é muito útil...
+
+
+
+---> NO PRÓXIMO MÓDULO ADICIONAREMOS FUNCIONALIDADE 
+
+
+HTTP 
+
+AO NOSSO BURGER... ---------> QUANDO O BOTÃO 'ORDER' FOR CLICADO, 
+
+
+VAMOS ENVIAR (OU FAKAR UM SEND) 
+
+
+UM REQUEST 
+
+A UM SERVIDOR,
+
+um request dizendo que 
+
+'FIZEMOS UM PEDIDO'....

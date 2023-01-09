@@ -1,0 +1,725 @@
+
+
+
+
+
+
+
+NA ÚLTIMA LIÇÃO, PROFESSOR FALOU UM POUCO SOBRE ONDE DEVEMOS COLOCAR 
+
+NOSSA 
+
+
+'DATA TRANSFORMING LOGIC' (no caso, deve ser enfiada/escrita no REDUCER, e não nos ACTION CREATORS...)
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+---> OK... MAS SE VOCê DISCORDA DO PROFESSOR, E QUER DEFINIR A 'DATA TRANSFORMING LOGIC' 
+
+NO 
+
+
+ACTION CREATOR,
+
+
+
+
+HÁ MAIS UM 'UTILITY METHOD' que vocÊ talvez queira saber, um método que 
+
+
+É ÚTIL 
+
+PARA 
+
+OS CASOS 
+
+EM QUE 
+
+VOCÊ ESTÁ TRABALHANDO 
+
+COM 
+
+
+'REDUX-THUNK' (que é o que usamos com CÓDIGO ASSÍNCRONO.... ) 
+
+
+
+
+
+
+
+
+
+---> vamos usar de exemplo o 'asyncStoreResult',
+
+AQUELE 
+
+
+NOSSO 
+
+ASYNC ACTION CREATOR...
+
+
+
+ex:
+
+
+
+export const asyncStoreResult = (result) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(storeResult(result));
+    }, 2000);
+  };
+};
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+--> certo... aí nós RETORNAMOS UMA ___FUNCTION (' () => {} ' ),
+
+
+
+
+UMA FUNÇAO 
+
+QUE 
+
+
+RECEBE AUTOMATICAMENTE A KEYWORD/negócio 
+
+'dispatch'
+
+
+enfiada nela.. -------> E 
+
+
+ESSA 
+
+
+
+KEYWORD/negócio é CHAMADO 
+
+
+
+QUANDO 
+
+
+O NOSSO CÓDIGO ASSÍNCRONO EM QUESTÃO (no caso, um 'setTimeout' de 2s) 
+
+
+FINALIZA... 
+
+
+(
+ isso é visto 
+
+ no código 
+
+
+ 'dispatch(storeResult(result));' 
+
+
+
+)
+
+
+
+
+
+
+--->  ENTRETANTO, AGORA O PROFESSOR NOS CONTA QUE 
+
+O 
+
+'REDUX-THUNK' ACEITA UM 
+
+SEGUNDO ARGUMENTO, OPCIONAL,
+
+
+NAQUELE 
+
+
+slot em que está inserido o 'dispatch'....
+
+
+
+ex:
+
+
+
+
+
+
+export const asyncStoreResult = (result) => {
+  return (dispatch, ...) => { ////////EIS O CÓDIGO EM QUESTÃO.
+    setTimeout(() => {
+      dispatch(storeResult(result));
+    }, 2000);
+  };
+};
+
+
+------------------------------------
+
+
+
+
+
+
+
+ESSE SEGUNDO 
+
+
+PARÂMETRO 
+
+
+
+É 
+
+o 
+
+
+'getState' -------> ESSE É UM ___MÉTODO__ QUE PODEMOS 
+
+EXECUTAR __ DENTRO 
+
+
+
+DO 'BODY' DESSA FUNÇÃO RETORNADA POR ESSE ACTION CREATOR....
+
+
+
+
+
+
+
+ex:
+
+
+
+export const asyncStoreResult = (result) => {
+  return (dispatch, getState) => { ////////EIS O CÓDIGO EM QUESTÃO.
+    setTimeout(() => {
+      dispatch(storeResult(result));
+    }, 2000);
+  };
+};
+
+
+
+
+
+
+----------------------------
+
+
+ESSE MÉTODO PODE SER EXECUTADO ('getState()'), DENTRO DA FUNÇÃO INTERNA, 
+
+PARA ___FAZER __gET___ DO 'currentState' 
+
+
+DO 
+
+NOSSO APP...
+
+
+
+
+
+
+
+---> ué, mas PQ FAZER ISSO? -----> pq às vezes você VAI PRECISAR 
+
+
+DO 
+
+
+
+'STATE ANTERIOR/CURRENT' a essa action específica que você está 
+dispatcheando (é o currentState/oldState, basicamente)... -----> 
+
+
+E VOCÊ VAI PRECISAR 
+
+DESSE state aí, desse acesso ÀS INFORMAÇÕES DO STATE,
+
+
+
+___JUSTAMENTE__ DENTRO DESSA PARTE 'ASSÍNCRONA' de esse 
+
+'action creator'...
+
+
+
+
+
+
+
+EX DE CASO CONCRETO:
+
+
+Digamos que você quer __SALVAR __ UMA 'DATA' PARA UM DETERMINADO USER,
+
+
+e aí vocÊ tem o ID DO USER ___ ARMAZENADO __ NO SEU 'REDUX STATE'... --> 
+
+
+
+se você tiver essa situação específica,
+
+VOCÊ PODE USAR 
+
+
+o 'getState' 
+
+
+PARA ___CONSEGUIR__ ESSE ID aí, QUE PODERÁ 
+
+ENTÃO 
+
+
+SER (exemplo)
+
+
+ENVIADO 
+
+AO SERVIDOR, JUNTO DA DATA QUE 
+
+O USUÁRIO INPUTTOU...
+
+
+
+
+
+
+
+
+
+--> professor nos mostra um exemplo,
+
+
+ele 
+
+
+
+
+escreve 
+
+
+
+'
+setTimeout(() => {
+            const oldCounter = getState().counter.counter;
+            dispatch(storeResult(result));
+}, 2000)
+'
+
+
+
+
+
+
+SE ESCREVERMOS ISSO AÍ,
+
+
+
+VAMOS 
+
+FICAR 
+
+
+
+COM 
+
+
+O 'OLD STATE' específico (só aquela propriedade) 
+
+de 
+
+'counter' 
+
+
+ARMAZENADO 
+
+
+EM UMA CONSTANTE 
+
+CHAMADA 
+
+
+DE 
+
+'oldCounter'...
+
+
+
+
+
+
+
+
+EX( código completo):
+
+
+
+
+
+export const asyncStoreResult = (result) => {
+  return (dispatch, getState) => {
+    setTimeout(() => {
+        const oldCounter = getState().ctr.counter;  ////////EIS O CÓDIGO EM QUESTÃO.
+      dispatch(storeResult(result));
+    }, 2000);
+  };
+};
+
+
+
+----------------------------
+
+
+
+O PROFESSOR VAI ENTÃO 
+
+
+__CONSOLE.LOGGAR__  ESSE 'oldCounter', justamente para ver 
+
+esse 
+
+'oldState'...
+
+
+ex:
+
+
+
+export const asyncStoreResult = (result) => {
+  return (dispatch, getState) => {
+    setTimeout(() => {
+        const oldCounter = getState().ctr.counter;  ////////EIS O CÓDIGO EM QUESTÃO.
+        console.log(oldCounter);
+      dispatch(storeResult(result));
+    }, 2000);
+  };
+};
+
+
+---------------------------
+
+
+O PROFESSOR SALVA ISSO E ENTÃO 
+
+
+
+aperta o botão 'store result'...
+
+
+
+
+
+--> depois de um tempo, veremos 
+
+
+um 
+
+'10' azul no console, isso é o OLD COUNTER.... ---> é a propriedade 
+
+'counter' 
+
+
+
+OBTIDA DO 'STATE GLOBAL DO REDUX'
+
+
+pouco antes 
+
+daquele 
+
+'dispatch(storeResult(result))' 
+
+
+
+SER __EXECUTADO__... (e é esse DISPATCH AÍ que leva ao nosso CÓDIGO SER EXECUTADO NO REDUCER...)
+
+
+
+----------------------
+
+
+
+
+----------------->  CERTO....
+
+
+
+
+
+
+MAS 
+
+ESSE 
+
+'getState()' 
+
+AÍ 
+
+
+TEM BASTANTE RELAÇÃO COM AQUILO QUE O PROFESSOR FALOU 
+
+NA ÚLTIMA LIÇÃO, 
+
+
+
+DAQUELA NEURA 
+
+DA DISCUSSÃO 
+
+ENTRE 
+
+COLOCAR 
+
+
+A 
+
+'DATA TRANSFORMING LOGIC '
+
+
+ ou no 
+
+
+ACTION CREATOR 
+ou 
+
+no 
+
+REDUCER... ---------------> SE VOCÊ PRECISA DELE,
+
+
+
+ESSE 
+
+
+UTILITY METHOD 
+
+de 
+'getState()'
+
+É BEM NICE... ----> MAS VOCÊ NÃO DEVE 
+
+
+'OVERUSE IT'... ------------> O PROFESSOR 
+
+
+
+
+
+SEMPRE TENTA 
+
+ESCREVER 
+
+
+OS 
+
+
+
+REDUCERS E ACTION CREATORS DELE 
+
+__DE UMA MANEIRA __ QUE 
+
+EVITA 
+
+USAR 
+
+'getState()'... --------> EM VEZ DISSO,
+
+
+
+
+
+DIZ O PROFESSOR,
+
+
+PODEMOS 
+
+
+
+PASSAR ___ TODOS OS DADOS DE QUE PRECISAMOS __ DENTRO DESSE 
+
+'ACTION CREATOR'... (como um 'userId', por exemplo),
+
+
+
+POR MEIO 
+
+
+DE UM SIMPLES 'EXPECT' DISSO COMO __UM ARGUMENTO NO SLOT __ MAIS EXTERNO 
+
+
+DO NOSSO ACTION CREATOR....
+
+
+
+tipo assim:
+
+
+
+
+export const asyncStoreResult = (result, userId) => { /////////ISSO AQUI É MUITO MAIS SIMPLES (e eficaz) DO QUE USAR 'getState()' mais para dentro de nossa function.......
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(storeResult(result));
+    }, 2000);
+  };
+};
+
+
+
+-----------------------------
+
+
+
+
+
+Se vocÊ optar pela rota 
+
+de 
+
+
+
+'export const asyncStoreResult = (result, userId) => {',
+
+
+
+
+VOCê 
+
+SÓ VAI TER QUE 
+
+FAZER UNS pequenos ajustes 
+
+lá 
+
+
+em 
+
+'Counter.js',
+
+ou seja,
+
+
+
+
+NO __CONTAINER__ EM QUE VOCÊ __ FAZ O DISPATCH DA ACTION/DO ACTION CREATOR QUE CRIA A ACTION....
+
+
+
+
+ex (vamos ter que dar uma alterada neste código aqui, por exemplo):
+
+
+
+
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onIncrementCounter: () => { 
+        
+        dispatch( 
+        
+            actionsCreators.inc_counter() 
+        
+      )
+      },
+      onDecrementCounter: () => {
+        dispatch(
+          actionsCreators.dec_counter()
+        )
+      },
+      onAddCounter: () => {
+        dispatch(
+          actionsCreators.add_counter(3)
+         )
+      },
+      onSubtractCounter: () => {
+        dispatch(
+          actionsCreators.sub_counter(3)
+        )
+      },
+      onResultStored: (result) => {
+        dispatch(
+            actionsCreators.asyncStoreResult(result, userId) /////////////TIPO ISSO AQUI, POR EXEMPLO...
+        )
+      },
+      onDeleteResult: (id) => {
+        dispatch(
+          actionsCreators.delete_result(id)
+        )
+      }
+  }
+}
+
+
+------------------------------
+
+
+
+
+AÍ, LÁ NO 'BUTTON' que trigga 
+
+esse 
+'onResultStored',
+
+
+VOCÊ VAI SIMPLESMENTE PASSAR 
+
+
+COMO PARÂMETRO 
+
+
+ALGO 
+
+
+COMO 
+
+
+
+'this.props.userId' (referência ao ID __ARMAZENADO NO STATE GLOBAL DO REDUX E CONECTADO NO NOSSO CONTAINER por meio de 'mapStateToProps', coisa padrão...)'...
+
+
+
+
+
+
+-------> NÓS DEVEMOS CONSTRUIR NOSSO APP DE ACORDO COM ESSE 
+
+ ÚLTIMO APPROACH AÍ, QUE É MAIS __PRÁTICO___....
+
+
+
+
+(o getState() É ___MELHOR ___ UTILIZADO COMO ___ FALLBACK__, COMO ÚLTIMO RECURSO...)
+
+
+
+
+(entretanto, não coloque muita lógica em 'getState()', pq isso é ruim... essa rota não é boa.)
+
+
+ ---------------------------------------------------

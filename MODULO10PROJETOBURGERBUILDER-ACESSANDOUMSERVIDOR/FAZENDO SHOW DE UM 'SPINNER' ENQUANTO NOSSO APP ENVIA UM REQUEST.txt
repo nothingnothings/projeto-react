@@ -1,0 +1,1345 @@
+
+
+
+
+NA ÚLTIMA LIÇÃO, 
+
+
+VIMOS 
+
+
+COMO __ENVIAR__ UM REQUEST__ (de tipo POST, armazenando dados 
+) AO DATABASE DO FIREBASE... ------>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> certo... em um aplicativo típico,
+
+geralmente vamos querer fazer SHOW de um 
+
+SPINNER 
+
+enquanto um request está sendo enviado... 
+
+
+----------------------------------
+
+
+
+
+PROFESSOR APONTA: o firebase é __MUITO, MUITO RÁPIDO__... --> e, em razão disso, 
+
+
+nós provavelmente NEM TEREMOS UMA CHANCE 
+
+DE VISLUMBRAR 
+
+O NOSSO SPINNER...
+
+
+
+
+
+-----------> AINDA ASSIM, É UMA BOA PRÁTICA mostrar um spinner; isso 
+
+para casos em que 
+
+o usuário está em uma rede mais lenta, pc de merda, etc...
+
+
+
+-------------------------------
+
+
+
+
+
+---> O QUE O PROFESSOR VAI QUERER FAZER É ___o  SHOW ___ DE UM 
+
+
+___SPINNER___ DENTRO DO MODAL 
+
+
+'Modal'... (componente 'modal').... ---------> PARA ISSO, 
+
+
+PROVAVELMENTE 
+
+VAMOS CRIAR 
+
+UM COMPONENT 
+
+
+CHAMADO 
+
+'spinner' 
+
+LÁ 
+
+NO 
+
+FOLDER 'UI', em components... -------> VAMOS QUERER 
+
+
+
+FAZER OUTPUT DESSE 
+
+'SPINNER' NO LUGAR 
+
+
+DE 
+
+
+'OrderSummary'... (que é um negócio que aparece POR CIMA DO MODAL/ENGLOBADO PELO MODAL...)
+
+
+
+EIS O CÓDIGO DESSES COMPONENTS, lá em 'BurgerBuilder':
+
+
+
+
+
+EX:
+
+
+
+
+
+    return (
+      <Aux>
+        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+        <OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice} clicked={this.purchaseCancelHandler} success={this.purchaseContinueHandler}></OrderSummary>
+        </Modal>
+        <Burger ingredients={this.state.ingredients}/>
+        <BuildControls 
+        disabled={disabledInfo} //'disabledInfo' será uma constante que terá aquele objeto com a 'CÓPIA DO STATE DE INGREDIENTS', mas aquela cópia tem uma alteração no INGREDIENT que será/não será removido, que estará tipo assim: 'cheese: false', ou 'bacon: true', etc.....
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}
+         ordered={this.purchaseHandler}
+      
+         />
+        
+      </Aux>
+    );
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+CRIO UM COMPONENT 
+
+'SPINNER' 
+
+lá no folder 'SPINNER', em UI....
+
+
+
+
+
+
+--> provavelmente VOU UTILIZAR O STATE DE 
+
+'burgerBuilder'
+
+
+PARA ____OCULTAR__O ORDERSUMMARY__ E 
+
+
+PARA 
+
+FAZER __SHOW__ DO SPINNER...
+
+
+
+
+
+
+----------------------------------------
+
+
+
+OK, 
+
+AGORA 
+
+ENCONTRAMOS UM __PROBLEMA__ ---> precisamos 
+
+
+__tROCAR___ 
+
+
+O 
+
+'ORDERSUMMARY' 
+
+
+
+por 
+
+um 
+
+'SPINNER' 
+
+
+
+QUANDO O BOTÃO DE 'CONTINUE' 
+
+é pressionado... ------> E QUANDO O NOSSO PROCESSO ACABAR__, O SEND REALMENTE FOR FEITO,
+
+
+ESSE 
+
+MODAL DEVERÁ __FECHAR__...
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+PROFESSOR EXPLICA QUE, PARA O DESIGN DO SPINNER,
+
+PODEMOS 
+
+TIRAR 
+
+VANTAGEM 
+
+
+DE ALGUNS RESOURCES QUE PODEM SER FACILMENTE ENCONTRADOS 
+
+NA INTERNET... -----> spinners sempre podem ser pegados da internet, é algo bem comum.
+
+
+
+
+'css spinners' --------> VAMOS ENCONTRAR 
+
+
+VÁRIOS 
+
+LINKS .... --> 
+
+'projects.lukehass'---> esse tem bons spinners... --> VOCÊ PODE ESCOLHER 
+
+A COR DO BACKGROUND 
+
+
+E A 
+
+COR 
+
+DO SPINNER EM SI... --> professor escolhe uma cor ROXA..
+
+
+
+
+
+
+ELE ESCOLHE O SEGUNDO SPINNER,
+
+
+E AÍ 
+
+ELE NOS MOSTRA 
+
+O CÓDIGO DELE.... código css... ---> devemos copiar esse código e colocar em um arquivo css vinculado ao spinner.js...
+
+
+
+
+
+
+-------------------------------
+
+
+
+EIS O NOSSO CÓDIGO:
+
+
+import React from 'react';
+
+
+import SpinnerStyle from './Spinner.module.css';
+
+
+
+const spinner = (props) => {
+
+
+
+
+    return  <div className={SpinnerStyle.Loader}>Loading...</div>
+    
+
+}
+
+
+export default spinner;
+
+
+
+
+
+-----------------------------
+
+
+
+---> CERTO,
+
+
+ESSE É TODO O CÓDIGO DE QUE 
+
+VAMOS PRECISAR PARA O SPINNER... ------> 
+
+
+
+AGORA SÓ PRECISAMOS DE ALGUMA LÓGICA PARA FAZER ___sHOW DELE___ 
+
+DENTRO DO MODAL... -------> ELE DEVE SER MOSTRADO QUANDO NÓS ESTIVERMOS 
+
+'LOADING', 
+
+QUANDO O 
+
+NOSSO REQUEST
+ ESTIVER 
+
+ SENDO ENVIADO ao servidor firebase...
+
+
+ --------------------------------
+
+
+
+ ACHO QUE SEI O QUE O PROFESSOR 
+
+ VAI FAZER... --> ELE PROVAVELMENTE 
+
+
+ VAI ESCREVER UMA 
+
+ TERNARY EXPRESSION PARA FAZER 
+
+ SHOW 
+
+
+
+ DO 
+
+ 'orderSummary'... ------>
+  
+
+
+
+  VAI FAZER ISSO, VAI ESCREVER UMA 
+
+  TERNARY EXPRESSION 
+
+  COM 
+
+  'ORDERSUMMARY' 
+
+  E 
+
+  'Spinner'...
+
+
+  
+
+
+
+
+  ex (código atual):
+
+
+
+
+  return (
+      <Aux>
+        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+        
+        <OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice} clicked={this.purchaseCancelHandler} success={this.purchaseContinueHandler}></OrderSummary>
+        <Spinner />
+        </Modal>
+        {/* <div>Burger</div> */}
+        <Burger ingredients={this.state.ingredients}/>
+        {/* <div>Build Controls</div> */}
+        <BuildControls 
+        disabled={disabledInfo} //'disabledInfo' será uma constante que terá aquele objeto com a 'CÓPIA DO STATE DE INGREDIENTS', mas aquela cópia tem uma alteração no INGREDIENT que será/não será removido, que estará tipo assim: 'cheese: false', ou 'bacon: true', etc.....
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}
+         ordered={this.purchaseHandler}
+      
+         />
+        
+      </Aux>
+    );
+
+
+
+
+    -----------------------------------
+
+
+
+    NA VERDADE, O QUE EU TENTEI FAZER É ESCREVER 
+
+    UM 'IF STATEMENT' COMUM, 
+
+
+    FAZENDO RENDER CONDICIONAL DE 
+
+
+    'Spinner'... --> mas isso DEU ERRADO. --> nosso spinner não é mostrado quando clicamos 
+
+
+    em 
+
+    'continue'...
+
+
+    ------------------------------
+
+
+EX:
+
+
+
+
+
+
+
+
+
+    export default class BurgerBuilder extends Component {
+
+  // constructor(props) { ///SINTAXE MAIS ANTIGA, é a mesma coisa que escrever 'state = {}' ....
+  //   super(props);
+  //   this.state = {...}
+  // }
+
+
+  // static contextType = TypeContext;
+
+
+
+
+
+
+
+
+  // state = {
+  //   ingredients: {
+  //     salad: 1,
+  //     bacon: 1,
+  //     cheese: 2,
+  //     meat: 2
+  //   }
+  // };
+
+
+  state = {
+    ingredients: {
+      salad: 0,
+      bacon: 0,
+      cheese: 0,
+      meat: 0
+    }, 
+    totalPrice: 4, //valor INICIAL do BUrger... sempre será '4'.
+    purchasing: false,
+    spinnerShow: false
+  };
+
+
+
+
+
+
+
+
+ 
+  addIngredientHandler = (type) => {  
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount + 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceAddition = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.totalPrice;
+    const newPrice = oldPrice + priceAddition;
+    this.setState(
+      {
+        totalPrice: newPrice, 
+        ingredients: updatedIngredients
+      }
+    )
+
+    
+
+
+
+
+  }
+
+
+
+
+
+
+
+purchaseHandler = () => {
+  this.setState(
+    {
+      purchasing: true
+    }
+  )
+
+}
+
+
+
+
+purchaseContinueHandler = () => { ///////OBS::: colocar '.json' DO LADO DO PATH/NODE a que você está querendo enviar o HTTP REQUEST  ___ É ALGO QUE __ SÓ É OBRIGATÓRIO PARA SERVIDORES __fIREBASE; EM OUTROS TIPOS DE SERVIDORES, ESSE '.json' AO FINAL __NÃO É NECESSÁRIO___... ---> pq isso? PQ ESSE É O ___eNDPOINT QUE ___ O FIREBASE__ PRECISA TARGETTAR PARA QUE A FEATURE DO FIREBASE DE 'AUTOMATIC CREATION' DOS NODES/PATHS CONSIGA FUNCIONAR CORRETAMENTE.
+    
+    this.setState({
+      spinnerShow: true
+    })
+  
+  
+  const orderData = {
+      
+      ingredients: this.state.ingredients,
+    price: this.state.totalPrice,
+      customer: {
+        name: 'Max schwarzmuller',
+        address: {
+          street: 'Teststreet 1',
+          zipCode: '41351',
+          country: 'Germany'
+        },
+        email: 'test@test.com'
+      },
+
+      deliveryMethod: 'fastest'
+  
+  
+  
+  }
+  
+  
+  
+  axiosOrder.post('/orders.json', orderData).then(
+
+    (response) => {
+      console.log(response);
+    }
+  )
+  .catch(error => {
+    console.log(error);
+  }
+  )
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+  removeIngredientHandler = (type) => {
+
+    const oldCount = this.state.ingredients[type];
+    const updatedCount = oldCount - 1;
+    const updatedIngredients = {
+      ...this.state.ingredients
+    }
+    updatedIngredients[type] = updatedCount;
+    const priceDeduction = INGREDIENT_PRICES[type];
+    const oldPrice = this.state.totalPrice;
+    const newPrice = oldPrice - priceDeduction;
+
+    // if(oldCount <= 0) { ////////CÓDIGO DEPRECADO, É UMA VERSÃO MAIS RUDIMENTAR DA FEATURE DE 'IMPEDIR QUE O USUÁRIO CRASHE O CÓDIGO POR MEIO DA REMOÇÃO DE UM NÚMERO DE INGREDIENTS QUE JÁ NÃO EXISTE NO HAMBURGUER' (reduzir o número de ingredients de '0' para '-1') --> para isso, o professor USOU o prop de 'disabled', e a const de 'disabledInfo', DEFINIDA EM BURGERBUILDER...
+    //   return (
+    //     <p>{alert("You can't remove any more of that ingredient")}</p>
+    //   );
+    // } 
+
+      this.setState(
+        {
+          totalPrice: newPrice, 
+          ingredients: updatedIngredients
+        }
+      )
+    
+  
+
+    
+
+  }
+
+
+
+  purchaseCancelHandler = () => {
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+
+
+  }
+
+
+
+
+
+
+
+
+  render() {
+
+
+
+
+
+    const ingredientCount = Object.values(this.state.ingredients);
+
+      let modalContent = (<OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice} clicked={this.purchaseCancelHandler} success={this.purchaseContinueHandler}></OrderSummary>)
+
+    let ingredientCountSum = ingredientCount.reduce(
+        (oldNumber, newNumber) => {
+          return oldNumber + newNumber;
+        }
+    )
+  
+
+    if(!ingredientCountSum) {
+      ingredientCountSum = true;
+    } else {
+      ingredientCountSum = false;
+    }
+
+    
+
+
+
+
+
+
+
+
+
+    const disabledInfo = {
+      ...this.state.ingredients
+    };
+
+    for (let key in disabledInfo) {
+      disabledInfo[key] = disabledInfo[key] <= 0; //parte da direita: CHECK BEM IMPORTANTE. RETORNA ou o valor 'true', ou 'false' para AQUELA DETERMINADA KEY (disabledInfo[key]) definida na direita... (que será 'cheese: true', 'meat: false', etc, dependendo desse check da direita...)
+    }
+
+
+
+    if (this.state.spinnerShow) {
+       modalContent = (<Spinner />)
+    }
+
+
+
+
+
+
+
+    return (
+      <Aux>
+        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+        
+        {/* <OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice} clicked={this.purchaseCancelHandler} success={this.purchaseContinueHandler}></OrderSummary>
+        <Spinner /> */}
+        {modalContent}
+        </Modal>
+        {/* <div>Burger</div> */}
+        <Burger ingredients={this.state.ingredients}/>
+        {/* <div>Build Controls</div> */}
+        <BuildControls 
+        disabled={disabledInfo} //'disabledInfo' será uma constante que terá aquele objeto com a 'CÓPIA DO STATE DE INGREDIENTS', mas aquela cópia tem uma alteração no INGREDIENT que será/não será removido, que estará tipo assim: 'cheese: false', ou 'bacon: true', etc.....
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}
+         ordered={this.purchaseHandler}
+      
+         />
+        
+      </Aux>
+    );
+  }
+}
+
+
+
+
+
+
+--------------------------
+
+
+O professor cria um state 
+
+de 
+
+'loading' 
+
+e define como false, na sua versão do aplicativo... --> quando estiver 
+
+'true', 
+professor 
+
+vai querer 
+
+
+
+RENDERIZAR O SPINNER, QUANDO ESTIVER 
+
+'FALSE',
+
+
+vai querer o ORDERSUMMARY... 
+
+
+
+
+
+
+
+
+
+---> aí ele vai 
+
+
+no render 
+
+e adiciona 
+
+
+
+um 
+
+
+IF CHECK 
+que adicionará 
+
+o spinner...
+
+
+
+ex:
+
+
+
+let orderSummary = <CÓDIGO DO ORDERSUMMARY NORMAL> 
+
+
+if (this.state.loading) {
+    orderSummary = <Spinner /> 
+}
+
+---------------------------------- 
+
+
+
+
+OU SEJA, 
+
+
+É EXATAMENTE A MESMA COISA QUE 
+
+FIZEMOS...
+
+
+
+O CÓDIGO no modal ficou 
+
+
+'<Modal> 
+    {orderSummary}
+</Modal>'
+
+
+
+---------------------
+
+
+MAS O NEGÓCIO AINDA NÃO FUNCIONA DIREITO...
+
+
+
+--> uma alteração que o professor faz é 
+
+no código de 
+
+'axios.post',
+
+que é o código que EFETIVAMENTE ENVIA O REQUEST 
+
+de nossa order...
+
+
+O código 
+
+está assim:
+
+
+
+axios,post( './orders.json', order)
+.then( response => console.log(response))
+.catch( error => console.log(error));
+
+
+
+
+O PROFESSOR VAI ALTERAR 
+
+ISSO, 
+
+
+ele vai 
+
+querer 
+
+
+
+
+
+
+_____O SPINNER__ FAZER 'STOP LOADING'... ---> professor 
+
+vai querer 
+
+QUE 
+
+O SPINNER 
+'PARE DE APARECER' 
+
+
+
+ASSIM QUE 
+
+A ___ RESPONSE FOR RECEBIDA___...
+
+
+ex:
+
+'response => {
+
+}' -----> PARA ISSO ,
+
+
+
+ele 
+
+vai 
+
+settar 
+
+'this.setState(
+    {
+        loading: false
+    }
+)'  ----> DENTRO DO '{}' DENTRO DO 
+
+'.THEN()' BLOCk...  ----------------> ELE ESCREVERÁ DESSA FORMA, 'NO SECO', PQ ELE NÃO VAI SE IMPORTAR COM O CONTEÚDO DO RESPONSE, ELE SÓ VAI QUERER QUE O 'loading' seja definido como 'FALSE' quando chegarmos NESSE THEN BLOCK AQUI (que só é alcançado uma vez que A RESPONSE __ CHEGOU NO NOSSO BROWSERSIDE)...
+
+
+------------------------
+
+
+
+
+EX:
+
+
+
+
+axios,post( './orders.json', order)
+.then( response => 
+this.setState(
+    {
+        loading: false
+    }
+))
+.catch( error => console.log(error));
+
+
+
+
+------------------------------
+
+
+e o professor vai querer o loading como 'false' MESMO EM CASOS DE ERRO,
+
+POIS MESMO EM CASOS DE ERRO ELE VAI QUERER 
+
+QUE 
+
+O LOADING CESSE....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+axios,post( './orders.json', order)
+.then( response => 
+this.setState(
+    {
+        loading: false
+    }
+))
+.catch( error => this.setState(
+    {
+        loading: false
+    }
+));
+
+
+
+
+
+
+---> SE O SPINNER CONTINUASSE RODANDO, NOSSA UI FICARIA 'STUCK', O USUÁRIO 
+PENSARIA QUE NOSSO APP ESTÁ BUGADO.
+
+
+
+
+
+---> OUTRA COISA QUE O PROFESSOR QUER QUE ACONTEÇA 
+
+
+É QUE O ___MODAL__ SEJA FECHADO __ QUANDO NOSSA RESPONSE FOR RECEBIDA... --> 
+
+ele diz que 
+
+isso é fácil, QUE SÓ PRECISAMOS ALTERAR 
+
+o 
+
+STATE 
+
+da propriedade 
+
+'purchasing', que é a propriedade 
+
+que efetivamente FAZ O MODAL SER 'SHOWN' ----> como visto no prop 
+
+de 
+
+'<Modal show={this.state.purchasing} />
+-------------------------
+
+CERTO, MAS NOSSA PÁGINA __aINDA NAÕ ESTÁ FUNCIONANDO DIREITO___... ---> o orderSummary 
+
+PERSISTE_, 
+
+não sai nunca... e o spinner NUNCA APARECE... (nem por cima dele).
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+CERTO,
+ 
+ ARRUMAMOS TUDO O QUE HAVIA PARA ARRUMAR, 
+
+
+ MENOS O SPINNER... -----> PROFESSOR 
+
+
+
+ APONTA 
+
+ QUE REALMENTE, NÓS NÃO CONSEGUIMOS 
+
+
+ VER O 
+
+ SPINNER --------> PROFESSOR 
+
+ ADMITE QUE 
+
+
+ ISSO 
+
+ ACONTECEU 
+
+
+ ____dEVIDO __A MANEIRA PELA QUAL ESTRUTURAMOS 
+
+ NOSSO PROJETO... ----> 
+
+
+ é algo bem curioso... (deve ter algo a ver com o 
+ 
+ RENDER CYCLE DO NOSSO APLICATIVO...) -
+
+
+
+
+
+
+
+ PRIMEIRO DE TUDO, O PROFESSOR 
+
+ EXPLICA QUE 
+
+ __eSTAMOS SETTANDO O 'LOADING', 
+
+ O STATE 
+
+ DE 
+ 'LOADING',
+
+ CORRETAMENTE... ------> 
+
+
+ E O ORDERSUMMARY realmente 
+
+
+ __FICA __ SENDO 
+
+ '<Spinner />',
+
+
+
+ ESSE ELEMENTO SPINNER... ---------> 
+
+ E AINDA ASSIM, MESMO FAZENDO TUDO CERTO,
+
+
+
+ NOSSO SPINNER AINDA NÃO É EXIBIDO/NÃO SUBSTITUI 
+
+ O 
+
+ 'ORDERSUMMARY'... ----> OK, MAS PQ?
+
+
+
+
+
+
+--> BEM, DEVEMOS CONSIDERAR O __CÓDIGO DE NOSSO ___MODAL___...
+
+
+
+
+
+CÓDIGO DE 'MODAL':
+
+
+
+
+class Modal extends Component {
+
+
+
+
+    shouldComponentUpdate(nextProps, nextState) {
+        // if(nextProps.show !== this.props.show) { //MESMA COISA QUE O CÓDIGO DE BAIXO, MAS O CÓDIGO DE BAIXO É MAIS SIMPLIFICADO (e melhor).
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+
+        return nextProps.show !== this.props.show;
+    }
+
+
+
+    componentWillUpdate() {
+        console.log('[Modal] componentWillUpdate')
+    }
+
+
+
+
+
+
+
+
+
+
+    
+render() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+  return  ( <Aux>
+    <Backdrop show={this.props.show}
+    clicked={this.props.modalClosed}/>
+<div className={ModalStyle.Modal} style={
+    {
+    transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
+    opacity: this.props.show ? '1' : '0'
+}
+}>
+      {this.props.children}
+          </div>
+          </Aux>
+)
+
+}
+
+
+
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+--> ALI, NÓS ESTAMOS 
+
+
+usando 'shouldComponentUpdate'.... ---->  E NESSE 
+
+'shouldComponentUpdate',
+
+
+NÓS BASICAMENTE 
+
+DIZEMOS 
+
+AO 
+
+'MODAL':
+
+
+
+
+
+''''VOCÊ SÓ DEVE SE UPDATAR/RE-RENDERIZAR __ QUANDO 
+
+O 
+
+
+'PRÓXIMO' PROP DE 'SHOW' NÃO __FOR EXATAMENTE IGUAL __ AO 
+
+
+PROP ATUAL DE 'show'... (isso foi uma das medidas 
+
+de OPTIMIZAÇÃO que fizemos no passado...) ---------> 
+
+
+
+
+OU SEJA,
+
+
+
+O SHOULDCOMPONENTUPDATE 
+
+
+ESTÁ ESTRAGANDO TUDO... 
+
+
+
+
+
+
+
+
+
+--> realmente, só queremos que ele seja atualizado quando SEU prop de 'SHOW' 
+
+FOR 
+
+ALTERADO/O NOVO PROP REALMENTE SEJA DIFERENTE... -----------> 
+
+
+
+AQUI, ENTRETANTO, QUEREMOS QUE ELE SE RE-RENDERIZE QUANDO 
+
+
+SUAS 'CHILDREN' 
+
+MUDAREM...  --------------------> ou seja,
+
+
+QUEREMOS 
+
+RE-RENDER QUANDO 
+
+
+as 'props.children'
+
+FOREM ALTERADAS, TAMBÉM....
+
+
+
+
+
+-------> E PARA RESOLVER ESSE PROBLEMA, TEREMOS DE REESTRUTURAR 
+
+TODO NOSSO CÓDIGO DE 
+
+'shouldComponentUpdate'...
+
+
+
+ex:
+
+
+
+
+
+    shouldComponentUpdate(nextProps, nextState) {
+
+ 
+
+        return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
+    }
+
+
+
+-----------------------------------------
+
+
+
+E ISSO REALMENTE RESOLVERÁ NOSSO PROBLEMA.
+ 
+ É UM MILAGRE...
+
+
+
+
+
+ CERTO, SUCESSO.
+
+
+
+------------------------
+
+COM ESSA CHANGE APLICADA,
+
+
+
+
+NOSSO 
+
+
+
+APLICATIVO VAI FUNCIONAR DIREITo... 
+
+
+
+
+
+
+CONTUDO, 
+
+O STYLING DO SPINNER FICOU UM POUCO __QUEBRADO__... --> professor define o background do spinner como '#FFF' para consertar o styling...
+
+
+
+DEU, RESOLVIDO.
+
+
+
+
+
+
+
+O SPINNER está funcionando.... 
+
+
+
+
+--> AGORA DEVEMOS FAZER 
+
+HANDLE DOS CASOS EM QUE NOSSO HTTP REQUEST __FALHA___ ---> pq 
+
+nós 
+
+QUEREMOS 
+
+INFORMAR 
+
+
+O USUÁRIO 
+
+DE FAILURES, 
+
+TAMBÉM....

@@ -1,0 +1,348 @@
+
+
+
+
+
+
+
+--> VIMOS REST E SPREAD...
+
+
+
+---> há mais uma feature next-gen que o professor quer nos mostrar: destrucutring...
+
+
+
+
+
+
+
+--> DESTRUCTURING TE DEIXA ___FACILMENTE____ EXTRAIR ELEMENTOS DE UM ARRAY 
+
+OU PROPERTIES DE UM OBJETO E ENTÃO 
+
+OS ARMAZENAR EM VARIÁVEIS... 
+
+
+('Easily extract array elements or object properties and store them 
+in variables')...
+
+
+
+
+---------------------------------
+
+
+
+
+
+Quando você ouve disso pela primeira vez, vocÊ pode pensar que O DESTRUCTURING 
+
+FAZ A EXATA MESMA COISA DO SPREAD OPERATOR... (mas ele não faz).
+
+
+
+
+
+--> SPREAD TIRA __tODOS OS ELEMENTOS/propriedades___ E OS DISTRIBUI EM 
+
+UM NOVO ARRAY/OBJECT....
+
+
+
+
+---> JÁ O DESTRUCTURING TE PERMITE PUXAR 'SINGLE ELEMENTS' OU 'SINGLE PROPERTIES'... ---> te 
+
+permite INDIVIDUALIZAR OS ELEMENTOS/PROPRIEDADES QUE VOCÊ QUER 
+
+e então 
+
+
+te deixa 
+
+OS ARMAZENAR EM VARIÁVEIS...
+
+
+--------------------------------------
+
+
+
+
+DESTRUCTURING FUNCIONA 
+
+
+____PARA 
+
+ARRAYS____ E PARA ___ OBJECTS____....
+
+
+
+-----------------------------------
+
+
+
+
+Exemplo de destructuring em arrays:
+
+
+
+[a, b] = ['Hello', 'Max'];
+
+console.log(a) // Hello 
+console.log(b) //Max 
+
+
+
+--------------------------------------------
+
+
+
+
+ESSA SINTAXE ESTRANHA ('array no lugar do nome da constante/variável/objeto/função/método'...)... É 
+
+
+A SINTAXE QUE EFETIVAMENTE FAZ O DESTRUCTURING; é a sintaxe que vai assignar uma 
+
+CONSTANTE (const) 
+
+de 'a' PARA A STRING/ELEMENTO DE 'Hello', e que vai assignar uma const de 
+
+'b' para a string/valor/elemento de 'Max'...
+
+
+
+---------------------------------------------------
+
+
+
+
+PARA OBJECT DESTRUCTURING, 
+
+
+NÓS TEMOS A EXATA MESMA SINTAXE, 
+
+MAS DESSA VEZ COM CURLY BRACES... ------> 
+
+também 
+
+__HÁ OUTRA DIFERENÇA___: no DESTRUCTURING DE ARRAYS,
+
+
+a ordem dos ELEMENTOS NO ARRAY É QUE IMPORTA para o assign de cada 
+
+constante....
+
+ex:
+
+
+
+
+[a, b] = ['Hello', 'Max', 'Manu'];  
+
+
+
+A CORRESPONDE A 'Hello' 
+
+
+B CORRESPONDE A 'Max'
+
+
+C CORRESPONDE A 'Manu'...
+
+
+
+-------------------------------------
+
+
+
+
+JÁ COM OBJETOS e propriedades, O QUE INTERESSA É O ___NOME____ da propriedade...
+
+
+
+ex:
+
+
+
+{name} = {name: 'Max', age: 28}
+
+console.log(name)/////MAX    //// COMO VIMOS ANTES, O QUE INTERESSA É O __NOME__DA PROPRIEDADE... ele deve ser referenciado no nome da const, na destructuring do negócio...
+
+console.log(age) /////UNDEFINED ///// deu undefined pq não o deestruturamos...
+
+
+
+-----------------------------
+
+
+
+Isso quer dizer que, no exemplo acima, 
+
+O 
+
+'name' dentro daquele objeto na direita SERÁ TARGETADO 
+
+
+pelo 'name' na esquerda... (será criada uma constante de nome 'name' com valor de 'Max'..) ---> 
+
+
+e é por isso que o console.log de age rende um simples UNDEFINED (pq não estamos puxando esse valor de dentro daquele objeto... )
+
+
+
+------------------------------------------
+
+
+
+DEVEMOS 
+
+
+VER ISSO EM PRÁTICA 
+
+
+NO JSBIN...
+
+
+
+
+PROFESSOR CRIA UM ARRAY 
+
+DE NOVO...
+
+
+
+Ele 
+
+
+cria um array de 'numbers'...
+
+
+ex:
+
+
+
+
+
+const numbers = [1, 2, 3];
+
+
+
+
+------------------------------
+
+
+
+CERTO... AGORA DIGAMOS QUE QUEREMOS PEGAR OS 
+
+VALORES/ELEMENTOS 
+
+1 E 2... E COLOCAR ELES EM UMAS CONSTANTES, constante 'a' e 'b'...
+
+
+
+para isso 
+
+vamos escrever assim:
+
+
+
+
+
+
+
+const numbers = [1, 2, 3]; 
+
+
+[a, b] = numbers; ////ASSIGNAMOS 'A' E 'B' como OS PRIMEIROS ELEMENTOS DO ARRAY DE 'NUMBERS', por meio dessa sintaxe...
+
+
+
+console.log(a, b); ///AQUI VEMOS EXATAMENTE aquilo que já sabíamos, que '1' e '2' serão ARMAZENADOS DENTRO DAS CONSTANTES DE nome 'a' e 'b'... 
+
+
+
+
+
+
+OS NÚMEROS 1 E 2 ESTÃO SENDO PUXADOS PARA FORA DO ARRAY... 
+
+
+
+
+OK... MAS E SE QUISÉSSEMOS O ELEMENTO/ITEM/NÚMERO 3 DO ARRAY?
+
+
+
+
+Bem, se quiséssemos isso, TERÍAMOS 
+
+QUE DEIXAR UM ESPAÇO EM BRANCO 
+
+entre vírgulas 
+
+dentro da parte da esquerda....
+
+
+
+EX:
+
+
+
+const numbers = [1, 2, 3];
+
+[num1, , num2] = numbers;
+
+console.log(num1, num2);
+
+------------------------------
+
+
+NESSE ÚLTIMO EXEMPLO,
+
+os elementos ficarão:
+
+
+
+'CONST num1 = 1 
+
+
+CONST num2 = 3'... 
+
+
+
+
+OU SEJA,
+
+OS NÚMEROS 1 E 3 SERÃO puxados daquele array... (pq deixamos um espaço em branco entre vírgulas na parte da esquerda...)
+
+------------------------------
+
+
+
+
+ISSO ERA O ARRAY DESTRUCTURING...
+
+
+
+
+
+
+--> OBJECT DESTRUCTURING TAMBÉM 
+
+É SUPORTADO PELO _NOSSO PROJETO__ (e o utilizaremos)....
+
+MAS NÃO É SUPORTADO 
+
+PELO JSBIN...
+
+
+
+------------------------------------
+
+
+MAS É AQUELA SINTAXE QUE VIMOS MAIS ACIMA... ---> não vamos usar 
+
+muito essas sintaxes de 
+
+
+destructuring, MAS DEVEMOS SABER QUE ELAS SÃO CONVENIENTES...

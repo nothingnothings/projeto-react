@@ -1,0 +1,958 @@
+
+
+
+
+
+
+
+
+
+
+--> na última lição,
+
+
+FIZEMOS FETCH DO 'post data' 
+
+
+DO SERVIDOR...    --> e aí renderizamos 
+
+ESSES POSTS NA TELA 
+
+
+POR MEIO DO MANAGE 
+
+DO 
+
+STATE 
+
+
+
+lá 
+
+em 
+
+'componentDidMount', e com a ajuda do AXIOS.... -------> MAS 
+
+É EVIDENTE 
+
+
+QUE NÓS 
+
+ESTAMOS FAZENDO FETCH 
+
+
+___DE POSTS___ DEMAIS AQUI.... (não queremos tantos...)
+
+
+
+
+
+
+
+
+
+
+
+----> EM UM __APLICATIVO DE VERDADE/REAL__, 
+
+VOCÊ PROVAVELMENTE VAI ENVIAR/ VAI QUERER ENVIAR __UM 
+
+'
+QUERY PARAMETER' 
+
+AO SEU 
+
+BACKEND 
+
+
+PARA __RESTRINGIR___ A QUANTIDADE 
+
+
+DE DATA 
+
+QUE VOCÊ 
+
+VAI QUERER 
+
+
+'FETCHEAR'... -----> ou seja,
+
+você vai querer 
+
+
+estabelecer 
+
+
+uma 
+
+
+'PAGINATION'... -------------> MAS UMA ALTERNATIVA 
+
+
+À 'PAGINATION'
+
+
+SERIA/É 
+
+
+___cONVERTER__ OS 
+
+DADOS_, UMA VEZ RECEBIDOS... ( ou seja,
+
+
+receber 
+
+O 
+
+__ARRAY__ COMPLETO DE OBJETOS 'post' 
+
+E ENTÃO _FILTRAR__ ALGUNS POSTS...) 
+
+
+
+
+
+
+
+
+PARA isso,
+ 
+
+ professor aponta que 
+
+
+ ele 
+
+
+
+ vai adicionar UMA NOVA 'CONST' 
+
+ DE NOME 
+
+ 'posts'
+
+
+ DENTRO 
+
+
+ DO __THEN __ BLOCK__ subsequente 
+
+ ao return da response (obtida por meio da package' AXIOS')....
+
+
+
+ ex:
+
+
+
+
+
+
+
+         
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+            
+            (response) => {
+                
+
+                const posts = ...; //////////EIS O CÓDIGO EM QUESTÃO.
+                this.setState({
+                    posts: response.data
+                })
+            
+            
+            }
+        )
+
+        
+    }
+    
+
+
+------------------------------------------
+
+
+
+DENTRO DESSE 
+
+
+'const posts',
+ 
+ O PROFESSOR ARMAZENARÁ 
+
+
+
+ 'response.data'... 
+
+
+
+
+
+
+
+ ex: 
+
+
+
+
+ const posts = response.data 
+
+
+ ---------------------------------
+
+
+ CERTO, MAS ELE NÃO ACABARÁ POR AÍ.... --> não,
+
+ ELE AINDA 
+
+ VAI CHAMAR 
+
+ '.slice()' 
+
+
+
+ EM ___CIMA___ DESSE 
+
+
+ 'response.data'... ------------->  POR MEIO 
+
+ DO MÉTODO 
+
+
+ 'SLICE()' (método de ARRAYS),
+
+
+
+
+ O PROFESSOR 
+
+ DECIDE
+
+
+ PEGAR ___aPENAS___ OS ELEMENTOS 
+
+
+ ___ DE 
+
+
+INDEXADOR '0' A '4'... ( ou seja, 4 elementos/posts)...
+
+
+
+ex:
+
+
+
+
+
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+            
+            (response) => {
+                
+
+                const posts = response.data.slice(0, 4); //////////EIS O CÓDIGO EM QUESTÃO.
+                this.setState({
+                    posts: response.data
+                })
+            
+            
+            }
+        )
+
+        
+    }
+
+
+--------------------------------------------
+
+
+
+--> ISSO VAI PEGAR SÓ ESSES 4 POSTS,
+
+
+E NÃO TODOS ELES... (na verdade,
+
+O PROFESSOR/NÓS FIZEMOS INICIALMENTE O RETRIEVE DE TODOS ELES,
+
+MAS SÓ 
+
+4 SERÃO ARMAZENADOS NESSA CONST DE NOME 'posts'...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ --> ENTRETANTO, 
+
+
+ AINDA TEMOS ___MUITOS POSTS, NÃO PRECISAMOS DE TANTOS... -------> 
+
+
+ É POR ISSO QUE NA PRÓXIMA AULA O PROFESSOR 
+
+
+ VAI NOS MOSTRAR UMA MANEIRA 
+
+
+
+ __DE TRANSFORMAR___ A 'DATA' QUE VOCÊ RECEBE DO SERVIDOR... (para pegar apenas 
+ 
+ os posts que vocÊ deseja...;quantos você deseja...) ------> ISSO FEITO,
+
+
+ PROFESSOR 
+
+ VAI REPASSAR 
+
+
+ ESSE 
+
+
+
+
+ ARRAY MODIFICADO (o 'posts,' const com só 4 elementos 'post') 
+
+
+
+ PARA 
+
+ DENTRO 
+
+ DO 
+
+ 'this.setState()',
+
+
+ trocando 
+
+
+
+ o código de 
+
+
+ 'this.setState({
+     posts: response.data
+ })' 
+
+
+
+
+ por 
+
+
+
+
+
+
+
+
+  'this.setState({
+     posts: posts
+ })' 
+
+
+
+
+(PQ 'posts' SERÁ ESSA NOSSA CONST MODIFICADA...)
+
+
+
+
+
+------------------------------------------------
+
+
+CERTO, MAS PROFESSOR NÃO PARA POR AÍ... -----> 
+
+
+
+ELE VAI CRIAR UMA 
+
+NOVA CONSTANTE, DE NOME 
+
+'updatedPosts',
+
+
+
+PQ ELE VAI QUERER
+
+
+APRESENTAR UM FIELD 
+
+
+DE 
+
+'offer'
+
+AOS NOSSOS POSTS...
+
+
+
+EX DO CÓDIGO:
+
+
+
+
+
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+
+            (response) => {
+                    const posts = response.data.slice(0, 4);
+
+                    const updatedPosts = ... ////////eis o código em questão
+                    
+                this.setState({
+                    posts: response.data
+                })
+            
+            
+            }
+        )
+
+        
+    }
+    
+
+
+----------------------------------------
+
+
+
+
+
+TIPICAMENTE, EXPLICA O PROFESSOR,
+
+VOCÊ 
+
+
+
+
+RECEBERIA/IRIA RECEBER 
+
+esse 
+
+'updatedPosts' 
+
+LÁ 
+
+DO SEU BACKEND,
+
+
+
+MAS __ NESSE NOSSO CASO ESPECÍFICO, NOSSO 
+
+FAKE BACKEND NÃO TEM 
+
+
+esse valor/coisa/objeto de 'updatedPosts'... --------> é por isso 
+
+
+que 
+
+o professor vai nos adicionar essa const de 'updatedPosts'... -----> 
+
+
+ELE SÓ VAI 
+
+ADICIONAR 
+
+ESSE NEGÓCIO 
+
+
+AQUI 
+
+
+___PARA NOS DEMONSTRAR__ QUE ___PODEMOS, SIM___ , 
+
+
+______EDITAR____ OS DADOS___ QUE 
+
+'RETRIEVAMOS'/FIZEMOS FETCH ___ DE UM SERVIDOR____. (ou seja, você 
+
+
+não é obrigado a USAR OS DADOS NUS E CRUS, OU ENTÃO APENAS PEGAR UMA PARTE DELES... --> não,
+
+VOCê PODE (e ÀS vezes, DEVE) FAZER '''EDIT''' 
+
+DE DADOS/DATA 
+
+OBTIDOS DO FETCH DE UM SERVIDOR....)
+
+
+
+
+
+-------------------------------------------------------------
+
+
+
+E COMO O REACT __NOS DEIXA TRABALHAR COM VANILLA JAVASCRIPT__, 
+
+AQUI PODEMOS 
+
+EXECUTAR __qUALQUER CÓDIGO JAVASCRIPT __ QUE DESEJARMOS__... ---> é por isso 
+
+
+
+que o professor, nesse 'updatedPosts',
+
+
+vai 
+
+invocar 
+
+
+a const 
+
+
+'posts' 
+
+
+
+E ENTÃO 
+
+VAI CHAMAR 
+
+
+O MÉTODO 
+
+'.map()' 
+
+
+EM CIMA DELE... ELE VAI USAR O MÉTODO '.map()" 
+
+PARA ___EDITAR ___ ESSE ARRAY DE POSTS (4 posts, de indice 0 a 4)...
+
+
+
+
+---> ELE VAI EDITAR ESES POSTS; PARA 
+
+CADA 
+
+POST, ELE VAI QUERER (por meio do método '.map()' ) 
+
+
+
+___rETORNAR UM OBJETO JAVASCRIPT____ ('{}') 
+
+
+EM QUE
+
+
+
+ELE VAI QUERER 
+
+DISTRIBUIR 
+
+TODAS AS PROPRIEDADES DO 'post' normal ('...post', OU SEJA, UM USO DE SPREAD OPERATOR), 
+
+
+E AO MESMO 
+
+TEMPO 
+
+VAI QUERER/VAI 
+
+
+DEFINIR 
+
+
+UMA 
+
+
+PROPRIEDADE 
+
+
+DE 
+
+'author', cujo valor O PROFESSOR HARDCODARÁ COMO 'Max'...
+
+ex:
+
+
+
+
+
+
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+
+            (response) => {
+                    const posts = response.data.slice(0, 4);
+
+                    const updatedPosts = posts.map(
+                        post => {
+                            return {
+                                ...post, ///////////////////EIS O CÓDIGO EM QUESTÃO.
+                                author: 'Max'
+                            }
+                        }
+                    )
+                    
+                this.setState({
+                    posts: response.data
+                })
+            
+            
+            }
+        )
+
+        
+    }
+
+
+
+-----------------------------------
+
+ISSO FEITO, 
+
+
+
+FINALMENTE,
+
+
+O PROFESSOR
+
+VAI QUERER 
+
+REPASSAR 
+
+
+ESSE 
+
+'updatedPosts' 
+
+
+AO 
+
+NOSSO 
+
+STATE, lá naquele 
+
+'this.setState(
+    {
+        posts: updatedPosts
+    }
+)
+'
+
+
+
+EX(CÓDIGO COMPLETO):
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+import Post from '../../components/Post/Post';
+
+import FullPost from '../../components/FullPost/FullPost';
+import NewPost from '../../components/NewPost/NewPost';
+
+
+import BlogStyle from './Blog.module.css';
+
+
+import axios from 'axios';
+
+
+
+
+
+class Blog extends Component {
+
+
+        state={
+            posts: [
+
+            ]
+        }
+
+
+
+
+    // async componentDidMount() {
+        
+    //         const response = await axios.get(
+    //             'https://jsonplaceholder.typicode.com/posts'
+    //           );
+    //             const listOfPosts = response.data;
+    //             console.log(listOfPosts);
+        
+
+    //     }
+       
+        
+
+    componentDidMount () {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(
+
+
+            (response) => {
+                    const posts = response.data.slice(0, 4);
+                    const updatedPosts = posts.map(post => {
+                        return {
+                            ...post,
+                            author: 'Max' //propriedade EDITADA/ADICIONADA ao nosso 'response'/post OBTIDO PELO USO DO 'AXIOS'...
+                        }
+                    })
+                // this.setState({
+                //     posts: response.data
+                // })
+                    
+                 this.setState({
+                    posts: updatedPosts
+                })
+            
+            }
+        )
+
+        
+    }
+    
+
+
+
+
+
+
+
+    render () {
+            const posts = this.state.posts.map( 
+                (post) => {
+                    return <Post title={post.title} body={post.body} key={post.id} author={post.author} />
+                }
+            )
+
+    
+
+
+
+        console.log(this.state.posts)
+        return (
+            <div>
+                <section className={BlogStyle.Posts}>
+                    {/* <Post />
+                    <Post />
+                    <Post /> */}
+                    {posts}
+                </section>
+                <section>
+                    <FullPost />
+                </section>
+                <section>
+                    <NewPost />
+                </section>
+            </div>
+        )
+
+    }
+}
+
+
+
+
+export default Blog;
+
+
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+E TAMBÉM:
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+
+
+
+import PostStyle from './Post.module.css';
+
+
+
+
+
+
+
+const post = (props) => {
+    
+    return <article className={PostStyle.Post}>
+        <h1>{props.title}</h1>
+        <div className="Info">
+            <div className={PostStyle.Author}>
+                {props.body}
+                &nbsp;
+                &nbsp;
+                <hr></hr>
+                {props.author}
+            </div>
+        </div>
+    </article>
+}
+
+
+
+export default post;
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CERTO,
+
+
+
+ISSO SIGNIFICA QUE 
+
+NÓS CONSEGUIMOS, AO MESMO TEMPO, __ABREVIAR__ A DATA 
+
+RECEBIDA 
+
+
+__PELO SERVIDOR (por meio de 'splice()')
+
+
+
+
+E 
+
+
+
+TAMBÉM __EDITÁ-LA... (por meio de '.map()', e por meio 
+
+do 
+return de 
+'{
+    ...post,
+    author: 'Max'
+
+}', que 
+
+
+ACABOU ACRESCENTANDO 
+
+A PROPRIEDADE 
+
+
+'author' 
+
+ÀS PROPRIEDADES JÁ EXISTENTES DE NOSSO/NOSSOS OBJETO/OBJETOS 
+
+'POST'...)
+
+
+
+
+
+
+
+---> e isso é apenas um simples exemplo QUE NOS 
+
+
+MOSTRA ___ QUE PODEMOS, SIM, __EDITAR__ OS DADOS/DATA __ RECEBIDOSS
+
+
+
+PELO __SERVIDOR__ ANTES 
+
+DE 
+
+OS UTILIZARMOS 
+
+
+PARA ____SETTAR___ UM NOVO STATE__....
+
+
+
+
+
+
+
+
+
+(professor faz o pass padrão daquele prop 'author'...)
+
+
+
+
+
+--> É ASSIM, PORTANTO,
+
+QUE PODEMOS 
+
+TRABALHAR COM 
+'DATA RECEIVED FROM A SERVER',
+
+
+por meio do AXIOS
+E por meio 
+
+
+
+do 
+
+'componentDidMount'..

@@ -1,0 +1,658 @@
+
+
+
+
+
+ANTES DE ACABARMOS ESTE MÓDULO 
+
+E EXAMINARMOS 
+
+CONCEITOS MAIS AVANÇADOS DE 'REDUX',
+
+como 
+
+
+
+o 
+
+
+
+__RUN __ DE CÓDIGO ASSÍNCRONO (que ainda não vimos),
+
+
+
+
+
+O PROFESSOR 
+
+
+
+
+
+VAI NOS 
+
+MOSTRAR ALGUNS 
+
+DOS DIFERENTES 
+
+
+__TIPOS DE STATE__, para então 
+
+
+
+RESPONDER A QUESTÃO:
+
+
+
+
+
+É UMA BOA IDEIA __FAZER MANAGE__ DE TODO E QUALQUER STATE 
+
+POR 
+
+MEIO 
+
+DO 
+
+REDUX? ---------> O professor 
+
+
+faz 
+
+
+essa 
+
+
+
+PERGUNTA 
+
+pq 
+
+_ já 
+
+nesse 
+
+pequeno 
+
+app 
+
+DEMO 
+
+nós 
+
+JÁ 
+
+
+
+___ELIMINAMOS __ O CALL 
+
+DE 
+
+'setState()'
+
+
+NO 
+
+'component/container',
+
+
+E TAMBÉM 
+
+
+___ELIMINAMOS__ O STATE _______LOCAL________ DE NOSSO 
+
+COMPONENT
+'Counter'...
+
+
+
+
+
+
+
+-----------------------> mas o STATE QUE NÓS USAMOS ATÉ AGORA,
+
+
+E EM __tODOS OS REACT APPS AO LONGO DO CURSO,
+
+
+era 
+
+justamente esse STATE INTERNO... --------> e nós usamos 
+
+
+
+o REDUX STATE,
+
+
+e 
+
+'action dispatching',
+
+e 
+
+
+o 
+
+'store binding' 
+
+
+DE NOSSO 
+
+COMPONENT/CONTAINER 
+
+PARA __ENTÃO USAR ESSE 'STATE'...
+
+
+
+
+--------------> ESSE É O APPROACH 
+
+QUE 
+
+DEVE SER SEMPRE SEGUIDO? DEVEMOS SEMPRE USAR O REDUX? --------->
+
+
+
+BEM,
+
+TUDO 
+
+
+_______dEPENDE ___ DO _________TAMANHO__ E COMPLEXIDADE __ DE SEU 
+
+
+
+
+________ STATE____________....
+
+
+
+
+
+
+
+
+
+
+--> se você tem um APLICATIVO PEQUENO, COISA SMALL FRY,
+
+
+
+
+O SETUP DO REDUX 
+
+__PODE TE FAZER PERDER MAIS TEMPO, 
+
+
+gastar mais tempo com nenhum benefício...
+
+
+
+
+---------> MAS PARA __QUALQUER APLICATIVO 
+
+
+
+'DECENTE' MID-LARGE SIZED,
+
+ 
+USAR O REDUX E FAZER O MANAGE DO STATE NELE __É PROVAVELMENTE __ UMA EXCELENTE IDEIA...
+
+
+
+
+
+--> AINDA ASSIM,
+
+
+
+DEVEMOS SEMPRE NOS PERGUNTAR:
+
+
+
+
+
+
+QUAL ___STATE__ DEVERÁ/DEVE __ SER USADO 
+
+
+PARA/COM O REDUX?  -----> isso pq 
+
+
+
+___VOCê ___ NÃO DEVE ____ FAZER MANAGE __ DE TODO O 'STATE' 
+
+
+DE 
+
+SEU 
+
+APLICATIVO NELE...
+
+----------------------------------------
+
+
+
+
+Para entender mais sobre isso, 
+
+
+
+
+DEVEMOS DAR UMA OLHADA 
+
+
+
+NOS 
+
+
+__DIFERENTES 
+
+
+
+
+'''''TIPOS'''' de state,
+
+
+
+
+ALGUNS EXEMPLOS DE CADA TIPO,
+
+e 
+
+se você deve/deveria implementar 
+
+O REDUX em cada um deles...
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+
+
+
+TIPO nº1 ----------> 
+
+
+
+
+
+'LOCAL UI STATE' ---------> COISAS COMO 'MOSTRAR/ESCONDER BACKDROP', ABRIR/FECHAR O MODAL... -----> ou seja, TODAS AS COISAS QUE MUDAM O STATE __ PARA ENTÃO ___ ALTERAR A 'UI'___ do seu REACT APP... ----> mostrar algo DIFERENTE AO USUÁRIO... 
+
+
+----> DEVEMOS USAR REDUX PARA FAZER MANAGE DO STATE DESSAS ALTERAÇÕES NA UI? ---> devemos fazer o manage do state desses negócios cOM O GLOBAL STATE DO REDUX..? ------------> PROFESSOR DIZ QUE 
+
+
+___NÃO___.  -----> '''MOSTLY HANDLED WITHIN YOUR COMPONENTS''... -----> ainda assim, é evidente que VOCê  ____PODE___ USAR O REDUX PARA ISSO; vocÊ pode ter uma propriedade 'showModal' no seu STATE GLOBAL, e então DISPATCHAR UMA ACTION PARA SETTAR esse 'showModal' como 'TRUE', E ENTÃO DISPATCHAR UMA ACTION PARA __SETTAR__ ESSE 'showMOdal' como false... --> depois disso você conectaria seus components, fazer 'listen-to' dessa propriedade, para então RENDERIZAR CONDICIONALMENTE O MODAL/ELEMENTO DA UI, e aí tudo bem... 
+
+--> mas isso aí pode ser OVERKILL .... -----> VOCÊ SEMPRE PODE ADMINISTRAR ESSAS COISAS __dE DENTRO DOS SEUS COMPONENTS_, como JÁ VIMOS AO LONGO DE NOSSO CURSO...
+
+
+
+--------------------------------------------------
+
+
+
+
+TIPO nº 2 --------------------> 
+
+
+
+
+'
+PERSISTENT STATE' ----------> isso quer dizer BASICAMENTE O __STATE___ QUE VOCê ___TAMBÉM__ ARMAZENA __ EM UMA DATABASE 'serverside'... ------> EX: 'All Users, All Posts' DE UM __wEBSITE__.... ---> usuários de seu app, posts de um blog... --> tudo isso É ARMAZENADO NO STATE, MAS É TAMBÉM ENVIADO A UM SERVIDOR backend... (como nossas 'Orders' do Burger) -------->
+
+
+-------> VOCÊ DEVE 
+
+USAR 
+
+O REDUX PARA FAZER HANDLE 
+
+DO STATE DESSES NEGÓCIOS?  ----------> PROFESSOR DIZ QUE VOCê __ DE FATO___ USA O REDUX PARA ISSO,
+
+CONTUDO __ VOCÊ __ NÃO VAI O UTILIZAR __ PARA TODO E QUALQUER DADO __ NA SUA 
+
+DATABASE SERVERSIDE... ------> isso, de não utilizar para todo e qualquer dado, 
+é pq 
+
+O REDUX É USADO JUSTAMENTE 
+
+PARA FAZER O MANAGE DO STATE NO SEU APP ___DESDE QUE __ SEU 
+
+APLICATIVO AINDA ESTEJA VIVO... ---------> 'AINDA ESTEJA VIVO' ---> ora,
+
+QUANDO O 
+
+__USUÁRIO _____ REFRESHA__ A PÁGINA DA INTERNET,
+
+
+TODO SEU STATE __ QUE HAVIA NELA ___ É PERDIDO___... ('is gone')... -------> COM ISSO, 
+
+
+PROFESSOR QUER NOS DIZER QUE 
+
+
+_________O REDUX _______ NÃO É UM 
+
+
+'REPLACEMENT', um substituto, __ PARA UMA DATABASE___-...
+
+
+
+
+não pode ser usado como uma database...
+
+
+
+
+
+
+---> EM VEZ DISSO, O QUE OS DESENVOLVEDORES TIPICAMENTE FAZEM É 
+
+___ARMAZENAR__ ESSES DADOS RELEVANTES (usuários, posts) EM UM SERVIDOR,
+
+
+
+E ENTÃO APENAS FAZEM O MANAGE DAS 'RELEVANT SLICES' POR MEIO DO 'REDUX'... -----> ISSO SIGNIFICA 
+
+QUE 
+
+APENAS 
+COISAS COMO 
+
+
+'the posts you are currently displaying' 
+
+SÃO 
+
+GERENCIADAS PELO REDUX E SEU STATE,
+
+
+
+ou então os 'USERS YOU CURRENTLY NEED TO DISPLAY'...
+
+
+
+ou então 
+
+'the posts the user currently may edit' ------->  ESSAS COISAS SÃO CARREGADAS 
+
+E REALMENTE DISPONIBILIZADAS NO REDUX,
+
+são disponibilizadas PARA QUE VOCê POSSA AS RENDERIZAR NA TELA DO USUÁRIO;
+
+
+MAS ISSO TALVEZ NÃO INCLUA ___tODOS OS DADOS __ QUE VOCÊ TEM NO SEU DATABASE.... (
+    isso significa que 
+
+
+    ALGUNS DADOS DO DATABASE PODERÃO TER SEU STATE HANDLADO POR MEIO 
+
+    DO REACT NORMAL, E NÃO POR MEIO DO REDUX EM SI...
+)
+
+
+---------------------------------------------
+
+
+
+
+
+POR FIM,
+
+
+
+TEMOS 
+
+O STATE DE TIPO 
+
+'Client',
+
+o 
+
+
+
+'Client State'... -------> esses states 
+
+são states como 
+
+
+
+'IS THE USER AUTHENTICATED' ('isAuth'), 
+
+OU ENTÃO 
+
+
+
+
+___FILTROS___ DEFINIDOS/ESCOLHIDOS ___ PELO USUÁRIO__ (ex: 
+
+um DROPDOWN acessado pelo usuário, que então o PERMITE FILTRAR SEUS POSTS/ORDENÁ-LOS 
+
+POR MAIS/MENOS RELEVANTES..., etc)...
+
+
+
+
+
+EX: 'isAuth', 'Filters set by User'...
+
+
+
+
+
+----------> ESSES FILTROS/PROPRIEDADES de 'autenticação'
+
+
+__NÃO SÃO DADOS__ 
+
+QUE VOCÊ 
+
+ARMAZENA 
+
+EM 
+
+UMA DATABASE...... --------> por exemplo,
+
+VOCÊ 
+
+NÃO PODE 
+
+
+
+___aRMAZENAR O DADO DE QUE O USUÁRIO ESTÁ AUTENTICADO NAQUELA OCASIÃO,
+
+pq 
+
+SE ELE 
+
+INPUTTOU O LOGIN ERRADO/informações erradas de login,
+
+VOCÊ 
+
+NÃO PRECISA/NÃO VAI ARMAZENAR ESSA INFORMAÇÃO 
+
+
+NO SERVERSIDE, necessariamente...
+
+
+
+
+
+
+
+---> quanto ao FILTRO definido pelo usuário/regulado pelo usuário,
+
+TALVEZ 
+
+VOCÊ NÃO DEVA SETTAR ISSO EM UM SERVIDOR,
+
+pq isso aí 
+ 
+
+ PROVAVELMENTE NEM É/NEM SERÁ 
+
+
+ TÃO IMPORTANTE ASSIM... 
+
+
+
+
+ ---> é claro que VOCÊ DEVE DEFINITVAMENTE 
+
+ TER CIÊNCIA 
+
+DAS CONFIGURAÇÕES DOS
+
+ FILTERS DEFINIDOS NO SEU CLIENT,
+
+no seu javascript, NO SEU CÓDIGO DO REACT..... -------> 
+
+
+
+
+E ESSE 
+
+TIPO 
+
+
+DE 
+'STATE',
+
+
+esse 
+
+'CLIENT STATE',
+
+
+É __________ DEFINTIVAMENTE ____ UM TIPO DE STATE __ QUE VOCÊ VAI QUERER ___ 
+
+
+GERENCIAR COM O 
+
+'REDUX'.... --> VOCÊ VAI QUERER 
+
+
+GERENCIAR 
+
+
+COM O REDUX 
+PQ 
+
+
+ESSES 
+
+DADOS 
+
+AÍ (de autenticação, filtros)
+
+
+
+___PODEM ACABAR AFETANDO ______MÚLTIPLOS COMPONENTS___ 
+
+E 
+
+ÁREAS DE SEU APP,
+ 
+ e 
+ aí 
+
+ O __REDUX___ VAI REALMENTE FACILITAR SUA VIDA NESSE ASPECTO (pass de PROPS/state 
+ 
+ 
+ ENTRE COMPONENTS de diferentes extremos FACILITADO...)
+
+
+
+
+ --> por exemplo, o fato/state de o usuário estar AUTENTICADO ('isAuth: true') 
+
+ PODE 
+
+ SER 
+
+
+ IMPORTANTE ___ PARA UMA PORRADA DE COMPONENTS___ NO SEU APLICATIVO,
+
+
+ E É 
+
+
+NESSA HIPÓTESE 
+
+
+EM QUE 
+
+O REDUX REALMENTE BRILHA,
+
+pq 
+
+a existência do 
+
+'CENTRAL STORE'
+
+
+OFERECE UMA IMENSA VANTAGEM...
+
+
+
+
+---------------------------------
+
+
+
+
+ESSES SÃO OS 3 DIFERENTES TIPOS DE 'state',
+
+E 
+
+
+COMO 
+
+ELES DEVEM SER HANDLADOS...
+
+
+
+
+1 (Local UI State )--> 'mostly handled within components' 
+
+
+2 (Persistent State )--> 'Stored on Server, relevant slice managed by Redux'
+
+
+3 (Client State) --> 'Managed via Redux'
+
+
+---------------------------------------------------
+
+
+
+NÓS VAMOS VER EXEMPLOS DE TODOS ESSES 'TIPOS DE STATE' nos próximos módulos, 
+
+
+quando 
+
+
+ADICIONARMOS 'REDUX' ao nosso 'COURSE PROJECT'... (burger builder)....
+
+
+
+
+
+
+ANTES DE FAZERMOS ISSO, CONTUDO, 
+
+DEVEMOS
+
+___PRATICAR __ O REDUX (ver o 'assignment' do professor, neste módulo...)
+
+
+

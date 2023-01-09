@@ -1,0 +1,795 @@
+
+
+
+
+
+NO ÚLTIMO MÓDULO, PROFESSOR NOS MOSTROU VÁRIAS MANEIRAS DE REFATORAR NOSSOS REDUCERS... 
+
+(aquela utility function de 
+
+'updateObject'...)
+
+
+
+
+----> ESSES MÉTODOS SÃO TODOS OPCIONAIS, MAS SÃO MUITO BONS...
+
+
+
+
+--> professor quer deixar o SWITCH CASE STATEMENT FICAR MAIS 'LEAN'...
+
+
+
+
+
+
+
+
+
+
+
+
+---> por exemplo,
+ 
+
+
+o professor vai adicionar o 'CONVENIENCE METHOD' do 
+
+'updateObject'...
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+
+--------> FUNÇÃO MUITO ÚTIL, que tem esta sintaxe:
+
+
+
+
+
+export const updateObject = (oldObject, updatedValues) => {
+    console.log(oldObject);
+    console.log(updatedValues);
+    return {
+        
+        ...oldObject,
+        ...updatedValues
+    }
+};
+
+
+
+
+----------------------------------------
+
+
+
+DEVEMOS IMPORTAR 
+
+esse negócio nos nossos 
+
+2 REDUCERS...
+
+
+
+
+
+--> EU JÁ HAVIA FEITO ISSO:
+
+
+
+
+
+
+
+
+
+
+
+
+
+const ingredientAdd = (state, action) => {
+  const updatedBurger = {
+    ...state.burger
+  }
+  const updatedBurgerIngredients = {
+    ...updatedBurger
+  }
+  //console.log(updatedBurgerIngredients)
+  const insideUpdatedBurgerIngredients = updatedBurgerIngredients.ingredients;
+  return updateObject(state, { ///////eis aqui o código que interessa
+    burger: {totalPrice: state.burger.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+      ingredients: {
+        ...insideUpdatedBurgerIngredients,
+        [action.ingredientName]: state.burger.ingredients[action.ingredientName] + 1
+      }
+    }
+  }
+  )
+  
+
+}
+
+
+
+
+
+
+
+
+    case actionTypes.INGREDIENT_ADD:
+return ingredientAdd(state, action); //call da função auxiliar... 
+(que vai executar 'objectUpdate'...)
+
+
+
+
+---------------------------
+
+
+
+
+
+
+-> professor diz que PODERÍAMOS 'squeeze' todo esse código 
+
+
+em 
+
+
+apenas 1 linha, mas isso seria 'pretty hard to follow along'...
+
+
+
+
+------------------------------
+
+
+
+
+
+
+O professor faz a mesma coisa, mas com 
+
+
+o 
+
+'REMOVE INGREDIENTS'...
+
+
+
+
+
+
+----------------------------
+
+
+
+
+
+
+--> depois disso, passamos a 'SET_INGREDIENTS'/'ORDER_INITIAL_INGREDIENTS_GET',
+
+
+o qual 
+
+
+TAMBÉM
+ 
+ JÁ 
+
+
+ ESCREVEMOS,
+
+ E FICOU ASSIM:
+
+
+
+
+
+
+
+
+
+const orderInitialIngredientsGet = (state, action) => {
+
+    return updateObject(state, {
+      burger: { totalPrice: 6.9,
+        error: false,
+      ingredients: {
+        ...action.ingredients
+      }}
+    })
+}
+
+
+
+
+   case actionTypes.ORDER_INITIAL_INGREDIENTS_GET:
+          return orderInitialIngredientsGet(state, action);
+
+
+
+
+
+
+
+
+
+-----------------------
+
+POR FIM, 
+
+
+O PROFESSOR 
+
+
+VAI FAZER 
+
+A MESMA COISA 
+
+com o 
+
+
+ '''''FETCH_INGREDIENTS_FAILED'''',
+
+ que 
+
+ terá um código 
+
+ de 
+
+
+
+
+
+
+
+
+
+
+
+     case actionTypes.FETCH_INGREDIENTS_FAILED: 
+    return updateObject(state, {error: true});
+
+
+
+
+
+
+(E NÃO TERÁ UMA 'FUNÇÃO AUXILIAR', como esses outros cases tinham...) 
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+----> PROFESSOR DIZ QUE DEVEMOS FAZER A MESMA COISA COM 
+
+
+O REDUCER DE 'orderReducer',
+
+com o código que está lá....
+
+
+
+
+
+
+
+--> e, de fato, importamos 
+
+'updateObject'
+
+
+
+nesse 'orderReducer'... --> 
+
+
+
+E AÍ 
+
+
+COMEÇAMOS 
+
+A REFATORAR 
+
+os 
+
+'cases'...
+
+
+
+ex:
+
+    case orderActionTypes.PURCHASE_BURGER_LOADING:
+            return updateObject(state, {loading: true});
+
+
+
+
+------------------------------------------
+
+
+
+
+
+HORA DE FAZER A MESMA COISA COM 'BURGER_SUCCESS',
+
+que tem este código:
+
+
+
+        case orderActionTypes.PURCHASE_BURGER_SUCCESS:
+            const newOrder = {
+                ...action.orderData,
+                id: action.orderId,
+                // purchased: true
+
+                
+            }
+            return {
+                ...state,
+                orders: state.orders.concat(newOrder),
+                loading: false,
+                redirect: true
+            };
+
+
+  
+-------------------------------------------
+
+
+
+
+
+
+
+FICOU TIPO ASSIM (o 'orderReducer'):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const initialState = {
+            orders: [],
+            loading: false,
+            initialIngr: {
+                ingredients: {
+                                    bacon: 0,
+                                    salad: 0,
+                                    cheese: 0,
+                                    meat: 0,
+            }
+  }
+  ,
+  redirect: false,
+//   purchased: false
+  }
+
+
+
+
+const purchaseBurgerSuccess = (state, action) => {
+  
+        const newOrder = {
+            ...action.orderData,
+            id: action.orderId,
+
+            
+        };
+
+       return updateObject(state, {
+            orders: state.orders.concat(newOrder),
+            loading: false,
+            redirect: true
+        })
+}
+
+
+
+const fetchOrderSuccess = (state, action) => {
+    const orders = {...action.orders};
+    return updateObject(state, {orders: orders, 
+                                loading: false});
+}
+
+
+
+
+
+
+const orderReducer = (state = initialState, action) => {
+
+
+    switch (action.type) {
+
+        case orderActionTypes.PURCHASE_BURGER_LOADING: 
+            return updateObject(state, {loading: false});
+
+        case orderActionTypes.PURCHASE_BURGER_SUCCESS:
+            purchaseBurgerSuccess(state, action);
+            break;
+
+        case orderActionTypes.PURCHASE_BURGER_FAIL:
+            return updateObject(state, {loading: false});
+
+         
+               case orderActionTypes.FETCH_ORDERS_START:
+           return  updateObject(state, {loading: true});
+       
+
+            case orderActionTypes.FETCH_ORDERS_SUCCESS:
+            fetchOrderSuccess(state, action);
+            break;
+
+
+            case orderActionTypes.FETCH_ORDERS_FAIL:
+         return  updateObject(state, {loading: false});
+
+
+        
+
+
+            default:
+        return state;
+
+
+
+
+    }
+    
+
+}
+
+
+
+
+
+
+export default orderReducer;
+
+
+
+---------------------------
+
+
+
+OBS:: SERÁ QUE ESSES  'breaks' realmente são necessários?
+
+
+
+---------------------------
+
+
+
+
+
+OK.... MAS ALGO DEU ERRADO... --> quando clico em 
+
+'Orders',
+
+
+
+MINHA PÁGINA __FICA EM BRANCO___.... ---> isso significa que 
+
+ALGUMA COISA NO FLOW DE DADOS 
+
+
+DEU ERRADO....
+
+
+
+------------------------
+
+
+
+
+
+Na verdade,
+
+consigo ver 
+
+
+
+
+3 (TRÊS) problemas... ----> 
+
+
+
+
+1) as orders NÃO ESTÃO APARECENDO QUANDO CLICAMOS EM 'order'... ---> isso significa que 
+
+
+ALGO DEVE ESTAR ERRADO NO NOSSO REDUCER....
+
+
+
+
+
+2) quando clico em 'Continue', na página 'CHECKOUT', 
+
+isso FAZ COM QUE MINHA 'FORM' seja re-renderizada.... (isso não deve acontecer, pq é um gasto de dados para NADA.)
+
+
+
+
+3) Quando abro o sidedrawer e clico em algum dos 'links' (burger builder ou 'orders'),
+
+O SIDEDRAWER não fecha automaticamente.... (e ele tem que fechar)...
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+OK... O PROBLEMA N1 foi consertado... (era um 'return' faltando em 'return fetchOrderSuccess(state, action)'..., lá no reducer...)
+
+
+
+
+
+
+
+
+
+------> agora devo ver o '2'... --> CERTO.... consegui consertar o '2'... ---> 
+
+tive que 
+
+fazer um 
+
+MANAGE DE STATE LOCAL/TRADICIONAL, lá em 'Checkout'.... -----> 
+
+
+
+é este código aqui:
+
+
+
+state = {
+  continueButtonDisable: false
+}
+
+
+
+
+
+  checkoutContinueHandler = () => {
+    console.log(this.props.ingr); //redux
+    console.log(this.props.price); //redux
+    this.setState(
+      {
+        continueButtonDisable: true
+      }
+    )
+    this.props.history.replace('/checkout/contact-data');
+ 
+      console.log(this.state.continueButtonDisable);
+  };
+
+
+
+
+
+
+
+
+
+
+    let summary = (
+      <div>
+      <CheckoutSummary
+     ingredients={this.props.ingr}
+     checkoutCancelled={this.checkoutCancelledHandler}
+     checkoutContinue={this.checkoutContinueHandler}
+     continueButtonStatus={this.state.continueButtonDisable}
+   /> 
+
+
+
+
+
+
+
+
+
+
+   e em 'CheckoutSummary':
+
+
+
+
+
+
+   const checkoutSummary = (props) => {
+
+      console.log(props);
+  return (<div className={checkoutSummaryStyle.CheckoutSummary}>
+
+        <h1>We hope it tastes well!</h1>
+          <div style={{width: '100%',
+                        margin: 'auto' }}>
+        <Burger ingredients={props.ingredients}/>
+        </div>
+        <Button btnType="Danger" clicked={props.checkoutCancelled}>CANCEL</Button>
+        <Button btnType="Success" clicked={props.checkoutContinue} disabled={props.continueButtonStatus}>CONTINUE</Button>
+
+  </div> )
+        }
+
+      
+
+
+
+---------------------------------------------
+
+
+
+
+E ISSO, ESSA MARACUTAIA AÍ,
+
+realmente funcionou...
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+
+
+MAS o 2 é __DIFÍCIL....____ ---> de fato, 
+
+
+
+o 
+
+
+
+
+nosso aplicativo react NUNCA __fECHOU _/FECHAVA O SIDEDRAWER 
+quando clicávamos 
+
+em algum 
+
+
+
+dos 
+
+
+'NavigationItem'/'NavigationItems'... -----------> isso significa que 
+
+MESMO 
+
+QUANDO 
+
+'TROCAMOS DE PÁGINA', ainda 
+
+
+fica aberto o side drawer, o que é uma PÉSSIMA USER EXPERIENCE.... -----> 
+
+
+
+tínhamos que consertar isso, mas é complicado.... --> já tentei 
+
+
+incorporar 
+
+
+o 
+
+'redux' 
+
+
+
+ao component 'SideDrawer',
+ 
+ mas nada parece funcionar...
+
+
+
+
+
+
+
+
+
+
+ ---> CONSEGUI FAZER FUNCIONAR... FOI COMPLICADO...
+
+
+
+
+ --> tive de fazer um grande pass de props, 
+
+
+ lááááá de 'Layout.js', para 'SideDrawer.js', para então 'navigationItems.js',
+
+ para então 
+
+ 'navigationItem.js',
+
+ onde 
+
+ coloquei um 
+
+
+ handler 
+
+ 'onClick={props.closed}' -------> ISSO FUNCIONOU, AGORA TODA VEZ QUE 
+
+
+
+ um navLink (no sidedrawer) é clicado, a página vai FECHAR o sidedrawer devagar e então trocar para outro link....
+
+
+
+
+ -----------------------
+
+
+ Ok, parece que todos os problemas foram consertados....
+
+
+
+
+ De volta às aulas do professor...
+
+ ----------------------------
+
+
+
+ Parece que todo nosso código já foi refatorado...
+
+ hora de partir para a próxima lição...
+
+
+
+ ------------------------------------
+
+
+
+
+ Esta lição era '''opcional'''', mas é bom 
+
+ de aprender sobre isso...

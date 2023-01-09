@@ -1,0 +1,2221 @@
+
+
+
+
+
+AGORA, PARA SOLUCIONAR AQUELE GRANDE PROBLEMA,
+
+
+DEVEMOS 
+
+
+
+
+ESTUDAR 
+
+
+O PACOTE 
+
+CHAMADO 
+DE 
+
+'react-transition-group'....
+
+
+
+------------------------------
+
+
+
+
+
+
+reactjs/react-transition-group
+
+
+
+------------------------------
+
+
+ESSA PACKAGE
+ 
+
+
+ NÃO É UMA PACKAGE OFICIAL,
+
+
+NÃO FOI CRIADA PELA 
+
+
+EQUIPE REACT OFICIAL... ---> entretanto,
+
+
+é uma package que foi criada 
+
+PELA COMUNIDADE DO REACT...
+
+
+
+-------------------------
+
+
+
+---> É UMA PACKAGE 
+
+QUE 
+
+NOS DEIXA 
+
+ANIMAR 
+
+
+ELEMENTOS 
+
+'SMOOTHLY'
+
+
+QUANDO 
+
+ELES 
+
+
+SÃO 
+
+ADDED/REMOVED 
+
+DO 
+
+DOM DE NOSSO APP...
+
+
+
+-----------------------
+
+
+
+DEVEMOS CHECAR
+ 
+ OS 
+
+ MAIN DOCS...
+
+
+
+
+
+ -----> 
+
+
+
+
+ DEVEMOS 
+
+
+
+ INSTALAR isso... --> devemos ler os 
+
+ docs 
+
+
+
+
+ para ver as COISAS QUE PODEMOS FAZER COM ELE...
+
+
+
+
+
+
+
+
+ --> devemos instalar 
+
+ com 
+
+
+
+ 'npm install --save react-transition-group'
+
+
+
+
+ -----------------------------------
+
+
+
+
+----> CERTO.... 
+
+
+
+
+
+
+
+
+---> ISSO FEITO,
+
+
+RODAMOS NPM START DE NOVO....
+
+
+
+
+
+
+
+--> QUEREMOS VER SE HOUVE ALGUMA ALTERAÇÃO NO FUNCIONAMENTO DO NOSSO 
+
+PROJETO... (examinar se os estilos de 'closed'/hide modal/backdrop ESTÃO FUNCIONANDO...)
+
+
+
+
+
+NÃO, NÃO ESTÃO FUNCIONANDO...
+
+
+
+
+
+
+
+----> PROFESSOR DIZ QUE 
+
+VAI ADICIONAR UM __BUTTON___ 
+
+
+NO NOSSO 
+
+APP.js ,
+
+
+no render dele...
+
+
+
+---> vai adicionar um 
+
+BUTTON 
+
+
+
+que dirá 
+
+'toggle',
+
+
+
+
+E 
+ESSE 
+
+BOTÃO 
+
+FARÁ 
+
+O 
+
+
+__RENDER__ DE UMA DIV__...
+
+
+
+
+
+ELE TAMBÉM VAI ADICIONAR UM NOVO STATE/PROPRIEDADE NO STATE,
+CHAMADO 
+
+DE 
+
+'showBlock',
+
+que 
+
+será 
+
+inicialmente
+ 
+
+ DE 
+
+ 'FALSE'...
+
+
+
+
+ EX:
+
+
+
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+
+  state = {
+    modalIsOpen: false,
+    showBlock: false /////////EIS O CÓDIGO EM QUESTÃO.
+  };
+
+  openModalHandler = () => {
+    this.setState({
+      modalIsOpen: true
+    });
+  };
+
+
+  closeModalHandler = () => {
+    this.setState(
+      {
+        modalIsOpen: false
+      }
+    )
+  }
+
+
+
+ 
+  render() {
+    return (
+      <div className="App">
+        <h1>React Animations</h1>
+        <button>Toggle</button>
+        {this.state.showBlock ? <div></div> : null } /////////EIS O CÓDIGO EM QUESTÃO.
+  {this.state.modalIsOpen ? <Modal show={this.state.modalIsOpen} closed={this.closeModalHandler} /> : null }
+  {this.state.modalIsOpen ? <Backdrop show={this.state.modalIsOpen} /> : null }
+        <button
+          className="Button"
+          onClick={this.openModalHandler}
+        >
+          Open Modal
+        </button>
+        <h3>Animating Lists</h3>
+        <List />
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+
+-------------------------
+
+
+
+
+
+
+
+
+CERTO,
+
+E ESSA DIV ALI,
+
+AQUELE 
+
+BLOCO,
+
+VAI RECEBER 
+
+BASICAMENTE 
+
+
+INLINE 
+
+STYLES,
+
+por meio 
+
+do 
+
+prop/attribute 
+
+'style={}'...
+
+
+
+
+
+
+
+dentro do objeto de estilo,
+
+professor 
+
+define 
+
+
+'backgroundColor: 'red',
+
+e aí define 
+
+width como 100,
+
+e 
+a 
+
+height também 
+
+como 100.... ----------> 
+
+
+
+
+
+A PARTIR 
+
+DE 
+
+CLICKS NO BUTTON,
+
+VAMOS QUERER 
+
+RODAR UM CÓDIGO..
+QUE 
+
+VAI 
+
+ALTERAR 
+
+O 
+
+STATE 
+
+DE 
+
+'showBlock'
+
+para TRUE...  -------> 
+
+
+
+ESSE CÓDIGO VAI SER 
+
+AQUELE 
+
+
+'this.setState()' forma completa,
+
+forma que 
+
+USA 
+
+O 
+
+'prevState'
+
+PARA 
+
+
+__fAZER __ UM TOGGLE/INVERSÃO DO VALOR ANTERIOR 
+
+
+do 
+
+state...
+
+
+
+
+--------------------
+
+
+
+
+
+ex:
+
+
+
+
+
+<button onClick={() => this.setState(prevState => {return  ({showBlock: !prevState.showBlock})})} />
+
+{this.state.showBlock ? <div style={{
+    backgroundColor: 'red';
+}}></div> : null }
+
+
+
+
+
+
+------------------
+
+TIPO ASSIM MESMO....
+
+
+
+---> Com tudo isso salvado e adicionado,
+
+temos 
+
+esse toggle button dando toggle nesse quadrado vermelho...
+
+
+
+
+---->  MAS SE DERMOS UMA OLHADA 
+
+NO 
+
+PACOTE 
+
+QUE 
+
+RECÉM INSTALAMOS ('react-transition-group'),
+
+
+
+
+PERCEBEMOS ___ QUE 
+
+ELE ADICIONOU UM OBJETO ___ JAVASCRIPT AO NOSSO BUILD WORKFLOW...
+
+
+
+
+
+
+
+
+
+
+--> na verdade, adicionou mais de 1 objeto, mas o MAIS IMPORTANTE 
+É 
+O
+ 
+ OBJETO 
+
+
+
+ 'Transition'... ----> 
+
+
+
+ É o transition component... --> 
+
+
+ professor 
+
+ QUER nos 
+
+ mostrar 
+
+ como isso funciona...
+
+
+
+ ---> DEVEMOS IMPORTAR ESSE COMPONENT 
+
+ LÁ 
+
+
+ EM 
+
+
+ 'App.js'...
+
+
+
+
+
+
+ --> vamos 
+
+ escrever (e você pode nomear esse objeto do jeito que quisermos, pq é um DEFAULT EXPORT, mas o professor vai usar o vocábulo 'Transition'...)
+
+
+ 'import Transition from 'react-transition-group/Transition'
+
+
+
+
+
+
+ --------- OU SEJA ,
+
+ É 
+
+ UMA SUB-PACKAGE 
+
+ DE 
+
+ 'react-transition-group' QUE
+
+
+ NOS 
+
+ DÁ 
+
+
+ ESSE 
+
+ COMPONENT 
+
+ 'TRANSITION'...
+
+
+
+
+
+
+
+
+ ---> ISSO FEITO,
+
+ VAMOS QUERER 
+
+
+ __wRAPPAr__ 
+
+
+
+ __a COISA QUE VAMOS QUERER ANIMAR __ USANDO ESSE PACOTe___...
+
+
+
+
+ --> no nosso caso, nesse exemplo aí,
+
+
+
+ VAI SER AQUELE CUBO 
+
+
+ ATIVADO/DESATIVADO COM AQUELE 'TOGGLE BUTTOn'...
+
+
+
+
+ ---> PARA TESTAR 
+
+
+
+ ESSE 
+
+
+ NEGÓCIO, ESSE OBJETO/COMPONENT 
+
+ 'Transition', 
+
+
+
+
+ VAMOS 
+
+
+
+ PRIMEIRAMENTE TIRAR O RENDER CONDICIONAL DO DIV COM O CUBO 
+ VERMELho (aquela ternary expression que ativava/desativava o cubo por meio de 'showBlock' no state de 'App'....),
+
+
+ para 
+
+ então 
+
+ WRAPPAR O CUBO COM ISSO...
+
+
+ ex:
+
+        <Transition> /////////EIS O CÓDIGO EM QUESTÃO.
+          <div
+          style={
+            {
+              backgroundColor: 'red',
+              width: 100,
+              height: 100,
+              margin: 'auto'
+            }
+          }
+            />
+            </Transition> ////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+PROFESSOR NOS EXPLICA QUE 
+
+ESSE 
+
+WRAP, POR SI SÓ, 
+
+NÃO FARÁ MUITA COISa.... -----> 
+
+
+
+
+
+
+MAS 
+
+
+A VANTAGEM 
+
+DE 
+
+'<Transition />'
+
+É QUE 
+
+PODEMOS 
+
+
+
+USÁ-LO
+ 
+
+ PARA 
+
+ CONTROLAR __ O 'DISPLAYAL' DOS 
+
+ ELEMENTOS 
+
+
+ QUE 
+
+ FICAM DENTRO DELE.... e __ ESPECIALMENTE__, CONTROLAR 
+
+
+ AS ANIMAÇÕES DESSES ELEMENTOS...
+
+
+
+
+
+
+
+ ---> NÓS FAZEMOS ISSO, por meio 
+
+
+
+ DA DEFINIÇÃO 
+
+ DE UM 
+
+
+ PROP 
+
+ chamado 
+
+ de 
+
+ 'in={}'... --------> 
+
+
+ ESSE 
+
+ PROP É __CORE__, É INDISPENSÁVEL___... --> ESSE 
+
+
+ PROP 
+
+
+
+ DETERMINA/DECIDE 
+
+ __SE OS ELEMENTOS ___  WRAPPADOS
+  
+
+
+  PELO 
+
+
+  COMPONENT 
+
+
+  'TRANSITION' 
+
+
+
+
+  DEVEM/DEVERIAM 
+
+
+  ___SER MOSTRADOS OU NÃO__....
+
+
+
+
+
+  -----> E A MORAL, O DESTAQUE, AQUI, É 
+
+
+  __ QUE ___ O COMPONENT 
+
+  'TRANSITION' 
+
+
+
+  __fAZ MANAGE__ DE 
+
+
+
+  4 ___ STATES __ INTERNOS, ESPECIAIS__...
+
+
+
+
+
+
+
+  ---> OS STATES SÃO 
+
+
+
+
+  'ENTERING' 
+
+
+
+  'ENTERED' 
+
+
+
+  'EXITING' 
+
+
+  'EXITED'...
+
+
+
+   
+
+
+  --> E A MORAL É QUE PODEMOS FAZER 'LISTEN TO'  
+
+  A ESSES STATES, para ENTÃO __dETERMINAR ___ COMO NOSSO 
+
+  ELEMENTO 
+
+
+  DEVERÁ 
+
+  ENTÃO SER 'SHOWN'...
+
+
+
+
+
+
+  --> pode parecer meio estranha essa descrição,
+
+  POR ISSO PROFESSOR 
+
+  VAI 
+
+
+  NOS MOSTRAR 
+
+  COMO 
+
+
+  ISSO 
+
+
+  FUNCIONA..
+
+
+
+
+
+
+  ----> PRIMEIRO DE TUDO, 
+
+  DEVEMOS 
+
+
+  ADICIONAR 
+
+  ESSA 
+
+  PROPRIEDADE  'in'
+
+  AO 
+
+
+  COMPONENT 'Transition'...
+
+
+
+
+
+
+  EX:
+
+
+        <Transition in={}> ////////////EIS O CÓDIGO EM QUESTÃO.
+          <div
+          style={
+            {
+              backgroundColor: 'red',
+              width: 100,
+              height: 100,
+              margin: 'auto'
+            }
+          }
+            />
+            </Transition> 
+
+----------------------------------
+
+
+
+
+
+NO CASO ,
+
+VAMOS __BINDAR __ ESSE 
+
+
+'in' 
+
+À propriedade/state de 
+
+
+''''_SHOWBLOCK''' ---> PQ __SÓ SE __ SHOWBLOCK ESTIVER COMO 'true', VAMOS REALMENTE 
+
+QUERER QUE 
+
+
+A DIV DENTRO DESSE 
+
+'<Transition />' SEJA 
+
+RENDERIZADA... (a div com o cubo...)
+
+
+
+
+
+EX:
+
+
+
+
+        <Transition in={this.state.showBlock}> ////////////EIS O CÓDIGO EM QUESTÃO.
+          <div
+          style={
+            {
+              backgroundColor: 'red',
+              width: 100,
+              height: 100,
+              margin: 'auto'
+            }
+          }
+            />
+            </Transition> 
+
+
+
+-----------------------------------
+
+
+
+
+
+CERTO... E A OUTRA PROPRIEDADE 
+
+QUE 
+
+PRECISAMOS 
+
+SETTAR 
+
+NO COMPONENT 
+
+'<Transition />'
+
+
+É 
+
+
+
+'timeout'.... --> ISSO É UM SIMPLES TIME VALUE 
+
+
+QUE 
+
+DETERMINA __ POR QUANTO TEMPO __ ESSA ANIMAÇÃO DEVERÁ TOCAR (actually, para ser MAIS PRECISO,  RELEMBRANDO 
+AQUILO 
+
+
+QUE O PROFESSOR FALOU, DE 'transitions' fazer MANAGE DE __4 STATES__; 'timeout' SIMPLESMENTE 
+ DETERMINA QUANTO TEMPO DEMORA PARA __ TROCAR 
+ 
+ DE 
+ 
+ 'ENTERING' PARA 'ENTERED' PARA 'EXITING' E 'EXITED'...  ) -----------> E É JUSTAMENTE 
+
+ ESSA 
+ 'IN BETWEEN THING' (o tempo/MOMENTO ___ENTRE ESSES STATES__)  QUE 
+ VOCÊ 
+
+
+ PODE 
+
+ ENTÃO _ANIMAR__/CUSTOMIZAR A ANIMAÇÃO...
+
+
+
+
+
+ ---> PARA EXEMPLIFICAR, VAMOS 
+
+ DEFINIR 
+
+ O 
+
+ 'timeout' 
+
+ COMO 
+
+ '300',
+
+ NESSE 
+
+ COMPONENT 
+
+ '<Transition />'...
+
+
+
+ ex:
+
+          <Transition in={this.state.showBlock} timeout={300}>
+          <div
+          style={
+            {
+              backgroundColor: 'red',
+              width: 100,
+              height: 100,
+              margin: 'auto'
+            }
+          }
+            />
+            </Transition>
+
+
+  
+  --------------------
+
+
+
+  E ESSE NÚMERO SERÁ INTERPRETADO 
+
+  COMO 
+
+  MILISSEGUNDOS...
+
+
+
+  --------------------
+
+
+  OK, MAS SÓ ISSO AÍ, esses props de 'in' e 'timeout',
+
+
+  NÃO __VÃO __ GERAR EFEITOS__... ---> 
+
+  PARA 
+
+
+  GERAR 
+
+  ALGUM EFEITO,
+
+
+
+  PROFESSOR DIZ QUE 
+
+  DEVEMOS 
+
+  ADICIONAR UM 
+
+
+  '{}' dentro 
+
+  do 
+
+
+
+COMPONENT '<Transition />' .... ----> DENTRO DESSEs CURLY BRACES,
+PODEMOS 
+
+
+FAZER O RENDER DE ALGO ___DINÂMICO___... --> 
+
+
+E 
+
+ESSA COISA DINÂMICA ___SERÁ __ UMA FUNÇÃO___ -------> PQ 
+
+É __ ISSO QUE 
+
+'<Transition />',
+NO FINAL
+ 
+
+
+ DAS CONTAS,
+
+ NOS DÁ; 
+
+ NOS 
+
+ DÁ __VALORES __ QUE PODEMOS USAR DENTRO __ DE UMA FUNÇÃO__,
+
+ DENTRO 
+
+ DESSES CURLY BRACES...  -------------> NA VERDADE,
+
+
+
+ O __ÚNICO VALOR __ QUE ESSE OBJETO 'Transition' nos dá 
+
+
+ é 
+
+
+ JUSTAMENTE UM OBJETO 'state'... 
+
+
+
+
+
+
+
+
+
+ ---> certo... e a coisa mais simples que podemos escrever aqui, a forma MAIS SIMPLES 
+ DESSE CÓDIGO DINÂMICO DENTRO DO CURLY BRACES,
+
+
+ é 
+
+
+ um simples write de UMA ARROW FUNCTION QUE VAI RETORNAR JSX....
+
+ uma 
+
+ arrow function assim:
+
+
+
+ 'state => <p>{state}</p>' 
+
+
+
+
+
+
+(SIM, VAMOS RETORNAR O 'STATE', IMPRESSO DENTRO DE UMA 
+
+TAG 
+
+'<p></p>'...)
+
+
+
+EX:
+
+
+
+
+
+
+          <Transition in={this.state.showBlock} timeout={300}>
+            {
+              state => (<p>{state}</p>) //////////EIS O CÓDIGO EM QUESTÃO.
+            }
+          <div
+          style={
+            {
+              backgroundColor: 'red',
+              width: 100,
+              height: 100,
+              margin: 'auto'
+            }
+          }
+            />
+            </Transition>
+
+------------------------
+
+
+
+
+
+
+
+
+
+PROFESSOR, DEPOIS DE FAZER ISSO, __REMOVE/COMENTA PARA FORA __AQUELA 
+
+
+DIV 
+
+COM 
+
+O 
+
+
+CUBO VERMELHO...
+(
+
+  código 
+
+'''
+          <div
+          style={
+            {
+              backgroundColor: 'red',
+              width: 100,
+              height: 100,
+              margin: 'auto'
+            }
+          }
+            />
+
+  '''''
+
+
+)
+
+
+
+
+
+ISSO FEITO,
+
+
+O CÓDIGO FICA ASSIM:
+
+
+
+
+
+          <Transition in={this.state.showBlock} timeout={300}>
+            {
+              state => (<p>{state}</p>) //////////EIS O CÓDIGO EM QUESTÃO.
+            }
+            </Transition>
+
+  
+
+  -----------------------------------
+
+
+  OK,
+
+
+
+  MAS 
+
+  ENTÃO,
+
+  O QUE 
+  VEREMOS 
+
+
+  NO LUGAR 
+
+  DESSE 
+
+
+  cubo aí? ------> BEM, VEREMOS 
+
+
+  UM WRITE/OUTPUT 
+
+  de 
+
+  'exited'... -----> o 'exited' ficará escrito DEBAIXO DO BOTÃO 'toggle'...
+
+
+
+  ------------------------------------
+
+
+
+
+
+
+
+  -----> CERTO.... VEMOS/OBSERVAMOS 
+
+
+  UM 'exited'...
+
+
+
+----------------------
+
+
+
+
+
+E AGORA, nosso botão de 'toggle' faz algo MUITO CURIOSO... --> 
+
+
+quando clicamos nele,
+
+
+o 
+
+
+
+output fica brevemente em 'entering', para depois ficar 'entered' (e parar por aí, não continua depois de outputtar 'entered'...).
+
+
+
+
+
+E SE CLICARMOS 
+
+NESSE BOTÃO MAIS 1 VEZ,depois 
+
+de 
+
+ele estar outputtando 'entered',
+
+
+
+ELE VAI NOS MOSTRAR 'exiting' por uns instantes, para depois PARAR EM 
+
+'exited'...
+
+
+
+--------------------------------
+
+
+ISSO, ESSE OUTPUT AÍ,
+
+É JUSTAMENTE 
+
+O 
+
+OUTPUT 
+
+DO 
+
+
+
+VALOR PURO de 'state'... (state ---> NOS É DADO PELO COMPONENT 'Transition'....)
+
+
+
+------------------------------------------
+
+
+
+
+exited --> entering --> entered (isso que acontece se vocÊ pressionar o toggle a primeira vez...)
+
+
+
+
+
+
+entered --> exiting --> exited (isso que acontece se vocÊ pressionar o toggle uma segunda vez...)
+
+
+
+
+
+-------------------------------
+
+
+
+
+E SE ESSAS TRANSIÇÕES __aCONTECERAM ___ MUITO RÁPIDO, VOCÊ 
+
+PODE 
+
+SIMPLESMENTE 
+
+
+TROCAR 
+
+o 
+
+valor 
+
+de 
+
+300 para 1000... --------> E É TUDO ISSO QUE 
+
+
+O 
+
+
+COMPONENT 
+
+
+'Transition' 
+
+FAZ 
+PARA NÓS :
+
+
+ELE 
+
+
+
+TE DÁ ESSE ARGUMENTO 
+
+'state' 
+
+
+EM UMA 
+
+FUNÇÃO QUE VOCÊ ESCREVE COMO __CHILD__ DO 
+
+
+COMPONENT 
+
+'Transition'...
+
+
+ex:
+
+
+       <Transition in={this.state.showBlock} timeout={300}>
+            {
+              state => (<p>{state}</p>) //////////EIS O CÓDIGO EM QUESTÃO.
+            }
+            </Transition>
+
+
+
+
+
+
+
+E AÍ ESSA 
+
+
+'MANGED STATE PROPERTY'
+
+
+
+ACEITA/PEGA O __ SEU 'timeout'QUE 
+
+VOCÊ 
+
+DEFINIU 
+
+
+
+NO COMPONENT 'Transition', 
+
+e o leva EM CONSIDERAÇÃO QUANDO 
+
+
+EXECUTA AS ANIMAÇÕES DEFINIDAS 
+
+
+NO CÓDIGO DINÂMICO da função definida 
+
+dentro dos curly braces...
+
+
+
+
+
+
+
+
+---> AGORA, COM ISSO,
+
+
+
+
+
+
+PODEMOS VOLTAR PARA O ___RENDER___ DAQUELA DIV LÁ__.. ( da div do CUBO VERMELHO)....
+
+
+
+
+
+
+
+
+-> MAS EM VEZ DE ESCREVER 
+
+A DIV 
+
+DO CUBO VERMELHO 'solta' __DENTRO DO COMPONENT 'Transition', como antes (
+  tipo assim:
+
+----------------------------------------------------
+          <Transition in={this.state.showBlock} timeout={300}>
+            {
+              (state) => {return <p>{state}</p>}
+            }
+       <div
+          style={
+            {
+              backgroundColor: 'red',
+              width: 100,
+              height: 100,
+              margin: 'auto'
+            }
+          }
+            /> 
+            </Transition>
+
+---------------------------------------------
+
+
+
+)
+
+,
+
+EM VEZ 
+
+DE ESCREVER ASSIM,
+
+
+
+
+ELE VAI 
+
+
+
+ESCREVER 
+
+
+
+O RENDER DESSE 'CUBO VERMELHO'/div com o cubo vermelho __DENTRO DO RETURN
+
+DAQUELA 
+
+FUNCTION __ DEFINIDA DENTRO DAQUELE CURLY BRACES...
+
+
+
+ex:
+
+
+
+
+
+
+          <Transition in={this.state.showBlock} timeout={300}>
+            {
+              (state) => {return ( ////////EIS O CÓDIGO EM QUESTÃO.
+                       <div ///////////EIS O CÓDIGO EM QUESTão.
+          style={
+            {
+              backgroundColor: 'red',
+              width: 100,
+              height: 100,
+              margin: 'auto'
+            }
+          }
+            /> ) } }
+
+          </Transition>
+
+
+
+
+--------------------------------------
+
+
+
+
+CERTO....
+ 
+
+
+ E AGORA,
+
+ NÓS SABEMOS 
+
+
+ QUE 
+
+ ESSE PARÂMETRO 
+
+ 'state'
+
+
+
+ É ___sEMPRE ___ UMA 'ALTERNÂNCIA' entre os valores 
+
+ de 
+
+
+ 'entering/ -> entered/ -> exiting/ -> exited'...
+
+
+
+
+
+
+
+
+ --> E NÓS PODEMOS TIRAR VANTAGEM JUSTAMENTE DESSA ALTERNÂNCIA AÍ... --> usá-la 
+
+ PARA 
+
+ MANIPULAR NOSSO 
+
+ __STYLE__, DEPENDENDO DO STATE (ou seja,
+ 
+ CODAR 
+ 
+ A ANIMAÇÃO __ A PARTIR __ DESSES 'STATES'... (é um só, mas que VARIA....))
+
+
+
+
+
+
+
+--> POR exemplo,
+
+
+AQUI,
+
+
+podemos 
+
+
+
+
+DEFINIR QUE 
+
+QUEREMOS 
+
+DEFINIR 
+
+A OPACIDADE (opacity)
+
+
+DO 
+
+
+ELEMENTO CUBO como 
+sendo 
+de 
+
+
+
+
+
+'opacity: state === 'exited' ? 0 : 1' 
+
+
+
+
+
+
+(OU SEJA, 'SE O STATE FOR EXITED, VOU QUERER QUE A OPACIDADE SEJA 0... CASO CONTRÁRIO,
+
+VOU QUERER QUE SEJA 1' ( ou seja, se O STATE __NÃO FOR DE 'exited', VOU QUERER QUE 
+
+O 
+
+CUBO vermelho APAREÇA...
+))
+
+
+
+
+---> AÍ VOCê JÁ PERCEBE A LIBERDADE/PODER 
+
+QUE 
+
+
+O 
+
+
+'ReactTransitionGroup' 
+
+NOS __DÁ__... --> podemos
+customizar 
+
+animações 
+
+de maneiras absurdas... (e podemos evitar justamente aquele problema da animação 
+
+DE CLOSE __não SENDO ATIVADA/ativar de forma errada no react....)
+
+
+
+ex:
+
+
+
+
+
+
+          <Transition in={this.state.showBlock} timeout={300}>
+            {
+              (state) => {return (     <div
+                style={
+                  {
+                    backgroundColor: 'red',
+                    width: 100,
+                    height: 100,
+                    margin: 'auto',
+                    opacity: state === 'exited' ? 0 : 1
+            
+                  }
+                }
+                  /> 
+                  
+                  )}
+            }
+    
+            </Transition>
+
+
+    
+    -----------------------------
+
+
+
+
+
+
+
+
+DEPOIS DISSO, O RESULTADO EM NOSSA PÁGINA É QUE 
+
+__ O CUBO __ 
+
+É EXIBIDO __ INSTANTANEAMENTE __ QUANDO 
+
+
+CLICAMOS EM 'toggle' (pq aí o state vai estar como 'NÃO EXITED', o que por sua vez 
+
+VAI DEFINIR A 'opacity' como 1...) -----> e aí, QUANDO O STATE 
+
+REALMENTE 
+
+ESTIVER COMO 
+
+
+'exited',
+
+O NEGÓCIO VAI FICAR SETTADO COMO '0' (cubo não será mostrado...) ---> e aí, uma 
+
+
+'ANIMAÇÃO' acontece, basicamente, 
+
+PQ 
+
+O CUBO DEMORA UM POUCO PARA 
+
+SER ''''REMOVIDO''' (ter ficado oculto)...
+
+
+
+
+-----------------------------
+
+
+
+
+
+O ÚNICO PROBLEMA É __QUE A DIV AINDA ESTÁ ALI__, 
+
+ELA AINDA ESTÁ 
+
+'TAKING SPACE'... (só não está VISÍVEL, devido ao 'opacity: 0'....) --------> 
+
+
+
+
+MAS ACHO QUE PODEMOS CONSERTAR ISSO... --> professor vai nos mostrar 
+como fazer isso...
+ 
+
+
+
+
+
+ ------------> NÓS, PORÉM,
+
+ NÃO TEMOS UMA 
+
+
+ ANIMATION PROPRIAMENTE DITA,
+
+
+
+ Mas 
+
+
+ estamos no caminho....
+  
+
+
+
+
+
+
+--> É ASSIM QUE 
+
+LIDAMOS COM ESSE COMPONENT 
+
+'Transition'... ---> OBVIAMENTE,
+
+SERIA BEM MAIS 
+
+NICE __TER UMA ANIMAÇÃO__-.... --> 
+
+
+
+
+E PARA 
+
+
+TER UMA 
+
+ANIMAÇÃO 
+
+DE VERDADE 
+
+
+NESSE 
+
+RENDER 
+
+DESSE CUBO,
+
+
+SÓ PRECISAMOS ___TWEAKAR__ UM POUCO ___
+
+
+
+esses estilos... ----> para isso,
+
+DEVEMOS 
+
+ADICIONAR 
+
+
+A PROPRIEDADE 
+
+
+'transition' QUE APRENDEMOS MAIS CEDO,
+
+
+
+
+E AÍ 
+
+VAMOS 
+
+QUERER 
+
+MANIPULAR/INFLUENCIAR 
+
+
+__QUAISQUER_ CHANGES __ 
+
+NA PROPRIEDADE 
+
+'opacity'...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+          <Transition in={this.state.showBlock} timeout={300}>
+            {
+              (state) => {return (     <div
+                style={
+                  {
+                    backgroundColor: 'red',
+                    width: 100,
+                    height: 100,
+                    margin: 'auto',
+                    transition: opacity ////////EIS O CÓDIGO EM QUESTÃO.
+                    opacity: state === 'exited' ? 0 : 1
+            
+                  }
+                }
+                  /> 
+                  
+                  )}
+            }
+    
+            </Transition>
+
+    
+  ---------------------------------
+
+
+
+  PROFESSOR DIZ QUE 
+
+  PODERÍAMOS 
+
+  USAR 
+
+  'all' em vez de 'opacity',
+
+  mas que 
+
+  ELE QUER 
+  FOCAR/DIRECIONAR UM POUCO 
+
+  à edição/manipulação 
+
+  dos 
+
+  elementos que manipulam 
+
+  'opacity'...
+
+
+
+  --> depois disso, professor define '1s' (1 segundo),
+
+
+  E AÍ 
+
+
+
+
+ 'ease-out'... ------> 
+
+
+
+
+
+ EX:
+
+
+
+
+
+ 
+          <Transition in={this.state.showBlock} timeout={300}>
+            {
+              (state) => {return (     <div
+                style={
+                  {
+                    backgroundColor: 'red',
+                    width: 100,
+                    height: 100,
+                    margin: 'auto',
+                    transition: 'opacity 1s ease-out' ////////EIS O CÓDIGO EM QUESTÃO.
+                    opacity: state === 'exited' ? 0 : 1
+            
+                  }
+                }
+                  /> 
+                  
+                  )}
+            }
+    
+            </Transition>
+
+
+-------------------------
+
+
+
+WOW.
+
+
+ISSO FICOU ___BEM LEGAL___... --> E AGORA 
+
+NOSSO COMPONENT 
+
+É 
+
+
+'animated in', 'animated out',
+
+TUDO 
+
+
+__POR MEIO __ DESSES CÓDIGOS 
+
+DE 
+
+'transition' 
+e 
+
+'opacity'...
+
+
+
+
+
+AGORA TEMOS 1 COISA IMPORTANTE, DIZ O PROFESSOR... :
+
+
+ESTAMOS CONTROLANDO ESSA ANIMAÇÃO POR MEIO DE 'transition', por meio 
+
+DE UMA FEATURE ___ CORE__ DO CSS... 
+
+
+
+
+
+
+-----> O ÚNICO PROBLEMA__ É QUE __ ESSE ELEMENTO AINDA ESTÁ 
+
+'STAYING ON THE DOM' (ele ainda existe no dom, mesmo invisível),
+
+
+
+MAS 
+
+NÓS PODEMOS 
+
+
+
+__CONTROLAR ___ ESSA PARADA __ POR MEIO DA ADIÇÃO __ DE PROPS __ ADICIONAIS ___ 
+
+AO COMPONENT 
+'<Transition />'... -------> O PROP QUE 
+
+PODEMOS 
+
+USAR 
+
+É 
+
+O 
+
+
+'mountOnEnter'... ---> ISSO 
+
+É 
+
+__UM BOOLEAN PROP__........ --> POR MEIO DESSE PROP,
+
+VOCÊ 
+
+BASICAMENTE 
+DIZ 
+
+'SE A PROPRIEDADE 'this.state.showBlock', definida em 'in' TIVER SEU VALOR COMO 'true',
+
+
+VOCÊ 
+
+__DEVE ADICIONAR/MONTAR ESSE COMPONENT 
+
+<div> DO CUBO VERMELHO __ NO NOSSO DOM...__ caso não, CASO NÃO ESTEJA COMO 'true',
+
+NÃO __MONTE__...'...
+
+
+
+
+
+
+
+
+---> JÁ 'unmountOnExit' PODE SER USADO __ PARA REALMENTE__ REMOVER __ AQUELE COMPONENT__ DO DOM __ 
+
+    DEPOIS QUE SUA ANIMAÇÃO acabar/depois que alcançar o estado de 'exited'.... 
+
+
+
+
+
+
+ ---> 
+ ENTRETANTO, o 'mountOnEnter' e o 'unmountOnExit' 
+ __ VÃO QUEBRAR __ NOSSA ANIMAÇÃO, NESSE EXEMPLO NOSSO... -------->
+
+
+ VÃO QUEBRAR 
+
+ NOSSA 
+
+ ANIMAÇÃO PQ 
+
+ __NÓS SÓ _ ESTAMOS ALTERANDO __ 
+
+
+ A 'opacity' 
+
+ QUANDO ___ O STATE ESTÁ COMO 'exited'... (e isso é muito tarde,
+ 
+ se comparado com os states de 'enter' e 'exit'...) 
+ 
+ ex:
+
+ opacity: state === 'exited' ? 0 : 1
+ 
+ 
+ 
+ ----> SE DEFINIRMOS 
+
+ ISSO COMO 
+
+ 'exiting',
+
+
+ ISSO VAI __sOLUCIONAR O PROBLEMA...
+
+
+ ex:
+
+
+
+
+opacity: state === 'exiting' ? 0 : 1
+
+
+
+
+
+----------------------------
+
+OK... COM ISSO,
+
+TEREMOS 
+
+
+CONSERTADO O PROBLEMA QUE 
+
+TÍNHAMOS ANTES,
+
+DE TER 
+
+
+
+'INSTANT REMOVE'/close 
+
+de um elemento,
+
+no react.... -----> 
+
+
+ENTRETANTO,
+
+VAMOS 
+
+TER CRIADO UM OUTRO PROBLEMA,
+
+POIS 
+
+
+AGORA ___ O 'SHOW' é instantâneo (não toca animaçãO),
+
+
+
+apesar do 'hide' 
+
+agora 
+
+não ser mais assim...
+
+
+
+
+
+
+
+
+
+----> RESUMINDO: ESTAMOS TIRANDO VANTAGEM DESSES 4 DIFERENTES STATES... (na verdade,
+
+os 
+
+STATES QUE SÃO MAIS UTILIZADOS PARA REMOVER _ UM ELEMENTO COM ANIMAÇÃO 
+
+SÃO
+
+'exiting' e 'exited'...)
+
+
+
+
+
+-> CERTO,
+
+E 
+
+AGORA 
+
+O 
+
+
+___COMPONENT __ SÓ É EFETIVAMENTE __ REMOVIDO_ _ DO DOM __ DEPOIS 
+
+DE SUA 
+ANIMAÇÃO REALMENTE 
+
+TER ACABADO... --> tudo com a ajuda 
+
+do 
+COMPONENT 
+
+'<Transition />'...
+
+
+
+
+
+
+
+ISSO FOI MUITO CONHECIMENTO,
+
+
+
+
+E AGORA DEVEMOS VER 
+
+COMO APLICAR ISSO AO NOSSO COMPONENT 'Modal', para treinar...
+
+
+
+
+
+
+
+
+
+
+--> CERTO... mas esse assunto é COMPLEXo.... --> devemos ver o resto 
+
+das aulas 
+
+do professor,
+
+pois 
+
+só isso aqui não basta...

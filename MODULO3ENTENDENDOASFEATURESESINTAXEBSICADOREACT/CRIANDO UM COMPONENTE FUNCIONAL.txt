@@ -1,0 +1,1106 @@
+
+
+
+
+---> JÁ APRENDEMOS MUITO SOBRE OS FUNDAMENTALS DO REACT, 
+
+PRINCIPALMENTE 
+
+
+ESSE CÓDIGO 'JSX', que 
+
+é super importante de entender...
+
+
+
+
+---> ENTRETANTO, APRENDEMOS QUE O REACT É 'ALL ABOUT COMPONENTS'... --->
+
+
+
+
+Construímos 
+nossos projetos com components, 
+
+
+e react 
+
+
+é uma library que 
+
+faz o build 
+
+desses components ser fácil...
+
+
+
+
+
+
+---> DEVEMOS APRENDER MAIS COMPONENTS... --> 
+para isso, 
+
+o professor 
+
+adiciona um novo FOLDER ao nosso projeto, folder que 
+
+ele chamará 
+
+de 'Person'...  
+
+
+ele cria isso dentro da pasta 'src'... ---> PROFESSOR 
+
+
+EXPLICA QUE 
+
+
+ESSA É A __CONVENÇÃO___ NO REACT... ---> você 
+
+não é obrigado 
+
+a fazer isso, mas quando você faz, 
+
+
+vocÊ 
+
+DÁ AOS SEUS COMPONENTS  LETRAS INICIAIS MAIÚSCULAS... ---> 
+
+e também 
+
+o nome deve DESCREVER UM POUCO DA FUNÇÃO/TAREFA/COISA QUE AQUELE NEGÓCIO 
+
+FARÁ NO CÓDIGO/NO PROJETO...
+
+
+
+
+---> aqui, como VOU RENDERIZAR ALGUMAS INFORMAÇÕES SOBRE UMA PERSON, 
+
+eu 
+
+deixei 'Person'...
+
+
+
+DENTRO 
+
+DESSE FOLDER 
+
+
+'Person', que 
+
+é armazenado no SOURCE FOLDER,
+
+
+
+O professor 
+
+
+
+CRIA UM ARQUIVO 
+
+'Person.js'...
+
+
+
+
+
+
+Mesma coisa, letra maiúscula e breve descrição daquilo que esse componente faz... ('Person.js'...)
+
+
+
+
+
+
+
+
+
+DENTRO DALI,
+
+
+
+
+EU VOU QUERER __CRIAR UM COMPONENT___...
+
+
+
+
+Lembre-se: nós 
+
+já havíamos 
+
+um component 
+
+
+'out of the box' 
+
+
+naquele 
+
+
+arquivo 
+
+
+'App.js',
+ 
+
+
+ por meio do import de 'React' e de 'Component' e depois 
+
+
+ do call 
+
+ de 'Component'
+
+
+ na criação da classe 
+ App (
+
+     'class App extends Component {
+         ...
+     }'
+ )
+
+
+ -------------------------------------------
+
+
+
+
+
+ PROFESSOR EXPLICA QUE PODERÍAMOS, ABSOLUTAMENTE, USAR 
+
+ ESSE APPROACH....  ----> e ele 
+
+ ficará 
+
+ mais 
+
+ importante mais 
+
+ tarde, quando 
+
+
+ aprendermos sobre STATE, que é algo 
+
+ que nos deixa/permite 
+
+ ___MUDAR___ NOSSO COMPONENT DURANTE 
+
+
+ O 'RUNTIME'...
+
+
+
+
+
+
+ --> MAS, NA MAIOR PARTE DO TEMPO, 
+
+ VOCÊ 
+
+ DEVE USAR 
+
+ __UMA DIFERENTE FORMA____ DE 'COMPONENT'/DE CRIAR 
+
+ COMPONENTS...
+
+
+ -------------------------------------- 
+
+
+
+Essa forma de criar 
+
+componentes, a forma 'tradicional' de criar react 
+
+components, 
+
+
+
+é criar 
+
+
+uma 
+
+
+'BARE JAVASCRIPT FUNCTION'...  ---> PQ 
+
+NA SUA FORMA MAIS SIMPLES, 
+
+UM COMPONENT É APENAS 
+
+UMA FUNÇÃO 
+
+
+QUE RETORNA UM 'JSX'... (um código pseudoHTML)...
+
+
+
+Devemos criar uma funçaõ 
+
+
+COM A SINTAXE DE ARROW FUNCTIONS QUE O  PROFESSOR NOS MOSTROU HÁ 
+
+MT TEMPO....
+
+
+
+
+-------------------------------------
+
+
+
+ex:
+
+
+
+const person = () => {
+
+
+
+}
+
+
+
+------------------------------------
+
+
+
+
+dentro 
+
+
+dessa função 
+
+'person',
+
+poderíamos/podemos
+
+
+fazer 
+
+o return de um simples código jsx....
+
+
+
+EX:
+
+
+
+
+const person = () => {
+
+
+
+
+    return (
+        <h2>Code</h2>
+    )
+
+}
+
+
+
+-------------------------------------------
+
+PROFESSOR EXPLICA QUE TAMBÉM 
+
+PODERÍAMOS 
+
+USAR A SINTAXE 
+
+
+ES5:
+
+
+'var person = function() {}' ---> ISSO RESULTARIA NA MESMA COISA DA SINTAXE 'NORMAL'...
+
+
+--------------------------------------------
+
+
+
+mas o PROFESSOR 
+
+
+VAI USAR 
+
+A SINTAXE 
+
+DAS ARROW FUNCTION... ----> 
+
+
+
+ELE VAI USAR 'CONST', POIS ELE NÃO VAI MUDAR ESSA FUNÇÃO/VARIÁVEL...
+
+
+
+
+
+ele chama 
+
+esse negócio de 
+
+'person' ----> function names geralmente são 
+
+LOWER CASE... ---> mas o nome da função __PRINCIPAL__ de seu arquivo
+
+geralmente é preferível que 
+
+
+seja o mesmo do componente que vocÊ usará (nesse caso, person...).
+
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+PROFESSOR USA A SINTAXE DAS ARROW FUNCTION...
+
+
+
+
+a sintaxe es6 das arrow function....
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+const person = () => {
+
+    return (
+        <h2>Code</h2>
+    )
+
+}
+
+
+-------------------------------
+
+
+
+
+
+
+
+A SINTAXE DAS ARROW FUNCTIONS NOS DÁ 
+
+VANTAGENS EM RELAÇÃO À 'THIS' KEYWORD...
+
+
+
+--------------------------------
+
+
+
+
+CERTO... AGORA TEMOS UMA FUNÇÃO.... 
+
+
+
+
+
+Um componente é uma FUNÇÃO QUE BASICAMENTE RETORNA UM CÓDIGO 
+
+
+JSX...
+
+
+
+
+
+
+
+DEVEMOS RETORNAR UM CÓDIGO JSX...
+
+
+
+retornamos 
+
+um '<p>' aqui 
+
+
+em que 
+
+dizemos 
+
+'I'm a Person'...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+const person = () => {
+
+    return (
+        <p>I'm a Person!</p>
+    )
+
+}
+
+
+
+--------------------------------
+
+
+
+
+ISSO, EXPLICA O PROFESSOR, POR SI SÓ 
+
+
+JÁ CONSTITUI UMA 
+
+FUNÇÃO QUE PODEMOS USAR COMO 
+
+REACT COMPONENT, MAS 
+
+
+AQUI 
+
+NÓS DEVEMOS 
+
+FAZER 2 OUTRAS COISINHAS... ----> 
+
+
+
+MAS O QUE DEVEMOS FAZER?
+
+
+
+
+
+1) DEVEMOS __IMPORTAR___ O REACT... ---> devemos importá-lo pq 
+
+ESSA SINTAXE 
+
+'JSX' NÃO VAI SE PARSEAR SOZINHA... essa sintaxe 
+
+
+TEM DE SER TRANSFORMADA EM 'React.createElement()' por MEIO 
+
+DA ATUAÇÃO 
+
+
+DO 'REACT' (que deve ser importado)...
+
+
+
+
+
+
+POR ISSO ESCREVEMOS ASSIM:
+
+
+
+
+import React from 'react';
+
+
+
+const person = () => {
+
+    return (
+        <p>I'm a Person!</p>
+    )
+
+}
+
+
+
+
+------------------------------------------
+
+
+
+
+NO ENTANTO, NÓS 
+
+
+NÃO PRECISAREMOS 
+
+DO 
+
+'Component' 
+
+aqui, 
+
+
+por isso 
+
+
+não o importamos...
+
+
+
+
+NÃO PRECISAMOS DO 'Component' 
+
+
+POIS ___NÃO ESTAMOS USANDO UMA ___CLASSE___, 
+
+E SÃO AS CLASSES QUE GERALMENTE FAZEM 'EXTEND' do 'Component' (e que geralmente 
+necessitam de seu import... )
+
+
+
+
+---> EM VEZ DE CRIAR/USAR UMA CLASSE, AQUI NÓS 
+
+ESTAMOS SOMENTE __CRIANDO UMA FUNÇÃO__....
+
+
+
+
+
+
+
+2) CONTUDO, 
+
+
+AINDA ___DEVEMOS/TEMOS DE___ 
+
+__EXPORTAR____ ESSA FUNÇÃO
+
+
+
+'person', para que ELA CONSIGA SER USADA PELO REACT (e pelo nosso projeto...) --> 
+
+os 'react components', no nosso projeto, são 
+
+
+renderizados POR MEIO DO CALL DE 'ReactDOM.render()' em 
+
+'index.js'...
+
+
+PARA EXPORTAR 
+
+
+PERSON (a constante que segura aquela função que faz o return do elemento <p>),
+
+
+ESCREVEMOS 
+
+'export default person' 
+
+no final
+
+
+do arquivo 
+
+
+'Person.js'...
+
+
+
+--------------------------------------------
+
+
+
+
+ex:
+
+
+
+
+
+
+import React from 'react';
+
+
+
+const person = () => {
+
+    return (
+        <p>I'm a Person!</p>
+    )
+
+}
+
+
+export default person;
+
+
+
+------------------------
+ 
+
+ ISSO FEITO,
+
+
+ AGORA 
+
+ PODEMOS 
+
+
+ USAR ESSE COMPONENTE ___ EM OUTROS ARQUIVOS __ DE NOSSO PROJETO... 
+
+
+
+ ---> isso quer dizer 
+
+ QUE PODEMOS 
+
+
+ USAR ESSE COMPONENTE NO ÚNICO OUTRO COMPONENTE que 
+
+
+ temos no nosso projeto, o componente root 'App' que temos 
+
+ em 'App.js'...
+
+
+
+
+ ---> LÁ, 
+
+ EM 
+
+ 'App.js',
+
+
+ O PROFESSOR 
+
+ VAI ADICIONAR 
+
+
+ UM IMPORT 
+
+
+ de 'Person' do arquivo './Person/Person';
+
+
+
+ ex(código de 'App.js'... ):
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+class App extends Component {
+  render = () => {
+
+
+     return (
+        <div className="App">
+            <h1>Hi, I'm a React App</h1>
+            <p>This is really working!</p>
+        </div>
+     );
+        
+  }
+}
+
+export default App;
+
+
+
+-------------------------------------------------
+
+
+
+
+
+PROFESSOR EXPLICA 
+
+
+QUE É __IMPORTANTE___ QUE 
+
+
+NÓS 
+
+DEMOS A ESSE COMPONENTE IMPORTADO 
+
+UM NOME 
+
+que 
+
+__COMECE___ com uma 
+
+
+MAIÚSCULA... ---------> vocÊ poderia escolher outro nome, 
+
+não precisa obrigatoriamente ser 'Person', MAS ELE DEVERÁ TER UMA 
+
+LETRA INICIAL MAIÚSCULA --> pq 
+
+
+EM ___REACT___ E JSX___, todos os 
+
+
+elementos que 
+
+comecam 
+
+
+COM MINÚSCULAS, como 'div' e 'h1',
+
+
+
+__SÃO RESERVADOS___ PARA OS 'NATIVE HTML ELEMENTS'... ---> isso quer 
+
+dizer que VOCê PODE, SE QUISER, USAR 
+
+NOMES DE ELEMENTOS COMO 'Div' (div com inicial maiúscula), 
+
+POIS ELES NUNCA SERÃO CONFUNDIDOS com 
+
+os 'native html elements' (div, h1, strike, etc etc) 
+
+PELO REACT...
+
+
+
+
+
+E É POR ISSO QUE VOCê 
+
+DEVE USAR 
+
+
+'Person', e não 'person', PORQUE AÍ 
+
+NUNCA EXISTIRÁ O RISCO DO 
+REACT 
+CONFUNDIR 
+
+ESSE 'CUSTOM COMPONENT' com um 'native html element' (ainda que não exista
+ um native html element de 'person'...)
+
+
+
+
+CERTO...
+
+
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+Certo... Professor diz que podemos chamar/invocar 
+
+
+'Person' 
+
+no nosso código 
+
+JSX/react 
+
+
+POR MEIO 
+
+
+DA escrita 
+
+'<Person></Person>' 
+
+NO LUGAR EM QUE 
+
+DESEJAMOS QUE ELE SEJA INSERIDO...
+
+
+
+ex:
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+class App extends Component {
+  render = () => {
+
+
+     return (
+        <div className="App">
+            <h1>Hi, I'm a React App</h1>
+            <p>This is really working!</p>
+            <Person></Person> /////////EIS O CÓDIGO EM QUESTÃO.
+        </div>
+     );
+        
+  }
+}
+
+export default App;
+
+
+
+
+------------------------------------------------
+
+
+
+
+ESSE É UM JEITO....
+
+
+
+
+OU, COMO NÓS NÃO ESTAMOS NESTEANDO ___NADA __ NO MEIO DESSE ELEMENTO___,
+
+PODEMOS 
+
+
+SIMPLESMENTE 
+
+escrever 
+
+'<Person />'   (O NOME DISSO É 'SELF CLOSING TAG'...)
+
+
+
+OBS::::: A SINTAXE DAS 'SELF CLOSING TAGS' ___ SÓ EXISTE___ NO JSX___, NÃO EXISTE NO HTML NORMAL...
+
+
+
+----------------------------------------
+
+
+
+ex:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+
+
+class App extends Component {
+  render = () => {
+
+
+     return (
+        <div className="App">
+            <h1>Hi, I'm a React App</h1>
+            <p>This is really working!</p>
+            <Person /> /////////EIS O CÓDIGO EM QUESTÃO.
+        </div>
+     );
+        
+  }
+}
+
+export default App;
+
+
+
+------------------------------
+
+
+
+
+COM ISSO, 
+
+
+
+
+SE AGORA VOCê SALVAR ESSE ARQUIVO TAMBÉM, 
+
+
+
+você volta ao seu aplicativo...
+
+
+AGORA VOCÊ VERÁ 
+
+'I'm a Person!' 
+
+
+SENDO RENDERIZADO 
+
+
+LOGO ABAIXO DOS OUTROS DIZERES da página....
+
+
+
+-----------------------------------
+
+
+
+CERTO, TUDO ISSO FUNCIONA....
+
+
+
+
+
+---------------------------------------
+
+
+
+
+'I'm a person' ESTÁ VINDO DO NOSSO PRÓPRIO 
+
+COMPONENT... e se nós inspecionarmos 
+
+esse elemento, NÃO 
+
+VEREMOS 
+
+
+NOSSO 'CUSTOM ELEMENT', 
+
+VEMOS 
+
+
+APENAS NOSSO 
+
+'<P>' QUE ESTÁVAMOS 
+
+EXPORTANDO POR MEIO 
+
+
+DA FUNÇÃO/constante DE 'person'...
+
+
+
+
+
+
+ok... qual o próximo passo?
+
+
+
+
+
+--------------------------
+
+
+
+CERTO, PORTANTO JÁ ESTAMOS 
+
+USANDO 
+
+
+
+NOSSO PRÓPRIO COMPONENT...
+
+
+
+
+USAR UM COMPONENT CRIADO 
+
+
+POR NÓS DESSA FORMA É NICE,
+ 
+
+ mas 
+
+
+ QUAL É EXATAMENTE O BENEFÍCIO 
+
+
+
+ DE CRIAR 
+
+ UM REACT COMPONENT 
+
+ por meio 
+
+ dessa sintaxe:
+
+
+
+ const person = () => {
+     return <p>I'm a Person!</p>
+
+ };
+
+
+ E então exportá-la,
+
+
+
+ EM VEZ 
+
+
+ DE SIMPLESMENTE 
+
+
+ ESCREVER ALGO COMO:
+
+
+
+
+
+      return (
+        <div className="App">
+            <h1>Hi, I'm a React App</h1>
+            <p>This is really working!</p>
+            <p>I'm a Person!</p> /////// ESCREVER ISSO AQUI
+        </div>
+      );
+
+
+
+
+?
+
+
+
+QUAL É O BENEFÍCIO 
+
+DAQUELA VERSÃO, EM RELAÇÃO 
+
+
+A ESTA?
+
+
+
+
+
+DEVEMOS 
+
+FAZER MAIS COISAS COM ESSE NOSSO COMPONENT PARA VER AS 
+
+DIFERENÇAS...

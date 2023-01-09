@@ -1,0 +1,584 @@
+
+
+
+
+
+
+
+
+
+
+--> NA ÚLTIMA LIÇÃO, IDENTIFICAMOS O __LAYOUT__ do nosso aplicativo, 
+
+
+E DA NOSSA __COMPONENT TREE___.... 
+
+
+
+
+
+--> É ÓBVIO QUE ESSA PRIMEIRA ETAPA É SEMPRE __SUPER IMPORTANTE___....
+
+
+
+
+
+
+
+
+
+
+
+
+---> MAS FALTOU UM NEGÓCIO NAQUELA IDENTIFICAÇÃO... --> não identificamos 
+
+__QUAL STATE__ VAMOS USAR, NO NOSSO APLICATIVO... 
+
+
+
+
+
+
+
+
+
+---> O 'STATE' SE TORNA/ É MUITO IMPORTANTE,
+
+POIS 
+
+NOS PERMITE 
+
+
+ENTENDER/PERCEBER QUAIS ___ COISAS SERÃO COMPONENTS (dumb) 
+
+E QUAIS COISAS SERÃO CONTAINERS.... 
+
+(stateful vs stateless...)
+
+
+
+
+
+
+--------> DEVEMOS PENSAR SOBRE O 
+
+
+
+___STATE____ DO NOSSO APLICATIVO ---> VAMOS RESUMIR NOSSO STATE...
+
+
+
+
+
+
+
+STATE
+__________
+
+
+
+---> no nosso APP, nós DEFINITIVAMENTE __vAMOS TER QUE FAZER 'MANAGE' ___ DOS 
+
+NOSSOS INGREDIENTS do hamburguer... --> ingredientes que o usuário ADICIONA.... --> 'ingredient(s)' 
+
+
+PROVAVELMENTE 
+
+
+SERÁ 
+
+UM OBJETO JAVASCRIPT 
+
+
+
+EM QUE 
+
+
+TEREMOS 
+
+ALGO COMO 
+
+
+'{ meat: 1, 
+cheese: 2}' -----------> ALGO ASSIM... 'meat 1 time, cheese 2 times'... ----------> ESSE 
+
+
+PODERÁ 
+
+SER O OBJETO 'INGREDIENTS'...  -
+
+
+
+
+
+
+------> NÓS TAMBÉM VAMOS QUERER 
+
+
+___sABER___ SE O USUÁRIO  ESTÁ 
+
+
+'currently' 
+
+FAZENDO 
+
+O CHECKOUT 
+
+
+DO BURGUER (ou seja, se ELE __CLICOU__ NO BOTÃO DE PURCHASE __ OU NÃO___...)
+
+
+
+
+--> ou seja,
+
+nós provavelmente vamos ser obrigados a ter uma propriedade 
+
+'purchased' 
+
+
+no nosso state.... --> essa propriedade 
+
+
+
+vai ter um valor de 'true' (já apertou no purchase) 
+
+
+ou 
+
+'FALSE'... (não apertou)...
+
+---------------------------------------------
+
+
+
+
+
+
+OU SEJA, ATÉ AGORA:
+
+
+
+State 
+
+
+ingredients --> {
+    meat: 1,
+    cheese: 2
+}
+
+
+purchased: true/false 
+
+
+
+
+-----------------------------------
+
+
+
+E PROFESSOR APONTA QUE 
+
+ESSES SÃO QUASE TODOS OS 
+
+'STATES'  que precisamos gerenciar na nossa página... mas ainda faltou um.... ------>
+
+
+
+
+O ÚLTIMO STATE/PROPRIEDADE 
+
+DO 
+
+STATE 
+
+
+será 
+
+
+um 
+
+'total Price'... --->
+ 
+ ELE TERÁ 
+
+
+ UM VALOR INICIAL DE 0, e aí 
+
+
+ ELE VAI SER UPDATADO... -------> o valor 
+
+
+ será updatado E CALCULADO 
+
+
+ pelo javascript... ----> e o valor será OUTPUTTADO no 
+
+ __PREVIEW__ DO HAMBURGER ao nosso usuário...
+
+
+
+
+-----------------------------------------
+
+
+RESUMINDO:
+
+
+
+
+
+State = {
+
+
+ingredients --> {
+    meat: 1,
+    cheese: 2
+}
+
+
+purchased: true/false 
+
+
+
+total Price: $ xx, 99....
+
+--------------------------------------
+
+
+
+
+
+
+
+
+ESSE É O NOSSO STATE/STATES, BASICAMENTE... --> não é algo 
+
+tão difícil/complexo,
+
+
+MAS É ALGO QUE 
+
+NOS DEIXA FAZER 'MANAGE' 
+
+DO NOSSO BURGUER 
+
+
+E TAMBÉM A FAZER  __OUTPUT DE TODAS 
+
+AS INFORMAÇÕES RELEVANTES 
+
+AO USUÁRIO... --------------> CERTO,
+
+
+MAS EM QUE 
+
+
+__LUGAR___ DO NOSSO APLICATIVO DEVEMOS __GERENCIAR___ ESSE STATE ? ---> 
+
+
+Professor aponta 
+
+que você talvez 
+
+diga 
+
+
+'em App', no primeiro component... --------------> MAS O PROFESSOR 
+
+
+DIZ QUE 
+
+
+___NÃO CONCORDA COM ISSO__, QUE NÃO FAREMOS 
+
+O MANAGE 
+
+
+DO 'STATE' EM APP,
+ 
+ nesse nosso exemplo...
+
+
+
+
+EM VEZ DISSO,
+
+
+EXPLICA O PROFESSOR,
+
+
+DEVEMOS 
+
+
+
+FAZER 
+
+O MANAGE 
+
+DESSE 
+
+STATE 
+
+LÁ NO COMPONENT/PÁGINA 
+
+
+'burger Builder'... (Que é uma 'subdivisão' de App).... -------> OK, 
+
+
+
+MAS PQ FAZER ISSO, pq fazer assim? ---------> DEVEMOS 
+
+
+
+FAZER 
+
+ASSIM 
+
+
+
+
+PQ ___o STATE SIMPLES___ QUE ELE NOS EXPLICOU AGORA 
+
+
+
+
+
+APENAS TEM RELAÇÃO COM O __BUILD__ DE UM _____HAMBURGUER____ --> e o build 
+
+DO HAMBURGUER ___, DE FATO, 
+
+SÓ ____ OCORRE ___ NA PÁGINA/COMPONENT 
+
+'BURGER BUILDER'.... -----------> SE MAIS 
+
+
+TARDE 
+
+NÓS ADICIONARMOS UMA 
+
+PÁGINA 
+
+
+DE CHECKOUT ou algo assim,
+
+
+SE FIZERMOS 
+
+O 
+
+GERENCIAMENTO DE STATE ___ DA CONSTRUÇÃO DO BURGER E ___ DO 
+
+'STATE' DO CHECKOUT ___ TUDO NO 'STATE' DE UM 
+
+
+COMPONENT 'APP',
+
+
+NOSSO 
+
+
+APLICATIVO/PROJETO 
+
+SE TORNARÁ __UMA CONFUSÃO___...  ----------> NESSA 
+
+
+
+PÁGINA 
+
+DE CHECKOUT, NÓS VAMOS ESTAR INTERESSADOS EM TODAS 'orders' QUE 
+
+O USUÁRIO FEZ, E NÃO 
+
+
+_OS INGREDIENTS__ DO BURGER ___ QUE 
+
+O USUÁRIO ESTAVA/ESTÁ __CURRENTLY BUILDING... ---------> É POR 
+
+
+ISSO QUE 
+
+O PROFESSOR 
+
+ACHA 
+
+QUE O MANAGE DO STATE NO NÍVEL 
+
+
+DO 
+
+'App' 
+
+__NÃO É CORRETO, EM SUA OPINIÃO__.... ------> isso pq 
+
+
+
+O 
+
+
+STATE DO HAMBURGUER EM SI NÃO É ALGO QUE AFETA O APLICATIVO NO SEU TODo,
+
+
+E sim é algo que 
+
+SÓ AFETA A PÁGINA 
+
+'BURGER BUILDER'...  ---------> e, por enquanto, 
+
+NOSSO 
+
+
+APLICATIVO INTEIRO 
+
+SERÁ 
+
+
+O 'BURGER BUILDER',
+
+
+mas 
+
+ela não será 
+
+só isso QUANDO 
+
+
+ELA ESTIVER COMPLETA (ela também terá 
+
+
+páginas como a página do CHECKOUT) -------> 
+
+
+
+
+
+
+
+PORTANTO, 
+
+O BURGER BUILDER __ DEVERÁ __SER UM 'STATEFUL' COMPONENT,
+
+DEVERÁ 
+
+
+SER __UM CONTAINER___...
+
+
+
+
+
+*** TODOS OS OUTROS COMPONENTS PODERÃO SER DUMB COMPONENTS,
+ 
+STATELESS COMPONENTS.... -------> O 
+
+
+'APP' component, POR DEFAULT, em um 
+
+NOVO PROJETO,
+ 
+ é SEMPRE 
+
+ UM 
+
+
+ __CLASS-BASED COMPONENT__... (stateful) -----> E PODERÍAMOS, É CLARO, 
+
+
+ DEIXAR ELE ASSIM... --> MAS NO NOSSO BURGUER BUILDER,
+
+ não vamos deixar assim,
+
+
+ vamos 
+
+ fazer com 
+
+
+ que ele seja 
+
+ um STATELESS class-based component/functional component... ---------> 
+
+
+
+
+
+
+** CERTO.... E SE ESTAMOS PENSANDO SOBRE 'PureComponents' 
+
+
+e 
+
+'shouldComponentUpdate',
+
+
+
+
+NÓS VAMOS 
+
+IMPLEMENTAR ESSAS FEATURES CONFORME VAMOS ESCREVENDO NOSSO APp... ---> e aí o professor 
+
+
+vai aplicar 
+
+alguns dos conceitos que aprendemos  (como os CREATIOn LIFECYCLES/UPDATE LIFECYCLES...)
+
+
+em LUGARES ESPECÍFICOS, SE ELE CONSTATAR QUE 
+
+PODEMOS OPTIMIZAR NOSSO 
+
+CÓDIGO NAQUELES LOCAIS DETERMINADOS...
+
+
+
+
+
+---> MAS DEVIDO à SIMPLICIDADE DO NOSSO 'STATE' E DA ESTRUTURA DO NOSSO APLICATIVO,
+
+
+VAI ACONTECER DE NÓS NUNCA PRECISARMOS USAR ALGUMAS DESSAS FEATURES,
+
+COMO 
+
+'pure Components' ---> 
+
+Pure Components do not depend
+ or modify the state of variables outside their scope. 
+ These are the building blocks of Functional Programming.
+  Before we get into the details of Pure Components in React, 
+  we need to understand the concept of Pure Functions in JavaScript.
+
+
+
+
+
+---> nós talvez nunca tenhamos que usar 'pureComponents' pq
+
+
+SE ALGO 
+
+
+MUDAR NO NOSSO APLICATIVO DO HAMBURGUER, NO BURGUER BUILDER,
+
+
+SABEREMOS/SABEMOS QUE SE AQUELE __PROP/STATE___ MUDOU,
+
+
+ELE 
+
+
+___ DE FATO__ REALMENTE MUDOu... --------> isso significa que nós não vamos ter um 
+
+
+botão que vai settar/redefinir esse hamburguer 
+
+como algo que ele já era/era previamente...  (vamos ver 
+ 
+isso ao longo das aulas...) --> não sabemos se converter esse 'App' em um PURECOMPONENT 
+
+será 
+
+
+algo realmente necessário...
+
+-------------------------------------

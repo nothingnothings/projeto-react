@@ -1,0 +1,589 @@
+
+
+
+
+
+
+
+
+
+
+
+----> COMO DIABOS O REACT ATUALIZA O 'DOM DE VERDADE', o DOM no browser?
+
+
+
+
+
+
+------> ANTES DE MAIS NADA:
+
+
+
+
+O MÉTODO 
+
+
+
+'render()' ----------> ESSE MÉTODO  __NÃO FAZ IMEDIATAMENTE __ O RENDER DOS 
+
+CÓDIGOS 'JSX' __ EM ELEMENTOS HTML NO DOM.... ------> isso quer dizer que 
+
+
+O NOME 
+
+
+'RENDER()' 'CAN BE MISLEADING'... (é enganador...)
+
+
+
+
+
+('Of course, this fact also applies to FUNCTIONAL COMPONENTS and the JSX 
+returned there, and NOT JUST TO CLASS-BASED COMPONENTS WITH 'render()' ' )...
+
+
+
+
+
+
+
+
+
+
+---> 'render()'  REALMENTE 
+
+
+__NÃO QUER DIZER, NECESSARIAMENTE, ___ QUE OS ELEMENTOS enfiados no interior de seu body
+
+ACABAM/ACABARÃO RENDERIZADOS NO DOM.... ------> 'render()' é 
+
+mais uma
+
+
+'SUGESTÃO' __DA 
+
+APARÊNCIA 
+
+__ QUE 
+
+O HTML DEVERÁ 
+
+__ TER AO FINAL DO PROCESSO DE RENDERING...  -------> mas ainda assim, 
+
+mesmo 
+
+
+
+sendo uma 'SUGESTÃO', o render() pode ser chamado 
+
+
+
+E ENTÃO __LEVAR__ ('lead') AO 
+
+
+MESMO RESULTADO QUE 
+
+JÁ ESTÁ 
+
+'DISPLAYED' na nossa tela... (sem alterações no html...) ------> E  ESSA 
+
+É PARTE DA RAZÃO 
+
+
+PARA USARMOS 'shouldComponentUpdate()': ESSE MÉTODO ___NOS AJUDA __ A PREVENIR 
+
+
+___ RENDER CALLS ___ DESNECESSÁRIOS__...   ---> nós o UTILIZAMOS 
+
+
+
+__PARA ___ PREVENIR 
+
+CALLS DE 'render()" DESNECESSÁRIOS...
+
+
+------------------------------------------------
+
+
+
+
+Certo... mas mesmo que NÓS __NÃO FIZÉSSEMOS 'catch' de um 
+
+RENDER CALL DESNECESSÁRIO.... por exemplo, em um caso hipotético
+ 
+
+ EM QUE 
+ UM 
+
+
+ PROP __REALMENTE __ MUDOU/FOI ALTERADO_, e em que 
+
+ MESMO SENDO ALTERADO __NÓS AINDA __ GOSTARÍAMOS __ DE RENDERIZAR O MESMO 
+
+ RESULTADO/MESMO HTML anterior... (por qualquer razão, qualquer motivo idiota)... ----->
+
+ 
+
+ MESMO NESSA SITUAÇÃO HIPOTÉTICA,
+
+
+
+ O render() 
+
+
+ __NUNCA__ (pq não consegue) 
+
+
+VAI 
+
+__IMEDIATAMENTE 'HIT THE REAL DOM' e então 
+
+COMEÇAR A RE-RENDERIZAR.... ----------------------> EM VEZ DISSO,
+
+
+ANTES DE COMEÇAR A RENDERIZAR,
+ 
+ O 'render()' 
+
+
+
+ FAZ __OUTRA COISA__.... ------> ELE __COMPARA__ 'VIRTUAL DOMs'... ------> 
+
+
+
+
+
+ O método 'render()', no final das contas,
+
+
+
+ TEM '''''VIRTUAL DOMS'''''....
+
+
+
+
+ ELE tem 2 DOMS VIRTUAIS:
+
+
+
+------------------------------------------------------
+
+
+ 1) O VELHO/ANTIGO 'VIRTUAL DOM'     ----> <div>...</div>
+
+
+
+ 2) O RE-RENDERED/FUTURO   'VIRTUAL DOM'...   <div>...</div> -----------> É CRIADO QUANDO O MÉTODO 'render()' É EXECUTADO/CHAMADO.
+
+ -------------------------------------------------------------
+
+
+
+ O REACT SEGUE ESSE APPROACH DOS 'VIRTUAL DOM' PQ ELE 
+
+ É __MAIS RÁPIDO DO QUE OS DOMS DE VERDADE ('the real DOM')...
+
+
+
+
+
+
+ UM virtual DOM ---> É ESSENCIALMENTE UMA ____'REPRESENTAÇÃO DO DOM, FEITA EM JAVASCRIPT..."
+
+
+
+
+ --> isso é possível PQ VOCÊ/QUALQUER UM/SOMOS CAPAZES DE 
+
+ ___REPRESENTAR __ ELEMENTOS DOM/ELEMENTOS E OBJETOS HTML  
+
+
+ __ NO JAVASCRIPT PURO... (e somos capazes 
+ 
+ de fazer/escrever essa representação __SEM QUE NADA ___ SEJA 
+ 
+ 
+ ESCRITO NO BROWSER EFETIVAMENTE...) -----> E É EXATAMENTE 
+
+ ISSO QUE 
+
+ OCORRE AQUI,
+
+
+
+
+ e o 
+
+
+
+ REACT MANTÉM 
+
+ 2 CÓPIAS DO DOM... 
+
+
+
+
+
+
+ O 'old virtual DOM' e o 'Re-rendered virtual DOM'. ------> o 'RE-RENDERED VIRTUAL DOM' É O VIRTUAL __DOM __ QUE É CRIADO QUANDO O MÉTODO 'render()' É __CHAMADO/EXECUTADO...
+
+
+
+
+
+ ----------------------------------------------
+
+
+
+
+
+
+ Certo... isso nós (quase) sabíamos...
+
+
+
+
+ ENTRETANTO, 
+
+
+ DEVEMOS ATENTAR PARA UM DETALHE!!!! ---> O 'RE-RENDERING'/call de 'render()'   
+                                            NÃO UPDATA O 'DOM DE VERDADE' (real DOM)
+                                            imediatamente.... ------> EM VEZ DISSO,
+                                             
+
+                                             O QUE O REACT FAZ É __UMA COMPARAÇÃO__ ENTRE 
+
+
+                                             OS DOMS...
+
+
+
+
+ELE COMPARA 
+
+
+ 1) O VELHO/ANTIGO 'VIRTUAL DOM'     ----> <div>...</div>
+
+
+E 
+
+
+ 2) O RE-RENDERED/FUTURO   'VIRTUAL DOM'...   <div>...</div> -----------> É CRIADO QUANDO O MÉTODO 'render()' É EXECUTADO/CHAMADO.
+
+
+
+ --------------------------------------
+
+
+
+
+ ELE COMPARA O DOM VIRTUAL ANTIGO COM O NOVO, e procura por diferenças... ------------> 
+
+
+
+
+
+ SE ELE __dETECTA ___ DIFERENÇAS __, ele 
+
+
+ faz/fará 
+
+
+ 'REACH OUT' ao DOM DE VERDADE E ENTÃO O __ATUALIZARÁ/ATUALIZA____... ------> e 
+
+ mesmo 
+
+ no caso/casos em que 
+
+ELE REALMENTE DETECTA DIFERENÇAS E DECIDE ATUALIZAR, 
+
+ELE NÃO FAZ UM 'RE-RENDER' __INTEGRAL__ DO DOM DE VERDADE... --> não, 
+
+ele não faz um 
+
+RE-RENDER integral... isso seria muito ruim em termos de performance... -----> ELE 
+
+__SÓ __ MUDA O 'REAL DOM'___ NOS 
+
+LUGARES ___ EM QUE 
+
+AS DIFERENÇAS 
+
+ENTRE 
+
+O 'OLD VIRTUAL dom'
+ 
+ E O 'RE-RENDERED VIRTUAL DOM' 
+
+ FORAM/SÃO __dETECTADAS____.. ----------> POR EXEMPLO,
+
+
+
+
+ SE O 
+
+
+ 'TEXT' 
+
+
+ DE UMA 
+
+
+ BUTTON TAG MUDA/MUDOU, 
+
+
+
+
+O ___ REACT__ VAI APENAS ___RE-RENDERIZAR __ AQUELE 
+
+TEXTINHO (only the text),
+
+E __NÃO O BUTTON INTEIRO__... ('and not the whole button, and definitely not the whole DOM.')
+
+
+
+
+
+
+
+
+                                                COMPARISON
+
+NO: "Don't touch the real DOM"   <------------ DIFFERENCES? ------> YES: UPDATE THE '''REAL''' DOM...
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+SEM DIFERENÇAS: O DOM NÃO É TOCADO PELO REACT.... ---> render() é executado,
+
+a COMPARAÇÃO É FEITA...... 
+
+
+e é por isso que 
+
+'shouldComponentUpdate' É __MUITO ÚTIL__, É ÚTIL PQ ELE 
+
+
+AJUDA A SALVAR PERFORMANCE NOS CASOS EM QUE 
+
+ESSA 'COMPARAÇÃO' __NÃO É NECESSÁRIA___, CASOS EM QUE 
+
+__SEMPRE VAMOS QUERER ATUALIZAR AQUELE COMPONENT (tvz pq ele é CHILD de um 
+
+
+PARENT COMPONENT, e queremos que ELE __aCOMPANHE___ AS MUDANÇAS DO COMPONENT 
+PAI, SEMPRE...)
+
+
+
+
+
+
+
+------> CERTO, mas o que importa é que, em caso de 
+
+'sem diferenças', o DOM DE VERDADE NUNCA É TOCADO... ----> e você pode depender/confiar nisso... ---> O DOM SÓ SERÁ 
+
+TOCADO SE EXISTIREM 
+
+REAIS DIFERENÇAS ENTRE OS 
+
+ 
+VIRTUAL DOMs... --------------> 
+
+
+
+
+
+E ISSO É MUITO IMPORTANTE ENTENDER:
+
+
+
+O REACT __SÓ VAI UPDATAR__ O DOM QUANDO ABSOLUTAMENTE NECESSÁRIO... ___ --> ué, mas 
+
+pq só 
+
+
+'quando ABSOLUTAMENTE NECESSÁRIO'? ------> É 
+
+
+PQ __ O ___ ACESSO AO DOM__ é, COMO JÁ SABEMOS,
+
+
+
+_______EXTREMAMENTE LENTO___ EM RELAÇÃO AOS OUTROS PROCESSOS NO JAVASCRIPT.... -----> É POR ISSO 
+
+QUE O UPDATE 
+
+DO DOM REAL é algo 
+
+QUE VOCÊ SEMPRE QUER EVITAR,
+
+
+ALGO QUE VOCÊ QUER TER A MENOR QUANTIDADE POSSÍVEL NO SEU CÓDIGO.... ('do it as little as possible')
+
+
+
+
+---> E É EXATAMENTE EM RAZÃO DISSO QUE O REACT TEM ESSA 'IDEIA' DOS 
+
+VIRTUAL 
+
+DOMs 
+
+e a comparação entre eles... -----> ele compara 
+
+
+
+os virtual DOMs e então 
+
+
+
+__SÓ UPDATA___ O REAL DOM SE ISSO FOR ABSOLUTAMENTE NECESSÁRIO...
+
+---------------------------------------------------
+
+
+
+E PODEMOS OBSERVAR/JÁ OBSERVAMOS ISSO NO NOSSO APLICATIVO....
+
+
+
+
+
+
+NO NOSSO APLICATIVO,
+
+
+
+É CLARO QUE AGORA TEMOS TODOS NOSSOS 
+
+'CHECKS' 
+
+
+no lugar... temos eles graças ao 'shouldComponentUpdate'... ------> 
+
+
+
+MAS O QUE NÓS 
+
+
+__AINDA TEMOS ___ NESSE aplicativo é...
+
+
+se inspecionarmos 
+
+o dev tools, 
+
+Aba 
+
+'elements' 
+
+
+E ENTÃO 
+
+
+DERMOS 
+__TOGGLE___ nas persons,
+
+
+
+
+CLARAMENTE 
+
+VEREMOS QUE 
+
+__AQUELAS DIVS com as 'person'/component 'persons' 
+
+
+FOI ADICIONADA...  (e os elements deles FLASHAM no console)--------> MAS SE EU CLICAR 
+
+NESSE TOGGLE AÍ,
+
+
+POSSO PERCEBER 
+
+
+QUE 
+
+
+
+A DIV DE 
+'cockpit' 
+
+
+
+e o 'button' NUNCA 
+
+'FLASHAM' a partir 
+
+
+DO TOGGLE DE PERSONS... -----> ELES NÃO FLASHAM ___PQ REALMENTE___ NUNCA SÃO RE-RENDERIZADOS/NÃO SÃO RE-RENDERIZADOS A PARTIR DO TOGGLE/ALTERAÇÃO DE 'persons'.... --> ou seja,
+
+
+essa parte 
+
+do 
+
+'REAL DOM'
+
+__rESTA INALTERADA_, NÃO MUDA EM NADA... ------> o 'button styling' até mudou, MAS A PARTE EM CIMA DO BOTÃO, como o paragraph de 'this is really working' e a 'H1 TAG', isso aí NUNCA MUDA/NÃO MUDOU... --> podeoms ver pela AUSÊNCIA DO FLASH desses elementos na aba 'elements'...
+
+
+
+
+ISSO SIGNIFICA QUE __ELES NÃO FORAM ___ TOCADOS PELO REACT DE MANEIRA ALGUMA, esses elementos '<h1>' e '<p>'... ------> ELES NÃO 
+FORAM TOCADOS ____MESMO COM O MÉTODO 'render()' SENDO EXECUTADO.... (o indicativo de que 'render()' do 'App.js', que 
+
+acaba renderizando o 'Cockpit', foi realmente executado,
+ é A TROCA DE ESTILOS DESSE ELEMENTO 'BUTTON', que 
+ 
+ passou de VERMELHO PARA verde, e vice-versa... esse update demonstra que o 'render()' foi executado... )
+
+
+
+
+
+
+
+
+
+
+ ----->  RESUMO:
+
+ O 'render()' NÃO FEZ O RE-RENDER DE TUDO NO DOM DE VERDADE (real dom).... 
+
+
+ ---> no entanto, 
+
+ NO _'DOM VIRTUAL DO FUTURO' ele 
+
+ __REALMENTE___ FEZ O RE-RENDER DE TUDO, 
+
+
+ mas o que importa é QUE ELE NÃO FEZ ESSE RE-RENDER NO DOM DE VERDADE, e esse diferencial
+  
+  é que acaba nos comprando muita performance... (essa 'imaginação' do react...)
+
+
+
+
+  O REACT COMPAROU O 'DOM VELHO' E 'DOM DO FUTURO' EM 
+
+  UM AMBIENTE VIRTUAL,
+   
+   e AÍ APENAS TOCA/TOCOU O DOM DE VERDADE 
+
+   NOS LUGARES EM QUE 
+
+
+   MUDANÇAS FORAM ENCONTRADAS.

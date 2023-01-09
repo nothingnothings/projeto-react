@@ -1,0 +1,1393 @@
+código:
+
+
+
+
+
+import axios from 'axios';
+
+
+
+const instance = axios.create(
+    {
+        baseURL: 'https://burgerbuilder201051-default-rtdb.firebaseio.com/',
+
+
+    }
+);
+
+
+
+
+export default instance;
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+
+--> CRIAMOS UMA INSTANCE, AGORA É HORA DE USÁ-LA PARA MANDAR REQUESTS...
+
+
+
+
+--> DEVE SER FEITO O IMPORT DE 'instance' 
+
+
+em algum lugar/component de nosso código... ---> provavelmente em 'BurgerBuilder', onde existem 
+
+MÉTODOS.... (ou em orderSummary... não sei...) 
+
+
+
+
+
+
+
+---> PROFESSOR DIZ QUE 
+
+
+LÁ 
+
+EM 
+
+'BURGERBUILDER', NAQUELE CONTAINER LÁ,
+
+
+
+NÓS TEMOS 
+
+
+
+UM MÉTODO QUE 
+
+
+FAZ ____ O HANDLE__ DAS PURCHASES... 
+
+
+O nome 
+
+
+desse handler é 
+
+
+'purchaseContinueHandler()'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+purchaseContinueHandler = () => {
+    alert('You Continue!');
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+}
+
+
+
+
+-------------------------------
+
+
+
+
+
+-----------> ATÉ AGORA, 
+
+
+O PROFESSOR SÓ FAZ ESSE ALERT de 'youcontinue'... ------> 
+
+
+
+
+MAS NO APLICATIVO FINAL, NÃO VAMOS QUERER 
+
+ESSA MENSAGEM BOSTA... --> não, 
+
+
+provavelmente 
+
+
+o que vamos querer 
+
+
+
+
+
+__É __ NAVEGAR O USER___ ATÉ UM 
+
+'CHECKOUT FORM'___ --->  E essa 
+
+
+
+'checkout form' 
+
+
+É UMA __sTANDALONE PAGE___ ... -------> NÓS  AINDA 
+
+NÃO 
+
+
+SABEMOS COMO CRIAR 'PÁGINAS' PROPRIAMENTE NO NOSSO REACT APP, 
+
+
+mas depois o professor vai nos ensinar... (será que é um uso do 'react router?' provavelmente).. 
+
+
+
+
+
+----> E ESSA STANDALONE PAGE __Ainda vai existir no nosso 'single page app'''' --> professor 
+
+
+admite que isso pode parecer estranho, mas é exatamente isso: 
+
+'múltiplas pages' existem 
+
+
+em um 
+
+SINGLE PAGE APP.... (spa)
+
+
+
+
+
+
+
+
+
+
+----------> OUTRA COISA QUE 
+
+
+AINDA NÃO APRENDEMOS 
+
+É O ___HANDLING DE '''FORM INPUTS''', 
+
+
+ou seja, 
+
+
+O
+ __VALIDATION___ de 
+
+ form inputs,
+
+
+ e assim por diante....  ---->  E É POR ISSO QUE, POR ENQUANTO, 
+
+ NÃO TEREMOS UMA 
+
+
+ 'CHECKOUT FORM' ----------> como não teremos uma CHECKOUT FORM,
+
+
+
+
+resulta que vamos __PEGAR A ORDER 'COMO ELA ESTÁ' __ E ENTÃO 
+
+
+
+A ENVIAREMOS A UM SERVIDOR.... ( o servidor do firebase, que tem uma DATABASE).
+
+
+
+
+
+
+
+
+
+-----> VAMOS FAZER O STORAGE DOS 
+
+
+'DADOS DA ORDER' 
+
+
+
+feita pelo usuário, junto de uma 
+
+'dummy data' apensa a ela, 
+
+
+NA NOSSA DATABASE DO FIREBASE...
+----------------------------------------------------
+
+
+
+
+
+
+
+
+----> PARA FAZER ISSO, 
+
+devemos comentar para fora aquele 
+
+
+'alert'.. ---->
+
+
+
+
+
+
+DEPOIS, O QUE O PROFESSOR VAI FAZER É 
+
+
+___eNVIAR___ DADOS, 
+
+
+
+as 
+
+nossas 
+
+'orders',
+
+
+ao nosso backend...
+
+
+
+-----------------------------------
+
+--> ok, vamos em frente e IMPORTAMOS 
+
+
+AQUELA __INSTANCE__ DE AXIOS 
+__ 
+
+NO 'BURGERBUILDER'...
+
+
+
+
+--> TIPO ASSIM(talvez?):
+
+
+------------------------------------------------------
+
+
+
+
+import axiosOrder from '../../axios-orders';
+
+
+
+purchaseContinueHandler = () => {
+    axiosOrder.post('/', {
+      
+    })
+
+
+
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+}
+
+
+
+------------------------------------------------------
+
+
+
+
+LEMBRE-SE, JÁ TEMOS UM BASEURL dessa axios instance configurada como ''https://burgerbuilder201051-default-rtdb.firebaseio.com/',
+
+
+
+
+é POR ISSO 
+
+
+
+que só escrevemos '/'...........
+
+
+
+
+
+
+
+
+
+---> OK, PROFESSOR NOS CONTA UM DETALHE INTERESSANTE:
+
+
+
+
+
+aquele '/' que colocamos 
+
+PODE SER QUALQUER OUTRA COISA... 
+
+
+
+PODERÍAMOS 
+
+
+DEFINIR 
+
+
+'/orders'..... -------> SE FIZÉSSEMOS 
+
+
+ISSO,
+
+
+O FIREBASE (pq ele tem essa FEATURE) 
+
+
+AUTOMATICAMENTE 
+
+
+CRIARÁ 
+
+UM 'PATH' PARA 
+ESSE LOCAL AÍ, 
+
+ONDE SERÃO ARMAZENADOS 
+
+SEUS DADOS/OS DADOS DO SEU REQUEST DE TIPO POST...
+
+
+
+-------------------------------------------------
+
+
+Ok, mas pq isso acontece? Acontece pq 
+
+
+o 
+
+FIREBASE 
+
+tem 
+
+uma estrutura 
+
+'mongoDB-like' que 
+
+
+CRIA UMAS 'PSEUDOTABLES'... ---> não são bem 
+
+TABLEs por assim dizer, 
+
+e sim
+
+
+'JSON LIKE NESTED STRUCTURE'... ------> E É POR ISSO QUE 
+
+
+SE VOCê 
+
+CRIAR/usar 
+
+
+alguma url
+
+
+no seu projeto, uma url aleatória que AINDA NÃO EXISTE,
+
+como 
+
+
+
+'https://burgerbuilder201051-default-rtdb.firebaseio.com/orders',
+
+
+
+
+O FIREBASE____ VAI __aUTOMATICAMENTE___ 
+
+
+CRIAR UM __NODE___ PARA ESSE PATH E ENTÃO ARMAZENAR NOSSAS 
+
+
+ORDERS 
+
+
+
+DEBAIXO DESSE NODE...
+
+
+
+
+
+
+
+---> E É EXATAMENTE ISSO QUE O PROFESSOR VAI QUERER FAZER, AQUI;
+
+
+
+
+ele vai 
+
+adicionar 
+
+
+'/orders' 
+
+nesse 
+
+'axios.post()'...
+
+
+
+ex:
+
+
+
+
+
+
+import axiosOrder from '../../axios-orders';
+
+
+
+purchaseContinueHandler = () => {
+    axiosOrder.post('/orders', {
+      
+    })
+
+
+
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+}
+
+
+
+
+------------------------------------------------------
+
+
+
+certo, 
+
+
+
+MAS SÓ __ FAZER ISSO__ NÃO VAI RESOLVER NOSSOS PROBLEMAS... ---> não, 
+
+
+
+é necessário 
+
+
+
+ESCREVER MAIS UMA PEQUENA COISA:
+
+
+
+
+
+
+
+ESSE DETALHE AÍ EXISTE SÓ NO FIREBASE, MAS É IMPORTANTE.... -------> 
+
+
+
+VOCê ***PRECISA**** 
+
+
+adicionar '.json' 
+
+
+
+DO __LADO__ DO NOME DO 'path'/node que 
+
+a que 
+
+você estará enviando o post request...
+
+
+
+ex:
+
+
+
+axios.post('/orders.json');
+
+
+
+
+---------------------------------------------------------
+
+
+
+(SIM, ISSO É NECESSÁRIO).      ---------->
+ 
+
+
+ MAS PQ É NECESSÁRIO? pq 
+
+
+
+ é 
+
+ o ___ENDPOINT__ QUE VOCê PRECISA TARGETTAR, NO FIREBASE, PARA QUE ESSA FEATURE DO FIREBASE/O FIREBASE 
+
+ EM SI __CONSIGA__ FUNCIONAR CORRETAMENTE___....
+
+
+
+
+
+
+
+ -------------------------------------------------------
+
+
+
+
+
+
+ EM UM PROJETO COMUM, EM QUE VOCÊ TEM SEU PRÓPRIO SERVIDOR/SERVIDOR 
+
+ DA EMPRESA, É LÓGICO QUE 
+
+
+ ____ VOCÊ JÁ TERÁ SEUS ENDPOINTS APROPRIADOS, ENDPOINTS QUE 
+
+ NÃO VÃO PRECISAR 
+
+ DESSE '.json' AO FINAL de sua escrita para funcionar (contudo, o firebase NECESSITA DISSO).
+
+
+
+
+
+
+
+RESUMINDO:
+
+
+
+FIREBASE --> 
+
+
+'qualquer nodeName de sua escolha' + '.json' -------> URL/ENDPOINT QUE OS HTTP REQUESTS DO SEU APLICATIVO TÊM DE ALCANÇAR...
+
+ --------------------------------------------------------------------------
+
+
+
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+
+
+
+
+axios.post('/orders.json')  ---> esse é o 'PATH' que acaba APENSO A MINHA 
+
+'BASEURL'...
+
+
+
+--------------------------------------------------
+
+
+
+
+CERTO, 
+
+ISSO FEITO, 
+
+TEREMOS 
+
+
+DE PEGAR NOSSA 
+
+'DATA'.... ------> para isso, provavelmente 
+
+vamos querer 
+
+
+__ A DATA ___ DOS NOSSOS INGREDIENTES,
+
+QUE SERÁ ENVIADA POR ESSE 
+
+REQUEST 
+
+
+DE TIPO 'post'...
+
+
+
+
+
+
+TALVEZ FAZER ALGO ASSIM:
+
+
+
+
+
+
+purchaseContinueHandler = () => { ///////OBS::: colocar '.json' DO LADO DO PATH/NODE a que você está querendo enviar o HTTP REQUEST  ___ É ALGO QUE __ SÓ É OBRIGATÓRIO PARA SERVIDORES __fIREBASE; EM OUTROS TIPOS DE SERVIDORES, ESSE '.json' AO FINAL __NÃO É NECESSÁRIO___... ---> pq isso? PQ ESSE É O ___eNDPOINT QUE ___ O FIREBASE__ PRECISA TARGETTAR PARA QUE A FEATURE DO FIREBASE DE 'AUTOMATIC CREATION' DOS NODES/PATHS CONSIGA FUNCIONAR CORRETAMENTE.
+    const orderData = this.state.ingredients;
+  axiosOrder.post('/orders.json', orderData).then(
+      console.log(orderData);
+  )
+
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+}
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+ESCREVEMOS ALGO ASSIM:
+
+
+
+
+purchaseContinueHandler = () => { ///////OBS::: colocar '.json' DO LADO DO PATH/NODE a que você está querendo enviar o HTTP REQUEST  ___ É ALGO QUE __ SÓ É OBRIGATÓRIO PARA SERVIDORES __fIREBASE; EM OUTROS TIPOS DE SERVIDORES, ESSE '.json' AO FINAL __NÃO É NECESSÁRIO___... ---> pq isso? PQ ESSE É O ___eNDPOINT QUE ___ O FIREBASE__ PRECISA TARGETTAR PARA QUE A FEATURE DO FIREBASE DE 'AUTOMATIC CREATION' DOS NODES/PATHS CONSIGA FUNCIONAR CORRETAMENTE.
+    const orderData = {
+      
+      ingredients: this.state.ingredients,
+    price: this.state.totalPrice}
+  
+  
+  
+  axiosOrder.post('/orders.json', orderData).then(console.log(orderData));
+
+
+
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+}
+
+
+
+-----------------------------------------------------------
+
+
+
+
+
+
+PROFESSOR 
+
+NOS CONTA UM PEQUENO DETALHE:
+
+
+''em um ready-for-production application,
+
+
+você tipicamente ___vAI FAZER O CÁLCULO ___ DOS PRODUCTS/INGREDIENTS__ NO 
+
+
+SERVIDOR EM SI, E NÃO NO BROWSERSIDE... ---------> o cálculo desses items será 
+
+feito 
+
+no servidor pq TIPICAMENTE ___ O PREÇO DELES__ ESTARÁ ARMAZENADO _LÁ TAMBÉM__,
+
+
+E FAZ MUITO MAIS SENTIDO REALIZAR OS CÁLCULOS SOBRE VALORES QUE 
+
+JÁ ESTÃO NO MESMO LUGAR (que já estão no servidor)... -----------> isso 
+
+tbm faz 
+
+sentido 
+
+PQ EVITA ___ A POSSIBILIDADE __ DE O USUÁRIO __MANIPULAR __ OS VALORES __ DOS 
+
+ITEMS __ DIRETO DO SEU BROWSER, COM ATAQUES XSRF e etc...
+
+
+
+
+
+----> contudo, professor continuará usando 
+
+esse formato de código aqui, apesar de admitir que 
+
+ESSE FORMATO NUNCA SERIA USADO 
+
+
+EM 
+
+UM APLICATIVO DE VERDADE (aplicativos de verdade ARMAZENAM 
+
+PREÇOS DE PRODUTOS E REALIZAM CÁLCULOS DE PREÇO ___DIRETAMENTE__ NO SERVIDOR,
+
+e não no browser...)
+
+
+-----------------------------------
+
+
+
+
+
+----> certo.... agora digamos que, para uma determinada ''ORDER'',
+
+
+NÓS TAMBÉM gostaríamos/queremos uma 
+
+'additional information'... --> 
+
+
+
+uma informação que NÃO CONSEGUIMOS FETCHEAR AGORA (no presente), pq 
+
+não temos 
+
+
+nenhuma 
+
+'checkout form' codada no nosso projeto, 
+
+
+
+mas vamos querer uma information mesmo assim, 
+
+mesmo que 
+essa information 
+
+esteja 
+
+preenchida, por enquanto, 
+
+com DUMMY DATA... ----------> para isso, 
+
+
+professor 
+
+
+adicionará 
+
+uma propriedade 
+
+
+'customer'
+ 
+
+
+ DENTRO DO NOSSO OBJETO 'orderData'....
+
+
+
+ ex:
+
+
+
+
+
+
+
+purchaseContinueHandler = () => { ///////OBS::: colocar '.json' DO LADO DO PATH/NODE a que você está querendo enviar o HTTP REQUEST  ___ É ALGO QUE __ SÓ É OBRIGATÓRIO PARA SERVIDORES __fIREBASE; EM OUTROS TIPOS DE SERVIDORES, ESSE '.json' AO FINAL __NÃO É NECESSÁRIO___... ---> pq isso? PQ ESSE É O ___eNDPOINT QUE ___ O FIREBASE__ PRECISA TARGETTAR PARA QUE A FEATURE DO FIREBASE DE 'AUTOMATIC CREATION' DOS NODES/PATHS CONSIGA FUNCIONAR CORRETAMENTE.
+    const orderData = {
+      
+      ingredients: this.state.ingredients,
+    price: this.state.totalPrice,
+    customer: {///////eis o código em questão.
+
+    }
+    
+    
+    }
+  
+  
+  
+  axiosOrder.post('/orders.json', orderData).then(console.log(orderData));
+
+
+
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+}
+
+
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+O PROFESSOR COLOCA DENTRO DESSE OBJETO PROPRIEDADES 
+
+como 
+
+'name' 
+
+
+
+e 
+
+
+'address'... --> que terá uma propriedade de 'street', zipcode, e country...
+
+
+
+também um 
+
+'email',
+
+
+ 
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+purchaseContinueHandler = () => { ///////OBS::: colocar '.json' DO LADO DO PATH/NODE a que você está querendo enviar o HTTP REQUEST  ___ É ALGO QUE __ SÓ É OBRIGATÓRIO PARA SERVIDORES __fIREBASE; EM OUTROS TIPOS DE SERVIDORES, ESSE '.json' AO FINAL __NÃO É NECESSÁRIO___... ---> pq isso? PQ ESSE É O ___eNDPOINT QUE ___ O FIREBASE__ PRECISA TARGETTAR PARA QUE A FEATURE DO FIREBASE DE 'AUTOMATIC CREATION' DOS NODES/PATHS CONSIGA FUNCIONAR CORRETAMENTE.
+    const orderData = {
+      
+      ingredients: this.state.ingredients,
+    price: this.state.totalPrice,
+    customer: {
+
+        name: 'Max Schwarzmuller',
+        address: {
+            street: 'Teststreet 1'
+            zzipCode: '41351',
+            country: 'Germany'
+        },
+        email: 'test@test.com'
+
+    }
+    
+    
+    }
+  
+  
+  
+  axiosOrder.post('/orders.json', orderData).then(console.log(orderData));
+
+
+
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+}
+
+
+
+
+---------------------------------
+
+
+ELE TAMBÉM 
+
+ADICIONA OUTRA PROPRIEDADE, 
+
+'deliveryMethod', 
+
+
+
+QUE 
+
+DIRÁ QUAL TIPO DE '''ENTREGA'''' 
+
+
+o customer desejará... (vamos definir como 'fastest', a título de exemplo)
+
+
+
+ex:
+
+
+
+
+
+
+purchaseContinueHandler = () => { ///////OBS::: colocar '.json' DO LADO DO PATH/NODE a que você está querendo enviar o HTTP REQUEST  ___ É ALGO QUE __ SÓ É OBRIGATÓRIO PARA SERVIDORES __fIREBASE; EM OUTROS TIPOS DE SERVIDORES, ESSE '.json' AO FINAL __NÃO É NECESSÁRIO___... ---> pq isso? PQ ESSE É O ___eNDPOINT QUE ___ O FIREBASE__ PRECISA TARGETTAR PARA QUE A FEATURE DO FIREBASE DE 'AUTOMATIC CREATION' DOS NODES/PATHS CONSIGA FUNCIONAR CORRETAMENTE.
+    const orderData = {
+      
+      ingredients: this.state.ingredients,
+    price: this.state.totalPrice,
+    customer: {
+
+        name: 'Max Schwarzmuller',
+        address: {
+            street: 'Teststreet 1'
+            zzipCode: '41351',
+            country: 'Germany'
+        },
+        email: 'test@test.com'
+
+    },
+    deliveryMethod: 'fastest'
+    
+    
+    }
+  
+  
+  
+  axiosOrder.post('/orders.json', orderData).then(console.log(orderData));
+
+
+
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+}
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+CERTO,
+
+É SÓ UMA 
+
+'DUMMY ORDERDATA'... -----> MAIS TARDE ADICIONAREMOS 
+
+
+UMA 
+
+'CHECKOUT PAGE',
+
+
+EM QUE 
+
+PODEREMOS COLOCAR/ESCREVER/OPTAR 
+
+POR INFORMAÇÕES,
+
+
+
+por meio de uma FORM... ------- mas por enquanto vamos usar 
+
+
+
+essa DUMMYDATA para a DUMMYORDER... --------> O PROFESSOR ENTÃO VAI EM FRENTE 
+
+
+E PASSA 
+
+ESSA CONST QUE SEGURA ESSE OBJETO 'orderData' 
+
+
+
+COMO SEGUNDO ARGUMENTO DE 
+
+'axios.post'..... (que é o slot em que enfiamos 
+
+a data que queremos enviar...)
+
+
+
+
+--------------------------------------------
+
+
+
+
+--> O PROFESSOR ENTÃO ADICIONA UM '.THEN BLOCK',
+
+
+
+
+
+EM QUE 
+
+
+VAMOS 
+
+
+
+QUERER VER ___ A RESPONSE___ DO NOSSO SERVIDOR...
+
+
+
+para isso,
+
+
+vamos 
+
+escrever 
+
+
+'.then(
+    response => {
+        console.log(response);
+    }
+)'
+
+
+------------------------------
+
+
+
+ISSO VAI NOS RETORNAR UM 
+
+STATUS 
+
+CODE 
+
+de 
+
+'200' (HTTP REQUEST SENT SUCCESSFULLY)'...
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+CERTO,
+
+
+
+NOSSA ORDER JÁ ESTÁ SENDO ARMAZENADA NO FIREBASE... o que é muito bom...
+
+
+
+
+'.then(
+    response => {
+        console.log(response);
+    }
+)'  -------> ESTE CÓDIGO AQUI NOS INFORMA 
+
+
+DO RESULTADO, SE O REQUEST FOI ENVIADO... o próprio servidor nos informa isso...
+
+ 
+
+ ------------------------------------------
+
+
+
+
+
+
+
+ ADEMAIS, O PROFESSOR TAMBÉM COLOCA UM MÉTODO
+
+
+ '.catch' depois do then block,
+
+
+ PARA __CAPTURAR__ QUAISQUER ERROS__ DURANTE O ENVIO DO NOSSO HTTP REQUEST...
+ -------------------------------------------
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+purchaseContinueHandler = () => { ///////OBS::: colocar '.json' DO LADO DO PATH/NODE a que você está querendo enviar o HTTP REQUEST  ___ É ALGO QUE __ SÓ É OBRIGATÓRIO PARA SERVIDORES __fIREBASE; EM OUTROS TIPOS DE SERVIDORES, ESSE '.json' AO FINAL __NÃO É NECESSÁRIO___... ---> pq isso? PQ ESSE É O ___eNDPOINT QUE ___ O FIREBASE__ PRECISA TARGETTAR PARA QUE A FEATURE DO FIREBASE DE 'AUTOMATIC CREATION' DOS NODES/PATHS CONSIGA FUNCIONAR CORRETAMENTE.
+    const orderData = {
+      
+      ingredients: this.state.ingredients,
+    price: this.state.totalPrice,
+      customer: {
+        name: 'Max schwarzmuller',
+        address: {
+          street: 'Teststreet 1',
+          zipCode: '41351',
+          country: 'Germany'
+        },
+        email: 'test@test.com'
+      },
+
+      deliveryMethod: 'fastest'
+  
+  
+  
+  }
+  
+  
+  
+  axiosOrder.post('/orders.json', orderData).then(
+
+    (response) => {
+      console.log(response);
+    }
+
+
+  )
+  .catch(error => {
+    console.log(error);
+  }
+  )
+
+
+
+    this.setState(
+      {
+        purchasing: false
+      }
+    )
+}
+
+
+----------------------------------
+
+
+
+
+
+
+CERTO... --->  quando clicamos no 'continue',
+
+
+
+nosso request 
+
+É REALMENTE ENVIADO,
+ 
+
+ E RECEBEMOS UMA 
+
+
+ RESPONSE COM STATUS DE 
+
+ '200'... --------------> COMO 
+
+
+ NÓS USAMOS 
+
+
+ O MÉTODO 
+
+ 'POST',
+
+
+ O FIREBASE __JÁ ESTÁ __ AUTOMATICAMENTE ___cRIANDO E FAZENDO 
+
+
+
+ MANAGE_ __ DE UMA 'LIST' ___ DENTRO DO 
+
+
+ NOSSO 'App'......  ---------> E CADA 'LIST-ITEM' 
+
+
+ SIMPLESMENTE 
+
+
+ RECEBE UM UNIQUE 
+
+ ID.... (letras e números aleatórios, gerados pelo firebase) ---------> 
+
+
+ E SE 
+
+ EXPANDIRMOS CADA UMA DESSAS ORDERS,
+
+
+ VEREMOS A 'DUMMYDATA' QUE HAVÍAMOS CODADO ANTES,
+
+
+
+ E INFORMAÇÕES SOBRE OS INGREDIENTS....
+
+
+
+------------------------------------------------------------------
+
+
+
+
+
+CERTO... FICOU BEM LEGAL... Nosso burger está armazenado no BACKEND...
+
+
+
+
+----> A PARTE MAIS LEGAL É QUE ESSA 'DATA' 
+
+___fICA ALI__... ---> se nós recarregarmos nossa página,
+
+
+
+A DATA DO NOSSO BURGER PERMANECERÁ ALI.... (no firebase, em sua database).. ------> 
+
+
+
+SE RECARREGARMOS NOSSA PÁGINA,
+
+PERDEMOS O NOSSO 'STATE' __ NO BROWSER__, 
+
+MAS 
+
+
+O 
+
+'STATE' 
+
+NO ___SERVER/SERVIDOR__ FIREBASE___ CONTINUA LÁ... (
+
+
+
+    o nosso 'antigo state', que existia 
+
+    ANTES DO RELOAD/CLOSE DE NOSSA PÁGINA...
+)
+
+
+
+
+-------> COMO ESSAS INFORMAÇÕES/DATA DAS 
+
+__oRDERS___ ESTÃO ARMAZENADAS EM UM SERVIDOR REMOTO, 
+
+PODEMOS 
+
+__USAR___ AS INFORMAÇÕES DESSE SERVIDOR REMOTO (por meio do método 
+
+'axios.get') PARA 
+
+
+__OUTPUTTAR____ 
+
+
+AS INFORMAÇÕES 
+
+DAS ORDERS 
+
+ANTIGAS NO 
+
+NOSSO 
+
+
+APLICATIVO.... (ou então poderíamos simplesmente só fazer uma página 
+
+PARA O DONO DO WEBSITE/LOJA, 
+
+UMA PÁGINA EM QUE 
+
+ELE ADMINISTRARÁ/ADMINISTRARIA OS PEDIDOS FEITOS 
+
+NA SUA PÁGINA ACESSADA PELOS USUARIOS...)
+
+
+
+
+
+
+
+
+
+
+
+---> CERTO, VIMOS O __POST REQUEST___ -------> 
+
+
+
+ANTES DE EXECUTARMOS O 'ERROR HANDLING' DOS POSTS 
+
+REQUESTS E ASSIM POR DIANTE,
+
+
+
+ 
+
+ DEVEMOS 
+
+
+MOSTRAR UMA MENSAGEM AO USUÁRIO, INFORMÁ-LO DE QUE 
+
+__o SEU PEDIDO__ 'IS ON ITS WAY', 
+
+
+uma tela de carregando...
+
+
+
+
+
+
+--> por fim, veremos ___COMO PEGAR __ DATA ___ DO BACKEND (por meio de 'axios.get')...
+
+
+
+
+
+----------------------------------------------------------

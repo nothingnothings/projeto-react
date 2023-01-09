@@ -1,0 +1,1460 @@
+https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet
+
+
+
+
+
+APRENDEMOS SOBRE O 'RADIUM' ---> TPP MUITO POPULAR que te permite usar INLINE STYLES COM FEATURES MODERNAS COMO MEDIA QUERIES, PSEUDOSELETORES E ANIMAÇÕES...
+
+
+
+
+-----> ENTRETANTO, O RADIUM NÃO É A ÚNICA MANEIRA 
+
+
+DE ADICIONAR/ESCREVER MEDIA QUERIEs e os utilizar com 
+
+INLINE STYLES... ---------> 
+
+
+
+
+
+
+
+---------> NÃO SERIA LEGAL/ÓPTIMO 
+
+SE PUDÉSSEMOS FAZER O SIMPLES SCOPE 
+
+
+DE UM ARQUIVO .CSS EM UM ARQUIVO .JS, 
+
+sem ter mais nada interferindo (sem fazer esse arquivo '.css' ser scopado 
+
+NO NOSSO PROJETO INTEIRO, GLOBALMENTE)....?
+
+
+
+
+Bem, nós PODEMOS 
+
+
+FAZER ISSO,
+
+
+
+SE UTILIZARMOS A FEATURE 
+
+DOS 
+
+'css modules'...
+
+
+
+
+
+
+
+ex: scopar 
+
+O ARQUIVO 
+
+'PERSON.CSS'
+
+
+no arquivo '
+
+Person.js'... --------------> COM ISSO, 
+
+QUAISQUER ESTILOS 
+
+
+
+DEFINIDOS EM 'person.css'
+
+
+PODERIAM SER 
+
+
+IMPORTADOS 
+
+
+E ASSIGNADOS A 
+
+
+ELEMENTOS 
+
+
+NAQUELE COMPONENT/ARQUIVO 'person.js',
+ 
+
+
+ E ISSO 
+
+ NÃO FARIA OVERWRITE DE ESTILOS 
+
+
+ ___EM OUTROS COMPONENTS/partes  ___ DE NOSSO PROJETO/APLICATIVO... (e isso 
+ 
+ MESMO EM CASOS EM QUE SEM QUERER nós 'SHARED THE SAME CSS CLASS/ID NAMES...') ------------>
+
+
+ 
+
+ ISSO, NA VERDADE, É POSSÍVEL,
+
+
+
+ E É POSSÍVEL JÁ 
+
+
+ NESSE SETUP QUE 
+
+ ESTAMOS USANDO AGORA... ---> vamos usar 
+
+ UMA FEATURE 
+
+ CHAMADA 
+
+ DE
+  
+
+
+
+
+  'CSS MODULES'...
+
+
+  -------------------------------
+
+
+  PARA que possamos os utilizar, 
+
+
+
+  devemos primeiramente 
+
+
+
+  NOS LIVRAR DE 
+
+
+  'radium', por meio do comment out do 
+
+
+  SEU CÓDIGO DE IMPORT...
+
+
+
+
+  Depois disso,
+   
+
+
+   o professor 
+
+
+   se livrará 
+
+
+   do INLINE STYLE DEFINIDO EM 
+
+   'person'...
+
+
+
+
+-------------------------------------------
+
+
+ELE TAMBÉM TIRA O 'WRAP' de person com aquele objeto 'Radium', pois ele não existe mais.
+
+
+-----------------------------------------------
+
+
+
+
+
+O PROFESSOR TAMBÉM 
+
+VAI ATÉ 
+
+
+O APP.JS 
+
+e remove todos os imports de radium,
+
+e o wrapper de 
+
+'<StyleRoot>' 
+
+aplicado ao código geral do nosso aplicativo......
+
+
+
+
+--> ele basicamente RETORNA NOSSO APP AO ESTADO QUE ESTAVA ___aNTES___ DESSE MÓDULO DE 'ESTILOS CSS...'
+
+
+----------------------
+
+
+
+
+
+
+AGORA, O PROFESSOR QUER 
+
+'HANDLE' DE TUDO, DE TODOS OS ESTILOS NOS ELEMENTOS,
+ POR MEIO 
+
+
+
+DE 'SCOPED CSS FILES' (pq NATIVAMENTE elas NÃO SÃO SCOPED)... -----> 
+
+
+
+E para conseguirmos 
+
+
+USAR SCOPED CSS FILES,
+
+
+
+nós precisamos 
+
+
+TWEAKAR A 'BUILD CONFIGURATION' DO 
+
+NOSSO PROJETO.... ----------------> ------>
+
+
+--------> PROFESSOR MENCIONOU, MAIS CEDO NO CURSO, 
+
+QUE NÓS 
+
+
+ESTAMOS 
+
+
+USANDO 
+
+
+AQUELE PACOTE/LIBRARY 
+
+
+'react-scripts'... -------> ISSO É UMA PACKAGE QUE 
+
+___eXPÕE ____ ESSE 
+
+
+
+'BUILD WORKFLOW' a nós, o build workflow do react... ---> E NÓS 
+
+
+ACTUALLY __NÃO PODEMOS MEXER NESSA CONFIGURAÇÃO (na verdade, nós podemos, 
+
+mas isso é algo mais recente... é uma feature introduzida NAS NOVAS 
+VERSÕES DO REACT. CASO VOCê QUEIRA SABER COMO HABILITAR 
+
+ESSES 'SCOPED CSS FILES' SEM MEXER NA BUILD WORKFLOW,
+
+VEJA AS ANOTAÇÕES NO ARQUIVO 
+
+'HABILITANDO MÓDULOS CSS'...) ---------> 
+
+
+NÓS 
+
+NÃO PODEMOS EDITAR ESSA CONFIG.... ------> na verdade, poderíamos 
+
+ENTRAR NO FOLDER DO 'NODE_MODULES' E ENTÃO PROCURAR 
+
+POR ESSA PACKAGE E A EDITAR LÁ, 
+
+mas nós 
+
+NUNCA DEVEMOS FAZER ISSO... ---> nunca devemos fazer isso PQ
+
+DEPOIS, SE NÓS ALGUMA HORA RODARMOS 'NPM INSTALL', NOSSAS 
+
+CHANGES SEMPRE SERÃO 'OVERWRITTEN' pelas configurações 
+introduzidas 
+
+pelo install mais recente ---->  THANKFULLY,
+
+
+HÁ UM COMANDO  
+
+
+
+_______ QUE NOS DÁ ACESSO À CONFIGURAÇÃO ____ DO REACT... ___ 
+
+
+É UM COMANDO BEM SIMPLES,
+ 
+
+QUE JÁ VEM DEFINIDO COMO DEFAULT, no nosso package.json... é 
+
+o script de 
+
+
+
+'eject'....
+
+
+podemos rodar 
+
+
+'npm run eject'  --> PARA 
+
+BASICAMENTE 
+
+
+____CONVERTER____ SEU PROJETO 'EVERYTHING IS MANAGED FOR ME' 
+
+
+EM UM PROJETO 'EVERYTHING IS MANAGED FOR ME, BUT I CAN EDIT THE CONFIGURATION'...
+
+
+
+------------------------
+
+
+
+
+
+
+OBS:::: UMA VEZ QUE VOCê FAZ ___EJECT___ EM UM 
+
+PROJETO REACT,
+
+
+não 
+
+HÁ COMO 'VOLTAR ATRÁS'... --------> MAS ISSO NÃO É UM PROBLEMA,
+
+POIS NOSSO CÓDIGO 
+
+
+AINDA VAI FUNCIONAR DA MESMA FORMA QUE ELE FUNCIONAVA ANTES...
+
+
+
+(E NÓS FAZEMOS EXATAMENTE ISSO: EXECUTAMOS 
+
+
+'NPM RUN EJECT' --> isso vai nos retornar 
+
+
+UMA MENSAGEM DE 
+
+
+'
+NOTE: Create React App 2+ supports TypeScript, Sass, 
+CSS Modules and more without ejecting:
+ https://reactjs.org/blog/2018/10/01/create-react-app-v2.html
+'
+)
+
+
+
+
+ Are you sure you want to eject? This action is permanent. » (y/N) 
+
+
+
+
+ YEs. ----->  NÓS ACABAMOS EJETANDO O NOSSO CÓDIGO.... ---->
+  
+
+  DEPOIS QUE EJETAMOS,
+   
+
+   NÓS NOS TORNAMOS CAPAZES DE __eDITAR___ A CONFIGURATION (folder 'config')...
+
+
+
+
+   --------------------------------------------------------
+
+
+
+
+AQUI, NÓS USAMOS 
+
+ESSA FEATURE 
+
+DO 'EJECT' PARA DESBLOQUEAR 
+
+
+___ A FEATURE DOS __ CSS MODULES___...
+
+
+
+
+NOTA: SE VOCÊ ESTIVER 
+
+
+USANDO 
+
+
+'GIT' 
+
+
+PARA 
+
+
+TRACKAR SUAS CHANGES,
+
+
+assegure-se QUE SEU CÓDIGO 
+
+
+ESTEJA TODO SALVO E COMMITADO 
+
+ANTES DE 
+
+RODAR 
+
+ O COMANDO 'EJECT', pq se você não fizer isso,
+
+
+ ESSE COMANDO 'EJECT' NÃO VAI FUNCIONAR....
+
+
+
+
+
+
+ ---------------------------------------------
+
+
+
+
+
+
+COM O 'EJECT', 
+
+AGORA VEMOS 
+
+UM MONTE DE NOVOS FOLDERS... --> 
+
+vemos um 
+
+folder de 
+
+'scrips' , com 'build.js', 'start.js' e 'test.js' ---> ou seja,
+
+UM SCRIPT PARA CADA COMANDO JÁ DEFINIDO LÁ NO ARQUIVO 
+
+
+'PACKAGE.JSON'...
+ 
+
+ --> 
+
+
+ NÓS 
+
+ TAMBÉM 
+
+ PERCEBEMOS 
+
+
+ QUE NOSSA 
+
+ LISTA DE 
+
+
+ 'DEPENDENCIES' 
+
+CRESCEU UM MONTE, LÁ NO PACKAGE.JSon... ----> isso aconteceu/acontece 
+
+
+PQ AGORA 
+
+
+NÓS VEMOS/ENXERGAMOS 
+
+___TODAS AS DEVELOPMENT DEPENDENCIES__ DO 'REACT'(de 'create-react-app')...
+
+
+(POR EXEMPLO, 'BABEL', que é responsável 
+
+POR CONVERTER CÓDIGO ES6 EM ES5)...
+
+
+
+--------------------------------------
+
+
+
+
+NÓS NÃO 
+
+VAMOS DIVAR MT DEEP NESSA CONFIGURATION AÍ.... ---> vamos deixá-la como está...
+
+
+
+
+
+
+
+
+
+--------> ENTRETANTO, 
+
+INTERESSANTE PARA NÓS, DENTRO DO FOLDER 'CONFIG', 
+
+
+SÃO OS ARQUIVOS 
+
+
+
+WEBPACK.CONFIG.JS 
+
+
+E 
+
+WEBPACK.config.prod.JS. (esse arquivo NÓS __NÃO TEMOS__...)
+
+
+
+
+
+
+WEBPACK ---> É A BUNDLING TOOL USADA PELO REACT;
+ 
+
+ ELA APLICA TODOS TIPOS DE TRANSFORMAÇÕES E OPTIMIZAÇÕES 
+
+
+ NOS NOSSOS ARQUIVOS,
+
+ E TAMBÉM OS BUNDLA EM APENAS 1 ARQUIVO... -----> também, como 
+
+ parte 
+
+
+ desse processo, 
+
+
+ ELE TAMBÉM 
+
+
+ CUIDA DOS NOSSOS ARQUIVOS '.css'... -------> basta lembrarmos 
+
+
+ AQUILO QUE O PROFESSOR NOS DISSE,
+
+
+
+ QUE 
+
+
+ o WEBPACK 
+
+
+ É QUE 
+
+
+ SE RESPONSABILIZAVA PELO 
+
+
+CÓDIGO 
+
+
+'import './App.css'  e afins, 
+
+
+LÁ NOS NOSSOS 
+
+
+ARQUIVOS .JS....
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+BEM, COMO O WEBPACK É O NEGÓCIO RESPONSÁVEL POR ESSES IMPORTS,
+
+
+É EVIDENTE QUE 
+
+
+É NELE (no seu 'webpack.config.js') QUE PODEMOS AJUSTAR 
+
+
+
+A MANEIRA PELA QUAL HANDLAMOS ARQUIVOS JAVASCRIPT, E É O LOCAL 
+
+EM QUE 
+
+PODEMOS 
+
+DESBLOQUEAR AQUELA FEATURE DOS MÓDULOS CSS...
+
+
+
+
+
+------------------------------
+
+
+
+PARA ISSO, 
+
+
+NO ARQUIVO 
+
+
+'WEBPACK.CONFIG.JS'/'webpack.config.dev.js',
+
+
+
+
+
+NÓS DEVEMOS 
+
+
+SCROLLAR 
+
+
+ATÉ 
+
+
+'module: {
+
+}'
+
+
+
+E ENTÃO 
+
+
+ATÉ 
+
+
+A PARTE 
+
+
+
+EM QUE 
+
+ENCONTRAMOS 
+
+
+
+
+UMA REGULAR EXPRESSION COM 
+
+
+UMA EXTENSÃO 
+
+
+'.css'...   ( ou seja, 
+
+no trecho 
+
+
+
+'{
+
+   test: /\.css$/,
+
+
+}')
+
+
+
+---------------------------
+
+
+É, MAS ESSA PARTE DO VÍDEO ESTÁ ___OBSOLETA___:
+
+
+
+
+
+In the video, I'll look for 
+an entry that starts like this (in the webpack.config.js file):
+
+{
+  test: /\.css$/,
+  ...
+}
+
+
+and I then edit this entry.
+
+This entry now looks slightly different.
+
+
+ You'll have to find the following part in your webpack.config.js file:
+
+{
+  test: cssRegex,
+  exclude: cssModuleRegex,
+  ...
+}
+
+
+
+and then edit that entry.
+
+Finally, it should look like this:
+
+{
+  test: cssRegex,
+  exclude: cssModuleRegex,
+  use: getStyleLoaders({
+      importLoaders: 1,
+      modules: true,
+      localIdentName: '[name]__[local]__[hash:base64:5]'
+  }),
+}
+
+
+You can ignore me editing the webpack.config.prod.js file 
+
+
+- with the latest version of create-react-app,
+
+ ejecting only gives you ONE webpack config file (which you edit as described above).
+
+
+
+---------------------------------------------
+
+
+
+
+PROFESSOR DEFINIU 'MODULES' COMO TRUE...
+
+
+
+--> 'css-loader' --> É UMA TOOL QUE SIMPLESMENTE 
+
+
+PARSEIA, EXTRAI, ARMAZENA E CONVERTE NOSSO CÓDIGO CSS... ------> 
+
+E TAMBÉM IMPORTA MÓDULOS CSS... (uma feature que 
+
+o professor logo nos mostrará)...
+
+
+
+
+
+
+
+Também 
+
+devemos 
+
+settar 
+
+"localIdentName: '[name]__[local]__[hash:base64:5]' "
+
+
+
+
+
+name --> será BASICAMENTE O NOME DA SUA CLASSE.
+
+
+'local' ----> ISSO VAI PERMITIR O CSS LOADER A ASSIGNAR ESSA CLASSE A UM COMPONENT (para que haja o SCOPING)..
+
+
+'[hash:base64:5]' ---> ISSO VAI BASICAMENTE DAR UM UNIQUE HASH a nossa classe, para que ela nunca ENTRE EM CONFLITO COM OUTRAS CLASSES HANDLADAS PELO 'css loader'...
+
+
+
+
+
+
+ESSA PROPRIEDADE/COISA PODE PARECER ESTRANHA/CRYPTIC, 
+
+mas ela é importante pq FAZ NOSSAS CLASSES E ESTILOS RECEBEREM 
+
+NOMES 'UNIQUE' POR CADA COMPONENT, o que faz com que 
+
+ELAS DEIXEM DE SE OVERWRITTAR E CAGAR NOSSO PROJETO...
+
+
+
+----------------------------------------
+
+
+
+
+COM ISSO, ESTAMOS PRONTOS.
+
+
+
+
+AGORA ESTAREMOS USANDO CSS MODULES 
+
+
+
+NO DEVELOPMENT WORKFLOW 
+
+
+E NO 
+
+PRODUCTION WORKFLOW... 
+
+
+
+
+
+
+---> CERTO.
+
+
+
+
+AGORA, 
+
+COM ESSAS ALTERAÇÕES,
+
+
+
+
+UMA COISA 
+
+
+
+__IMPORTANTE___ TERÁ 
+
+MUDADO 
+
+NO NOSSO CÓDIGO.... ---> com essa troca para 'css modules',
+ 
+
+ AGORA 
+
+ TODOS 
+
+ OS IMPORTS 
+
+
+ DE ARQUIVOS 
+
+
+ CSS NOS 
+
+
+ NOSSOS ARQUIVOS 
+
+ JAVASCRIPT 
+
+
+
+ ____SERÃO SCOPADOS___.....
+
+
+
+
+EX:
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css'; //////////ESSE ESTILO AGORA ESTARÁ 'SCOPADO' em 'App.js'...
+import Person from './Person/Person';
+
+
+
+
+
+
+--------------------------
+
+
+
+
+GRAÇAS A ESSE CÓDIGO, 
+
+
+
+AGORA PODEMOS 
+
+IMPORTAR 
+
+'.red' '.bold' e '.app' DIRETAMENTE 
+
+
+
+NO NOSSO ARQUIVO 
+
+'App.js'....
+
+
+
+-------------------------------
+
+
+Entretanto, antes de começar a usar 
+
+ESSES ESTILOS de forma MODULAR,
+ 
+ nós 
+
+
+ devemos 
+
+
+
+ REESTRUTURAR A SINTAXE DE IMPORTS desse 
+ Arquivo 
+
+ .css....
+
+
+( ou seja, o professor 
+
+vai escrever um objeto/const de 'classes', que ABRIGARÁ 
+
+OS ESTILOS IMPORTADOS DESSE ARQUIVO 
+
+'App.css'...)
+
+
+
+
+
+ ex:
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import classes from './App.css'; //////eis o código em questão.
+import Person from './Person/Person';
+
+---------------------------------------------
+
+
+
+esse 'classes' SERÁ UM OBJETO JAVASCRIPT  
+
+
+QUE CONTERÁ OS 
+
+ESTILOS 
+
+'.App', '.red' e '.bold' 
+
+
+COMO ___PROPRIEDADES___...
+
+
+
+
+ISSO TUDO ACONTECE POR MEIO DA MÁGICA DO 'CSS-LOADER', que 
+
+
+
+TRANSFORMA O CÓDIGO 
+
+CSS 
+
+
+NO NOSSO ARQUIVO .CSS 
+
+
+em UM OBJETO QUE PODE ENTÃO 
+
+SER USADO 
+
+
+NO NOSSO ARQUIVO JAVASCRIPT...
+----------------------------------
+
+
+
+Certo, 
+
+
+temos 
+
+essa propriedade 'classes'...
+
+
+
+PODEMOS, NESSE EXEMPLO,
+
+IR ATÉ 
+
+'<div className="App"> 
+
+
+
+e então 
+
+TROCAR 
+
+"App"
+ 
+
+ por 
+
+ '{classes.App}'..... (É UM EXEMPLO PERFEITO DE USO DE ESTILO CSS IMPORTADO POR CSS MODULAR)....
+
+
+
+ --------------------------------
+
+
+ EX:
+
+
+
+
+   <div className={classes.App}> ///////EIS O CÓDIGO EM QUESTÃO.
+    <h1>Hi, I'm a React App</h1>
+    <p className={classes.join(' ')}>This is really working!</p>
+    <button 
+    style={style}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    {persons}
+
+   
+
+  </div>
+
+
+  -------------------------------------------------
+
+
+
+
+  PODEMOS FAZER ISSO EM TODOS OS OUTROS LUGARES 
+
+  DE NOSSO CÓDIGO, substituir por essa sintaxe aí.
+
+
+
+  OU SEJA, 
+
+  AGORA DEIXAREMOS O MESMO ESTILO DE ANTES, 
+
+
+  MAS POR MEIO DO USO DE UMA TÉCNICA TOTALMENTE DIFERENTE, por trás 
+  das cenas....  
+
+
+
+  -----------------------------------------
+
+
+
+
+  O CSS-LOADER, é claro, 
+
+  NÃO FAZ NENHUMA MÁGICA AQUI.... -----> em vez disso,
+
+
+  o que está acontecendo
+
+   É 
+
+SIMPLES:
+
+
+O CSS-LOADER ESTÁ TRANSFORMANDO OS 
+
+NOMES DAS CLASSES QUE DEFINIMOS 
+
+NO 
+
+'App.css' 
+
+
+EM 
+
+'UNIQUE NAMES' de classes... --------> ele está fazendo isso com aquele PADRÃO DE name + 'localIdentName' que settamos no arquivo 'webpack.config'... --> ele essencialmente pega o name + localIdentName + random hash E OS FUNDE PARA ENTÃO CRIAR UM 'UNIQUE CSS CLASSNAME'.. ---> ele então armazena todos esses estilos com nomes unique DENTRO DESSE OBJETO 'classes/classes2' que você importou, como PROPRIEDADES... (e os nomes das propriedades SÃO __REALMENTE___ OS MESMOS NOMES DAS CLASSES QUE VOCÊ DEFINIU NO ARQUIVO .CSS )  
+
+
+
+É ASSIM QUE ESSE NEGÓCIO FUNCIONA, POR TRÁS DAS CENAS.
+
+---------------------------------
+
+
+
+
+Professor diz que é claro que nós 
+
+também 
+
+
+teremos 
+
+
+de ajustar 
+
+
+aquela variável 
+
+
+'classes' que nós temos lá embaixo em 'app', 
+
+aquele 
+
+código de 
+
+
+
+
+'''''''
+const classes = [];
+
+
+if(this.state.persons.length <= 2) {
+
+  classes.push('red');
+}
+
+
+
+
+if(this.state.persons.length <= 1) {
+  classes.push('bold'); //classes = ['red', 'bold'];
+}
+
+'''''''
+
+
+
+
+e também
+
+
+
+'p className={classes.join(' ' )}', 
+
+
+
+
+POIS 
+
+ESSE CÓDIGO AÍ NÃO VAI MAIS FUNCIONAR... (esse 'className' está usando aquele APPROACH ANTIGO DE USAR/DEFINIR CLASSNAMES DINAMICAMENTE... )
+
+
+
+
+
+
+
+
+--> essa sintaxe de '.join()' pode continuar ali,
+
+
+
+
+mas 
+
+
+os códigos 
+
+
+de 
+
+'classes.push('red')' 
+
+
+
+NÃO FUNCIONAM MAIS.... ---> não funcionam mais pq 
+
+
+AGORA 
+
+
+NÓS NÃO FAREMOS 
+
+PUSH 
+
+DE STRINGS 
+
+como 'red'  e 'bold', 
+
+
+
+E SIM 
+
+FAREMOS 
+
+PUSH 
+
+
+
+DE 
+
+
+'classes.push(classes2.red)' 
+
+
+
+e 
+
+
+
+'classes.push(classes2.bold)'....
+
+
+
+
+
+----------------------------------------
+
+
+
+LEMBRE-SE: SÓ PODEMOS USAR ESSES NEGÓCIOS, ESSAS FEATURES DO 'classes.xxx' (daquele objeto 'classes', que é SIMPLESMENTE UM OBJETO COM TODOS OS SELETORES/ESTILOS DEFINIDOS NO ARQUIVO 'App.css'),
+
+PQ NÓS DESBLOQUEAMOS A FEATURE DO CSS MODULES POR MEIO DO ___eJECT____ DO NOSSO PROJETO REACT... (e por meio das nossas futricagens no arquivo 'webpack.config.js'...)
+
+
+
+
+------------------------------------------------------------------------------
+
+
+
+
+
+
+Salvamos tudo e checamos se nosso app está funcionando.... -----> NÃO ESTÁ FUNCIONANDO. NÓS 
+
+NÃO ESTAMOS VENDO NOSSAS CLASSES SENDO APLICADAS. ----> A RAZÃO PARA ISSO É que.... ''NÓS NUNCA REINICIAMOS NOSSO SERVIDOR DE DESENVOLVIMENTO''', diz o professor...
+
+
+
+
+
+
+
+
+
+cERTO, 
+
+
+mas nós, POR OUTRO LADO, 
+
+RECEBEMOS 
+
+
+__UM OUTRO ERRO__, e a página NEM MESMO INICIOU.
+
+
+
+
+
+RECEBEMOS:
+
+
+./src/index.css (./node_modules/css-loader/dist/cjs.js??ref--5-oneOf-4-1!./node_modules/postcss-loader/src??postcss!./src/index.css)
+ValidationError: Invalid options object. 
+
+CSS Loader has been initialized using an options object that does not match the API schema.
+ - options has an unknown property 'localIdentName'. These properties are valid:
+   object { url?, import?, modules?, icss?, sourceMap?, importLoaders?, esModule? }
+
+
+
+
+---------------------------------
+
+
+OK, ISSO TUDO ESTÁ DANDO MUITO ERRADO....
+
+
+
+encontramos essa informação nos DOCS do react:
+
+
+This is an optional feature. Regular <link> 
+
+stylesheets and CSS files are fully supported.
+
+
+ CSS Modules are turned on for files ending with the
+ 
+  .module.css extension.
+
+(é por isso que vamos renomear 'App.css' para 'App.module.css'...)
+
+
+
+
+
+
+e nós realizamos essa troca, essa mudança 
+
+do
+
+
+nome do arquivo 
+
+
+'App.css' para 'App.module.css'.... ------> e isso vai funcionar, vai SCOPAR 
+
+NOSSOS ESTILOS 
+
+na div 
+
+'App'...
+
+
+-----------------
+
+
+
+CERTO,
+
+
+MAS AGORA TENHO 
+
+'RED' APLICADO 
+
+
+
+
+A TODOS MEUS PERSON COMPONENTS... ----> certo, agora consertei isso, 
+
+
+removi o 
+
+'const style' lá no PERSON COMPONENT...
+
+
+
+
+-------------------------------------
+
+
+MAS O IMPORTANTE NESSE NOSSO EXEMPLO É QUE 
+
+
+O ESTILO DE 'App.module.css' 
+
+ESTÁ SENDO APLICADO À NOSSA DIV QUE ENGLOBA TODO O APLICATIVO (a div que antes tinha um className de 'App'...)
+
+
+--> ALÉM DISSO, 
+
+
+AGORA VEMOS 
+
+
+UM ESTRANHO NOME 
+
+
+NA DIV 'App' QUANDO  A EXAMINAMOS:
+
+
+'''App_App__KOWMP''' ------> ISSO É BASICAMENTE UM UNIQUE NAME; basicamente 
+
+ainda temos o css rodando no browser, mas por meio desse UNIQUE NAME/unique names, SÓ 
+
+ESSA DIV TERÁ ESSA CLASSE ESPECÍFICA AÍ.... --------> E mesmo se 
+
+REUTIIZÁSSEMOS/EU REUTILIZAR 
+
+ESSA CLASSE EM OUTROS LUGARES DE MEU CÓDIGO, TODOS OS LUGARES EM QUE 
+
+EU USAR 
+
+ESSE CLASSNAME FICARÃO COM UM CLASSNAME DIFERENTE.... (por causa do SCOPING do css modules,
+
+
+E DO 'SCOPE' QUE NÓS FIZEMOS PARA CADA ELEMENTO (como 'import classes from 'App.module.css'...) )
+
+
+
+--------------------------
+
+
+
+ISSO SIGNIFICA QUE 
+
+NOSSOS CÓDIGOS DE ESTILO AGORA ESTÃO FUNCIONANDO...
+
+
+RESUMO: DEVEMOS USAR 'XXXX.MODULE.CSS' COMO NOMES DE ARQUIVOS 
+
+PARA USAR 
+
+A FEATURE DE 'STYLE SCOPING' ('style={style}') JUNTO DO FORMATO DOS ___IMPORTS __ DE 
+
+ARQUIVOS .CSS (o que evita ter APENAS 1 ÚNICO ARQUIVO CSS PARA TODO NOSSO PROJETO/PÁGINA).
+
+
+
+By the way, if you somehow also want to define a global (i.e. un-transformed) CSS class in such a .css  file, you can prefix the selector with :global .
+
+By the way, if you somehow also want to define a global (i.e. un-transformed) CSS class in such a .css  file, you can prefix the selector with :global .
+By the way, if you somehow also want to define a global (i.e. un-transformed) CSS class in such a .css  file, you can prefix the selector with :global .
+By the way, if you somehow also want to define a global (i.e. un-transformed) CSS class in such a .css  file, you can prefix the selector with :global .
+By the way, if you somehow also want to define a global (i.e. un-transformed) CSS class in such a .css  file, you can prefix the selector with :global .
+
+
+Example:
+
+:global .Post { ... } 
+
+Now you can use className="Post"  anywhere in your app and receive that styling.
+
+
+-------------------------------------
+
+
+
+
+
+ 
+ PARA TERMINAR ESSE PEDAÇO DO CURSO, 
+
+ DEVEMOS 
+
+ FAZER 
+
+
+
+ MEDIA QUERIES E HOVER (um pseudoseletor) FUNCIONAREM 
+
+
+ COM CSS MODULES...
+
+
+
+
+ ---------------------------------------
+
+
+ By the way, if you somehow also want to define a global (i.e. un-transformed) CSS class in such a .css  file, you can prefix the selector with :global .
+ By the way, if you somehow also want to define a global (i.e. un-transformed) CSS class in such a .css  file, you can prefix the selector with :global .
+ By the way, if you somehow also want to define a global (i.e. un-transformed) CSS class in such a .css  file, you can prefix the selector with :global .
+ By the way, if you somehow also want to define a global (i.e. un-transformed) CSS class in such a .css  file, you can prefix the selector with :global .
+
+
+
+
+ Example:
+
+:global .Post { ... } 
+
+Now you can use className="Post"  anywhere in your app and receive that styling.
+

@@ -1,0 +1,287 @@
+
+
+
+
+APRENDEMOS MUITO SOBRE A TEORIA DO REACT....
+
+
+
+
+
+
+
+
+---> VIMOS COMO COMPONENTS FUNCIONAM, COMO PODEMOS PASSAR 
+
+
+PROPS, fazer manage do state, etc... --> tudo isso é nice,
+
+
+
+
+MAS COMO 
+
+
+
+VOCÊ 
+
+FAZ O PLANNING DE 
+
+UMA 
+
+REACT APPLICATION? ---> como esse procedimento é feito?
+
+
+
+
+
+
+
+
+
+-------> PROFESSOR DIZ QUE PODERÍAMOS DIVIDIR EM ETAPAS MENORES, subdividir essas etapas,
+
+MAS QUE ___UM APLICATIVO REACT ___ É SEMPRE CONSTRUÍDO 
+
+POR 
+
+
+
+MEIO DE 
+
+3 GRANDES ETAPAS...
+
+
+
+
+
+3 ETAPAS IMPORTANTES.
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+1) COMPONENT TREE/Component STRUCTURE 
+
+
+
+
+2) APPLICATION STATE (data) 
+
+
+
+3) COMPONENTS VS CONTAINERS
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+a PRIMEIRA ETAPA 
+
+é fazer o 
+
+PLANNING 
+
+DA 
+
+
+'COMPONENT TREE'... a estrutura dos components... ---> você PROVAVELMENTE VAI RECEBER 
+
+
+UM DESIGN DO SEU DESIGNER... , ou então você cria um DESIGN DE APP por conta própria...
+
+
+
+
+---> E DEPOIS DISSO, 
+
+
+CABE A VOCÊ SPLITTAR O CONCEITO EM VÁRIOS REACT COMPONENTS... ---------> E É BEM COMUM 
+
+
+
+que 
+
+___o RESULTADO FINAL ___ DO SEU APLICATIVO ___ seja __bEM DIFERENTE ___ DA SUA COMPONENT 
+
+TREE ESBOÇADA INICIALMENTE... ------>  MAS AINDA ASSIM,
+
+
+
+
+É MUITO IMPORTANTE 
+
+
+ENTENDER 
+
+'QUAIS COISAS VÃO NOS SEUS PRÓPRIOS COMPONENTS, e etc'...
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+A SEGUNDA ETAPA  
+
+É 
+
+
+O 'APPLICATION STATE (data)'  ------------> EM OUTRAS PALAVRAS,
+
+
+
+SÃO OS __DADOS___ QUE PLANEJAMOS USAR E MANIPULAR NA NOSSA APPLICATION.... ---> por exemplo,
+
+
+
+
+NO NOSSO APLICATIVO HAMBURGUER,
+
+PRECISAREMOS 'keep track of' dOS __INGREDIENTES__ QUE O USUÁRIO ADICIONU/ADICIONA... -----> PQ ISSO AÍ 
+VAI DETERMINAR 
+
+___QUAIS COISAS ___ VAMOS PRECISAR RENDERIZAR __, e também VAI DETERMINAR ___ O VALOR ___ QUE O USUÁRIO TERÁ DE PAGAR,
+
+NO FINAL.... 
+
+
+
+
+FEITO ESSE ENTENDIMENTO DO 'COMPONENT STRUCTURE' DO SEU APLICATIVO E O 
+
+
+'state' QUE VOCÊ VAI USAR DENTRO DELE,
+
+
+
+
+VOCÊ PODE PASSAR 
+
+
+À TERCEIRA ETAPA,
+
+
+que é 
+
+
+
+a 
+
+
+do 
+
+
+
+
+'COMPONENTS VS CONTAINERS' ---> nessa etapa,
+
+
+VOCÊ DETERMINARÁ __QUAIS COMPONENTS___ DEVERÃO 
+
+
+SER ____ 'DUMB COMPONENTS', 
+
+
+E QUAIS SERÃO 'SMART COMPONENTS'/CONTAINERS... ---------> STATEFUL VS STATELESS...
+
+
+
+
+
+--> STATEFUL ---> TANTO COMPONENTS CLASS-BASED QUANTO FUNCTIONAL COMPONENTS USANDO REACTHOOks... (hook 'useState'...)
+                         (que usam a propriedade 'STATE')
+
+
+
+-----------------------------
+
+
+
+ESSAS SÃO AS STEPS
+ 
+
+ QUE O PROFESSOR SEMPRE SEGUE... ---> e essas 
+
+
+ são as steps que 
+
+
+ o professor quer que nós sigamos... -----> VAMOS 
+
+ COMEÇAR PELO 
+
+
+ PLANNING DA COMPONENT TREE/STRUCTURE... ---> depois  __diSSO_ ___ VAMOS 
+
+
+
+DAR UMA OLHADA EM QUE __sTATE__ VAMOS PRECISAR __ NO NOSSO APLICATIVO.... -----> 
+
+
+
+
+POR FIM,
+
+
+
+VAMOS DECIDIR QUAIS COISAS DEVERÃO SER 
+
+
+COMPONENTS e quais deverão ser CONTAINERS (Stateful)... --------> delineados 
+
+esses steps, 
+
+vamos começar 
+
+
+a escrever nossa application.... --------->  DURANTE 
+
+
+
+O DESENVOLVIMENTO, PODEMOS 
+
+ACABAR COM MAIS COMPONENTS 
+
+DO QUE 
+
+AQUELES QUE PLANEJAMOS INICIALMENTE... --> isso acontece quando nos damos conta QUE 
+
+
+PODEMOS SPLITTAR NOSSO CÓDIGO AINDA MAIS..., ou talvez quando 
+
+NOS DAMOS CONTA 
+
+
+QUE 
+
+UM SPLIT QUE 
+
+PLANEJÁVAMOS NÃO
+ 
+ FAZ SENTIDO QUANDO COLOCADO EM PRÁTICA... ---> tudo isso é normal, 
+
+
+
+
+ mas é evidente que 
+
+
+ TER UM 
+
+ PLANO É IMPORTANTE....

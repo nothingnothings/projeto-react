@@ -1,0 +1,2300 @@
+ 
+
+
+
+
+
+
+
+
+
+
+
+ --> PROFESSOR EXPLICA QUE 
+
+ ESSE 
+
+ 'CHECKOUT' VAI SER UM CONTAINER PQ ___ELE SERÁ UMA 'ACTUAL PAGE' __ no nosso 
+ aplicativo, no nosso 
+
+
+ '''SPA''' (single page application)... -----> e essa page/container 
+
+
+
+ VAI __FAZER ____ __MANAGE___ DE SEU PRÓPRIO 'STATE'... -----> 
+
+
+
+
+ E esse component/container/página TAMBÉM VAI FAZER O 'PASS-DOWN'
+
+ de seu state 
+
+
+ A 
+ OUTROS COMPONENTS...
+
+
+--------------------------------
+
+
+
+
+PROFESSOR CRIA UM NOVO FOLDER EM 'containers', 
+
+
+e o chama de 
+
+'checkout'.... ----> dentro desse negócio, 
+
+
+SUPONHO QUE ELE 
+
+
+VÁ 
+
+QUERER CRIAR 
+
+
+UM 
+
+CLASS-BASED COMPONENT...
+
+
+
+
+
+EX:
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+
+class Checkout extends Component {
+
+
+
+        state = {
+        
+    }
+
+    render() {
+        return(
+
+        );
+    }
+}
+
+
+----------------------------------------------
+
+
+
+
+
+
+ELE EXPLICA QUE UM FUNCTIONAL COMPONENT COM 
+
+reacthooks (hook de 'useState') funcionaria,
+
+mas 
+
+que 
+
+ele vai se 
+
+ater 
+
+ao 
+
+approach tradicional (class-based), aqui...
+
+
+
+
+
+--------------------------> 
+
+
+
+
+
+
+Certo... ----> DEVEMO ADICIONAR ESSA classe... a exportamos, também.
+
+
+
+
+
+
+
+
+----> AGORA DEVEMOS PLANEJAR COMO 
+
+
+ESSE COMPONENT 
+
+'CHECKOUT' 
+
+deve 
+
+se 
+parecer, e como deve se COMPORTAR... ---------->
+
+
+
+
+
+
+VOU QUERER TER, DENTRO DELE, UM 
+
+___PEQUENO SUMMARY__ DO CHECKOUT (
+
+    ou seja,
+
+    PROVAVELMENTE 
+
+
+    AS COISAS/ INGREDIENTS QUE 
+
+    O USUÁRIO 
+
+
+    VAI QUERER COMPRAR, 
+
+
+    E O PREÇO...
+)
+
+
+
+
+---> por fim, vamos querer um botão PARA __ APROVAR ('continue', ou algo assim),
+
+
+E 
+OUTRO PARA __CANCELAR___ o processo de checkout, que retorna o usuário ao burgerBuilder...
+
+
+
+
+
+
+
+
+-------> E, de novo, para o summary,
+
+
+SERIA 
+
+
+BOM FAZER ALGO DIFERENTE,
+ 
+ NÃO FAZER 
+
+ ALGO COMO O SIMPLES 
+
+ SHOW 
+
+
+ DE UMA 
+
+ LIST dos ingredients,
+
+
+
+ e sim 
+
+
+ fazer 
+
+
+ algo como 
+
+
+ o 
+
+ 'SHOW'/representação 
+
+
+ DO __BURGER EM SI___... (burger construído pelo usuário)... -----> OU SEJA,
+
+
+ VAMOS 
+
+ RECONSTRUIR O BURGER AQUI.... (burger construído anteriormente...)
+
+
+
+
+
+
+
+--> certo, esse é o nosso objetivo, então...
+
+
+
+
+
+
+
+
+---> E QUANDO O BOTÃO 
+
+'aprovar/continuar'
+
+
+
+FOR PRESSIONADO, SÓ AÍ VOU QUERER 
+
+
+
+MOSTRAR 
+
+
+
+AO USUÁRIO 
+
+O 
+
+
+'Form de contato'... ---> ok, então, ETAPA POR ETAPA... 
+
+
+
+
+
+
+
+
+
+
+
+
+
+PRIMEIRAMENTE,
+
+
+
+QUEREMOS CRIAR UM 'FORM' DE 
+
+
+'CHECKOUT SUMMARY'... ---> ESSA FORM __VAI __  MOSTRAR UM PREVIEW DO BURGER,
+
+
+E AÍ __ UNS BOTÕES DE AVANÇAR/CANCELAR....
+
+
+
+
+
+
+
+
+--------------> 
+
+PARA ISSO, 
+
+
+O PROFESSOR VAI ATÉ 
+
+O FOLDER DE 'Components' E 
+
+
+VAI 
+
+ADICIONAR UM __NOVO FOLDEr_ NO SEU INTERIOR... -------> 
+
+
+
+
+E 
+
+
+esse folder será chamado 
+
+
+de 
+
+'Order',
+
+
+E NELE 
+
+SERÃO COLOCADOS TODOS 
+
+
+OS 
+
+'Order related components',
+
+
+
+COMO 
+
+'CheckoutSummary....'.... --------> 
+
+
+dentro 
+
+
+
+desse 
+
+
+
+
+folder de 
+
+'CheckoutSummary',
+
+o professor 
+
+criará 
+
+um arquivo js e um arquivo css,
+
+de mesmos nomes....
+
+
+
+
+
+------------------------------
+
+
+
+PRIMEIRAMENTE VAMOS CONSTRUIR O ARQUIVO DE 
+
+'CheckoutSummary'....
+
+
+
+
+
+
+
+
+--> ele será um PRESENTATIONAL COMPONENT... (functional component, sem state)....
+
+
+
+
+
+ex:
+
+
+
+
+const CheckoutSummary = (props) => {
+
+}
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+professor explica que 
+
+nesse component nós PROVAVELMENTE VAMOS RECEBER UNS __PROPS___ para 
+
+
+RENDERIZAR O BURGER (que já existe no nosso código...)
+
+
+
+
+
+
+
+
+
+
+
+--> como nós vamos RENDERIZAR O BURGER,
+
+eu já vou lá e 
+
+FAÇO IMPORT DELE 
+
+nesse 
+
+component 
+
+
+'CheckoutSummary'.... (e talvez o renderizo dentro de uma <div>....?)
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+
+
+
+const checkoutSummary = (props) => {
+
+  return <div></div>
+        }
+
+
+
+export default checkoutSummary;
+
+
+
+
+
+
+
+----------------------
+
+
+LEMBRE-SE:
+
+
+
+
+QUEREMOS 
+
+
+1) UMA PREVIEW DE NOSSO BURGER 
+
+
+
+
+
+2) botões de cancelar/avançar....
+
+
+
+
+
+
+(TIPO ALGO ASSIM:)
+
+
+
+
+ex:
+
+
+
+
+
+import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+
+
+
+const checkoutSummary = (props) => {
+
+  return 
+  (
+  <Aux>
+  <div><Burger /></div>
+  <button>Continue</div>
+  <button>Cancel</div>
+    </Aux>
+
+  )
+        
+        
+        
+        }
+
+
+
+export default checkoutSummary;
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+CERTO, MAS HÁ ALGO QUE O PROFESSOR FEZ DE FORMA DIFERENTE, AQUI... ----> em vez de usar 
+
+
+'Aux',
+
+ele usou o APPROACH DA 'wrapping div'... (dá na mesma, mas o benefício da WRAPPING div é que ele PODE A UTILIZAR PARA __ESTILIZAR MELHOR OS CHILD COMPONENTS DE 'checkoutSummary'....)
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+
+
+
+const checkoutSummary = (props) => {
+
+  return 
+  (
+  <div>
+  <div><Burger /></div>
+  <button>Continue</div>
+  <button>Cancel</div>
+    </div>
+
+  )
+        
+        
+        
+        }
+
+
+
+export default checkoutSummary;
+
+
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+MAS ELE TAMBÉM ESCREVE ALGO QUE NÓS NÃO HAVÍAMOS ESCRITO... ----> ele 
+
+ESCREVE 
+uma 
+
+
+TAG <H1>... -------> nessa tag, teremos um flavor text de 
+
+
+'We hope it tastes well!'
+
+
+
+
+
+ex:
+
+
+
+
+
+import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+
+
+
+const checkoutSummary = (props) => {
+
+  return 
+  (
+  <div>
+  <h1>We hope it tastes well!</h1>
+  <div><Burger /></div>
+  <button>Continue</div>
+  <button>Cancel</div>
+    </div>
+
+  )
+        
+        
+        
+        }
+
+
+
+export default checkoutSummary;
+
+-------------------------------
+
+
+
+
+DEPOIS DISSO,
+
+
+PROFESSOR 
+
+DIZ QUE 
+
+VAMOS PRECISAR DE UMA DIV PARA __sEGURAR__ O COMPONENT 
+
+
+'<Burger />' (e nós já temos essa __DIV__) --> e ele 
+
+explica que 
+
+
+essa div wrappadora do Burger é necessária, necessária pq É ELA QUE 
+
+VAI DEFINIR 
+
+AS 
+
+'BOUNDARIES' 
+
+
+do component 
+
+'Burger'.... -------> o professor então vai em frente e REUTILIZA O CÓDIGO/COMPONENT 
+
+
+'Burger' QUE JÁ TINHAMOS NO NOSSO CÓDIGO...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+import checkoutSummaryStyle from './CheckoutSummary.module.css';
+
+
+
+
+const checkoutSummary = (props) => {
+
+  return 
+  (
+  <div>
+  <h1>We hope it tastes well!</h1>
+  <div><Burger /></div>
+  <button>Continue</div>
+  <button>Cancel</div>
+    </div>
+
+  )
+        
+        
+        
+        }
+
+
+
+export default checkoutSummary;
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+CERTO,
+
+
+ISSO FEITO,
+
+PROFESSOR AFIRMA QUE 
+
+VAI QUERER 
+
+
+DEFINIR 
+
+UM 
+
+
+'INLINE STYLE'  ('style={}')...
+
+PARA 
+
+
+ESSA 'DIV WRAPPADORA DO COMPONENT '''BURGER''''' '...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+import checkoutSummaryStyle from './CheckoutSummary.module.css';
+
+
+
+
+const checkoutSummary = (props) => {
+
+  return 
+  (
+  <div>
+  <h1>We hope it tastes well!</h1>
+  <div style={}><Burger /></div> ///////////EIS O CÓDIGO EM QUESTÃO.
+  <button>Continue</div>
+  <button>Cancel</div>
+    </div>
+
+  )
+        
+        
+        
+        }
+
+
+
+export default checkoutSummary;
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+ELE USA ESSE INLINE STYLE apenas para algo pequeno, apenas 
+
+
+para 
+
+definir 
+
+
+a width de nosso burger como 
+
+IGUAL 
+
+
+A 
+
+
+'300px'... também uma height de '300px', e uma margin de 'auto'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+import checkoutSummaryStyle from './CheckoutSummary.module.css';
+
+
+
+
+const checkoutSummary = (props) => {
+
+  return 
+  (
+  <div>
+  <h1>We hope it tastes well!</h1>
+  <div style={{
+      width: '300px',
+      height: '300px',
+      margin: 'auto'
+  }}><Burger /></div> ///////////EIS O CÓDIGO EM QUESTÃO.
+  <button>Continue</div>
+  <button>Cancel</div>
+    </div>
+
+  )
+        
+        
+        
+        }
+
+
+
+export default checkoutSummary;
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+DENTRO DESSE BURGER, PROFESSOR ESCLARECE QUE __ELE TAMBÉM PRECISA __ PASSAR 
+
+O PROP 
+
+
+DE 
+
+'ingredients'...  ---> E, PARA ISSO, É CLARO, SERÁ _iMPORTANTE__ SABER 
+
+
+A ___MANEIRA PELA QUAL___ O PROFESSOR VAI RECEBER ESSES INGREDIENTS... -------> 
+
+
+E, POR ENQUANTO, 
+
+NÃO TEMOS 
+
+MANEIRA 
+
+
+ALGUMA 
+
+DE 
+
+RECEBER ESSE 
+
+PROP 'de ingredients'( o seu valor)...
+
+
+
+ficará (o código incompleto)   (incompleto, com um valor PROVISÓRIO DE 'props.ingredients'...)
+
+
+ASSIM:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+import checkoutSummaryStyle from './CheckoutSummary.module.css';
+
+
+
+
+const checkoutSummary = (props) => {
+
+  return 
+  (
+  <div>
+  <h1>We hope it tastes well!</h1>
+  <div style={{
+      width: '300px',
+      height: '300px',
+      margin: 'auto'
+  }}><Burger ingredients={props.ingredients} /></div> ///////////EIS O CÓDIGO EM QUESTÃO.
+  <button>Continue</div>
+  <button>Cancel</div>
+    </div>
+
+  )
+        
+        
+        
+        }
+
+
+
+export default checkoutSummary;
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+Esse 'props.ingredients'
+
+
+
+SERÁ RECEBIDO DE ALGUMA FORMA PELO 
+'CheckOUtSummary'... --> vamos passar esse prop de 'ingredients' por meio de 
+
+
+OUTRO COMPONENT, O COMPONENT QUE ABRIGARÁ 'checkoutSummary'.... (provavelmente 'Checkout', lá nos CONTAINERS...)
+
+
+
+
+
+
+
+
+
+--> CERTO. E AÍ, LÁ EMBAIXO,
+
+
+nA DIV QUE SEGRARÁ OS 'BUTTON',
+
+
+professor explica que vai querer mostrar nossos 'Button'....
+
+
+--> para isso, professor explica que 
+
+ELE VAI QUERER IMPORTAR OS PRÓPRIOS BOTÕES (button) que ele construiu (construiu nas 
+
+aulas passadas...) ----> esses buttons estarão 
+
+
+no folder 
+
+
+'UI',
+
+lá em 'components'...
+
+
+
+
+
+
+ex (CÓDIGO ATÉ AGORA):
+
+
+
+
+import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+import Button from '../../UI/Button/Button';
+
+
+const checkoutSummary = (props) => {
+
+  return (<div>
+
+        <h1>We hope it tastes well!</h1>
+          <div style={{width: '300px',
+                        height: '300px',
+                        margin: 'auto' }}>
+        <Burger ingredients={props.ingredients}/>
+        </div>
+        <Button></Button> ///////EIS O CÓDIGO EM QUESTÃO.
+        <Button></Button>
+
+  </div> )
+        }
+
+
+
+
+export default checkoutSummary;
+
+
+
+
+------------------------------------
+
+
+
+
+
+E ESSES BUTTONS, como já sabemos, SUPORTAM 2 DIFERENTES 'STYLES'... ---> é a 
+
+
+classe 
+
+de 
+
+
+'Success' e 
+
+
+a 
+
+classe 
+
+de 
+
+'Danger'.... -----> e o TIPO de cor/style desses buttons 
+
+é 
+
+settado, essas classes aí são settadas,
+
+
+POR MEIO 
+
+
+DO 
+
+
+PROP 
+
+
+
+de nome 
+
+'btnType'...
+
+
+
+(conforme visto no código de 'Button', que É:
+
+
+
+
+
+const button = (props) => {
+    
+
+    return (
+        <button className={[Button.Button, Button[props.btnType]].join(' ')}
+        onClick={props.clicked}
+        >
+            
+            
+            {props.children}
+            </button>
+    )
+}
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+ou seja,
+
+podemos escrever algo assim:
+
+
+
+
+
+
+   <Button btnType="Danger">CANCEL</Button> 
+        <Button btnType="Success">CHECKOUT</Button>
+
+
+-----------------------------------------------
+
+
+
+
+E ISSO AÍ VAI FUNCIONAR...
+
+
+
+
+
+Ex(CÓDIGO COMPLETO):
+
+
+
+
+
+import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+import Button from '../../UI/Button/Button';
+
+
+const checkoutSummary = (props) => {
+
+  return (<div>
+
+        <h1>We hope it tastes well!</h1>
+          <div style={{width: '300px',
+                        height: '300px',
+                        margin: 'auto' }}>
+        <Burger ingredients={props.ingredients}/>
+        </div>
+        <Button btnType="Danger">CANCEL</Button>
+        <Button btnType="Success">CONTINUE</Button>
+
+  </div> )
+        }
+
+
+export default checkoutSummary;
+
+-----------------------------------------
+
+
+
+
+Certo...
+
+
+
+
+
+
+-------> e nós também sabemos 
+
+
+QUE 
+
+OS BUTTONS 
+
+
+'EXPOSE' 
+
+
+A PROPRIEDADE/prop 
+
+
+de 
+
+
+
+
+'clicked', que é uma PROPRIEDADE/HANDLER QUE __SIMPLESMENTE INDICA __ QUE 
+
+
+CLICAMOS 
+
+NESSES BUTTON.... (pq lá no código de 'Button' temos o código 'onClick={props.clicked}'...)
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+import Button from '../../UI/Button/Button';
+
+
+const checkoutSummary = (props) => {
+
+  return (<div>
+
+        <h1>We hope it tastes well!</h1>
+          <div style={{width: '300px',
+                        height: '300px',
+                        margin: 'auto' }}>
+        <Burger ingredients={props.ingredients}/>
+        </div>
+        <Button btnType="Danger"   clicked={}>CANCEL</Button>
+        <Button btnType="Success" clicked={}>CONTINUE</Button>
+
+  </div> )
+        }
+
+
+export default checkoutSummary;
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+CERTO... E É POR ISSO QUE 
+
+
+VAMOS 
+
+
+QUERER 
+
+
+
+2 MÉTODOS
+ 
+
+
+ DENTRO 
+
+ DE 
+
+ 'checkoutSummary', esse component aí:
+
+
+
+ vamos querer 
+
+
+ 1 
+
+ método 
+
+
+ PARA ___CANCELAR/NEGAR __ O PROSSEGUIMENTO DO CHECKOUT,
+  
+
+  e outro 
+
+
+  PARA 
+
+
+  AVANÇAR/CONTINUAR com o tal procedimento.... -----> e esses métodos 
+
+  serão, cada um deles,
+
+  vinculado ao 'clicked' desses button...
+
+
+
+
+NÓS VAMOS ADICIONAR ISSO AÍ __DEPOIS___...
+
+
+  ------------------------------------
+
+
+
+ANTES DISSO, PROFESSOR QUER ACABAR O __sTYLING___ DESSE COMPONENT 
+
+'checkoutSummary'....
+
+
+
+
+
+
+
+
+---> terminamos o código jsx de 'checkoutSummary'.... -------->
+
+
+
+
+AGORA DEVEMOS ESTILIZAR ESSE COMPONENT... ----> professor 
+
+
+vai lá 
+
+
+E 
+
+
+define uma 
+
+
+className 
+
+À 
+
+DIV 
+
+QUE 
+
+
+
+WRAPPA O CÓDIGO JSX DE NOSSO COMPONENT 'checkoutSummary'...
+
+
+
+
+
+
+ex:
+
+
+
+import checkoutSummaryStyle from './CheckoutSummary.module.css';
+
+
+
+const checkoutSummary = (props) => {
+
+  return (<div className={checkoutSummaryStyle.CheckoutSummary}>
+
+        <h1>We hope it tastes well!</h1>
+          <div style={{width: '300px',
+                        height: '300px',
+                        margin: 'auto' }}>
+        <Burger ingredients={props.ingredients}/>
+        </div>
+        <Button btnType="Danger">CANCEL</Button>
+        <Button btnType="Success">CONTINUE</Button>
+
+  </div> )
+        }
+
+  
+
+  --------------------------------
+
+
+
+
+
+  PROFESSOR DENOTA QUE VAMOS USAR CSS MODULES, AQUI, PARA SCOPAR NOSSOS ESTILOS...
+
+
+
+
+
+
+
+
+  o estilo ficará:
+
+
+
+
+  .CheckoutSummary {
+    text-align: center;
+    width: 80%; 
+    margin: auto;
+  }
+
+
+
+
+  ------------------------------
+
+
+
+
+
+
+  ELE TAMBÉM ADICIONARÁ UMA MEDIA QUERY,
+
+
+  que REDUZIRÁ A WIDTH DESSE COMPONENT, quando estivermos COM UMA TELA MAIOR...
+
+
+
+
+
+  '
+
+
+  @media(min-width: 600px) {
+      .CheckoutSummary {
+        width: 500px;
+      }
+  }
+
+
+
+  ---------------------------
+
+
+  CÓDIGO COMPLETO:
+
+
+
+
+
+
+
+  import React from 'react';
+
+import Burger from '../../Burger/Burger';
+
+import Button from '../../UI/Button/Button';
+
+
+import checkoutSummaryStyle from './CheckoutSummary.module.css';
+
+
+
+
+const checkoutSummary = (props) => {
+
+  return (<div className={checkoutSummaryStyle.CheckoutSummary}>
+
+        <h1>We hope it tastes well!</h1>
+          <div style={{width: '300px',
+                        height: '300px',
+                        margin: 'auto' }}>
+        <Burger ingredients={props.ingredients}/>
+        </div>
+        <Button btnType="Danger">CANCEL</Button>
+        <Button btnType="Success">CONTINUE</Button>
+
+  </div> )
+        }
+
+
+
+
+
+
+
+
+
+export default checkoutSummary;
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------
+
+
+
+
+------> CRIADO ESSE 'DUMB COMPONENT' 
+
+
+de 
+
+'checkoutSummary',
+
+
+
+O PROFESSOR DIZ QUE 
+
+
+VAMOS QUERER IMPORTÁ-LO 
+
+
+LÁ NAQUELE CONTAINER 
+
+de 
+
+'Checkout'...
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+
+
+class Checkout extends Component {
+
+    state = {
+
+    }
+
+
+
+    render() {
+        return(
+            <div>
+            <CheckoutSummary ingredients={} />
+            </div>
+        );
+    }
+}
+
+
+
+export default Checkout;
+
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+
+Professor explica que 
+
+o 
+
+
+component 
+
+
+'<CheckoutSummary >' 
+
+
+ESTÁ ___wRAPPADO__ EM UMA DIV __ PQ ESSA DIV __ VAI SER USADA ___ COMO UMA 'EXTRA PAGE' pelo 
+
+
+REACT ROUTER... (Vai ser considerada como UMA PÁGINA EXTRA...)
+
+
+
+
+
+
+
+
+
+
+--> o checkoutSummary espera um 'ingredients' prop, 
+
+por isso 
+
+vamos 
+
+escrever 
+
+'ingredients={}'........... OK, MAS 
+
+QUAL DEVERÁ 
+
+SER O VALOR 
+
+DESSE NEGÓCIO?  DE onde vou conseguir os 'ingredients'? ----> professor diz que, por enquanto, 
+
+
+ele vai 
+
+
+só 
+
+passar 
+
+um 
+
+objeto ingredients 'DUMMY'...  ----> mas isso será algo que substituiremos no futuro...
+----------------------------------
+
+
+
+O MAIS IMPORTANTE, AGORA, É 
+
+
+A ADIÇÃO DE 
+
+
+UM 
+
+
+__STATE____ 
+
+
+ao 
+
+
+component 
+
+'Checkout'...
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+
+
+class Checkout extends Component {
+
+    state = {
+
+    }
+
+
+
+    render() {
+        return(
+            <div>
+            <CheckoutSummary ingredients={} />
+            </div>
+        );
+    }
+}
+
+
+
+export default Checkout;
+
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+CERTO, E DENTRO DESSE STATE O PROFESSOR VAI COLOCAR UMA PROPRIEDADE 
+
+
+
+de 
+
+'ingredients'... -------> 
+
+
+
+e o 'ingredients' provisório (dummy) vai ser um objeto assim:
+
+
+
+
+
+
+ingredients: {
+  salad: 1,
+  meat: 1,
+  cheese: 1,
+  bacon:1  
+}
+
+
+
+
+
+------> E AÍ ELE VAI REPASSAR ESSE 
+
+'DUMMY' ingredients 
+
+ao 
+
+
+prop 'ingredients'....
+
+
+
+
+
+EX:
+
+
+
+import React, { Component } from 'react';
+
+
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
+
+
+class Checkout extends Component {
+
+    state = {
+        
+ingredients: {
+  salad: 1,
+  meat: 1,
+  cheese: 1,
+  bacon:1  
+}
+
+    }
+
+
+
+    render() {
+        return(
+            <div>
+            <CheckoutSummary ingredients={this.state.ingredients} />
+            </div>
+        );
+    }
+}
+
+
+
+export default Checkout;
+
+
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+
+-------> O PROFESSOR JÁ NOS EXPLICA QUE ______o ROUTING ____ TERÁ DE SER UTILIZADO (react-router)
+
+
+
+PARA _______rEALMENTE___ PASSAR OS 'INGREDIENTS' 
+
+A 
+
+ESSE COMPONENT 
+'checkoutSummary',
+
+MAIS 
+
+
+TARDE.... (talvez por meio de 'params...?') ------> por meio disso, aqui, acho:
+
+
+
+
+
+
+
+
+' '''''''''''''''''''''''''
+
+ainda bem QUE 
+
+
+
+
+______EXISTE UMA MANEIRA DE CONSEGUIR ESSE 
+
+'id', esse 'post.id' lá 
+
+
+do código de 
+
+
+render 
+
+de 
+
+
+'Post',
+ 
+
+ lá em 
+
+
+ 'Posts'.... (
+
+     e se conseguimos FAZER __gET/ACESSAR __ esse 'post.id' 
+
+
+     em 
+
+     'Blog.js',
+
+
+     NÓS CONSEGUIMOS __EFETIVAMENTE__ 
+
+     RENDERIZAR 
+
+     'FullPost' 
+
+     LÁ....
+ ) 
+
+
+
+
+
+
+
+
+
+
+ ---> ok, mas como podemos fazer isso, como podemos passar esse 'post.id'
+  
+
+
+  AO COMPONENT 'Blog'?  ---------> PARA FAZER ISSO ,
+
+
+
+  DEVEMOS PASSAR O ID (post.id) ___COMO PARTE __ DE NOSSA 
+
+
+  _____URL________ ------> FAZEMOS ISSO PARA __QUE LÁ 
+
+
+  NO COMPONENT 'FULLPOST', quando nós o CARREGARMOS, NÓS 
+
+
+  SEJAMOS 
+
+
+  _______CAPAZES__ DE __PEGAR (fazer 'GET') DESSE 
+
+
+  PARÂMETRO/PAREMETER  E ENTÃO ___cARREGAR __ O POST 
+
+
+  APROPRIADO, DE ACORDO 
+
+
+  COM ESSE PARAMETER RECEBIDO...
+
+
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''
+
+
+
+
+
+
+
+
+
+
+OK, MAS CONTINUANDO.... ----> agora temos nosso 
+
+container 
+
+'checkout'... ----->  vamos querer utilizá-lo em algum lugar... -----> 
+
+
+
+O PROFESSOR DIZ QUE, PRIMEIRAMENTE (por enquanto) 
+
+
+ELE VAI 
+
+
+
+HARDCODAR 
+
+ESSE 
+
+'Checkout'
+
+
+NAQUELE 
+
+
+ARQUIVO 
+
+
+'App.js'... -------> ELE VAI COLOCÁ-LO LOGO EMBAIXO DAQUELE COMPONENT 
+
+'BurgerBuilder'...
+
+
+
+tipo assim:
+
+
+
+import React, { Component } from 'react';
+
+
+import BurgerBuilder from '../src/containers/BurgerBuilder/BurgerBuilder';
+
+
+
+import Layout from '../src/hoc/Layout/Layout';
+
+
+import Checkout from './containers/Checkout/Checkout'
+
+
+class App extends Component {
+
+
+  render() {
+
+
+
+   
+
+
+    return(
+        <div>
+       <Layout >
+         <BurgerBuilder />
+         <Checkout />
+       </Layout>
+       </div>
+    )
+  }
+
+}
+
+export default App;
+
+
+----------------------------
+
+
+
+
+
+
+
+
+
+LEMBRANDO QUE O PROFESSOR SÓ QUER IMPORTAR ESSE NEGÓCIO E O UTILIZAR 
+
+
+HARDCODADO EM 
+
+'App.js'
+
+APENAS PARA QUE VEJAMOS SUA APARÊNCIA/para que 
+
+
+
+entendamos um pouco o que será esse component... ----> salvamos tudo, e rodamos npm start...
+
+
+
+
+
+
+
+
+
+
+-------------> O resultado que será visto por nós __É UM SEGUNDO BURGER__...
+
+
+
+
+
+
+
+
+--> ENTRETANTO, O QUE PODEMOS VER AQUI é que 
+
+
+-->
+
+
+1) ESSA DIV COM O BURGER__ NÃO ESTÁ ACTUALLY 'CENTERED'.. (está desalinhada...). -------> 
+
+
+ESSE STYLING DEVE SER __CONSERTADo__... -----> para isso, o professor 
+
+volta ao 
+
+
+
+'checkoutSummary',
+
+o lugar em que UTILIZAMOS O BURGER...
+
+
+
+
+
+
+
+
+código de 'checkoutSummary':
+
+
+
+const checkoutSummary = (props) => {
+
+  return (<div className={checkoutSummaryStyle.CheckoutSummary}>
+
+        <h1>We hope it tastes well!</h1>
+          <div style={{width: '300px',
+                        height: '300px',
+                        margin: 'auto' }}>
+        <Burger ingredients={props.ingredients}/>
+        </div>
+        <Button btnType="Danger">CANCEL</Button>
+        <Button btnType="Success">CONTINUE</Button>
+
+  </div> )
+        }
+
+
+
+-------------------------------
+
+
+
+PROVAVELMENTE O PROFESSOR 
+
+VAI ALTERAR O CÓDIGO DE ESTILO DAQUELA DIV COM O BURGER... ('Burger'...) 
+
+
+
+
+--> ok, mas como ele fará isso? -----> ELE ALTERARÁ 
+
+A 
+
+
+
+WIDTH em 'div style={{}}'.... -----> agora 
+
+
+está 
+
+como 
+
+'300px'; o professor vai alterar esse valor para 100%.... (isso fará com que ele ocupe 
+
+100% da largura DO SURROUNDING COMPONENT... (que é o nosso próprio component 'Order Summary')) --------> 
+
+
+ISSO VAI FAZER COM QUE 
+
+
+ESSE BURGER FIQUE BEM MAIS BONITO, tanto em aparelhos pequenos, como celulares, como em pcs....
+
+
+
+
+
+ex:
+
+
+const checkoutSummary = (props) => {
+
+  return (<div className={checkoutSummaryStyle.CheckoutSummary}>
+
+        <h1>We hope it tastes well!</h1>
+          <div style={{width: '100%',
+                        height: '300px',
+                        margin: 'auto' }}>
+        <Burger ingredients={props.ingredients}/>
+        </div>
+        <Button btnType="Danger">CANCEL</Button>
+        <Button btnType="Success">CONTINUE</Button>
+
+  </div> )
+        }
+
+
+  
+
+--------------------------
+
+
+
+
+
+2) nos MOBILE DEVICES,
+
+a height desse burger pode ser ajustada.... ele está um pouco ALTO DEMAIS... -----> 
+
+
+para conseguir 
+
+reduzir a height, vamos simplesmente REMOVER O 
+
+HEIGHT DE '300px'...
+
+
+
+ex:
+
+
+
+
+const checkoutSummary = (props) => {
+
+  return (<div className={checkoutSummaryStyle.CheckoutSummary}>
+
+        <h1>We hope it tastes well!</h1>
+          <div style={{width: '100%',
+                        margin: 'auto' }}>
+        <Burger ingredients={props.ingredients}/>
+        </div>
+        <Button btnType="Danger">CANCEL</Button>
+        <Button btnType="Success">CONTINUE</Button>
+
+  </div> )
+        }
+
+
+  ----------------
+
+
+
+  CERTO.... AGORA 
+
+
+  ESSE 
+
+
+  'CheckoutSummary'
+
+  VAI ESTAR FUNCIONANDO TANTO EM MOBILE DEVICES COMO EM DESKTOPS....
+
+
+-------------------------
+
+
+
+É CLARO, AINDA HÁ UM ESPAÇÃO ALI EMBAIXO do burger, um espação QUE PODE SER REMOVIDO POR MEIO DE CSS...
+
+
+
+--> entretanto, professor diz que 
+
+VAMOS PRECISAR DE MAIS ESPAÇO, PARA BURGERS MAIORES, por isso é bom esse espação...
+
+
+
+
+
+
+-----------------------> MAS A 'MAIN THING' que o professor 
+
+quer fazer,
+ 
+
+ agora, 
+
+
+ É QUE 
+
+
+ ESSE ___cOMPONENT___ ('checkoutSummary' ) NÃO 
+
+ SEJA 
+
+
+ SEMPRE MOSTRADO,
+
+
+ e sim seja 
+
+ APENAS 
+
+ MOSTRADO 
+
+ QUANDO O USUÁRIO CLICAR EM 
+
+ 'continue'
+
+ depois de clicar em 
+
+'order now-> continue' ---------> QUANDO ISSO ACONTECER, O PROFESSOR/NÓS 
+
+
+
+VAMOS 
+
+CARREGAR 
+
+
+O ___ 'CHECKOUT SUMMARY' 
+
+
+EM VEZ DO ___BURGER BUILDER___ (ou seja, vamos ter que USAR ROUTING...)
+
+
+
+
+
+
+
+--> professor diz que podemos tentar implementar esse routing por conta própria, tentar fazer as coisas sozinhos....

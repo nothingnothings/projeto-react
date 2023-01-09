@@ -1,0 +1,1165 @@
+
+
+
+
+
+
+
+
+
+NA ÚLTIMA lição,
+
+
+
+NÓS 
+
+
+
+adicionamos 
+
+
+código que fazia 
+
+
+O _______pASS_________ DE ROUTE PARAMETERS _______
+
+(
+
+    como 
+
+    isto:
+
+
+    <Link  
+                
+            to={'/' + post.id} ///isso é bem importante. É o que faz o FLOW de nosso 'dynamic routing parameter', de '/:postId', lá em 'Blog.js', funcionar.
+            key={post.id} >
+            <Post 
+                    {...this.props}
+                    // key={post.id} 
+                    title={post.title} 
+                    author={post.author}
+                    clicked={() => this.postSelectedHandler(post.id)}/>
+                    </Link>);
+            });
+
+
+
+
+
+            e 
+
+
+
+
+            ISTO:
+
+
+            <Route path="/:postId" exact component={FullPost} />
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> E O PROFESSOR NOS EXPLICOU, DE FATO, 
+
+que 
+
+
+nós 
+
+
+fazemos isso, esse 'PASS DE ROUTE PARAMETERS', por meio 
+
+
+do 
+
+
+
+___WRAP___ de seu component/elemento com 
+
+
+o 
+
+objeto 
+
+
+'Link'/'NavLink',
+
+
+
+como 
+
+fizemos 
+
+
+
+
+com o component 'Post'... -------> ex:
+
+
+
+<Link to={'/' + post.id} key={post.id}>
+    <Post 
+        ... 
+        clicked={() => this.postSelectedHandler(post.id)}
+        />
+</Link>
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+
+certo... nesse código acima,
+
+o que 
+
+fizemos foi usar 
+
+'
+to'
+
+
+
+e então passamos o valor de 'post.id' 
+
+como 
+
+PATH/URL de 
+
+
+nossa página,
+
+
+
+pois 
+
+
+isso foi SETTADO
+
+lá 
+
+
+naquele Route 
+
+
+
+de 
+
+código 
+
+
+'<Route path="/:postId" exact component={FullPost} />'
+
+
+
+
+-----> o segredo nessa route, o segredo para o PASS DE um PARÂMETRO __EMINENTEMENTE___ DINÂMICO__, como esse 'post.id' passado por nosso component 'Link' (que foi wrappado no component 'Post'), 
+
+É JUSTAMENTE 
+
+aquele '/:postId'... -----> é o ':', que marca um ____PARÂMETRO ___ DINÂMICO PARA A ROUTE... ----> e é isso 
+
+
+QUE 
+
+
+NOS PERMITIU/PERMITE SETTAR __ UM 'PATH DINÂMICO'___ nesse local, nessa 'Route'...
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+ENTRETANTO, 
+
+
+AGORA 
+
+
+NÓS DEPARAMOS COM UM PROBLEMA..... ----> o problema é que NÓS ____tAMBÉM_ __ PRECISAMOS 
+
+
+___RETRIEVAR___ ESSE PARÂMETRO DINÂMICO (esse 'post.id' enfiado no path/url, esse post.id que pode ser 1,3, 5, 2, 4... qualquer número...) ------->
+
+
+
+
+o grande problema, aqui, 
+
+é 
+
+que 
+
+
+aquele código de 'FullPost',
+
+
+aquele 
+
+
+
+
+'componentDidUpdate()',
+
+
+
+de código:
+
+
+
+
+
+
+
+    componentDidUpdate () {
+        if ( this.props.id ) {
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) ) {
+                axios.get( '/posts/' + this.props.id )
+                    .then( response => {
+                        // console.log(response);
+                        this.setState( { loadedPost: response.data } );
+                    } );
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+__NÃO FUNCIONA MAIS__... ------> não funciona mais 
+
+
+pq 
+
+
+
+
+O
+
+
+'this.props.id' 
+
+
+NÃO ESTÁ MAIS SETTADO... 
+
+
+
+
+
+
+
+
+
+
+------> o professor fala algo maluco, do nada... ---> ele diz 
+
+
+
+
+que 
+
+
+devemos 
+
+
+examinar o CONSOLE.LOG 
+
+
+
+POSICIONADO LÁ 
+
+
+EM 
+
+'Posts', no component 'posts'... -----> se examinarmos o console, vamos ver aquele 
+
+
+
+
+objeto 'props' do 
+
+component 
+
+
+'Posts'.... -----> pq o console.log foi de 'console.log(this.props)', lá no 
+
+
+
+component 'Posts'...
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+
+
+
+Dentro desse objeto PROPS, que foi __INTERFERIDO__/MANIPULADO 
+
+
+pelo 
+
+
+'react-router-dom', 
+
+
+
+
+Vemos aquelas 
+
+
+
+4 propriedades familiares:
+
+
+
+
+'history', 
+
+
+'location',
+
+
+
+'match' 
+
+
+
+e 
+
+
+'staticContext'...   
+
+
+
+
+
+
+
+
+
+
+
+
+---> O PROFESSOR VAI ENTÃO ___eXPANDIR__ O OBJETO/PROPRIEDADE 
+
+
+
+'match'... ---------->
+
+
+
+
+dentro desse 
+
+'match', observamos 
+
+OUTRAS PROPRIEDADES,
+
+
+como 
+
+
+
+'isExact',
+
+
+'params',
+
+'path' 
+
+
+
+e 
+
+'url'....
+
+
+
+
+
+
+
+
+
+
+
+---> O PROFESSOR FOCA NA PROPRIEDADE 
+
+de 
+
+
+'params'... 
+
+
+
+
+
+
+
+esse params está 
+
+
+assim:
+
+
+
+
+'params: {}'... (OBJETO VAZIO)...  ------------> 
+
+
+
+
+
+
+
+
+
+
+
+
+DEPOIS DISSO, DEPOIS DE APONTAR ESSA PROPRIEDADE 
+
+'params' 
+
+com um valor de 
+
+OBJECT VAZIO,
+
+
+
+
+o professor 
+
+vai 
+
+
+
+até 
+
+
+o 
+
+
+component/container
+
+'FullPost'
+
+
+
+
+
+E ________ FAZ_______ O CONSOLE.LOG 
+
+
+
+de 
+
+'this.props', dentro do 
+
+
+
+método 
+
+
+'componentDidUpdate()' 
+
+
+desse 'FullPost':
+
+
+
+
+
+
+ex:
+
+
+
+    componentDidUpdate () {
+        console.log(this.props);
+        if ( this.props.id ) {
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) ) {
+                axios.get( '/posts/' + this.props.id )
+                    .then( response => {
+                        // console.log(response);
+                        this.setState( { loadedPost: response.data } );
+                    } );
+            }
+        }
+    }
+
+
+
+------------------------------------------------------------------------
+
+
+
+
+
+MAS ELE TAMBÉM FAZ OUTRO AJUSTE,
+
+
+
+ele 
+
+converte
+ 
+
+ 'componentDidUpdate', lá do 'FullPost',
+
+
+ em 
+
+
+ 'componentDidMount'... -----------> a explicação 
+
+ é:
+
+
+
+
+
+
+
+ ''''nós AGORA NÃO ESTAMOS UPDATANDO ESSE COMPONENT 'FULLPOST'... O QUE ESTAMOS FAZENDO, AGORA,
+É __aDICIONANDO/REMOVENDO___ ESSE COMPONENT   DO NOSSO DOM__, E É POR ISSO QUE 
+VAMOS ESCREVER 
+'componentDidMount' EM VEZ DE ''''COMPONENTDIDUPDATE'''...'''''
+
+
+
+
+
+
+-----> se fizermos 
+
+
+essa 
+
+
+
+mudança,
+
+
+
+VAMOS 
+
+OBSERVAR 
+
+
+QUE....
+
+
+
+
+
+dentro daquele objeto 'props' 
+
+
+
+de 'FullPost' (e não de 'Posts'),
+
+
+DENTRO 
+
+DA PROPRIEDADE 
+
+'MATCH',
+
+
+
+
+SERÁ POSSÍVEL VER 
+
+
+
+UM 
+
+
+
+'params' 
+
+
+
+que estará 
+
+
+
+
+'params: {postId: 3}'... -------------> 
+
+
+
+
+
+OU SEJA,
+
+
+
+DENTRO 
+
+
+DESSA PROPRIEDADE AÍ,
+
+
+
+
+dentro 
+
+
+
+de 
+
+
+'props.match',
+
+
+
+NESSA PROPRIEDADE 
+
+'params',
+
+
+
+TEREMOS 
+
+
+
+UM 
+
+
+
+
+'PARAM' de 
+
+
+
+'postId',
+
+
+que 
+
+
+É 
+
+AQUELE 
+
+
+
+'PARAMETER DINAMICO'
+
+
+que foi 
+
+settado _________________LÁÁÁÁÁÁÁÁÁAÁ ____ _EM 
+
+
+
+'<Route path="/:id" exact component={FullPost} />'...   (Rota que foi apresentada/definida LÁ NO COMPONENT 'Blog.js'...)
+
+
+
+
+
+
+
+
+
+
+
+
+---> E É ________eVIDENTE________ QUE 
+
+
+
+
+a existência desse 'param' 
+
+
+
+NOS TORNA ___CAPAZES __ DE EXTRAIR __ ESSE 'PARAMETER DINÂMICO' definido naquela route... -------->
+
+
+
+
+
+
+
+LEMBRE-SE:
+
+
+
+
+NÓS QUERÍAMOS 
+
+USAR 
+
+
+ESSE 
+
+PARÂMETRO 
+
+
+DINÂMICO do nosso 'route' 
+
+
+LÁ 
+
+
+
+no 
+
+
+'componentDidMount' 
+
+
+de 
+
+'FullPost'...
+
+
+
+
+
+ex(código de agora):
+
+
+
+
+
+    componentDidMount () {
+        console.log(this.props);
+        if ( this.props.id ) { ////////essa é a parte que precisa ___SER ALTERADA______...
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) ) {
+                axios.get( '/posts/' + this.props.id )
+                    .then( response => {
+                        // console.log(response);
+                        this.setState( { loadedPost: response.data } );
+                    } );
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+acho que vai ficar:
+
+
+
+
+
+    componentDidMount () {
+        
+        if ( this.props.match.params.postId ) {  ///tipo isso, será?
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) ) {
+                axios.get( '/posts/' + this.props.match.params.postId) ///tipo isso, será?
+                    .then( response => {
+                        // console.log(response);
+                        this.setState( { loadedPost: response.data } );
+                    } );
+            }
+        }
+    }
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> certo (obs: deve-se alterar também 
+
+
+o código do 'axios', aquele axios.get, que antes estava fazendo um http request 
+
+
+com 
+
+um valor de 
+
+
+'/posts/' + 'this.props.id', ALGO QUE NÃO VAI MAIS FUNCIONAR, PRECISARÁ 
+
+SER 
+
+
+
+'/posts/' + this.props.match.params.postId .... )
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+SALVAMOS TUDO, E AGORA AS COISAS FUNCIONAM... ------> agora nossa página 
+
+CARREGA com 
+
+
+sucesso 
+
+
+os 'post' 
+
+
+em que clicamos, 
+
+
+
+ou seja,
+
+ele faz render 
+
+
+do component '
+
+
+FullPost', 
+
+
+que 
+
+pega os 
+
+props 
+
+
+de nosso 'Route' com PARÂMETRO DINÂMICO...
+
+
+
+
+
+
+
+
+
+ISSO SIGNIFICA QUE __aGORA TEMOS UM APP___ em que 
+
+
+
+___TEMOS UM ELEMENTO/COMPONENT DINÂMICO ('FullPOst'), 
+
+PQ 
+
+
+NÓS ESTAMOS 'SUCCESSFULLY' 
+
+
+__PASSANDO ROUTE PARAMETERS (route parameters DINÂMICOS)___ E ENTÃO OS EXTRAINDO EM OUTRO COMPONENT...
+
+
+
+
+
+
+
+
+
+
+
+
+-------> CERTO, MAS AINDA HÁ ALGUMAS COISAS QUE 
+
+
+NÃO ESTÃO FUNCIONANDO COMO QUEREMOS... ---------> ex:
+
+
+
+
+se 
+
+clicamos 
+
+
+
+em 
+
+'New Post' quando 
+
+
+
+JÁ 
+
+TEMOS O 
+
+
+'FULLPOST'
+
+
+carregado na nossa página,
+
+
+
+
+
+NOSSA PÁGINA ACABA RENDERIZANDO O 
+
+
+component 
+
+
+'NewPost' (que adiciona um NOVO POST) 
+
+
+EM CIMA 
+
+
+__ DO NOSSO COMPONENT 'FULLPOST'... (e não queremos isso; não, o que queremos 
+
+
+é 
+
+que 
+
+
+NOSSO APLICATIVO 'SWITCHE' para 
+
+
+a página/container 
+
+
+'NewPost'....) ------> 
+
+
+
+(ALÉM DISSO, NOSSO BOTÃO 
+
+'remove' no 'FullPost' NÃO FUNCIONA.)
+
+
+
+
+
+
+
+
+
+
+vocÊ sabe a razão 
+
+
+de nossa página estar se comportando desse jeito?
+
+
+
+
+
+
+
+DEVEMOS VER ESSA QUESTÃO NA PRÓXIMA AULA.
+
+
+
+
+
+
+
+(CONSEGUIIIII, CONSEGUIII CARALHO... ---> agora 
+
+o elemento 
+
+'FullPost' 
+
+É __REMOVIDO___ A PARTIR 
+
+DE UM CLIQUE EM 
+
+'delete'...
+
+
+o código ficou (uso de if statements):
+
+
+
+
+
+
+
+
+class FullPost extends Component {
+    state = {
+        loadedPost: null,
+        deleteVisualPost: false
+    }
+
+    componentDidMount () {
+        console.log(this.props);
+        if ( this.props.match.params.postId ) {  ////eis aqui a alteração pertinente; aqui passamos/extraímos o PARÂMETRO DINÂMICO QUE FOI DEFINIDO E REPASSADO POR AQUELA 'ROUTE' DEFINIDA LÁ EM 'Blog.js'...
+            if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) ) {
+                axios.get( '/posts/' + this.props.match.params.postId ) ////////ISTO AQUI TAMBÉM DEVE/TEVE DE SER ALTERADO, POIS É O CÓDIGO DE GET DO AXIOS....  nós simplesmente trocamos 'this.props.id' POR AQUELE __ PARAMETER DINÂMICO__ OBTIDO __ POR NOSSO ROUTER....
+                    .then( response => {
+                        // console.log(response);
+                        this.setState( { loadedPost: response.data } );
+                    } );
+            }
+        }
+    }
+
+
+
+
+
+
+
+    deletePostHandler = () => {
+        axios.delete('/posts/' + this.props.match.params.postId);
+
+            this.setState(
+                {
+                    deleteVisualPost: true
+                }
+            )
+            console.log(this.state);
+    }
+
+    render () {
+
+    
+
+
+
+
+        let post = <p style={{ textAlign: 'center' }}>Please select a Post!</p>;
+
+
+
+        if ( this.props.id ) {
+            post = <p style={{ textAlign: 'center' }}>Loading...!</p>;
+        }
+        if ( this.state.loadedPost ) {
+            post = (
+                <div className="FullPost">
+                    <h1>{this.state.loadedPost.title}</h1>
+                    <p>{this.state.loadedPost.body}</p>
+                    <div className="Edit">
+                        <button onClick={this.deletePostHandler} className="Delete">Delete</button>
+                    </div>
+                </div>
+
+            );
+
+        }
+        
+        if(this.state.deleteVisualPost) {
+            post = null;
+
+            console.log(this.state);
+        }
+
+
+        return post;
+    }
+}
+
+
+)
+
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+OK.... AGORA SÓ PRECISO RESOLVER O PROBLEMA 
+
+
+DO 
+
+
+'NewPost'
+
+
+
+sendo renderizado 
+
+JUNTO DO 
+
+
+NOSSO 
+
+
+POST ('FullPost') 
+
+QUE É RENDERIZADO NA PÁGINA...
+
+
+
+
+
+(eu acho que o problema está no nosso 'Route', mas não tenho certeza...)

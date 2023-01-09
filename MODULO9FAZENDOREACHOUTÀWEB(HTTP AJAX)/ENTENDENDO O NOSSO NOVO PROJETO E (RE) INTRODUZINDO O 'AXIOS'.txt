@@ -1,0 +1,754 @@
+
+
+
+
+
+
+
+
+
+
+
+-----> ANEXADA A ESSA LIÇÃO,
+
+
+veremos 
+
+o 
+
+STARTING PROJECT deste módulo.... ---> 
+
+
+
+vamos ter que 
+
+
+iniciá-lo por meio 
+
+
+
+de 
+
+
+'react-create-app' 
+
+
+
+
+NO TERMINAL....
+
+
+
+
+
+
+
+DEPOIS DISSO,
+
+
+EXECUTAMO-NO 
+
+
+POR 
+
+meiO 
+
+
+
+
+DE
+
+
+
+'npm start'...
+
+
+
+
+
+
+
+------> O PROFESSOR NÃO O EDITOU PARA USAR MÓDULOS CSS,
+
+
+
+EM VEZ DISSO ELE SÓ IMPORTOU UNS ESTILOS CSS PORCOS 
+
+PARA QUE 
+
+ELES AFETASSEM 
+
+
+
+O PROJETO GLOBALMENTE... (mas isso não é problema).... ---------> 
+
+
+
+
+
+--> ADEMAIS, 
+
+
+PROFESSOR 
+
+
+CODOU 1 ÚNICO CONTAINER 
+
+
+
+E ALGUNS COMPONENTZINHOS..
+
+
+
+
+
+
+----> O COMPONENT 'Fullpost', RESPONSÁVEL pelo render do component/parte
+
+de 
+
+
+'Title' 
+
+e 
+'Content'..... -----> ele deixou esses components (e não containers) COMO 
+
+
+CLASS-BASED COMPONENTS PQ ELE VAI 
+
+ADICIONAR/FAZER USO DOS LIFECYCLE HOOKS NELeS...
+
+
+
+--------------------------------------
+
+
+
+
+--> CERTO, CONSEGUI ESCREVER A PÁGINA DO PROFESSOR, NA SUA FORMA MAIS BÁSICA.
+
+
+
+CONTUDO: problemas de estilo 
+
+
+
+no component 'Post'.... ------> CERTO, CONSERTEI. 
+
+
+
+
+
+
+--------------------------
+
+
+
+--> você poderia, teoricamente, converter 
+
+
+os class-based components em FUNCTIONAL COMPONENTS 
+
+E ENTÃO 
+
+USAR reacthooks neles,
+ 
+ como 
+
+ 'useEffect' 'useState'... -------> mas como no nosso curso 
+
+
+ VAMOS 
+
+
+ FOCAR, PRIMEIRAMENTE,
+  
+
+  NA PARTE 
+
+  DOS 
+
+
+  LIFECYCLE HOOKS PADRÃO (class-based),
+
+
+  vamos 
+
+
+  primeiro trabalhar com coisas como 
+
+  'shouldComponentUpdate' 
+
+
+  e 
+
+  'ComponentDidMount'/'ComponentDidUpdate'...
+
+
+
+
+  --------------------------------------
+
+
+
+
+  AINDA ASSIM, O PROFESSOR SÓ TEM 1
+   
+   COMPONENT 
+
+
+   QUE 
+
+   VAI 
+
+   'DISTRIBUTE DOWN' (distribuir para baixo) 
+
+
+   PROPS/properties PARA OUTROS COMPONENTS... -------> 
+
+
+
+
+   o component que fará 
+
+   isso 
+
+
+   é 
+
+
+
+   a 
+
+
+   'ROOT PAGE', o component 
+
+   'BLOG',
+
+
+   que é o 
+
+
+   negócio que 
+
+   FAZ 
+
+
+   RENDER DE ALGUNS POSTS NO TOPO 
+
+   (
+
+       '<Post />
+       <Post />
+       <Post />
+       '
+   )
+
+
+
+.... DEPOIS DE RENDERIZAR 
+
+ESSES NEGÓCIOS NO TOPO,
+
+
+ELE 
+
+RENDERIZA UM 
+
+
+''FULLPOST'', um component 
+
+'FULLPOST',
+
+que conterá 
+
+OS __dETALHES___ DO POST EM QUE 
+
+ACABAMOS DE CLICAR,
+
+
+
+('<FullPost />')...
+
+
+
+
+
+POR FIM, 
+
+
+TEMOS UMA 
+
+
+ÁREA
+
+
+
+'NewPost', em que 
+
+
+será criado um NEW POST... (só que ele ainda não cria um 
+
+novo post 
+
+nessa nossa página (lá em cima), pois 
+
+isso não foi implementado no momento... )
+
+
+
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+PROFESSOR DIZ QUE 
+
+
+ELE DEIXOU 
+
+
+UMAS 
+
+'DUMMY DATA' 
+
+ALI EM CIMA 
+
+
+('Title 
+
+Author') 3 vezes... 
+
+
+
+
+PQ 
+
+
+ELE VAI QUERER 
+
+
+CARREGAR 
+
+
+DATA (esses posts aí) 
+
+
+
+DE UM ____SERVIDOR___... ('from a server')....
+
+
+
+
+---------------------------------------
+
+
+
+PARA FAZER O RETRIEVE/FETCH DESSES DADOS 
+
+
+
+DO SERVIDOR,
+
+
+NÓS NÃO VAMOS 
+
+
+USAR 
+
+UM SERVIDOR 
+
+DE VERDADE 
+(apesar de que no próximo módulo NÓS VAMOS FAZER ISSO COM UM SERVER DE VERDADE)... ----> (faremos isso quando adicionarmos funcionalidade HTTP no nosso projeto )
+
+
+
+----------------------------------------
+
+
+
+
+PARA SIMULAR 
+
+
+UM SERVIDOR DE VERDADE,
+
+
+
+VAMOS USAR 
+
+
+
+'jsonplaceholdertypicode.com'... ----------> 
+
+
+
+
+
+
+É A MESMA COISA QUE USAMOS 
+
+
+DA ÚLTIMA VEZ, NO OUTRO CURSO...
+
+
+
+
+
+
+Esse negócio é simplesmente 
+
+
+uma 
+
+'Fake ONline REST API' , é um 
+
+
+BACKEND 
+
+REST API ___fake___... usado 
+
+
+para 
+
+
+TESTES E PROTOTYPING...
+
+
+
+
+
+
+
+
+
+
+---> você pode usá-lo para 
+
+
+ENVIAR REQUESTS para fazer fetch de uma 'dummy data',
+
+
+OU PARA 
+
+
+
+___SIMULAR___ O STORAGE 
+
+
+DE DUMMY 
+
+
+DATA NESSE FAKE SERVER (dados não serão realmente armazenados, ele só SIMULA isso.)
+
+
+
+
+
+--------> ELE FAKA O ENVIO DE DADOS,
+
+mas isso é bom.... ele 
+
+
+faka o envio de HTTP REQUESTS...
+
+
+
+
+
+
+
+
+
+---> nós vamos FAKAR um 
+
+send de http request 
+
+
+para 
+
+
+a URL 
+
+
+
+de 
+
+'jsonplaceholder.typicode.com/posts'... (como já fizemos uma vez).
+
+
+
+
+--> SE FIZERMOS ISSO, ESSE SEND,
+
+PODEMOS 
+
+
+CODAR UMA RESPONSE __ NESSE SERVIDOR__ DE 
+
+UM ARRAY... (aquele 
+
+
+array  de OBJETOS JAVASCRIPT,
+
+
+
+de dummy posts, que já vimos uma vez...)
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+
+---> E ISSO É EXATAMENTE O QUE O PROFESSOR QUER FAZER, AQUI... ---> ele vai usar 
+
+
+o axios, é claro.
+
+-------------------------------------------
+
+
+
+COMEÇAREMOS 
+
+
+
+COM ISSO NA PRÓXIMA LIÇÃO.. --------> PROBLEMA!!!! --------> 
+
+
+
+
+PRECISAMOS 
+
+
+
+TER UM JEITO 
+
+
+DE 
+
+MANDAR 
+
+
+ESSES 
+
+''''AJAX REQUESTS''''
+
+
+
+
+
+
+
+
+
+
+
+
+--> PARA FAZER O SEND DE 'AJAX REQUESTS',
+
+
+vocÊ 
+
+tem 
+
+basicamente 
+
+
+
+2 OPÇÕES:
+
+
+
+
+
+
+
+
+
+
+1)  O OBJETO 'XMLHttpRequest' ---> ISSO JÁ FOI VISTO POR NÓS. É 
+
+PROVIDENCIADO PELO PRÓPRIO JAVASCRIPT, 
+
+e é chatinho de settar. -------> COM ELE, PODEMOS CONSTRUIR 
+
+
+NOSSOS PRÓPRIOS AJAX REQUESTS, 
+
+e então os ENVIAR A UMA URL ESPECÍFICA E ENTÃO 
+
+
+FAZER 'HANDLE' DA RESPONSE (a partir do request)... --------> NÃO 
+
+
+HÁ NADA 
+
+DE ERRADO COM ISSO... ----------------> E COMO 
+
+
+O 
+
+
+'REACT' É 'ALL ABOUT' 
+
+
+FAZER USO DO JAVASCRIPT POR TODAS AS PARTES DE SEU CÓDIGO, 
+
+VOCÊ PODE 
+
+ENFIAR 
+
+E USAR 
+
+HTTP REQUESTS por meio de 'XMLHttpRequest' no seu código react... 
+
+
+
+
+
+
+
+----> certo.... mas fazer o WRITE e CONFIGURING 
+
+desse objeto 'XMLHttpRequest' É UM ___sACO___... fazer isso manualmente 
+
+é bem 
+
+'cumbersome'...
+
+
+
+
+
+
+
+
+
+
+2) USAR A PACKAGE ESPECIAL/MUITO POPULAR,
+
+'''AXIOS'''...  ---------------->  é uma package (disponível a QUALQUER PROJETO JAVASCRIPT, E NÃO SÓ AO REACT) instalada 
+
+
+no terminal com 
+
+o código 
+
+
+
+'npm install --save axios'...
+
+
+
+-------------------------------------------
+
+
+
+
+
+MAS O AXIOS COMBINA BEM COM O REACT, PQ ELE É JAVASCRIPT...
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+
+---> INSTALAMOS O AXIOS, E ENTÃO 
+
+
+
+O UTILIZAMOS NO NOSSO PROJETO....
+
+
+
+
+
+'--save' ----> isso também 
+
+
+STORA (armazena) uma 
+
+
+
+ENTRY DO 
+
+AXIOS 
+
+LÁ 
+
+
+NO 
+
+
+
+ARQUIVO 
+
+
+'PACKAGE.JSON'...
+
+
+
+
+
+
+
+
+
+
+
+
+---> JÁ PODEMOS USAR O AXIOS NA PRÓXIMA LIÇÃO PARA FAZER O __fETCH__ DE ALGUNS POSTS...
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+temos anotações de aulas passadas... ------> 
+
+
+
+
+
+async function fetchPosts() {
+
+
+
+  try{
+    const responseData = await axios.get('https://jsonplaceholder.typicode.com/posts');
+  const listOfPosts = responseData;  
+      for (const post of listOfPosts) {
+      const postEl = document.importNode(postTemplate.content, true);
+      postEl.querySelector('h2').textContent = post.title.toUpperCase();
+      postEl.querySelector('p').textContent = post.body;
+      postEl.querySelector('li').id = post.id;
+      listElement.append(postEl);
+    }
+  } catch(error) {
+    console.log('Something went wrong...');
+  }

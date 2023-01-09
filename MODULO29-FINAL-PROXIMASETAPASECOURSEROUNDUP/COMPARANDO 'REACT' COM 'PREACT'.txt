@@ -1,0 +1,522 @@
+
+
+
+
+
+
+
+
+
+
+--> PREACT É LEGAL,
+
+
+
+é 
+
+menor e tem praticamente a mesma API.... -----> 
+
+
+
+
+
+DEVEMOS SEMPRE O UTILIZAR?
+ 
+
+
+
+
+ __DEPENDE__..
+
+
+
+
+ devemos 
+
+ ver 
+
+ as diferenças 
+
+ dele 
+
+ em 
+
+ relação 
+
+ ao 
+
+ 'react'... 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ---> O QUE É INCLUÍDO NO 'PREACT':
+
+
+
+ * HOCS 
+
+
+ * CLASS COMPONENTS
+
+
+ * FUNCTIONAL COMPONENTS  (pure functional components)
+
+
+
+* Contexts 
+
+
+
+
+* Refs 
+
+
+
+
+* Virtual DOM DRIFTING (como o do react, mas simplificado e mais rápido....)
+
+
+
+
+* h(), uma versão mais GENERALIZADA DE 'React.createElement()'...
+
+
+
+--------> ESSA É UMA DAS PEQUENAS DIFERENÇAS, esse 'h()'...
+
+
+
+
+------------------------------------------------------
+
+
+
+
+
+
+
+TAMBÉM POSSUI FEATURES __ EXTRAS____:
+
+
+
+* this.props e this.state __ SÃO PASSADOS __ A 'render()' PARA __ NÓS, AUTOMATICAMENTE...
+
+(isso significa que podemos referenciar/passar 'props' e 'state' dentro de 'render' SEM A KEYWORD de 'this'...)
+
+(mas você ainda pode usar a this keyword, é só uma opção....)
+
+
+
+
+* VOCê PODE USAR A KEYWORD de 'class' para definir classes DE CSS (não precisa ser 'className'), mas CLASSNAME AINDA FUNCIONA (apesar de 'class' ser preferido pela linguagme..)
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+MAS TAMBÉM HÁ COISAS __ FALTANDO___....
+
+
+
+
+
+
+
+POR EXEMPLO,
+
+
+* validação 
+
+de 
+
+
+
+PROPTYPES.... --> ''''nem todos usam proptypes, por isso eles não são parte do CORE do preact...''' (mas existem na library do 'preact-compat'...)
+
+
+
+
+
+* Children ---> 'children'/props.children __ NÃO É NECESSÁRIO NO PREACT, PQ 'props.children' é SEMPRE UM ARRAY, AQU... 
+
+
+
+
+
+
+^^^^^^ ESSAS COISAS AÍ 
+
+DE CIMA 
+
+__NÃO IMPORTAM TANTO.. --> SÃO COISAS 
+
+__COSMÉTICAS___----->
+
+
+
+AS COISAS 
+
+QUE 
+
+ESTÃO 
+
+'MISSING' 
+
+E QUE 
+IMPORTAM _ ESTÃO 
+
+'BEHIND THE SCENEs'........
+
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+
+
+-------> OK.... MAS 
+
+
+
+
+
+A GRANDE 
+
+DIFERENÇA,
+
+
+POR TRÁS DAS CENAS,
+
+É 
+
+COMO 
+
+O 
+
+
+
+
+
+'DOM DITHING' FUNCIONA... ( ou seja, a MANEIRA PELA QUAL 
+
+O 
+
+
+PREACT DETERMINA SE ALGO PRECISA SER UPDATADO NO DOM, E A MANEIRA PELA QUAL O REACT FAZ ISSO...)
+
+
+
+
+
+
+
+
+
+
+
+---------> E NÓS __ PRECISAMOS _ DE UM 
+
+'BENCHMARK'
+
+
+
+PARA DETERMINAR QUAL DAS 2 
+
+LINGUAGENS É A MELHOR PARA UM DETERMINADO PROJETO... 
+
+
+
+
+
+
+
+
+
+
+
+---------> PARA RESPONDER ESSA QUESTÃO 
+SOBRE 
+
+
+
+
+'QUAL LINGUAGEM É MELHOR PARA X?',
+
+
+
+TEMOS A página 
+
+
+
+DE 
+
+
+
+
+
+
+'js-framework-benchmark'... ---> 
+
+
+
+
+ESSE REPOSITÓRIO 
+
+DO GITHUB 
+
+
+
+
+
+
+
+
+COLOCA DIVERSAS FRAMEWORKS UMA CONTRA OUTRA,
+
+
+
+para ver qual é a mais rápida... ------------>
+
+
+
+
+CONVENIENTEMENTE,
+
+
+OS 
+
+
+RESULTADOS 
+
+
+SÃO MOSTRADOS EM UMA GRANDE TABELA.... ------> 
+
+
+
+
+A tabela 
+
+
+mostra 
+
+
+bem 
+
+
+
+
+as performances comparadas 
+
+entre 
+
+
+os negócios ... --> 
+
+aí 
+
+vemos 
+
+coisas 
+
+como 
+
+
+'removal de 1000s of rows of data'.... ------->
+
+
+
+
+
+e ái isso te mostra qual framework é a melhor para isso....
+
+
+
+
+
+---> podemos ver a versao 'react 16' 
+
+e o 
+
+preact... ------> 
+
+PODEMOS 
+
+VER 
+Q 
+
+OS 
+
+2 FICAM BEM PRÓXIMOS EM TERMOS DE PERFORMANCE.. -->
+
+
+MAS 
+
+SE 
+
+EXAMINARMOS O 
+
+'STARTUP TIME',
+
+vemos 
+que 
+
+o 
+
+
+
+react tem 0.53ms  
+
+
+
+E 
+
+O 
+
+
+
+preac tem 
+
+36, 
+
+o que 
+
+é 
+
+
+um bocado 
+
+mais rápido (a razão para isso e´
+
+O TAMANHO MENOR... ) -------> 
+
+
+
+
+
+APESAR 
+
+DE SER MENOR 
+
+EM TAMANHO,
+
+
+É POSSÍVEL PERCEBER QUE 
+
+EM CERTAS 
+OPERAÇÕES,
+
+ O PREACT PERDE... --> 
+
+
+
+ ex: 
+
+
+
+ FAZER CLEAR DE VÁRIOS ROWs ------> O REACT É MAIS RÁPIDO DO QUE O PREACT NISSO... ---> pq o algoritmo é melhor/melhor escrito.... -------> 
+
+
+ POR ISSO O REACT É UM POUCO MELHOR NESSE ASPECTO... 
+
+
+
+
+
+
+
+
+ ---> RESUMINDO:
+  
+
+  O PREACT __ MELHORA ___ BASTANTE O STARTUP TIME DO 
+
+  SEU APLICATIVO,
+
+  pq ele é menor,
+
+  mas 
+
+  OPERAÇÕES SUBSEQUENTES PODEM 
+
+SE DAR 
+
+DE MANEIRAS UM POUCO PIORES...
+
+
+
+
+(ou seja, se tivermos um app em que 
+
+o 
+
+
+STARTUP TIME IMPORTA MUITO, 
+
+
+seria 
+
+
+bom usar o preact....) --> MAS 
+
+SE VOCÊ 
+
+ESTIVER 
+
+
+CONSTRUINDO 
+
+'A HUGE ENTERPRISE APP',
+o 
+
+REACT 
+
+__aINDA PODE SER A MELHOR OPÇÃO__...
+
+
+
+
+
+
+
+
+
+--> MAS você ainda pode aprender o preact,
+
+pq 
+
+ele 
+
+pode ser bom, realmente... é uma ótima alternativa ao react,
+
+que 
+é 
+praticamente a mesma coisa, mas 
+
+menor, e mais rapidinha....

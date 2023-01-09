@@ -1,0 +1,807 @@
+
+
+
+
+
+
+
+
+--> HÁ ALGO QUE O PROFESSOR QUER ADICIONAR  às lições em que 
+
+
+trabalhamos
+
+
+COM shouldComponentUpdate...
+
+
+
+
+
+---> se você tiver/vai ter um 
+
+
+CLASS-BASED COMPONENT 
+
+NO SEU CÓDIGO, 
+
+
+
+
+
+
+UM COMPONENT DESSE TIPO, EM QUE 
+
+
+VOCÊ IMPLEMENTA
+'shouldComponentUpdate()'...
+
+
+
+
+
+ex:
+
+
+
+
+class App extends Component {
+
+shouldComponentUpdate(nextProps, nextState) { 
+    console.log('[Persons.js] shouldComponentUpdate');
+
+    if(nextProps.persons !== this.props.persons) {
+      return true; 
+    } else {
+      return false;
+    }
+    
+    
+}
+
+
+}
+
+
+
+
+-------------------------------------
+
+
+
+EM UM 
+
+COMPONENT COMO ESSE,
+ 
+
+
+com esse método, 
+
+
+
+
+SE VOCÊ 
+
+QUISER/QUER SIMPLESMENTE 
+
+
+RODAR UM 'CHECK' 
+
+
+que compare e procure por diferenças em 
+
+TODOS OS PROPS QUE IMPORTAM A UM COMPONENT,
+
+
+
+EXISTE UMA MANEIRA 
+
+
+___MAIS FÁCIL__ DE ESCREVER 
+
+ESSE COMPONENT...
+
+
+
+-------> O PROFESSOR DEMONSTRA ESSA SINTAXE/FORMATO DE ESCRITA 
+
+
+
+POR MEIO DO EXEMPLO DO COMPONENT 'persons'...
+
+
+
+Ex:
+
+
+
+
+class Persons extends Component {
+
+
+
+
+
+shouldComponentUpdate(nextProps, nextState) { 
+    console.log('[Persons.js] shouldComponentUpdate');
+
+    if(nextProps.persons !== this.props.persons) {
+      return true; 
+    } else {
+      return false;
+    }
+    
+    
+}
+
+
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+      console.log('[Persons.js] getSnapshotBeforeUpdate');  
+    return { message: 'Snapshot'};
+    }
+
+
+  render() {
+    console.log('[Persons.js] rendering...');
+    return (
+      this.props.persons.map((person, index) => {
+            
+       return <Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}/>  
+          
+    }
+  
+      )
+    )
+    }
+
+
+componentDidUpdate(prevProps, prevState, snapshot) {  
+  console.log('[Persons.js] componentDidUpdate');
+  console.log(snapshot);
+} 
+
+
+
+  componentWillUnmount() {
+    console.log('[Persons.js] componentWillunMount');
+  }
+
+
+
+
+  }
+
+
+
+
+export default Persons;
+
+
+
+
+-----------------------------------
+
+
+
+
+
+NESSE CÓDIGO AÍ, 
+
+
+EM 
+'shouldComponentUpdate',
+
+
+O professor 
+
+está 
+
+CHECANDO 
+
+
+
+SE 
+
+'nextProps.persons' (POINTER desse ARRAY no futuro) 
+
+
+É __IGUAL___ a 
+
+
+'this.props.persons' (POINTER desse array NO PRESENTE) -----> OU SEJA,
+
+
+
+ELE ESTÁ 
+
+
+CHECANDO 
+
+SE ESSES POINTERS/ARRAYS (na verdade, é os POINTERS DOS ARRAYS, arrays 
+produzidos com o SPREAD OPERATOR)  MUDARAM/FORAM ALTERADOS.... 
+
+
+
+
+
+
+---------> Professor diz que 
+
+
+devemos entender
+
+
+QUAIS__ PROPS__ ESTAMOS USANDO 
+
+
+
+EM
+
+'Persons'... -----------> 
+
+
+
+
+ELE 
+
+EXPLICA QUE 
+
+NÓS NÃO 
+
+
+ESTAMOS APENAS 
+
+USANDO 
+
+
+
+o prop 'persons' (this.props.persons) NESSE COMPONENT 
+
+'Persons'.... ---> não, nós estamos 
+
+
+USANDO AQUELA FUNÇÃO/PROP 
+
+
+
+'changed'   ('this.props.changed(event, person.id)') 
+
+
+
+
+
+E 
+
+AQUELA FUNÇÃO/PROP 
+
+
+'this.props.clicked(index);'
+
+
+
+
+
+---------> O PROFESSOR EXPLICA QUE TODOS ESSES 'PROPS' SÃO 
+
+____FUNÇÕES__, e não propriamente DADOS QUE NÓS OUTPUTTAMOS... -----> AINDA ASSIM, 
+
+
+MESMO NÃO SENDO DADOS/DATA OUTPUTTADA EM 'Persons', 
+
+
+
+SE A 'FUNCTION REFERENCE' desses props 
+
+__fOSSE __ ALTERADA__, SE NÓS 
+
+
+DE REPENTE CONSEGUÍSSEMOS UMA NOVA
+
+'FUNCTION REFERENCE' VINDA DE FORA ('from outside'),
+
+
+
+uma function reference inédita dentro desses props, 
+
+
+NÓS 
+
+
+__COM CERTEZA__ TERÍAMOS  DE FAZER 
+
+ESSE 
+
+
+
+COMPONENT ESPECÍFICO CONHECER DESSA MUDANÇA ('this component WOULD NEED TO KNOW  about this/the change') ---------->
+
+
+TERÍAMOS DE FAZER ESSE COMPONENT CONHECER/ENTENDER QUE 
+
+HOUVE UMA MUDANÇA __JUSTAMENTE__ PARA QUE ELE CONSIGA SER ATUALIZADO/RE-RENDERIZADO 
+
+
+APROPRIADAMENTE, DE ACORDO COM A MUDANÇA...........
+
+
+
+
+
+
+
+OU SEJA,
+
+
+AQUI NOSSO 'IF CHECK'
+
+
+não 
+
+é uma 
+
+simples comparação 
+
+
+
+
+entre 
+
+
+'nextProps.persons'  (prop 'persons'/array persons do FUTURO)
+
+e 'this.props.persons' (prop 'persons'/array persons do PRESENTE),
+
+
+
+MAS TAMBÉM 
+
+
+
+uma comparação 
+
+entre 
+
+os props 'CHANGED' e 'CLICKED' do PRESENTE E DO FUTURO     ------> ISSO SIGNIFICA QUE 
+
+
+VAMOS QUERER 
+
+QUE 
+
+o component 
+
+
+'Persons' 
+
+
+SEJA 
+
+ATUALIZADO
+
+
+TANTO QUANDO 'persons' muda, como 
+
+também 
+
+
+quando 
+
+'CHANGED' e 'CLICKED' (Esses métodos/funções) MUDAM...        ---> aqui, há uma fundamental diferença entre 'persons' e 'changed'/'clicked' ------> 'persons' é 'dados mortos', é aquele ARRAY lá em 'App.js'... Já 'changed' e 'clicked' SÃO __REALMENTE___ functions, eles executam códigos, e representam os métodos/funções 'nameChangedHandler' e 'togglePersonsHandler'...
+
+
+
+
+
+
+---------------------------------------------
+
+
+MAS COMO O PROFESSOR ESCREVERÁ ISSO?
+
+
+
+ELE USARÁ 'OR' (||)
+
+ESCREVERÁ ASSIM:
+
+
+
+
+
+shouldComponentUpdate(nextProps, nextState) { 
+    console.log('[Persons.js] shouldComponentUpdate');
+
+    if(nextProps.persons !== this.props.persons || nextProps.changed !== this.props.changed || nextProps.clicked !== this.props.clicked) {
+      return true; 
+    } else {
+      return false;
+    }
+    
+    
+}
+
+
+
+
+
+
+------------------------------------------
+
+
+
+Certo... isso vai fazer com que nosso component TAMBÉM 
+
+
+ATUALIZE 
+
+
+no caso 
+
+das funções/métodos/props 
+
+
+'changed' 
+
+
+e 'clicked' 
+
+mudarem...
+
+
+
+
+
+---> certo...     BASICAMENTE, PROFESSOR ADICIONOU 2 NOVOS 'IF CHECKS'... ---> 
+
+
+e se QUALQUER UM DESSES 
+
+
+
+IF CHECKS DER 'TRUE',
+
+
+
+SERÁ 
+
+EXECUTADO 
+
+
+O CÓDIGO 
+
+
+DE 
+
+'return true' 
+
+
+
+em 'shouldComponentUpdate'... ----> e se 
+
+NEM PERSONS, nem 'CLICKED', NEM 'CHANGED'
+
+foram alterados,
+
+VAMOS RETORNAR 'false'...  (e aí o update/re-render nunca acontece, nesses casos... )
+
+
+
+
+
+
+--> professor testa isso: ele recarrega a página 
+
+
+e clica nos 2 botões, 'remove cockpit' 
+
+
+e 
+
+'toggle persons'... --> quando ele faz 
+
+isso, ocorre 
+
+
+exatamente o que prevíamos: 
+
+
+
+em 'Person.js' 
+
+
+
+a execução do re-render será cancelada 
+
+no método 'shouldComponentUpdate' (que retorna 'FALSE', pois não houve 
+
+alteração do 'clicked', nem do 'changed' e nem de 'persons'...)... E se o professor 
+
+
+
+escreve no input field,
+
+NÓS TEMOS UM UPDATE (shouldComponentUpdate retorna 'TRUE', o que faz o re-render/atualização 
+acontecer em 'persons') -------->  OU SEJA,
+
+
+O NEGÓCIO ESTÁ FUNCIONANDO COMO ANTES... -------> MAS SE VOCÊ 
+
+
+
+TEM UM CENÁRIO DESSES,
+
+
+EM QUE VOCÊ CHECA __tODOS OS PROPS___ DE UM COMPONENT, procura 
+
+
+POR CHANGES em CADA UM DESSES PROPS (o que não é tão incomum, pq tipicamente 
+
+você vai querer que NENHUM DOS PROPS DESSE COMPONENT MUDE... é mt raro pensarmos 
+
+"ah, só n quero que esse especificamente não mude... " --> geralmente vamos querer 
+
+QUE TODOS RESTEM INALTERADOS...)   
+
+
+
+
+
+
+
+-----> BEM, 
+
+SE VOCÊ 
+
+ESTIVER/FOR CHECAR 
+
+
+______TODAS AS PROPERTIES/PROPS DE UM COMPONENT__, 
+
+
+VOCê 
+
+PODE/É RECOMENDADO 
+
+QUE VOCÊ 
+
+
+
+__NÃO USE___ O 'shouldComponentUpdate'.... ou seja,
+
+
+
+___dEIXE____ DE USAR 
+
+
+O 'shouldComponentUpdate', USANDO, EM VEZ DISSO, um approach 
+
+
+
+ALTERNATIVO.... ------> ESSE APPROACH 
+
+
+
+ALTERNATIVO (dos components 'CLASS-BASED') 
+
+
+
+ENVOLVE O USO/EXTEND 
+
+
+DE UM __DIFERENTE__ TIPO DE COMPONENT (e não aquele objeto 'Component' que sempre usamos por meio do import de 'import React, { Component }')
+
+
+
+
+
+
+
+
+NESSE APPROACH, 
+
+NÓS 
+
+
+FAZEMOS 
+
+
+EXTEND __DE UM ___ 'pureComponent', 
+
+e não de 
+
+
+'Component'...
+
+
+
+------------------------------------
+
+ex:
+
+
+
+
+import React, { PureComponent } from 'react';
+
+
+----------------------------------------------
+
+
+
+ISSO FEITO,
+
+
+DEVEMOS 
+
+INCLUIR ESSE NEGÓCIO NO EXTEND DE NOSSO CLASS-BASED COMPONENT...
+
+ex:
+
+
+
+
+
+class Person extends PureComponent {
+  ....
+ }
+
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+OK, 
+
+MAS O QUE DIABOS 
+
+
+'PURECOMPONENT' 
+
+
+FAZ?  -------> O QUE ELE FAZ 
+
+
+É ____ APLICAR UM FUNCIONAMENTO DE 
+
+'shouldComponentUpdate' IGUALZINHO AO QUE TÍNHAMOS ANTES... 
+
+
+---> ou seja,
+
+
+O que 
+
+
+o import/extend de 'PureComponent' 
+
+
+FAZ, EM UM CLASS-BASED COMPONENT,
+
+
+é 
+
+
+LITERALMENTE 
+
+
+ESCREVER 
+
+
+'shouldComponentUpdate(nextProps, nextState) {
+
+      console.log('[Persons.js] shouldComponentUpdate');
+
+    if (nextProps.persons !== this.props.persons ||
+       nextProps.changed !== this.props.changed ||
+        nextProps.clicked !== this.props.clicked) {
+      return true; 
+    } else {
+      return false;
+    }
+    
+    
+
+}' 
+
+
+
+---------------------------------
+
+
+
+OU SEJA,
+
+ELE É LITERALMENTE 
+
+UM COMPONENT NORMAL, 
+
+MAS UM COMPONENT 
+
+NORMAL 
+
+QUE 
+
+JÁ IMPLEMENTA 
+
+'OUT OF THE BOX'
+
+
+UM 
+
+'shouldComponentUpdate()' 
+
+
+COM UM 'COMPLETE PROPS CHECK', ou seja,
+
+
+Um CHECK COMPLETO de ___TODOS OS PROPS___ DESSE COMPONENT 
+
+EM QUE ELE FOR 'EXTENDIDO'... ( ou seja, 
+
+o método 'shouldComponentUpdate()' IMPLÍCITO que 
+
+ele vai introduzir ao seu component 
+
+
+VAI OBSERVAR __POR QUAISQUER __ MUDANÇAS 
+
+
+EM TODOS OS PROPS que você tem nesse component...)  ----> no caso de 'Persons', ele basicamente vai checar por alterações em 'persons', 'changed' e 'clicked'...
+
+
+
+
+
+
+
+
+----> ELE VAI PROCURAR POR QUAISQUER MUDANÇAS EM TODOS 
+
+OS PROPS 
+
+QUE VOCÊ TEM NAQUELE COMPONENT EM QUE VOCÊ FEZ 'extend PureComponent' ----> ISSO QUER DIZER 
+
+
+QUE VOCê DEVE O UTILIZAR __SEMPRE QUE __ VOCê REALMENTE QUISER 
+
+monitorar changes em TODOS OS PROPS de um component... (aí você não precisa 
+
+escrever aquele código longo de 
+
+ex:
+
+
+if (nextProps.persons !== this.props.persons ||
+       nextProps.changed !== this.props.changed ||
+        nextProps.clicked !== this.props.clicked) 
+
+
+,
+
+
+
+ESSE CÓDIGO JÁ ESTARÁ IMPLICITo...
+
+)
+
+
+
+----------------------------------
+
+
+
+'PureComponent' 
+
+NOS SALVA UM BOCADO DE CÓDIGO.

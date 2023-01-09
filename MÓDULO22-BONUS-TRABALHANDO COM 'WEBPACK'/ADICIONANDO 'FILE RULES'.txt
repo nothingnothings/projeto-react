@@ -1,0 +1,816 @@
+
+
+
+
+
+
+
+
+
+--> NA ÚLTIMA LIÇÃO,
+
+ 
+ adicionamos 
+
+ nosso 
+
+ 'basic webpack config'...
+
+
+ ex:
+
+
+
+
+ const path = require('path');
+
+
+ module.exports = {
+    entry: './src/index.js',
+    devtool: 'cheap-module-eval-source-map',
+    output: {
+        publicPath: '',
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    }
+}
+
+
+
+
+
+---------------------------------
+
+
+ENTRETANTO,
+
+
+
+UMA COISA QUE 
+
+TEMOS QUE ADICIONAR, AGORA, 
+
+
+
+
+
+É ___aSSEGURAR __ QUE 
+
+O WEBPACK 
+
+ADICIONE 
+
+'.js'
+
+NO FINAL 
+
+
+
+DOS 
+
+
+IMPORTS 
+
+
+NOS NOSSOS 
+
+REACT COMPONENTS/REACT APP,
+
+
+
+PQ ELE PRECISA DISSO PARA IMPORTAR NOSSOS COMPONENTS DE FORMA 
+
+
+
+CORRETA (
+
+    pq eles estão escritos assim:
+    'import Users from './containers/Users';
+)
+
+
+
+
+
+
+--------------------------------------------------
+
+
+
+E PARA FAZER COM QUE 
+
+O WEBPACK SE COMPORTE ASSIM,
+
+
+PRECISAMOS 
+
+O CONFIGURAR... --> configurar de um certo modo... 
+
+
+
+
+
+
+
+
+
+
+
+
+---> no webpack.config.js,
+
+
+
+VAMOS ADICIONAR UMA 
+
+PROPRIEDADE EXTRA,
+
+
+CHAMADA 
+
+DE 
+
+
+'resolve: {}'
+
+
+
+
+
+
+
+
+
+---> RESOLVE --> é uma configuração... --> ELA ACEITA/EXIGE UM 
+
+OBJETO JAVASCRIPT...  ------> E DENTRO 
+
+
+DESSE 
+
+OBJETO/PROPRIEDADE,
+
+
+PODEMOS 
+
+'RESOLVE' ALGUMAS 'EXTENSIONS'... --> isso BASICAMENTE 
+
+
+server para 
+
+
+CONSCIENTIZAR/COMUNICAR 
+
+O 
+
+WEBPACK 
+DE QUE 
+
+
+__eXISTEM ALGUMAS EXTENSÕES 
+
+QUE 
+
+ELE DEVERÁ LEVAR EM CONSIDERAÇÃO.... ---> e se ele encontrar 
+
+um 
+
+IMPORT  __SEM ALGUMA 'EXTENSÃO'__,
+
+ELE DEVERÁ 
+
+
+__'TENTAR' (try) ALGUMA 
+
+DESSAS EXTENSIONS,
+PARA ENTÃO 
+TENTAR 
+
+ENCONTRAR 
+
+UM 
+
+ARQUIVO (file) COM 
+
+
+ALGUMA DESSAS EXTENSIONS..
+
+
+
+
+
+
+---> NO CASO DE NOSSO APP REACT,
+
+
+PROFESSOR 
+
+VAI QUERER 
+
+QUE 
+
+
+
+
+'extensions: '
+
+TENHA 
+
+
+COMO VALOR 
+
+UM 
+
+
+ARRAY 
+
+
+COM 
+
+
+'.js' 
+
+e 
+
+'.jsx'....
+
+
+-------------------------------
+
+
+
+ex:
+
+
+
+
+resolve: {
+    extensions: ['.js', '.jsx']
+}
+
+
+
+-------------------------------------
+
+
+
+
+
+EX:
+
+
+
+
+
+
+const path = require('path');
+
+
+ module.exports = {
+    entry: './src/index.js',
+    devtool: 'cheap-module-eval-source-map',
+    output: {
+        publicPath: '',
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
+    resolve: {
+        extensions: ['.js', '.jsx']
+    }
+}
+
+
+---------------------------
+
+
+
+
+ISSO 
+
+FARÁ COM QUE 
+
+O WEBPACK ESSENCIALMENTE __ PROCURE___ POR ARQUIVOS 
+
+COM AQUELAS EXTENSOES,
+
+CASO NÃO 
+
+ENCONTRE NENHUMA EXTENSÃO 
+
+
+DIGITADA NA SINTAXE DE imports de um arquivo... (ex: import BuildControls from './BuildControls'; ---> './BuildCOntrols' vai ser RESOLVED como './BuildControls.js'...)
+
+
+
+
+--------------------------
+
+
+OK,
+
+
+
+ESSA 
+
+ERA UMA COISA IMPORTANTE...
+
+
+
+
+--------------------------------------------------
+
+
+
+
+-----------------------------> OK, ESSA ERA UMA COISA IMPORTANTE..
+
+
+
+
+MAS A PRÓXIMA COISA IMPORTANTE É OS __NOSSOS LOADERS___... queremos 
+
+assegurar 
+que 
+
+
+O WEBPACK CONSIGA 'HANDLE' __dIFERENTES __' FILE TYPES'.... (images, js, css...) --->
+
+
+ISSO 
+
+
+É FEITO 
+
+
+
+
+POR MEIO DE UMA CONFIGURAÇÃO 
+
+
+ESPECIAL,
+
+NO MESMO LEVEL 
+
+
+do 
+
+
+'output' 
+
+e 
+
+'resolve',
+
+CHAMADO 
+
+
+DE 
+
+
+'module: ...'  --------->  
+
+
+
+
+
+
+
+MODULE---> ISSO PQ UM IMPORT/DEPENDENCY 
+
+É SEMPRE 
+
+SE 
+
+REFERIDO COMO 
+
+'module' ----------------->
+
+
+
+VOCÊ PODERIA TRADUZIR 'module' COMO ARQUIVO,
+
+ESSENCIALMENTE... --> E É POR ISSO 
+
+QUE 
+
+
+EM 
+
+'module',
+
+nessa propriedade aí,
+
+
+
+
+CONFIGURAMOS O QUE O WEBPACK DEVERÁ FAZER 
+
+COM 
+
+AS 
+'FILES' INDIVIDUAIS....  ---> e isso, esse config aí,
+
+
+É 
+
+
+
+FORMULADO POR MEIO 
+
+DE UMA PROPRIEDADE 
+
+
+'rules',
+
+QUE 
+
+
+ENTÃO SEGURA UM ARRAY COMO VALOR....
+
+
+
+eX:
+
+
+
+
+
+
+module: {
+    rules: [
+
+    ]
+}
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+--> RULES.... ---> OK... CADA RULE dentro de 'rules' 
+
+
+SERÁ UM OBJETO JAVASCRIPT... ---> 
+
+
+
+E 
+
+CADA OBJETO JAVASCRIPT/rule 
+
+
+
+DEVERÁ, PRIMEIRAMENTE,
+
+
+
+
+
+'TESTAR'.... ---------> 
+
+
+
+isso significa que 
+
+vamos 
+
+precisar 
+
+de uma 
+
+propriedade 
+
+
+chamada 
+
+'test: '....
+
+
+
+
+
+
+----> TEST --> TESTAR SE UM __DETERMINADO __ ARQUIVO 
+___ SATISFEZ_ UM DETERMINADO CRITÉRIO.... (criteria) ---> 
+
+
+
+ESSE CRITÉRIO 
+É 
+
+O 
+
+
+___fILENAME__,
+
+
+e 
+
+
+OS FILENAMES SÃO CHECADOS POR MEIO 
+
+DE UMA COMPARAÇÃO COM 
+
+REGULAR EXPRESSIONS....
+
+
+
+ex:
+
+
+
+
+module : {
+    rules: [
+        {
+            test: //regular expression
+        },
+              {
+            test: //regular expression
+        }
+    ]
+}
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+A REGULAR EXPRESSION, NESSE LUGAR AÍ,
+
+
+
+COMUMMENTE 
+
+
+CHECA 
+
+A 
+
+'FILE EXTENSION'... -->
+
+
+
+
+
+
+POR MEIO DE UMA 
+
+REGULAR EXPRESSION (regex)
+
+
+
+VAMOS 
+
+QUERER 
+
+DIZER 
+
+
+
+'SE O ARQUIVO TERMINA COM 
+
+
+.js,
+
+
+
+EU VOU QUERER APLICAR UM CERTO __ LOADER__ NELE___...'
+
+
+
+
+
+e isso fica tipo assim:
+
+
+
+
+'test: /\.js$/'....
+
+
+
+
+
+
+
+
+
+COMPLETO FICA ASSIM:
+
+
+
+
+
+
+
+module : {
+    rules: [
+        {
+            test: /\.js$/,
+            loader:
+        },
+              {
+            test: //regular expression
+        }
+    ]
+}
+
+
+
+-------------------
+
+
+
+
+
+
+
+
+CERTO,
+
+E O 
+
+'loader' 
+
+É 
+
+SEMPRE COMO 
+
+___ UM THIRD PARTY 
+
+
+
+__PLUGIN ___ QUE 
+
+
+FAZ ALGO COM O ARQUIVO... --> para arquivos jsx,
+
+
+
+
+PROFESSOR 
+
+DIZ QUE 
+
+
+
+É NECESSÁRIO TAMBÉM 
+
+ADICIONAR 
+
+UM 
+
+'exclude: ...',
+
+
+
+
+QUE 
+
+É USADO __PARA __ EXCLUIR___ 
+
+
+
+CERTOS PADRÕES... --------> E O PROFESSOR 
+
+
+
+VAI COLOCAR OUTRA REGEX (regular expression) 
+
+
+COMO VALOR DESSA PROPRIEDADE,
+
+indicando 
+
+
+que 
+
+
+'/node_modules/'
+
+DEVERÁ 
+
+SER EXCLUIDO/'excluded' da leitura feita pelos 'loaders' e pelo webpack...
+
+
+
+----------------------------------------
+
+
+
+
+
+
+module : {
+    rules: [
+        {
+            test: /\.js$/,
+            loader: ,
+            exclude: /node_modules/
+        },
+              {
+            test: //regular expression
+        }
+    ]
+}
+
+
+
+
+------------------------------------
+
+
+
+
+--> OK,
+
+
+O LOADER NÃO DEVERÁ 
+
+
+TRANSFORMAR/MANIPULAR QUALQUER 
+
+COISA 
+
+
+DENTRO 
+
+
+
+DE 'node_modules',
+
+PQ 
+
+
+ESSAS JÁ SÃO 
+
+THIRD PARTY LIBRARIES EFETIVAMENTE IMPORTADAS 
+
+NO NOSSO PROJETO (não precisam da ajuda de loaders, já estão OPTIMIZADOS E NÃO PRECISAM SER CONVERTIDOS DE NOVO....)...
+                    (só vamos querer que NOSSOS PRÓPRIOS ARQUIVOS SEJAM CONVERTIDOS/OPTIMIZADOS...)
+
+-----------------------------------------------
+
+
+
+
+------------> OK,
+ 
+ MAS 
+
+ E QUANTO ÀQUELE 'loader'? -----> BEM,
+
+ PARA 
+
+
+ O 
+
+ JAVASCRIPT, ESPECIFICAMENTE,
+
+
+ VAMOS QUERER 
+
+ USAR 
+
+ O 
+
+
+ _______bABEL-LOADER__________.....
+
+
+
+
+
+ BABEL ---> É O 'DEFACTO STANDARD' PARA CONVERTER 
+
+
+ NEXT-GEN JAVASCRIPT EM CURRENT-GEN JAVASCRIPT...
+
+
+
+
+
+
+
+
+
+ --> é por isso que 
+
+ devemos 
+
+
+ INSTALAR E CONFIGURAR 'babel' na próxima aula...

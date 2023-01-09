@@ -1,0 +1,113 @@
+The current setup won't support all browsers theoretically supported by React. Features like Promises and Object.assign()  are missing in older browsers - especially in IE of course.
+
+If you need to support these browsers, you need to add a polyfill (a package which provides these features for older browsers). babel-polyfill  is a great and easy-to-use choice.
+
+Add it like this:
+
+npm install --save @babel/polyfill 
+
+Add the following import to the top of your index.js file:
+
+import 'babel-polyfill';
+Change the config of your env  babel preset in the .babelrc  file: 
+
+"presets": [
+    ["env", {
+        "targets": {
+            "browsers": [
+                "> 1%",
+                "last 2 versions"
+            ]
+        },
+        "useBuiltIns": "entry"
+     }],
+     "stage-2",
+     "react"
+ ],
+useBuiltIns  was added and by setting it to 'entry' , the import in the index.js  file (import 'babel-polyfill' ) is actually changed to import whatever features need to be supported for your chosen browsers and environment. More information can be found here: https://github.com/babel/babel-preset-env#usebuiltins-entry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+PS C:\projeto2 - react\MÓDULO22-BONUS-TRABALHANDO COM 'WEBPACK'> npm install --save @babel/polyfill
+npm WARN deprecated @babel/polyfill@7.12.1: 🚨 This package has been deprecated in favor of separate inclusion of a polyfill and regenerator-runtime (when needed). See the @babel/polyfill docs (https://babeljs.io/docs/en/babel-polyfill) for more 
+information.
+npm WARN deprecated core-js@2.6.12: core-js@<3.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+
+
+
+
+
+(PARA USAR O ''BABEL POLYFILL''' COM CÓDIGO MAIS MODERNO,
+
+
+
+
+
+você deve 
+
+ESCREVER O SEGUINTE CÓDIGO 
+
+__NO TOPO __ DO SEU ENTRY FILE ___ 
+
+
+NO 
+
+WEBPACK... (ou seja, 'index.js', no nosso caso...))--->
+
+
+
+EX:
+
+
+
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
+
+
+(colocar no topo de 'index.js').. ---> TAMBÉM PRECISAMOS INSTALAR ESSAS 2 DEPENDENCIES...
+
+
+
+INSTALEI O 
+
+'core-js/stable'... (isso deu certo). --> E POR ALGUMA RAZÃO, O CÓDIGO DE ERRO RELATIVO 
+
+a 
+
+'regenerator-runtime' TAMBÉM SUMIU... (isso pq esse PACKAGE passou a existir em 'node_modules'...)
+
+
+
+
+
+-----------------------------------
+
+
+OK, AGORA TENHO POLYFILL FUNCIONANDO, CREIO EU...
+
+
+
+Webpack Docs: https://webpack.js.org/concepts/
+More about Babel: https://babeljs.io/
+

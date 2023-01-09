@@ -1,0 +1,84 @@
+
+
+
+
+
+
+-----> VIMOS MUITA COISA DURANTE ESTE MÓDULO... --> vimos funcionalidades que 
+
+DEIXAM 
+
+
+NOSSO APLICATIVO MAIS SEGURO.... ----> adicionamos 
+
+
+
+
+AUTENTICAÇÃO, COM VALIDAÇÃO.... 
+
+
+também 
+
+
+AUTO-SIGNUP.. ....
+
+
+
+
+
+
+
+
+---> PROFESSOR NOS MOSTROU COMO __FAZER 'MANAGE' DA TOKEN,
+
+e também 
+
+SOBRE COMO 
+
+
+IMPLEMENTAR 
+
+
+AUTENTICAÇÃO 
+
+EM 
+
+SINGLE PAGE APPS... ------> NÓS TAMBÉM 
+
+
+
+
+USAMOS NOSSA 'DATA' PARA __MAPPEAR__ ORDERS __ A 
+
+
+UM DETERMINADO USER,
+
+
+
+e também 
+
+
+
+
+REDIRECIONAMOS O USUÁRIO QUANDO ELE TENTA FAZER ALGO 'FISHY'... 
+
+
+
+
+--------------------------------
+
+
+
+----> APRENDEMOS MUITAS COISAS IMPORTANTES...
+
+
+
+SPA Authentication in general: https://stormpath.com/blog/token-auth-spa
+
+Firebase authentication REST API: https://firebase.google.com/docs/reference/rest/auth/ 
+
+
+
+
+-----------------------------
+

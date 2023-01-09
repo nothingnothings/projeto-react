@@ -1,0 +1,1238 @@
+
+
+
+
+
+
+
+
+
+-----------------> AO LONGO DAS ÚLTIMAS LIÇÕES,
+
+
+CRIAMOS UMA 
+
+'STORE'/CENTRAL STORE,
+
+
+
+ 
+ UM __rEDUCEr__ E AÍ 
+
+ NOSSAS 
+
+
+
+ ACTIONS (que informam a ação do REDUCER, que por sua vez __ALTERA__ O STATE em 'Central Store'.)
+
+
+
+
+
+ ---------> AGORA TEMOS QUE 
+
+
+ ADICIONAR NOSSAS 
+
+ SUBSCRIPTIONS... -----------> SUBSCRIPTIONS ME DEIXAM/me 
+
+ fazem 
+
+ conseguir 
+
+ uma 
+
+
+ feature 
+
+ especial,
+
+
+ a 
+
+ feature 
+
+
+ ________de NÃO PRECISAR __ CHAMAR 
+
+
+
+MANUALMENTE 
+
+
+'store.getState()' PARA __CONSEGUIR___ 
+
+A 
+
+
+'CURRENT STATE SNAPSHOT'... nos lugares de meu código...  ------------------> em vez disso,
+
+o que 
+
+
+as 
+
+'subscriptions' 
+
+
+fazem É 
+
+
+
+_________ME INFORMAR__ QUE  ______PRECISO___ CONSEGUIR UM 'NEW STATE' ____ PQ 
+
+ALGUMA 
+
+
+COISA FOI ALTERADA...
+
+
+--------------------------------------------------
+
+
+
+
+Não entendi... 
+
+
+
+
+
+--> professor diz que essa feature é importante.... é importante pq pense 
+
+nele 
+
+fazendo o get do 'currentState' manualmente,
+
+tipo naquele 
+
+console.log 
+
+de 
+
+código 
+
+
+
+'console.log(store.getState())'... -----------> se ele tiver que 
+
+
+FAZER 
+
+
+OS 'GETs' manuais, por meio desse código,
+
+
+ELE 
+
+
+
+
+SEMPRE 
+
+VAI
+
+TER QUE 
+
+
+'GUESS'/adivinhar 
+
+
+
+SE 
+
+ALGUMA COISA MUDOU NO NOSSO CÓDIGO, se alguma coisa mudou no nosso código, e isso alterou 
+
+
+nosso state...
+
+
+
+(ainda está meio confuso....)
+
+
+
+
+
+
+
+
+
+
+
+
+OK, MAS COMO CRIAMOS UMA SUBSCRIPTION, então? -----------> 
+
+
+
+
+
+para 
+
+
+
+CRIAR UMA SUBSCRIPTION,
+
+
+devemos 
+
+
+
+acessar 
+
+
+
+
+
+o 
+
+
+'store'  (que é criado com aquele código de 'const store = createStore(rootReducer);')
+
+
+
+
+
+
+
+
+E ENTÃO, DENTRO DESSE objeto/código 'store',
+
+
+NÓS 
+
+
+TEMOS 
+
+
+UM 
+
+
+
+MÉTODO 
+
+CHAMADO 
+
+'.subscribe',
+
+que podemos 
+
+
+UTILIZAR....
+
+
+
+
+
+
+
+ex:
+
+
+
+
+const store = createStore(rootReducer);
+
+console.log(store.getState());
+
+
+
+
+
+store.dispatch(
+    {
+        type: 'INC_COUNTER'
+    }
+)
+
+
+
+store.dispatch(
+    {
+        type: 'ADD_COUNTER',
+        value: 10
+    }
+)
+
+
+console.log(store.getState());
+
+
+
+
+store.subscribe(); //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+CERTO... 
+
+
+
+E 
+
+
+O '.subscribe()'
+
+
+
+__EXIGE/ACEITA__ UMA FUNÇÃO__... -------> essa função 
+
+
+será 
+
+
+
+_______EXECUTADA _________ SEMPRE QUE 
+
+
+O 
+
+'state' (o state no CENTRAL STORE)
+
+
+
+
+
+for 
+
+
+ATUALIZADO/ALTERADO... ------> e __QUANDO O STATE NO __ 'central store' É ALTERADO? -------->
+
+
+é 
+
+
+ALTERADO __SEMPRE QUE __ UMA 'ACTION' ALCANÇA O 'REDUCER'...
+
+
+
+
+
+
+
+
+---> e essa função interna, passada 
+
+ao 
+
+'SUBSCRIBE',
+
+
+___NUNCA RECEBE ARGUMENTOS... (é uma arrow function anônima comum, sem parâmetros...)
+
+
+
+
+
+
+ex:
+
+
+
+
+
+store.subscribe(
+    () => {}
+)
+
+
+
+
+----------------------------------------------------------------------
+
+
+
+AÍ, NESSA FUNÇÃO INTERNA,
+
+
+dentro do function body,
+
+
+VAMOS 
+
+
+
+____EXECUTAR__________ QUALQUER CÓDIGO QUE QUISERMOS, CÓDIGO QUE SERÁ ENTÃO 
+
+EXECUTADO 
+
+
+
+SEMPRE QUE O STATE EM 'central store' for atualizado ('''code that runs upon state updates....'''')
+
+
+
+
+
+
+
+
+
+
+--> aqui, por exemplo,
+
+professor 
+
+vai 
+
+
+passar/escrever 
+
+um 
+
+
+CONSOLE.LOG 
+
+
+
+de 
+
+'[Subscription]', store.getState() 
+
+
+
+ex:
+
+
+
+
+
+store.subscribe(() => {
+    console.log('[Subscription]', store.getState());
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ---------------> ISSO 
+
+
+VAI 
+
+
+
+NOS 
+
+
+DAR UM CONSOLE LOG 
+
+
+QUE 
+
+DIRÁ 
+
+
+'[Subscription]' e 
+
+
+VAI 
+
+NOS 
+
+DAR/PRINTAR
+ 
+
+ O 
+
+ VALOR DO 'state' no CENTRAL STORE.... (provavelmente o state de central store DEPOIS DE TER SIDO ALTERADO pela ação de 'reducer', com aquelas 'action'...)
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------> MAS ISSO AÍ QUE EU ESCREVI ACIMA __NÃO ACONTECE/NÃO ACONTECEU__... --------> 
+
+
+
+
+
+NÓS AINDA 
+
+RECEBEMOS, NO TERMINAL,
+
+AQUELE
+
+
+CONSOLE.LOG 
+
+de 
+
+
+
+'{ counter: 0}
+{ counter: 11}'
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+ou seja,
+ 
+
+
+o console.log() 
+
+
+de 
+
+'store.subscribe()'
+
+
+NÃO FOI DISPARADO...
+
+
+
+---------------------------------
+
+
+
+
+PROFESSOR 
+
+NOS 
+
+EXPLICA QUE 
+
+
+A 'ATRIBUIÇÃO' 
+
+
+
+de 
+
+
+'.subscribe', 
+
+
+
+
+nesse nosso projeto (e em qualquer projeto) É EXECUTAR 
+
+AQUELE 
+
+
+CÓDIGO NO FUNCTION BODY _________sEMPRE________ QUE 
+
+
+
+
+o 'state' em 'centralStore' for alterado...
+
+
+
+
+
+---> ué, mas PQ DIABOS AQUI, NO NOSSO CÓDIGO, 
+
+
+A 'subscription' NÃO FOI DISPARADA IMEDIATAMENTE? (afinal de contas,
+
+
+os 'dispatches' teoricamente mudaram o valor do 'state' na central store, não...? ) -------> 
+
+
+
+A 
+
+
+RAZÃO PARA ISSO É BEM SIMPLES, É A ORDEM DE ESCRITA DAS LINHAS...
+
+
+
+
+
+eX:
+
+
+
+
+const redux = require('redux');
+const createStore = redux.createStore;
+
+
+
+
+
+
+const initialState = {
+    counter: 0
+}
+
+
+
+
+const rootReducer = (state = initialState, action) => { //////////////////////////// 1
+         if (action.type === 'INC_COUNTER') {
+        return {
+            ...state,
+            counter: state.counter + 1 
+        }
+    }
+
+
+    if (action.type === 'ADD_COUNTER') {
+        return {
+            ...state,
+            counter: state.counter + action.value 
+        }
+    }
+
+
+
+    return state;  
+    }
+
+
+
+
+const store = createStore(rootReducer);  /////////////2
+
+console.log(store.getState());
+
+
+
+
+
+store.dispatch(    ///////////////3
+    {
+        type: 'INC_COUNTER'
+    }
+)
+
+
+
+store.dispatch( //////////////3
+    {
+        type: 'ADD_COUNTER',
+        value: 10
+    }
+)
+
+
+console.log(store.getState());
+
+
+
+
+store.subscribe(  //////////4
+    () => { 
+    console.log('[Subscription]', store.getState());
+}); 
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+A SOLUÇÃO PARA ISSO,
+
+
+A SOLUÇÃO PARA __ENXERGAR ____ AQUELE CONSOLE.LOG dentro 
+
+
+de 
+
+'.subscribe', para 
+
+QUE 
+
+ELE SEJA EXECUTADO,
+
+
+
+é 
+
+
+SIMPLESMENTE 
+
+
+COLOCAR ESSE 
+
+
+
+
+
+'SUBSCRIBE' ______________ANTES____________ DO DISPATCH DAS ACTIONS... (pq aí, QUANDO AS 
+
+ACTIONS REALMENTE FOREM LIDAS/ENVIADAS,
+
+
+o CÓDIGO DENTRO 
+
+DO BODY DA FUNÇÃO INTERNA DE
+
+
+
+
+'subscribe', no caso esse console.log,
+
+
+___vAI SER EXECUTADO _________AUTOMATICAMENTE....) ------------> e aí, a ordem de execução estará correta...
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const redux = require('redux');
+const createStore = redux.createStore;
+
+
+
+
+
+
+const initialState = {
+    counter: 0
+}
+
+
+
+
+const rootReducer = (state = initialState, action) => { //////////////////////////// 1
+         if (action.type === 'INC_COUNTER') {
+        return {
+            ...state,
+            counter: state.counter + 1 
+        }
+    }
+
+
+    if (action.type === 'ADD_COUNTER') {
+        return {
+            ...state,
+            counter: state.counter + action.value 
+        }
+    }
+    return state;  
+    }
+
+
+
+
+const store = createStore(rootReducer);  /////////////2
+
+console.log(store.getState());
+
+
+
+
+store.subscribe(  //////////3
+    () => { 
+    console.log('[Subscription]', store.getState());
+}); 
+
+
+
+
+
+store.dispatch(    ///////////////4
+    {
+        type: 'INC_COUNTER'
+    }
+)
+
+
+
+store.dispatch( //////////////4
+    {
+        type: 'ADD_COUNTER',
+        value: 10
+    }
+)
+
+
+console.log(store.getState());
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+
+
+É POR ISSO, EXPLICA O PROFESSOR,
+
+QUE 
+
+___TIPICAMENTE___ AS 
+
+'SUBSCRIPTIONS' ( '.subscribe' )
+
+
+
+
+SÃO POSICIONADAS/ESCRITAS ____________ANTES__________ DAS ACTIONS... isso pq 
+
+quando 
+
+as 
+
+actions 
+
+forem executadas/lidas/enviadas ao reducer, que 
+
+então altera o state,
+
+O CÓDIGO 
+
+DENTRO 
+
+DESSAS 
+
+'.subscribe'
+
+
+é
+
+AUTOMATICAMENTE EXECUTADO....
+
+
+
+(e isso realmente funcionará...)
+
+
+
+
+
+
+
+---> AGORA, COM ISSO, 
+
+
+
+NOSSO 
+
+
+
+______ OUTPUT ___ NO CONSOLE __ TERÁ MUDADO COMPLETAMENTE....  -----------> 
+
+
+
+enxergaremos 
+
+o seguinte output:
+
+
+
+
+---------------------------------
+
+
+{ counter: 0 }
+[Subscription] { counter: 1 }
+[Subscription] { counter: 11 }
+{ counter: 11 }
+
+
+---------------------------------------
+
+
+
+
+
+
+ESSE OUTPUT AQUI É __EXTREMAMENTE ÚTIL__ PARA VER 
+
+COMO 
+O 
+
+NOSSO STATE FOI ALTERADO PELO 'Reducer' e pelas 'action'...
+
+
+
+
+
+{ counter: 0 }  ////ANTES DO REDUCER/ACTIONS, logo após a CRIAÇÃO do 'central store', e definição desse STATE...
+[Subscription] { counter: 1 } //////'Subscribe/subscription' É EXECUTADA pq __O CENTRAL STORE__ foi alterado pela ação do REDUCER e __DA PRIMEIRA 'ACTION', a action de 'type' (propriedade) 'INC_COUNTER'....
+[Subscription] { counter: 11 } //////'Subscribe/subscription' É EXECUTADA pq __O CENTRAL STORE__ foi alterado pela ação do REDUCER e __DA SEGUNDA 'ACTION', a action de 'type' (propriedade) 'ADD_COUNTER'....
+{ counter: 11 } /////////////////CÓDIGO QUE MOSTRA O RESULTADO NO 'STATE' DO CENTRAL STORE ______aPÓS ___ AS ACTIONS TEREM SIDO 'dispatched'... (é o 'console.log(store.getState())' VISTO logo depois dos DISPATCHES....)
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+
+
+
+**** TIPICAMENTE, EXPLICA O PROFESSOR,
+
+UMA 
+
+'SUBSCRIPTION' É ADICIONADA 
+
+
+
+______SEMPRE __ LOGO APÓS ___ A CRIAÇAO 
+
+
+DE UMA 
+'STORE'  (que por sua vez, geralmente vem DEPOIS DA CRIAÇÃO DE UM 'REDUCER'...) 
+
+
+            (ADEMAIS, GERALMENTE OS 'DISPATCHES' de actions VEM POR ÚLTIMO, ÚLTIMO LUGAR NO ARQUIVO, DEPOIS 
+                    DO SUBSCRIBE...)
+
+
+
+
+
+
+
+
+
+ORDEM COMUM/GERAL:
+
+
+
+
+1) REDUCER 
+
+
+
+2) CRIAÇÃO DA 'STORE' (central store) 
+
+
+
+3) 'SUBSCRIPTIONS'/subscribe....
+
+
+
+
+4) CÓDIGO DOS DISPATCHES/ACTIONS...
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+A MORAL/PROPÓSITO DE 
+
+
+ESCREVER 
+
+AS 
+
+
+
+'subscriptions'
+
+
+
+__ANTES__ DOS DISPATCHES É QUE 
+
+
+______aS SUBSCRIPTIONS VÃO SEMPRE NOS 'NOTIFICAR'/EXECUTAR CÓDIGO 
+
+
+A PARTIR 
+
+
+DE TODOS OS FUTUROS 
+
+'dispatches' (os dispatches escritos abaixo delas, na verdade... os dispatches escritos acima 
+
+NÃO SOFREM EFEITOS/NÃO SÃO SUPERVISIONADOS PELOS '.subscribe'...)
+
+
+
+
+-----------------------------------------------------------------------------
+
+
+
+
+
+E A FUNÇÃO DENTRO 
+
+DO 
+
+() => {}
+
+
+no 
+
+'.subscribe' 
+
+
+__VAI SER EXECUTADA__ SEMPRE QUE 
+
+UMA 
+
+'ACTION' FOR 'DISPATCHEADA'... (sempre que uma action for dispatcheada e sempre que 
+o store FOR MUDADO IMUTÁVELMENTE/MUTAVELMENTE (mas evite mudar de forma 'mutável'...))
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> o professor REEXECUTA 
+
+
+'node redux-basics.js',
+
+
+
+e 
+
+
+nos mostra aquele 
+
+output 
+
+
+de 
+
+
+{ counter: 0 }
+[Subscription] { counter: 1 }
+[Subscription] { counter: 11 }
+{ counter: 11 }
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+AS ACTIONS SÃO DISPATCHEADAS, nesse exemplo,
+
+
+ANTES
+
+DO 'console.log(store.getState())' posicionado 
+
+LÁ EMBAIXO, 
+
+
+depois 
+
+
+dos dispatches...
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+-------------------> É ASSIM, PORTANTO, QUE 
+
+UMA 
+
+'SUBSCRIPTION' FUNCIONA... ---------> ela é triggada/executa o seu código
+
+
+__SEMPRE QUE
+
+O 
+
+'state'
+
+
+em 
+
+
+'local store'
+
+É 
+
+ATUALIZADO...
+
+
+
+
+
+------------------------
+
+
+ESSE ESQUEMA TODO É MUITO BOM, 
+
+
+E NOS MOSTRA 
+
+BEM 
+TODOS 
+
+
+OS 
+
+'BUILDING BLOCKS'
+
+
+do 
+
+
+
+''''REDUX''''...
+
+
+
+
+-------------------------
+
+
+ENTRENTANTO, UM PROBLEMA GRANDE:
+
+
+
+
+
+
+
+ESSE ARQUIVO/APLICATIVO 
+
+
+'redux-basics.js'
+
+
+NÃO 
+
+NOS 
+
+MOSTRA 
+
+NEM UM POUCO 
+
+COMO 
+
+DEVE 
+
+SER 
+
+FEITA 
+
+
+A IMPLEMENTAÇÃO 
+
+
+DE 
+
+'REDUX'
+
+
+NO NOSSO PROJETO 
+
+'react'...  
+
+
+(
+
+    deve ser bem mais complicado.
+)
+
+
+
+
+
+
+
+VAMOS VER COMO CONECTAR O 
+
+
+'REDUX' 
+
+NO REACT,
+
+na próxima aula...

@@ -1,0 +1,39 @@
+
+
+BEM, PARA USAR REACTOHOOKs, você 
+PRECISA 
+
+
+usar 
+
+
+a versão 
+
+correta... ---> 
+
+
+
+
+
+
+A VERSÃO DO REACT TEM QUE SER SUPERIOR 
+
+À 
+
+
+16.8... ------> 
+
+
+
+
+
+A FEATURE DOS HOOKS FOI INTRODUZIDA NESSA VERSÃO....
+
+
+
+
+
+----------------------------
+
+
+

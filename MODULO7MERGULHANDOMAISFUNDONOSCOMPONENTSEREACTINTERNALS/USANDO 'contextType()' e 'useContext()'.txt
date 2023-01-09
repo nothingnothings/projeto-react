@@ -1,0 +1,1724 @@
+
+
+
+
+
+
+
+--> APRENDEMOS SOBRE A 'CONTEXT API'  ---> E A MANEIRA/JEITO QUE ESTAMOS 
+
+
+A UTILIZANDO 
+
+É 
+
+'PERFECTLY FINE.'.. ---------->   ENTRETANTO,
+
+
+
+
+___eXISTE ___ UMA MANEIRA ___ MAIS 
+
+
+ELEGANTE 
+
+
+
+__DE USAR 
+
+a 
+
+'context api'
+
+
+
+
+EM CLASS-BASED COMPONENTS... (
+
+
+mais elegante do que aquele LONGO processo em que temos que seguir as etapas:
+
+
+1) CRIAR um arquivo 'xxxxContext.js'....
+
+
+
+
+
+2) DEFINIR um 'VALOR DEFAULT' do seu objeto/props/propriedades nesse objeto, lá em 'xxxContent.js' ---> esses 'props' serão utilizados QUANDO VOCÊ NÃO PASSAR UM PROP 'value' no lugar do código em que você escrever '<xxxxxContext.Provider></xxxxContent.Provider>'....  --> ex:   value={{propriedade: () => {}}}
+
+
+
+
+3) WRAPPAR O LUGAR DO SEU CÓDIGO EM QUE VOCÊ VAI QUERER USAR SEU CONTEXT, por meio da sintaxe '<xxxxContent.Consumer></xxxxContent.Consumer>'...
+
+
+4) ABAIXO DO 'WRAP'/componente(s) wrappado(s) com o CONTEXT, você deve ENFIAR SEU CÓDIGO/COMPONENTE WRAPPADO PELO 'xxxContent.Consumer' 
+        DENTRO DO BODY DE UMA ARROW FUNCTION, que por sua vez ficará wrappada em um '{}'... 
+
+
+
+5) VOCÊ DEVE PASSAR UM ARGUMENTO DE 'context' nessa arrow function...
+
+
+
+6) Finalmente, aí você poderá usar OS VALORES/propriedades/props definidos 
+lá no 'value' do 'xxxContext.Provider', por meio da sintaxe   'context.propriedade'...
+
+
+
+ex:
+
+
+
+'''''''''''''
+      <Aux>
+        <AuthContext.Consumer>
+        {context => context.authenticated ? ( <p className={Pessoa.green}>VALIDATION SUCCEEDED</p> ) : ( <p className={Pessoa.red}>VALIDATION INCOMPLETE</p> ) }
+        </AuthContext.Consumer>
+'''''''''''''''''''''
+
+
+)
+
+
+
+
+---------------------------------------
+
+
+
+
+CERTO,
+
+
+E QUAL É A MANEIRA MAIS ELEGANTE DE FAZER ISSO nos class-based components????
+
+
+
+(o approach mais elegante).....
+
+
+
+(OBS::: TAMBÉM HÁ UM APPROACH/MANEIRA DE USAR 'context' NOS __FUNCTIONAL COMPONENTS/REACTHOOKS)
+
+
+
+--------------------------------------
+
+
+
+
+
+
+VEREMOS PRIMEIRO O APPROACH 'ELEGANTE' de 
+
+adicionar 
+
+
+context 
+
+
+em CLASS-BASED COMPONENTS... -----> 
+
+
+
+
+No componente 'Person'...  e  em 'CLASS BASED COMPONENTS' (é exclusivo aos class-based components, esse truque),
+
+
+
+VOCÊ 
+
+
+__PODE USAR___ UM  
+
+
+________PADRÃO ALTERNATIVO____ PARA 
+
+
+
+DEFINIR 
+
+
+
+AQUELE NEGÓCIO DE 
+
+
+'<AuthContext.Consumer>' ------------> LEMBRE-SE:
+
+
+
+
+
+
+o 
+
+
+'<AuthContext.Consumer>'
+
+
+é aquele negócio que exige uma 'função wrapper' 
+
+
+
+de 
+
+
+
+'{(context) => {SEU CÓDIGO JSX/CÓDIGO NORMAL}}'...
+
+
+
+
+
+----------> e por essa sintaxe 
+
+
+SER DE DIFÍCIL LEITURA E COMPREENSÃO,
+
+
+EXISTE UMA 
+
+
+SINTAXE ALTERNATIVA.........  ----> outra razão 
+
+
+desse código 
+
+ser meio 
+
+merda
+ 
+
+ é que 
+
+
+ ELE 
+
+ SÓ TE DÁ 
+
+ ACESSO 
+
+
+ AO 
+
+
+ 'context' 
+
+
+
+ ___DENTRO DO SEU CÓDIGO JSX____...
+
+
+
+
+Ex( código de person):
+
+
+
+
+
+
+class Person extends Component {
+  constructor(props) {
+    
+    super(props); 
+    this.inputProperty = React.createRef();
+  }
+
+  componentDidMount() {
+    
+    this.inputProperty.current.focus();
+  }
+
+  render() {
+    console.log('[Person.js] rendering...');
+
+    return (
+      
+
+      <Aux>
+        <AuthContext.Consumer>
+        {context => context.authenticated ? ( <p className={Pessoa.green}>VALIDATION SUCCEEDED</p> ) : ( <p className={Pessoa.red}>VALIDATION INCOMPLETE</p> ) }
+        </AuthContext.Consumer> ///////// VOCÊ SÓ PODE USAR o 'context'/props do CONTEXT ___DENTRO DO SEU CÓDIGO JSX__, NA FORMA''''' NATIVA''''/crua....
+
+        <p key="i1" onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+
+        <p key="i2">{this.props.children}</p>
+
+        <input
+          key="i3 "
+          ref={this.inputProperty}
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+Person.propTypes = {
+  
+  click: PropTypes.func,
+  age: PropTypes.number,
+  name: PropTypes.string,
+  changed: PropTypes.func,
+}; 
+
+
+
+export default withClass(Person, Pessoa.Person);
+
+
+
+-------------------------------------------------
+
+
+
+
+
+Isso quer dizer, por exemplo,
+
+
+
+QUE SE NÓS QUISÉSSEMOS 
+
+
+USAR 
+
+'context'
+
+
+
+em outros lugares de nosso component 'person',
+
+como por exemplo 
+
+
+
+'componentDidMount',
+
+
+NÓS __NÃO PODERÍAMOS__, por causa dessa limitação (''só pode ser usado dentro do CÓDIGO JSX de Person...''')...
+
+
+
+
+
+
+
+
+---> E realmente precisamos de 'context' no componentDidMount? ---> PROFESSOR DIZ QUE 
+
+
+SIM, 
+
+DIZ QUE TAMBÉM 
+
+
+PRECISAMOS DO AUTHENTICATION STATUS NESSE LOCAL, 
+
+
+pq nesse local nós podemos/poderíamos/talvez precisássemos 
+
+
+
+_______eNVIAR UM HTTP REQUEST___ A UM SERVIDOR (para fazer o CHECK se aquele usuário
+ realmente é AUTORIZADO/a autenticação em si...) ---------> um 
+
+
+ HTTP REQUEST __que ENVIA __ o user ID,
+
+ por exemplo... --------> bem, se você quiser/QUISESSE
+
+
+ FAZER ISSO,
+
+
+ VOCÊ 
+
+SERIA IMPEDIDO 
+
+
+DE USAR 
+
+
+ESSA SINTAXE 
+
+
+DO 
+
+'context'... (A sintaxe 'COMUM/nativa' dos objetos CONTEXT NÃO FUNCIONA 
+
+FORA DO RETURN STATEMENT DE CÓDIGO JSX dos seus components...)
+
+
+
+
+
+
+
+
+
+---> THANKFULLY,
+
+o 
+
+
+REACT 16.6 ADICIONOU __OUTRA MANEIRA__ DE USAR 
+
+
+
+O OBJETO 'CONTEXT'... ------------------> 
+
+
+
+
+
+
+
+
+------> ESSA OUTRA MANEIRA 
+
+
+de usar 
+
+
+o objeto context 
+
+
+
+ENVOLVE 
+
+uso 
+
+
+
+de uma PROPRIEDADE 
+
+ESPECIAL, uma propriedade que você 
+
+
+tem que 
+
+DEFINIR 
+
+com 
+
+'static' 
+
+NO INÍCIO... -------> E ESSA 
+
+
+
+PROPRIEDADE 
+
+SERÁ 
+
+CHAMADA 
+
+DE 
+
+
+
+'contextType'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+static contextType = ...
+
+
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+O PROFESSOR EXPLICA QUE ____ESSA PROPRIEDADE __ DEVE OBRIGATORIAMENTE 
+
+
+SER CHAMADA 
+
+
+DE 
+
+'contextType'... ---------> e também 
+
+
+TEM QUE 
+
+SER UMA 
+
+
+PROPRIEDADE 
+
+
+__ESTÁTICA___.... ------------->  '''''PROPRIEDADES ESTÁTICAS''''' ------> ISSO SIMPLESMENTE SIGNIFICA QUE ___eSSE MÉTODO ___ PODE SER INVOCADO/UTILIZADO  ___DO LADO __ DE FORA __ DESSA CLASSE 'Person' __ SEM PRECISAR ___iNSTANCIAR ___ A CLASSE 'PERSON' ANTERIORMENTE/ANTES de seu uso...
+
+
+
+
+
+
+
+
+----> E O __rEACT___ VAI ACESSAR O 'contextType'
+ 
+ para nós,
+
+ POR ASSIM DIZER...
+
+
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+---> CERTO.
+
+
+
+DEVEMOS 
+
+
+SETTAR UM VALOR 
+
+para 
+
+
+'contextType'... 
+
+
+
+
+
+ESSE VALOR ______dEVE___ SER SEU OBJETO 'Context'... ---> nesse nosso caso, será o 'AuthContext'....
+
+
+
+
+ex:
+
+
+
+
+
+import AuthContext from '../../../context/auth-context';
+
+
+
+class Person extends Component {
+  constructor(props) {
+    
+    super(props); 
+    this.inputProperty = React.createRef();
+  }
+
+  componentDidMount() {
+    
+    this.inputProperty.current.focus();
+  }
+
+
+
+
+    static contextType = AuthContext;
+
+
+
+
+
+
+
+
+
+  render() {
+    console.log('[Person.js] rendering...');
+
+    return (
+      
+
+      <Aux>
+        <AuthContext.Consumer>
+        {context => context.authenticated ? ( <p className={Pessoa.green}>VALIDATION SUCCEEDED</p> ) : ( <p className={Pessoa.red}>VALIDATION INCOMPLETE</p> ) }
+        </AuthContext.Consumer> 
+
+        <p key="i1" onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+
+        <p key="i2">{this.props.children}</p>
+
+        <input
+          key="i3 "
+          ref={this.inputProperty}
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+Person.propTypes = {
+  
+  click: PropTypes.func,
+  age: PropTypes.number,
+  name: PropTypes.string,
+  changed: PropTypes.func,
+}; 
+
+
+
+export default withClass(Person, Pessoa.Person);
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+DEVE SIMPLESMENTE SER O NOME DO SEU OBJETO 
+
+''Context'' (como 'authContext')... -------> VOCÊ 
+
+
+
+NÃO DEVE ESCREVER NADA ALÉM DISSO,
+
+
+NÃO DEVE ESCREVER CÓDIGO JSX, NADA, NADA... -----> isso, 
+
+
+essa 
+
+
+PROPRIEDADE 
+
+
+
+
+definida COM ESSE VALOR, 
+
+
+__VAI DEIXAR ___ O 
+
+
+REACT ___ ____CONECTAR ____ AUTOMATICAMENTE 
+
+
+
+O 
+
+'CLASS-BASED COMPONENT' 
+
+
+EM QUE 
+
+VOCÊ 
+
+COLOCOU 
+
+
+
+ESSE 
+
+'static contextType = AuthContext;'
+
+
+
+
+____AO SEU OBJETO 'CONTEXT'... (o objeto context que você definiu nessa propriedade estática)... ------> 
+
+
+E ELE FARÁ ESSE PROCESSO 
+
+__POR TRÁS DAS CENAS___ (é um monte de código sendo rodado).
+
+
+
+ 
+-------------------------------------------
+
+
+
+
+E ESSA SINTAXE 
+
+'static contextType = AuthContext;'
+
+
+
+
+__TE __DÁ UMA __NOVA PROPRIEDADE ____ 
+
+
+NESSE component 'Person'... ------------------> 
+
+
+
+
+
+O NOME 
+
+
+DESSA PROPRIEDADE É 
+
+A PROPRIEDADE 
+
+
+'this.context'....  --------> DEVEMOS USAR o 'this'... ---> 'this' É DADO A NÓS PELO REACT, e se 
+
+REFERE 
+
+à CLASSE 'PERSOn'...
+
+
+
+
+
+
+PARA DEMONSTRAR O FUNCIONAMENTO DE 'this.context', professor 
+
+faz um 
+
+
+CONSOLE.LOG, em 'componentDidMount()',
+
+
+de 
+
+'this.context.authenticated'.... (propriedade/prop 'authenticated' DENTRO DO OBJETO CONTEXT 'AuthContext', que foi vinculado __À CLASSE/COMPONENT 'PERSON'...)
+
+
+
+
+
+
+
+
+
+
+
+Ex:
+
+
+
+
+
+
+
+
+
+
+
+
+
+import AuthContext from '../../../context/auth-context';
+
+
+
+class Person extends Component {
+  constructor(props) {
+    
+    super(props); 
+    this.inputProperty = React.createRef();
+  }
+
+  componentDidMount() {
+    
+    this.inputProperty.current.focus();
+    console.log(this.context.authenticated);
+  }
+
+
+
+
+    static contextType = AuthContext;
+
+
+
+
+
+
+
+
+
+  render() {
+    console.log('[Person.js] rendering...');
+
+    return (
+      
+
+      <Aux>
+        <AuthContext.Consumer>
+        {context => context.authenticated ? ( <p className={Pessoa.green}>VALIDATION SUCCEEDED</p> ) : ( <p className={Pessoa.red}>VALIDATION INCOMPLETE</p> ) }
+        </AuthContext.Consumer> 
+
+        <p key="i1" onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+
+        <p key="i2">{this.props.children}</p>
+
+        <input
+          key="i3 "
+          ref={this.inputProperty}
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+Person.propTypes = {
+  
+  click: PropTypes.func,
+  age: PropTypes.number,
+  name: PropTypes.string,
+  changed: PropTypes.func,
+}; 
+
+
+
+export default withClass(Person, Pessoa.Person);
+
+
+
+
+
+
+
+
+
+
+--------------------------
+
+
+
+
+POR MEIO DESSE APPROACH MAIS ''ELEGANTE'', ESSE approach 
+
+do 
+
+
+'contextType', 
+
+
+
+NÓS PODEMOS 
+
+
+
+UTILIZAR 
+
+
+
+
+
+'CONTEXT', objetos CONTEXT,
+
+
+
+__EM LUGARES DO NOSSO CÓDIGO QUE NÃO SÃO OBRIGATORIAMENTE 
+
+
+o return statement de código JSX do nosso component...
+
+
+
+
+
+
+-------> isso nos deixa CONSEGUIR ACESSO AO 'CONTEXT' em lugares como 
+
+
+'componentDidMount()' (que é um LUGAR EM QUE ANTES NÃO CONSEGUÍAMOS USAR
+
+'context' )
+
+
+
+
+
+
+
+
+----> e vocÊ ainda pode, é claro, usar 
+
+
+'this.context' 
+
+
+NA SUA RENDER FUNCTION, NORMAL MSM...
+
+
+(E VOCÊ DEVE REMOVER AQUELE 
+
+'<AuthContext.Consumer>' CASO VOCÊ DECIDA USAR ESSE APPROACH MAIS MODERNO, DE 'this.context')
+
+
+
+
+
+EX (de como fica o component 'Person'):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  render() {
+    console.log('[Person.js] rendering...');
+
+    return (
+     
+
+      <Aux>
+      
+        {this.context.authenticated ? ( <p className={Pessoa.green}>VALIDATION SUCCEEDED</p> ) : ( <p className={Pessoa.red}>VALIDATION INCOMPLETE</p> ) } 
+        
+
+        <p key="i1" onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+
+        <p key="i2">{this.props.children}</p>
+
+        <input
+          key="i3 "
+          // ref={(inputElement) => {inputElement.focus();}} /////////ISSO NÃO FUNCIONARÁ. 'cannot read FOCUS property of NULL'...
+          // ref={(inputElement) => {this.inputProperty = inputElement}} //// 1o APPROACH para  o USO DE 'ref'... AQUI, É USADO PARA O ESTILO 'FOCUS' ESPECIFICADO AO INPUT ELEMENT DO COMPONENT 'PERSON' EM QUE O USUÁRIO REALMENTE DIGITARÁ/ESTARÁ DIGITANDO...
+          ref={this.inputProperty}
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+
+
+
+
+  --------------------------------------------------
+
+
+  'this.context' --> é this 
+
+
+  PQ __SE REFERE__ 
+
+A 
+
+
+
+'THIS CONTEXT PROPERTY THAT REACT GAVE YOU'....
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+---> recarregamos o código e 
+
+vemos no console.log 
+
+
+
+o valor 'false' e 'true', 
+
+
+sinalizando que nosso contexto realmente foi utilizado com êxito 
+
+FORA 
+
+do return statement de RENDER do código JSX...
+
+
+
+
+----------------------------------------------------------
+
+
+
+
+----> ESSE APPROACH 'MODERNO' PODE SER UTILIZADO EM CLASS-BASED COMPONENTS ----> 
+
+
+
+E O PROFESSOR RECOMENDA SUA UTILIZAÇÃO, POIS 
+
+É ___ MENOR___ E MAIS FÁCIL DE SER USADO...  ---> e também
+
+
+TE DÁ ACESSO A 
+
+
+'CONTEXT' EM LUGARES EM QUE VOCê ANTERIORMENTE NÃO TINHA/NÃO CONSEGUIA 
+
+ACESSO A ELE (como 'componentDidMount' e OUTROS LIFECYCLE HOOks)
+
+
+---------------------------------------------------
+
+
+
+
+
+
+
+EM 'FUNCTIONAL COMPONENTS',
+
+
+
+
+O APPROACH MODERNO __NÃO SE ENCONTRA DISPONÍVEL___... ----> LÁ, 
+
+
+SÓ PODEMOS 
+
+usar 
+
+
+o 
+
+
+'<AuthContext.Consumer>' 
+
+
+( MAS  o 
+
+'static contextType = AuthContext;'...   _NÃO É SUPORTADO__....) 
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------
+
+
+
+
+
+SORTE NOSSA QUE 
+
+
+___O REACT__ 'GOT US COVERED' _, POR MEIO 
+
+
+DOS 
+
+
+
+___HOOKS__... -----> você/nós 
+
+
+PODEMOS 
+
+IMPORTAR 
+
+
+
+
+O HOOK 
+
+
+'useContext' ------> ESSE HOOK ___ TE DEIXA __ GANHAR ACESSO __ 
+
+
+
+AO MÉTODO 
+
+'useContext'.... esse método te possibilita 
+
+ganhar 
+
+
+acesso 
+
+ao 
+
+seu 
+
+
+'context'
+
+
+EM ____QUALQUER LUGAR ___ DO SEU FUNCTIONAL COMPONENT.... (qualquer lugar do FUNCTION BODY do seu functional component)
+
+
+
+
+
+ex:
+
+
+
+import React, { useEffect, useRef, useContext } from 'react';
+
+
+
+
+
+
+
+PROFESSOR VAI IMPORTAR 
+
+
+ESSE NEGÓCIO EM 'COCKPIT.JS'...
+
+
+
+
+--------------------------------------------------------------
+
+
+
+
+Professor demonstra que pode usar esse negócio em qualquer 
+
+
+lugar 
+
+por meio 
+
+da escrita
+
+
+DE UM CÓDIGO 
+
+
+NO __ROOT___ do 
+
+
+body 
+
+do component 
+
+
+'
+cockpit'...
+
+
+
+
+
+ELE 
+
+
+CRIA UMA CONST DE 
+
+
+NOME 
+
+
+'authContext'... (e diz que podemos nomear esse negócio do jeito que quisermos)
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+const Cockpit = props => {
+
+
+
+const authContext = ...
+
+
+
+
+
+
+
+
+}
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+DENTRO DO VALOR DESSA CONSTANTE,
+ 
+ O PROFESSOR VAI SIMPLESMENTE 
+
+
+
+ USAR O MÉTODO 
+
+ 'useContext()'....
+
+
+
+
+ ex:
+
+
+
+
+
+
+import React, { useEffect, useRef, useContext } from 'react';
+
+import AuthContext from '../../context/auth-context';
+ 
+const Cockpit = props => {
+
+
+
+const authContext = useContext();
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+
+COMO ARGUMENTO
+
+DESSE MÉTODO, 
+
+É ÓBVIO QUE 
+
+
+VAMOS 
+
+PASSAR 
+
+O NOSSO 
+
+OBJETO 'context',
+
+que nesse caso 
+
+É O 
+
+
+'AuthContext'...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useRef, useContext } from 'react';
+
+import AuthContext from '../../context/auth-context';
+ 
+const Cockpit = props => {
+
+
+
+const authContext = useContext(AuthContext);
+
+
+
+
+
+
+
+
+}
+
+
+
+-----------------------------------------
+
+
+
+
+
+SE VOCê FIZER ISSO,
+ 
+
+
+O REACT VAI FAZER A CONEXÃO DO OBJETO 'context' COM O 
+
+
+SEU COMPONENT, POR TRÁS DAS CENAS.... 
+
+
+
+
+
+
+
+
+
+
+---> AGORA, PORTANTO,
+
+
+
+'AuthContext' SERÁ UMA __CONSTANTE___ QUE 
+
+
+VAI SEGURAR INFORMAÇÕES/DATA 
+
+
+__aCERCA __ DO SEU 
+
+
+CÓDIGO 
+
+
+
+INSCRITO NO 
+
+OBJETO 
+'context'... 
+
+
+
+--> para demonstrar esse fato, professor faz um 
+
+console.log 
+
+
+de 
+
+
+'authContext.authenticated'...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useRef, useContext } from 'react';
+
+import AuthContext from '../../context/auth-context';
+ 
+const Cockpit = props => {
+
+const authContext = useContext(AuthContext);
+
+
+console.log(authContext.authenticated); ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+}
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+E NÓS PODEMOS, É CLARO, USAR 
+
+ESSE CONTEXTO 
+
+
+
+NO NOSSO 
+
+__CÓDIGO JSX___ RETORNADO LÁ EMBAIXO, POR EXEMPLO...
+
+
+
+ex:
+
+
+
+
+
+
+import React, { useEffect, useRef, useContext } from 'react';
+
+import AuthContext from '../../context/auth-context';
+ 
+const Cockpit = props => {
+
+
+const authContext = useContext(AuthContext); //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+console.log(authContext.authenticated); /////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+ const toggleBtnRef = useRef(null);      
+
+
+  useEffect(() => { 
+    toggleBtnRef.current.click();
+  
+  }, 
+  []
+  );
+
+
+    useEffect(
+      ()=> {
+        console.log('[Cockpit.js] 2nd useEffect');
+        
+
+        return() => {
+          console.log('[Cockpit.js] cleanup work in 2nd useEffect');
+        };
+
+    });
+
+
+    const classes = [];
+    let btnClass = '';
+ 
+    if (props.showPersons) {
+      btnClass = cockpit.red;
+    }
+
+
+    if(props.personsLength <= 2) {
+    
+      
+      classes.push(cockpit.red); 
+    }
+
+    
+    if(props.personsLength <= 1) {
+      classes.push(cockpit.bold);
+    }
+
+
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <div className={cockpit.buttons}>
+        <button 
+        ref={toggleBtnRef}
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button>
+        <AuthContext.Consumer>
+
+       { (context) => <button onClick={context.login}>Login</button> }
+        </AuthContext.Consumer>
+        </div>
+        </div>
+    );
+
+
+}
+
+
+
+
+
+----------------------------------
+
+
+
+
+OU SEJA,
+
+AGORA 
+
+
+PODEMOS UTILIZAR 
+
+
+ESSA CONST 
+
+'authContext' LÁ EMBAIXO,
+
+
+NO RENDER do código jsx.... --> podemos DEIXAR MAIS SIMPLES AQUELAS LINHAS DE  
+
+
+'''''
+
+        <AuthContext.Consumer>
+
+       { (context) => <button onClick={context.login}>Login</button> }
+        </AuthContext.Consumer>
+
+
+''''''''''''
+
+
+(ESSE É O APPROACH TRADICIONAL, VELHO, DE 'CONTEXT', que podemos SUBSTITUIR 
+
+POR ESSA SINTAXE DOS REACTHOOKS, mais moderna, a sintaxe do 'useContext'...)
+
+
+
+
+
+------------------
+
+
+
+
+
+NÓS VAMOS ESCREVER, NO LUGAR 
+
+
+dessas linhas aí, 
+
+
+isso aqui:
+
+
+
+
+
+
+
+
+    return (
+        <div className={cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <div className={cockpit.buttons}>
+        <button 
+        ref={toggleBtnRef}
+        className={btnClass} //aqui temos um PROBLEMA. o ESTILO TOGGLE NÃO ESTÁ FUNCIONANDO...
+        onClick={props.clicked}>Show/Hide Persons</button>
+      {<button onClick={authContext.login}>Login</button> } //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+        </div>
+        </div>
+    );
+    
+
+
+----------------------------
+
+
+
+COM TUDO ISSO SALVO,
+
+
+
+
+RECARREGAMOS A PÁGINA... ---> TUDO VAI FUNCIONAR COMO ANTES,
+
+
+MAS AGORA 
+
+ESTAMOS USANDO 
+
+
+ESSE APPROACH MAIS __MODERNO__ DE 
+
+'CONTEXT', que utiliza 
+
+
+'useContext()', esse REACTHOOK AÍ...
+
+
+
+
+
+
+
+ISSO SIGNIFICA, EM OUTRAS PALAVRAS,
+
+
+QUE 
+
+
+
+O HOOK 
+
+
+'useContext()', NOS __FUNCTIONAL COMPONENTS___, 
+
+
+
+É 
+
+
+A 
+
+
+MESMA COISA 
+
+
+QUE 
+
+
+
+O 
+
+
+
+'static contextType = AuthContext;'  , NOS __CLASS-BASED COMPONENTS___...
+
+
+
+
+
+
+
+
+OS DOIS TE DÃO ACESSO AO 'context', À 'CONTEXT API'.. ---> e essa 
+
+
+APi 
+
+
+é 
+
+
+'ALL ABOUT MANAGING DATA ACROSS MULTIPLE COMPONENTS, 
+
+
+WITHOUT NEEDING TO PASS DATA AROUND WITH __PROPS__...'
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> POR FIM, NÓS TAMBÉM VAMOS APRENDER SOBRE UM CONCEITO QUE NOS AJUDARÁ 
+
+
+COM ISSO, 'redux', 
+
+
+MAIS TARDE NO CURSO... ----> E VAMOS USAR O REDUX, certamente....
+
+
+
+
+
+
+
+
+
+---> MAS CONHECER O USO DE CONTEXT API  É _iMPORTANTE___ PQ VOCê PODE CONSTRUIR COISAS 
+
+LEGAIS COM ELE.... --> e também vai ajudar bastante a entender o REDUX, mais tarde, quando 
+
+
+aprenderemos SOBRE ELE....
+------------------------------------------------------------------------

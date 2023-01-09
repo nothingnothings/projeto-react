@@ -1,0 +1,1335 @@
+
+
+
+
+NA ÚLTIMA LIÇÃO,
+
+APRENDEMOS 
+
+
+O BÁSICO SOBRE UM APP NEXT.JS... ----------> 
+
+
+
+
+
+PROFESSOR EXPLICA QUE ESTE NÃO É UM CURSO DEDICADO AO 'NEXT.JS',
+
+
+mas 
+
+que 
+
+poderíamos criar um curso sobre ele... ( o professor tem um curso sobre isso,
+
+devo assistir)...
+
+
+
+
+
+
+
+
+
+---> O PROFESSOR QUER NOS MOSTRAR 
+
+
+AS FEATURES 
+
+BÁSICAS... ---> 
+
+
+
+
+
+AGORA DEVEMOS 
+
+VER COMO 
+
+PODEMOS 
+
+NAVEGAR 
+
+
+LÁÁAÁÁ 
+
+
+
+da 
+
+
+
+
+página 
+
+'The Main Page' (o index.js no ROOT) 
+
+para 
+
+
+o 
+
+
+'The Auth Index Page' (o index.js no folder 'auth', em 'pages'...)
+
+
+
+
+
+
+
+
+--> PARA ISSO, É CLARO,
+
+NÓS 
+
+
+
+___PRECISAMOS ___ DE UM _________'''LINK''''________- ----> e com o 
+
+REACT ROUTER, ANTIGAMENTE,
+
+NÓS 
+
+USÁVAMOS 
+
+O 
+
+OBJETO/COMPONENT 
+
+
+'Link'/'NavLink' 
+
+QUE 
+ELE NOS DAVA... ----> agora,
+
+
+com 
+
+
+'next.js',
+
+
+
+NÓS ___TAMBÉM __ TEMOS UM COMPONENT 'Link' QUE PODEMOS (E DEVEMOS!) utilizar... --> 
+
+mas 
+
+
+é um 
+
+component 
+
+QUE 
+
+NÃO VEM DO 
+
+'REACT-ROUTER',
+
+
+E SIM 
+
+
+DO 
+
+
+'next.js'... ------> 
+
+
+
+PARA 
+
+ISSO,
+
+PARA 
+
+'NAVIGATE AROUND',
+
+
+
+
+
+PROFESSOR 
+
+VAI 
+
+
+importar 
+
+'Link'
+
+
+
+LÁ 
+
+
+
+DE 
+
+'next/link'....
+
+
+(E ELE VAI FAZER ISSO NA NOSSA 'MAIN PAGE'; OU SEJA,
+
+ELE 
+
+VAI ADICIONAR UM 
+
+'LINK' DENTRO DE NOSSA 'MAIN PAGE'/HOME, QUE VAI
+
+REDIRECIONAR À 
+
+PÁGINA 
+
+DE 
+
+'auth'....)
+
+
+
+ex:
+
+
+
+
+import Link from 'next/link';
+
+
+class IndexPage extends Component {
+    render(){
+        return(
+            <div>
+            <h1>The Main Page</h1>
+          </div>
+        )   
+    }
+
+}
+
+export default IndexPage;
+
+
+
+
+----------------------------------
+
+
+
+
+
+ISSO FEITO,
+
+PROFESSOR
+
+NOS DIZ QUE 
+
+PODEMOS 
+
+
+ADICIONAR 
+
+UM 
+
+LINK DESSES,
+
+
+
+um COMPONENT 
+
+desses,
+
+
+DENTRO 
+
+
+DO 
+
+RETURN 
+
+NAQUELA DIV ALI...
+
+
+-----------------------
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+
+class IndexPage extends Component {
+    render(){
+        return(
+            <div>
+            <h1>The Main Page</h1>
+            <p>Go to <Link>Auth</Link></p>
+          </div>
+        )   
+    }
+
+}
+
+export default IndexPage;
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+É CLARO QUE 
+
+TEMOS 
+
+QUE 
+
+DEFINIR UM PROP 
+
+NESSE 
+
+'<Link>',
+
+PARA 
+
+ENTÃO 
+
+O 
+
+FAZER 
+IR 
+
+ATÉ 
+
+UMA DE NOSSAS 
+
+
+'ROUTES'/CONTAINERS/COMPONENTS/ARQUIVOS...
+
+
+
+---> NO CASO 
+
+DE 
+
+
+'next.js',
+
+
+NÓS 
+
+NÃO VAMOS 
+
+
+USAR 
+
+'to=.....' 
+
+
+
+COMO 
+
+
+PROP DE 
+
+
+
+'<Link />'... -------> NÃO ,
+
+
+EM VEZ DISSO,
+
+
+O QUE 
+
+USAMOS 
+
+É 
+
+O BOM 
+
+E 
+VELHO 
+
+
+'href'....
+
+
+
+
+ex:
+
+
+
+
+class IndexPage extends Component {
+    render(){
+        return(
+            <div>
+            <h1>The Main Page</h1>
+            <p>Go to <Link href=>Auth</Link></p> ///////EIS O CÓDIGO EM QUESTÃO... É BASICAMENTE COMO UMA 'BOA E VELHA' ANCHOR TAG....
+          </div>
+        )   
+    }
+
+}
+
+export default IndexPage;
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+---> NESSE 
+
+
+'href',
+
+VAMOS 
+
+
+ESCREVERE 
+
+
+'/auth',
+
+PARA ___APONTAR __ PARA ESSA PÁGINA/FOLDER...
+
+
+
+ex:
+
+
+
+
+
+class IndexPage extends Component {
+    render(){
+        return(
+            <div>
+            <h1>The Main Page</h1>
+            <p>Go to <Link href="/auth">Auth</Link></p> ///////EIS O CÓDIGO EM QUESTÃO... É BASICAMENTE COMO UMA 'BOA E VELHA' ANCHOR TAG....
+          </div>
+        )   
+    }
+
+}
+
+export default IndexPage;
+
+
+
+--------------------------------------
+
+
+
+
+
+
+--> OBS:: SE VOCÊ ESCREVER ALGO COMO 
+
+
+'/nomeDoFolder',
+
+O 
+
+
+___NEXT.JS__ SEMPRE 
+
+VAI 
+
+'PICK THE INDEX.JS FILE',
+
+
+se tiver 
+
+um 
+
+desses arquivos presentes....
+
+
+
+
+
+
+
+---> CERTO.... --->  MAS O PROFESSOR NOS EXPLICA QUE 
+
+
+
+
+'Link', 
+
+POR 
+
+SI 
+
+SÓ__,
+
+
+'WONT DO THE TRICK'.... ----> 
+
+
+
+NÃO... ISSO 
+
+
+PQ 
+
+
+
+
+__vOCê AINDA ___ PRECISA 
+
+USAR 
+
+A 
+
+'ANCHOR TAG NORMAL' 
+
+
+__DENTRO __ DO SEU 
+
+
+
+'''<Link>'''' (sim, isso é necessário...)
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+ <p>Go to <Link href="/auth"><a>Auth</a></Link></p>
+                            ^^^^^    ^^^^
+
+
+
+
+
+
+
+
+
+
+
+
+--> É BEM BIZARRO,
+
+POIS ESTE É O CÓDIGO NORMAL DE UMA 'ANCHOR TAG':  <a href="xxxxxxxx">NomeDoLink</a> 
+
+
+
+
+E ESTE É O CÓDIGO 
+
+DE UMA 'ANCHOR TAG DO NEXT.JS'...:
+
+
+<p><Link href="xxxxxx"><a>NomeDoLink</a></Link></p>
+
+
+
+
+------------------------------------------
+
+
+POR TRÁS 
+
+
+DAS 
+
+
+CENAS,
+
+O 
+
+'next.js'
+
+
+
+VAI ESSENCIALMENTE 
+
+
+COLOCAR ESSE 'href' PARA DENTRO 
+
+DA ANCHOR TAG 
+
+que você escreveu (é uma idiossincrasia da linguagem...)
+
+
+
+
+
+
+
+EX:
+
+
+
+
+import React, { Component } from 'react';
+
+import Link from 'next/link';
+
+
+
+
+class IndexPage extends Component {
+    render(){
+        return(
+            <div>
+            <h1>The Main Page</h1>
+            <p>Go to <Link href="/auth"><a>Auth</a></Link></p> ////////EIS O CÓDIGO EM QUESTÃO.
+          </div>
+        )   
+    }
+
+}
+
+export default IndexPage;
+
+
+
+
+-------------------
+
+
+
+
+
+
+
+
+----> CERTO... --> E ISSO __ REALMENTE FUNCIONOU__....
+
+
+
+
+
+
+
+
+
+----> PROFESSOR NOS EXPLICA QUE 
+
+O NEXT.JS 
+
+
+VAI 
+
+ADICIONAR O ATRIBUTO 
+
+
+'href' 
+
+à anchor tag,
+
+MAS 
+
+QUE 
+
+ELE 
+
+VAI 
+
+
+ENTÃO 
+
+__CAPTURAR ___ QUAISQUER 'clicks' 
+
+
+NA 
+
+ANCHOR TAG EM SI,
+
+e aí 
+
+__FAZER HANDLE __ DISSO INTERNAMENTE, TUDO PARA QUE 
+
+__SUA PÁGINA NÃO ACABE SENDO 'RELOADED'.... (que é o que desejamos... --> queremos essencialmente esse comportamento aí, esse 'event.preventDefault()' AUTOMÁTICO...)
+
+
+
+
+
+
+
+
+--> SALVAMOS 
+
+TUDO 
+
+ISSO E VOLTAMOS 
+
+AO NOSSO 
+
+APP,
+
+
+
+ 
+ E NOSSA FEATURE 
+
+ DO 
+
+
+ 'Go to Auth' 
+
+
+ AGORA 
+
+
+ ESTARÁ 
+ FUNCIONANDO...
+
+
+
+ ------------------------------
+
+
+
+
+
+ E SE VOCÊ ABRIR SUA ABA NETWORK 
+
+ e 
+
+ dar uma olhada nos arquivos,
+
+
+ VOCÊ __VAI PERCEBER __ QUE O LAZY LOADING __ TAMBÉM __ É IMPLEMENTADO 
+
+
+ POR 
+
+ MEIO 
+
+ DO 
+
+ 'Next.js'... (vemos que recebemos um arquivo 'auth.js', um BUNDLE de 'auth', quando 
+ 
+ clicamos para ir nesse link aí...) ------> OK,
+
+
+ o
+
+ NEXT.JS 
+
+
+ NOS 
+
+ dá 
+
+
+
+ __fILE SPLITTING AUTOMÁTICO___....
+
+
+
+
+
+ (E VOCÊ NÃO DEVE FICAR INTIMIDADO PELO TAMANHO DOS 
+ 
+ ARQUIVOS EM 
+ 'network',
+
+
+POIS 
+
+ISSO, NOSSO CÓDIGO,
+
+AINDA 
+
+NÃO ESTÁ OPTIMIZADO...
+ ) ---------------------> OK,
+
+
+
+ CONSEGUIMOS 
+
+
+ 'LAZY LOADING' DE GRAÇA,
+
+
+ E 
+
+
+
+ TAMBÉM TEMOS ESSES LINKS QUE 
+
+ NOS 
+
+ DEIXAM
+  
+
+  'navigate around'
+
+  NOSSO APLICATIVO...
+
+
+
+
+
+
+
+--> É ASSIM QUE 
+USAMOS O 
+
+'LINK',
+
+e é assim  
+
+QUE PODEMOS 
+
+
+'NAVIGATE AROUND' 
+
+nosso aplicativo...
+
+
+
+
+
+
+
+
+
+
+--> OK.. MAS VOCÊ NÃO É OBRIGADO A USAR o
+
+
+'<Link>'...  ------> DIGAMOS QUE 
+
+VOCê 
+
+
+TEM UM 
+
+<button>,
+
+
+UM 
+
+BUTTON 
+
+QUE 
+
+TEM UMA 
+
+CAPTION 
+
+DE 
+
+'Go to Auth'.... --> 
+
+
+E 
+
+VOCÊ QUER QUE 
+
+QUANDO ESSE BUTTON,
+ 
+ NA MAIN PAGE,
+
+ FOR CLICADO,
+
+
+
+
+
+ VOCÊ ___SEJA __ AUTOMATICAMENTE 
+
+ NAVEGADO ('navigated imperatively') 
+
+
+
+ AO 
+
+ 'AUTH'... 
+
+
+
+ ex:
+
+
+
+
+
+
+ import React, { Component } from 'react';
+
+import Link from 'next/link';
+
+
+
+
+class IndexPage extends Component {
+    render(){
+        return(
+            <div>
+            <h1>The Main Page</h1>
+            <p>Go to <Link href="/auth"><a>Auth</a></Link></p>
+            <button>Go to Auth</button>
+          </div>
+        )   
+    }
+
+}
+
+export default IndexPage;
+ 
+
+--------------------------------
+
+
+
+
+
+
+
+
+'NAVIGATE IMPERATIVELY' ---> navegar POR DENTRO DO SEU CÓDIGO (???) 
+
+
+
+
+
+
+--> SE VOCÊ QUISER FAZER ISSO, 
+
+É 
+
+ÓBVIO QUE 
+
+VOCÊ 
+
+
+PODE USAR 
+
+UM 
+
+HANDLER 
+
+de 
+
+'onClick' 
+
+nesse button,
+
+para 
+
+ENTÃO 
+
+
+DEFINIR 
+
+A ATIVAÇÃO __ DE UM MÉTODO __ QUE 
+
+VOCÊ DEFINIU NO SEU CLASS-BASED COMPONENT...
+
+
+
+
+ex:
+
+
+
+
+
+ <button onClick={() => {this.goToAuthMethod()}}>Go to Auth</button>
+
+
+
+
+
+
+ ----------------------------------------------------------
+
+
+
+
+
+
+
+---------> SE VOCê QUISER USAR 
+
+UM 
+
+__BUTTON __ PARA 
+
+FAZER 
+
+
+ESSE 
+
+
+'GO TO xxxx',
+
+
+
+
+VOCÊ 
+
+
+DEVE 
+
+IMPORTAR 
+
+
+
+
+O 
+
+
+
+'Router' da package de 
+
+'next/router'... -------> 
+
+ 
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+import Router from 'next/router';
+
+
+
+
+
+----------------------------------
+
+
+
+COM O 'ROUTER' EM MÃOS,
+
+
+VOCê 
+
+PODE 
+
+SIMPLESMENTE 
+
+ACESSAR 
+
+ESSE OBJETO E USAR 
+
+MÉTODOS 
+
+ESPECIAIS,
+
+
+métodos 
+
+como 
+
+'.push()',
+
+
+
+
+que é BASICAMENTE 
+
+A MESMA COISA QUE 
+
+ 
+'this.props.history.push()'.... (do react router)....  --------->
+
+
+
+
+
+FICARIA TIPO ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+ <button onClick={() => Router.push('/auth')}>Go to Auth</button>
+
+
+
+
+
+
+
+
+
+
+ E ISSO,
+
+ DIZ O PROFESSOR,
+
+
+ É UMA 
+
+ MANEIRA __TRI RÁPIDA __ DE NAVIGAR 'IMPERATIVELY' ( ou seja,
+ 
+  DE DENTRO DO SEU CÓDIGO... 'in-code' navigating around....)
+
+
+
+
+-----------------------------
+
+
+
+
+
+CERTO,
+
+
+
+NAVEGAMOS
+
+
+ATÉ 
+
+
+A 
+
+PÁGINA 
+
+
+
+'Auth' 
+
+por meio desse código aí... ( por meio do objeto 'Router' e o método 'push'...)
+
+
+
+
+
+--> TUDO ISSO PARECE MUITO SIMPLES,
+
+
+
+MAS ___ UM MONTE DE __ COISAS ESTÃO ACONTECENDO POR TRÁS DAS CENAS__...
+
+
+
+
+
+
+
+
+--> O MAIS IMPORTANTE É O CODE SPLITTING AUTOMÁTICO,
+
+QUE É MUITO BOM...
+
+
+--> devemos ver o resto das coisas que 
+
+o next.js 
+
+nos dá,
+
+e como podemos trabalhar com elas...
+
+
+
+
+
+
+----------------------------
+
+
+
+CERTO, MAS ANTES DISSO, UM DETALHE.... --> NOSSO 
+
+
+BOTÃO 
+
+QUE USA 
+
+'Router.push()'
+
+
+NÃO ESTÁ FUNCIONANDO___...
+
+
+
+
+EX:
+
+
+
+
+Handles client-side transitions, this method is useful for cases where next/link is not enough.
+
+router.push(url, as, options)
+url - The URL to navigate to
+
+
+
+
+
+
+
+
+
+--> PARECE QUE _ A SINTAXE__ DO 'ROUTER' mudou... --> 
+
+
+deve 
+
+ser IMPORTADO ASSIM:
+
+
+
+
+
+import { useRouter } from 'next/router'
+
+
+
+
+
+E DEPOIS 
+
+USADO 
+
+
+ASSIM:
+
+
+
+    const router = useRouter();
+
+
+
+
+
+ return (
+    <button type="button" onClick={() => router.push('/about')}>
+      Click me
+    </button>
+  )
+}
+
+
+
+
+
+----------------------
+
+
+
+
+
+
+
+
+
+
+CERTO.... DESCOBRI QUE 
+
+'const router = useRouter()'
+
+
+
+
+___ SÓ FUNCIONA COM FUNCTIONAL COMPONENTS__, E QUE 
+
+ESSE CÓDIGO AÍ DEVE SER __eSCRITO _ NO SEU INTERIOR, 
+
+NO INTERIOR DE SEU 'BODY'... (não funciona com class-based components...)
+
+
+
+
+
+
+
+
+
+
+--> AINDA ASSIM,
+
+
+
+NOSSOS BUTTONS 
+
+de 
+
+'go to' 
+
+
+AINDA __NÃO FUNCIONAM__... --> alguma coisa nÃO ESTÁ FUNCIONANDO... (era um mistype: estava 'onCLick', quando devia estar 'onClick'....)
+
+
+
+
+
+
+
+------------------------- 
+
+
+OK,
+
+
+AGORA 
+
+
+NOSSO CÓDIGO ESTÁ FUNCIONANDO (e está funcionando COM 
+
+
+FUNCTIONAL COMPONENTS COMO 'PAGES',
+
+o que 
+
+é 
+
+BIZARRO...)
+
+
+
+
+
+
+
+
+---> tanto 
+
+
+os LINKS como 
+
+OS 
+
+BUTTONS 
+
+
+que 'navegam imperativamente' nosso usuário ___ESTÃO FUNCIONANDO___...

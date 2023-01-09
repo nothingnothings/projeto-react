@@ -1,0 +1,310 @@
+
+
+
+
+
+
+
+
+
+
+
+--> na última lição,
+ 
+
+ professor nos mostrou o 
+
+ gatsby....
+
+
+
+
+
+
+
+
+
+ --> o gatsby é legal,
+
+
+ mas 
+
+ O 
+
+
+ REACT NATIVE É 'AMAZING', nas palavras do professor.... --> 
+
+
+
+
+
+
+
+ REACT NATIVE É __OUTRO __ PROJETO __ CRIADO PELO FACEBOOK ___ ----> 
+
+
+
+
+
+ O 
+
+
+ REACT NATIVE 
+
+ É 
+
+
+ __ESSENCIALMENTE _ O REACT,
+
+
+ MAS 
+
+
+ __CONSTRUÍDO __ PARA 
+
+ 'MOBILE APPS'... ------> COM 
+
+ isso,
+
+
+
+
+ PROFESSOR QUER 
+
+ DIZER 
+
+ 'NATIVE IOS/ANDROID APPS'... --------> OU SEJA,
+
+
+ COM 
+
+
+ O 
+
+ REACT QUE 
+
+ APRENDEMOS 
+
+
+
+ NESSE CURSO, APRENDEMOS A CONSTRUIR 
+
+ __wEB APPS__ COM JAVASCRIPT... ---> 
+
+
+
+
+
+ BEM, COM REACT NATIVE,
+
+ VOCÊ USA 
+
+ JAVASCRIPT 
+
+
+__E  REACT___ E 
+
+
+
+'REACT NATIVE' ( a terceira library)
+
+PARA 
+
+
+_CONSTRUIR___ MOBILE __APPS... --->  ISSO SIGNIFICA QUE 
+
+VOCÊ 
+
+
+
+__AINDA CONSTRÓI 
+
+CÓDIGO 
+
+NORMAL 
+
+JAVASCRIPT/REACT__,
+
+
+MAS 
+
+O 
+
+REACT NATIVE VAI COMPILAR 
+
+
+ESSE CÓDIGO EM 
+
+CÓDIGO 
+
+ QUE 
+
+ RODA 
+
+
+ EM 
+
+ ANDROID/IOS... -----------> ELE FAZ ISSO 
+
+
+
+ POR MEIO 
+
+
+ DO 'EXPOSE' 
+
+ DE CERTOS BUILDING BLOCKS  
+
+ A NÓS,
+
+
+ COMO O COMPONENT 
+
+ '<View />'... ----->  ESSE COMPONENT É NOSSA ALTERNATIVA a 
+
+
+
+ '<divs>'... --> 
+
+
+ DIVS 
+
+
+
+
+SÓ FUNCIONAM COM WEB BROWSERS,
+
+É CLARO,
+
+MAS 
+
+
+
+'<View />',
+
+POR TRÁS 
+
+DAS CENAS,
+
+É UM ELEMENTO 
+
+QUE 
+
+RODA 
+
+___ EM 
+
+ANDROID/IOS... ---> O 
+
+
+
+
+
+REACT NATIVE 
+
+__USA SUA ENGINE __ PARA 
+
+
+COMPILAR __ O CÓDIGO ADEQUADO 
+
+A IOS/ANDROID A PARTIR 
+
+DA LINGUAGEM 
+
+REACT QUE VOCÊ ESCREVE...
+
+
+
+
+---------------------------------------
+
+
+
+
+
+VOCê 
+
+
+AINDA PRECISA APRENDER ALGUMAS COISAS 
+
+
+COM 
+
+REACT NATIVE... --> mas 
+
+é 
+
+fácil de começar....
+
+
+
+
+
+
+
+
+
+----> EXISTE ATÉ UMA versão
+
+de
+'create-react-app'
+
+
+
+
+DO 
+
+
+'react native',
+
+QUE 
+
+É 
+
+o 
+
+'create-react-native-app'...
+
+
+
+
+
+------------------------------------------
+
+
+tipo 'npm install -g create-react-native-app'....
+
+
+
+
+
+
+
+
+-------> PODEMOS 
+
+USAR NOSSO  
+
+
+CONHECIMENTO REACT 
+
+PARA 
+
+APRENDER A CRIAR APLICATIVOS MOBILE... --> 
+
+
+é uma 
+
+
+oportunidade ótima para 
+
+construir 
+
+aplicativos de celular...
+
+
+
+
+(professor diz que 
+
+é uma ótima alternativa a aprender 'Objective-C' ou 'Swift' primeiro ...)

@@ -1,0 +1,1072 @@
+ 
+
+
+
+
+
+
+
+
+
+
+
+ --> COM O BURGERINGREDIENT PREPARADO, 
+
+
+
+ DEVEMOS CONTINUAR
+
+
+ E AGORA 
+
+
+
+PREPARAR O COMPONENT 'BURGER'.. --> colocamos esse component dentro do folder 'Burger'...
+
+
+
+
+
+
+--> PROFESSOR EXPLICA QUE ELE VAI ESCREVER 
+
+
+
+ESSE COMPONENT NA FORMA 'FUNCTIONAL'...
+
+
+
+
+-->  CÓDIGO FICARÁ ASSIM:
+
+
+
+
+import React from 'react';
+
+
+
+
+
+
+
+
+
+
+const burger = (props) => {
+
+
+    return ();
+};
+
+
+
+
+
+
+
+
+
+
+
+
+export default burger;
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+
+
+AÍ 
+
+
+ELE VAI QUERER 
+
+
+ESCREVER ALGUMA 
+
+LÓGICA JAVASCRIPT DENTRO DO FUNCTION BODY, MAS 
+
+antes disso ele vai querer 
+
+FAZER O SIMPLES RETURN 
+
+DE UM CÓDIGO JSX...  ('return()')  ---> MAS ELE EXPLICA QUE 
+
+__MAIS TARDE__ VAMOS REVISITAR ESSE COMPONENT__, QUE VAMOS 
+
+ADICIONAR __ UMA LÓGICA DE __RENDERIZAR ___ CONDICIONALMENTE ALGUMA COISA POR MEIO 
+DESSE COMPONENT_, mais tarde...
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+---> CERTO... O CÓDIGO JSX QUE 
+
+ELE VAI QUERER 
+
+VAI SIMPLESMENTE USAR 
+
+
+O
+ 
+
+ 'burgerIngredient' que nós criamos ---> na verdade,
+
+
+
+ vai usar __VÁRIOS__ DESSES INGREDIENTS... ------> 
+
+
+
+ MAS O PROFESSOR 
+
+
+ __TAMBÉM ____ VAI QUERER__ 
+
+
+ WRAPPAR TODOS OS CALLS DESSE 'BurgerIngredient' 
+
+ em uma __Div____........ ---------> 
+
+
+
+ pq, dessa vez, ele realmente vai querer uma div.... --> ele vai querer 
+
+ uma div 
+
+ PQ ELE VAI QUERER DAR A ESSE 
+
+
+ WRAPPER (WRAPPER = O COMPONENT 'BURGER'... PQ ISSO É OQ ESSENCIALMENTE ELE É: 
+ 
+ É UM WRAPPER DOS NOSSOS 'BurgerIngredient'...) ALGUM STYLING ---> 
+
+ ELE VAI QUERER 
+
+
+
+ ____esTILIZAR___ ESSE 'WRAPPER'... -----> ELE VAI QUERER 
+
+
+
+ PASSAR ESTILOS __ DE WIDTH E HEIGHT__ A ESSE BURGER,
+
+ vai querer definir seu TAMANHO NA PÁGINA.... Limites ao seu tamanho.
+
+
+
+
+
+
+
+ EX:
+
+
+
+
+import React from 'react';
+
+
+const burger = (props) => {
+
+
+    return (
+        <div></div>
+    );
+};
+
+
+
+export default burger;
+
+
+
+
+
+------------------------------
+
+
+
+
+
+
+PARA ISSO, O PROFESSOR CRIARÁ UM NOVO ARQUIVO CSS,
+
+o arquivo 
+
+'Burger.module.css'...
+
+
+
+
+
+--->  DENTRO DESSE ARQUIVO, 
+
+O PROFESSOR 
+
+VAI ADICIONAR 
+
+UM CLASS SELECTOR/ESTILO 
+
+
+
+DE 
+
+
+
+'.Burger'... ----> 
+
+
+
+esse negócio terá uma 
+
+WIDTH DE 100%,
+
+
+e uma 
+
+MARGIN de 
+
+'auto;'... ------> MAS O PROFESSOR VAI QUERER __LIMITAR___ A HEIGHT DESSE 
+
+
+'BURGER' 
+
+A apenas 250px....
+
+
+ex:
+
+
+
+
+.Burger {
+    with: 100%;
+    margin: auto;
+    height: 250px; 
+    overflow: scroll;
+}
+
+
+
+---------------------------------
+
+
+
+
+
+
+--> PROFESSOR DIZ QUE PODERÍAMOS COLOCAR OUTRA HEIGHT, MAS QUE ESSA PARECE SER BOA....
+
+
+
+---> PROFESSOR TAMBÉM DEFINE UM ESTILO DE 'overflow: scroll' ---> isso vai 
+
+fazer com que
+ 
+ MESMO NOS CASOS EM QUE O HAMBURGER 
+
+ SEJA 
+
+ GRANDE DEMAIS (maior do que 250px), ele vai TER UM SCROLLBAR QUE 
+
+ PODEMOS USAR PARA SCROLLAR A REPRESENTAÇÃO DO HAMBURGER (e isso vai evitar 
+ 
+ QUE O __BURGER__ SEJA CORTADO OU OVERLAPPE OUTRA PARTE DE NOSSA PÁGINA...) -----> SE NÃO LIMITÁSSEMOS 
+
+
+ A HEIGHT com '250px' e não usássemos 'overflow: scroll', esse burger 
+ PODERIA 
+
+ ATÉ MESMO OCUPAR A PÁGINA INTEIRA, OVERLAPPAR SOBRE OUTRAS COISAS...
+
+
+
+---> PROFESSOR TAMBÉM USA 'TEXT-ALIGN: CENTER', 
+
+PARA ALINHAR 
+
+
+TUDO NO MEIO, e 
+
+'font-weight: bold' -------> NÓS NÃO ESTAMOS PRINTANDO CÓDIGO ALGUM AINDA, MAS 
+PRINTAREMOS NO FUTURO... ------->
+
+e ele também 
+
+deixa 
+
+'font-size: 1.2rem';   ('REM' --> unidade de medida que considera O FONTSIZE __ QUE O USUÁRIO __ DEFINIU NO SEU BROWSER...)
+
+
+
+
+
+ EX:
+
+
+
+.Burger {
+    with: 100%;
+    margin: auto;
+    height: 250px; 
+    overflow: scroll;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+
+
+
+-------------------------------------------
+
+
+
+
+CERTO,
+
+ESSE É O LAYOUT DO __BURGER_ QUE O PROFESSOR VAI QUERER USAR...
+
+
+
+
+
+
+____CONTUDO___, O PROFESSOR APONTA QUE __ESSE SERÁ O LAYOUT 'MOBILE'... (PQ NOSSO 
+
+APP/NOSSOS APPS __SEMPRE SÃO CRIADOS COM __ 'MOBILE-FIRST' EM MENTE)....
+
+
+
+
+
+
+----> depois de criar 
+
+esse estilo, da versõa '
+
+MOBILE',
+
+
+O PROFESSOR 
+
+
+VAI QUERER 
+
+
+CRIAR/ESCREVER 
+
+
+
+
+__UM MEDIA QUERY___ no NOSSO 
+
+'BURGER.MODULE.CSS'.... -------->  será 'tela mínima de 1000px' e 'altura mínima de 700px' --> SE 
+
+ESSE FOR O CASO,
+
+VAMOS QUERER 
+
+
+APLICAR O ESTILO ALTERNATIVO DE '.Burger', DESKTOP VERSIOn... ---> que fará com que o burger tenha uma WIDTH DE 700PX e uma HEIGHT de 600px...
+
+
+
+
+
+EX:
+
+
+
+
+
+
+@media (min-width: 1000px) and (min-height: 700px) {
+     .Burger {
+        width: 700px;   
+        height: 600px;
+
+     }
+}
+
+
+-----------------------------------------
+
+
+DEPOIS ELE ADICIONA OUTRA MEDIA QUERY,
+
+DESSA VEZ PARA 
+
+APARELHOS 
+
+
+
+COM 500px de 'min-width' (aparelhos menores) e 'min-height' de 401px... --> se esse for o caso, o professor 
+
+vai querer 
+
+
+450PX de width e 400PX DE HEIGHT...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+.Burger {
+    with: 100%;
+    margin: auto;
+    height: 250px; 
+    overflow: scroll;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+
+
+
+@media (min-width: 1000px) and (min-height: 700px) {
+     .Burger {
+        width: 700px;   
+        height: 600px;
+
+     }
+}
+
+
+
+
+@media (min-width: 500px) and (min-height: 401px) {
+     .Burger {
+        width: 450px;   
+        height: 400px;
+
+     }
+}
+
+
+
+
+------------------------------- 
+
+
+
+
+POR FIM, ELE ADICIONA UM __MEDIA QUERY PARA___ APARELHOS
+QUE NÃO 
+
+SÃO MT 'WIDE', mas que são 'tall' ---> ou seja, 
+
+PARA ___MOBILE__ DEVICES 
+
+
+EM 
+
+'PORTRAIT MODE'... ---> ele coloca um min-width de 500px e uma min-height de 400px ... --> aí, nesse caso, o estilo de Burger terá um width de 350px, e uma height de 300px... 
+
+
+
+
+ESSES SÃO APENAS ALGUNS MEDIA QUERIES PARA 
+
+FAZER COM QUE 
+
+O BURGER FIQUE COM BOA APARÊNCIA 
+
+NO MAIOR NÚMERO DE DEVICES POSSÍVES....
+
+ex:
+
+
+
+
+
+
+.Burger {
+    with: 100%;
+    margin: auto;
+    height: 250px; 
+    overflow: scroll;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+
+
+
+@media (min-width: 1000px) and (min-height: 700px) {
+     .Burger {
+        width: 700px;   
+        height: 600px;
+
+     }
+}
+
+
+
+
+@media (min-width: 500px) and (min-height: 401px) {
+     .Burger {
+        width: 450px;   
+        height: 400px;
+
+     }
+}
+
+
+
+@media (min-width: 500px) and (max-height: 400px) {
+     .Burger {
+        width: 350px;   
+        height: 300px;
+
+     }
+}
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+VOCÊ AINDA PODE TWEAKAR ESSE NEGÓCIO, SE SENTIR QUE É NECESSÁRIO....
+
+
+
+
+
+
+
+
+
+
+---> de volta ao 'Burger.js',
+
+DEVEMOS IMPORTAR ESSES ESTILOS, com a sintaxe de modulos css...
+
+
+
+
+
+O CÓDIGO DE BURGER.JS FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+import BurgerStyle from 'Burger.module.css';
+
+
+
+
+
+
+const burger = (props) => {
+
+
+    return (
+        <div className={BurgerStyle.Burger}></div>
+    );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+export default burger;
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+
+CERTO... --> agora podemos COMEÇAR A ADICIONAR __INGREDIENTS__ DENTRO 
+
+DESSE COMPONENT 'burger' (que é essa WRAPPING DIV...)
+
+
+
+
+
+PARA ISSO, IMPORTAMOS 
+
+
+'BurgerIngredient' por meio 
+
+
+de 
+
+
+
+import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
+
+
+
+
+
+ASSIM:
+
+
+
+
+import React from 'react';
+
+
+
+
+import BurgerStyle from 'Burger.module.css';
+
+
+import BurgerIngredient from './BurgerIngredients/BurgerIngredient';
+
+
+
+
+const burger = (props) => {
+
+
+    return (
+        <div className={BurgerStyle.Burger}>
+
+
+
+            
+        </div>
+    );
+};
+
+
+
+export default burger;
+
+
+
+
+--------------------------------
+
+
+
+
+ISSO FEITO,
+
+
+
+PODEMOS SIMPLESMENTE 
+
+USAR 
+
+NOSSOS BURGER INGREDIENTS 
+
+
+COMO __SELF CLOSING__ COMPONENTS (a call deles...)
+
+
+
+(NÃO SEI SE ISSO ESTÁ CERTO):
+
+
+ex:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+import BurgerStyle from 'Burger.module.css';
+
+
+import BurgerIngredient from './BurgerIngredients/BurgerIngredient';
+
+
+
+
+const burger = (props) => {
+
+
+    return (
+        <div className={BurgerStyle.Burger}>
+            <BurgerIngredient />
+            <BurgerIngredient />
+            <BurgerIngredient />
+            <BurgerIngredient />
+            <BurgerIngredient />
+
+
+
+        </div>
+    );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+export default burger;
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+
+OK, MAS TENHA EM MENTE QUE 
+
+__PRECISAMOS DEFINIR UM 'TYPE' 
+
+nesses components.... ----> 
+
+
+O TYPE ___DEVERÁ__ SER UMA STRING (por causa do proptype checking)... ---> 
+
+
+PROFESSOR COMEÇARÁ 
+
+
+COM O 
+
+COMPONENT QUE 
+
+SERÁ O 
+
+'bread-top'... ----------> ele deverá adicionar um prop de 'type'....
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+import BurgerStyle from 'Burger.module.css';
+
+
+import BurgerIngredient from './BurgerIngredients/BurgerIngredient';
+
+
+
+
+const burger = (props) => {
+
+
+    return (
+        <div className={BurgerStyle.Burger}>
+            <BurgerIngredient type="bread-top" />
+            <BurgerIngredient type="cheese"/>
+            <BurgerIngredient type="meat"/>
+            <BurgerIngredient type="bread-bottom" />
+          
+
+
+
+
+        </div>
+    );
+};
+
+
+
+
+
+export default burger;
+
+
+
+
+
+
+--------------------------------------
+
+
+
+ISSO FEITO, AGORA 
+
+
+DEVEMOS SIMPLESMENTE IMPLEMENTAR ESSE NEGÓCIO,
+
+
+FAZER COM QUE ELE SEJA __rENDERIZADO___ no nosso 
+
+
+'Layout'...
+
+
+
+----------------------------------
+
+
+
+EU FIZ O IMPORT DESSE NEGÓCIO LÁ NO COMPONENT 
+
+'BurgerBuilder'... ---> não sei se fiz certo...
+
+
+
+
+
+
+---> arrumei um problema de ESTILOS... (com modules). 
+
+
+
+
+
+
+PROFESSOR FAZ EXATAMENTE O QUE EU FIZ, ELE 
+
+VAI ATÉ O COMPONENT 
+
+'BurgerBuilder.js' 
+
+
+E ENTÃO SUBSTITUI AQUELA 'DUMMY DIV' DE <div>Burger</div>
+
+
+
+
+POR UMA INVOCAÇÃO DO NOSSO 
+
+COMPONENT 'BURGER'...
+
+
+
+ex:
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Aux from '../../hoc/Auxiliary';
+
+
+import Burger from '../../components/Burger/Burger';
+
+
+
+
+class BurgerBuilder extends Component {
+  state = {};
+
+  render() {
+    return (
+      <Aux>
+        {/* <div>Burger</div> */}
+        <Burger />
+        <div>Build Controls</div>
+      </Aux>
+    );
+  }
+}
+
+export default BurgerBuilder;
+
+
+
+
+------------------------------------------
+
+
+
+
+
+CONTUDO, AGORA RECEBEMOS UM ___eRRO__....
+
+
+
+
+
+
+Error: Element type is invalid: expected a
+ string (for built-in components) or a class/function 
+ (for composite components) but got: object. You likely forgot to export your component 
+ from the file it's defined in, or you might have mixed up default and named imports.
+
+Check the render method of `burger`.
+
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+CONSERTAMOS TODOS OS IMPORTS E ESTILOS.... ---> AGORA O HAMBURGUER REALMENTE ESTÁ SENDO RENDERIZADO...
+
+
+
+
+
+
+
+--> ESSE É O NOSSO BURGER PROTÓTIPO ----> ele é bem legal.... mas uma coisa RUIM 
+
+
+dele 
+
+é que 
+
+
+O CÓDIGO DELE É 100% HARDCODADO, POR ENQUANTO... (não é nada dinâmico; a única coisa 
+
+que fizemos foi 
+
+outputtar ingredients 
+
+de acordo com 
+
+o código/modelo
+
+
+de 
+
+
+
+
+const burger = props => {
+  return (
+    <div className={BurgerStyle.Burger}>
+      <BurgerIngredient type="bread-top" />
+      <BurgerIngredient type="cheese" />
+      <BurgerIngredient type="meat" />
+      <BurgerIngredient type="bread-bottom" />
+    </div>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+--> NÓS ESTAMOS USANDO COMPONENTS, SIM, MAS ___NÓS NÃO SOMOS CAPAZES 
+
+
+DE 
+
+__MUDAR ESSE BURGER DINAMICAMENTE,
+E NEM 
+
+MESMO ESTAMOS 
+
+
+__ RENDERIZANDO ESSE BURGER DINAMICAMENTE... ----->  NAS PRÓXIMAS LIÇÕES,
+
+
+DEVEMOS COMEÇAR 
+
+
+PELO __MANAGE__ DOS INGREDIENTS
+
+
+___vIA ___'State' E ENTÃO 
+
+__ FAZER O RENDER DELE DINAMICAMENTE, A PARTIR DESSE STATE...

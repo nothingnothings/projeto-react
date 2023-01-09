@@ -1,0 +1,507 @@
+
+
+--> NA ÚLTIMA LIÇÃO,
+
+
+
+FALAMOS SOBRE 
+
+'TIMINGS'... -->  
+
+
+
+
+
+
+
+
+AGORA,
+
+
+
+VAMOS FALAR SOBRE ''''TRANSITION EVENTS''''' .... --> 
+
+
+
+
+
+
+
+
+Às vezes,
+
+
+você vai querer __ EXECUTAR __ DIFERENTES 
+
+
+CÓDIGOS __ 
+
+
+
+
+DURANTE MOMENTOS ESPECÍFICOS DO 'PLAY' DE UMA ANIMAÇÃO... --> ex: TOCAR ALGUM CÓDIGO __ ASSIM QUE UMA ANIMAÇÃO DER EXIT/FINISH... --> 
+
+essa execução 
+de código 
+
+__NÃO É __ AQUILO QUE VIMOS ATÉ AGORA, NÃO É A SIMPLES 'CHANGE OF THE ELEMENT THAT WAS SEEN/WASNT SEEN ON THE SCREEN'.... ------> 
+
+essa execução pode ser 
+
+
+de um 
+
+código que 
+
+NÃO TEM __NADA ___ A VER COM O COMPONENT __ QUE 
+
+está 
+
+''executando'' sua animação... -------> e para executar 
+
+esses 
+
+
+códigos 
+
+variados,
+
+
+
+VOCÊ 
+
+
+TEM 
+
+VÁRIOS 
+
+CALLBACKS 
+
+que 
+
+
+podem 
+
+
+ser 
+
+posicionados 
+
+
+no 
+
+seu
+ 
+'<Transition />'...  ----> esses callbacks são 'functions you can execute to a transition'...
+
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+O PROFESSOR VAI DEMONSTRAR UM DESSES CALLBACKS 
+
+
+__NAQUELE __  
+
+
+
+TRANSITION QUE 
+
+WRAPPA 
+
+AQUELE 
+
+BLOCO 
+VERMELHO,
+
+DE ANTES... ------> 
+
+
+
+ex:
+
+
+
+
+
+          <Transition in={this.state.showBlock} timeout={1000} unmountOnExit>
+            {
+              (state) => {return (     <div
+                style={
+                  {
+                    backgroundColor: 'red',
+                    width: 100,
+                    height: 100,
+                    margin: 'auto',
+                    transition: 'opacity 1s ease-out',
+                    opacity: state === 'exiting' ? 0 : 1,
+                  
+            
+                  }
+                }
+                  /> 
+                  
+                  )}
+            }
+    
+            </Transition>
+
+
+----------------------------------
+
+
+
+
+DENTRO DO OBJETO 'Transition',
+
+NÓS TEMOS 
+
+
+
+
+___6___ DIFERENTES __ 'EVENTS' 
+
+aos quais 
+
+
+PODEMOS 
+
+FAZER 
+
+'listen to'... --------->
+
+
+
+
+
+O PRIMEIRO DELES É 
+
+
+'onEnter'....
+
+
+
+
+ex:
+
+
+
+
+
+         <Transition in={this.state.showBlock}
+          timeout={1000}
+           unmountOnExit
+           mountOnEnter
+           onEnter={} ///EIS O CÓDIGO EM QUESTÃO.
+           >
+
+
+
+
+----------------------------------
+
+
+
+
+DENTRO 
+
+
+DESSE 'EVENT'/'event handler',
+
+O PROFESSOR 
+
+
+VAI SIMPLESMENTE 
+
+
+
+ESCREVER UM CÓDIGO EM QUE 
+
+VAI 
+
+
+EXECUTAR 
+UM 
+
+CONSOLE.LOG 
+
+
+de 
+
+
+
+'onEnter'... ----> faremos isso para VER ___EM QUE MOMENTO __ EXATAMENTE _ 
+
+ESSE 
+
+'event' 
+
+ACONTECE...
+
+
+
+
+
+
+
+--> o segundo 
+
+
+EVENT SERÁ 
+
+'onEntering'....
+
+
+
+
+--> O TERCEIRO 
+
+
+é 
+
+
+
+'OnEntered'
+
+
+
+
+
+
+
+--> O QUARTO 
+
+é 
+
+
+'onExit' 
+
+
+
+
+--> o quinto é 
+
+
+'onExiting'
+
+
+
+
+
+--> E O SEXTO É 
+
+'onExited'...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+         <Transition in={this.state.showBlock}
+          timeout={1000}
+           unmountOnExit
+           mountOnEnter
+           onEnter={() => {console.log('onEnter')}} ///EIS O CÓDIGO EM QUESTÃO.
+           onEntering={() => {console.log('onEntering')}}
+           onEntered={() => {console.log('onEntered')}}
+           onExit={() => {console.log('onExit')}}
+           onExiting={() => {console.log('onExiting')}}
+           onExited={() => {console.log('onExited')}}
+           >
+
+
+
+
+--------------------------
+
+
+
+
+
+CERTO...  --> E ESSES 6 
+
+DIFERENTES 
+
+'PROPS'
+
+
+PODEM 
+
+
+SER 
+
+'BOUND'
+
+A DIFERENTES 
+
+___FUNÇÕES__, BEM DESSE JEITO QUE O PROFESSOR FEZ... --> e aí vocÊ 
+
+
+
+
+__PODE ___ EXECUTAR QUALQUER CÓDIGO QUE VOCÊ QUISER... -----> E AÍ 
+
+
+
+
+
+OS CÓDIGOS 
+
+SÃO 
+
+EXECUTADOS EXATAMENTE NESSA ORDEM QUE ESCREVEMOS AQUI...
+
+
+
+
+
+'->onEnter' --> É EXECUTADO ___ POUCO ANTES __ DE ACESSARMOS O 'ENTERING' MODE'... 
+
+
+
+---> 'onEntering' --> é executado quando acessado o 'entering mode'...
+
+
+
+--> 'onEntered' --> é executado DEPOIS do entering mode, quando realmente 'entramos'... 
+
+
+
+--> 'onExit' --> é executado quando COMEÇAMOS O processo de EXIT...
+
+
+--> 'onExiting' --> é executado QUANDO __ estamos DENTRO do processo de 'exiting'....
+
+
+--> 'onExited' ---> é executado quando __EXITAMOS__, quando realmente saímos/acaba a animação....
+
+
+
+
+
+
+
+---> agora, quando clicarmos em 
+
+'Toggle',
+
+
+vamos 
+
+ver 
+
+
+'onEnter/onEntering/onEntered' 
+
+no console.... --> 
+
+
+
+
+e quando 
+
+
+clciarmos 
+
+toggle 
+
+dnv,
+
+veremos 
+
+
+
+'onExit', 
+
+'onExiting'
+
+e 
+
+'onExited'...
+
+--------------------
+
+
+
+
+
+ESSE RECURSO DOS
+
+
+
+
+6 'Steps'
+ 
+
+ É ÚTIL QUANDO VOCê QUER 
+
+ CRIAR 
+
+ 'STAGGERED ANIMATIONS',
+
+
+ ANIMAÇÕES EM QUE __VOCê ___ QUER ___ _ESPERAR__ PELO 'FINISH' ('onExited') 
+
+
+ DE UMA 
+
+ ANIMATION__ ANTES __ DE COMEÇAR A PRÓXIMA ANIMAÇÃO....
+
+
+
+
+
+---> COM ESSES MÉTODOS E EVENTOS,
+
+
+
+você 
+
+tem tudo de que precisa 
+para 
+
+
+DETERMINAR 
+
+
+
+''''O QUE ACONTECEU''',
+
+
+ '''' O QUE ACABOU''',
+
+
+
+ ''''O QUE COMEÇOU''',
+
+  e então 
+
+
+
+
+  TIMAR suas outras animações, com base 
+
+
+  nesses métodos...
+
+
+  -------------------------------
+
+
+
+  

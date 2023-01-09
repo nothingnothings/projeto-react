@@ -1,0 +1,1376 @@
+
+
+
+
+
+Nós tivemos aquele assignment lá,
+
+
+
+que terminamos em 1 hora e meia... --------> Nesse aplicativo 'persons',
+
+
+
+
+nós podemos CRIAR UMA PERSON COM um click no botão 
+
+
+'Add Person',
+
+
+e então 
+
+REMOVÊ-LA quando clicamos no seu 'li'...
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+---> os campos 'age' 
+
+
+das nossas 'Person' 
+
+SÃO CRIADOS ALEATORIAMENTE...
+
+
+
+
+--> o 'name' é HARDCODADO NO REDUCER... 
+
+
+
+
+
+
+
+--> professor explica que É CLARO QUE AQUI TERÍAMOS UM TÍPICO USE-CASE 
+
+
+de 
+
+
+'input fields' para o usuário utilizar,
+
+
+
+para colocar seu nome...
+
+
+
+
+--> o usuário especificaria 
+
+
+o seu nome, idade, etc... -------> OK, 
+
+
+
+MAS 
+
+
+COMO PODERÍAMOS 
+
+
+FAZER ISSO FUNCIONAR 
+
+
+
+
+COM 
+
+
+
+O ___REDUX___....?
+
+
+
+
+
+
+
+
+---> professor nos explica que é um TÍPICO CASO DE 
+
+
+'LOCAL UI STATE'.... -----> 
+
+
+
+
+
+1 (Local UI State )--> 'mostly handled within components' 
+
+
+
+
+---------------------------------------------
+
+
+
+
+NOS ÚLTIMOS MÓDULOS DO CURSO, 
+
+
+APRENDEMOS 
+
+
+
+QUE, para o user input,
+
+NÓS TAMBÉM 
+
+fazemos 
+
+'handle'
+
+
+
+
+
+____DESSE 'user Input' 
+
+
+COM 
+
+
+'setState', e com 
+
+o 
+
+STATE 
+
+EM GERAL... ------------> E, PARA ISSO, PARA 
+
+
+
+ENFIAR 
+
+
+ESSES 
+
+VALORES (user inputs de 'name' e 'age')
+
+
+
+__NÓS NÃO __ PRECISAMOS USAR O REDUX,
+
+NÃO HÁ NECESSIDADE... ----> para casos como esses,
+
+
+
+PODEMOS 
+
+USAR 
+
+
+O
+ STATE TRADICIONAL... 
+
+
+
+
+
+
+
+--------> NÓS __SÓ VAMOS PRECISAR __ DO REDUX__ em um pedaço do nosso app 
+
+SE NÓS 
+
+ENTÃO 
+
+
+__PRECISARMOS __ CRIAR UMA PERSON ___ COM ESSE INPUT...
+
+
+
+
+
+mas 
+
+
+para apenas fazer HANDLE de cada 'keystroke' e para usar 'two way binding' (quando usuário digita, valor aparece 
+automaticamente na página... isso é o two way binding...),
+
+
+
+NÓS ___ NÃO PRECISAMOS ___ NECESSARIAMENTE USAR O 
+
+'REDUX'...
+
+
+
+
+------------------------------
+
+
+
+
+
+
+--> Certo... ---> isso significa que 
+
+LÁ EM 
+
+
+
+'Add Person', 
+
+em quee 
+
+
+TEMOS 
+
+
+O NOSSO 
+
+
+BUTTON 
+
+
+de 
+
+
+'<div className="AddPerson">
+    <button onClick={props.personAdded}>Add Person</button>
+</div',
+
+
+
+
+DIGAMOS QUE AGORA TAMBÉM ADICIONAREMOS ___INPUTS___...
+
+
+
+ex:
+
+
+
+
+
+import React from 'react';
+
+import AddPersonStyle from '../../components/AddPerson/AddPerson.module.css';
+
+const addPerson = (props) => {
+  return <div className={AddPersonStyle.AddPerson}>
+      <label for="name" placeholder="Name">Name</label>
+      <input type="text"/>
+      <label for="age">Age</label>
+      <input type="number" placeholder="Age"/>
+    <button onClick={props.personAdded}>Add Person</button>
+  </div>;
+};
+
+
+
+export default addPerson;
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+
+tipo assim, creio eu.
+
+
+
+
+Input fields SUPER SIMPLES...
+
+
+
+
+
+PROFESSOR NOS EXPLICA QUE 
+
+É 
+
+CLARO QUE PODEMOS 
+
+
+
+__CONVERTER __ O 'addPerson'
+
+
+
+EM UM __CLASS COMPONENT___ (component class-based)
+
+
+
+POR MEIO 
+
+
+DA KEYWORD 
+
+'class'... ------> faríamos/fazemos ISSO 
+
+
+__PARA FAZER MANAGE __ DO STATE ___ 
+
+
+DESSES DADOS 
+
+'name' 
+
+e 
+
+'age'
+
+
+___LOCALMENTE__ ( o state LOCAL de 'AddPerson' vai fazer esse manage aí...)
+
+
+
+
+----------------------------------
+
+
+
+
+ALTERNATIVAMENTE, DIZ O PROFESSOR, PODERÍAMOS implementar
+
+
+O APPROACH DO HOOK 'useState',
+
+
+ 
+
+ SE VOCÊ ESTIVER USANDO ESSA VERSÃO DO REACT....
+
+
+
+
+
+
+
+ --> nós simplesmente vamos em frente e convertemos esse FUNCTIONAL COMPONENT 
+
+ em 
+
+ um 
+
+ CLASS-BASED COMPONENT...
+
+
+ ex:
+
+
+
+
+import React, { Component } from 'react';
+
+import AddPersonStyle from '../../components/AddPerson/AddPerson.module.css';
+
+class AddPerson extends Component {
+ render() { return <div className={AddPersonStyle.AddPerson}>
+      <label for="name" >Name</label>
+      <input type="text" placeholder="Name"/>
+      <label for="age">Age</label>
+      <input type="number"  placeholder="Age"/>
+    <button onClick={this.props.personAdded}>Add Person</button>
+  </div>;
+ }
+}
+
+
+
+export default AddPerson;
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+ISSO FEITO,
+
+adicionamos 
+
+UM 
+
+
+STATE 
+
+A 
+
+ESSE 
+
+
+CLASS-BASED COMPONENT....
+
+
+
+
+
+ex:
+
+
+
+
+import React, { Component } from 'react';
+
+import AddPersonStyle from '../../components/AddPerson/AddPerson.module.css';
+
+class AddPerson extends Component {
+    state = {
+        name: ,
+
+        age: 
+    }
+
+
+
+ render() { return <div className={AddPersonStyle.AddPerson}>
+      <label for="name" >Name</label>
+      <input type="text" placeholder="Name"/>
+      <label for="age">Age</label>
+      <input type="number"  placeholder="Age"/>
+    <button onClick={this.props.personAdded}>Add Person</button>
+  </div>;
+ }
+}
+
+
+
+export default AddPerson;
+
+
+------------------------------------
+
+
+
+
+TIPO ASSIM, 
+
+
+BASICAMENTE...
+
+
+
+-------------------------------
+
+
+
+
+name e age serão INICIALMENTE empty string e um 'null'...
+
+
+
+
+
+
+ISSO FEITO, 
+
+
+PROFESSOR ADICIONARÁ UM 
+
+
+
+MÉTODO,
+
+
+que 
+
+será 
+o método 
+
+
+
+
+
+'nameChangedHandler'....
+
+
+
+
+
+
+
+
+será 
+
+
+
+'nameChangedHandler = (event) => {
+
+}'
+
+
+
+-------------------------------
+
+
+
+
+Nesse método, vamos escrever 
+
+
+
+
+'this.setState(
+  {
+    name: event.target.value'
+  }
+)
+
+'
+
+
+
+
+
+
+-----------------
+
+
+
+
+
+
+ E ENTÃO VAMOS VINCULAR ISSO AO NOSSO INPUT, com 
+
+
+ um 
+
+eventHandler de 
+
+'onChange'...
+
+
+
+
+ex:
+
+
+
+ <input type="text" placeholder="Name" onChange={(event) => {this.nameChangedHandler(event)}}/>
+
+
+
+
+
+
+
+
+ -------
+
+
+
+ CERTO, TEREMOS O SEGUINTE CÓDIGO EM 
+
+
+ 'AddPerson.js':
+
+
+
+
+
+ import React, { Component } from 'react';
+
+import AddPersonStyle from '../../components/AddPerson/AddPerson.module.css';
+
+class AddPerson extends Component {
+
+state = {
+    name: '',
+    age: null
+}
+
+nameChangedHandler = (event) => {
+  this.setState(
+    {
+      name: event.target.value
+    }
+  )
+}
+
+
+ageChangedHandler = (event) => {
+  this.setState(
+    {
+      age: event.target.value
+    }
+  )
+}
+
+
+
+ render() { return <div className={AddPersonStyle.AddPerson}>
+      <label for="name" >Name</label>
+      <input type="text" placeholder="Name" onChange={(event) => {this.nameChangedHandler(event)}}/>
+      <label for="age">Age</label>
+      <input type="number"  placeholder="Age" onChange={(event) => {this.ageChangedHandler(event)}}/>
+    <button onClick={this.props.personAdded}>Add Person</button>
+  </div>;
+ }
+}
+
+
+
+export default AddPerson;
+
+
+
+
+-------------------------------
+
+
+
+
+PARA 
+
+TER ____TWO WAY BINDING_____ NESSE COMPONENT 
+
+
+'AddPerson', nesse nosso 'INPUT',
+
+
+nós 
+
+vamos 
+
+
+escrever 
+
+o prop/propriedade 
+
+de 
+
+'value'.... -- (fazemos isso para que nossas 'KEYSTROKES' ___rEALMENTE___ SEJAM REFLETIDAS NO 'INPUT'...)
+
+
+
+ex:
+
+
+
+
+
+<input type="text"
+ placeholder="Name"
+  onChange={(event) => {this.nameChangedHandler(event)}}
+  value={this.state.name} /////////com isso, SERÁ VINCULADO ESSE INPUT com sucesso ao 'name' no nosso STATE.... (que será então OUTPUTTADO NA NOSSSA UI, por meio de algum component/código no nosso 'render' de 'addPerson'...)
+  
+  />
+
+
+
+
+------------------------
+
+
+
+
+
+ENTÃO FAZEMOS A MESMA COISA COM NOSSO 
+
+'age':
+
+
+
+
+
+<input type="text"
+ placeholder="Name"
+  onChange={(event) => {this.ageChangedHandler(event)}}
+  value={this.state.value} /////////com isso, SERÁ VINCULADO ESSE INPUT com sucesso ao 'age' no nosso STATE.... (que será então OUTPUTTADO NA NOSSSA UI, por meio de algum component/código no nosso 'render' de 'addPerson'...)
+  
+  />
+
+
+
+
+-------------------
+
+
+
+OU SEJA,
+
+NESSAS LINHAS DE CÓDIGO APLICAMOS __TUDO QUE APRENDEMOS__ ANTES DESSE MÓDULO 
+
+DE 
+
+'REDUX'...
+
+
+
+
+--------> nós estaremos fazendo manage do STATE DESSE COMPONENT __DENTRO DE ELE MESMO__...
+
+
+
+
+---------> E ESSE STATE É UM TÍPICO 'LOCAL UI STATE'.... -------> QUALQUER COISA QUE 
+
+
+O 
+
+
+USUÁRIO INPUTTAR 
+
+NAQUELES
+ 
+
+
+ CAMPOS 
+
+
+ input, que então é 
+
+
+ escrito 
+
+
+ em 
+
+ 'name' e 
+
+ 'age' no state,
+
+
+
+ PROVAVELMENTE ___NÃO SERÁ __ ___RELEVANTE__ PARA O RESTO DO APLICATIVO... ------> e É EXATAMENTE 
+
+ POR ISSO QUE __NÃO HÁ NECESSIDADE __ DE ARMAZENAR 
+
+ ESSE 
+
+ NEGÓCIO 
+
+
+ EM 
+
+ UM 
+
+
+ 'LOCAL STORE'/GLOBAL STORE DO REDUX... (state global do redux)...
+
+
+
+
+
+
+ --------------> VOCÊ PODE (E DEVE) ARMAZENAR 
+
+VALORES DESSAS PROPRIEDADES 
+
+NO STATE DESSE COMPONENT AÍ (localmente),
+
+
+PQ 
+
+ISSO 
+
+
+AÍ 
+
+CERTAMENTE SÓ IMPORTA ___A ESSE COMPONENT _ ESPECÍFICO__...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----> ****ENTRETANTO,
+
+
+
+ESSES DADOS CONTIDOS NESSE STATE LOCAL/TRADICIONAL podem, sim (e vão), 
+
+IMPORTAR 
+
+AOS 
+
+OUTROS COMPONENTS, ASSIM QUE 
+
+AQUELE BOTÃO 
+
+de 
+
+
+
+'<button onClick={this.props.personAdded} />'
+
+
+
+FOR __PRESSIONADO____.... -----------> 
+
+
+
+
+
+E É EXATAMENTE POR ISSO QUE 
+
+O PROFESSOR 
+
+
+
+
+VAI ______ USAR AUQELA SINTAXE 
+
+DE 
+
+'{() => {this.props.personAdded} }' 
+
+
+
+
+
+NESSE 
+
+'onClick'... -----------> ELE FAZ ISSO PQ __ELE PRETENDE __ ____ COMBINAR ___ O USO 
+
+DO 
+
+
+'LOCAL STATE' de 'AddPerson.js' (component 'AddPerson') 
+
+
+
+
+COM 
+
+
+
+O STATE GLOBAL 'REDUX' NESSE APLICATIVO DAS 'PERSONS'... (cujo state '''está no reducer''')...
+
+
+
+
+-------------------------------------------
+
+
+
+
+E O PROFESSOR JUSTAMENTE USA ESSA SINTAXE 
+
+
+
+
+
+''''{() => {this.props.personAdded() } }'''''
+
+
+
+
+PARA __QUE POSSAMOS __ 
+
+
+
+ENVIAR
+ 
+
+
+
+'SOME DATA ALONG TO THE PROPS HERE'... ---> ou SEJA,
+
+
+
+vamos 
+
+
+PASSAR 
+
+
+UNS DADOS 
+
+
+à FUNÇÃO 
+
+'personAdded'...
+
+
+
+
+
+
+---> E 'personAdded' é ISSO AQUI: <AddPerson personAdded={this.props.onPersonAdd} />,
+
+
+
+QUE POR SUA VEZ É UMA REFERÊNCIA A ISSO AQUI:
+
+
+
+
+
+        onPersonAdd: () => {
+                        dispatch(
+                            {
+                                type: actionTypes.ADD_PERSON
+                            }
+                        )
+                    }
+
+
+  
+  -----------------------------------------
+
+
+
+
+
+
+  OK, MAS O QUE DIABOS 
+
+  O PROFESSOR 
+
+
+  VAI 
+
+  PASSAR? --> bem ,
+
+
+
+  ELE 
+
+
+  VAI 
+
+  PASSAr 
+
+
+
+
+  'this.state.name' e 'this.state.age',
+
+
+  ESSAS 
+
+  2 INFORMAÇÕES 
+
+
+  QUE 
+
+
+  (eRAM) RELEVANTES APENAS AO 'AddPerson.js' (mas que agora 
+  
+  
+  serão utilizados/REPASSADOS AO __STATE __ GLOBAL DO 'REDUX'...).
+
+
+
+
+
+
+  ex:
+
+
+
+
+
+
+    <button onClick={() => {this.props.personAdded(this.state.name, this.state.age)}}>Add Person</button>
+
+
+
+
+
+---------------------------
+
+
+
+FICARÁ ASSIM,
+
+LÁ NO CONTAINER 
+
+'Persons.js'...:
+
+
+
+---------------------------------
+
+    onPersonAdd: (name, age) => { ///////EIS O CÓDIGO EM QUESTÃO.
+                        dispatch(
+                            {
+                                type: actionTypes.ADD_PERSON
+                            }
+                        )
+                    }
+
+-----------------------------------
+
+
+
+
+O PROFESSOR FAZ ISSO JUSTAMENTE 
+
+PARA 
+
+QUE 
+
+POSSAMOS 
+
+PASSAR UM 'PAYLOAD'
+
+nessa action 
+
+de 
+
+
+
+
+'name: name' 
+
+
+e 
+
+'age: age'...
+
+
+
+ex:
+
+
+
+
+    onPersonAdd: (name, age) => { 
+                        dispatch(
+                            {
+                                type: actionTypes.ADD_PERSON,
+                                name: name, ///////EIS O CÓDIGO EM QUESTÃO.
+                                age: age
+                            }
+                        )
+                    }
+
+
+
+
+
+--------------------------
+
+
+
+Mas o professor diz que prefere enfiar tudo isso em uma propriedade que segura 
+
+um objeto com essas propriedades,
+ 
+ um objeto chamado de 'personData'...
+
+
+
+ ex:
+
+
+
+
+
+    onPersonAdd: (name, age) => { 
+                        dispatch(
+                            {
+                                type: actionTypes.ADD_PERSON,
+                                
+                                personData: 
+                                {
+                                  name: name,
+                                age: age
+                                }
+                            }
+                        )
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+CERTO... ISSO FEITO, AGORA IMAGINO QUE DEVA 
+
+
+SER EDITADO O 'REDUCER' e seu '''STATE GLOBAL INICIAL'''' ('initialState'), 
+
+PARA QUE 
+
+ELE PASSE 
+
+A INCLUIR 
+
+ESSAS 
+
+PROPRIEDADES...
+
+
+
+
+
+
+
+
+
+PROFESSOR DIZ QUE DEVEMOS __IR ATÉ O REDUCER__ E DEVEMOS 
+
+
+___EDITAR ___ 
+
+
+O 'CASE'/LÓGICA 
+
+DO CASE 
+
+DE 
+
+
+'ADD_PERSON',
+
+
+
+para 
+
+INCLUIR 
+
+
+O 
+
+
+
+'INPUT' que o usuário 'INPUTTOU', 
+
+justamente 
+
+por meio da REFERENCIA 
+
+A ESSE PAYLOAD ENFIADO NA NOSSA ACTION...
+
+
+
+
+
+
+--> CERTO, ISSO DEU CERTO:
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import * as actionTypes from '../actions';
+
+
+
+
+const initialState = {
+  persons: []
+};
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actionTypes.ADD_PERSON:
+      const newPerson = {
+        id: Math.random(),
+        // name: 'Max',
+        name: action.personData.name, ///////////////////EIS O CÓDIGO EM QUESTÃO.
+        // age: Math.floor(Math.random() * 40),
+        age: action.personData.age
+      };
+        return {
+            ...state,
+            persons: state.persons.concat(newPerson)
+        }
+      break;
+    case actionTypes.DELETE_PERSON:
+        const updatedPersons = state.persons.filter(
+            (person) => {
+                return person.id !== action.personId;
+            }
+        )
+        return {
+            ...state,
+            persons: updatedPersons
+        }
+      break;
+    default:
+      return state;
+  }
+};
+
+export default reducer;
+
+
+
+----------------------------
+
+
+
+
+
+AGORA QUANDO 
+
+
+DIGITAMOS 
+
+ALGO 
+
+NOS NOSSOS INPUT fields 
+E 
+
+APERTAMOS 
+
+
+o botão 
+
+'Add Person',
+
+
+um 
+
+
+'PERSON ITEM'
+ 
+ é adicionado 
+
+EM UMA LISTA... E ESSE 'PERSON ITEM'
+
+
+sempre 
+
+terá 
+
+O NAME 
+
+E 
+
+Age 
+
+
+QUE O USUÁRIO 
+
+INPUTTOU...
+
+
+
+--------------------
+
+OK, ISSO QUER DIZER QUE 
+
+
+___MUDANÇAS __ NO NOSSO STATE 'LOCAL' DE 'AddPerson'
+
+
+SÃO AGORA PROPAGADAS E UTILIZADAS 
+
+
+NO 
+
+
+'STATE GLOBAL' DO REDUX... 
+
+(estamos COMBINANDO 
+
+
+
+''''LOCAL UI STATE'''', QUE FAZ O __HANDLE ___ DO INPUT DO USUÁRIO LOCALMENTE,
+
+
+E 
+
+
+AÍ 
+
+USAMOS O 'REDUX STATE' COM ESSES DADOS DESSE STATE LOCAL 
+
+__PARA __eNTÃO FAZER HANDLE DO ___COMPONENT 'Person',
+
+QUE É UM COMPONENT QUE PODE/PROVAVELMENTE PODERÁ AFETAR 
+
+PARTES DIFERENTES, MAIS AMPLAS, DE NOSSO APLICATIVO,  )
+
+
+
+
+
+
+
+--> e o professor queria nos mostrar isso, COMO 
+
+
+
+FAZER HANDLE DE 'INPUT' LOCALMENTE, em um ''''MUNDO DE REDUX'''',
+
+
+
+
+E TAMBÉM QUERIA NOS MOSTRAR 
+
+
+___COMO É FEITA A DIFERENCIAÇÃO (nas nossas cabeças) 
+
+
+ENTRE 
+
+
+O 'LOCAL UI STATE' (como vimos aqui, com 'AddPerson', com aquelas informações 
+
+'name' e 'age', que são INICIALMENTE ___APENAS__ RELEVANTES 
+
+A ESSE 
+
+COMPONENT 
+'AddPerson'...) E O 
+
+
+'GLOBAL STATE' DO REDUX,
+
+
+que 
+
+faz handle desses components/items criadoS, NO INÍCIO, LOCALMENTE,
+
+mas que são 
+
+então 
+
+UTILIZADOS/PASSADOS AO STATE GLOBAL DO REDUX (por meio de PAYLOADS em ACTIONS),
+
+para 
+
+serem 
+então UTILIZADOS 
+
+EM TODAS 
+
+AS PARTES 
+
+DE NOSSO APLICATIVO...

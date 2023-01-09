@@ -1,0 +1,1199 @@
+
+
+
+
+
+
+
+
+
+
+
+---> AGORA,
+
+
+COM O HIGHER ORDER COMPONENT 'withClass' 
+
+
+
+e 'Auxiliary' (outro HOC) 
+
+criado,
+
+
+
+
+
+
+
+NÓS TALVEZ DEVAMOS O UTILIZAR NO 
+
+
+
+
+ARQUIVO 
+
+
+'Person.js',
+
+
+
+
+NAS 'SINGLE PERSONS'... -------> vamos querer 
+
+
+
+
+TER __UMA CLASS__ AO REDOR DESSE component 
+
+'Person'....
+
+
+
+O CÓDIGO 
+ESTÁ, POR ENQUANTO, ASSIM:
+
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Auxiliary> //////EIS O CÓDIGO.
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p
+        key="i2">{this.props.children}</p>,
+
+        <input
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Auxiliary>
+    );
+  }
+}
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+O PROFESSOR HAVIA USADO O COMPONENT 
+
+
+
+
+'Auxiliary'/'Aux' 
+
+PARA DEMONSTRAR 
+
+
+COMO FAZER 
+
+
+O OUTPUT/RENDER 
+
+
+DE ELEMENTOS HTML/JSX ADJACENTES... ------> MAS 
+
+
+
+
+AGORA ELE QUER ENFIAR UNS 
+
+
+ESTILOS/UM ESTILO 
+
+
+NESSE CONTEÚDO 
+
+
+dO component 
+
+'Person'... --------> PARA ISSO, 
+
+
+EXPLICA 
+
+
+O PROFESSOR,
+
+
+PODEMOS SIMPLESMENTE 
+
+IMPORTAR 
+
+
+aquela 
+
+'função/higher order component/função que age como higher order component' 
+
+
+DE 
+
+'withClass'...
+
+
+
+
+ex:
+
+
+
+import withClass from '../../../hoc/withClass';
+
+
+
+
+-----------------------------------------------
+
+ISSO FEITO,
+
+
+
+PODEREMOS USAR
+
+ESSA FUNÇÃO/COISA BUGADA AÍ
+
+
+
+no 
+
+
+Component 
+
+'Person'... (essa função 'withClass'/qualquer HOC NÃO ESTÁ LIMITADO A SER USADO __EM APENAS 1 ÚNICO COMPONENT___.... ---> não, você pode usá-lo EM QUANTOS COMPONENTS VOCÊ QUISER. )
+
+
+
+
+
+
+---> VOCÊ PODE 
+
+
+WRAPPAR 'withClass' AO REDOR 
+
+DE QUALQUER COMPONENT QUE PRECISE DE SUA FUNCIONALIDADE... 
+
+
+
+
+
+
+----> E A FUNCIONALIDADE QUE 
+
+
+O 'withClass' ADICIONA 
+
+É A DE SETTAR UM 
+
+ESTILO (.css),
+
+
+cujo 'className' 
+
+
+VOCÊ __PASSA__... (ele faz isso por meio da sua escrita, que contém uma WRAPPING DIV com um código css sendo aplicado a seus elementos...)
+
+
+
+
+
+
+
+
+
+
+
+É POR ISSO QUE VAMOS ESCREVER 
+
+
+
+ex:
+
+
+
+
+
+export default withClass(Person);
+
+
+------------------------------------
+
+
+
+MAS NÃO VAMOS SÓ FAZER ISSO, NÃO; 
+
+NÓS DEVEMOS 
+
+PASSAR O SEGUNDO PARÂMETRO,
+
+QUE SERÁ 
+
+
+O ESTILO A SER APLICADO...
+
+
+
+O estilo 
+
+
+será 
+
+
+
+'Pessoa.Person'...
+
+
+
+ex:
+
+
+
+
+
+export default withClass(Person, Pessoa.Person);
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+CÓDIGO COMPLETO:
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Pessoa from './Person.module.css';
+
+
+
+
+
+import Aux from '../../../hoc/Auxiliary.js';
+
+
+
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+        <Aux>
+        <p 
+        key="i1"
+        onClick={this.props.click}>
+          Hi, I'm {this.props.name} and I am {this.props.age} years old!
+        </p>,
+
+        <p
+        key="i2">{this.props.children}</p>,
+
+        <input
+          key="i3 "
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+  }
+}
+
+
+
+export default withClass(Person, Pessoa.Person);
+
+
+
+
+---------------------------------------------
+
+
+
+
+CERTO... COM ISSO,
+
+
+
+
+
+NÓS TEMOS TUDO SETTADO... ----> NOSSO ESTILO (STYLING) 
+
+
+
+deve ter 
+
+VOLTADO
+ 
+
+PARA 
+
+
+OS COMPONENTS 'Person'... ------>  
+
+
+QUANDO FIZERMOS ISSO,
+
+
+VEREMOS 
+
+
+QUE 
+
+
+___O STYLING__ TERÁ VOLTADO ___ A ESSES COMPONENTS,
+
+
+
+MAS 
+
+
+___a DATA____ (os NOMES nos INPUT FIELDS dos components E TODOS 'NAME', 'AGE', ETC ETC...) 
+
+
+TERÁ ___SUMIDo____....
+
+
+
+
+
+
+
+
+----> UÉ, MAS OQ DEU ERRADO?  ------->  A 'DATA'  (nomes nos input fields E TODO O RESTO.. )
+
+
+
+ESTÁ FALTANDO 
+
+
+PQ _______NÓS ESTAMOS ____ FAZENDO, AQUI,
+
+
+É ALGO ERRADO:
+
+
+
+ESTAMOS 
+
+
+PEGANDO NOSSO 
+
+COMPONENT 
+
+
+
+'Person'
+
+
+E, logo antes DE O EXPORTARMOS com ('export'),
+ 
+
+ NÓS 
+
+ ACABAMOS O PASSANDO 
+
+ PARA 
+
+ DENTRO 
+
+
+
+ DA FUNÇÃO 
+
+
+ 'withClass'.... 
+
+
+
+
+
+ CÓDIGO DE 'WithClass':
+
+
+
+'''''''''''''''''''''''
+ 
+const withClass = (WrappedComponent, className) => {
+        
+return props => (
+                <div className={className}>
+                    <WrappedComponent />
+                </div>
+        );
+};
+
+'''''''''''''''''''''''''''''
+
+
+
+
+
+
+
+CERTO,
+
+
+E O QUE 
+
+ESSA FUNÇÃO FAZ? ----> ELA pega __ o component/recebe o component 
+
+
+
+E ___ O OUTPUTTa___, mas 
+
+NÃO 
+
+__ANTES__ DE O WRAPPAR __ COM 
+
+UMA DIV EXTRA de 'className={className}'...   (que é a DIV QUE EFETIVAMENTE ADICIONA A CLASSE .CSS que quereoms....)
+
+
+
+
+A 'div' na verdade não importa,
+
+
+MAS  A COISA 
+
+
+
+__QUE ESTÁ FALTANDO NESSE ___ 'WrappedComponent' (que é 'Person', nesse caso) é/SÃO
+
+
+
+_______________TODOS OS PROPS DO COMPONENT 'Person'_____________ ------> todos 
+
+
+os 
+
+props 
+
+
+__ESTÃO FALTANDO/MISSING___....
+
+
+
+ou seja,
+
+o professor está 
+
+OUPUTTANDO 
+
+
+O 'WrappedComponent'
+
+DESSA FORMA:
+
+
+''''''''
+<div className={className}>
+    <WrappedComponent />
+</div>
+
+''''''''
+
+
+,
+
+
+
+MAS ELE 
+
+__NÃO DEFINIU NENHUM __ PROP__  nesse 'WrappedComponent' 
+
+que 
+
+estamos outputtando ali...
+
+
+
+
+
+
+
+
+ELE EXPLICA QUE É CLARO QUE PODERÍAMOS 
+
+FAZER ALGO 
+
+COMO (settar os props aqui, de novo):
+
+
+
+
+
+
+
+
+<div className={className}>
+    <WrappedComponent name="exemplo" />
+</div>
+
+
+
+,
+
+
+
+
+
+MAS SE FIZÉSSEMOS ISSO, SERIA PÉSSIMO... SERIA PÉSSIMO 
+
+PQ:
+
+
+
+1) seria HARDCODAR nosso código
+
+
+
+2) ISSO FARIA TODO COMPONENT__ QUE USA ESSE HIGHER ORDER COMPONENT 
+
+
+RECEBER 
+
+'exemplo' COMO  'name'... (e aí todos ficarão 'I'm exemplo and i am years old')...
+
+
+
+--------> E ISSO CERTAMENTE NÃO É O QUE DESEJAMOS...
+
+
+
+
+
+
+
+-------> BEM, PARA SOLUCIONAR ESSE PROBLEMA,
+
+
+NÓS PODEMOS PASSAR PROPS __DINAMICAMENTE___... ---> e essa é uma feature 
+
+BEM PODEROSA DO JAVASCRIPT E DO REACT...
+
+
+
+
+
+--> REEXAMINE O CÓDIGO:
+
+
+
+
+
+
+
+const withClass = (WrappedComponent, className) => {
+        
+return props => (
+                <div className={className}>
+                    <WrappedComponent />
+                </div>
+        );
+};
+
+
+
+
+
+
+
+
+
+
+
+Perceba que 
+
+
+ali nós 
+
+
+DE FATO __ACEITAMOS___ 'props' 
+
+
+
+Dentro 
+
+daquele return ali... ('return props => {...}') ----------> E ESSES 
+
+'props',
+
+
+DE FATO,
+
+SERÃO/SÃO
+
+
+OS __PROPS____ DE NOSSO 
+
+
+'WrappedComponent'... ----> mas pq isso? Bem,
+
+
+
+É PQ 
+
+NÓS 
+
+
+FAZEMOS 
+
+__RETURN___ dessa 
+
+função/functional componet
+
+
+
+'props => (
+                <div className={className}>
+                    <WrappedComponent />
+                </div>
+        );
+
+
+'
+
+
+
+
+NO NOSSO 
+
+'higher order component',
+
+
+
+O QUE,
+ 
+ NO FINAL DAS CONTAS,
+
+
+
+SIGNIFICA QUE 
+
+
+
+ESSA FUNÇÃO 'withClass' 
+
+RETORNA  ___O 'FUNCTIONAL COMPONENT' 
+
+QUE 
+
+
+ACABA WRAPPANDO 
+
+
+nosso component 'Person'... ------> ISSO SIGNFICA QUE, POR MEIO DO CÓDIGO 
+
+
+'export default withClass(Person, Pessoa.Person)',
+
+
+NÓS ACABAMOS EXPORTANDO A COISA/QUALQUER COISA QUE 
+
+
+_É RETORNADA (return) 
+POR 
+
+'withClass'... -----------------> RESUMINDO:
+
+
+
+NÓS ___EXPORTAMOS___ AQUELE FUNCTIONAL COMPONENT RETORNADO PELA FUNÇÃO 
+
+
+'withClass'... -----> E, EM DECORRÊNCIA DISSO,
+
+
+QUALQUER 
+
+
+COMPONENT 
+
+
+QUE 
+
+
+
+IMPORTA 
+
+
+o component 'Person' 
+
+
+de 
+
+'Person.js'   E QUE USA 
+
+
+
+O EXPORT 
+
+
+
+de 'withClass(Person, Pessoa.Person);' 
+
+
+
+COMO 
+
+
+___component 'Person'       (
+
+
+
+    como visto 
+
+
+    no arquivo 
+
+    'Persons.js',
+
+
+    em que 
+
+    escrevemos 
+
+'
+    render() {
+        return (
+            <Person 
+                click={...}
+        )
+    }
+)
+',
+
+
+
+
+ISSO AÍ,
+
+
+esse call/invocação 
+
+
+'return (<Person>)' 
+
+
+
+SE REFERE 
+
+___APENAS___ AO 
+
+
+RESULTADO__ DO CALL 
+
+
+
+DE 
+
+'withClass(xxx, yyyy)'.... -------------> ISSO QUER DIZER, ESSENCIALMENTE,
+
+
+
+QUE 
+
+
+ESSE call/INVOCAÇÃO VAI ESTAR SE REFERINDO ÀQUELE 'functional component' 
+
+
+de código 
+
+
+'props => (
+                <div className={className}>
+                    <WrappedComponent />
+                </div>
+        );
+'.............
+
+
+
+
+E 
+
+
+__É POR ISSO QUE QUAISQUER __ PROPS ___ QUE 
+
+
+PASSAMOS  AO COMPONENT 
+
+
+'Person',
+
+
+lá em 
+
+
+'Persons' 
+
+
+(
+
+
+    código:
+
+
+
+  render() {
+    console.log('[Persons.js] rendering...');
+    return (
+      this.props.persons.map((person, index) => {
+            
+       return <Person 
+        click={() => this.props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.props.changed(event, person.id)}/>  
+          
+    }
+  
+      )
+    )
+    }
+
+
+
+
+)
+
+
+
+
+VÃO ACABAR NO COMPONENT 'withClass'...  (naquele parâmetro 'props'..) ------> ISSO 
+
+VAI SIGNIFICAR/SIGNIFICA QUE 
+
+
+
+O 'props' que está nesse 'withClass' ___SERÁ___ REALMENTE 
+
+
+O 'PROPS' __CORRETO___, SERÁ REALMENTE __OS PROPS___ 
+
+
+de 'Person' 
+
+PASSADOS 
+
+por 'Persons'... (name, age, etc etc...) --------->
+
+
+
+
+E PARA RESOLVERMOS NOSSO PROBLEMA,
+
+
+PROFESSOR 
+
+
+DIZ QUE PODEMOS 
+
+USAR UMA SINTAXE 
+
+
+ESPECIAL JAVASCRIPT __QUE NOS PERMITE___ FORWARDAR ___ 
+
+
+OS PROPS 
+
+
+PASSADOS por 'Persons' a 'Person' 
+
+
+
+__AO ___ 'WrappedComponent' (o que resolve tudo)
+
+
+(
+DEVE-se usar essa sintaxe especial... isso pq 
+
+
+escrever de forma bruta e burra algo como:
+
+
+
+''''''
+
+
+const withClass = (WrappedComponent, className) => {
+        
+return props => (
+                <div className={className}>
+                    <WrappedComponent
+                    props={props} ///ISSO NÃO FUNCIONARÁ.
+                    name={props.name} ///////ISSO NÃO FUNCIONARÁ
+
+                    />
+                </div>
+        );
+};,
+
+
+
+''''
+
+
+
+
+__NÃO FUNCIONARÁ__....
+
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+Ok, mas
+
+
+pq 
+
+
+'props={props}' não funciona? -----> NÃO FUNCIONA PQ O __REACt___ PEGA__ AUTOMATICAMENTE__ TODOS 
+
+
+OS ATRIBUTOS QUE VOCÊ ADICIONA AO SEU CÓDIGO JSX (nesse caso, ao 'WrappedComponent') E ENTÃO 
+
+OS COMBINA EM UM OBJETO 'props'...  ---> ISSO SIGNIFICA QUE O REACT PEGA AUTOMATICAMENTE TODOS OS ATTRIBUTES
+
+
+QUE PASSAMOS ao call de 'WrappedComponent' E OS COMPILA EM UM GRANDE OBJETO/PROPRIEDADE 
+
+CHAMADO DE 
+
+'props'... ---> e isso, nos atrapalha, aqui, pois se nós 
+
+
+escrevermos 
+
+'WrappedComponent props={props}' A ÚNICA COISA QUE VAMOS CONSEGUIR, por meio 
+
+desse 'props', é __UMA PROPRIEDADE 'PROPS' ___DENTRO DO 'PROPS'... (com um valor de 'props').... --> e não é isso que queremos, não queremos 'props: {props: props}'.....
+
+
+
+
+
+
+--------> PARA EVITAR ESSA PORCARIA AÍ, 
+
+
+ESSE 'props: {props: props}' INDEVIDO,
+
+
+
+NÓS DEVEMOS
+
+
+
+__PASSAR____  UMA OUTRA SINTAXE,
+
+UMA SINTAXE  EM QUE __USAMOS 
+
+___ 
+
+CURLY BRACES + O SPREAD OPERATOR... ---> ou seja, escrever: '<WrappedComponent {...} />' -------> 
+
+
+MAS NÃO SÓ ISSO,
+
+
+NÓS 
+
+
+VAMOS 
+
+
+ESCREVER 
+
+'{...props}' -------> ISSO FARÁ COM QUE OCORRA O 'SPREAD' DOS ___PROPS___ QUE VOCÊ ESTÁ GANHANDO EM 'return props => (...)' DENTRO DESSE OBJETO (dentro do '{}')....
+
+
+
+
+
+
+
+
+
+ex(REPRESENTAÇÃO):
+
+
+
+
+
+
+const withClass = (WrappedComponent, className) => {
+        
+return props => (
+                <div className={className}>
+                    <WrappedComponent   {...props} //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+                    />
+                </div>
+        );
+};,
+
+
+
+
+
+
+
+
+-----------------------------------------------
+
+
+
+Isso funciona 
+
+
+PQ 
+
+
+
+o __PROPS___ que estamos recebendo
+
+dentro dessa função interna/functional component retornado 
+
+por 'withClass' 
+
+
+É __UM OBJETO JAVASCRIPT__... POR SER UM OBJETO JAVASCRIPT, 
+
+ELE PODE SER MANIPULADO PELO __SPREAD OPERATOR___, QUE, NO FINAL DAS CONTAS,
+
+'PUXA SEU CONTEÚDO PARA FORA' 
+
+e então 
+
+
+enfia 
+
+esse conteúdo no NOVO objeto (no '{}' ao redor do '...props')... ----> ISSO SIGNIFICA 
+
+QUE 
+
+TODAS AS PROPRIEDADES QUE 
+
+ESTÃO/ESTAVAM DENTRO DO 
+
+objeto 'props' 
+
+
+RECEBIDO 
+
+EM 
+
+'withClass'
+
+
+SÃO REDISTRIBUÍDAS 
+
+
+DENTRO 
+
+DESSE NOVO 'Wrapped Component'... -----------> Isso significa que se nós 
+
+tínhamos propriedades 
+
+como 
+
+'name: Maximillian', 'age:28' 
+
+DENTRO 
+
+dos PROPS de 'Person' (por exemplo),
+
+
+QUANDO DIGITARMOS
+ 
+
+
+ '<WrappedComponent {...props} />', 
+
+ TODAS 
+
+ ESSAS PROPRIEDADES PASSARÃO 
+ A EXISTIR/VIVER 
+
+ DENTRO DESSE ''''WRAPPEDCOMPONENT'''' (que é 'Person', nesse caso aí....)
+
+
+
+
+
+
+
+
+
+ ISSO SIGNIFICA QUE 
+ESCREVER 
+
+
+
+'<WrappedComponent {...props} />'
+
+
+
+É ___BASICAMENTE___ ESCREVER 
+
+
+'<WrappedComponent  name: Maximillian  age:28 />'    (E todos os outros props...)
+
+
+
+
+É ISSO QUE VAI ACONTECER AQUI, BASICAMENTE, POR TRÁS DAS CENAS,
+
+PARA NÓS... ---> se salvarmos nossa página, vamos ver que 
+
+
+
+A DATA ESTARÁ DE VOLTA,
+ e tudo vai funcionar bem... tudo 
+
+
+ graças 
+
+
+ a essa gambiarra do 
+
+
+
+'{...props}' no __WRAPPEDCOMPONENT__...

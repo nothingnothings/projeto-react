@@ -1,0 +1,548 @@
+
+
+
+
+
+
+
+
+
+NÓS TRABALHAMOS UM POUCO NO 'ORDER REDUCER',
+
+
+
+E NAS ACTIONS DE 'order.js'.....---------> 
+
+
+
+MAS 
+
+
+RECEBEMOS UM 
+
+
+ERRO,
+
+
+O 
+
+
+ERRO 
+
+
+
+'TypeError: Cannot convert undefined or null to object'... 
+
+
+
+
+
+
+--> na linha 
+
+
+
+'let transformedIngredients = Object.keys(props.ingredients)'' 
+.map(.....)
+
+
+
+
+
+
+
+
+
+
+--> ISSO PROVAVELMENTE ACONTECEU PQ __NÃO INDICAMOS 
+
+
+ESSE 
+
+'SLICE' DO STATE (o slice de 'ingredients', representado por 
+
+'''ingr: state.burger.burger.ingredients'''
+
+)
+
+
+
+
+
+---> mas a questão é que 
+
+EU __JÁ CONECTEI ESSE 'SLICE' DO 
+
+
+STATE 
+
+
+AOS MEUS CONTAINERS,
+
+
+
+e já subdividi o state do redux em vários slices, 
+
+cada 
+
+
+um 
+
+para os meus reducers... --> e é por isso que 
+
+não estou recebendo esse erro...
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+MAS O PROFESSOR NOS EXPLICA QUE 
+
+A 
+
+__ORIGEM__ DESSE ERRO ESTÁ NESSE TRECHO DO CÓDIGO (em 'Checkout.js'):
+
+
+
+
+
+
+
+    return (
+      <div>
+        <CheckoutSummary
+          ingredients={this.props.ingr}
+          checkoutCancelled={this.checkoutCancelledHandler}
+          checkoutContinue={this.checkoutContinueHandler}
+        />
+        <Route
+          path={this.props.match.path + '/contact-data'}     
+           component={      
+            ContactData
+       } 
+        />
+      </div>
+    );
+
+
+
+
+
+
+
+    --> NA PÁGINA DE 'CHECKOUT',
+
+
+    no 
+
+    'CheckoutSummary',
+
+
+    NÓS MOSTRAMOS 
+
+    UMA __PREVIEW__ DE NOSSO BURGER... --> e, inicialmente,
+
+
+    ANTES DE CARREGARMOS OS INGREDIENTS NA NOSSA PÁGINA,
+
+    ELES
+
+    estarão como 
+
+    'null'... ----> e é exatamente 
+
+    QUE 
+
+    AQUELE CÓDIGO 
+
+
+    DE 
+
+    '.map()' falha,
+
+    PQ ELE 
+
+    TENTA LOOPAR POR DENTRO 
+
+    DE INGREDIENTS QUE AINDA NÃO FORAM DEFINIDOS...
+
+
+
+
+
+
+--> HÁ MUITAS MANEIRAS DE SOLUCIONAR ESSE PROBLEMA.... --> uma 
+
+delas 
+
+é 
+
+SIMPLESMENTE 
+
+
+__NÃO CARREGAR __ 'CheckoutSummary' (esse component aí)
+
+
+
+
+SE 
+
+
+
+
+'ingredients' (ou seja, 'this.props.ingr')  
+
+
+
+AINDA NÃO ESTIVER CARREGADO.. ---> aí mostraríamos um __SPINNER__ NO SEU LUGAR (até que apareçam...).
+
+
+
+
+
+
+
+
+----> CERTO, MAS 
+
+
+COMO NO NOSSO APP __O ÚNICO MOMENTO EM QUE __ OS INGREDIENTS __ NÃO ESTÃO PRESENTES 
+
+
+É 
+
+
+__DURANTE__ O STARTUP,
+
+
+
+
+NÓS PODEMOS 
+
+
+
+EVIDENTEMENTE 
+
+
+__aPENAS ___ REDIRECIONAR O USUÁRIO____ À PÁGINA 'BurgerBuilder'
+
+
+
+SE 
+
+NENHUM INGREDIENT 
+
+
+ESTIVER 
+
+CARREGADO inicialmente... ----> PQ SE NENHUM INGREDIENT ESTÁ CARREGADO,
+
+
+NÃO HÁ NENHUM SENTIDO EM PERMANECER NA PÁGINA DE 
+
+'CHECKOUT'...
+
+
+
+
+
+
+
+--> É POR ISSO QUE 
+
+
+ESTA É A ROUTE QUE O PROFESSOR VAI TOMAR, um run de código condicional que 
+
+vai 
+
+
+REDIRECIONAR O USUÁRIO 
+
+À PÁGINA BURGER BUILDER,
+
+caso constate 
+
+que 
+
+
+
+'this.props.ingr' 
+
+
+
+está 
+
+
+VAZIO/undefined...
+
+
+
+
+
+
+
+(mas o professor fez aquele esclarecimento no início apenas 
+para 
+
+nos 
+
+afirmar que PODERÍAMOS MOSTRAR UM SPINNER AQUI, se quiséssemos, no lugar 
+do 'CheckoutSummary'...) --> um spinner e uma mensagem 'Taking too long? Maybe you skipped the Burger Build page...' 
+
+
+
+-------------------------------------
+
+
+
+
+
+COMO O PROFESSOR 
+
+
+
+VAI 
+
+QUERER 
+
+SEGUIR 
+
+ESSE 
+
+'APPROACH' aí,
+
+
+
+ELE 
+
+
+DECIDE 
+
+
+
+importar 
+
+o component
+
+
+'{ Redirect }' lá do 
+
+
+
+'react-router-dom',
+
+
+nesse 
+
+component 
+
+
+
+de 
+
+'Checkout'....
+
+
+
+ex:
+
+
+
+import { Route, Redirect } from 'react-router-dom';
+
+
+
+
+
+------------------------------------
+
+
+
+ISSO FEITO,
+
+
+
+
+ELE VAI 
+
+CRIAR 
+
+UMA NOVA CONST no método 
+
+render,
+
+
+de nome 
+
+'summary'.... ---> 
+
+
+
+
+esse 
+
+SUMMARY, por default,
+
+
+VAI 
+SER 
+
+
+O 
+
+'redirect',
+
+
+que 
+é 
+
+
+escrito 
+
+assim:
+
+
+
+
+
+const summary = <Redirect to='/'/>
+
+
+
+
+----------------------------------------
+
+ISSO VAI REDIRECIONAR O USUÁRIO 
+
+À 
+
+PÁGINA 
+
+'BURGERBUILDER', por default (pq logo vamos escrever 
+
+
+a 
+lógica 
+
+
+'ah, se for constatada a existência de 'this.props.ingr', renderize summary...').
+
+
+
+
+
+
+EX:
+
+
+render() {
+
+
+    const summary = (<Redirect to="/" />)  ////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+    if (this.props.ingr) {
+          summary =(   <CheckoutSummary
+          ingredients={this.props.ingr}
+          checkoutCancelled={this.checkoutCancelledHandler}
+          checkoutContinue={this.checkoutContinueHandler}
+        />
+          )
+    }
+
+
+
+
+            return (
+
+
+
+      <div>
+        {summary}
+        <Route
+          path={this.props.match.path + '/contact-data'}     
+           component={      
+            ContactData
+       } 
+        />
+      </div>
+    );
+}
+
+
+
+
+-----------------------------
+
+
+
+CERTO,
+
+
+ISSO FOI FEITO...
+
+
+
+O código (em 'Checkout') ficou assim:
+
+
+
+
+
+
+
+
+    let summary = (
+      <CheckoutSummary
+     ingredients={this.props.ingr}
+     checkoutCancelled={this.checkoutCancelledHandler}
+     checkoutContinue={this.checkoutContinueHandler}
+   /> 
+ )
+
+
+
+    if (!this.props.ingr) {
+      alert('No ingredients detected, redirecting to Home Page...');
+  summary = (<Redirect to={
+    {
+      pathName: '/'
+    }
+    } />
+  )
+    }
+
+
+
+
+
+    return summary; ////////ISSO AQUI VAI RETORNAR ou aquele 'REDIRECT', ou o elemento 'summary' mesmo, que será aquele '<CheckoutSummary />', com a route...
+
+
+
+
+  ------------------------------
+
+
+
+
+
+
+ 
+
+ CERTO, NOSSO REDIRECT ESTÁ FUNCIONANDO... ---> 
+
+ agora 
+
+é 
+
+hora DE 
+
+__CONSEGUIR ___ COMBINAR___ NOSSOS REDUCERS EM 1 único reducer...

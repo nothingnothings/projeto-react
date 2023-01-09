@@ -1,0 +1,94 @@
+
+
+
+NESTE MÓDULO,
+
+
+APRENDEMOS UM MONTE SOBRE REACTHOOKS...
+
+
+
+
+
+
+
+
+
+--> REACTHOOKS --> é uma feature 
+
+RELATIVAMENTE NOVA ADICIONADA AO REACT...
+
+
+
+
+
+
+
+
+
+--> TE DEIXA ESCREVER SÓ FUNCTIONAL COMPONENTS...
+
+
+
+
+
+
+
+
+
+--> CLASS-BASED COMPONENTS VS REACTHOOKS....
+
+
+
+
+
+
+
+
+--> NÃO HÁ UM VENCEDOR BEM DEFINIDO... ----------->
+
+
+
+
+
+SE A VERSÃO 
+
+DO REACT 
+
+É MUITO VELHA/VELHA,
+
+VOCÊ 
+
+SERÁ 
+OBRIGADO 
+
+A USAR 
+
+CLASS-BASED COMPONENTS... --> SE VOCÊ 
+
+
+
+ESTIVER USANDO UMA VERSÃO MAIS RECENTE DO REACT,
+
+E 
+
+VOCÊ ESTÁ LIVRE PARA TRABALHAR COM QUALQUER VERSÃO QUE QUISER,
+
+VOCÊ 
+PODE 
+
+QUERER USAR 
+
+O 
+
+REACTHOOKS... 
+
+
+
+
+------> TRABALHAR ´SO COM FUNCTIONAL COMPONENTS --> 
+é 
+
+mais fácil, diz o professor,
+
+mas não acho...

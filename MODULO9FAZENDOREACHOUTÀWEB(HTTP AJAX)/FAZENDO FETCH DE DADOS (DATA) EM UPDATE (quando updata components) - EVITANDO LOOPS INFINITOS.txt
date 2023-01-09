@@ -1,0 +1,3146 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> NA ÚLTIMA LIÇÃO, APRENDEMOS SOBRE 
+
+
+COMO FAZER 
+
+NOSSOS POSTS 
+
+EXTRAÍDOS 
+
+DO 
+
+SERVER 
+
+SEREM 
+
+'SELECIONÁVEIS' pelo usuário... --> pena que SÓ FIZEMOS ELES SEREM SELECIONÁVEIS,
+
+
+
+efeitos mesmo só temos um: a mudança de '<p>Please select a post!</p>'
+
+
+para 
+
+
+
+O SHOW __DO NOSSO COMPONENT (da div com o component, no caso) 
+
+
+de 
+
+'FullPost' naquela área mais inferior....
+
+
+---------------------------
+
+
+
+
+
+--> PROFESSOR FALA O QUE JÁ SABEMOS: 
+
+
+
+
+ESSE 'SELECT' DO POST AÍ N TEM NADA A VER COM 
+
+O AXIOS OU HTTP REQUESTS.... é apenas react comum. (vanilla react) ----> 
+
+
+
+
+
+AGORA DEVEMOS FAZER ALGO DIFERENTE,
+
+
+DEVEMOS _____ENVIAR__ UM HTTP REQUEST___ ASSIM 
+
+
+QUE CONSEGUIMOS 
+
+UM 
+
+
+'VALID ID'.... (aquele id extraído de 'post.id'...) ---------> 
+
+
+
+
+ONDE FAZER ISSO? EM QUE LUGAR DO CÓDIGO? -------> 
+
+
+
+
+eu penso 
+
+em 
+
+'Blog.js',
+
+
+mas talvez eu esteja errado... 
+
+
+
+
+
+
+
+
+
+
+-------> MAS A PRIMEIRA PERGUNTA QUE O PROFESSOR FAZ A NÓS É:
+
+
+
+
+''''QUAL LIFECYCLE HOOK DEVEMOS USAR, AQUI, PARA CONSEGUIR ENVIAR UM HTTP 
+
+REQUEST A PARTIR DE UM ID OBTIDO DO SERVIDOR?''' 
+
+
+
+
+
+
+
+
+----> o professor então mostra 
+
+
+os slides 
+
+
+dos lifecycle hooks de UPDATE de components....
+
+
+
+
+
+
+lembre-se, 
+
+
+são as 
+
+
+etapas:
+
+
+
+
+componentWillReceiveProps(nextProps)
+
+
+shouldComponentUpdate(nextProps, nextState)
+
+
+
+componentWillUpdate(nextProps, nextState)
+
+
+
+
+render()
+
+
+
+update child Component props 
+
+
+
+
+ComponentDidUpdate()  -------> EU CHUTO ESSA ETAPA/MÉTODO AQUI...
+
+
+
+
+
+
+
+
+
+
+---> A ___DATA___ DEVERÁ SER 'FETCHED' DO SERVIDOR___ ASSIM QUE __ TIVERMOS RECEBIDOS ___ 
+
+
+UM NOVO PROP.ID/ O PROP ID... ------> 
+
+
+
+e esse 'receive' do PROP de 'ID' 
+
+
+ocorre justamente no PASSO 
+
+
+'UPDATE CHILD COMPONENT PROPS'.... ---------> ISSO 
+
+
+
+
+
+
+SIGNIFICA EXATAMENTE O QUE ESTÁVAMOS PENSANDO:
+
+
+'ComponentDidUpdate' 
+
+
+É UM EXCELENTE LUGAR 
+
+PARA 
+
+
+
+CAUSAR 'SIDE-EFFECTS' (como para ENVIAR HTTP REQUESTS, por exemplo).
+
+
+
+
+
+----------------------------------------------------------
+
+
+
+
+
+---> MAS É EVIDENTE QUE O  'componentDidUpdate'
+
+nos impõe um problema, também... :
+
+
+se NÓS
+
+
+UPDATARMOS O STATE DENTRO DELE, VAMOS 
+
+ACABAR 
+
+UPDATANDO O COMPONENT EM SI DE NOVO, E ISSO CAUSARÁ UM __LOOP INFINITO___....
+
+
+
+
+E ISSO DEVE SER EVITADO, MUITO CUIDADO...
+
+
+
+
+
+
+
+
+
+-------------------> NUNCA CHAME 'this.setState()' 
+
+
+
+diretamente 
+
+no 'componentDidUpdate/componentDidMount'...
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+OK... o professor 
+
+nos explica que 
+
+
+o que ele vai 
+
+
+fazer 
+
+
+é 
+
+IR 
+
+
+ATÉ  
+
+
+O COMPONENT 
+
+
+
+'FullPost.js' 
+
+
+
+e então 
+
+
+
+VAI QUERER ____REALIZAR ___ O MAKE DO HTTP REQUEST__ 
+
+
+NESSE LUGAR MESMO... ------> ou seja,
+
+ele primeiramente 
+
+
+vai querer 
+
+
+IMPORTAR 
+
+
+O AXIOS ___ PARA __ PODER UTILIZÁ-LO ___ 
+
+
+NO 
+
+COMPONENT 
+
+'FullPost'... (dentro de 'componentDidUpdate')....
+
+
+
+-------------------------------
+
+
+
+FICARÁ TIPO ASSIM:
+
+
+
+
+class FullPost extends Component {
+
+
+  componentDidUpdate() {
+            axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(
+                (response) => {
+                            
+
+                }
+            )
+
+    }
+
+}
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+TENTAMOS ESCREVER UM CÓDIGO SOZINHOS, MAS FALHAMOS.
+
+EIS ELE:
+
+
+
+import React, { Component } from 'react';
+
+
+
+import axios from 'axios';
+
+import FullPostStyle from './FullPost.module.css';
+import Post from '../Post/Post';
+
+
+
+
+
+class FullPost extends Component {
+
+
+    state = {
+        post: null
+    }
+
+
+
+
+
+    componentDidUpdate() {
+            axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(
+                (response) => {
+                         
+                  const postData = response.data.map(
+                      post => {
+                          return {
+                              ...post
+                      }
+                      }
+                  )
+                     
+                  
+
+                    this.setState({
+                        post: postData
+                    })
+
+                }
+            )
+
+    }
+
+    
+
+
+
+
+
+
+    render () {
+
+
+        return this.props.id 
+
+            ?
+
+            (
+                <div className={FullPostStyle.FullPost}>
+                    <h1>{this.state.post.title}</h1> 
+                    <p>{this.state.post.body}</p>
+                    <div className={FullPostStyle.Edit}>
+                        <button className={FullPostStyle.Delete}>Delete</button>
+                    </div>
+                </div>
+    
+            )
+
+            : 
+
+        <p style={
+            {
+                textAlign: "center"
+            }
+        }>Please select a Post!</p>
+        
+    }
+}
+
+
+//title 
+
+//content
+
+
+
+
+export default FullPost;
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+professor 
+
+
+vai 
+
+
+
+escrever 
+
+
+
+'componentDidUpdate() {
+    axios.get()
+}' 
+
+
+
+
+
+
+
+
+
+
+---> PROFESSOR EXPLICA QUE 
+
+
+ESSE 
+
+
+'axios.get()'
+ 
+
+
+
+
+ AGORA DEVERÁ __OBJETIVAR__/TARGETTAR___ APENAS 
+
+ 1 ÚNICO 
+
+ POST,
+
+ por meio 
+
+ do 
+
+ SEU  
+
+
+
+
+
+
+ ___iD___ (identificador único) ------->  
+
+
+
+
+ E SE 
+
+
+ VERIFICARMOS 
+
+
+
+ OS DOCS 
+
+
+
+ DO 
+
+ 'jsonplaceholdertypicode',
+
+
+
+
+ PODEMOS VER QUE 
+
+ __EXISTE__, SIM__, UMA URL 
+
+
+ PARA ___ CADA 'POST INDIVIDUAL'___... -------> 
+
+
+
+
+
+ ESSE ENDEREÇO/URL 
+
+ é 
+
+
+
+
+ https://jsonplaceholder.typicode.com/posts/1 (OU O ID DO NEGÓCIO QUE VOCÊ QUER...)
+
+
+
+
+ ------------------------------------------------
+
+
+ OU SEJA:
+
+
+  https://jsonplaceholder.typicode.com/posts/IDDINÂMICO...
+
+
+
+
+
+  ------------------------------------------ 
+
+
+
+
+
+
+  --> PARA INSERIR 
+
+  UMA MARCAÇÃO DINÂMICA (props.id) 
+
+  DENTRO 
+
+  DESSA STRING, 
+
+  VAMOS PRECISAR 
+
+  DA SINTAXE DO TEMPLATE LITERAL,
+
+
+  E DOS ''back ticks'' (``)...
+
+
+
+
+
+
+
+
+
+  TIPO ASSIM:
+
+
+
+  axios.get(`https://jsonplaceholder.typicode.com/posts/${this.props.id}`)
+
+
+
+
+
+
+
+
+
+
+  ex:
+
+
+
+  class FullPost extends Component {
+
+
+    state = {
+        post: null
+    }
+
+
+
+
+
+    componentDidUpdate() {
+            axios.get(`https://jsonplaceholder.typicode.com/posts/${this.props.id}`)
+
+    }
+
+
+  }
+
+
+  ---------------------------------------------------
+
+
+
+
+
+  CERTO...
+
+
+
+  AGORA SÓ FALTA 
+
+
+  O '.THEN() block'
+
+
+
+  E A MANIPULAÇÃO 
+
+
+  DO OBJETO 
+
+  'post'... ---> mas nosso código ainda está falhando...
+
+
+
+
+  ex:
+
+
+
+
+
+  import React, { Component } from 'react';
+
+
+
+import axios from 'axios';
+
+import FullPostStyle from './FullPost.module.css';
+import Post from '../Post/Post';
+
+
+
+
+
+class FullPost extends Component {
+
+
+    state = {
+        post: null
+    }
+
+
+
+
+
+    componentDidUpdate() {
+            axios.get(`https://jsonplaceholder.typicode.com/posts/${this.props.id}`)
+            .then(
+                (response) => {
+                         
+                  const postData = response.data
+                     
+                  
+
+                    this.setState({
+                        post: postData
+                    })
+
+                }
+            )
+
+    }
+
+    
+
+
+
+
+
+
+    render () {
+
+
+        return this.props.id 
+
+            ?
+
+            (
+                <div className={FullPostStyle.FullPost}>
+                    <h1>{this.state.post.title}</h1> 
+                    <p>{this.state.post.body}</p>
+                    <div className={FullPostStyle.Edit}>
+                        <button className={FullPostStyle.Delete}>Delete</button>
+                    </div>
+                </div>
+    
+            )
+
+            : 
+
+        <p style={
+            {
+                textAlign: "center"
+            }
+        }>Please select a Post!</p>
+        
+    }
+}
+
+
+//title 
+
+//content
+
+
+
+
+export default FullPost;
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+CERTO... MAS PROFESSOR NÃO USA UM 'TEMPLATE LITERAL' ALI NA STRING...
+
+NÃO,
+ 
+
+ o que ele faz 
+
+
+ é 
+
+usar 
+
+
+
+'https://jsonplaceholder.typicode.com/posts/' + {this.props.id} 
+
+
+
+
+
+
+
+(SIM, ISSO FUNCIONARÁ)... -------------> ELE VAI USAR 
+
+
+ESSA SINTAXE 
+
+
+PQ __SE ___ NÓS 
+
+
+
+RECEBERMOS 
+
+
+
+
+um 
+
+
+id 
+
+
+de 
+
+'NULL',
+
+nós ficaríamos com 
+
+uma 
+
+
+url de 
+
+
+
+'https://jsonplaceholder.typicode.com/posts/null',
+
+
+
+
+QUE É UMA URL QUE __NÃO EXISTE__....  --------> é por isso que ele vai colocar um 
+
+simples if check para checar 
+
+se 
+
+'this.props.id' 
+
+
+
+retorna TRUE....
+
+
+
+
+
+
+-----------------------------
+
+
+
+
+TIPO ASSIM:
+
+
+
+    componentDidUpdate() {
+        if(this.props.id) {
+            axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+            .then(
+    
+                 
+
+                
+            )
+        }
+
+    }
+
+
+
+
+---------------------
+
+
+
+NOSSA VERSÃO DO CÓDIGO AINDA ESTÁ 
+
+DANDO UM ERRO,
+
+
+ESTÁ 
+
+
+DANDO 
+
+'Uncaught TypeError: Cannot read property 'title' of null
+    at FullPost.render'
+
+
+----------------------------
+
+
+
+
+Certo..
+
+
+
+
+Professor 
+
+
+vai escrever 
+
+o início do .then() block 
+
+
+desse request do axios....
+
+ 
+
+
+ .then(
+     response => {
+         console.log(response);
+     }
+ )
+
+ -----------------------------------
+
+
+
+ ESSE CÓDIGO/SINTAXE AÍ 
+
+
+ VAI NOS MOSTRAR 
+
+ UMA 
+
+
+ RESPONSE __ NO MOMENTO EM QUE CLICARMOS ___ EM ALGUM ELEMENTO 'POST'..
+
+
+
+ ------------------------------------
+
+
+
+
+
+ E ESSE CONSOLE.LOG AÍ FUNCIONA LEGAL, 
+
+
+ MAS É CLARO QUE 
+
+ NÓS VAMOS QUERER __OUTPUTTAR__ 
+
+
+
+ essa 
+
+
+ 'response' (nosso objeto 'post') 
+
+
+
+ NAQUELES ESPAÇOS 
+
+
+ 'title'
+
+
+ e 
+
+
+ 'content', 
+
+ mais abaixo....
+
+
+
+
+ -----------------------------------------
+
+
+
+
+
+
+
+
+
+ ---> PARA ISSO, PROFESSOR CRIARÁ UM STATE 
+
+
+ NESSE COMPONENT 
+
+
+ 'FullPost'... ------> 
+
+
+
+ será um state 
+
+
+ COM UMA PROPRIEDADE 
+
+
+
+ DE 
+
+
+ 'loadedPost'...  ------> E ELE SERÁ INICIALMENTE __NULL__...
+
+
+
+
+ ex:
+
+
+
+
+ import React, { Component } from 'react';
+
+
+
+import axios from 'axios';
+
+import FullPostStyle from './FullPost.module.css';
+import Post from '../Post/Post';
+
+
+
+
+
+class FullPost extends Component {
+
+
+    state = {
+        loadedPost: null
+    }
+
+
+
+
+
+    componentDidUpdate() {
+        if(this.props.id) {
+            axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+            .then(
+                (response) => {
+                         
+                  console.log(response);
+                     
+                  
+
+                }
+            )
+        }
+
+    }
+
+    
+
+
+
+
+
+
+    render () {
+
+
+        return this.props.id 
+
+            ?
+
+            (
+                <div className={FullPostStyle.FullPost}>
+                    <h1>{}</h1> 
+                    <p>{}</p>
+                    <div className={FullPostStyle.Edit}>
+                        <button className={FullPostStyle.Delete}>Delete</button>
+                    </div>
+                </div>
+    
+            )
+
+            : 
+
+        <p style={
+            {
+                textAlign: "center"
+            }
+        }>Please select a Post!</p>
+        
+    }
+}
+
+
+//title 
+
+//content
+
+
+
+
+export default FullPost;
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+
+--> isso feito,
+
+professor diz que podemos 
+
+simplesmente 
+
+usar 
+
+
+'loadedPost.title' 
+
+
+naquele espaço inferior... 
+
+
+
+
+
+
+---------------------------------
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+import axios from 'axios';
+
+import FullPostStyle from './FullPost.module.css';
+import Post from '../Post/Post';
+
+
+
+
+
+class FullPost extends Component {
+
+
+    state = {
+        loadedPost: null
+    }
+
+
+
+
+
+    componentDidUpdate() {
+        if(this.props.id) {
+            axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+            .then(
+                (response) => {
+                         
+                  console.log(response);
+                     
+                  
+
+                }
+            )
+        }
+
+    }
+
+    
+
+
+
+
+
+
+    render () {
+
+
+        return this.props.id 
+
+            ?
+
+            (
+                <div className={FullPostStyle.FullPost}>
+                    <h1>{this.state.loadedPost.title}</h1> 
+                    <p>{this.state.loadedPost.body}</p>
+                    <div className={FullPostStyle.Edit}>
+                        <button className={FullPostStyle.Delete}>Delete</button>
+                    </div>
+                </div>
+    
+            )
+
+            : 
+
+        <p style={
+            {
+                textAlign: "center"
+            }
+        }>Please select a Post!</p>
+        
+    }
+}
+
+
+//title 
+
+//content
+
+
+
+
+export default FullPost;
+
+
+
+--------------------------------------
+
+
+
+
+
+
+E DEPOIS DISSO,
+
+
+PROFESSOR VAI QUERER 
+
+DEFINIR, 
+
+LÁ NO 'componentDidUpdate',
+
+
+
+DENTRO 
+
+
+
+DO 
+
+.THEN() BLOCK 
+
+
+do 
+
+'axios',
+
+
+
+
+um código 
+
+
+de 
+
+
+
+
+'this.setState({
+    loadedPost: response.data
+})'....
+
+
+
+
+EX(CÓDIGO COMPLETO):
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+import axios from 'axios';
+
+import FullPostStyle from './FullPost.module.css';
+import Post from '../Post/Post';
+
+
+
+
+
+class FullPost extends Component {
+
+
+    state = {
+        loadedPost: null
+    }
+
+
+
+
+
+    componentDidUpdate() {
+        if(this.props.id) {
+            axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+            .then(
+                (response) => {
+                         
+                  console.log(response);
+                     this.setState({
+                         loadedPost: response.data
+                     })
+                  
+
+                }
+            )
+        }
+
+    }
+
+    
+
+
+
+
+
+
+    render () {
+
+
+        return this.props.id 
+
+            ?
+
+            (
+                <div className={FullPostStyle.FullPost}>
+                    <h1>{this.state.loadedPost.title}</h1> 
+                    <p>{this.state.loadedPost.body}</p>
+                    <div className={FullPostStyle.Edit}>
+                        <button className={FullPostStyle.Delete}>Delete</button>
+                    </div>
+                </div>
+    
+            )
+
+            : 
+
+        <p style={
+            {
+                textAlign: "center"
+            }
+        }>Please select a Post!</p>
+        
+    }
+}
+
+
+//title 
+
+//content
+
+
+
+
+export default FullPost;
+
+
+
+------------------------------
+
+
+
+
+
+
+CERTO.... E ISSO ___CONTINUA__ NOS DANDO___ ERRO... -----> SE EU 
+
+
+CLICO EM UM 
+
+DOS POSTS, 
+
+
+EU RECEBO UM ____ERRO___. Erro feio.
+
+
+
+
+--------------------------------
+
+
+
+
+--> ELE DIZ QUE 
+
+RECEBEMOS UM ___ERRO____... ------> Recebemos 
+
+
+
+um 
+
+erro 
+
+
+de 
+
+
+'cannot read property 'title' of null'... ------------> 
+
+
+
+
+
+
+
+
+
+PROFESSOR APONTA QUE __iSSO FAZ MUITO SENTIDO____.... ---> 
+
+
+
+FAZ MUITO SENTIDO PQ NESTE 
+
+
+TRECHO DE CÓDIGO AQUI:
+
+
+
+
+<div className={FullPostStyle.FullPost}>
+                    <h1>{this.state.loadedPost.title}</h1> 
+                    <p>{this.state.loadedPost.body}</p>
+                    <div className={FullPostStyle.Edit}>
+                        <button className={FullPostStyle.Delete}>Delete</button>
+                    </div>
+                </div>
+
+
+
+
+
+NÓS 
+
+
+___iMEDIATAMENTE__ ACESSAMOS 
+
+
+'this.state.loadedPost.title' 
+
+e 
+
+
+'this.state.loadedPost.body'
+
+
+
+
+naquelas linhas ali... -------> e quando/se 
+
+
+
+
+
+ACESSAMOS ESSE STATE ___INSTANTANEAMENTE__, NOS DEPARAMOS 
+
+COM UM 
+
+
+VALOR 
+
+
+DE 
+
+'null'... (o valor de 'loadedPost' será 'null', e NÃO HÁ COMO ACESSAR UMA PROPRIEDADE 
+
+
+'title' e 'body' em um NULL...)  ------> e esse 
+
+
+
+
+acesso é feito 
+
+
+
+NO MESMO INSTANTE 
+
+EM QUE 
+
+
+CHECAMOS (if check)  --------     if (this.props.id) 
+
+
+
+SE 
+
+
+RECEBEMOS 
+
+
+UM 
+
+'props.id' 
+
+
+VÁLIDO.... 
+
+
+
+
+
+-----> E ISSO SIGNIFICA QUE 
+
+___NÓS ___ ACABAMOS ____ RECEBENDO UMA 
+
+
+'VALID PROPERTY' (a propriedade/prop de 'props.id') 
+
+
+___ANTES___ 
+
+
+
+DE TERMOS 
+
+___ UM 
+
+
+'VALID LOADEDPOST' (antes DE TER AQUELA PROPRIEDADE 'LoadedPost' COM UM VALOR VÁLIDO,
+
+ou seja, quando 
+
+'loadedPost' ainda está como NULL...) --------------> 
+
+
+
+
+--------> E ISSO, ESSE PROBLEMA AÍ,
+
+
+
+ACONTECE __JUSTAMENTE___ PQ 
+
+
+
+O 
+
+FETCH DE DADOS É __ ALGO QUE OCORRE DE FORMA __ ASSÍNCRONA____... ---> 
+
+
+isso significa 
+
+
+
+
+que 
+
+nós 
+
+
+PRIMEIRAMENTE 
+
+conseguimos 
+
+o 
+
+
+'props.id' 
+
+
+
+
+E SÓ 
+
+DEPOIS (alguns MS depois, mas ainda é um tempo depois...) 
+
+
+NÓS CONSEGUIMOS O 
+
+'LOADEDPOST' (o SET do valor de LOADEDPOST, que foi FETCHEADO DO SERVIDOR...) 
+
+
+
+MAS O PROBLEMA É 
+
+QUE 
+
+NÓS 
+
+
+__RE-RENDERIZAMOS O __ DOM (render()  ) IMEDIATAMENTE 
+
+APÓS 
+CONSEGUIR/TERMOS CONSEGUIDO O 
+
+'props.id'....
+
+
+ex(ordem de execução das coisas, e PORQUE ESTAMOS COM ESSE 
+
+PROBLEMA):
+
+
+
+
+
+
+
+
+class FullPost extends Component {
+
+
+    state = {
+        loadedPost: null
+    }
+
+    componentDidUpdate() {
+        if(this.props.id) { //////////111111///////1 (ACONTECE ANTES)
+            axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+            .then(
+                (response) => {
+                         
+                  console.log(response);
+                     this.setState({ ////////////////////222222222///////////2222222 (ACONTECE DEPOIS, mas deveria acontecer antes para evitar PROBLEMAS DE 'ordem'/sequencia...)
+                         loadedPost: response.data 
+                     })
+                  
+
+                }
+            )
+        }
+
+    }
+
+
+    render () {
+
+
+        return this.props.id 
+
+            ?
+
+            (
+                <div className={FullPostStyle.FullPost}>
+                    <h1>{this.state.loadedPost.title}</h1>  1////////////////////1111111//////// ACONTECE ANTES, esse acesso.
+                    <p>{this.state.loadedPost.body}</p>     1////////////////11111111/////////// ACONTECE ANTES.
+                    <div className={FullPostStyle.Edit}>
+                        <button className={FullPostStyle.Delete}>Delete</button>
+                    </div>
+                </div>
+    
+            )
+
+            : 
+
+        <p style={
+            {
+                textAlign: "center"
+            }
+        }>Please select a Post!</p>
+        
+    }
+}
+
+
+export default FullPost;
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+
+PARA ___CONSERTAR __ ESSE PROBLEMA,
+
+PROFESSOR DIZ QUE PODEMOS 
+
+
+ADICIONAR UM SIMPLES 
+
+
+IF 
+
+check 
+
+NO NOSSO RENDER.... -------> 
+
+
+
+NA VERDADE, NÃO É SÓ ISSO.... PRECISAMOS REESTRUTURAR
+
+
+NOSSOS IF CHECKS....
+
+
+
+
+
+
+CÓDIGO (DE AGORA):
+
+
+
+
+
+  render () {
+
+
+        return this.props.id 
+
+            ?
+
+            (
+                <div className={FullPostStyle.FullPost}>
+                    <h1>{this.state.loadedPost.title}</h1> 
+                    <p>{this.state.loadedPost.body}</p>
+                    <div className={FullPostStyle.Edit}>
+                        <button className={FullPostStyle.Delete}>Delete</button>
+                    </div>
+                </div>
+    
+            )
+
+            : 
+
+        <p style={
+            {
+                textAlign: "center"
+            }
+        }>Please select a Post!</p>
+        
+    }
+}
+
+
+
+
+----------------------------------------
+
+
+
+ISSO AÍ 
+
+É UMA ___tERNARY EXPRESSION___... --> vamos 
+
+
+ter que 
+
+substituir 
+
+POR 
+
+2 IF CHECKS...
+
+
+
+
+
+o primeiro IF CHECK
+
+será 
+
+
+
+CHECANDO 
+
+PELA PRESENÇA 
+
+
+do 
+
+'props.id' ( do id válido, extraído do servidor).... --------> 
+
+
+
+
+para isso,
+
+
+vamos 
+
+ter que 
+
+trocar 
+
+
+o 
+
+
+código de 
+
+
+'
+if(this.props.id) {
+    post = <p style={{textAlign: 'center'}}>Please select a Post!</p>
+}'
+
+
+
+
+POR 
+
+
+''''
+if(this.props.id) {
+    post = <p style={{textAlign: 'center'}}>Loading...!</p>
+}''''
+
+
+
+-------------------------------
+
+
+
+
+ESSE LOADING AÍ É PERFEITO: é ÚTIL, conveniente,
+
+
+e JUNTO DO NOSSO SEGUNDO IF CHECK (que adicionaremos/explicaremos agora,
+
+RESOLVERÁ O PROBLEMA 
+
+DE 'ORDEM' de execução no nosso código...)
+
+
+
+
+
+
+
+O SEGUNDO IF CHECK __CHECARÁ __ POR 
+
+
+'this.state.loadedPost'....
+
+
+
+ex:
+
+
+
+if (this.state.loadedPost) {
+    post = (
+        <div className="FullPost">
+        <h1>{this.state.loadedPost.title}</h1> 
+        <p>{this.state.loadedPost.body}</p>
+         <div className={FullPostStyle.Edit}>
+         <button className={FullPostStyle.Delete}>Delete</button>
+          </div>
+          </div>
+
+
+    )
+}
+
+
+----------------------
+
+
+
+
+
+
+
+COM ISSO, 
+
+
+
+quando esse 'this.state.loadedPost' 
+
+
+____NÃO FOR DE VALOR 'NULL'___, 
+
+
+
+SÓ NESSE MOMENTO 
+
+
+
+VAMOS REALMENTE 
+
+
+TER ESSE 'post' 
+
+RENDERIZADO NAQUELE ESPAÇO MAIS ABAIXO.... (no espaço em que o desejamos).
+
+
+
+-------------------------------------
+
+
+
+
+OU SEJA, POR MEIO DESTE CÓDIGO:
+
+
+
+
+
+
+
+
+   let post = <p style={{ textAlign: 'center' }}>Please select a Post!</p>;
+
+    if (this.props.id) {
+      post = <p style={{ textAlign: 'center' }}>Loading...!</p>;
+    }
+    
+    if (this.state.loadedPost) {
+      post = (
+        <div className={FullPostStyle.FullPost}>
+          <h1>{this.state.loadedPost.title}</h1>
+          <p>{this.state.loadedPost.body}</p>
+          <div className={FullPostStyle.Edit}>
+            <button className={FullPostStyle.Delete}>Delete</button>
+          </div>
+        </div>
+      );
+    }
+    return post;
+
+
+
+
+
+
+
+
+CONSERTAMOS A ORDEM DE EXECUÇÃO 
+
+de nosso aplicativo, consertamos 
+
+o LOOP INFINITO.... (moral da história:
+
+
+
+
+___SEMPRE__ ADICIONE ___ 'LOADINGS', 
+
+
+e sempre obedeça esta ordem:
+
+
+-------x----------x-----------x------------x----------x
+
+1) ''ESCOLHA SEU NEGÓCIO''.. (IF CHECK DO __PROP___ recebido...; nesse caso, de 'props.id'...)
+
+
+
+2) ''CARREGANDO''... (if do STATE EM SI... checar SE O STATE EM SI NÃO ESTÁ NULL....)
+
+
+
+
+3)''ACESSO AO ITEM/ITEM CARREGADO''''... (acessos comuns, por meio de 'this.state.xxxxx.xxx'...) ---> nesse caso, 'this.state.loadedPost.title'...
+
+
+
+-------x---------x-----------x----------x----------x
+
+
+
+
+
+
+
+
+
+
+
+
+CERTOOOOO, AGORA, SIM, FUNCIONOU... ---------> 
+
+
+
+O POST FETCHEADO DO SERVIDOR REALMENTE ESTÁ SENDO OUTPUTTADO 
+
+
+NAQUELE ESPAÇO DO 
+
+'FULLPOST',
+
+agora...
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+ENTRETANTO, 
+
+PROFESSOR 
+
+
+APONTA QUE 
+
+
+
+TAMBÉM 
+
+É POSSÍVEL PERCEBER UMA 
+
+
+NOVA 'ISSUE' AQUI, AGORA....
+
+
+
+OK, AGORA VI... -----> temos um MEMORY LEAK ___ BEM FODIDO__ NO NOSSO APLICATIVO...
+
+
+
+
+
+
+--> ESTAMOS MANDANDO REQUESTS INFINITOS NESSA PÁGINA... ------> 
+
+
+
+MAS PQ DIABOS 
+
+ESSES REQUESTS 
+
+
+ESTÃO SENDO MANDADOS INFINITAMENTE? ----------> 
+
+
+
+PROFESSOR 
+
+
+EXPLICA QUE 
+
+
+ESTAMOS 
+
+OS VENDO 
+
+PQ 
+
+
+
+
+
+
+
+________________NÓS ESTAMOS ___ UPDATANDO O 'STATE' __ 
+
+
+
+JUSTAMENTE ___DENTRO____ DE 
+
+'componentDidUpdate'.............. ----------> 
+
+
+
+
+E ISSO 
+
+
+É UMA 
+
+
+DAS PIORES PRÁTICAS
+ 
+
+ QUE 
+
+ VOCê 
+
+
+ PODE 
+
+
+ TER NO SEU CÓDIGO... ------> ISSO CRIA UM LOOP INFINITO... ---> ESSE É O PROBLEMA 
+
+
+ DO 
+
+
+ 'LOOP INFINITO'... 
+
+
+
+
+
+
+ UÉ, MAS PQ ISSO ACONTECE?
+
+
+
+
+ ---> é bem simples:
+
+
+
+
+
+ LEIA O __NOME DESTE MÉTODO:
+
+
+
+ 'Component Did Update'.... ---> ou seja, 
+
+
+
+
+ ___eSSE MÉTODO ___ É EXECUTADO ____ SEMPRE QUE ___ O 
+
+
+ COMPONENT É UPDATADO ('componentDidUpdate'...) --------->
+
+
+
+ CERTO,
+
+
+
+ E O QUE NÓS ACABAMOS DE FAZER, DE ERRADO, DENTRO 
+
+ DESSE MÉTODO? -----> bem, 
+
+
+ nós 
+
+ chamamos 
+
+ 'this.setState()', que é algo que.... acaba... updatando... o state... -----> 
+
+ SIM,
+  
+
+  EXATAMENTE...
+
+
+
+
+
+  CRIA-SE UM LOOP INFINITO 
+
+
+  entre 
+
+
+  this.setState() --> updatou o state --> roda-se componentDidUpdate ---> this.setState() é executado dnv --> updatou o state --> roda componentDidUpdate. ..
+
+
+
+
+
+  ISSO PARA SEMPRE...
+
+
+  --------------------------------------------
+
+
+
+
+
+
+
+OU SEJA,
+
+
+NÓS DEVEMOS 
+
+
+
+___ASSEGURAR__ QUE  
+
+NOSSO CÓDIGO 
+
+
+
+___APENAS __ ENVIE ____ ESSE HTTP REQUEST___ 
+
+
+E UPDATE ___ O 
+
+
+
+STATE (por meio de 'this.setState()' ) 
+
+
+
+
+__UMA ÚNICA VEZ____.... -------> para 
+
+
+
+fazer isso,
+
+
+
+
+devemos 
+
+
+dizer 
+
+
+
+
+''''''SÓ ___UPDATE ____ O STATE DE NOSSO APLICATIVO_____ SE NÓS 
+
+
+REALMENTE __ RECEBEMOS/TIVERMOS RECEBIDO ___ UM NOVO POST___... O POST REALMENTE 
+
+TEM DE SER NOVO...____"""""
+
+
+
+
+
+
+PARA isso, 
+
+
+vamos 
+
+ter que 
+
+usar 
+
+
+aquele 
+
+
+'prevState'...
+
+
+
+ex:
+
+
+
+
+
+
+
+componentDidUpdate(prevState) { //////EIS O CÓDIGO EM QUESTÃO.
+    if (this.props.id) {
+      axios
+        .get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+        .then((response) => {
+          console.log(response);
+
+          if(prevState.loadedPost !== this.state.loadedPost) { //////////EIS O CÓDIGO EM QUESTÃO.
+          this.setState({
+            loadedPost: response.data,
+          });
+          }
+        });
+    }
+  }
+
+  -------------------------------------------
+
+
+
+
+  FICOU ASSIM:
+
+
+
+
+
+
+    componentDidUpdate(prevState) {
+    if (this.props.id) {
+      axios
+        .get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+        .then((response) => {
+          console.log(response);
+          if(prevState.loadedPost !== this.state.loadedPost) { ///////////ESTE CHECK É MUITO IMPORTANTE. É ELE QUE PREVINE LOOPS INFINITOS EM DECORRÊNCIA DE CHAMAR 'this.setState()' DENTRO DE 'componentDidUpdate'... --> isso fará com que SÓ SEJA UPDATADO O STATE QUANDO NOSSA PROPRIEDADE 'loadedPost' FUTURA/ATUAL SER DIFERENTE EM RELAÇÃO à ANTIGA (prevState)...
+          this.setState({
+            loadedPost: response.data,
+          });
+        }
+        });
+    }
+  }
+
+
+
+
+
+
+
+  ----------------------------------
+
+
+
+
+
+
+  E ISSO __REALMENTE___ FUNCIONOU. --> mas o código do professor ficou um pouco diferente....
+
+
+
+
+
+
+
+
+
+O código do professor é __bEM MAIS INSANO... --> ele vai lá 
+
+
+e vai 
+
+
+ESCREVER 
+
+UM __IF CHECK ___ DENTRO DE OUTRO IF CHECK...
+
+
+
+
+(ele vai escrever um IF CHECK DENTRO DO IF CHECK 
+
+de 
+
+
+'this.props.id'....)
+
+
+
+
+COMO ASSIM?
+
+
+
+
+
+
+
+---> BEM, 
+
+
+O PROFESSOR EXPLICA QUE 
+
+
+
+______NÓS ___SÓ VAMOS QUERER __ QUE
+ 
+
+ O __aXIOS ___ ENVIE 
+
+
+ UM HTTP REQUEST (o que updatará o state..., conforme visto no 
+ 
+ código 'this.setState({loadedPost: response.data})', dentro do CÓDIGO QUE ENVIA 
+ 
+ O HTTP REQUEST) 
+
+
+___ SE NÓS REALMENTE ___ TIVERMOS CARREGADO UM 
+
+'NOVO POST'... ('ONLY IF WE HAVE ACTUALLY LOADED A NEW POST'...) ---------> 
+
+
+OK, 
+
+
+E COMO PODEMOS 
+
+FAZER ISSO? (o meu método havia funcionado, acho;  --------> ENTRETANTO, ESSE NOSSO APPROACH __cRIAVA UM MEMORY LEAK___... --> ESSE NOSSO APPROACH TAMBÉM CRIA INCONTÁVEIS HTTP REQUESTS quando clicamos em algum dos 'posts'...
+
+mas o professor 
+
+nos mostra 
+
+outro approach...)
+
+
+
+
+
+
+(O que o professor está falando está representado neste código aqui:
+
+
+
+
+
+
+componentDidUpdate () {
+    if (this.props.id) {
+        axios.get('https:/....')
+        .then (
+            response => {
+                this.setState(
+                    {
+                        loadedPost: response.data
+                    }
+                )
+            }
+        )
+    }
+}
+
+)
+
+
+
+------------------------------------
+
+
+
+
+
+Bem, a próxima coisa que ele vai querer que façamos,
+
+
+PARA __ QUE SEJA __ EVITADO O LOOP DE ('this.setState()' --> componentDidUpdate'),
+
+
+É 
+
+
+
+____ESCREVER __ UM IF CHECK DENTRO DO 'IF CHECK' de 'this.props.id'....
+
+
+
+
+esse if check dentro do if check de 'this.props.id' 
+
+
+
+SERÁ __UM IF CHECK __ CHECANDO 
+
+
+SE NÓS ___ACTUALLY__ REALMENTE___ TEMOS 
+
+
+UM 'this.state.loadPosts'.... (pq se esse if check retornar FALSE, signficará 
+
+
+QUE O __vALOR ___ 'loadedPosts' de nosso STATE ESTARÁ COMO NULL, pq 'null' é falsy, sacou?)
+
+
+Ex:
+
+
+
+
+
+
+componentDidUpdate () {
+    if (this.props.id) {
+
+        if (this.state.loadedPost) { ///////EIS O CÓDIGO EM QUESTÃO....
+
+        }
+
+
+        axios.get('https:/....')
+        .then (
+            response => {
+                this.setState(
+                    {
+                        loadedPost: response.data
+                    }
+                )
+            }
+        )
+    }
+}
+
+)
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+É CLARO, EXPLICA O PROFESSOR,
+
+
+que 
+
+se esse for o caso, 
+
+se realmente 
+
+conseguimos um 
+
+'loadedPost' válido,
+
+
+
+É EVIDENTE 
+
+QUE VAMOS 
+
+QUERER 
+
+
+___QUE O ID ____ DESSE POST QUE OBTIVEMOS 
+
+em 
+
+'loadedPost' 
+
+NÃO __SEJA___ O ___ MESMO ID ___
+
+QUE NÓS 
+
+
+
+CONSEGUIMOS ANTES, por meio de 'props.id'... ------> PQ 
+
+
+SE ESSE FOSSE O CASO, SE O 
+
+ID 
+
+DO NEGÓCIO, DO POST QUE VAMOS QUERER FAZER retrieve FOR __ 
+
+O MESMO ___ do ID __ QUE NÓS 
+
+JÁ RECEBEMOS ANTES (por meio de 'props.id'),
+
+ISSO 
+
+SIGNIFICARÁ 
+
+QUE NÓS NÃO VAMOS NEM FAZER FETCH DA DATA DAQUELE POST NO SERVIDOR, OU SEJA,
+ NEM MESMO SERÁ FEITO UM HTTP REQUEST PARA FAZER FETCH DAQUELE POST NAQUELE SERVIDOR ( 
+    e isso vai contra o que queremos, pois agora O QUE QUEREMOS 
+
+    QUE ACONTEÇA NA NOSSA PÁGINA É QUE 
+
+    OS DADOS DE UM POST DETERMINADO DO SERVIDOR (com um id específico) SEJAM 
+
+    ___RETRIEVADOS___ por meio de um clique na coisa que o representa 
+    nessa nossa página 
+    que se encontra renderizada desde o início. 
+) ------------> 
+
+PARA 
+
+
+
+REALIZAR 
+
+ESSE CHECK AÍ, para checar 
+
+
+se  
+
+
+o 
+
+'id' 
+
+
+
+do 
+
+POST NOVO __ É DISTINTO __ DO POST QUE RECÉM/ANTES FOI CARREGADO por meio 
+
+de 
+
+'props.id'... ----------------- queremos que o id do post novo SEJA __ REALMENTE NOVO__, INDIQUE 
+
+___ALGO REALMENTE NOVO___...
+
+
+
+
+--> para 
+
+isso, professor vai, além de checar SE TEMOS UM 'LOADED POST' ('if (this.state.loadedPost)' ),
+
+
+
+ELE 
+
+
+TAMBÉM 
+
+VAI CHECAR 
+
+
+
+
+SE (if) 
+
+'this.state.loadedPost.id  É ____DIFERENTE__ DE this.props.id'....
+
+
+
+
+
+
+
+EX:
+
+
+if (this.props.id) {
+    if (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)
+}
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+--> OU SEJA,
+
+
+___SÓ VAMOS QUERER___ FAZER UM HTTP REQUEST (por meio do axios)
+
+
+
+SE:
+
+
+1) SE O 'props.id' recebido NÃO FOR 'NULL' (ou seja, se o POST realmente foi CARREGADO 
+na nossa página... --> isso é que faz aparecer o 'loading' e etc...)
+
+
+
+
+
+2) SE O 'ID' do 'loadedPost', do POST CARREGADO ___aGORA____ não é ___ IGUAL ___ AO 
+
+ID ___ do post que havia sido CARREGADO ANTES (ou seja, se o 'id' do post NOVO e do post 'velho' NÃO COINCIDEM)....
+
+--> pq isso ai significaria QUE NÓS ESTARÍAMOS TENTANDO FAZER 
+
+'FETCH' DE DADOS/DATA DE UM __POST___ QUE NÓS JÁ TEMOS/JÁ TEMOS OS DADOS... (http request seria desnecessário, nessa hipótese.)
+
+
+
+
+
+EX(RESULTADO):
+
+
+
+
+
+if (this.props.id) {
+    if (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) {
+
+                 axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+        .then((response) => {
+          console.log(response);
+          
+          this.setState({
+            loadedPost: response.data,
+          }
+          );
+        }
+        );
+
+
+
+    }
+}
+
+
+
+
+----------------------------------
+
+
+
+
+OU SEJA,
+
+
+O 'AXIOS' apenas fará seu TRABALHO SE AQUELAS 
+
+2 CONDIÇÕES TIVEREM SIDO SATISFEITAS/ESTÃO SATISFEITAS...
+
+
+
+
+
+
+
+---------------------------
+
+
+
+CÓDIGO FICOU ASSIM:
+
+
+
+
+
+
+
+  componentDidUpdate() {
+    if (this.props.id) { ///sim, aqui escreveremos UM IF CHECK DENTRO DE OUTRO IF CHECK- ----> faremos isso para EVITAR O LOOP INFINITO de execução de 'this.setState()' e 'componentDidUpdate', que é um problema na interação de nosso código que CAUSA O SEND INFINITO DE HTTP REQUESTS...
+
+      if(this.state.loadedPost && this.props.id !== this.state.loadedPost.id) {
+
+
+        axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+        .then((response) => {
+          console.log(response);
+          this.setState({
+            loadedPost: response.data,
+          }
+          );
+        }
+        );
+      }
+        return;
+
+    }
+  }
+
+
+
+--------------------------
+
+
+
+SALVAMOS TUDO E RECARREGAMOS...
+
+
+
+
+
+
+--> certo, deparamo-nos 
+
+
+COM __OUTRO PROBLEMA:
+
+
+
+AGORA ESTAMOS 
+
+COM 
+
+
+___UM LOADING INFINITO__... ('Loading...') ------> NOSSO POST __NUNCA ACABA__ SENDO 
+
+
+FETCHEADO...
+
+
+
+
+
+
+
+
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+ESTAMOS 
+
+'RECEBENDO PORRA NENHUMA' 
+
+
+pq 
+
+
+
+devemos fazer 'amend'
+
+
+
+DE NOSSO CÓDIGO.... ------> nosso código 
+
+falha/ESTÁ FALHANDO/FALHOU
+
+
+
+
+
+____PQ ____ 
+
+
+O VALOR INICIAL DE 
+
+
+NOSSO 
+
+
+'this.state.loadedPost' é 
+
+
+
+___NULL______....
+
+
+
+(basta examinarmos nosso código,
+ 
+ 
+ o 
+ 
+ 
+ 
+ 'state' 
+ 
+ está como 
+ 
+ 
+ 'state = {
+     loadedPost: null
+ }
+ 
+ 
+ ' )
+
+
+
+
+
+
+E NOSSO CHECK 
+
+ESTÁ EQUIVOCADO,
+ 
+ ele está assim:
+
+
+
+ 'if (this.state.loadedPost ...... && .)' ----------> 
+
+
+ OU SEJA,
+
+
+ ESSE IF CHECK JÁ VAI FALHAR NA PRIMEIRA PARTE, NÃO VAI NEM MESMO 
+
+ CHEGAR 
+
+
+ AO 
+
+
+ '&&'...
+
+
+
+
+
+
+
+
+
+--> PROFESSOR VAI USAR OUTRA SINTAXE MALUCA.... 
+
+
+ELE VAI 
+
+dizer que 
+
+PARA CONTORNAR
+
+
+
+esse negócio do valor inicial ser 
+
+'null',
+
+
+
+
+
+ele vai checar 
+
+
+
+
+
+'if (!this.state.loadedPosts)' -------------> 
+
+
+OU SEJA, 
+
+
+ELE 
+
+
+VAI CHECAR 
+
+
+___PELA __ INEXISTÊNCIA __  ('!this.state.loadedPosts)' DE 
+
+
+
+'loadedPosts'...
+
+
+
+
+
+
+CERTO, MAS ELE NÃO ACABA POR AÍ....
+
+ALÉM DE CHECAR ISSO.... ELE VAI FAZER OUTRO CHECK MALUCO... --> dessa vez um CHECK COM '()' DENTRO DE UM IF CHECK (?? COMO SE LÊ ISso?)
+
+
+
+
+
+
+
+
+
+You use it to force associations, in your example this won't change anything. But consider this case:
+        ||
+A and B or C 
+
+
+is a lot different from
+   &&     ||
+A and (B or C)
+Here you would be preventing the expression from being understood as (A and B) or C which is the natural way javascript and maths do things.
+
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+ACHO QUE AGORA ENTENDI...
+
+
+
+O PROFESSOR 
+
+
+ESCREVEU O SEGUINTE IF CHECK,
+
+
+na sua forma final:
+
+
+
+
+
+
+if (!this.state.loadedPosts ||  (this.state.loadedPost && this.props.id !== this.state.loadedPost.id)       )
+
+
+
+
+
+
+OU SEJA,
+
+
+
+'RETORNE TRUTHY' 
+
+
+se 
+
+
+1) SE NÓS NÃO TIVERMOS UM STATE INICIALMENTE DEFINIDO/definido como NULL ---> ou seja, se '!this.state.loadedPost' FOR __TRUTHY__ 
+
+
+OU (||) 
+
+
+2) SE 'this.state.loadedPost' __EXISTIR/FOR RECEBIDO/NÃO FOR NULL  ___E, TAMBÉM__( && ) SE O ID DO NOVO 'POST' (this.state.loadedPost.id)  NÃO FOR __IGUAL__ AO ID DO POST ANTIGO ('this.props.id') .... 
+
+
+
+
+
+
+
+----> É ISSO QUE SIGNIFICA ESSE GIGANTE 
+
+IF CHECK, BASICAMENTE....
+
+
+
+--------------------------------
+
+
+
+
+
+
+
+
+
+
+CERTO.... AGORA SALVAMOS E RECARREGAMOS NOSSO CÓDIGO.... -----------> CERTO, 
+
+
+
+
+
+
+AGORA NOSSO CÓDIGO FUNCIONOU, E DESSA VEZ, SEM PROBLEMAS...   (sem enviar REQUESTS INFINITOS... Consertado esse problema...)
+
+
+
+
+
+--> e agora, portanto,
+
+recebemos apenas 1 único 
+
+'http request' 
+
+
+para cada 
+
+'SWITCH'
+
+de posts, 
+
+quando clicamos nos posts...
+
+
+
+---------> AGORA, PORTANTO, TEMOS UMA 
+
+MANEIRA 'SAFE' 
+
+DE FAZER FETCH 
+
+DE DADOS DE UM SERVIDOR 
+
+LÁ 
+
+EM 
+
+
+
+'COMPONENTDIDUPDATE',
+
+
+E O COMPONENTDIDUPDATE 
+
+
+
+SEGUIRÁ 
+
+SENDO 
+
+O LUGAR 
+
+
+ADEQUADO 
+
+PARA 
+
+FAZER 
+
+O FETCH DESSES DADOS,
+ 
+
+
+PQ NESSE LUGAR, POR MEIO DOS IF CHECKS,
+
+
+VAMOS QUERER __UPDATAR___ NOSSOS DADOS/DATA 
+
+
+DE NOSSO POST 
+
+___SEMPRE__ QUE RECEBEMOS 
+
+__NOVOS 'props' ___ dos dados 
+
+
+extraídos do servidor (Em relação aos dados já carregados na página).
+
+
+
+
+
+
+
+----------------------------------------------------------
+
+
+
+

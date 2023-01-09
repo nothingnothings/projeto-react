@@ -1,0 +1,342 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------> AGORA QUE OPTIMIZAMOS NOSSO PEQUENO APP DE DEMONSTRAÇÃO,
+
+
+
+DEVEMOS 
+
+
+RELEMBRAR 
+
+
+
+A COMPARAÇÃO 
+
+
+
+ENTRE 
+
+STATEFUL E STATELESS COMPONENTS ---> isso é muito importante de entender....
+
+
+
+-------------------------------------
+
+
+
+
+
+STATEFUL COMPONENTS ----> COMPONENTS EM QUE 
+
+
+CRÍAMOS UMA PROPRIEDADE 'STATE' E EM QUE 
+
+ENTÃO 
+
+ALTERAMOS ESSA PROPRIEDADE 
+
+POR MEIO 
+
+
+DE 
+
+'setState'
+
+
+EM VÁRIOS HANDLERS....
+
+
+
+
+
+
+
+--> UM FUNCTIONAL COMPONENT QUE GERENCIA SEU 'STATE' POR MEIO 
+
+DE 'useState' (não confunda com 'setState') TAMBÉM 
+
+É CONSIDERADO COMO UM 'STATEFUL COMPONENT' (mesmo sendo um FUNCTIONAL COMPONENT). ----> ISSO QUER DIZER, 
+
+EM OUTRAS PALAVRAS, QUE 
+
+
+'STATEFUL' NÃO QUER DIZER AUTOMATICAMENTE 'CLASS-BASED COMPONENT'... (os 2 não são sinônimos)...
+
+
+
+
+
+
+
+PORÉM, 
+
+HISTORICAMENTE OS CLASS-BASED COMPONENTS SÃO CONSIDERADOS 
+
+'stateful' components... ------> isso pq REACTHOOKS, como 'useState' (o reacthook mais importante 
+de todos) SÃO 
+
+_UMA FEATURE RELATIVAMENTE NOVA___, e portanto 
+
+
+NÓS AINDA 
+
+VAMOS ENCONTRAR
+ 
+
+
+ UM MONTE DE APLICATIVOS QUE GERENCIAM SEUS 
+
+ STATES 
+
+
+ EM 
+
+ 'CLASS-BASED COMPONENTS'...
+
+
+
+
+
+
+
+ --> entretanto, desde react 16.8,  STATEFUL __NÃO SIGNIFICA AUTOMATICAMENTE 'CLASS-BASED COMPONENTS'...
+
+
+
+ ------------------------------
+
+
+
+
+
+ DUMB/STATELESS/PRESENTATIONAL COMPONENTS 
+
+
+ SEMPRE 
+
+
+ SÃO 
+
+ ___FUNCTIONAL COMPONENTS___.... -----------> VOCÊ SEMPRE QUER 
+
+ TER 
+
+
+ __MUITOS DESSES NO SEU APLICATIVO____... 
+
+
+
+
+
+
+
+
+
+
+
+
+ --------> É UMA EXCELENTE PRÁTICA 
+
+ TER APENAS 
+
+ POUCOS 
+
+
+ COMPONENTS DEDICADOS AO STATE MANAGEMENT... --------> 
+
+
+
+ Ex: APP COM ___CENTENAS DE COMPONENTS___.... ---> devemos 
+
+ ter 
+
+ apenas 
+
+ uns 10 
+
+ STATEFUL COMPONENTS...
+
+
+ --------------------------------------------------
+
+
+
+
+
+
+
+ A QUESTÃO É: 
+
+
+ POR QUE 
+
+ USAR 
+
+ FUNCTIONAL COMPONENTS  TANTO ASSIM?
+
+
+
+
+ ---> A RESPOSTA: 
+
+
+
+ AO SPLITTAR SEU APLICATIVO EM VÁRIOS CONTAINERS E VÁRIOS FUNCTIONAL COMPONENTS, 
+
+ VOCê DEIXA 
+
+ SEU CÓDIGO BEM MAIS 
+
+ 'MANAGEABLE'... -------> PQ AÍ VOCÊ 
+
+
+ TEM UM FLOW DE DADOS __PREVISÍVEL___, 
+
+
+
+ VOCê SABE ONDE SEU 'STATE' muda (vai mudar apenas EM ALGUNS 
+ 
+ POUCOS COMPONENTS...) -------> E AÍ VOCÊ 
+
+
+ SABE/SABERÁ 
+
+ QUE OS OUTROS 
+
+ COMPONENTS ESTARÃO 
+
+ NO SEU APLICATIVO 
+
+
+ APENAS 
+
+ PARA 
+
+ PROVIDENCIAR 
+
+
+ UMA 
+
+ 'NICE USER INTERFACE'... ------------> E ELES APENAS  DEFINEM 
+
+
+ COISAS SOBRE EXTERNAL INPUTS POR MEIO 
+
+
+ do recurso 'props'... -------> E ISSO SIMPLESMENTE ___CERTIFICA/GARANTE__ QUE 
+
+ ESSES COMPONENTS 
+
+ SEJAM
+
+ __ALTAMENTE PREVISÍVEIS__, E QUE 
+
+
+
+ VOCÊ POSSA OS ATIRAR EM QUALQUER 
+
+ LUGAR DO SEU CÓDIGO, 
+
+
+ e que 
+
+ eles sempre vão funcionar, desde que 
+
+ você os passe os parâmetros corretos.
+
+
+
+
+
+
+
+ --> E CONFORME SEU APP VAI CRESCENDO, 
+
+ TER MUITOS DUMB COMPONENTS FAZ O MANAGEMENT SER BEM MAIS FÁCIL...
+
+
+
+
+ ----------------------------------------------------
+
+
+
+
+
+
+ É CLARO QUE VOCÊ NÃO DEVE, TAMBÉM, RESTRINGIR 
+
+ TODO SEU APP A APENAS 1 ÚNICO COMPONENT 
+
+ DE STATE MANAGEMENT... --------> QUANTO 
+
+
+ MAIS VOCÊ TRABALHAR COM 
+
+ REACT, 
+
+ MAIS VOCê 
+
+ VAI 
+
+TER EXPERIÊNCIA 
+
+
+E CONHECIMENTO ('get a feeling for') DE QUAIS 
+
+
+COMPONENTS DEVERÃO 
+
+FAZER 'MANAGE' DE STATES (ex: um determinado 
+component DEVE FAZER 
+
+O MANAGE DE STATE PARA __QUE SEUS CHILD COMPONENTS ___ CONSIGAM 
+
+OS INPUTS CORRETOS...)
+
+
+
+
+
+
+
+
+COMO REGRA,
+ 
+
+DEVEMOS 
+
+SEMPRE 
+
+___PENSAR ___ BASTANTE ANTES 
+
+
+DE COLOCAR 
+UM CLASS-BASED COMPONENT 
+
+NO NOSSO APLICATIVO... ----------> TALVEZ SEJA MELHOR 
+
+
+DEIXÁ-LO FUNCTIONAL, ETC ETC...
+
+
+
+---------------------------------
+
+
+
+
+
+

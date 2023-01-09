@@ -1,0 +1,97 @@
+
+PROFESSOR NOS MOSTROU BASTANTE COISA SOBRE O REDUX...
+
+
+
+
+
+
+
+
+
+--> nos mostrou as melhores practices,
+
+
+
+NOS MOSTROU 
+
+COMO 
+
+__RODAR ASYNC CODE__ COM O REDUX,
+ POR MEIO DE ACTION CREATORS... (e o 'redux-thunk', aquele middleware...)
+
+
+
+
+
+
+
+ --> ELE TAMBÉM NOS ENSINOU SOBRE COMO __COMBINAR REDUCERS _ e tmabém 
+
+ SOBRE COMO USAR 
+
+ O 
+
+ 'REDUX DEV TOOLS' para CONSEGUIR 
+
+ INSIGHTS 
+
+
+ SOBRE O SEU STORE, e viajar no tempo (quando necessário)...
+
+
+
+
+
+ ---> ESSAS SÃO TODAS FERRAMENTAS ÚTEIS... -----> E VEREMOS REDUX 
+
+ SENDO UTILIZADO 
+
+ EM 
+
+ MUITAS E MUITAS APLICAÇÕES....
+
+
+
+
+
+
+
+
+ --> AGORA NÓS VAMOS VOLTAR AO BURGER BUILDER, upgradá-lo um pouco.... ---> vamos usar 
+
+
+ ASYNC CODE EM CONJUNÇÃO COM O REDUX, LÁ NO BURGER BUILDER...
+
+
+
+
+
+
+
+ ---> É BEM PROVÁVEL QUE VOCÊ VÁ USAR 'redux' NO SEU PRÓXIMO PROJETO...
+
+
+
+
+
+
+
+
+ ---> OS BASICS DESTE MÓDULO AQUI VÃO TE PREPARAR BEM...
+
+
+
+
+
+RESOURCEs 
+
+
+
+ Middleware: http://redux.js.org/docs/advanced/Middleware.html
+
+redux-thunk package: https://github.com/gaearon/redux-thunk
+
+Async Actions: https://redux.js.org/advanced/asyncactions
+
+

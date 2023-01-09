@@ -1,0 +1,836 @@
+
+
+
+
+
+
+
+
+---> NA ÚLTIMA AULA, APRENDEMOS SOBRE REDIRECTS de routes/requests EM APLICATIVOS REACT... 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> AGORA O PROFESSOR VAI NOS MOSTRAR OUTRO __USO __ DE REDIRECTS__,
+
+
+
+
+MAS DESSA VEZ ESSE USO SERÁ 
+
+MOSTRADO 
+
+NO COMPONENT 
+
+'FullPost',
+
+
+e não em 'Blog' (onde vimos os 'redirects clássicos'/puros...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+------> LÁ, EM 'NewPost.js',
+
+
+
+NÓS 
+
+
+_____PROVAVELMENTE___ VAMOS QUERER 
+
+
+REDIRECIONAR  O USUÁRIO __QUANDO 
+
+____ AQUELE
+
+
+BOTÃO 
+
+
+
+de 
+
+
+'Add Post' 
+
+
+FOR __cLICADO__...
+
+
+
+
+
+código do botão de 
+
+'Add Post':
+
+
+
+
+'''''                                                           '''
+<button onClick={this.postDataHandler}>Add Post</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CÓDIGO COMPLETO DE 'NewPost':
+
+
+
+
+
+
+
+
+class NewPost extends Component {
+    state = {
+        title: '',
+        content: '',
+        author: 'Max'
+    }
+
+
+
+
+    componentDidMount() {
+        console.log(this.props);
+    }
+    
+
+    postDataHandler = () => {
+        const data = {
+            title: this.state.title,
+            body: this.state.content,
+            author: this.state.author
+        };
+        axios.post('/posts', data)
+            .then(response => {
+                console.log(response);
+            });
+    }
+
+    render () {
+        return (
+            <div className="NewPost">
+                <h1>Add a Post</h1>
+                <label>Title</label>
+                <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
+                <label>Content</label>
+                <textarea rows="4" value={this.state.content} onChange={(event) => this.setState({content: event.target.value})} />
+                <label>Author</label>
+                <select value={this.state.author} onChange={(event) => this.setState({author: event.target.value})}>
+                    <option value="Max">Max</option>
+                    <option value="Manu">Manu</option>
+                </select>
+                <button onClick={this.postDataHandler}>Add Post</button>
+            </div>
+        );
+    }
+}
+
+export default NewPost;
+
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+O importante 
+
+nesse 
+
+botão 
+
+
+é o BOTÃO EM SI
+
+
+
+e o 
+
+
+
+___HTTP ___ REQUEST__ QUE É DISPARADO POR MEIO DE 
+
+
+
+
+'postDataHandler'.... -----------> E NÓS VAMOS QUERER 
+
+
+
+
+_____QUE O USUÁRIO __ SEJA ___ REDIRECIONADO _______ DEPOIS ___ DAQUELE __ 
+
+
+HTTP REQUEST 
+
+
+DE TIPO 
+
+
+'Post', 
+
+
+de código 
+
+
+'axios.post('/posts', data)
+.then(
+    response => {
+        console.log(response);
+    }
+)'
+
+
+
+
+
+
+
+TER SIDO EXECUTADO e acabado sua operação... ----------> PQ, EM APLICATIVOS ___iNTERATIVOS__, 
+
+
+COMO 
+
+
+ESSE NOSSO DE POSTS,
+
+
+QUANDO 
+
+ADICIONAMOS 
+
+
+ALGO 
+
+
+A ALGUM SERVER OU COISA DO GÊNERO, 
+
+
+NÓS TIPICAMENTE 
+
+
+NÃO VAMOS QUERER 
+
+
+PERMANECER 
+
+
+NA MESMA PÁGINA 
+
+
+
+EM QUE CRIAMOS/EDITAMOS O NEGÓCIO, geralmente 
+
+
+vamos 
+
+querer/o usuário vai querer 
+
+
+SER TRANSPORTADO 
+
+
+PARA 
+
+A PÁGINA 
+
+QUE 
+
+
+MOSTRA 
+
+TODOS OS POSTS EXISTENTES NO SERVIDOR... -------> para 
+
+isso,
+
+
+vamos ter 
+
+de 
+
+o 
+
+REDIRECIONAR... -----------> PARA REDIRECIONAR,
+
+
+
+VAMOS USAR 
+
+
+O 
+
+
+COMPONENT 
+
+
+'Redirect',
+
+como fizemos 
+
+
+na 
+
+aula 
+
+anterior, com os REDIRECTS CLÁSSICOS...
+
+
+
+
+
+
+
+
+
+--> PARA TAL, VAMOS IMPORTÁ-LO COM 
+
+A SINTAXE 
+
+DE 
+
+
+
+
+
+
+
+'import { Redirect } from 'react-router-dom'; ' 
+
+
+
+---------------------------
+
+
+
+
+
+
+
+
+
+
+CERTO, ISSO FEITO,
+ 
+
+
+professor diz que devemos 
+
+
+TENTAR 
+
+
+
+COLOCAR 
+
+
+
+ESSE OBJETO 
+
+'Redirect' ali embaixo, 
+
+
+no código JSX retornado pelo método 
+
+'render() {}'   (E FORA DE UM OBJETO/COMPONENT 'Switch', o que __NOS IMPEDE DE ADICIONAR UMA PROPRIEDADE/PROP DE 'from' A ESSE OBJETO/COMPONENT 'Redirect'....)
+
+
+
+de 
+
+'newPost'... ------> 
+
+
+
+
+
+TIPO FAZER ALGO ASSIM:
+
+
+
+
+
+    render () {
+        return (
+            <div className="NewPost">
+            <Redirect to="/posts"  />
+                <h1>Add a Post</h1>
+                <label>Title</label>
+                <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
+                <label>Content</label>
+                <textarea rows="4" value={this.state.content} onChange={(event) => this.setState({content: event.target.value})} />
+                <label>Author</label>
+                <select value={this.state.author} onChange={(event) => this.setState({author: event.target.value})}>
+                    <option value="Max">Max</option>
+                    <option value="Manu">Manu</option>
+                </select>
+                <button onClick={this.postDataHandler}>Add Post</button>
+            </div>
+        );
+    }
+
+
+
+------------------------------
+
+
+
+E, DE NOVO, AQUI NÓS SÓ COLOCAMOS 
+
+'
+to="/posts", 
+
+
+e não colocamos 
+
+
+nenhum 
+
+
+'from'; não colocamos 'from=' algum
+
+
+
+PQ 
+
+____ELE NÃO É SUPORTADO __ FORA 
+
+DE 
+SWITCH STATEMENTS....
+
+
+-------------------------
+
+
+OK, MAS 
+
+ESSE CÓDIGO QUE ESCREVEMOS LOGO ACIMA 
+
+
+É PROBLEMÁTICO, TEM UM GRANDE PROBLEMA... -------> SE CLICARMOS EM 
+
+
+'New Post' ( o 'NavLink' de 'New Post'), na nossa página,
+
+
+SOMOS 
+
+__IMEDIATAMENTE 
+
+
+RETORNADOS__ PARA A PÁGINA 
+'Posts'.... (isso por causa desse objeto REDIRECT __posicionado ___ DENTRO 
+
+DO RENDER DE 
+
+'NewPost'...)
+
+
+
+
+
+
+
+--> isso pq 
+
+O COMPONENT 'NewPost' 
+
+será renderizado, e SEMPRE QUE ELE FOR RENDERIZADO, AQUELE CÓDIGO DE 
+
+'Redirect' para '/posts'
+
+ 
+ SERÁ _LIDO E EXECUTADO_, resultando 
+
+ no redirecionamento 
+
+do usuário à página 
+
+'posts'... -------------------> E ISSO É TERRÍVEL, POIS TIRA 
+
+
+A CHANCE DO USUÁRIO 
+
+
+INPUTTAR CONTEÚDO NO NOSSO COMPONENT 
+
+'NewPost'...
+
+
+
+
+
+
+
+---> ok.... ISSO SIGNFICA QUE NÓS VAMOS TER QUE ESCREVER 
+
+
+
+ESSE COMPONENT/OBJETO 
+
+'Redirect'
+
+
+EM OUTRO LUGAR... ------> PROVAVELMENTE ELE VAI TER DE SER ESCRITO NAQUELE
+
+
+'postDataHandler()',
+
+
+COM ALGUMA SINTAXE ALTERNATIVA... (talvez com um WRAP?)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------> NÃO. PROFESSOR DIZ QUE A NOSSA SOLUÇÃO É ___RENDERIZAR ___ ESSE 
+
+<Redirect /> 
+
+
+ESPECÍFICO ____CONDICIONALMENTE___.... ------> E COMO 'Redirect' É UM ___cOMPONENT__, PODEMOS 
+
+
+USAR 
+
+
+__IF STATEMENTS/TERNARY EXPRESSIONS  com ele... --------> para 
+
+
+isso, 
+
+
+
+
+DEVEMOS 
+
+
+
+ADICIONAR __ UMA NOVA PROPRIEDADE 
+
+
+AO NOSSO 
+
+STATE... -----> a propriedade 
+
+
+
+'submitted',
+
+
+QUE 
+
+
+SERÁ INICIALMENTE 
+
+
+DE 
+
+'false'...
+
+
+
+
+
+ex:
+
+
+
+    state = {
+        title: '',
+        content: '',
+        author: 'Max',
+        submitted: false
+    }
+
+
+
+
+-----------------------
+
+
+
+DEPOIS DISSO,
+
+
+NAQUELE MÉTODO 
+
+
+'postDataHandler()'
+
+
+VAMOS 
+
+
+
+___ADICIONAR UM 'this.setState({})' 
+
+
+QUE 
+
+VAI ALTERAR ESSE STATE PARA 
+
+SER 
+'true'...
+
+
+--------------------------
+
+
+
+
+NOSSO CÓDIGO VAI FICAR + OU - ASSIM:
+
+
+
+
+
+
+import React, { Component } from 'react';
+import axios from 'axios';
+
+import { Redirect } from 'react-router-dom';
+
+import './NewPost.css';
+
+
+
+
+class NewPost extends Component {
+    state = {
+        title: '',
+        content: '',
+        author: 'Max',
+        submitted: false /////////EIS O CÓDIGO EM QUESTÃO.
+    }
+
+    componentDidMount() {
+        console.log(this.props);
+    }
+    
+
+    postDataHandler = () => {
+        const data = {
+            title: this.state.title,
+            body: this.state.content,
+            author: this.state.author
+        };
+        axios.post('/posts', data)
+            .then(response => {
+                console.log(response);
+                this.setState({
+                    submitted: true /////EIS O CÓDIGO EM QUESTÃO.
+                })
+            });
+    }
+
+    render () {
+
+            let redirect = null; ///////EIS O CÓDIGO EM QUESTÃO.
+
+            if(this.state.submitted) { ///////EIS O CÓDIGO EM QUESTÃO.
+                redirect = (
+                    <Redirect to="/" />
+                )
+            }
+
+
+        return (
+            <div className="NewPost">
+                {redirect} ///////EIS O CÓDIGO EM QUESTÃO.
+                <h1>Add a Post</h1>
+                <label>Title</label>
+                <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
+                <label>Content</label>
+                <textarea rows="4" value={this.state.content} onChange={(event) => this.setState({content: event.target.value})} />
+                <label>Author</label>
+                <select value={this.state.author} onChange={(event) => this.setState({author: event.target.value})}>
+                    <option value="Max">Max</option>
+                    <option value="Manu">Manu</option>
+                </select>
+                <button onClick={this.postDataHandler}>Add Post</button>
+            </div>
+        );
+    }
+}
+
+export default NewPost;
+
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+Certo...
+
+
+
+(mas meu código ainda é uma merda, pq 
+
+os posts não são updatados 
+
+quando esse post é 'submittado' (ele é submittado de mentira, é claro.)) -------> 
+
+
+O SERVER ESTÁ SENDO HITTADO, 
+
+
+É CLARO,
+
+DIZ O PROFESSOR,
+
+
+
+E 
+
+
+__NÓS REALMENTE__ SOMOS REDIRECIONADOS__(por meio desse CONDITIONAL REDIRECT),
+
+
+
+
+
+
+MAS NENHUM POST NOVO É VISTO NA NOSSA PÁGINA 'posts'( tvz pq nós temos um DUMMY SERVER?)
+
+
+---------------------------------------
+
+
+
+
+
+
+CERTO,
+
+
+E 
+
+ESSE 
+
+
+ERA 
+
+O OUTRO JEITO DE USAR O 'REDIRECT': 
+
+
+
+
+
+FORA DE UM 'SWITCH STATEMENT',
+
+
+
+
+E USADO PARA ___rEDIRECIONAR__ O USUÁRIO __ APÓS 
+
+
+CERTAS __ OPERAÇÕES (operações demoradas, como 'http requests'... mas coisas não demoradas, também...),
+
+
+
+
+REDIRECIONÁ-LO 
+
+
+
+à PÁGINA EM QUE DESEJAMOS QUE 
+
+FIQUE... (depois de uma certa condição/operação ter acabado/sido satisfeita.... )
+
+
+
+
+
+
+
+---> o redirect condicional é basicamente:
+
+
+
+'POR ACASO X ACONTECEU, PARA QUE EU FAÇA ESSE REDIRECT SER REALMENTE RENDERIZADO NO MEU COMPONENT?'  (if checks...)
+
+
+
+
+
+
+
+
+
+
+
+no início, isso pode parecer estranho, isso de 
+
+RENDERIZAR UM COMPONENT (o component 'Redirect', que deve ser inserido DENTRO DO return de CÓDIGO JSX(método render) DE SEU COMPONENT/página...) 
+
+PARA 
+
+
+
+FAZER 
+COM QUE 
+
+O USUÁRIO SAIA 
+
+
+DA NOSSA PÁGINA/VÁ A OUTRA PÁGINA,
+
+MAS É ASSIM QUE 
+
+ESSE NEGÓCIO FUNCIONA.

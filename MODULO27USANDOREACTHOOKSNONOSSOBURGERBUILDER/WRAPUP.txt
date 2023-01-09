@@ -1,0 +1,93 @@
+CONSEGUIMOS CONVERTER
+ 
+
+
+ NOSSO 
+
+ APP 
+
+ EM UMA 
+
+ VERSÃO QUE SÓ USA FUNCTIONAL COMPONENTS... ----> 
+
+
+
+
+ NÓS NÃO USAMOS MAIS NENHUM 'lifecycle hooks',
+
+
+ E NENHUMA CALL DE 
+
+ 'STATE'... -->
+
+
+
+
+
+
+
+
+
+
+
+
+ OS HOOKS QUE USAMOS, PRINCIPALMENTE,
+
+ FORAM 
+
+ 'useState' 
+
+ e 
+
+ 'useEffect'....
+
+
+
+ -------------------------
+
+
+
+
+ --> DEVEMOS SEMPRE NOS LEMBRAR 
+
+ DESTE MÓDULO...
+
+
+
+
+ ------------------
+
+
+
+ -> NÓS TAMBÉM CRIAMOS NOSSO 'OWN CUSTOM HOOK',
+
+ o 
+
+ que 
+
+
+
+
+ nos deu 
+ uma ideia 
+
+ de 
+
+ COMO PODEMOS OUTSOURCEAR NOSSA PRÓPRIA LÓGICA,
+
+ LÓGICA 
+
+ QUE 
+
+
+usa nossos próprios hooks,
+
+que 
+
+podem 
+
+ser adicionados 
+
+
+
+a qualquer functional component de seu aplicativo...

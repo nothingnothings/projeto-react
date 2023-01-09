@@ -1,0 +1,417 @@
+
+
+
+
+
+
+
+
+
+
+---------> axios INSTANCES... 
+
+
+
+
+
+
+
+--> NA ÚLTIMA LIÇÃO,
+
+CRIAMOS UM 
+
+
+FIREBASE PROJECT... -------> E MUDAMOS AS REGRAS DE 'WRITE/READ' DESSE SERVIDOR FIREBASE... (colocamos 'true' em tudo, usuários podem LER E EDITAR TUDO, BASICAMENTE...)
+
+
+
+
+
+---> AGORA DEVEMOS ENVIAR UM HTTP REQUEST 
+
+
+AO ENDPOINT/URL 
+
+DE 
+
+'https://burgerbuilder201051-default-rtdb.firebaseio.com/'...
+
+
+
+
+
+
+----------------------------
+
+
+PARA ENVIAR UM HTTP REQUEST,
+
+É EVIDENTE QUE 
+
+DEVEMOS 
+
+
+___INSTALAR UM NOVO PACKAGE__ NO NOSSO PROJETO 'BURGER',
+
+
+E ESSE PACKAGE SERÁ O __aXIOS__...
+
+
+'npm install --save axios'...
+
+
+
+----------------------------------------------------------
+
+
+
+
+--> PROFESSOR VAI QUERER USAR O AXIOS PARA MANDAR HTTP REQUESTS... --> professor 
+
+
+explica que você poderia usar outra package para mandar 'AJAX REQUESTS', 
+
+mas que 
+
+O AXIOS JÁ É UMA DAS MELHORES PACKAGES PARA ISSO...
+
+
+
+----------------------------------------
+
+
+
+
+DEPOIS DISSO, 
+
+
+
+PODEMOS INICIAR NOSSO 
+
+SERVER DE DESENVOLVIMENTO POR MEIO DE 
+'npm start'...
+
+
+
+
+
+
+---> Primeiro devemos copiar o código do nosso projeto 
+do módulo passado neste módulo aqui...
+
+
+------------------------------------
+
+
+
+NO ÚLTIMO MÓDULO VIMOS VÁRIOS DOS APPROACHES 
+
+
+DE 
+
+INSTALAÇÃO/IMPLEMENTAÇÃO DE AXIOS EM UM PROJETO... ----> podemos usar o axios 'default' 
+
+
+OU INSTÂNCIA/INSTÂNCIAS DE AXIOS...  'axios.create()' -------->  
+
+
+
+----------------------------------
+
+
+
+O PROFESSOR VAI QUERER USAR O APPROACH DE CRIAR 'INSTANCIAS DE AXIOS'... (EM VEZ DO axios default, que é importar ele GLOBALMENTE)...
+
+
+
+
+----------------------------
+
+
+PODE-SE UTILIZAR TANTO O AXIOS GLOBAL (DEFAULT) 
+
+
+COMO O INSTANCIADO ( ou os 2 ao mesmo tempo)... 
+
+
+
+
+
+--> acho que é legal usar o instanciado...
+
+-----------------------------------------
+
+
+PARA CRIAR UMA NOVA __INSTANCE___ DE AXIOS, O PROFESSOR VAI CRIAR UM NOVO ARQUIVO NO NOSSO ROOT LEVEL DO PROJETO, ARQUIVO QUE 
+
+CHAMARÁ 
+
+DE 
+
+'axios-orders.js'... -------> ele dá esse nome 
+
+
+
+ao arquivo pq __ELE USARÁ ___ ESSA 'INSTÂNCIA AXIOS' 
+
+
+PARA 
+
+
+
+TODO 
+
+
+O 
+
+'ORDER-RELATED STUFF'...
+
+
+
+
+
+
+--------------------------------------
+
+
+
+DENTRO DE LÁ, PROFESSOR VAI IMPORTAR O AXIOS POR MEIO DE 
+
+
+'import axios from 'axios'... ---- >
+
+
+
+
+
+DEPOIS DISSO ,
+
+
+
+ELE VAI 
+
+USAR 
+
+
+'axios.create()' 
+
+
+PARA 
+
+____cRIAR UMA INSTÂNCIA DE AXIOS___....
+
+
+
+
+----> dentro desse 'axios.create' 
+
+
+
+VAMOS PASSAR __ UM OBJETO ___ JAVASCRIPT...  (
+    {
+        ...
+    }
+)
+
+
+
+
+EU PRESSUPONHO QUE DENTRO DESSE NEGÓCIO VAMOS PASSAR 
+
+UMA 
+
+
+'BASEURL', 
+
+
+
+e alguns headers (talvez)... ------> PROFESSOR 
+
+
+DEFINIRÁ 
+
+UMA 
+
+'BASEURL'  --------> E NESSA BASEURL, O PROFESSOR VAI COLOCAR O 
+
+
+'BASE-PATH' DO NOSSO FIREBASE, AQUELE 
+
+
+'ENDPOINT' QUE O FIREBASE CRIOU/CRIA PARA NÓS... (é    'https://burgerbuilder201051-default-rtdb.firebaseio.com/')
+
+
+
+
+
+
+
+Certo....
+
+
+ficará assim:
+
+
+
+
+
+
+import axios from 'axios';
+
+
+
+axios.create(
+    {
+        baseURL: 'https://burgerbuilder201051-default-rtdb.firebaseio.com/'
+    }
+)
+
+
+
+-----------------------------------------------
+
+
+
+
+é evidente que 
+
+ELE VAI TER QUE ARMAZENAR ESSE CALL DE 
+
+'axios.create '
+
+
+
+
+
+
+EM UMA ___CONSTANTE___....
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+import axios from 'axios';
+
+
+
+const instance = axios.create(
+    {
+        baseURL: 'https://burgerbuilder201051-default-rtdb.firebaseio.com/'
+    }
+)
+
+
+
+
+export default instance;
+----------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+--> CERTO, ESSA SERÁ 
+
+A URL
+
+A QUE 
+
+VAMOS QUERER 
+
+ENVIAR 
+
+NOSSO 'POST' REQUEST, 
+
+
+OS REQUESTS 
+
+QUE 
+
+ARMAZENARÃO __dADOS/DATA__ NO NOSSO SERVIDOR/DATABASE...
+
+
+
+
+--------------------------------------------------
+
+
+
+
+
+
+
+certo... agora temos essa instância de axios CONFIGURADA PARA ESSA URL/ENDPOINT 
+
+DO 
+
+FIREBASE...
+
+
+
+
+
+
+
+*****A RAZÃO PARA O PROFESSOR USAR 
+
+'INSTANCES' EM VEZ DO AXIOS 
+
+
+GLOBAL É SIMPLES: 
+
+
+MAIS TARDE NO CURSO 
+
+
+VAMOS ___FAZER UM OUTRO TIPO DE REQUEST 
+
+NO NOSSO PROJETO, UM REQUEST 
+
+__QUE SERÁ __ ENVIADO A ___ UMA URL ___ DIFERENTE... E COMO 
+
+ESSA URL SERÁ ___DIFERENTE__, 
+
+VAMOS QUERER 
+
+
+OUTRA INSTÂNCIA DE AXIOS, CONFIGURADA DE FORMA DISTINTA, PARA ELA...
+
+
+
+
+
+---> e é exatamente por isso que o professor não quer definir 
+
+essa 'baseURL' aí como o DEFAULT GLOBAL DO NOSSO APLICATIVO... (de todos os http requests 
+
+de nosso aplicativo)...
+
+
+
+
+
+
+--> como agora JÁ TEMOS UMA INSTANCIA DO AXIOS CRIADA, 
+
+
+
+DEVEMOS 
+
+
+USÁ-LA PARA FAZER REQUESTS NO NOSSO PROJETO (em algum lugar dele)....
+----------------------------------------------------------------

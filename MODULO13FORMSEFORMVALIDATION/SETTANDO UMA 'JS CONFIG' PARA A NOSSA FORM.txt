@@ -1,0 +1,1947 @@
+
+
+
+
+Colocamos estilos básicos na nossa form... ---> 
+
+
+
+
+também consertamos aquele erro bosta de "" 'propType' (esse nome) não é suportado, use 'proptype' em vez disso...'''
+
+
+
+
+
+
+
+
+
+
+agora 
+
+
+é hora 
+
+
+
+__DE ENCONTRAR UMA MANEIRA __ DE CRIAR NOSSA FORM __ DINAMICAMENTE... -----> devemos 
+
+
+criar 
+
+
+nossa 
+
+
+form 
+
+dinamicamente 
+
+e então 
+
+DEFINIR 
+
+
+CLARAMENTE 
+
+
+com  
+O QUE 
+
+
+CADA 
+
+
+
+ELEMENTO/INPUT ELEMENT DEVERÁ SE PARECER..
+
+
+
+
+
+
+
+
+
+
+--> para isso, professor vai dar uma olhada 
+
+
+no nosso STATE DE 
+
+'contactData',
+
+aquelas informações que havíamos antes ( e que agora não temos mais da mesma forma, pq você deu uma pequena alterada na 
+estrutura do state do professor...)
+
+
+
+
+
+
+
+
+
+
+O que o professor tem/tinha 
+
+
+é 
+
+
+state = {
+    ingredients: this.props.ingredients,
+    price: this.props.price,
+    customer: 
+    {
+        name: 'Max'
+        address: {
+            street: 'Teststreet 1',
+            zipCode: '41351',
+            country: 'Germany'
+        },
+        email: 'test@test.com'
+    },
+    deliveryMethod: 'fastest'
+}
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+--> esse 'deliveryMethod', por exemplo PODERIA/PODE SER __ UM 
+
+
+DROPDOWN__ EM QUE 
+
+VAMOS 
+
+ESCOLHER 
+
+'fastest/cheapest', ou algo do gênero... (E vamos 
+
+fazer essa definição por meio 
+da gambiarra 
+
+do 
+
+'Input.js'
+
+
+E 
+
+DO SWITCH STATEMENT, etc etc..)
+
+
+
+
+
+
+
+
+
+TIPO ISTO AQUI:
+
+
+
+
+
+
+const input = (props) => {
+
+    let inputElement = null;
+
+
+        switch (props.inputtype) { ///////SIM, ESSE PROP DEVE SER DEFINIDO/SETTADO ASSIM MESMO, SEM 'CamelCase', POIS SE NÃO FIZERMOS ISSO, SERÁ MOSTRADO UM ERRO CHATO NO CONSOLE DIZENDO QUE 'DEFAULT HTML PROPS' (como esse inputtype) NÃO PODEM SER DEFINIDOS COM CAMEL CASE QUANDO ELES FOREM REPRESENTADOS NO DOM, pq o __DOM__ em si, o código html em si, SEMPRE É __ CASE INSENSITIVE__ (ao contrário do javascript/react, que é CASE SENSITIVE.)
+            case('input'): 
+            inputElement = (<input {...props} className={InputStyle.InputElement}/>)
+            break;
+            case('textarea'):
+            inputElement = (<textarea {...props} className={InputStyle.InputElement}/>)
+            break;
+            case('dropdown'): ////////EIS O CO´DIGO EM QUESTÃO.
+            inputElement = (<select name="deliveryMethod" id="delivery">
+                        <option value="fastest">Fastest</option>
+                        <option value="cheapest">Cheapest</option>
+            </select> )
+            break;
+            default:
+                inputElement = (<input {...props} className={InputStyle.InputElement}/>)
+        }
+
+
+
+    return (
+        <div className={InputStyle.Input}>
+            <label>{props.label}</label>
+            {inputElement}
+        </div>
+    )
+
+
+
+}
+
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+FIZ O CÓDIGO FUNCIONAR.... 
+
+
+
+
+
+
+FICOU ASSIM:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+import InputStyle from './Input.module.css';
+
+
+
+
+
+
+const input = (props) => {
+
+    let inputElement = null;
+
+
+        switch (props.inputtype) { ///////SIM, ESSE PROP DEVE SER DEFINIDO/SETTADO ASSIM MESMO, SEM 'CamelCase', POIS SE NÃO FIZERMOS ISSO, SERÁ MOSTRADO UM ERRO CHATO NO CONSOLE DIZENDO QUE 'DEFAULT HTML PROPS' (como esse inputtype) NÃO PODEM SER DEFINIDOS COM CAMEL CASE QUANDO ELES FOREM REPRESENTADOS NO DOM, pq o __DOM__ em si, o código html em si, SEMPRE É __ CASE INSENSITIVE__ (ao contrário do javascript/react, que é CASE SENSITIVE.)
+            case('input'): 
+            inputElement = (<input {...props} className={InputStyle.InputElement}/>)
+            break;
+            case('textarea'):
+            inputElement = (<textarea {...props} className={InputStyle.InputElement}/>)
+            break;
+            case('dropdown'):
+            inputElement = (<select {...props} name="dropdown" id="dropdown">      ///////////EIS O CÓDIGO EM QUESTÃO.
+                        <option value="fastest">Fastest</option>
+                        <option value="cheapest">Cheapest</option>
+            </select> )
+            break;
+            default:
+                inputElement = (<input {...props} className={InputStyle.InputElement}/>)
+        }
+
+
+
+    return (
+        <div className={InputStyle.Input}>
+            <label>{props.label}</label>
+            {inputElement}
+        </div>
+    )
+
+
+
+}
+
+
+
+
+
+
+
+
+export default input;
+
+
+
+
+
+
+
+------------------------------
+
+
+
+
+PRIMEIRAMENTE, O INPUTELEMENT de tipo 
+
+'dropdown' NÃO ESTAVA FUNCIONANDO, 
+
+
+aquele método 
+
+'contactDataHandler' 
+
+NÃO ESTAVA 
+
+HANDLANDO AS 'MUDANÇAS' 
+
+
+NO DROPDOWN (a mudança entre 'cheapest' e 'fastest', de acordo com 
+
+o VALUE desse event... ) ----> para resolver o problema,
+
+
+
+
+escrevi 
+
+
+'{...props}' DENTRO DO ' <select />' lá em 'Input.js'... -----> isso fez com que TODOS OS PROPS 
+
+
+DE 
+
+'ContactData' (inclusive o prop 'onChange={....}') FOSSEM 
+
+PASSADOS 
+
+A ESSE COMPONENT 
+
+'Input'/a esse elemento html de 'select'...
+
+
+
+
+---------------------
+
+
+
+
+
+
+
+
+
+
+Contudo, mesmo que tudo esteja funcionando, ainda é bom 
+
+continuar 
+
+a assistir 
+
+
+a explicação do professor...
+
+
+
+
+
+prosseguindo... --> 
+
+
+
+
+
+ESTE É O 'SHAPE' DE NOSSA FORM:
+
+
+
+state = {
+    ingredients: this.props.ingredients,
+    price: this.props.price,
+    customer: 
+    {
+        name: 'Max'
+        address: {
+            street: 'Teststreet 1',
+            zipCode: '41351',
+            country: 'Germany'
+        },
+        email: 'test@test.com'
+    },
+    deliveryMethod: 'fastest'
+}
+
+
+
+-------------------------------------------------
+
+
+
+
+
+---------> Entretanto, o professor vai LOCURAR,
+
+
+ele 
+
+vai 
+
+
+
+
+SUBSTITUIR/REMOVER TODAS ESSAS PROPRIEDADES, vai colocar 
+
+uma 
+
+propriedaDE 
+
+
+'OrderForm'
+
+
+por cima de todas elas...
+
+
+
+ex:
+
+
+
+
+
+state = {
+
+
+            orderForm: 
+
+            loading: false
+}
+
+
+
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+CERTO,
+
+E DENTRO DESSA 
+
+
+'ORDERFORM'
+
+o professor
+
+vai querer 
+
+
+DEFINIR 
+
+TODOS 
+
+
+OS 
+
+'FORM FIELDS' dessa página 'Checkout'...
+
+
+
+Ou seja, ele vai querer todos os INPUTS,
+
+e como 
+
+eles 
+
+
+
+
+
+
+DEVERÃO SER CONFIGURADOS,
+
+
+
+e também 
+
+seus VALORES....
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+state = {
+    orderForm: {
+            name: 'Max',
+            street: 'Teststreet 1',
+            zipCode: '41351',
+            country: 'Germany',
+            email: 'test@test.com',
+            deliveryMethod: 'fastest'
+            },
+
+            loading: false
+        }
+
+
+
+
+
+
+
+
+
+
+IMPORTANTE!!!! --> PROFESSOR VAI ___aCHATAr___ ESSE OBJETO QUE FICARÁ DENTRO DE 'orderForm', tudo para 
+
+REDUZIR A COMPLEXIDADE DE NOSSO OBJETO... (isso nos deixa executar métodos/operações javascript mais 
+elaboradas, usar HELPER METHODS melhores, que vão facilitar nossa vida...)
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+OK, AGORA TEMOS VÁRIAS ENTRIES DENTRO DESSE 
+
+'orderForm', 
+
+
+cada uma REPRESENTANDO 1 INPUT ELEMENT QUE NÓS CRIAMOS...
+
+
+
+
+
+
+
+--> PROFESSOR DIZ QUE O PRÓXIMO PASSO É 
+
+definir/estabelecer 
+
+
+COMO __ ESSES INPUTS __ DEVERÃO SE PARECER...
+
+(
+
+    faremos isso para que 
+
+
+    SEJA 
+
+    POSSÍVEL __IR POR DENTRO DESSE OBJETO 'orderForm', IR POR DENTRO 
+    PARA QUE SEJA POSSÍVEL ATÉ 
+
+    MESMO ____aDICIONAR___  OBJETOS DINAMICAMENTE A ELE... ---> e isso vai nos ajudar 
+
+    a 
+    definir 
+
+    um 
+
+    'fitting input element' para cada um deles...
+) ------------> 
+
+
+
+
+PARA ISSO, 
+
+PROFESSOR 
+
+
+APONTA QUE 
+
+ELE VAI QUERER 
+
+TER 
+
+
+
+UMA PROPRIEDADE 
+
+'elementType' 
+
+PARA __CADA 'INPUT/OBJETO INPUT' na nossa 
+
+'OrderForm'....
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+state = {
+    orderForm: {
+                name: 
+                {
+                    elementType: 
+                    'Max',
+
+                
+            street: 'Teststreet 1',
+            zipCode: '41351',
+            country: 'Germany',
+            email: 'test@test.com',
+            deliveryMethod: 'fastest'
+            },
+
+            loading: false
+        }
+
+
+
+-------------------------
+
+
+
+
+no caso de 
+
+
+'name',
+
+
+
+esse 
+
+'elementType' 
+
+SERÁ 
+
+
+DE UM VALOR 'input',
+
+pois esse elemento aí será um INPUT ELEMENT COMUM....
+
+
+
+ex:
+
+
+state = {
+    orderForm: {
+                name: 
+                {
+                    elementType: 'input',
+                }
+
+                
+            street: 'Teststreet 1',
+            zipCode: '41351',
+            country: 'Germany',
+            email: 'test@test.com',
+            deliveryMethod: 'fastest'
+            },
+
+            loading: false
+        }
+
+
+
+------------------------------------
+
+
+ISSO FEITO, PROFESSOR DIZ QUE 
+
+EM 
+
+
+CADA 
+
+
+1 DESSES ELEMENTOS/INPUTS TAMBÉM VAMOS QUERER 
+
+UMA PROPRIEDADE 
+
+
+
+'elementConfig'... ------> ESSE OBJETO AÍ, DIZ O PROFESSOR, PODERÁ/VAI __dEFINIR __ A  ''''configuração'''', ou seja,
+
+
+OS 
+
+'NORMAL ATTRIBUTES' QUE PODEMOS 
+
+DEFINIR 
+
+PARA A DETERMINADA TAG HTML (no caso, 'input')... 
+
+
+
+
+tipo assim:
+
+
+
+
+
+
+
+
+state = {
+    orderForm: {
+                name: 
+                {
+                    elementType: 'input',
+                    elementConfig: {
+                        
+                    }
+                }
+
+                
+            street: 'Teststreet 1',
+            zipCode: '41351',
+            country: 'Germany',
+            email: 'test@test.com',
+            deliveryMethod: 'fastest'
+            },
+
+            loading: false
+        }
+
+
+-------------------------------------
+
+
+
+
+CERTO, MAS 
+
+O QUE PODEMOS 
+
+DEFINIR 
+
+DENTRO 
+
+DESSE OBJETO 
+
+'elementConfig'? -----> professor diz que podemos settar/definir 
+
+o TYPE DESSE INPUT, que poderá/deverá 
+
+
+ser 
+
+'text' (pois é o NAME)... -------> O 'PLACEHOLDER' também poderá 
+
+ser settado aqui;
+
+o professor 
+
+
+vai 
+
+definir 
+
+
+
+'placeholder: 'Your Name'...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+state = {
+    orderForm: {
+                name: 
+                {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your Name'
+                    }
+                }
+
+                
+            street: 'Teststreet 1',
+            zipCode: '41351',
+            country: 'Germany',
+            email: 'test@test.com',
+            deliveryMethod: 'fastest'
+            },
+
+            loading: false
+        }
+
+
+
+---------------------------------------
+
+
+
+
+
+
+ESSAS COISAS DEFINIDAS NO 'CONFIG' 
+
+SERÃO, NO FINAL DAS CONTAS, __ AS COISAS/ATTRIBUTES QUE __ O PROFESSOR 
+
+VAI QUERER 
+
+
+DEFINIR 
+
+DENTRO 
+
+
+
+DO DETERMINADO INPUT QUE FOI CRIADO (no caso, o 'input', esse valor de 'elementType'...).
+
+
+
+
+
+POR FIM, PROFESSOR DIZ QUE TAMBÉM 
+
+DEVEMOS/DEVEREMOS 
+
+TER UM
+
+
+
+___VALOR (value) 
+
+
+PARA O 'name',
+
+
+ que poderá 
+
+ ser simplesmente um VALOR VAZIO (pq esse valor vazio vai ser substituído pelo 'event.target.value', pela coisa que 
+ 
+ o usuário digitar nesse input field de 'name'...)
+
+
+
+ ex:
+
+
+ 
+
+
+
+state = {
+    orderForm: {
+                name: 
+                {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your Name'
+                    },
+                    value: ''
+                },
+
+
+                
+            street: 'Teststreet 1',
+            zipCode: '41351',
+            country: 'Germany',
+            email: 'test@test.com',
+            deliveryMethod: 'fastest'
+            },
+
+            loading: false
+        }
+
+
+-------------------------------
+
+
+
+E ESSE PADRÃO AÍ  É UM PADRÃO QUE O PROFESSOR VAI QUERER REPETIR __ EM TODOS ___ OS 
+
+
+'fields', ou seja, 
+
+vai repetir 
+
+para 
+
+o 
+
+'street',zipcode, country, email....
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+state = {
+    orderForm: {
+                name: 
+                {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your Name'
+                    },
+                    value: ''
+                },
+
+
+                
+            street: {
+                        
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your Street'
+                    },
+                    value: ''
+                
+            }
+
+            zipCode: {
+                                  elementType: 'input',
+                    elementConfig: {
+                        type: 'number',
+                        placeholder: 'ZIP Code'
+                    },
+                    value: ''
+            }   
+            country: {
+                                              elementType: 'input',
+                    elementConfig: {
+                        type: 'number',
+                        placeholder: 'Country'
+                    },
+                    value: ''
+            }
+            email: {
+                            elementType: 'input',
+                    elementConfig: {
+                        type: 'email',
+                        placeholder: 'Your Mail'
+                    },
+                    value: ''
+            }
+            deliveryMethod: 'fastest'
+            },
+
+            loading: false
+        }
+
+
+
+----------------------------
+
+
+E O PROFESSOR NOS EXPLICA QUE É CLARO QUE VOCê PODERIA/PDOE ESCREVER UM 
+
+CÓDIGO MAIS 'LEAN' PARA 
+
+
+
+FAZER O CREATE/DEFINIÇÃO DESSAS PROPRIEDADES; você poderia criar UMA HELPER FUNCTION, QUE 
+
+CRIA ESSES TAIS OBJETOS... (aí vocÊ apenas chamaria a função, e então passaria esses valores de agora 
+
+como seus parâmetros....) ---------> 
+
+
+
+O PROFESSOR ADMITE QUE 
+
+ELE ESTÁ ESCREVENDO ESSE NEGÓCIO NA 'FORMA LONGA' pq 
+
+ele quer nos mostrar o que REALMENTE ESTÁ ACONTECENDO/VAI ACONTECER no nosso código...
+
+
+
+( e isso vai BLOATAR nossa classe, mas só por enquanto..)
+
+
+
+
+
+
+--> professor explica que no 'country' nós PODERÍAMOS USAR UM DROPDOWN,
+
+mas que ele tbm vai colocar um input normal... (pq um dropdown COM RESTRICTED COUNTRIES 
+
+É ALGO UM POUCO MAIS COMPLICADO, E VOCÊ TIPICAMENTE USARIA/USA THIRD PARTY PACKAGES PARA 
+
+FAZER ESSES DROPDOWNS... )
+
+
+
+
+--> email --> o TYPE SERÁ 'EMAIL'...
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+
+state = {
+    orderForm: {
+                name: 
+                {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your Name'
+                    },
+                    value: ''
+                },
+
+
+                
+            street: {
+                        
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your Street'
+                    },
+                    value: ''
+                
+            }
+
+            zipCode: {
+                                  elementType: 'input',
+                    elementConfig: {
+                        type: 'number',
+                        placeholder: 'ZIP Code'
+                    },
+                    value: ''
+            }   
+            country: {
+                                              elementType: 'input',
+                    elementConfig: {
+                        type: 'number',
+                        placeholder: 'Country'
+                    },
+                    value: ''
+            }
+            email: {
+                            elementType: 'input',
+                    elementConfig: {
+                        type: 'email',
+                        placeholder: 'Your Mail'
+                    },
+                    value: ''
+            }
+            deliveryMethod: 'fastest'
+            },
+
+            loading: false
+        }
+
+
+----------------------------------------------------------------------
+
+
+
+
+
+
+O 'DELIVERYMETHOD' também deverá obter um desses objetos aí... ----> contudo, 
+
+
+o 
+
+
+'elementType' DELE DEVERÁ SER 
+
+DE TIPO 
+
+
+'select', e não de input (pq vamos usar um DROPDOWN nele....) 
+
+
+
+
+
+
+ex:
+
+
+deliveryMethod: {
+    elementType: 'input',
+                    elementConfig: {
+                        type: 'email',
+                        placeholder: 'Your Mail'
+                    },
+                    value: ''
+
+
+}
+
+
+
+
+----------------------------------------
+
+
+
+CONTUDO, PROFESSOR AFIRMA QUE 
+
+
+DENTRO DE 'elementConfig' NÃO VAMOS 
+
+ESCREVER 
+
+as propriedades 
+
+'type' e 'placeholder'... ---> não... AQUI O QUE VAMOS 
+
+DEFINIR 
+É UMA 
+
+PROPRIEDADE 
+
+'options' (que será as OPÇÕES DENTRO DO DROPDOWN/'<select/>'...) ------>
+
+
+isso pq uma 
+
+SELECT TAG 
+
+geralmente é estruturada 
+assim:
+
+
+<select>
+<option name="xxx" value="xxx" />
+<option name="yyy" value="yyy" />
+</select>
+
+
+
+
+
+--------------------------------
+
+
+E NESSE STATE AÍ, FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+
+deliveryMethod: {
+    elementType: 'select',
+                    elementConfig: {
+                            options: 
+                    },
+                    value: ''
+
+
+}
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+CERTO, MAS O QUE VAI IR DENTRO DO VALOR DESSA PROPRIEDADE 'options'....? --> professor 
+
+
+aponta que deverá ser um ARRAY DE OBJETOS JAVASCRIPT... ------->
+
+
+
+
+dentro de cada um desses objetos vamos ter as propriedades 
+
+
+'value'
+
+
+e uma 
+
+
+propriedade 
+
+'displayValue'  -------> E AS DUAS SERÃO 'fastest' e 'cheapest'.... 
+
+
+
+
+
+
+
+eX:
+
+
+
+deliveryMethod: {
+    elementType: 'select',
+                    elementConfig: {
+                            options:  [
+                                {value: 'fastest', displayValue: 'Fastest'},
+                                {value: 'cheapest', displayValue: 'Cheapest'}
+                            ]
+                    },
+                    value: ''
+
+
+}
+
+
+
+
+-------------------------------------
+
+
+É CLARO, DIZ O PROFESSOR, QUE VOCê PODERÁ 
+
+CONFIGURAR 
+
+ESSAS 'OPTIONS'/OPÇÕES 
+
+
+DE ACORDO COM SUAS NECESSIDADES/DE ACORDO COM AS OPÇÕES QUE VOCÊ QUER 
+
+QUE 
+
+EXISTAM DENTRO 
+
+
+DAQUELE ELEMENTO SELECT/DROPDOWN...
+
+
+
+
+--------------------------
+
+
+CERTO... COM ISSO, TEREMOS 
+
+ESSA 
+'orderForm'
+
+
+BEM COMPRIDINHA... ------> ela tem essas vários key-value pairs, 
+
+em que 
+
+temos 
+
+
+
+BASICAMENTE 
+
+IDENTIFIERS (name, street, etc) de todos os nossos TIPOS DE FORM ELEMENTS,
+
+
+E ENTÃO, NOS VALORES DESSES IDENTIFICADORES, OBJETOS JAVASCRIPT 
+
+
+COM 
+
+
+A CONFIGURAÇÃO E O SETUP DESSES ELEMENTOS...
+
+
+
+
+
+
+
+
+
+---> O PRÓXIMO PASSO É ___FAZER COM QUE O RENDER DE NOSSOS ELEMENTOS 
+
+'<Input />' 
+
+
+CONSIGA TRABALHAR COM ESSAS INFORMAÇÕES/SETUPS 
+
+definidos 
+
+no 
+
+STATE 
+
+desse 
+
+'ContactData.js'... -------> FAREMOS ISSO PARA QUE 
+
+
+NOSSOS COMPONENTS '<Input />'
+
+
+SEJAM 
+
+CRIADOS 
+
+PELO SIMPLES '''__lOOP THROUGH__ '''' (loopar por dentro) 
+
+
+DOS OBJETOS JAVASCRIPT 
+
+DENTRO 
+
+DE 
+'this.state'...  ----------> 
+
+
+MAS É 
+
+
+EVIDENTE 
+QUE 
+
+
+
+
+_____PARA PODEr___ 'LOOP THROUGH'__ ESSES OBJETOS JAVASCRIPT,
+
+
+TEMOS 
+
+___ DE CONVERTER___ ESSES OBJETOS JAVASCRIPT EM 
+
+___aRRAYs___...
+
+
+
+
+
+
+
+
+---> mas o professor diz que devemos começar pelo AJUSTE 
+
+DOS 
+
+ELEMENTOS 
+
+'<Input />'...
+
+
+
+
+ex:
+
+
+
+     <Input
+            label="Name"
+            inputtype="input"
+            type="text"
+            placeholder="Your Name"
+            onChange={(event) => {
+              this.contactDataHandler(event, 'name');
+            }}
+          />
+          <Input
+            label="Email"
+            inputtype="input"
+            type="text"
+            placeholder="Your Mail"
+            onChange={(event) => {
+              this.contactDataHandler(event, 'email');
+            }}
+          />
+          <Input
+            label="Street"
+            inputtype="input"
+            placeholder="Street"
+            onChange={(event) => {
+              this.contactDataHandler(event, 'street');
+            }}
+          />
+          <Input
+            label="Postal Code"
+            inputtype="input"
+            onWheel={(event) => event.preventDefault()}
+            placeholder="Postal Code"
+            onChange={(event) => {
+              this.contactDataHandler(event, 'postal');
+            }}
+          />
+          <Input
+            label="Delivery Method"
+            placeholder="Select"
+            inputtype="dropdown"
+            onChange={(event) => {
+              this.contactDataHandler(event, 'dropdown');
+            }}
+          />
+
+
+
+-----------------------------
+
+
+ALI, NESSES LUGARES,
+
+
+
+
+nós vamos usar OS OBJETOS 
+
+DEFINIDOS 
+
+
+NO NOSSO STATE 
+
+
+para __ passar__ os PROPS que serão usados em 
+
+'Input'...
+
+
+
+
+
+EX:
+
+
+     <Input
+            label="Name"
+            inputtype="input"
+            type="text"
+            placeholder="Your Name"
+            onChange={(event) => {
+              this.contactDataHandler(event, 'name');
+            }}
+            />
+-----
+
+
+
+
+PARA COMEÇAR, VAMOS QUERER PASSAR:
+
+
+
+1) O __type___ ('input')
+
+
+
+2)   o 'elementConfig' (que é aquele outro obojeto, com 'type' e 'placeholder' no seu interior...)
+
+
+3) o VALUE (que será DE UMA EMPTY STRING, inicialmente....)
+
+
+
+
+
+
+
+
+--> é exatamente isso que vamos fazer...
+
+
+
+
+
+
+vai ficar assim:
+
+
+
+
+
+
+     <Input
+          
+            elementType="..." 
+            elementConfig="..."
+            value="..."
+  
+        />
+
+
+
+
+
+
+
+
+
+        O PROFESSOR NOS EXPLICA QUE É __cLARO QUE __ VALORES DE VERDADE 
+
+        SUBSITUTIRÃO 
+
+        ESSES 
+
+        '...', logo logo...
+
+
+
+
+
+
+
+        --> ISSO FEITO, 
+
+        NÓS VAMOS ATÉ 
+
+        NOSSO ELEMENTO 'INPUT'... ----> 
+
+
+
+        código:
+
+
+
+
+
+
+        const input = (props) => {
+
+    let inputElement = null;
+
+
+        switch (props.inputtype) { ///////SIM, ESSE PROP DEVE SER DEFINIDO/SETTADO ASSIM MESMO, SEM 'CamelCase', POIS SE NÃO FIZERMOS ISSO, SERÁ MOSTRADO UM ERRO CHATO NO CONSOLE DIZENDO QUE 'DEFAULT HTML PROPS' (como esse inputtype) NÃO PODEM SER DEFINIDOS COM CAMEL CASE QUANDO ELES FOREM REPRESENTADOS NO DOM, pq o __DOM__ em si, o código html em si, SEMPRE É __ CASE INSENSITIVE__ (ao contrário do javascript/react, que é CASE SENSITIVE.)
+            case('input'): 
+            inputElement = (<input {...props} className={InputStyle.InputElement}/>)
+            break;
+            case('textarea'):
+            inputElement = (<textarea {...props} className={InputStyle.InputElement}/>)
+            break;
+            case('dropdown'):
+            inputElement = (<select {...props} name="dropdown" id="dropdown">
+                        <option value="fastest">Fastest</option>
+                        <option value="cheapest">Cheapest</option>
+            </select> )
+            break;
+            default:
+                inputElement = (<input {...props} className={InputStyle.InputElement}/>)
+        }
+
+
+
+    return (
+        <div className={InputStyle.Input}>
+            <label>{props.label}</label>
+            {inputElement}
+        </div>
+    )
+
+
+
+}
+
+
+
+
+
+
+----------------------------
+
+
+
+CERTO,
+
+
+VAMOS TER QUE 
+
+EDITAR 
+
+ESSE 
+
+'switch statement', 
+
+
+POIS 
+
+
+AGORA 
+
+
+NÓS VAMOS 
+
+RECEBER PROPS DIFERENTES, DISTINTOS DE 
+
+
+'props.inputtype'...
+
+
+
+
+
+
+--> professor explica que nós vamos receber
+
+
+O PARÂMETRO 
+
+'props.elementType' (Que é onde aquela string de 'input' e outras estarão
+
+armazenadas...) ----->
+
+
+
+
+ex:
+
+
+
+
+
+switch (props.elementType) { ////EIS O CÓDIGO EM QUESTÃO.
+            case('input'): 
+            inputElement = (<input {...props} className={InputStyle.InputElement}/>)
+            break;
+            case('textarea'):
+            inputElement = (<textarea {...props} className={InputStyle.InputElement}/>)
+            break;
+            case('dropdown'):
+            inputElement = (<select {...props} name="dropdown" id="dropdown">
+                        <option value="fastest">Fastest</option>
+                        <option value="cheapest">Cheapest</option>
+            </select> )
+            break;
+            default:
+                inputElement = (<input {...props} className={InputStyle.InputElement}/>)
+        }
+
+
+
+------------------------------------------
+
+
+
+
+
+
+CERTO... MAS ALÉM DISSO AÍ, PROFESSOR FARÁ OUTRA ALTERAÇÃO... ---> 
+
+
+naqueles 
+
+
+elementos que temos mais para baixo,
+
+nos CASES 
+
+
+de 
+
+'InputElement',
+
+
+PROFESSOR 
+
+
+EXPLICA QUE 
+
+
+NÃO VAMOS MAIS FAZER UM SPREAD DE '{...props}'... ------> 
+
+
+
+Não, agora nós vamos APENAS 
+
+FAZER O DISTRIBUTE 
+
+de 
+
+'{...props.elementConfig}', e não de '{...props}' (que é MAIOR DO QUE esse '...props.elementConfig')...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+switch (props.elementType) { ////EIS O CÓDIGO EM QUESTÃO.
+            case('input'): 
+            inputElement = (<input {...props.elementConfig} className={InputStyle.InputElement}/>)
+            break;
+            case('textarea'):
+            inputElement = (<textarea {...props.elementConfig} className={InputStyle.InputElement}/>)
+            break;
+            case('dropdown'):
+            inputElement = (<select {...props.elementConfig} name="dropdown" id="dropdown">
+                        <option value="fastest">Fastest</option>
+                        <option value="cheapest">Cheapest</option>
+            </select> )
+            break;
+            default:
+                inputElement = (<input {...props.elementConfig} className={InputStyle.InputElement}/>)
+        }
+
+
+---------------------------------------
+
+
+
+
+
+
+
+ou seja,
+
+esse 'props.elementConfig' será, na verdade,
+
+
+isto aqui:
+
+
+'<Input elementConfig="..." />'
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+E ESSE NEGÓCIO AÍ, 
+
+
+esse 'component' INPUT 
+
+vai 
+
+receber 
+
+
+O ELEMENT CONFIG de acordo com o ELEMENTO/TIPO DE INPUT 
+
+NO NOSSO STATE QUE 
+
+VAMOS QUERER QUE 
+
+ELE SEJA DEFINIDO (como 'email', por exemplo...) -----> 
+
+
+
+
+E COMO NÓS ESTAMOS 
+
+__DISTRIBUINDO '...props.elementConfig', 
+
+
+NÓS VAMOS ACABAR 
+
+DISTRIBUINDO AS PROPRIEDADES DENTRO DESSE OBJETO, 
+
+que 
+
+são 
+
+'type' e 'placeholder'...
+
+
+
+
+--------------------------------
+
+
+Certo, com isso temos 
+
+
+nossos 
+
+INPUT ELEMENTS ajustados em 'Input.js'...:
+
+
+
+switch (props.elementType) { ////EIS O CÓDIGO EM QUESTÃO.
+            case('input'): 
+            inputElement = (<input {...props.elementConfig} className={InputStyle.InputElement}/>)
+            break;
+            case('textarea'):
+            inputElement = (<textarea {...props.elementConfig} className={InputStyle.InputElement}/>)
+            break;
+            case('dropdown'):
+            inputElement = (<select {...props.elementConfig} name="dropdown" id="dropdown">
+                        <option value="fastest">Fastest</option>
+                        <option value="cheapest">Cheapest</option>
+            </select> )
+            break;
+            default:
+                inputElement = (<input {...props.elementConfig} className={InputStyle.InputElement}/>)
+        }
+
+
+
+----------------------------------
+
+
+
+
+O professor então nos explica que 
+
+
+É CLARO QUE 
+
+
+ELE VAI QUERER __aDICIONAR__ UM 'VALUE' 
+
+
+a cada 
+
+um desses components,
+
+
+
+por isso ele vai 
+
+bindar 
+
+
+
+
+'<Input value={props.value} />',
+
+
+
+PARA QUE 
+
+
+
+ESSE VALOR ___tAMBÉM __ SEJA RECEBIDO __ NESSES INPUT ELEMENTS...
+
+
+
+
+
+
+ex:(resultado):
+
+
+
+
+
+switch (props.elementType) { ////EIS O CÓDIGO EM QUESTÃO.
+            case('input'): 
+            inputElement = (<input {...props.elementConfig} className={InputStyle.InputElement} value={props.value} />)
+            break;
+            case('textarea'):
+            inputElement = (<textarea {...props.elementConfig} className={InputStyle.InputElement} value={props.value}/>)
+            break;
+            case('dropdown'):
+            inputElement = (<select {...props.elementConfig} name="dropdown" id="dropdown">
+                        <option value="fastest">Fastest</option>
+                        <option value="cheapest">Cheapest</option>
+            </select> )
+            break;
+            default:
+                inputElement = (<input {...props.elementConfig} className={InputStyle.InputElement} value={props.value}/>)
+        }
+
+
+
+
+
+-----------------------------------------------------------
+
+
+
+
+CERTO.... 
+
+
+AGORA 
+
+NÓS TEMOS UM 
+
+'CUSTOM INPUT COMPONENT', que 
+
+provavelmente funcionará...
+
+
+
+
+---------> NA PRÓXIMA AULA O PROFESSOR VAI QUERER USAR 
+
+NOSSA 
+
+'JAVASCRIPT FORMDATA'  que configuramos 
+
+
+com 
+
+
+'orderForm' 
+
+no STATE 
+
+de 
+
+'ContactData'  PARA __ ENTÃO ___ CRIAR VERDADEIROS ELEMENTOS 'INPUT' A PARTIR 
+
+DESSA DATA...
+
+
+
+
+
+
+
+Certo... vamos ver como fazer isso NA PRÓXIMA AULA...

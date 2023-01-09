@@ -1,0 +1,137 @@
+
+
+
+
+
+
+FORMS E FORM VALIDATION --------> 
+
+
+
+
+
+HANDLANDO (handling) 
+
+
+
+O 'USER INPUT'
+
+
+DA MANEIRA CORRETA... 
+
+
+
+
+
+
+
+
+
+
+
+----------> nosso app já está ficando melhor... ---> mas HÁ UM ELEMENTO 
+
+
+DO APP QUE AINDA NÃO ESTÁ SENDO 
+
+
+GERENCIADO 
+
+ADEQUADAMENTE... ------> esse elemento é 
+
+
+A 
+
+___fORM VALIDATION__.... (a 'contact data' form, no nosso APP....) -------> 
+
+
+
+E ISSO É UM PROBLEMA:
+
+
+
+NÃO FALAMOS MUITO, ATÉ AGORA,
+
+SOBRE 
+
+'FORMS'
+
+Durante este curso... --------> falamos sobre 
+
+
+
+O HANDLE DE INPUTS COM 'two-way binding' (e isso MUITAS VEZES JÁ 
+
+É SUFICIENTE)... -------> CONTUDO,
+
+
+SE VOCê REALMENTE TEM UMA FORM... se vocÊ tem uma form 
+
+
+E VOCÊ QUER 
+
+ENTÃO 
+
+
+
+
+
+________vALIDAR ___ ESSA FORMA___ (ou seja, 'sanitize' os inputs 
+
+do usuário, fazer com que eles realmente sejam a) um email; b) um nome; c)um endereço,
+
+etc etc....) -------> ISSO PODE 
+
+
+SER MEIO ____COMPLEXO____.... --------> PODE SER COMPLEXO DEVIDO 
+
+
+À MANEIRA PELA QUAL
+
+O 
+
+REACT FUNCIONA... -----------> o fato do react ser 'APENAS JAVASCRIPT' 
+
+
+introduz alguns furos de segurança 
+
+
+no nosso app,
+
+alguns furos relativos 
+
+
+AO __vALIDATION__ de nossas forms... -------> NESTE MÓDULO 
+
+
+
+VAMOS 
+
+
+
+VER COMO 
+
+
+
+FAZER HANDLE DE FORMS E DE FORM VALIDATION,
+
+
+
+
+e aí 
+
+veremos 
+
+
+como podemos/poderemos 
+
+
+LIDAR/administrar
+ 
+
+ nossa 
+
+ 'CONTACTDATA FORM', no nosso aplicativo, 
+
+
+ com facilidade...

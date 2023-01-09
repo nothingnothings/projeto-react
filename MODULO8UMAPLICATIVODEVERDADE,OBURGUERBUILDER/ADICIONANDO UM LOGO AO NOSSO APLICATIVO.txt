@@ -1,0 +1,764 @@
+
+
+
+
+ADICIONAMOS UMA TOOLBAR NA ÚLTIMA LIÇÃO,
+
+
+AGORA É 
+
+
+HORA DE ___aDICIONAR UM LOGO....
+
+
+
+
+
+
+
+
+
+
+---> Professor explica que 
+
+ele não vai ADICIONAR 
+
+
+O LOGO 
+
+
+NAQUELE 
+
+FOLDER 
+
+DE 
+'NAVIGATION', pois ele não é um component 'navegacional'....
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+---> ELE VAI USAR O LOGO NO 'COMPONENTS', solto ali dentro, 
+
+pq 
+
+ELE __PODERÁ SER USADO EM QUALQUER LUGAR DO NOSSO APP_..... --> ele cria um folder chamado 
+
+
+
+'Logo', com esse component no seu interior.
+
+
+
+
+
+
+
+
+
+
+
+---> O PROFESSOR EXPLICA QUE ___ELE VAI USAR __ UMA IMAGEM NESSE 
+
+
+
+COMPONENT 'LOGO'... ----> e essa IMAGEM 
+
+TEM 
+
+DE ESTAR ARMAZENADA LÁ NO FOLDER 'assets', no ROOT 
+
+
+de nosso folder 'src'....
+
+
+
+
+---> PROFESSOR CRIA UM SUBFOLDER DE 
+
+'images' 
+DENTRO 
+
+
+
+DO 
+
+
+FOLDER 'assets'... ----- É UM LOGO DE BURGER....  um burger com um BACKGROUND TRANSPARENTE... 
+
+
+
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+O PROFESSOR VAI QUERER SIMPLESMENTE FAZER O DISPLAY DAQUELA IMAGE NESSE COMPONENT... ---> 
+
+
+MAS 
+ele também vai querer  
+
+
+WRAPPAR ESSA 
+
+
+
+IMAGEM EM UMA DIV, UMA DIV __qUE TAMBÉM__ SETTARÁ ___ O BACKGROUND PARA ESSA IMAGEM....
+
+(pq a IMAGEM EM SI TEM UM BACKGROUND ___tRANSPARENTE___, E NESSE COMPONENT 
+
+'LOGO' ele vai querer DEFINIR UM 
+
+
+FUNDO ___BRANCO ___ ('white background)'. )
+
+
+
+
+
+---> PROFESSOR DIZ QUE PODERÍAMOS, SE QUISÉSSEMOS, ACEITAR 
+
+
+A BACKGROUND COLOR POR MEIO DE 'PROPS' e a alterar dinamicamente... (mas não é isso que ele fará, aqui)...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+const logo = (props) => {
+
+    <div>
+        <img src={} />
+    <div>
+
+
+
+
+
+}
+
+
+
+
+export default logo;
+
+
+
+
+-----------------------------------------
+
+
+
+OK... A PARTE ESTRANHA 
+
+AQUI 
+
+
+__É QUE __ A NOSSA IMAGEM SERÁ REALMENTE __sETTADA__ DINAMICAMENTE ({})...
+
+
+
+-> VOCÊ PODERIA PENSAR QUE O PROFESSOR IA ESCREVER 
+
+'../../assets/images/burger-logo.png'... -------> MAS ISSO,
+
+DIZ O PROFESSOR, 
+
+NÃO FUNCIONARIA... ---> não 
+
+funcionaria 
+
+
+DEVIDO 
+
+AO FUNCIONAMENTO DO NOSSO BUILD WORKFLOW ---> O FOLDER 
+
+
+'src' É APENAS __ O FOLDER EM QUE ESTAMOS TRABALHANDO... ---> 
+
+o webpack, no final das contas, 
+
+VAI PEGAR ___tODOS  ___ ESSES ARQUIVOS, OS BUNDLAR EM 
+
+UM 
+
+SÓ COMPILADO,
+ 
+
+ E ENTÃO CRIARÁ UM 
+
+ NOVO FOLDER 
+
+ 'output'... --------> NÓS NÃO VEMOS ESSE 'OUTPUT' AQUI, AGORA, 
+
+ PQ 
+
+ __NÓS ESTAMOS 
+
+ EM 
+
+ 'DEVELOPMENT MODE', E NO DEV MODE, ESSE OUTPUT 
+
+ FICA/MORA NA ___MEMÓRIA__, 
+
+ não é efetivamente produzido.... (mas QUANDO 
+ 
+ 
+ NÓS ___rEALMENTE PUBLICARMOS NOSSO APP (production), NÓS 
+
+
+ REALMENTE VAMOS GANHAR 
+
+ UM 
+
+ FOLDER ADICIONAL EM QUE 
+
+ TODO O NOSSO CÓDIGO/ASSETS/COISAS 
+
+ ESTARÃO COMPILADOS E OPTIMIZADOS.... 
+ ) -------------> 
+
+
+
+ E É POR ISSO, EXPLICA O PROFESSOR,
+  
+
+  QUE 
+
+  ESSE 
+
+  FOLDER 
+
+
+  'assets/images' 
+
+  NÃO __SERÁ SHIPPADO___ 
+
+  PARA NENHUM SERVIDOR DE VERDADE.... --------> 
+
+
+
+  NEM ISSO, NEM O FOLDER 'SRC' SERÁ SHIPPADO 
+
+
+  A UM SERVIDOR.... --> o que será shippado AO SERVIDOR __SERÁ __ O CÓDIGO DE 
+
+  'PRODUCTION'......_________ (isso é BEM IMPORTANTE)....
+
+
+
+
+
+
+
+
+  EM OUTRAS PALAVRAS: precisamos fazer com que o 
+
+  WEBPACK ENTENDA ('make webpack aware of our use of that image'  )...
+
+
+
+  ENTENDA QUE ESTAREMOS/ESTAMOS USANDO ESSA IMAGEM.... --> 
+
+
+  E NÓS FAZEMOS ISSO, É CLARO, 
+
+
+  POR MEIO DO 
+
+
+  ________iMPORT___ (por meio de 'import xxx from xxx') 
+
+
+
+
+  DA IMAGEM NO ARQUIVO EM QUE QUEREMOS A UTILIZAR....
+
+
+
+
+
+  -----------> OBS:::: ENTRETANTO, 
+
+
+
+  ASSIM COMO 
+  
+
+  ARQUIVOS .CSS,
+
+
+  O FATO DE IMPORTARMOS 
+
+  UM ARQUIVO 
+
+  DE IMAGEM EM UM 
+
+  __ARQUIVO ESPECÍFICO___ NÃO SIGNIFICARÁ 
+
+  QUE 
+
+  ESSA IMAGEM 
+
+  NÃO 
+
+
+  ESTARÁ/ESTÁ DISPONÍVEL 
+
+
+  EM TODOS OS OUTROS LUGARES/COMPONENTS/PÁGINAS 
+
+  DO NOSSO APP...
+
+
+
+
+
+
+
+  Entretanto, isso não importa tanto assim.. ---> o que interessa 
+
+  é que 
+
+  NÓS ESTAMOS 
+
+  COMUNICANDO AO WEBPACK QUE NÓS REALMENTE USAREMOS ESSA IMAGE.. ------> 
+
+
+  assim que fizermos isso,
+   
+
+
+   O WEBPACK VAI __lIDAR COM ESSA IMAGEM__ por meio 
+
+   de um 
+
+   PLUGIN/MODULE ESPECIAL DELE,
+
+
+    ESSE NEGÓCIO VAI FAZER 'HANDLE' DESSA IMAGEM 
+
+
+    E ENTÃO 
+
+    VAI A COPIAR 
+
+    PARA O FOLDER/LUGAR NA MEMÓRIA 
+
+    EM QUE 
+
+
+    SURGIRÁ O OUTPUT DE NOSSO CÓDIGO OPTIMIZADO (que não é o mesmo código de 'src')...
+
+
+----------------------------------
+
+
+
+
+---> O WEBPACK ATÉ VAI __OPTIMIZAR___ A IMAGEM... ->
+
+
+
+
+
+
+É POR ISSO QUE, EM 'Logo.js',
+
+
+
+O PROFESSOR 
+
+VAI ESCREVER 
+
+
+'import burgerLogo from '../../assets/images/'... 
+
+
+-------------------------------------------
+
+
+
+
+CERTO... MAS, IMPORTANTE:
+
+
+
+esse 
+
+'
+burgerlogo' (objeto), aqui, 
+
+
+
+SÓ VAI RECEBER O 
+
+
+'PATH' DA IMAGEM 
+
+
+OPTIMIZADA/ALTERADA PELO 
+
+WEBPACK.... ------> ISSO SIGNIFICA QUE 
+
+
+ESSE 
+
+
+OBJETO/PATH SERÁ 
+
+'dinamically RESOLVED'.......
+
+
+
+---------------------------------------
+
+
+
+
+PARA USAR 
+
+ESSA IMAGEM/ARQUIVO 
+
+LÁ NAQUELE 
+
+'img src',
+
+
+
+devemos 
+
+escrever:
+
+
+
+
+import burgerLogo from '../../assets/images/burger-logo.png';
+
+
+<div>
+    <img src={burgerLogo} /> /////////SIM, É SÓ FAZER ISSO MSM...
+</div>
+
+
+------------------------------------------------
+
+
+''''burgerLogo''''' --> isso vai, de novo, 
+
+no final das contas se referir 
+
+a uma 
+STRING 
+
+
+DO LOCAL ONDE 
+
+ESTARÁ ARMAZENADA 
+
+A 
+IMAGEM OPTIMIZADA 
+
+E CORRIGIDA....
+
+
+
+
+
+
+---> professor também define um 
+
+'alt' de 
+
+'MyBurger', como placeholder....
+
+
+
+
+---------------------------------
+
+
+
+CERTO....
+
+
+MAS NÃO É SÓ ISSO:
+
+
+
+
+O PROFESSOR TAMBÉM VAI ADICIONAR  
+
+
+
+UM
+
+
+ESTILO/CLASSNAME A ESSE NEGÓCIO.... (lá na WRAPPING DIV)...
+
+
+
+
+
+
+
+--> para isso, o professor explica que 
+
+ele vai CRIAR/adicionar um arquivo 
+
+
+
+de 
+
+
+'Logo.module.css' ...
+
+
+
+
+------------------------------------
+
+
+
+
+--> DENTRO DESSE NEGÓCIO, 
+
+O PROFESOR VAI ESCREVER:
+
+
+
+
+
+.Logo {
+    background-color: white;
+    padding: 8px;
+    height: 100%;
+
+}
+
+
+
+
+.Logo img {
+    height: 100%;
+}
+
+
+
+
+
+
+-----------------------------
+
+
+
+O '.Logo img {
+    height: 100%;
+}' 
+
+
+
+É IMPORTANTE, POIS LIMITA 
+
+A 'IMAGE' dentro do 
+
+LOGO __ ao __ TAMANHO DO LOGO EM SI... (100% do tamanho do logo....)
+
+
+
+----------------------------
+
+
+
+
+
+
+
+
+
+
+--> ISSO FEITO,
+
+
+CÓDIGO 
+
+DE 
+
+'Logo':
+
+
+
+
+
+import React from 'react';
+
+
+
+
+import burgerLogo from '../../../src/assets/images/burger-logo.png'
+
+
+
+import BurgerLogoStyle from './Logo.module.css';
+
+
+
+const logo = (props) => {
+
+
+    return <div className={BurgerLogoStyle.Logo}>
+            <img src={burgerLogo} alt="MyBurger" />
+    </div>
+
+};
+
+
+
+
+
+
+
+
+
+export default logo;
+
+
+
+
+-------------------------------------
+
+
+
+
+AGORA O PROFESSOR EXPLICA QUE DEVEMOS 
+
+IR ATÉ NOSSO COMPONENT 
+
+
+'Toolbar' 
+
+E ENTÃO ADICIONAR 
+
+O 
+
+
+LOGO 
+
+ali naquele placeholder...
+
+
+
+
+
+
+
+
+
+
+CÓDIGO DE 'Toolbar':
+
+
+
+
+
+import React from 'react';
+
+import Toolbar from './Toolbar.module.css';
+
+import Logo from '../../../src/components/Logo/Logo';
+
+const toolbar = (props) => {
+  return (
+    <header className={Toolbar.Toolbar}>
+      <div>MENU</div>
+      {/* <div>LOGO</div> */}
+      <Logo />
+      <nav>...</nav>
+    </header>
+  );
+};
+
+export default toolbar;
+
+
+
+
+---------------------------------
+
+
+
+
+
+--> CERTO, AGORA NOSSO LOGO ESTÁ APARECENDO.... --> professor dá uma ajustada 
+
+
+no código css do logo... --> para fazer  ele ocupar só 80% da height, e não 100%......
+
+
+
+
+
+COM ESSE ESTILO:
+
+
+
+
+
+.Logo {
+    background-color: white;
+    padding: 8px;
+    height: 80%;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+}
+
+
+
+.Logo img {
+    height: 100%;
+}
+
+
+
+---------------------------------
+
+
+AGORA NOSSO LOGO FICOU MT BOM.
+
+
+
+
+
+
+
+
+
+
+
+---> PRÓXIMA ETAPA É TRABALHAR NOS NAVIGATION ITEMS...

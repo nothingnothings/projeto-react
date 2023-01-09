@@ -1,0 +1,706 @@
+
+
+OK, QUAIS STEPS
+
+
+
+
+PRECISAMOS SEGUIR QUANDO QUEREMOS 'DEPLOY' UM REACT APP.?
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> PRIMEIRO PASSO IMPORTANTE:
+
+
+
+
+
+
+__CHECAR__ E AJUSTAR O 
+
+'BasePath' 
+
+
+de nosso aplicativo... 
+
+
+
+
+
+
+
+-----------> ISSO SÓ É IMPORTANTE QUANDO USAMOS O REACT ROUTER (mas isso é quase sempre).... ---------> 
+
+
+
+
+
+EX:
+
+
+<BrowserRouter basename="/my-app/">
+
+
+
+
+
+--> ou seja,
+
+quando 
+
+
+vocÊ 
+
+WRAPPA SEU APLICATIVO COM O BROWSERROUTER,
+
+
+você 
+
+pode 
+
+definir 
+
+uma propriedade 
+
+'basename' ------> e isso 
+
+é 
+
+
+___SEMPRE NECESSÁRIO__ NAS HIPÓTESES 
+
+EM QUE 
+
+VOCê 
+
+QUER 
+
+'SERVE' 
+
+SEU APLICATIVO
+
+
+EM 
+
+UMA URL/DOMÍNIO 
+
+QUE 
+
+NÃO É SEU 'root domain'...
+
+
+
+ex:
+
+
+
+
+burgerbuilder.com/burger ------------> se eu escrever isso em 'basename',
+
+
+todos 
+
+
+meus 
+
+
+'paths' 
+
+
+serão adicionados DEPOIS DESSE '/burger'...
+
+
+
+ex:
+
+
+
+
+burgerbuilder.com/burger/checkout,
+
+
+burgerbuilder.com/burger/auth...
+
+
+
+
+--> VOCÊ 
+
+TERÁ 
+
+
+DE 
+
+SETTAR 
+
+'burgerbuilder.com/burger' para 
+
+que 
+
+O APLICATIVO FUNCIONE CORRETAMENTE,
+
+NESSA HIPÓTESE...
+
+
+
+
+
+
+
+
+--->
+
+
+ESSA É A PRIMEIRA COISA IMPORTANTE...
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+
+
+
+A SEGUNDA COISA IMPORTANTE:
+
+
+----> 
+
+
+
+
+
+
+2) BUILD E OPTIMIZAR O NOSSO PROJETO... ('we need to Build & optimize our project')... ------------>
+
+
+e esse BUILD e OPTIMIZE __ É FEITO __ POR MEIO 
+
+DE UM 
+
+
+
+COMANDO SIMPLES E CONVENIENTE NO TERMINAL,
+
+o comando 
+
+
+'npm run build'... -----------------------> ISSO,
+ 
+
+
+
+em 
+
+
+
+PROJETOS 
+
+'create-react-app',
+
+VAI
+ 
+
+
+ AUTOMATICAMENTE BUILDAR O PROJETO E OPTIMIZAR 
+
+ TODOS 
+
+ NOSSOS
+  
+
+  JAVASCRIPT BUNDLES... ---> isso 
+  fará 
+
+
+  com que 
+
+
+  TENHAMOS 
+  UMA 
+
+
+  'VERY SMALL CODEBASE',
+
+  que 
+
+  vamos 
+
+
+  então UPLOADAR 
+
+  NO NOSSO SERVIDOR... ---> isso pq PLANEJAMOS SEMPRE 
+
+
+  UPLOADAR A MENOR QUANTIDADE DE CÓDIGO POSSÍVEL,
+
+
+  PARA QUE 
+
+  O LOAD DA PÁGINA SEJA SEMPRE O MAIS RÁPIDO POSSÍVEL...
+
+
+
+
+
+
+
+
+
+
+3a COISA IMPORTANTE =-----------> SEU SERVIDOR __ DEVE ___ SEMPRE FAZER __ 
+
+
+'SERVE' DO ARQUIVO 
+
+
+HTML... ----> (SIM, MESMO EM CASES/hipóteses de '404' requests...; NA VERDADE,
+
+__ESPECIALMENTE__ EM CASOS '404'...) -------> ISSO 
+
+É 
+
+REQUERIDO/NECESSÁRIO DEVIDO
+ 
+ À MANEIRA PELA QUAL A INTERNET FUNCIONA... -----> se seu usuário 
+
+ visita 
+
+ 'myapp.com/users',
+
+
+
+É EVIDENTE QUE 
+
+O 
+
+
+___SERVIDOR__ É O PRIMEIRO NEGÓCIO QUE VAI __ RECEBER ESSA ROUTE ESPECÍFICA... ---> e 
+
+é provável QUE 
+
+O 
+
+
+SERVER __NÃO CONHEÇA___ esse path de 
+
+'/users',
+
+
+JUSTAMENTE 
+
+
+PQ VOCÊ 
+CONFIGUROU 
+
+ESSE PATH __SOMENTE NO SEU REACT APP... ----> 
+
+e para 
+
+QUE 
+
+
+__SEU SERVIDOR __ NÃO FAÇA _ THROW DE UM ERRO_,
+
+
+
+
+SEU REACT APP __ PRECISA __ TER UMA CHANCE 
+
+DE 
+
+
+'PARSEAR O PATH'... -----> E O REACT APP __ SÓ TEM/TERÁ 
+ESSA CHANCE 
+
+
+SE 
+
+__VOCê ____ __sEMPRE___ RETORNAR O ARQUIVO INDEX.HTML,
+
+em 
+
+
+todos os casos possíveis,
+
+ E PRINCIPALMENTE 
+
+ NESSAS ROUTES ESPECÍFICAS DO DOMÍNIO, PQ ESSAS 
+
+ ROUTES 
+
+ NÃO SÃO CONHECIDAS/RECONHECIDAS PELO/NO SERVIDOR, 
+
+ e por isso 
+
+ são 
+
+ tratadas como 'unknown' ---> e É EXATAMENTE POR ISSO QUE QUEREMOS RETORNAR 
+
+ O INDEX.HTML EM TODOS OS CASOS POSSÍVEIS, E PRINCIPALMENTE 
+
+ EM 
+
+ '404 REQUESTS', esses requests QUE POSSUEM RELAÇÃO COM AS ROUTES (que são 404, unknown...)
+
+
+
+
+
+
+
+
+
+ --> OK, 
+
+
+ SEMPRE
+
+ RETORNAR 
+
+
+index.html,
+
+
+TANTO 
+
+NORMALMENTE COMO EM CASOS 404... ---> se você não fizer isso,
+
+
+'ROUTING-DEPENDANT' REACT APPLICATIONS __ NÃO FUNCIONARÃO____....
+
+
+(you must ALWAYS return index.html to ENSURE THAT ROUTING WORKS CORRECTLY)....
+
+
+
+
+
+
+
+
+
+4) FINALMENTE,
+
+VOCÊ 
+
+
+DEVE 
+
+
+UPLOADAR 
+
+
+'BUILD ARTIFACTS' 
+
+
+AO 
+
+'SERVIDOR ESTÁTICO'/UM SERVIDOR ESTÁTICO...
+
+
+
+
+
+('Upload Build Artifacts to (static) Server')...
+
+
+
+
+
+
+
+
+
+--->  ESSES 'BUILD ARTIFACTS' SÃO EXTRAÍDOS JUSTAMENTE 
+
+DA SEGUNDA ETAPA,
+
+etapa 
+
+de 
+
+'Build & optimize project'... --->  
+
+
+DEVEMOS 
+
+
+
+UPLOADAR 
+
+ESSES 
+
+'BUILD ARTIFACTS' 
+a um 
+
+
+servidor... ---> SERVIDOR ___ estático__, na maior parte dos casos...
+
+
+
+
+
+
+UÉ, COMO 
+
+ASSIM, 
+
+'ESTÁTICO?' ---------> por 'ESTÁTICO',
+
+professor quer 
+
+dizer um 
+
+
+SERVIDOR 
+
+QUE 
+
+
+NÃO __ RODA__ 'NODE.JS',
+
+'PHP',
+ou qualquer 
+
+
+outra coisa do gênero... ------------> no final das contas,
+
+
+
+
+A COISA QUE VOCÊ 'DEPLOYARÁ' AQUI 
+
+SERÁ 
+
+UM 
+
+SPA (single page app),
+
+
+
+UM 
+
+
+
+APLICATIVO QUE CONSISTE EM 
+
+
+1 ÚNICO HTML, UM PUNHADO 
+
+DE 
+CSS 
+
+
+E __UM MONTE DE JAVASCRIPT__.... (LINGUAGENS DE SERVIDOR (serverside languages) SÃO __DESNECESSÁRIAS, PORTANTO...) --------> 
+
+
+
+ ISSO SIGNIFICA QUE 
+
+SERVIDORES 
+
+
+'ESTÁTICOS'
+
+
+COMO 
+
+
+'AWS3' (https://aws.amazon.com/pt/s3/),
+
+
+
+'GITHUB PAGES' (https://pages.github.com/),
+
+
+
+'FIREBASE',
+
+
+
+qualquer 
+UM 
+
+
+DESSES 
+
+SERVIRÁ...
+
+
+
+-----------------------------
+
+
+
+--> VOCÊ SÓ PRECISA UPLOADAR 
+
+OS 
+
+'BUILD ARTIFACTS',
+
+
+
+
+E NÃO PRECISA UPLOADAR TODO O FOLDER DE SEU PROJETO...
+
+
+
+
+
+
+
+
+-->ok, mas onde ficam esses 'build artifacts' de nosso projeto? ------> 
+
+FICAM 
+
+
+
+NO FOLDER DE 
+
+'build',
+
+quando 
+
+usamos 
+
+
+'npm run build',
+
+quando 
+
+
+estamos 
+criando 
+
+um aplicativo 
+
+
+com 
+
+'create-react-app'....
+
+
+
+
+
+
+--> BASTA VOCÊ UPLOADAR ESSES ARQUIVOS (dentro de 'build') AÍ A UM 'STATIC SERVER'
+
+
+PARA 
+
+
+PODER FAZER DEPLOY NO SEU APP... 
+
+
+
+
+
+
+
+
+
+--> E É ASSIM QUE 
+
+FAZEMOS 
+
+DEPLOY 
+
+
+DE UM 
+
+APLICATIVO REACT....
+
+
+
+
+
+
+
+
+
+
+
+
+(importante ---> aparentemente, precisamos 
+
+de 
+
+2 
+
+'ENDS',
+
+UM 
+
+
+SERVIDOR 
+RESPONSÁVEL
+
+
+PELO 
+
+'BACKEND' (armazenamento de 
+
+
+
+
+USERDATA, dados variados, databases, etc.... ------> ISSO É O 
+
+QUE 
+
+FIZEMOS COM O FIREBASE NOS 
+
+MÓDULOS PASSADOS...)
+
+
+
+
+E 
+
+__OUTRO RESPONSÁVEL PELO 'FRONTEND' ---> que 
+
+também 
+
+pode 
+
+
+ser 
+
+
+firebase,
+
+ou pode ser 
+
+
+AWS3, 
+
+github pages,
+
+ etc etc....
+
+
+
+
+)
+
+
+
+VAMOS VER COMO FAZER TUDO ISSO JUNTOS, NA PRÓXIMA LIÇÃO...

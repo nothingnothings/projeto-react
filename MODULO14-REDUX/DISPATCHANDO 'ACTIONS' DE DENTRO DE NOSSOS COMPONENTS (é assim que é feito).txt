@@ -1,0 +1,1780 @@
+
+
+
+--> 
+
+
+Certo... na última aula nós realmente CONSEGUIMOS 
+
+PEGAR 
+
+
+UMA 
+
+
+'SLICE DE NOSSO STATE',
+
+
+
+
+sendo 
+
+
+essa 
+
+slice 
+
+
+a 
+propriedade 
+
+
+'counter'... (no central store do 'redux'...) --------> 
+
+
+
+
+essa 
+
+
+propriedade 
+
+'counter' é agora 
+
+representada 
+
+
+pelo 
+
+
+
+prop 
+
+
+de 
+
+nome 
+
+'ctr',
+
+que foi 
+
+definido por meio 
+
+
+de um código como 
+
+este:
+
+
+
+
+const mapStateToProps = state => {
+    return {
+        ctr: state.counter
+    }
+}
+
+
+
+
+------------------------------
+
+
+
+
+
+
+
+AGORA, NO ENTANTO, O PROFESSOR __ QUER __ SE TORNAR CAPAZ __ DE DISPATCHAR__ ACTIONS ___ 
+
+NOS NOSSOS COMPONENTS.... ------> E NÓS REALMENTE PODEMOS 
+
+
+
+FAZER ISSO, 
+
+
+DISPATCHAR 
+
+ACTIONS DE DENTRO DOS NOSSOS COMPONENTS...
+
+
+
+---------------------------------
+
+
+
+OBS:::: QUANDO NÓS ESTÁVAMOS usando 
+
+O 
+
+
+REDUX 
+
+
+DE FORMA 
+
+'STANDALONE' ( sem o react, portanto),
+
+
+
+
+NÓS 
+
+
+
+FAZÍAMOS O DISPATCH DE ACTIONS 
+
+
+
+POR MEIO 
+
+
+
+DE UM CÓDIGO/SINTAXE ASSIM:
+
+
+
+
+
+
+
+
+store.dispatch(
+    {
+        type: 'INC_COUNTER',
+        value: 10
+    }
+)
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+OU SEJA, O COMANDO 'DISPATCH' ERA ACESSADO/EXECUTADO POR MEIO DA 
+
+
+CALL 
+
+
+DE 
+
+'store'... ------------> ENTRETANTO,
+
+
+NO 
+
+REACT, NÓS 
+
+___NÃO TEMOS ACESSO DIRETO 
+
+A 
+
+
+'STORE' 
+
+LÁ NOS 
+
+NOSSOS 
+
+COMPONENTS/CONTAINERS.... (o único container/component que 
+
+possui acesso À 
+
+'store'  É O 
+
+
+
+''___INDEX.JS___'', que é onde ela foi criada/posicionada...) ------------> 
+
+
+
+
+
+
+
+
+ENTRETANTO, 
+
+PROFESSOR AFIRMA QUE 
+
+NÓS 
+
+
+TEMOS, ACESSO SIM, 
+
+
+__iNDIRETO__ A ESSE STORE,
+
+
+por meio 
+
+
+
+da função/hoc 
+
+
+
+'connect',
+
+
+VISTA LÁ 
+
+EM 
+
+
+'Counter.js' (e nos nossos CONTAINERS, em geral...)
+
+
+
+-----------------------------------------------------
+
+
+
+
+LEMBRE-SE:
+
+
+
+
+
+
+
+
+PROFESSOR NOS DISSE QUE 
+
+
+'CONNECT' ACEITA 
+
+
+__2 PARÂMETROS___ (isso no primeiro '()' )....
+
+
+
+
+
+
+
+
+OS PARÂMETROS SÃO:
+
+
+
+1) A função MAPPEADORA DO STATE DE REDUX AOS PROPS DE NOSSO CONTAINER ESPECÍFICO (nesse caso, 'mapStateToProps'...) ---------> É ISSO QUE DETERMINA/PEDE/COMUNICA __AO REDUX __ QUAL ___ PARTE/SLICE DO STATE DO REDUX VAMOS QUERER...
+
+
+
+
+
+2) ____AS ACTIONS ___ QUE VAMOS QUERER DISPATCHAR NESSE CONTAINER ESPECÍFICO (no caso, 'Counter')...
+
+
+
+
+--------------------------------------------------------------------
+
+
+
+
+
+QUANTO A ESSE SEGUNDO PARÂMETRO/ARGUMENTO,
+
+
+PROFESSOR 
+
+
+CRIARÁ UMA NOVA CONSTANTE que será enfiada ali,
+
+
+chamada 
+
+de 
+
+
+
+'mapDispatchToProps'....
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+const mapDispatchToProps 
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+--> DENTRO DESSA CONSTANTE/FUNÇÃO,
+
+
+O PROFESSOR/NÓS 
+
+VAMOS 
+
+
+INFORMAR ____QUAIS TIPOS DE 'ACTION'___ VAMOS QUERER DISPATCHAR 
+
+DE 
+
+DENTRO 
+
+
+DESSE 'CONTAINER'...
+
+
+
+
+
+
+
+mapDispatchToProps também segura uma função,
+
+
+
+
+UMA FUNÇÃO QUE VAI RECEBER, COMO PARÂMETRO, UMA FUNÇÃO 
+
+'dispatch', 
+
+QUE 
+
+
+VAMOS PODER EXECUTAR COMO UM ARGUMENTO... (no body dessa função)... ------> isso quer 
+
+dizer que 
+
+esse parâmetro 
+
+
+'dispatch' é BASICAMENTE A MESMA COISA QUE UTILIZAMOS ANTES, AQUELE 'store.dispatch',
+
+MAS 
+
+
+DESSA 
+
+
+VEZ 
+
+FEITO ESPECIFICAMENTE PARA O REACT...
+
+
+
+
+
+
+
+
+eis a sintaxe:
+
+
+
+
+----------------------------------------
+
+
+const mapDispatchToProps = dispatch => {
+
+}
+
+
+-----------------------------------------
+
+
+
+esse parâmetro 'dispatch'  é _UMA HELPER FUNCTION__ QUE 
+
+VAI BASICAMENTE CHAMAR  'store.dispatch', POR TRÁS DAS CENAS...
+
+
+
+
+
+
+
+---> dentro 
+
+dessa função/constante 
+
+mapDispatchToProps,
+
+
+
+
+NÓS _______tAMBÉM ___ rETORNAMOS___ 
+
+
+
+UM _______ OBJETO JAVASCRIPT __________ ('{}'),
+
+
+
+
+
+OBJETO JAVASCRIPT EM QUE 
+
+
+TAMBÉM 
+
+
+___VAMOS 
+
+
+DEFINIR alguns
+
+
+'PROP NAMES', prop names que, por sua vez,
+
+
+VÃO 
+
+
+SEGURAR  
+
+
+UMA/UMAS REFERÊNCIAS 
+
+A FUNÇÃO/FUNÇÕES QUE 
+
+
+EVENTUALMENTE DEVERÃO SER ___eXECUTADAS___ 
+
+PARA 
+
+
+
+__dISPATCHAR ___ COM SUCESSO UMA 'action' AO REDUCER... ----------------> 
+
+
+
+
+
+
+
+
+E PROFESSOR NOS EXPLICA QUE, AQUI, PODEMOS DEFINIR UM 'PROP NAME' de uma action.. pode 
+
+ser qualquer nome de nossa escolha... ----------> O PROFESSOR, AQUI,
+
+
+
+
+
+vai 
+
+
+escrever/escolher 
+
+um 
+
+nome 
+
+
+de 
+
+
+
+'onIncrementCounter'...
+
+
+
+
+ex:
+
+
+
+const mapDispatchToProps = dispatch => {
+        return {
+            onIncrementCounter: 
+        }
+}
+
+
+
+--------------------------------
+
+
+
+
+
+
+CERTO.... mas qual será o valor desse 'PROP TYPE' de 'onIncrementCounter'?
+
+
+
+
+
+
+
+
+
+
+
+--> ESSA PROPRIEDADE vai segurar um valor.... (value) -------> E ESSE 
+
+
+VALOR 
+
+
+
+DEVERÁ/VAI SER ___UMA ANONYMOUS FUNCTION, SEMPRE_______....
+
+
+
+
+
+
+
+
+
+(por isso, vai ficar):
+
+
+
+
+
+const mapDispatchToProps = dispatch => {
+        return {
+            onIncrementCounter: () => {
+
+            }
+        }
+}
+
+
+-----------------------------------------------
+
+
+
+
+
+NESSA FUNÇÃO ANÔNIMA QUE É O VALOR DE 
+
+'onIncrementCounter',
+
+O PROFESSOR 
+
+
+VAI 
+
+
+ESCREVER 
+
+
+UM ________RETURN________ DE 'dispatch()'....
+
+
+
+
+
+ex:
+
+
+
+
+
+const mapDispatchToProps = dispatch => {
+        return {
+            onIncrementCounter: () => {
+                        return dispatch();
+            }
+        }
+}
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+A PARTE IMPORTANTE DESSE CÓDIGO INTEIRO 
+
+____ É QUE ____ 
+
+
+A FUNÇÃO ___ 
+
+
+
+
+
+'() => { return dispatch () }' 
+
+
+
+
+
+VAI __fICAR/ESTAR___ DISPONÍVEL/REFERENCIÁVEL POR MEIO 
+
+
+DESSE 
+
+
+PROP 
+
+
+DE 
+
+NOME 
+
+
+
+'onIncrementCounter'....   (é para isso que serve os 'PROP NAMES/TYPES' nesse nosso objeto; eles podem ser REFERENCIADOS DEPOIS...)
+
+
+
+
+
+ex:
+
+
+
+
+const mapDispatchToProps = dispatch => {
+        return {
+            onIncrementCounter: () => {
+                        return dispatch();
+            }
+        }
+}
+
+
+
+------------------------
+
+
+
+
+
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+SEMPRE QUE 
+
+
+ESSA 
+
+
+
+PROPRIEDADE 
+
+
+'onIncrementCounter' 
+
+
+
+É ____eXECUTADA__ COMO UMA FUNÇÃO___ (o exemplo PERFEITo é a sua EXECUÇÃO POR MEIO DE UM HANDLER 'onClick'...), 
+
+
+
+
+
+QUANDO ISSO ACONTECER, QUANDO FOR EXECUTADA, COMO UMA FUNÇÃO,
+
+
+AQUELE 
+
+
+CÓDIGO 
+
+
+
+'() => dispatch()' 
+
+
+
+
+____VAI SER EFETIVAMENTE EXECUTADO....___ (é uma referência, portanto...)
+
+
+
+
+------------------------------------------------
+
+
+
+CERTO... 
+
+
+
+MAS 
+
+
+É 
+
+EVIDENTE QUE 
+
+____NÃO ACABAMOS POR AÍ__... ------> dentro 
+
+do 
+
+''''método''''    'dispatch()',
+
+
+
+NÓS 
+
+PODEMOS/DEVEMOS 
+
+
+PASSAR 
+
+
+A 
+
+'action' propriamente dita.... -------> a action 
+
+
+É 
+
+
+_______UM OBJETO JAVASCRIPT___ COM 
+
+
+UM 
+
+
+'type' e 
+
+
+com 
+
+
+PROPRIEDADES OPCIONAIS (como já vimos anteriormente,
+
+é 
+
+algo assim:
+
+
+
+{
+    type: 'ADD_COUNTER',
+    value: 100
+}
+
+
+
+
+)
+
+
+
+
+
+
+ISSO QUER DIZER QUE O CÓDIGO VAI FICAR ASSIM:
+
+
+
+
+
+
+
+const mapDispatchToProps = dispatch => {
+        return {
+            onIncrementCounter: () => {
+                        return dispatch(
+                            {
+                                type: 'INC_COUNTER'
+
+                            }
+                        );
+            }
+        }
+}
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+COM ISSO, AGORA TEMOS UMA __PROPRIEDADE____, UMA PROPRIEDADE 
+
+
+'onIncrementCounter', 
+
+
+
+QUE 
+
+
+
+
+
+________PODEMOS UTILIZAR _____ NO NOSSO CONTAINER___ 'Counter.js'... 
+
+
+
+
+
+
+
+----------> SIM, PODEMOS UTILIZAR... MAS ___SÓ ___ SE NÓS 
+
+A VINCULARMOS/PASSARMOS NAQUELA função/hoc 
+
+
+'connect', vista mais abaixo....
+
+
+
+
+ex:
+
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+OBS::::::::::: ESSA FUNÇÃO/constante 
+
+
+
+'mapDispatchToProps' 
+
+
+___SEMPRE PODERÁ/PODE ____ SEGURAR __MÚLTIPLAS ACTIONS__, cada uma INDEPENDENTE 
+
+
+DA OUTRA.
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+OBS2::::::::::::: SE EXISTIR ALGUM CASO EM QUE ___vOCÊ NÃO TEM NENHUMA 
+
+'ACTION' NO SEU CONTAINER,
+
+
+
+VOCê SÓ USA O PRIMEIRO PARÂMETRO, o parâmetro de 'mapStateToProps'....
+
+
+export default connect(mapStateToProps)(Counter);
+
+
+
+
+
+OBS3::::::::::: MESMA COISA NO SENTIDO INVERSO, SE VOCÊ SÓ QUER QUE UM CONTAINER 
+
+__FAÇA DISPATCH DE ACTIONS__, e acha que ELE NÃO PRECISA ACESSAR O 'central store'/state do redux,
+
+VOCÊ PODE SÓ PASSAR 
+
+
+
+A CONST de 'mapDispatchToProps'... -----> para fazer isso, você simplesmente deve passar 'null' COMO PRIMEIRO ARGUMENTO DE 'connect'...
+
+
+ex:
+
+
+
+export default connect(null, mapDispatchToProps)(Counter);
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+DE VOLTA AO NOSSO SETUP,
+
+
+
+
+AGORA 
+
+O PROFESSOR 
+
+
+TAMBÉM 
+
+ESTÁ 
+
+PASSANDO
+ 
+
+ 'mapDispatchToProps'
+
+
+ ao 
+
+
+
+ 'connect'...;
+
+
+
+
+
+ E, COM ISSO, 
+
+
+ AGORA 
+ TEMOS 
+
+
+ ACESSO 
+
+ AO 
+
+ MÉTODO/PROPRIEDADE 
+
+
+
+ 'onIncrementCounter'  ---------->
+
+
+
+
+ E PROFESSOR DIZ QUE 
+
+ ______dEVEMOS UTILIZAR ___ ESSA PROPRIEDADE 
+
+
+ 'onIncrementCounter'...
+
+
+
+
+
+
+
+
+
+
+
+-------> PROFESSOR EXPLICA QUE VAI QUERER USAR 
+
+
+o 
+
+
+
+'onIncrementCounter' em 'Counter.js',
+
+naquele 
+
+
+TRECHO DO 'RENDER'... (especificamente no component 'CounterControl' de label 'Increment'...)
+
+
+
+
+
+ex:
+
+
+
+  render() {
+    return (
+      <div>
+        <CounterOutput value={this.props.ctr} /> 
+        <CounterControl
+          label="Increment"
+          clicked={() => this.counterChangedHandler('inc')}
+        />
+        <CounterControl
+          label="Decrement"
+          clicked={() => this.counterChangedHandler('dec')}
+        />
+        <CounterControl
+          label="Add 5"
+          clicked={() => this.counterChangedHandler('add', 5)}
+        />
+        <CounterControl
+          label="Subtract 5"
+          clicked={() => this.counterChangedHandler('sub', 5)}
+        />
+      </div>
+    );
+  }
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+NESSE NEGÓCIO AÍ, agora, 
+
+
+
+naquele 
+
+prop 
+
+de 
+
+'clicked',
+
+
+
+
+
+PROFESSOR _____PROVAVELMENTE___ VAI ESCREVER 
+
+
+
+'clicked={props.onIncrementCounter}'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> ERREI!!!! --------> ele escreveu 
+
+
+
+
+
+
+'clicked={this.onIncrementCounter}'.... 
+
+
+
+--------------------------------
+
+
+
+
+e ele RESSALTA QUE 
+
+DEVEMOS 
+
+ESCREVER ESSA REFERÊNCIA 
+
+'solta'; ou seja, sem EXECUTÁ-LA (sem escrever '()' do lado, sem EXECUTAR... ex: 'this.onIncrementCounter()' -----> ISSO ESTÁ ERRADO....)
+
+
+
+
+
+
+
+
+
+
+ex(representação):
+
+
+
+
+  render() {
+    return (
+      <div>
+        <CounterOutput value={this.props.ctr} /> 
+        <CounterControl
+          label="Increment"
+          clicked={this.onIncrementCounter}
+        />
+        <CounterControl
+          label="Decrement"
+          clicked={() => this.counterChangedHandler('dec')}
+        />
+        <CounterControl
+          label="Add 5"
+          clicked={() => this.counterChangedHandler('add', 5)}
+        />
+        <CounterControl
+          label="Subtract 5"
+          clicked={() => this.counterChangedHandler('sub', 5)}
+        />
+      </div>
+    );
+  }
+
+
+------------------------------------
+
+
+
+
+
+
+
+
+CERTO.... ACHO QUE ESTOU ENTENDENDO... ----> mas falta um pedaço do quebra cabeça,que 
+
+
+É 
+
+
+__O CÓDIGO____ DE LÓGICA DE ADIÇÃO NESSA ACTION, o código que REALMENTE VAI ACRESCENTAR 
+
+'+1' quando o botão de 'increment 1' for pressionado... --------> EU IMAGINO QUE 
+
+
+O 
+
+CÓDIGO 
+
+PARA 
+
+REAGIR 
+
+
+A 
+
+
+ESSE 
+
+
+'TYPE' (nessa action)
+ 
+
+ É 
+
+
+ FEITO 
+
+ LÁ NO REDUCER,
+  
+  NO ARQUIVO 
+
+
+  'reducer.js',
+
+
+ MAS 
+
+ NÃO TERIA CERTEZA....
+
+
+
+
+
+
+
+ TIPO ASSIM, CREIO EU:
+
+
+
+
+
+------------------------------------------------------
+
+
+ const initialState = {
+    counter: 0
+}
+
+
+
+
+
+
+
+const reducer = (state = initialState, action) => { 
+    
+    if(action.type === 'INC_COUNTER') { //////////EIS O CÓDIGO EM QUESTÃO.
+                return {
+                    ...state,
+                        counter: state.counter + 1
+                }
+    }
+    
+    
+    
+    
+    return state;
+}
+
+
+
+
+
+  
+
+export default reducer;
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+E ISSO __REALMENTE NÃO FUNCIONOU__.... SÓ NÃO SEI A RAZÃO PARA NÃO TER FUNCIONADO,
+ 
+ AINDA...
+
+
+
+
+---> O PROFESSOR ENTÃO FAZ 
+
+
+___eXATAMENTE A MESMA COISA QUE EU FIZ,
+
+
+vai lá 
+
+
+
+E 
+escreve 
+
+
+const reducer = (state = initialState, action) => { 
+    
+    if(action.type === 'INC_COUNTER') { //////////EIS O CÓDIGO EM QUESTÃO.
+                return {
+                    ...state,
+                        counter: state.counter + 1
+                }
+    }
+    
+    
+    
+    
+    return state;
+}
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+PARECE QUE 
+
+__o PROFESSOR COMETEU UM ERRO... -------> 
+
+
+
+
+ERRO 
+
+
+em 
+
+
+
+------------------------------
+
+
+      <CounterControl
+          label="Increment"
+          clicked={this.onIncrementCounter} /////////ERRO AQUI...
+        />
+
+
+------------------------------------
+
+
+
+
+
+
+PARECE QUE O ERRO É 
+
+ESSE 
+'this'... -----> SÓ O 'THIS' não é suficiente ------> 
+
+
+
+EM 
+
+
+VEZ 
+
+
+DE 
+
+'this', 
+
+
+devemos escrever 
+
+'THIS.PROPS', justamente 
+
+
+PQ 
+
+
+___NOSSA __ ACTION/DISPATCH ___ É PASSADO COMO 
+
+'props' (e props dessa classe/container específica 'Counter')
+
+AO 
+
+NOSSO COMPONENT (por isso o nome daquela função é 'mapDispatchToProps'...)
+
+
+
+
+
+
+FICA ASSIM, PORTANTO:
+
+
+
+
+
+
+
+
+
+  render() {
+    return (
+      <div>
+        <CounterOutput value={this.props.ctr} /> 
+        <CounterControl
+          label="Increment"
+          clicked={this.props.onIncrementCounter} /////////EIS O CÓDIGO EM QUESTÃO.
+        />
+        <CounterControl
+          label="Decrement"
+          clicked={() => this.counterChangedHandler('dec')}
+        />
+        <CounterControl
+          label="Add 5"
+          clicked={() => this.counterChangedHandler('add', 5)}
+        />
+        <CounterControl
+          label="Subtract 5"
+          clicked={() => this.counterChangedHandler('sub', 5)}
+        />
+      </div>
+    );
+  }
+
+
+
+
+
+  ---------------------------------------
+
+
+
+
+  UFA.... AGORA, COM ISSO, 
+
+
+
+  NOSSO 
+
+
+  BOTÃO 
+
+  'increment 1'
+
+
+  __FUNCIONA__...
+
+
+
+
+Conseguimos fazer o dispatch de uma ACTION, portanto,
+
+
+
+NO REDUX... 
+
+
+
+(e 
+
+isso alterou o STATE GLOBAL do REDUX/de nosso app....)
+
+
+
+
+
+
+--------------------------------------
+
+
+OK... COPIEI ESSA ESTRUTURA/FUNCIONAMENTO COM TODOS OS BOTÕES,
+
+para testar a sintaxe...
+
+
+ficou assim:
+
+
+
+
+
+
+(Counter.js):
+
+
+
+
+
+import React, { Component } from 'react';
+import { connect } from 'react-redux'; ///ESSENCIAL PARA PODER USAR A FEATURE DO 'REDUX'... --> deve-se sempre importar esse objeto/função/hoc/pacote NO CONTAINER EM QUE VOCÊ PLANEJA USAR O STATE DO REDUX/STATE ARMAZENADO NO 'CENTRAL STORE' do redux....
+
+import CounterControl from '../../components/CounterControl/CounterControl';
+import CounterOutput from '../../components/CounterOutput/CounterOutput';
+
+
+
+class Counter extends Component {
+  state = {
+    counter: 0,
+  };
+
+  counterChangedHandler = (action, value) => {
+    switch (action) {
+      case 'inc':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + 1 };
+        });
+        break;
+      case 'dec':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - 1 };
+        });
+        break;
+      case 'add':
+        this.setState((prevState) => {
+          return { counter: prevState.counter + value };
+        });
+        break;
+      case 'sub':
+        this.setState((prevState) => {
+          return { counter: prevState.counter - value };
+        });
+        break;
+
+      default:
+        return;
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        {/* <CounterOutput value={this.state.counter} />  //////////USO INTERNO DE 'STATE'. COISA COMUM... (ver código logo abaixo, que é a mesma coisa, MAS __UTILIZANDO O STATE GLOBAL DE 'REDUX', que é armazenado no seu 'CENTRAL STORE'...*/}
+        <CounterOutput value={this.props.ctr} /> 
+        {/* <CounterControl 
+          label="Increment"
+          clicked={() => this.counterChangedHandler('inc')} //////////SINTAXE ''ANTIGA''...
+        /> */}
+                                  {/* vvvvvvv ------> SINTAXE DE USO DAS 'ACTIONS' do redux.... ---------> aqui, estamos usando A PROPRIEDADE/MÉTODO 'onIncrementCounter', definida LÁ NAQUELE 'mapDispatchToProps', naquele return daquele objeto javascript, return interno... */}
+            <CounterControl 
+          label="Increment"
+          clicked={this.props.onIncrementCounter}
+        />
+        {/*                 ^^^^^^^--------> SIM, É EXATAMENTE ESTA A SINTAXE A SER UTILIZADA.... devemos chamar 'this.nomeDaPropriedadeNoReturnDeMapDispatchToProps'... ----> e devemos chamar SEM EXECUTAR, ou seja, sem escrever assim: 'this.onIncrementCounter()'... ------> ISSO ESTÁ ERRADO. -------> forma correta: 'this.onIncrementCounter'.... */}
+        <CounterControl
+          label="Decrement"
+          clicked={this.props.onDecrementCounter}
+        />
+        <CounterControl
+          label="Add 5"
+          clicked={this.props.onAddCounter}
+        />
+        <CounterControl
+          label="Subtract 5"
+          clicked={this.props.onSubtractCounter}
+        />
+      </div>
+    );
+  }
+}
+
+
+const mapDispatchToProps = dispatch => { ///////////DEVE SER SEGUIDO ESTE FORMATO.... -------> (sempre usar 'dispatch' como PARÂMETRO DESSA FUNÇÃO... ex: 'const mapDispatchToProps = dispatch => { return ...}' ...)
+  return {
+      onIncrementCounter: () => {
+        
+        dispatch(
+        {
+            type: 'INC_COUNTER'
+        }
+      )
+      },
+      onDecrementCounter: () => {
+        dispatch({
+          type: 'DEC_COUNTER'
+        })
+      },
+      onAddCounter: () => {
+        dispatch({
+          type: 'ADD_COUNTER',
+          value: 10
+        })
+      },
+      onSubtractCounter: () => {
+        dispatch({
+          type: 'SUB_COUNTER',
+          value: 10
+        })
+      }
+  }
+}
+
+
+
+
+const mapStateToProps = state => { ///////obs:::: é sempre 'const mapStateToProps', e nunca 'mapStateToProps = () => {}' (PQ ISSO AÍ NÃO É UM MÉTODO, E SIM UMA '''''CONSTANTE __ QUE SEGURA __ UMA FUNÇÃO QUE RETORNA UM OBJETO com 'prop names'... '''')
+        return {
+            ctr: state.counter
+        }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter); /////////SIM, A SINTAXE É ESSA MESMA...
+
+
+
+-------------------------------------------------------------------------------------
+--------------------------------------------------------------
+---------------------------------------------------------
+
+
+
+
+('reducer.js'):
+
+
+
+const initialState = {
+    counter: 0
+}
+
+
+const reducer = (state = initialState, action) => { ///////devemos sempre definir o parâmetro 'state' dessa forma, dessa forma/formato de 'default parameter value', esse negócio de '= initialState' ----------> ISSO VAI FAZER COM QUE, QUANDO O parâmetro 'state'  '''''inicial''''' (primeira execução) estiver como 'undefined', SERÁ __aDOTADO ___ O VALOR DE 'initialState', aquela CONSTANTE QUE DEFINIMOS LOGO ACIMA, que então entrará como valor de 'state' (e por isso é considerado um 'PARÂMETRO DEFAULT' dessa função 'reducer', nesse caso... (e em todos os outros)) ------> é LÓGICO QUE NAS FUTURAS EXECUÇÕES DE 'reducer', será adotado o VALOR 'value' mesmo, e não esse 'initialState', que SÓ SERVE PARA A PRIMEIRA EXECUÇÃO (mesmo assim, ele é crucial, pois precisamos dessa primeira execução)...
+    
+    if(action.type === 'INC_COUNTER') {
+                return {
+                    ...state,
+                        counter: state.counter + 1
+                }
+    }
+
+
+    if(action.type === 'DEC_COUNTER') {
+        return {
+            ...state,
+                counter: state.counter - 1
+        }
+}
+    
+    if(action.type === 'ADD_COUNTER') {
+        return {
+            ...state,
+                counter: state.counter + action.value
+        }
+}
+
+    if(action.type === 'SUB_COUNTER') {
+    return {
+        ...state,
+            counter: state.counter - action.value
+    }
+}
+    
+    
+    
+    return state;
+}
+
+
+export default reducer;
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+Certo.
+
+
+Agora todos os buttons estão funcionando, e tudo com USO 
+
+DO 
+
+
+'REDUX' no 
+
+'REACT'...
+
+
+
+ATENÇÃO PARA A MANEIRA DE SETTAR VÁRIAS ACTIONS 
+
+NO SEU 
+
+
+
+'CONTAINER'/component:
+
+
+é assim:
+
+
+
+const mapDispatchToProps = dispatch => { ///////////DEVE SER SEGUIDO ESTE FORMATO.... -------> (sempre usar 'dispatch' como PARÂMETRO DESSA FUNÇÃO... ex: 'const mapDispatchToProps = dispatch => { return ...}' ...)
+  return {
+      onIncrementCounter: () => {
+        
+        dispatch(
+        {
+            type: 'INC_COUNTER'
+        }
+      )
+      },
+      onDecrementCounter: () => {
+        dispatch({
+          type: 'DEC_COUNTER'
+        })
+      },
+      onAddCounter: () => {
+        dispatch({
+          type: 'ADD_COUNTER',
+          value: 10
+        })
+      },
+      onSubtractCounter: () => {
+        dispatch({
+          type: 'SUB_COUNTER',
+          value: 10
+        })
+      }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+Ou seja,
+
+
+é 
+
+algo tipo 
+
+
+
+
+
+'onIncrementCounter: () => {dispatch ({...})},
+    onDecrementCounter: () => {dispatch ({...})},
+onAddCounter: () => {dispatch ({...})},
+onSubtractCounter: () => {dispatch ({...})}
+
+'
+
+
+----------------------------------------------------------
+
+
+
+
+
+
+
+ISSO É MUITO BOM... ----> professor diz que devemos praticar, mas já fizemos 
+
+isso...

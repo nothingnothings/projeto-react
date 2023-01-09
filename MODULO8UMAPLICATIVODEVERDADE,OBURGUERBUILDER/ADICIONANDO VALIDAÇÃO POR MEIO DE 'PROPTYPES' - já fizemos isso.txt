@@ -1,0 +1,258 @@
+import propTypes from 'prop-types';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+O QUE INTERESSA, AQUI, SÃO 2 COISAS:
+
+
+
+1)
+
+o package 'prop types' é 
+
+
+
+'NPM INSTALL --SAVE prop-types',
+
+
+
+
+
+E NÃO 
+
+
+'NPM INSTALL --SAVE PROPTYPES' --------> isso deve ser outra coisa....
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+2) O PROFESSOR DISSE QUE 
+
+QUER CONVERTER 
+
+
+NOSSO 'FUNCTIONAL COMPONENT'
+ 
+
+
+ em um class-based component (mas sem state, STATELESS), 
+
+
+ por isso 
+
+ vamos em frente 
+
+
+ e convertemos 
+
+
+
+ o 
+
+ 'burgerIngredient'
+
+ em um desses components....
+
+
+
+
+
+
+
+ ---------------------------------------
+
+
+
+
+ FICOU ASSIM (acho que fiz tudo certo):
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+
+import BurgerIngredientStyles from 'BurgerIngredient.module.css';
+
+
+
+import propTypes from 'prop-types';
+
+
+
+ class BurgerIngredient extends Component {
+    
+    
+    
+    
+
+    constructor(props) {
+        super(constructor);
+    }
+
+
+
+
+
+
+    render() {
+        let ingredient = null;
+
+
+
+        switch(this.props.type) {  ///sintaxe de 'switch()' ===== switch(parâmetro) {case(x): códigoASerExecutado}
+            case ('bread-bottom'): ingredient = <div className={BurgerIngredientStyles.BreadBottom}></div>;
+            
+            break;
+    
+    
+            case('bread-top'): ingredient = 
+            
+            <div className={BurgerIngredientStyles.BreadTop}>
+                <div className={BurgerIngredientStyles.Seeds1}></div>
+                <div className={BurgerIngredientStyles.Seeds2}></div>
+                <div></div>
+            </div>;
+    
+            break;
+    
+            case('meat'): ingredient = <div className={BurgerIngredientStyles.Meat}></div>;
+    
+            break;
+    
+            case('cheese'): ingredient = <div className={BurgerIngredientStyles.Cheese}></div>;
+    
+            break;
+    
+            case('bacon'): ingredient = <div className={BurgerIngredientStyles.Bacon}></div>;
+    
+            break;
+    
+            case('salad'): ingredient = <div className={BurgerIngredientStyles.Salad}></div>;
+            
+    
+            break;
+    
+            default: ingredient = null; //isso aqui é o que ocorre quando o 'type' DENTRO DE PROPS É INVÁLIDO/NÃO EXISTE/NÃO FOI PASSADO... --> o ingredient será NULO, ou seja, NADA ACONTECERÁ/será renderizado..., pois não existirá elemento 'div' com className de 'null'...
+    
+    
+            
+        }
+
+
+        return ingredient;
+    }
+
+}
+
+
+
+BurgerIngredient.propTypes = {
+    type: propTypes.string
+
+}
+
+
+
+export default BurgerIngredient;
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+
+
+
+PROFESSOR DIZ QUE PREFERE USAR 'PROPTYPES' 
+
+
+EM CLASS-BASED COMPONENTS.... --> e é por isso que ele converte.
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+OK... MAS O PROFESSOR COLOCOU __OUTRA __ COISA 
+
+
+QUE NÃO CONHECÍAMOS...-------> ele 
+
+
+colocou, em vez de 
+
+
+
+'type: propTypes.string,'
+
+
+
+
+'type: propTypes.string.isRequired' -------->  
+
+
+
+''''isRequired''''' --> COM ISSO,
+
+COM ESSE 
+
+MÉTODO 'CHAINADO'  em cima de '.string',
+
+
+
+NOSSO APLICATIVO VAI TE DAR UM __ERRO___ SE VOCÊ ___TENTAR USAR __ o
+
+COMPONENT 'BurgerIngredient' 
+
+____SEM PASSAR UM prop de tipo 'Type'____....
+
+
+
+
+
+
+--> COM ISSO, O COMPONENT VISUAL DO BURGER (burgerIngredient) ESTÁ PRONTO --> agora devemos VÊ-LO EM AÇÃO... --> NA 
+
+
+PRÓXIMA LIÇÃO, VAMOS COMEÇAR A CONSTRUÍ-LO 
+
+NO NOSSO 
+
+
+COMPONENT 
+
+'BURger'

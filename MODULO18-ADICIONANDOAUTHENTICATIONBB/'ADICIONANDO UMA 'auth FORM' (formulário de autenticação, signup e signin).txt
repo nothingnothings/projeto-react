@@ -1,0 +1,3101 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DE VOLTA AO NOSSO APLICATIVO,
+
+
+
+
+o professor vai querer ADICIONAR UM NOVO CONTAINER, justamente para 
+
+
+fazer 
+
+
+essa 
+
+'auth form'...
+
+
+
+---------------
+
+
+
+Ele cria um folder de 'Auth' em 
+
+
+'containers',
+
+
+e então 
+
+
+
+cria um arquivo 
+
+'Auth.js'....
+
+
+
+
+--------------------
+
+
+
+
+
+
+
+
+
+Certo.... -----> ESSA SERÁ A PÁGINA QUE VAMOS QUERER  CARREGAR,
+
+A PÁGINA 
+
+COM 
+
+A FORM 
+
+DE 
+
+'signup/signin'...
+
+
+
+
+
+----------------------------
+
+
+
+
+
+
+
+DENTRO DE 'Auth.js',
+
+o professor 
+vai criar um 
+
+
+CLASS-BASED COMPONENT....
+
+
+
+
+
+
+
+ele escreve 
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+
+
+class Auth extends Component {
+        render() {
+                return ();
+        }
+}
+
+
+
+export default Auth;
+
+--------------------------------
+
+
+
+
+
+
+
+
+
+DENTRO 
+
+
+
+DESSE 
+
+
+CLASS BASED COMPONENT,
+ 
+ o professor 
+
+
+ vai 
+
+ criar 
+
+ UMA 
+
+ WRAPPING DIV, 
+
+ com 
+
+ um ELEMENTO 
+
+ FORM NO MEIO....
+
+
+
+ --------------------
+
+
+
+ DENTRO 
+
+
+
+
+DESSA FORM, O PROFESSOR 
+
+
+VAI QUERER 
+
+USAR 
+
+
+O 
+
+'CUSTOM INPUT' 
+
+
+
+E 
+
+'CUSTOM BUTTON' components.... --> ou seja ,
+
+
+
+ele VAI QUERER __REUTILIZAR ___ OS COMPONENTS __ QUE 
+
+JÁ 
+
+
+TEMOS CODADOS... (dentro daquele folder de 'Components/UI'...)
+
+
+
+
+
+---------------------------
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
+
+
+
+class Auth extends Component {
+  render() {
+    return (
+            <div>
+                <form>
+
+
+                </form>
+            </div>
+
+
+
+    );
+  }
+}
+
+export default Auth;
+
+
+
+-------------------------------
+
+
+ex:
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
+
+
+
+class Auth extends Component {
+  render() {
+    return (
+            <div>
+                <form>
+                    <Input />
+                    <Input />
+                    <Button />
+                </form>
+            </div>
+
+
+
+    );
+  }
+}
+
+export default Auth;
+
+
+
+---------------------------
+
+
+
+O PROFESSOR TAMBÉM 
+
+NOS DIZ QUE 
+ELE VAI 
+
+FAZER 
+
+MANAGE DESSA 
+
+'FORM' 
+
+POR MEIO 
+
+
+DO 
+
+STATE 
+
+
+__LOCAL___ DESSE CONTAINER 
+
+
+'Auth.js'...  (ou seja, NÃO VAMOS USAR REDUX...)
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
+
+
+
+class Auth extends Component {
+    state = {
+
+    }
+
+
+
+  render() {
+    return (
+            <div>
+                <form>
+                    <Input />
+                    <Input />
+                    <Button />
+                </form>
+            </div>
+
+
+
+    );
+  }
+}
+
+export default Auth;
+
+
+
+---------------------------------
+
+
+NÃO VAMOS USAR 
+
+REDUX PQ 
+
+
+O PROFESSOR SÓ ESTÁ FALANDO/GERENCIANDO 
+
+o 
+
+'Local State'; ou seja,
+
+
+só 
+
+está 
+
+gerenciando 
+
+OS VALORES
+ 
+ QUE 
+
+ O USUÁRIO INPUTTA
+  
+
+NOS 
+
+
+CAMPOS 
+
+'Input'... 
+
+
+
+
+
+---> é por isso que 
+
+ele 
+
+
+vai criar umas propriedades no 
+
+state....
+
+
+
+
+
+
+PRIMEIRAMENTE ELE VAI CRIAR 
+
+UMA PROPRIEDADE 
+
+CHAMADA 
+
+
+DE 
+
+
+'controls'... ----> E ISSO VAI SEGURAR __ UM OBJETO JAVASCRIPT___... ---> 
+e 
+
+
+seu 
+
+formato 
+
+SERÁ 
+SIMILAR 
+
+
+ÀQUELE QUE CRIAMOS 
+
+NO 
+
+
+CONTAINER 
+
+'ContactData',
+
+que 
+
+tinha aquele código de 'ORDER'...
+
+
+
+(
+
+    tipo:
+
+ state = {
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+        validation: {  ///AQUI VÃO TODAS AS REGRAS DE NOSSOS components 'Input' em 'ContactData'....
+          required: true  /////USADO NA VALIDATION DE NOSSOS INPUTS... assistir aula 'Adding Custom Form Validation'... ---> ''''required: true'' significa que ESSE FIELD DEVE SER __PREENCHIDO__ PARA QUE USUÁRIO POSSA ENVIAR A 'ORDER'...
+        } ,
+        valid: false,
+        touched: false
+      },
+
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Street',
+        },
+        value: '',
+validation: {  ///ver método 'checkValidity()'....
+  required: true
+} ,
+valid: false,
+touched: false
+      },
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+validation: {
+  required: true,
+  minLength: 5,
+  maxLength: 5
+} ,
+valid: false,
+touched: false
+      },
+
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country',
+        },
+        value: '',
+        validation: {
+          required: true
+        } ,
+
+        valid: false,
+        touched: false
+
+      },
+
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+validation: {
+  required: true,
+  
+},
+valid: false,
+touched: false
+      },
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                        value: 'fastest', 
+                        validation: {},
+                        valid: true
+                       
+
+                        // validation: {
+                        //   required: false
+                        // },
+                        // valid: true
+    
+    
+    },
+  },
+    formIsValid: false,
+
+    // loading: false,
+  };
+
+
+)
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+
+
+Professor nos explica que 
+
+LÁ 
+
+NÓS TÍNHAMOS UMA PROPRIEDADE 
+
+'orderForm',
+
+
+
+E ENTÃO 
+
+
+
+TÍNHAMOS OS VÁRIOS 'controls' (cada objeto era 1 ''''control''''),
+
+
+
+E 
+
+cada 
+
+UM 
+
+DESSES 
+
+
+'controls'
+ 
+
+ tinha 
+
+ algo como 
+
+ um 
+
+
+ 'elementType: 'input'',
+
+
+ coisa do gênero.... ------> o PROFESSOR VAI COPIAR 
+
+ O 
+
+ CONTROL 
+
+
+ DE 
+
+ 'name', pq aquele é bem útil... --> ele então vai o colocar dentro 
+
+ de 
+
+ 'controls',
+ dentro 
+
+ do state....seja
+
+
+ ex:
+
+
+
+
+
+ state = {
+   controls: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+        validation: {  
+          required: true 
+        } ,
+        valid: false,
+        touched: false
+      },
+   }
+ }
+
+
+
+
+------------------------
+
+
+
+
+
+
+
+
+ISSO FEITO, ELE VAI __RENOMEAR o 'control' de 
+
+
+'name' para ___'email'___, JUSTAMENTE __ PQ 
+
+O
+ PRIMEIRO CAMPO 
+
+
+ DESSE 
+
+
+ 'signup/signin' view 
+
+
+
+ VAI __SER UM CAMPO EM QUE 
+
+ O USUÁRIO COLOCARÁ O SEU EMAIL...
+
+
+
+ ----------------------
+
+
+
+
+
+ fica assim, portanto:
+
+
+
+
+
+ 
+ state = {
+   controls: {
+      email: { /////eis o código em questão
+        elementType: 'input', 
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+        validation: {  
+          required: true 
+        } ,
+        valid: false,
+        touched: false
+      },
+   }
+ }
+
+
+ ------------------------
+
+
+
+
+ já o ELEMENTTYPE SERÁ 
+
+
+ de 
+ tipo 
+
+ 'email', 
+
+
+
+ justamente pq VAMOS QUERER 
+
+ QUE O USUÁRIO INSIRA '@'.com...
+
+
+
+ ----------------------------
+
+
+
+
+
+ o placeholder vai ser um simples 'Mail address'...
+
+
+
+ ex:
+
+
+
+
+
+  state = {
+   controls: {
+      email: {
+        elementType: 'input',   
+        elementConfig: {
+          type: 'text',  /////eis o código em questão
+          placeholder: 'Your Mail Address',
+        },
+        value: '',
+        validation: {  
+          required: true 
+        } ,
+        valid: false,
+        touched: false
+      },
+   }
+ }
+
+
+
+-------------------------------------------
+
+
+
+o value vai continuar como aquela EMPTY STRING,
+pq 
+
+vamos querer 
+
+que ele realmente comece __vAZIO___.... (o nosso código vai considerar o espaço inicial como VAZIO...)
+
+
+
+
+--> quanto 
+
+Às 
+
+___'''RULES'''___,
+
+
+aquele
+
+'validation' ali,
+
+
+
+
+NÓS VAMOS 
+
+MANTER
+ 
+
+ 'required' como true... ------------> E O PROFESSOR 
+
+
+ VAI QUERER 
+
+
+
+ ___REUTILIZAR AQUELE método 
+
+
+'checkValidity',
+
+
+LÁ 
+NO COMPONENT 
+
+
+
+'ContactData'... ----------> PQ NAQUELE 
+
+
+'checkValidity' 
+
+NÓS 
+
+JÁ 
+
+
+
+FAZÍAMOS CHECK/verificávamos 
+
+a 
+
+
+'minLength', 'maxLength',
+
+required, 
+
+
+
+
+também 
+
+
+
+'rules.isEmail' 
+
+
+
+e 
+
+
+'rules.isNumeric'....
+
+
+
+
+
+(
+
+  PROFESSOR 
+
+  ESTÁ 
+
+  FALANDO __dESTE CÓDIGO AQUI__...:
+
+
+
+
+      let isValid = true;  ///////FIX PARA O PROBLEMA DE VALIDAÇÃO, AQUELE PROBLEMA COMUM DE VALIDAÇÃO (problema em que uma sequência de if checks acaba afetando a propriedade 'validity' do nosso state de forma errada, pq tipo, se apenas 1 desses if checks sem o '&& isValid' no if statement RETORNAR 'TRUE', isso basicamente 'overwritaria' o valor de 'isValid' definido pelos if checks anteriores (que poderiam ter definido o valor dessa variável como sendo 'false'... ) ----> e por meio desse 'let isValid = true' e também dessa adição do check de '&& isValid' ao final de cada if statement, O PROFESSOR EVITA ESSE COMPORTAMENTO; FAZ COM QUE 'isValid' seja considerado false NAS HIPÓTESES EM QUE APENAS 1 DOS IF STATEMENTS RETORNA 'false'; apenas 1 if statement retornando false já vai ser suficiente para fazer o 'isValid' ficar como 'false', que éo  que queremos. )
+
+
+
+      if (rules.required) { 
+      isValid = value.trim() !== '' && isValid;
+      }
+      
+      if (rules.minLength) {
+        isValid = value.length >= rules.minLength && isValid;
+      }
+      
+      if (rules.maxLength) { 
+        isValid = value.length <= rules.maxLength && isValid;
+      }
+
+      if (rules.isEmail) {
+        const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        isValid = pattern.test(value) && isValid;
+      }
+
+      if (rules.isNumeric) {
+        const pattern = /^\d+$/;
+        isValid = pattern.test(value) && isValid;
+      }
+      
+      return isValid;
+
+)
+
+
+
+
+
+
+
+
+
+
+
+(OBS::: ESSES 'isNumeric'/'isEmail' são mt importantes,
+ 
+ 
+ eles 
+ 
+ são 
+ 
+ Aqueles
+  
+  objetos 
+  
+  '
+  validation: {
+    required: true,
+    isEmail: true
+  }
+  ',
+
+
+
+  LÁ 
+
+  NO NOSSO STATE LOCAL... (no caso em que escrevemos esse código aí, antigamente, era em 'ContactData'....)
+  
+  
+  )
+
+
+
+----------------------------
+
+
+
+CERTO... e é exatamente isso que o professor vai querer introduzir  (esses 'isXXXXX: true'...)
+no 
+
+'validation: {
+
+}' 
+
+
+dentro 
+
+do 
+
+STATE 
+
+DE 
+
+'Auth.js'...
+
+
+
+
+
+
+
+
+---> professor vai escrever 
+
+
+
+
+'validation: {
+    required: true,
+    isEmail: true
+}' 
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+certo... quanto ao 'valid', ele deve inicialmente ser 'false' (será trocado para 'true' por meio da função 'checkValidity()'...)....
+
+
+
+
+
+
+---> e 'touched' também inicialmente deverá estar settado como 'false'...
+
+
+
+
+
+
+ficará assim:
+
+
+
+
+
+
+  state = {
+   controls: {
+      email: {
+        elementType: 'input',   
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail Address',
+        },
+        value: '',
+        validation: {  
+          required: true,
+          isEmail: true
+        } ,
+        valid: false,
+        touched: false
+      },
+   }
+ }
+
+
+
+
+
+
+
+----------------------
+
+
+
+O PROFESSOR ENTÃO VAI __DUPLICAR __ ESSE OBJETO 'email' de control,
+
+
+
+
+para 
+
+então 
+
+CRIAR 
+
+UM MESMO CAMPO, MAS DESSA VEZ ___PARA O __ PASSWORD....
+
+
+
+ex:
+
+
+
+
+
+  state = {
+   controls: {
+      email: {
+        elementType: 'input',   
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail Address',
+        },
+        value: '',
+        validation: {  
+          required: true,
+          isEmail: true
+        } ,
+        valid: false,
+        touched: false
+      },
+
+       password: {
+        elementType: 'input',   
+        elementConfig: {
+          type: 'password',
+          placeholder: 'Your Password',
+        },
+        value: '',
+        validation: {  
+          required: true,
+          isPassword: true
+        } ,
+        valid: false,
+        touched: false
+      }
+   }
+ }
+
+
+
+
+------------------------
+
+ele faz algumas alteraçõezinhas,
+
+
+como 
+
+
+'isPassword' em vez de 'isEmail',
+
+
+e o 
+
+
+'type' constará como 'password'... ( e o placeholder também será outro...)
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+Certo....
+
+
+
+
+
+--> vamos querer que esse negócio seja 
+
+'required: true',
+
+e também 
+
+VAMOS QUERER 
+
+
+UMA REGRA 
+
+'minLength',
+
+
+
+que 
+
+será 
+
+de 6 
+
+caracteres...   (PQ O MÍNIMO DE CARACTERES PARA UM PASSWORD, NO FIREBASE, É DE 6.... ----> mas isso varia de BACKEND PARA BACKEND, você deve ver com seu provider....)
+
+
+
+
+ficará assim:
+
+
+
+
+
+  state = {
+   controls: {
+      email: {
+        elementType: 'input',   
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail Address',
+        },
+        value: '',
+        validation: {  
+          required: true,
+          isEmail: true
+        } ,
+        valid: false,
+        touched: false
+      },
+
+       password: {
+        elementType: 'input',   
+        elementConfig: {
+          type: 'password',
+          placeholder: 'Your Password',
+        },
+        value: '',
+        validation: {  
+          required: true,
+          //isPassword: true
+        } ,
+        valid: false,
+        touched: false
+      }
+   }
+ }
+
+
+
+
+ -----------------------------------
+
+
+
+ ESTÁ FICANDO ASSIM:
+
+
+
+
+
+
+
+
+ import React, { Component } from 'react';
+
+import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
+
+
+
+class Auth extends Component {
+
+  state = {
+    controls: { //////////MESMO FORMATO DE 'CRIAÇÃO DE INPUT FIELDS' usado em 'ContactData', mas dessa vez nessa 'página especial' de 'Auth.js'... --->  e, como em 'Auth.js', USAREMOS O __STATE__ LOCAL DE  UM CONTAINER ('Auth.js', nesse caso) PARA ___cRIAR___ E EDITAR/CUSTOMIZAR NOSSOS INPUT FIELDS...
+      email: {
+        elementType: 'input',   
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail Address'
+        },
+        value: '',
+        validation: {  
+          required: true,
+          isEmail: true
+        } ,
+        valid: false,
+        touched: false
+      },
+
+       password: {
+        elementType: 'input',   
+        elementConfig: {
+          type: 'password',
+          placeholder: 'Your Password'
+        },
+        value: '',
+        validation: {  
+          required: true,
+          //isPassword: true
+        } ,
+        valid: false,
+        touched: false
+      }
+   }
+
+  }
+
+
+  render() {
+    return (
+            <div>
+                <form>
+                    <Input />
+                    <Input />
+                    <Button />
+                </form>
+            </div>
+
+
+
+    );
+  }
+}
+
+export default Auth;
+
+
+
+
+-----------------------------------
+
+
+
+Ok, importamos o 'Input' 
+
+e o 
+
+
+
+elemento 
+
+'Button'... 
+
+
+-------------------------------
+
+
+
+--> PROFESSOR DIZ QUE 
+
+
+A LÓGICA AQUI, de editar nossa página, 
+É A MESMA 
+
+
+
+USADA 
+
+
+NO COMPONENT/container
+
+'ContactData'....
+
+
+
+
+
+--> lá 
+
+
+em 
+
+
+
+'ContactData',
+
+
+
+NÓS __LOOPAMOS __ POR DENTRO 
+
+DE TODOS NOSSOS OBJETOS 'control' 
+
+
+dentro 
+
+DO NOSSO STATE, 
+
+para 
+
+então 
+
+
+RETORNAR 
+
+ELEMENTOS 
+
+'INPUT' de acordo com esses objetos...
+
+
+
+
+
+ex (isso em 'ContactData'):
+
+
+
+
+
+render() {
+    const formElementsArray = [];
+    for (let key in this.state.orderForm) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.orderForm[key],
+      });
+    }
+
+    let redirect = null;
+
+    if (this.props.redirect) {
+      redirect = <Redirect to="/" />;
+    }
+
+    let form = (
+      <div className={ContactDataStyle.ContactData}>
+        <h4>Enter your Contact Data</h4>
+        <form
+          onSubmit={(event) => {
+            if (
+              !this.state.orderForm.name.value ||
+              !this.state.orderForm.street.value ||
+              !this.state.orderForm.zipCode.value ||
+              !this.state.orderForm.email.value ||
+              !this.state.orderForm.country.value
+            ) {
+              alert('Please enter your contact information!');
+              return;
+            }
+
+            this.orderHandler(event);
+          }}
+        >
+          {formElementsArray.map((formElement) => {
+            return (
+              <Input
+                changed={(event) => {
+                  this.inputChangedHandler(event, formElement.id);
+                }}
+                key={formElement.id}
+                elementValue={formElement.id}
+                touched={formElement.config.touched}
+                invalid={!formElement.config.valid}
+                elementType={formElement.config.elementType}
+                shouldValidate={formElement.config.validation}
+                value={formElement.value}
+                elementConfig={formElement.config.elementConfig}
+              />
+            );
+          })}
+          <Button
+            disabled={!this.state.formIsValid}
+            btnType="Success"
+          >
+            ORDER
+          </Button>
+          {redirect}
+        </form>
+      </div>
+    );
+
+    if (this.props.loading) {
+      form = <Spinner />;
+    }
+
+    return (
+      <div>{form}</div>
+    );
+  }
+}
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+ok....
+
+
+aqui ficaria, portanto:
+
+
+
+
+render() {
+  const controlElementsArray = [];
+  for(let key in this.state.controls) {
+    controlElementsArray.push(
+      {
+        id: key, 
+        config: this.state.controls[key]
+      }
+    )
+  }
+
+
+
+let form = (
+    <div>
+      <form>
+      {controlElementsArray.map(
+          (controlElement) => {
+            return (
+              <Input changed={(event) => {this.inputChangedHandler(event, controlElement.id)}};
+                key={controlElement.id}
+                elementValue={controlElement.id}
+                touched={controlElement.config.touched}
+                invalid={!controlElement.config.valid}
+                elementType={controlElement.config.elementType}
+                shouldValidate={controlElement.config.validation}
+                value={controlElement.value}
+                elementConfig={controlElement.config.elementConfig}
+
+              />
+            )
+          }
+
+
+
+      )}
+      </form>
+      <Button>SIGNUP</Button>
+      <Button>SIGN-IN</Button>
+    </div>
+
+
+)
+
+
+
+
+
+
+
+
+
+
+
+
+  return <div>{form}</div>
+
+
+
+
+
+}
+
+
+
+
+
+
+-------------------------
+
+
+
+eu 
+
+
+_ACHO_ que vai ser algo assim....
+
+
+
+
+------------------------
+
+
+
+E, DE FATO, ERA MESMO... ---> agora 
+
+
+temos 
+
+um
+
+
+
+'DINAMICALLY 
+
+GENERATED SET OF INPUTS'... (bem maneiro...)
+
+
+
+
+---------------------------
+
+
+
+PROFESSOR 
+NOS EXPLICA QUE 
+
+O 
+PRÓXIMO PASSO É _TER UM __BUTTON___ nessa página/coisa de 'signup'/'signin'...
+
+
+
+
+
+
+
+
+
+
+
+<Button /> ---------> ISSO VAI PRECISAR 
+
+
+DE UM 
+
+PROP 
+
+'btnType'... --> colocaremos 
+
+'success'...
+
+
+
+
+
+
+
+
+<Button btnType="Success" />  --------> MAS O 
+
+PROFESSOR 
+
+
+NOS EXPLICA QUE 
+
+ESSE 
+
+ELEMENTO 
+
+NÃO 
+
+
+DEVERÁ 
+
+SER 
+
+PARTE 
+
+
+
+DA VARIÁVEL/CONST 'form',
+
+
+E 
+
+
+SIM QUE 
+
+ELE DEVE SER 
+PARTE 
+
+
+___ DA FORM LÁÁÁ EMBAIXO, no __RENDER(){}, como 
+
+'nested child' de nossa form...
+
+
+
+
+ex:
+
+
+
+'''''
+return (
+      <div>
+        <form>
+          {
+            form //////VAI CONTER NOSSOS INPUTS/input fields na form...
+          }
+        <Button btnType="Success"/> ///////EIS O CÓDIGO EM QUESTÃO.
+      </form> 
+    </div>
+)''''
+
+
+
+
+
+
+--------------------------------
+
+
+E 
+ESSE 
+
+BUTTON AÍ N DEVE SER 'SELF-CLOSING', pois 
+
+nós 
+
+PRECISAMOS 
+
+
+QUE 
+
+ELE 
+
+
+diga alguma coisa... (ele está programado para 'dizer alguma coisa', para TER ALGUMA 
+INSCRIÇÃO EM SI...) -----> 
+
+
+
+vamos 
+
+
+
+fazer assim:
+
+
+
+
+
+''''''''''''                            ''''''''''''''''
+<Button btnType="Success">SUBMIT</Button> 
+
+
+
+
+
+-----------------------------------
+
+
+CERTO,
+ 
+
+ COM 
+
+ ISSO, 
+
+ agora 
+ TEREMOS 
+
+ UMA 
+
+
+
+ 'form ' COM INPUTS E UM BUTTON... ------> MAS 
+
+
+ PARA __
+
+
+ REALMENTE___
+
+
+
+
+ CONSEGUIRMOS 
+
+
+
+ FAZER COM QUE 
+
+ ESSA 'PAGE'/form 
+
+
+ APAREÇA 
+
+ NA 
+
+ PÁGINA,
+
+ PRECISAMOS 
+
+
+ SETTAR 
+
+ BEM 
+
+ O 
+
+
+  SEU ___rOUTING____ -------> 
+
+
+
+
+  NÓs 
+
+  temos 
+
+
+  o 
+
+
+  container 
+
+  'Auth'... -----> 
+
+
+  esse 
+
+
+
+  container 
+
+
+  DEVE 
+
+  SER 
+
+
+
+
+  ABERTO/carregado ___QUANDO 
+
+  O USUÁRIO 
+
+
+  ____ CLICAR 
+
+
+
+  EM 
+
+
+  'Orders', 
+
+  que 
+
+  É JUSTAMENTE 
+
+
+  NOSSA 
+  PÁGINA 
+
+  'PROTEGIDA',
+
+  A 
+  PÁGINA 
+
+
+  QUE 
+  VAI 
+  receber 
+  OS 
+
+
+  'Guards'...
+
+
+
+
+---------------------------
+
+
+
+
+CERTO... ---> O IMPORTANTE É __ QUE ___TODAS AS ROUTES __ DE NOSSO APLICATIVO 
+
+ESTÃO 
+
+
+
+SETTADAS 
+
+
+NO 
+
+
+ARQUIVO 
+
+'App.js'... -------- >
+
+
+lá 
+
+
+temos 
+
+aquela 
+
+route 
+
+de 
+
+
+'<Route path="/orders" component={Orders} />'
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+PARA INÍCIO DE CONVERSA,
+
+DEVEMOS 
+
+IMPORTAR 
+
+NOSSO 
+
+CONTAINER 
+
+'Auth' 
+
+LÁ 
+
+EM 
+
+
+'App.js'...
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+ex:
+
+
+
+
+
+import BurgerBuilder from '../src/containers/BurgerBuilder/BurgerBuilder';
+
+
+import {BrowserRouter} from 'react-router-dom';
+
+
+import Layout from '../src/hoc/Layout/Layout';
+
+
+
+import { Route } from 'react-router';
+
+
+import { Switch } from 'react-router-dom';
+
+import Orders from './containers/Orders/Orders';
+
+import Checkout from './containers/Checkout/Checkout'
+
+import Auth from '../../................';
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+
+O CÓDIGO DE 'App.js', como você deve se lembrar,
+
+é:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+render() {
+
+
+
+   
+
+
+    return(
+        <BrowserRouter>
+        <div>
+       <Layout >
+         <Switch>
+         <Route path="/checkout" component={Checkout} />
+         <Route path="/orders" component={Orders} />
+        <Route path="/" component={BurgerBuilder} //obs: 'exact' nessa route NÃO É NECESSÁRIO, pois já temos o SWITCH STATEMENT/OBJECT ali em cima; se colocássemos o 'exact' + o 'switch', isso seria redundante...
+        />
+        </Switch>
+       </Layout>
+       </div>
+       </BrowserRouter>
+    )
+  }
+
+}
+
+export default App;
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+Certo....
+
+
+
+
+
+
+
+--> para settar 
+
+a 
+
+route de 
+
+'Auth',
+
+o professor 
+
+vai simplesmente ___rEPLICAR___ A ROUTE 
+
+
+
+de 
+
+
+'orders'.. ---->  
+
+
+
+
+
+
+por enquanto, 
+
+vamos querer 
+
+carregar 
+
+
+O COMPONENT 'Auth' 
+
+QUANDO 
+
+A 
+
+ROUTE 
+
+DE 
+
+path 
+
+'/auth' 
+
+
+FOR 
+
+ACESSADA..
+
+
+
+
+
+ex(resultado):
+
+
+
+
+render() {
+
+    return(
+        <BrowserRouter>
+        <div>
+       <Layout >
+         <Switch>
+         <Route path="/checkout" component={Checkout} />
+         <Route path="/orders" component={Orders} />
+         <Route path="/auth" component={Auth} />
+        <Route path="/" component={BurgerBuilder} //obs: 'exact' nessa route NÃO É NECESSÁRIO, pois já temos o SWITCH STATEMENT/OBJECT ali em cima; se colocássemos o 'exact' + o 'switch', isso seria redundante...
+        />
+        </Switch>
+       </Layout>
+       </div>
+       </BrowserRouter>
+    )
+  }
+
+}
+
+export default App;
+
+
+
+
+---------------------------------------
+
+
+
+
+Salvamos tudo isso e recarregamos nosso app...
+
+
+
+
+
+
+
+
+--> E PARA SERMOS CAPAZES DE REALMENTE 'ALCANÇAR'/reach 
+
+esse 
+
+
+
+container 
+
+de 
+
+'Auth',
+
+
+PROFESSOR 
+
+
+VAI 
+ATÉ NOSSOS 
+
+COMPONENTS,
+
+em 
+
+'Navigation',
+
+
+
+E AÍ 
+
+ADICIONA UM 
+
+NOVO 'NavigationItem',
+
+
+Dessa vez 
+
+com um 
+
+nome 
+
+
+'Auth'... (só para testar...)
+
+
+-------------------------------------
+
+
+
+
+
+-----------------------------------
+
+
+
+
+
+--> E já conseguimos spottar 
+
+
+os 
+
+INPUT FIELDS nessa nova página 
+
+
+'Authenticate'....
+
+
+---------------------------------
+
+
+
+
+
+
+
+---->  OK... FALTA O __sTYLING___ desse 
+
+
+'Auth.js'... 
+
+
+
+
+
+---> professor vai em frente e cria 
+
+
+
+UM 
+
+
+
+
+Arquivo 
+
+
+'Auth.module.css'....
+
+
+
+
+
+
+
+
+
+
+Aí ele vai lá 
+
+
+e 
+
+COPIA 
+
+O STYLING 
+
+USADO 
+
+
+
+
+NO 
+
+CONTAINER/COMPONENT 
+
+
+
+'ContactData'...
+
+
+
+
+ex:
+
+
+.ContactData {
+  margin: 20px auto;
+  width: 80%;
+  text-align: center;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+
+ @media (min-width: 600px) {
+  .ContactData {
+    width: 500px;
+  }
+}
+
+
+---------------------------
+
+
+
+
+AÍ ELE SUBSTITUI 
+
+
+
+o 
+
+
+'.ContactData' 
+
+
+
+por 
+
+
+'.Auth',
+
+
+mas deixa todo o styling...
+
+
+
+EX:
+
+
+
+
+
+.Auth {
+  margin: 20px auto;
+  width: 80%;
+  text-align: center;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+
+ @media (min-width: 600px) {
+  .Auth {
+    width: 500px;
+  }
+}
+
+
+
+---------------------------------
+
+
+
+ISSO FEITO,
+
+
+DENTRO 
+
+
+D
+E 
+
+
+
+'Auth.js'
+
+
+
+ELE IMPORTA ESSE STYLING AÍ...  -> que será aplicado na __dIV__ que 
+
+segura 
+
+
+
+
+a nossa form (com os button...).
+
+
+
+
+------------------------------
+
+
+FICOU ASSIM:
+
+
+  let form = (
+      <div >
+        <form>
+        {controlElementsArray.map( 
+            (controlElement) => {
+              return (
+                <Input changed={(event) => {this.inputChangedHandler(event, controlElement.id)}}
+                  key={controlElement.id} ///'id: key'... 
+                  elementValue={controlElement.id}
+                  touched={controlElement.config.touched}
+                  invalid={!controlElement.config.valid}
+                  elementType={controlElement.config.elementType}
+                  shouldValidate={controlElement.config.validation}
+                  value={controlElement.value}
+                  elementConfig={controlElement.config.elementConfig}
+                />
+              )
+            }
+  
+  
+  
+        )}
+        </form>
+      </div>
+  
+  
+  )
+  
+    return <div className={AuthStyle.Auth} >
+     <form>
+      {form}
+      <Button btnType="Success">SUBMIT</Button>
+      </form>
+      
+      </div>
+    
+  }
+}
+
+export default Auth;
+
+
+
+------------------------
+
+
+
+
+
+
+A PRÓXIMA ETAPA É __ADICIONAR 'VALIDATION' 
+
+a 
+
+
+ESSES INPUT FIELDS... --> vamos ter que usar aquela 
+
+FUNÇÃO/método 
+
+
+'checkValidity'... (que usamos lá em 'ContactData', no passado....).
+
+
+
+
+
+ex:
+
+
+
+checkValidity(value, rules) {
+    let isValid = true;
+
+    if (rules.required) {
+      isValid = value.trim() !== '' && isValid;
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    if (rules.isEmail) {
+      const pattern =
+        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    return isValid;
+  }
+
+
+
+
+-----------------------------
+
+
+
+
+PROFESSOR RESSALTA QUE, COMO ESTAMOS ESCREVENDO UM MONTE DE CÓDIGO REPETIDO,
+
+
+PODERÍAMOS 
+
+SIMPLESMENTE 
+
+OUTSOURCEAR 
+
+
+TODO 
+
+ESSE CÓDIGO QUE ESCREVEMOS 
+
+__eM 1 ARQUIVO SEPARADO__, CENTRALIZADO, __ QUE 
+
+
+ENTÃO 
+
+
+SIMPLESMENTE EXPORTARÁ/EXPORTARIA
+ 
+ essa 
+
+
+ função 
+
+
+ 'checkValidity' a todos components/containers 
+
+ que 
+
+
+ necessitam dele...
+
+
+
+
+
+
+ --> VAMOS FAZER ISSO NO PRÓXIMO MÓDULO, 
+
+ QUANDO APLICARMOS ALGUMAS OPTIMIZAÇÕES A ESTE PROJETO...
+
+
+
+
+
+
+
+
+ --> ok, vamos copiar 'checkValidity'.... ----> 
+
+
+ e 
+
+ provavelmente vamos ter que fazer a mesma coisa com 'inputChangedHandler',
+
+ mais tarde...
+
+
+
+
+
+
+ ---------------------------------------------
+
+
+
+ o 
+
+
+ 'inputChangedHandler'
+
+
+ ficou assim:
+
+
+
+  inputChangedHandler = (event, inputIdentifier) => {
+
+     const updatedControls = {
+      ...this.state.controls
+    };
+
+    const updatedControlElement = {
+      ...updatedControls[inputIdentifier],
+    };
+
+    updatedControlElement.value = event.target.value;
+
+    console.log(updatedControlElement.touched);
+
+    updatedControlElement.valid = this.checkValidity(
+      updatedControlElement.value,
+      updatedControlElement.validation
+    );
+
+    updatedControlElement.touched = true;
+
+    updatedControls[inputIdentifier] = updatedControlElement;
+
+    let formIsValid = true; ////parte difícil de entender. Examinar esse for in loop logo abaixo, que é o que vai definir o valor dessa variável/ alternar entre true/false dependendo do STATUS de nossos input fields e o input que o usuário inseriu neles...
+
+    for (let inputIdentifier in updatedControls) {
+      formIsValid = updatedControls[inputIdentifier].valid && formIsValid; ////ISSO FARÁ COM QUE 'formIsValid' APENAS FIQUE COMO 'true' (valor de 'true') SE O VALOR NO NOSSO 'given input element ( ou seja, EM TODOS ELES, pq estamos LOOPANDO por dentro de todos eles com esse for in loop) E ___ O ___ VALOR DE 'formIsValid' __ EM SI__ JÁ ESTIVER SETTADO COMO 'true' (esse último check, de '&& formIsValid', serve para que O VALOR DE 'formIsValid' seja true __aPENAS__ QUANDO TODOS VALORES '.valid' dentor de 'updatedOrderForm[inputIdentifer]', esse elemento dinâmico, que na verdade é todos, FOR ___ DE TRUE__...)
+    }
+
+    this.setState({
+      orderForm: updatedControls,
+      formIsValid: formIsValid,
+    });
+
+    console.log(this.state);
+    console.log(formIsValid);
+  };
+
+
+
+
+
+-----------------------------------
+
+
+
+OK, o inputChangedHandler também é copiado...
+
+
+
+
+
+
+
+
+
+
+
+
+o do professor (que é o mesmo código ,na verdade, MAS ___ESCRITO DE UMA FORMA MAIS ÓPTIMA...)
+
+fica assim:
+
+
+
+
+
+
+inputChangedHandler = (event,  inputIdentifer) => {
+    const updatedControls = {
+      ...this.state.controls,
+    [inputIdentifer] ///////////////ISSO SERÁ 'email' ou 'password'... (será a propriedade que SERÁ __OVERWRITTADA __ PELO INPUT DO USUÁRIO...).
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+----------------------------
+
+
+PROSSEGUINDO, ficará assim:
+
+
+
+
+
+
+inputChangedHandler = (event,  inputIdentifer) => {
+    const updatedControls = {
+      ...this.state.controls,
+    [inputIdentifer]: {
+      ...this.state.controls[inputIdentifer] ///////////ISSO VAI DISTRIBUIR TODAS AS PROPRIEDADES DAQUELE 'GIVEN CONTROL OBJECT'...
+      value:        ///////// ESSA ESCRITA AQUI __Vai __oVERWRITTAR__ a propriedade 'value' dentro de 'email'/'password'/qualquer que seja o input type....
+    }
+    }
+
+
+}
+
+
+
+-------------
+
+
+
+
+
+ex:
+
+
+
+
+inputChangedHandler = (event,  inputIdentifer) => {
+    const updatedControls = {
+      ...this.state.controls,
+    [inputIdentifer]: {
+      ...this.state.controls[inputIdentifer], ///////////ISSO VAI DISTRIBUIR TODAS AS PROPRIEDADES DAQUELE 'GIVEN CONTROL OBJECT'...
+      value: event.target.value        ///////// ESSA ESCRITA AQUI __Vai __oVERWRITTAR__ a propriedade 'value' dentro de 'email'/'password'/qualquer que seja o input type....
+    }
+    }
+
+
+}
+
+
+
+
+
+
+
+----------------------------------------
+
+
+Já o 
+
+
+'valid'
+
+vai 
+
+usar 
+
+
+
+'this.checkValidity()', vai UTILIZAR NOSSO MÉTODO ALI,
+
+e vai 
+
+aceitar alguns parâmetros....
+
+
+ex:
+
+
+
+
+
+
+inputChangedHandler = (event,  inputIdentifer) => {
+    const updatedControls = {
+      ...this.state.controls,
+    [inputIdentifer]: {
+      ...this.state.controls[inputIdentifer], ///////////ISSO VAI DISTRIBUIR TODAS AS PROPRIEDADES DAQUELE 'GIVEN CONTROL OBJECT'...
+      value: event.target.value,        ///////// ESSA ESCRITA AQUI __Vai __oVERWRITTAR__ a propriedade 'value' dentro de 'email'/'password'/qualquer que seja o input type....
+      valid: this.checkValidity(event.target.value);
+    }
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+---> ESSE 
+
+'checkValidity' 
+
+
+vai 
+
+exigir/aceitar 
+
+
+um 
+
+
+VALOR ('value') e algumas 
+
+
+__rEGRAS ('rules') ---> nós 
+
+
+vamos 
+
+
+
+justamente 
+
+passar 
+
+
+'event.target.value' 
+
+como 
+
+VALUE,
+
+
+e então 
+
+
+
+'this.state.controls[inputIdentifier].validation'
+
+
+COMO __RULES___ dessa função/método....
+
+
+
+eX:
+
+
+
+
+
+
+inputChangedHandler = (event,  inputIdentifer) => {
+    const updatedControls = {
+      ...this.state.controls,
+    [inputIdentifer]: {
+      ...this.state.controls[inputIdentifer], 
+      value: event.target.value,        
+      valid: this.checkValidity(event.target.value,   //'value'
+      this.state.controls.[inputIdentifer].validation); //'rules'...
+    }
+    }
+
+
+}
+
+
+---------------------------------
+
+
+
+ 
+
+ POR FIM,
+
+
+ professor 
+
+
+ TAMBÉM 
+
+
+ VAI COLOCAR 
+
+
+ OUTRA PROPRIEDADE 
+
+ NESSE 
+
+ 'updatedControls',
+
+ QUE 
+
+ SERÁ 
+ 'touched',
+
+ que 
+
+ VAI TER UM VALOR DE 
+ 'true', pq 
+
+ CERTAMENTE 
+
+ O INPUTFIELD (regido por 'inputChangedHandler')__ TERÁ SIDO 'tocado' (touched: true)
+
+
+ QUANDO 
+
+ O USUÁRIO DIGITAR ALGO NELE...
+
+
+
+
+
+ ex:
+
+
+
+
+
+ inputChangedHandler = (event,  inputIdentifer) => {
+    const updatedControls = {
+      ...this.state.controls,
+    [inputIdentifer]: {
+      ...this.state.controls[inputIdentifer], 
+      value: event.target.value,        
+      valid: this.checkValidity(event.target.value,   //'value'
+      this.state.controls.[inputIdentifer].validation), //'rules'...
+      touched: true ////USUÁRIO TOCOU/ALTEROU/DIGITOU ALGO NOS INPUT FIELDS....
+    }
+    }
+
+
+}
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+
+
+CERTO.... MAS PROFESSOR DIZ QUE ELE NÃO VAI FAZER HANDLE DA 'OVERALL FORM VALIDITY' 
+
+
+nesse 
+
+component 
+
+'Auth.js'...  ----> isso significa que 
+
+ELE 
+
+_NÃO VAI QUERER___ DESABILITAR O BOTÃO 
+
+DE 
+
+'SUBMIT'
+
+para 
+
+
+FORMS INVÁLIDAS... (pq o server já vai cumprir essa função...) ----->  O PROFESSOR 
+
+
+
+QUER 
+
+NOS MOSTRAR O QUE 
+
+DEVE ACONTECER/___DEVERÁ __ ACONTECER QUANDO 
+
+ENVIARMOS 
+
+'INVALID FORMS' ao nosso server...
+
+
+
+
+
+
+
+
+--> por fim, 
+
+para 
+
+terminar o código de 'inputChangedHandler',
+
+o 
+
+
+professor 
+
+
+chama 
+
+'this.setState()'
+
+
+E ENTÃO 
+
+PASSA 
+
+UM 
+
+PARÂMETRO DE 
+
+'updatedControls', que 
+
+é 
+
+justamente este grande objeto de 
+
+
+
+''''''''''
+
+
+
+
+
+{
+      ...this.state.controls,
+    [inputIdentifer]: {
+      ...this.state.controls[inputIdentifer], 
+      value: event.target.value,        
+      valid: this.checkValidity(event.target.value,   //'value'
+      this.state.controls.[inputIdentifer].validation), //'rules'...
+      touched: true
+    }
+    }
+
+
+
+'''''''''''''''''''''
+
+
+
+
+
+
+
+
+
+
+OK... editamos tudo, mas 
+
+
+
+
+a VALIDATION AINDA NÃO FUNCIONA... --> nosso input field __NÃO FICA __ VERMELHO quando 
+
+digitamos algo que 
+
+'NÃO encaixa nos critérios/regras'...
+
+
+
+
+
+---------------------------
+
+
+
+--> parece que o problema é QUE 
+
+O 
+
+__ESTILO NÃO ESTÁ SENDO APLICADO.... (isso pq o 'valid' está realmente como 'false', quando FAZEMOS O CONSOLE.LOG DO STATE DE NOSSO APP...)
+
+
+
+----------------------------------
+
+
+
+RESOLVI O PROBLEMA...- -> o 'this.setState()' 
+
+estava 
+
+
+ESCRITO ERRADO.. -----> 
+
+
+eu 
+
+havia 
+
+colocado
+ 
+
+
+
+ 'this.setState(updatedControls);',
+
+
+
+ MAS 
+
+
+ a 
+
+ FORMA 
+
+ CORRETA
+  
+
+  É/ERA 
+
+
+  '
+    this.setState({controls: updatedControls});'
+
+
+
+
+---------------------------------
+
+
+Pronto... agora isso está funcionando....
+
+
+
+
+--> o password, por exemplo, só é válido se o usuário 
+
+DIGITA UM 
+
+INPUT COM NO MÍNIMO 
+
+
+'6 caracteres' ('minLength = 6', no STATE...)
+
+
+------------------------------
+
+
+
+Certo... isso está funcionando... -> a 'form está TERMINADA'...  --> O PRÓXIMO PASSO 
+
+
+
+
+É ___fAZER HANDLE___ DA SUBMISSION,
+
+
+E 
+
+É 
+
+CLARO QUE 
+
+
+
+
+
+________O PROFESSOR VAI QUERER FAZER ISSO,
+ 
+ ESSA FORM SUBMISSION,
+
+
+
+ por meio 
+
+ DO 
+
+
+ _rEDUX___ E POR MEIO DOS SEUS ACTION CREATORS....
+
+
+ (vamos ver isso na próxima aula...)
+
+
+
+ ------------------------------------
+
+
+
+

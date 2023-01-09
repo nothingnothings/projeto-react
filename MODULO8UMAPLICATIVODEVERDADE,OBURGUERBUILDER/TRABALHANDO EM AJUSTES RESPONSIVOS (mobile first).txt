@@ -1,0 +1,987 @@
+
+
+
+
+---> nossa página mobile está uma merda pq 
+
+
+o LOGO e os navigation items têm de ser modificados para 
+
+ficarem bonitos 
+
+
+
+nesses aparelhos.. ---> 
+
+
+
+
+PROVAVELMENTE PRECISAMOS DE UMA MEDIA QUERY  NO NOSSO LOGO...
+
+
+
+
+
+
+--------------------
+
+
+NOSSO ESTILO DO LOGO ESTÁ ASSIM:
+
+
+
+
+
+.Logo {
+    background-color: white;
+    padding: 8px;
+    height: 80%;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+}
+
+
+
+.Logo img {
+    height: 100%;
+}
+
+
+
+
+------------------------------------
+
+
+
+O estilo está uma merda 
+
+
+
+pq 
+
+
+a height 
+
+do 
+
+LOGO 
+
+está como 
+
+'80%'... -----------------------------> 
+
+
+
+E 80%  
+
+
+LÁ NO 
+
+
+'SIDEDRAWER' 
+
+
+significa ___OITENTA POR CENTO DA FUCKING HEIGHT DA TELA____ (pq 
+
+
+o height de 
+
+
+
+'sideDrawer', do estilo de sidedrawer, é 100%.....) ----------> 
+
+
+E ISSO É 
+
+
+MUUUIITO GRANDE... -----------> MAS COMO PODEMOS AJUSTAR 
+
+
+ISSO? --------> PROFESSOR EXPLICA QUE 
+
+
+
+PODERÍAMOS 
+
+
+ADICIONAR 
+
+
+ALGUM 
+
+'RESPONSIVE DESIGN' 
+
+
+
+AO ARQUIVO .CSS 
+
+DO LOGO....... --------------> poderíamos 
+
+
+
+fazer algo como 
+
+
+
+DEIXAR A HEIGHT '''PADRÃO'''' DO LOGO COMO 
+
+SENDO 
+
+
+DE 
+11%,
+
+
+e deixar 
+
+
+de 100% __APENAS___ NOS 
+
+
+APARELHOS DESKTOP... (por meio de uma media query)... --------> MAS O PROFESSOR 
+
+
+EXPLICA QUE 
+
+
+
+isso 
+
+
+
+
+_____NÃO SERIA IDEAL____, POIS 
+
+
+________DEIXARIA____ NOSSO LOGO __ MAIS DIFÍCIL ___ dE SER REUTILIZADO.... ---------> 
+
+
+
+EM VEZ DISSO,
+
+
+professor é fã do approach em que 
+
+
+SIMPLESMENTE 
+
+
+___AJUSTAMOS A HEIGHT___ DO LOGO NO LUGAR EM QUE O 'EMBEDDAMOS' (in the place we embed it)... --> ISSO É 
+
+
+MELHOR DO QUE 
+
+
+AJUSTAR O LOGO COMPONENT EM SI, na opinião do professor....
+
+
+
+
+
+----------------------------------
+
+
+
+POR ISSO ELE VAI DEIXAR A HEIGHT DO LOGO AINDA COMO 100%..... ---> 
+
+
+E AÍ NÓS VAMOS 
+
+RESTRINGIR A HEIGHT 
+
+DO LOGO 
+
+
+LÁ 
+
+NO ___TOOLBAR___ E 
+
+
+NO SIDEDRAWER....
+
+------------------------------------
+
+
+
+
+COMEÇAMOS COM A RESTRIÇÃO DA HEIGHT 
+
+
+
+DO 
+
+
+LOGO 
+
+
+lá 
+
+
+NOS 
+
+
+ESTILOS 
+
+
+
+
+DE 
+
+
+'TOOLBAR'... -----> o logo deve ser 
+
+SÓ UNS 80% DO TAMANHO DA TOOLBAR...
+
+
+--------------------------------
+
+
+
+
+CÓDIGO DE TOOLBAR (js):
+
+
+
+
+
+
+
+import React from 'react';
+
+import Toolbar from './Toolbar.module.css';
+
+import Logo from '../../Logo/Logo';
+
+
+
+
+
+
+import NavigationItems from '../NavigationItems/NavigationItems';
+
+const toolbar = (props) => {
+  return (
+    <header className={Toolbar.Toolbar}>
+      {/* <div>MENU</div> */}
+      {/* <div>LOGO</div> */}
+
+      <Logo />
+      <NavigationItems />
+    </header>
+  );
+};
+
+export default toolbar;
+
+
+
+-----------------------------------------
+
+
+
+
+código de TOOLBAR (CSS):
+
+
+
+
+.Toolbar {
+
+
+
+    height: 56px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #703B09;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 90;
+
+
+
+
+
+}
+
+
+
+.Toolbar nav {
+    height: 100%
+}
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+professor EXPLICA QUE PODEMOS 
+
+OBTER 
+
+ESSA LIMITAÇÃO/RESTRIÇÃO 
+
+
+DA HEIGHT DO LOGO 
+
+
+
+___POR MEIO DE 2 APPROACHES DIFERENTES___.. -------> 
+
+
+
+
+
+
+1o APPROACH ============ PODERÍAMOS 
+
+
+SETTAR __ UM PROP___ no 
+
+
+'Logo' ___ PARA 
+
+
+SETTAR ___ A HEIGHT __dINAMICAMENTE___....
+
+
+
+
+
+Isso quer dizer que o professor passaria algo como 
+
+
+'<Logo height="80%" />' -------------> 
+
+
+SE FIZÉSSEMOS ESSE 
+
+'PASS' AÍ, 
+
+
+nós 
+
+poderíamos simplesmente 
+
+
+
+ESCREVER UM INLINE STYLE/DEFINIR UM INLINE STYLE EM 
+
+
+'Logo', 
+LÁ NO ARQUIVO LOGO,
+
+
+desta forma:
+
+
+
+
+const logo = (props) => {
+
+
+    return <div className={BurgerLogoStyle.Logo} style={
+       {
+           height: props.height
+       }
+    }>
+            <img src={burgerLogo} alt="MyBurger" />
+    </div>
+
+};
+
+
+
+
+
+
+
+
+
+export default logo;
+
+
+
+
+
+------------------------------------
+
+
+
+OU SEJA, 
+
+
+DEFINIRÍAMOS/DEFINIMOS 
+
+
+UM 
+
+VALOR 'OBJETO' 
+
+
+DENTRO 
+
+
+
+DESSA PROPRIEDADE/FEATURE 
+
+'
+style' (que é dos inline styles)
+ 
+
+
+ E AÍ, 
+
+
+ DENTRO DESSE OBJETO,
+
+
+
+ DEFINIMOS 
+
+ UMA 
+
+
+ HEIGHT 
+
+
+como igual 
+
+
+' props.height' (sendo '.height' aquele PROP__ PASSADO __ LÁ NO COMPONENT 'TOOLBAR' ao COMPONENT LOGO de agora...)....
+
+
+
+
+
+
+
+ISSO FUNCIONARIA, POIS A PROPRIEADE/FEATURE 
+
+
+'style' (inline style)
+ 
+
+
+ DENTRO 
+
+ DO 
+
+ COMPONENT 
+
+ 'LOGO' 
+
+ vai __DAR OVERWRITE__ NO STYLE  DE 'LOGO' 
+
+ DEFINIDO 
+
+ LÁ NO ARQUIVO 
+
+ CSS 'LOGO.MODULE.CSS'... 
+
+
+ ---------------------------------------------------------
+
+
+
+
+ SE SALVARMOS ESSAS ALTERAÇÕES, VAMOS TER CONSERTADO O LOGO NA TOOLBAR...
+
+
+
+
+
+
+
+
+
+ ---> CERTO, MAS É ÓBVIO QUE NÃO ACABAMOS POR AÍ... -------> 
+
+
+
+ TEMOS QUE VER O AJUSTE DO 'LOGO' 
+
+
+
+ QUE FICA 
+
+ LÁ 
+
+ NO 
+
+
+ SIDEDRAWER... ------> é só repetir a mesma coisa, mas dessa vez com o SIDEDRAWER...
+
+
+
+
+
+ EX:
+
+
+ 
+
+const sideDrawer = (props) => {
+
+    return (
+
+        <div className={SideDrawerStyle.SideDrawer}>
+            <Logo height="11%"/>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+
+        
+    )
+
+
+}
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+CERTO, ISSO FUNCIONOU.
+
+
+
+
+---------------------------------
+
+
+
+ESSE É
+
+
+
+1 'CLEVER WAY' 
+
+DE AJUSTAR ESSA HEIGHT 
+
+
+DO SEU LOGO...
+
+
+
+RESUMINDO, PARA CONSEGUIR ESSE APPROACH:
+
+
+
+
+1) DEVE-SE PASSAR um prop de 'height' AO COMPONENT 'LOGO'... ex: '<Logo height="40%" />'
+
+
+
+
+2) ESSE PROP 'height' (props.height) DEVERÁ ___sER RECEBIDO____ PELO COMPONENT 'LOGO'... 
+
+
+
+
+
+3) O PROP HEIGHT DEVE SER __PREPARADO__ PARA __RECEBER___ ESSE PROP DE 'height'.... PREPARAR = 
+DEFINIR/ESCREVER UM INLINE 
+
+STYLE 
+
+de 
+
+'style={
+    {
+        height: props.height
+    }
+}' 
+
+
+
+4) PROFIT ----> isso REALMENTE VAI FUNCIONAR, É UMA BOA MANEIRA DE AJUSTAR O TAMANHO DE UM MESMO LOGO DINAMICAMENTE, MANEIRA DE AJUSTAR O TAMANHO DE SEU LOGO DE ACORDO COM O LUGAR DO CÓDIGO EM QUE VOCÊ O POSICIONA.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+CERTO... NÃO HÁ NADA DE ERRADO COM ESSE APPROACH..... ELE É PERFECTLY FINE.
+
+
+(e, de fato, o professor deixa o 'LOGO' de 'TOOLBAR' editado por meio desse approach, pq esse approach realmente é aceitável)
+
+
+MAS AGORA O PROFESSOR 
+
+
+VAI NOS 
+
+MOSTRAR O APPROACH Nº 2...
+
+
+
+
+
+
+
+
+
+2)  ------> PARA 
+
+SEGUIRMOS ESSE APPROACH,
+
+
+
+
+O APPROACH DIZ 
+
+QUE DEVEMOS 
+
+
+COMEÇAR PELO ___WRAP___ DO LOGO 
+
+
+LÁ 
+
+
+EM 
+
+'SideDrawer' 
+
+EM 
+
+UMA ___dIV____....
+
+
+
+ex:
+
+
+
+
+
+
+const sideDrawer = (props) => {
+
+    return (
+
+        <div className={SideDrawerStyle.SideDrawer}>
+            <div> //////////EIS O CÓDIGO EM QUESTÃO.
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+
+        
+    )
+
+
+}
+
+
+
+------------------------------------------------------------------------------------------
+
+
+
+
+
+CERTO... AGORA 
+
+ESSAS DIV QUE ESTÁ __WRAPPANDO O LOGO____, 
+
+SÃO ELAS __QUE DEVERÃO ___ CONTROLAR 
+
+
+O 
+
+'HEIGHT' 
+
+DESSE LOGO.... ---> e podemos 
+
+fazer isso 
+
+
+TANTO POR MEIO DA DEFINIÇÃO ___INLINE STYLES (style={}) QUANTO 
+
+
+
+POR 
+
+
+MEIO DO USO/DEFINIÇÃO 
+
+
+DE 
+
+'className={}'.... --------->
+
+
+
+OU SEJA, PODERÍAMOS FAZER ISTO AQUI (versão 1):
+
+
+
+
+
+
+const sideDrawer = (props) => {
+
+    return (
+
+        <div className={SideDrawerStyle.SideDrawer}>
+            <div style={
+                {
+                    height: 11%
+                }
+            }> //////////EIS O CÓDIGO EM QUESTÃO.
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+
+        
+    )
+
+
+}
+
+
+
+
+
+
+
+OU, ENTÃO, PODERÍAMOS FAZER ISSO AQUI:
+
+
+
+
+
+
+
+const sideDrawer = (props) => {
+
+    return (
+
+        <div className={SideDrawerStyle.SideDrawer}>
+            <div className={}    /////////EIS O CÓDIGO EM QUESTÃO.
+            }> 
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+
+        
+    )
+
+
+}
+
+
+
+
+
+--------------------------------
+
+
+OK, MAS 
+
+
+O QUE DIABOS COLOCARÍAMOS DENTRO 
+
+
+DESSE 
+
+'className'? (pq nós NÃO TEMOS AINDA NADA 
+
+DE ESTILOS DE 
+
+'.Logo' em 'SideDrawer.module.css'....) ----------> 
+
+
+
+PROFESSOR EXPLICA QUE 
+
+
+
+PODERÍAMOS SIMPLESMENTE 
+
+
+
+DEFINIR UMA CLASSE DE 
+
+'.Logo' em 
+
+'SideDrawer', 
+
+
+QUE NÃO HAVERÁ PROBLEMÁ 
+
+
+COM RELAÇÃO A ISSO, 
+
+
+POIS 
+
+
+O REACT E O CSS MODULES __ GARANTEM___ QUE 
+
+
+
+CLASSES DE MESMO NOME EM ARQUIVOS SEPARADOS
+
+
+___NUNCA VÃO CONFLITAR___...
+
+
+
+
+É por isso que o professor 
+
+
+vai  
+
+até o arquivo 
+
+
+'SideDrawer.module.css' 
+
+
+e vai então 
+
+definir 
+
+
+
+'.Logo {
+    height: 11%;
+}
+
+
+
+
+ISSO FEITO,
+
+
+ELE SIMPLESMENTE VAI ESCREVER 
+
+A CLASSNAME ASSIM:
+
+
+
+
+
+
+
+
+const sideDrawer = (props) => {
+
+    return (
+
+        <div className={SideDrawerStyle.SideDrawer}>
+            <div className={SideDrawerStyle.Logo}    /////////EIS O CÓDIGO EM QUESTÃO.
+            }> 
+            <Logo />
+            </div>
+            <nav>
+            <NavigationItems />
+            </nav>
+            
+
+
+
+        </div>
+
+
+        
+    )
+
+
+}
+
+
+--------------------------------------------
+
+
+CERTO.
+
+
+
+AGORA VIMOS, PORTANTO, 
+
+OS APPROACHES 
+
+QUE PODEMOS USAR PARA 
+
+AJUSTAR
+ 
+
+ O LOGO EM DIVERSAS PARTES 
+
+
+ DO NOSSO SITE DINAMICAMENTE... (bem úteis). ----> 
+
+
+
+ E ISSO NOS AJUDA 
+
+
+A 
+
+CONFIGURAR O LOGO/COISAS 
+
+DE NOSSA PÁGINA 
+
+
+
+PARA QUALQUER APARELHO QUE PRECISAMOS SUPORTAR...
+
+
+
+-->  A PRÓXIMA ETAPA É __CONSERTAR__ OS NAVIGATION ITEMS, 
+
+
+fazer com que eles fiquem ok nesse sidedrawer....

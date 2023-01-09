@@ -1,0 +1,2197 @@
+
+
+
+
+
+--> NAS ÚLTIMAS LIÇÕES, fizemos um 
+
+OUTPUT 
+
+
+DO BURGER,
+
+
+mas até agora esse OUTPUT 
+
+
+NÃO É VERDADEIRAMENTE DINÂMICO... --> devemos
+
+
+
+dar UM IMPORTANTE 
+
+PRIMEIRO PASSO... ---> devemos 
+
+
+adicionar UMA FUNÇÃO 
+
+
+
+DE 'HANDLING'  de BURGERINGREDIENTs  ___DENTRO DO 'STATE'___  DO NOSSO 'BURGERBUILDER.JS'... ---> 
+
+
+PQ, NO FINAL DAS CONTAS,
+
+É DENTRO DO 
+
+
+'BURGER BUILDER' QUE VAMOS 
+
+
+
+EVENTUALMENTE OS EDITAR, TAMBÉM... ------> e essa é tbm a RAZÃO DE 
+
+
+'BurgerBuilder' 
+
+SER UM ___STATEFUL___ COMPONENT (em vez de stateless)....
+
+
+
+
+
+
+CÓDIGO DE 'BURGERBUILDER':
+
+
+
+-----------------------------------------------------
+
+
+
+
+import React, { Component } from 'react';
+
+import Aux from '../../hoc/Auxiliary';
+
+
+import Burger from '../../components/Burger/Burger';
+
+
+
+
+
+
+
+
+
+export default class BurgerBuilder extends Component {
+  state = {};
+
+  render() {
+    return (
+      <Aux>
+        {/* <div>Burger</div> */}
+        <Burger />
+        <div>Build Controls</div>
+      </Aux>
+    );
+  }
+}
+
+
+-------------------------------------------
+
+
+
+
+AGORA, VAMOS ADICIONAR 'STATE' 
+
+
+A 
+
+ESSE COMPONENT/ARQUIVO...
+
+
+
+
+
+ex:
+
+
+
+import React, { Component } from 'react';
+
+import Aux from '../../hoc/Auxiliary';
+
+
+import Burger from '../../components/Burger/Burger';
+
+
+
+
+
+
+
+
+
+export default class BurgerBuilder extends Component {
+  state = {};
+
+  render() {
+    return (
+      <Aux>
+        {/* <div>Burger</div> */}
+        <Burger />
+        <div>Build Controls</div>
+      </Aux>
+    );
+  }
+}
+
+
+
+-----------------------------------------------
+
+
+
+
+O PROFESSOR INICIALIZA O NOSSO 
+
+'state' de forma SIMPLES,
+ 
+ como uma 
+
+
+ 'PROPERTY' (ou seja, com a sintaxe 'state = {}' )..... ---------> MAS 
+
+
+ ELE EXPLICA/APONTA QUE NÓS TAMBÉM PODERÍAMOS ADICIONAR O CONSTRUCTOR, 
+
+
+ DE SINTAXE 
+
+
+ ('''''
+     constructor(props) {
+         super(props);
+         this.state = {
+
+         };
+     }
+
+
+'''''''
+
+ )
+
+ -------------------------------
+
+
+
+^^^^^ESSA É A SINTAXE TRADICIONAL/ANTIGA.
+
+
+
+
+
+
+----------------------------------
+
+
+
+CERTO.... 
+
+
+MAS E O QUE DIABOS DEVERÁ 
+
+ESTAR 
+
+DENTRO DO 
+
+'state'? -----> provavelmente 
+
+
+ALGO RELACIONADO AOS NOSSOS 
+
+
+
+___INGREDIENTS___... -----> professor 
+
+
+
+vai 
+
+
+ter uma propriedade 
+
+inicial 
+
+de 
+
+'ingredients: ....'
+
+
+
+
+
+
+O VALOR 
+
+DESSE NEGÓCIO SERÁ __KEY-VALUE PAIRS__ ( em um OBJETO), 
+
+em que 
+
+
+ AS 'KEYS'/propriedades __ SERÃO OS ___NOMES DOS INGREDIENTS__,
+  
+
+
+  E O __VALOR__/VALUE__ será 
+
+
+
+_______A QUANTIDADE PARA AQUELE TIPO DE INGREDIENT.... (eu achava que era 'true/false', mas pelo visto, não é esse o caso...)
+
+
+
+
+
+PROFESSOR EXPLICA QUE ELE TERÁ 
+
+UM INGREDIENT 'salad', outro 'bacon', etc etc... ---> esses 2 terão valor de '1'....
+
+
+
+
+---> ele terá também um ingredient 'cheese', de valor 2....
+
+
+---> também um ingredient 'meat', de valor '2'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Aux from '../../hoc/Auxiliary';
+
+
+import Burger from '../../components/Burger/Burger';
+
+
+
+
+
+
+
+
+
+export default class BurgerBuilder extends Component {
+  state = {
+      ingredients: {
+          salad: 1,
+          bacon: 1,
+          cheese: 2,
+          meat: 2
+      }
+  };
+
+  render() {
+    return (
+      <Aux>
+        <Burger />
+        <div>Build Controls</div>
+      </Aux>
+    );
+  }
+}
+
+
+
+
+-----------------------------------------
+
+
+
+
+CERTO... O PROFESSOR APONTA QUE 
+
+
+MAIS TARDE NÓS PROVAVELMENTE __VAMOS ___ ADICIONAR MAIS 
+
+'STATE', mais __PROPRIEDADES__ NESSE 'state' (COMO, POR EXEMPLO, 'price')... 
+
+
+MAS QUE, POR ENQUANTO,
+
+
+
+vamos nos ater aos FUNDAMENTAIS DO BURGER, nos ater AOS __INGREDIENTS__... 
+
+
+
+
+
+
+--> CERTO, AGORA TEMOS NOSSOS INGREDIENTS... ---> É EVIDENTE QUE 
+
+O __OBJETIVO__, AGORA, É ___ DE ALGUMA FORMA ____ 
+
+PASSAR ___ ESSE ARRAY/OBJETO 
+
+
+
+COM VÁRIOS key-value 
+
+
+_PAIRS___ 
+
+
+AO NOSSO COMPONENT 'Burger'... ----------> OU SEJA,
+
+
+NÓS QUEREMOS,
+
+DE ALGUMA FORMA,
+
+
+
+DAR AO NOSSO BURGER COMPONENT 
+
+
+
+OS __INGREDIENTS___.... -----> É POR ISSO 
+
+QUE O PROFESSOR 
+
+VAI ADICIONAR UM 
+
+
+PROP 
+
+DE 
+
+nome 
+
+'ingredients' 
+
+
+NA INVOCAÇÃO DO COMPONENT 'Burger'... --> e esse prop terá um valor de 'this.state.ingredients' ( o state inicial/atual dos INGREDIENTS)...
+
+
+
+
+ex:
+
+
+
+
+
+import React, { Component } from 'react';
+
+import Aux from '../../hoc/Auxiliary';
+
+
+import Burger from '../../components/Burger/Burger';
+
+
+
+
+
+
+
+
+
+export default class BurgerBuilder extends Component {
+  state = {
+      ingredients: {
+          salad: 1,
+          bacon: 1,
+          cheese: 2,
+          meat: 2
+      }
+  };
+
+  render() {
+    return (
+      <Aux>
+        <Burger ingredients={this.state.ingredients} />
+        <div>Build Controls</div>
+      </Aux>
+    );
+  }
+}
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+CERTO... MAS UM PROBLEMA É QUE __ O BURGER__ NÃO RECEBE NENHUM 
+
+
+prop 'ingredients' (ele não usa esse prop) NO 
+
+momento... ----------> DEVEMOS 
+
+
+
+CODAR ALGUMA LÓGICA NO 
+
+
+COMPONENT 
+
+'burger' (
+
+
+    aquele component de código 
+
+
+const burger = props => {
+  return (
+    <div className={BurgerStyle.Burger}>
+      <BurgerIngredient type="bread-top" />
+      <BurgerIngredient type="cheese" />
+      <BurgerIngredient type="meat" />
+      <BurgerIngredient type="bread-bottom" />
+    </div>
+  );
+};
+
+
+
+)
+
+
+
+
+
+DEVEMOS 
+
+
+CODAR ALGUMA COISA AÍ 
+
+QUE __CONSIGA_ __ FAZER O OUTPUT ___ DINÂMICO 
+
+
+___dOS INGREDIENTS __ A PARTIR 
+
+
+DO 
+
+
+
+'GET' DO prop 'ingredients'
+
+de 
+
+'BurgerBuilder' (passado por 'BURGERBUILDER')....
+
+
+
+
+
+
+---> ISSO NÃO SERÁ FÁCIL...
+
+
+
+
+
+--> lá no component 'burger',
+ 
+
+
+ devemos fazer com que ele ACEITE/EXECUTE CÓDIGO A PARTIR DO 
+
+
+ PROP de 'ingredients' passado por 'BurgerBuilder'...
+
+
+
+
+
+
+ --> ESTAMOS RECEBENDO  'ingredients' como props,
+
+
+ mas se 
+
+ examinarmos 
+
+ esses ingredients 
+
+ no 
+
+ STATE 
+
+
+ do 
+
+ 
+
+ 'BurgerBuilder',
+
+
+
+
+SEMPRE DEVEMOS TER EM MENTE QUE 
+
+
+ESSE 'ingredients' é um __OBJETO__ (
+
+
+  é um objeto de código '{
+    salad: 1, 
+    bacon: 1,
+    cheese: 2, 
+    meat: 2
+  }'
+)
+
+
+
+
+---> ISSO SIGNIFICA QUE ______, POR SER UM OBJETO, __ NÃO PODEMOS O TRATAR COMO 
+
+UM ___ ARRAY__ ----> isso significa que nós 
+
+_NÃO PODEMOS USAR '.map()' 
+
+EM CIMA 
+
+DO COMPONENT 'ingredients'/key-value pairs dentro do 
+objeto 'ingredients'...
+
+
+
+(POR SER UM OBJETO, NÃO PODEMOS SIMPLESMENTE 'LOOPAR' POR DENTRO DELE POR MEIO DE UM MÉTOOD COMO '.MAp()'... )
+
+
+---> lemos na internet que 
+
+
+'Object.keys/values' É UM NEGÓCIO/PROPRIEDADE JAVASCRIPT NO OBJETO GLOBAL 'OBJECT' 
+
+que 
+
+__rETORNA__ UM __aRRAY___ DAS 
+
+
+KEYS/values__ DAQUELE OBJECT... (do object 'ingredients', nesse caso...).
+
+
+
+
+--------------------------------------------
+
+
+
+---> E O PROFESSOR DIZ QUE FAREMOS EXATAMENTE ISSO: 
+
+
+VAMOS TRANSFORMAR NOSSO OBJETO __EM UM ARRAY__... -------> PARA SERMOS MAIS PRECISOS,
+
+
+VAMOS QUERER 
+
+RETORNAR UM ARRAY ___cOM OS VALORES__ (e não as KEYS) daqueles INGREDIENTS...
+
+
+
+
+
+Então... provavelmente 
+
+
+
+algo como 'Object.values'
+
+
+
+
+DENTRO DA FUNÇÃO/COMPONENT 
+
+'BURGER',  O professor vai CRIAR UMA NOVA CONSTANTE, A QUAL ELE 
+
+CHAMARÁ 
+
+DE 
+
+'transformedIngredients'...   -------> aí, dito e feito, ele vai usar 
+
+
+o objeto 
+
+
+'Object' e então 
+
+
+
+usar 
+
+'Object.keys()' ----> ISSO VAI __EXTRAIR __ AS KEYS__ DE UM DETERMINADO OBJETO,
+
+E AÍ VAI COLOCAR ESSAS KEYS DENTRO DE UM ___aRRAY__....
+
+
+----> professor PROVAVELMENTE
+
+vai querer 
+
+fazer 
+
+chain 
+
+de 
+
+'Object.keys()' com '.value'... (errei, ele não fez isso)
+
+
+ex:
+
+
+
+const burger = props => {
+
+
+  const transformedIngredients = Object.keys(props.ingredients);
+  return (
+
+
+    
+    <div className={BurgerStyle.Burger}>
+      <BurgerIngredient type="bread-top" />
+      <BurgerIngredient type="cheese" />
+      <BurgerIngredient type="meat" />
+      <BurgerIngredient type="bread-bottom" />
+    </div>
+  );
+};
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+'Object.keys(props.ingredients)' --> isso 
+
+vai nos 
+
+
+render 
+
+
+'["salad", "cheese", "bacon", "meat"]' ....
+
+
+
+
+
+
+---> E AÍ O PROFESSOR VAI _______FAZER _________ UM CHAIN ___ DE UM 
+
+OUTRO MÉTODO __ EM CIMA 
+
+DESSE ARRAY... ----> ele _NÃO VAI USAR '.value', 
+
+
+
+
+ELE VAI 
+
+USAR 
+
+
+'.map()'  (pq agora NOSSO OBJETO VIROU UM ARRAY DE STRINGS...) --> ele provavelmente vai usar 'Object.value' __ COM o 'props.ingredients' ___DENTRO DESSE MÉTODO 'map()'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+const burger = props => {
+
+
+  const transformedIngredients = Object.keys(props.ingredients)
+  .map(
+
+    () => {
+
+    }
+
+  )
+  return (
+
+
+    
+    <div className={BurgerStyle.Burger}>
+      <BurgerIngredient type="bread-top" />
+      <BurgerIngredient type="cheese" />
+      <BurgerIngredient type="meat" />
+      <BurgerIngredient type="bread-bottom" />
+    </div>
+  );
+};
+
+
+---------------------------------
+
+
+
+
+C
+erto... e 
+
+esse método 
+
+MAP 
+
+__eXIGE__ UMA FUNÇÃO INTERNA... ( ''''() => {} ''') -----> provavelmente 
+
+
+o professor usará 
+
+
+um PARâMETRO/argumento de 'ingredient'/'igkey'... ----> e aí ele 
+
+
+provavelmente vai usar 
+
+
+'Object.value(ingredient/igKey)' em cima desse argumento recebido....
+
+
+
+ex:
+
+
+
+
+
+
+
+const burger = props => {
+
+
+  const transformedIngredients = Object.keys(props.ingredients)
+  .map(
+
+    (igKey) => {
+        Object.value(igKey); ///////EIS O CÓDIGO EM QUESTÃO (ele está errado, foi uma tentativa MINHA.)
+    }
+
+  )
+  return (
+
+
+    
+    <div className={BurgerStyle.Burger}>
+      <BurgerIngredient type="bread-top" />
+      <BurgerIngredient type="cheese" />
+      <BurgerIngredient type="meat" />
+      <BurgerIngredient type="bread-bottom" />
+    </div>
+  );
+};
+
+
+
+
+
+
+---------------------------------
+
+
+OU SEJA,
+
+
+O PROFESSOR VAI QUERER 
+
+
+
+__TRANSFORMAR__ ESSE 
+
+
+'STRING VALUE' (o elemento )
+
+
+
+EM UM __ARRAY___ DE ELEMENTOS 
+
+NECESSÁRIOS PARA AQUELE INGREDIENT ESPECÍFICO (igKey)... --> OU SEJA,
+
+
+''' SE EU TENHO 2 DE CHEESE, VOU QUERER TRANSFORMAR 
+
+AQUELA STRING 'igKey' em um ARRAY __ QUE CONTENHA ___ 2 ELEMENTOS...
+
+
+
+
+
+
+--> isso significa que ele PROVAVELMENTE VAI ARMAZENAR 
+
+ESSE 
+
+
+''''Object.value(igKey);'''' (ERRADo).
+
+
+EM UMA CONSTANTE, e então 
+
+VAI CRIAR UM ARRAY/ELEMENTO A PARTIR 
+
+DESSE NÚMERO aí... 
+
+
+
+-----------------------------------
+
+
+
+parece que ERRAMOS NOSSO CÓDIGO... ----> em vez de 
+
+usar 
+
+'Object.value',
+
+
+aqui o professor 
+
+
+vai usar 
+
+
+
+o 
+
+
+__sPREAD OPERATOR__ com um return statement....
+
+
+
+ex:
+
+
+
+
+const transformedIngredients = Object.keys(props.ingredients)
+  .map(
+
+    (igKey) => {
+      
+      
+            return [...] ///////EIS O CÓDIGO EM QUESTÃO
+    }
+
+  )
+
+
+
+
+
+
+
+  ----------------------------------------------
+
+
+
+  O PROFESSOR VAI USAR O SPREAD OPERATOR __ PARA CRIAR UM NOVO ARRAY ___ que 
+
+
+  ele VAI FAZER CONSTRUIR... ---> e ele vai CONSTRUIR 
+
+
+  esse array 
+
+
+  POR MEIO DO MÉTODO 
+
+
+  'Array()', QUE É __PROVIDENCIADO __ PELO JAVASCRIPT__.... 
+
+
+
+
+tipo assim:
+
+
+'''return [...Array()]''''
+
+
+-------------------------------
+
+
+
+
+ESSE É UM __OBJETO DEFAULT___ JAVASCRIPT... --> nós não o conhecemos 
+
+pq não o utilizamos com tanta frequência... -------> MAS 
+
+
+___VOCê PODE __ CRIAR UM __ARRAY__ POR MEIO DELE.... --------> 
+
+
+
+por exemplo,
+
+
+'Array(3)' ---> ISSO VAI CRIAR UM ARRAY COM __3 __EMPTY SLOTS (undefined spaces)...
+
+
+
+
+
+--> é claro que nosso ARRAY, AQUI, 
+
+NÃO __TERÁ UMA LENGTH DE APENAS '3'....____ ---> não,
+
+
+A NOSSA LENGTH 
+
+__dEVERÁ __ SER 'A QUANTIDADE DOS INGREDIENTS QUE NOS FOI PASSADA'... 
+
+(ou seja, será uma VARIÁVEL...) ---> é por isso 
+
+
+que o professor vai passar 
+
+
+
+'props.ingredients' como seu parâmetro....
+
+
+
+
+ex( representação):
+
+
+
+
+
+
+
+
+const transformedIngredients = Object.keys(props.ingredients)
+  .map(
+
+    (igKey) => {
+      
+      
+            return [...Array(props.ingredients)] ///////EIS O CÓDIGO EM QUESTÃO
+    }
+
+  )
+
+
+
+------------------------------------------------
+
+
+
+
+CERTO... MAS O PROFESSOR NÃO VAI PARAR POR AÍ... não, ele 
+
+
+
+USA '[igKey]' (indexador COM UMA VARIÁVEL) em cima 
+
+desse 'props.ingredients',
+
+pq ele 
+
+
+vai querer acessar 
+
+ A 
+
+
+DADA CHAVE daquele específico ingredient... 
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+const transformedIngredients = Object.keys(props.ingredients)
+  .map(
+
+    (igKey) => {
+      
+      
+            return [...Array(props.ingredients[igKey])] ///////EIS O CÓDIGO EM QUESTÃO
+    }
+
+  )
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> 
+
+
+
+ou seja,
+
+
+esse return statement vai retornar um 
+
+
+ARRAY TIPO ASSIM:
+
+
+[ , ]
+
+
+
+
+(OS VALORES NÃO IMPORTAM, ATÉ AGORA...)
+
+
+
+
+
+
+
+
+
+OU SEJA,
+
+
+O PROFESSOR VAI QUERER 
+
+
+
+__TRANSFORMAR__ ESSE 
+
+
+'STRING VALUE' (o elemento )
+
+
+
+EM UM __ARRAY___ DE ELEMENTOS 
+
+NECESSÁRIOS PARA AQUELE INGREDIENT ESPECÍFICO (igKey)... --> OU SEJA,
+
+
+''' SE EU TENHO 2 DE CHEESE, VOU QUERER TRANSFORMAR 
+
+AQUELA STRING 'igKey' em um ARRAY __ QUE CONTENHA ___ 2 ELEMENTOS...
+
+
+
+
+
+
+
+
+
+
+
+return [...Array(props.ingredients)] ---> isso vai nos retornar um ARRAY 
+
+
+COM O NÚMERO EXATO DE SLOTS DE 
+
+DETERMINADO INGREDIENT QUE O USUÁRIO ADICIONOU/PASSOu...
+
+
+
+e ele será 
+um array 
+
+
+assim:
+
+[],
+
+
+e não 
+
+assim: 
+
+[[]].....   (isso por causa do SPREAD OPERATOR em cima do 'Array(props.ingredients[igKey])' --> spread operator vai ESPALHAR OS ELEMENTS DESSE ARRAY dentro do nosso novo array...)
+
+
+ 
+
+
+
+E esse '.map()' vai retornar VÁRIOS ARRAYS,
+
+um PARA __CADA__ TIPO DE 'INGREDIENT' e seu VALOR CORRESPONDENTE...
+
+
+ex:
+
+
+
+'["cheese", 2]'
+
+'["meat", 2]'
+
+
+
+
+VAI SER SEMPRE ESSE MODELO.... -------->
+
+
+
+E AÍ FICARÁ/EXISTIRÁ UM 
+
+
+ARRAY 'OVERALL' de 
+
+
+
+'[  ["cheese", 2], ["meat", 2], ["salad", 2], ["bacon", 2]  ]'
+ --------------------------------------------------
+
+
+
+
+
+ ---> CERTO... E AÍ O PROFESSOR 
+
+ VAI QUERER 
+
+
+
+ _CHAINAR___ AINDA OUTRO MÉTODO EM 
+
+ CIMA 
+
+ DO MÉTODO
+ '.map()'... -------> 
+
+
+
+ ou seja, ele vai querer USAR 
+
+ '.MAP()' 
+
+ EM CIMA DESSE ARRAY OVERALL AÍ...
+
+
+
+
+ e o código ficará assim:
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+const transformedIngredients = Object.keys(props.ingredients)
+  .map(
+
+    (igKey) => {
+      
+      
+            return [...Array(props.ingredients[igKey])].map(); ///////EIS O CÓDIGO EM QUESTÃO (SIM, ELE EXECUTOU UM '.MAP()' NO RESULTADO RETORNADO PELO PRÓPRIO '.map()'...)
+    }
+
+  )
+
+
+
+--------------------------------------------
+
+
+
+
+Certo....
+
+
+
+e com esse 
+
+
+'.map()' 
+
+aí 
+
+ele PROVAVELMENTE 
+
+VAI QUERER 
+
+CONVERTER O ARRAY 'OVERALL' , com todos os TIPOS (strings) de ingredients 
+
+
+e VALORES (values/números) desses ingredients 
+
+
+
+
+EM VÁRIOS __ COMPONENTS __ CORRESPONDENTES...
+
+
+
+
+--> nós colocamos um 
+
+
+PARâMETRO DE 'ingredientElement', 
+
+pois é isso que 
+
+
+o método '.map()' vai receber, essencialmente... ---> OBS: criar o elemento (tipo de 'DIV' daquele ingredient exato) 
+
+talvez NÃO SEJA DIFÍCIL,
+
+
+MAS 
+
+
+
+CRIAR O NÚMERO DE INGREDIENTS ADEQUADO (pq esse número é variável) é algo que 
+
+EU NÃO TENHO IDEIA DE COMO FAZER.
+
+
+
+
+
+EX:
+
+
+
+
+
+
+const transformedIngredients = Object.keys(props.ingredients)
+  .map(
+
+    (igKey) => {
+      
+      
+            return [...Array(props.ingredients[igKey])].map(
+
+              (ingredientElement) => {
+                  return (
+                    <BurgerIngredient type={ingredientElement[0]}>
+                  )
+              }
+            ); 
+    }
+
+  )
+
+
+
+
+  ------------------------------------
+
+
+
+
+  ESSE CÓDIGO AÍ FARIA 
+
+  O OUTPUT 
+
+  DO ELEMENTO CORRESPONDENTE, SIM... --> mas 
+
+
+  ele 
+
+  NÃO FARÁ O OUTPUT ___ DA QUANTIA __ ATRIBUÍDA àQUELE INGREDIENT ESPECÍFICo....
+
+
+
+
+
+  ------> CERTO.... --> O PROFESSOR FEZ ALGO __COMPLETAMENTE DIFERENTE __ DO 
+
+  QUE AQUILO QUE ESTAMOS ESCREVENDO... -------> 
+
+
+
+  ele vai 
+
+  lá 
+
+
+
+   e escreve/passa um parâmetro 
+
+
+   de 
+
+   '_' (underscore) 
+
+   AO 
+
+   MÉTODO 
+
+   '.map()' ----------> 
+
+
+
+   tipo assim:
+
+
+
+
+  '.map(_)' ------->  ISSO VAI COMUNICAR AO '.map()" 
+
+  QUE 
+
+  _NÓS NÃO __ NOS IMPORTAMOS COM 
+
+
+  O __OBJECT__ EM SI DAQUELE ARRAY.... (não nos importamos com o elemento '[ , ]' dentro 
+  
+  
+  do overall array...) -------> 
+
+
+  O PROFESSOR 
+
+
+
+  DIZ QUE O QUE INTERESSA 
+
+  NESSES 
+
+  PARÂMETROS É O __SEGUNDO PARÂMETRO__, 
+
+  O ___iNDEX___ PASSADO 
+
+
+  AO '.map()'... ----------> O 
+
+
+
+  INDEX__ É IMPORTANTE___... ------> e, como index, 
+
+  ele vai simplesmente 
+
+
+  passar um 'i' (de index)...
+
+
+
+  ex (CÓDIGO ATÉ AGORA):
+
+
+
+
+
+
+
+
+
+const burger = (props) => {
+
+
+
+
+const transformedIngredients = Object.keys(props.ingredients)
+  .map(
+
+    (igKey) => {
+      
+      
+            return [...Array(props.ingredients[igKey])].map(
+
+
+                (_, i) => { ///////EIS O CÓDIGO EM QUESTÃO
+
+                }
+        
+                  )
+              }
+          
+    }
+
+  )
+
+
+
+
+
+
+
+}
+
+
+
+
+-------------------------------------
+
+
+
+CERTO...
+
+O QUE O PROFESSOR VAI FAZER,
+
+DENTRO DESSA FUNÇÃO INTERNA DO 
+
+__OUTRO __ 'map()',
+
+É 
+
+
+
+O __ RETURN__ DE 
+
+
+UM 
+
+
+COMPONENT 
+
+
+'BURGERINGREDIENT' ------> ele vai 
+
+fazer 
+
+esse return 
+
+
+DE UM 
+
+'BURGERINGREDIENT' (component)
+
+
+PQ 
+
+ELE __TEM QUE 
+
+__rETORNAR UM ___ 
+
+
+ARRAY 
+
+
+DE 
+
+'JSX ELEMENTS' 
+
+POR MEIO 
+
+DESSE 
+
+
+'.map()', 
+
+NO FINAL DAS CONTAS...
+
+
+
+
+EX (representação):
+
+
+
+
+
+
+
+
+const transformedIngredients = Object.keys(props.ingredients)
+  .map(
+
+    (igKey) => {
+      
+      
+            return [...Array(props.ingredients[igKey])].map(
+
+
+                (_, i) => { 
+
+                  return <BurgerIngredient   />
+
+                }
+        
+                  )
+              }
+          
+    }
+
+  )
+
+
+
+
+  ---------------------------------------
+
+
+
+
+
+
+CERTO....
+
+
+E NESSE COMPONENT 
+
+
+
+'BurgerIngredient' NÓS 
+
+VAMOS 
+
+___DEFINIR __ UMA 
+
+
+
+'key' (aquele PROP ESPECIAL que podemos passar aos nossos components)... -------> 
+
+
+
+PROFESSOR RELEMBRA AQUELE ENSINAMENTO: QUANDO 
+ESTAMOS FAZENDO/FAZEMOS 
+
+
+RETURN 
+
+DE 
+
+__ARRAYS __ DE ELEMENTOS JSX,
+
+
+NÓS SEMPRE DEVEMOS COLOCAR 
+
+UMA PROPRIEDADE 
+
+'key'...
+
+
+
+ex:
+
+
+
+const transformedIngredients = Object.keys(props.ingredients)
+  .map(
+
+    (igKey) => {
+      
+      
+            return [...Array(props.ingredients[igKey])].map(
+
+
+                (_, i) => { 
+
+                  return <BurgerIngredient key={}  />
+
+                }
+        
+                  )
+              }
+          
+    }
+
+  )
+
+
+
+--------------------------------------------------------
+
+
+
+
+--> E O VALOR DESSA KEY 
+
+
+SERÁ 
+
+
+'igKey' + O INDEXADOR ('i')... --------> 
+
+isso 
+
+fará com que 
+
+o negócio vire, essencialmente,
+
+
+um código como 
+
+'salad1', 
+
+
+'cheese2',
+
+
+'meat1',
+
+Etc etc... -------> ISSO VAI CRIAR UMA UNIQUE 
+
+
+KEY, ESSENCIALMENTE, PARA CADA INGREDIENTE... 
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+const transformedIngredients = Object.keys(props.ingredients)
+  .map(
+
+    (igKey) => {
+      
+      
+            return [...Array(props.ingredients[igKey])].map(
+
+
+                (_, i) => { 
+
+                  return <BurgerIngredient key={igKey + i}  /> /////////EIS O CÓDIGO EM QUESTÃO.
+
+                }
+        
+                  )
+              }
+          
+    }
+
+  )
+
+
+
+
+
+--------------------------------------
+
+
+
+E O __TYPE__? ----> o TYPE É SIMPLES,
+
+
+ELE 
+
+SIMPLESMENTE 
+
+SERÁ 
+
+
+'igKey' (pode ser 'cheese', 'meat', 'salad', 'bacon'... qualquer um 
+
+daqueles negócios extraídos por meio de 'Object.keys(props.ingredients)') -------> 
+
+
+
+
+
+E É ESSA VARIÁVEL, 
+
+
+'igKey', produzida por meio do uso de '.map()', 
+
+
+QUE DEIXA DESNECESSÁRIO 
+
+
+O USO 
+
+
+DO PRIMEIRO PARÂMETRO  ('_') 
+
+
+nesse SEGUNDO CALL DE .MAP(), 
+
+no burger.... (pq nós realmente 
+
+NÃO NOS IMPORTAMOS COM AS COISAS QUE 
+
+O 
+
+'[...Array(props.ingredients[igKey])]'  VAI POPULAR 
+
+
+no 
+
+
+seu 'overall array'...) ---------->  PQ 
+
+
+A ÚNICA COISA QUE IMPORTA AO 
+
+
+PROFESSOR __É A __ LENGTH__ DESSE ARRAY___  (pq ele vai PRECISAR 
+
+de um array de length 2, por exemplo, para O QUEIJO...) ------> ele precisa 
+
+dessa LENGTH PARA __QUE ELE SEJA __ CAPAZ DE CRIAR O NÚMERO 
+
+APROPRIADO DE BURGER INGREDIENTS 
+
+A PARTIR DESSE NÚMERo....
+
+
+
+
+
+E QUANTO AO 'type', o professor já o tinha desde o começo, pois 
+
+ele já havia o extraído daquele 
+
+
+array 
+
+de 
+'Object.keys(props.ingredients)'...
+
+
+
+
+
+
+
+
+--> É CLARO QUE ISSO IMPLICA, consequentemente, QUE 
+
+AS KEYS QUE 
+
+VOCê USA 
+
+
+NO 
+
+
+STATE DE 'BurgerBuilder'
+
+
+__TÊM___ QUE SE 
+
+
+
+
+IGUALAR __ àS KEYS__ _qUE VOCÊ FAZ CHECK 
+
+'em burgerIngredient'... (mesmo casing e mesmo nome...)
+
+
+
+
+
+
+
+
+
+---> CERTO.. E QUANDO SALVARMOS E RECARREGARMOS O CÓDIGO, VEREMOS UM HAMBURGER (?) 
+
+
+EXTREMAMENTE BUGADO,
+
+CADA COMPONENT 
+
+EMPILHADO EM CIMA DO OUTRO....
+
+
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+****aCHO QUE ENTENDI*****.... --------> 
+
+
+
+
+
+CÓDIGO COMPLETO:
+
+
+
+
+
+const burger = props => {
+
+  
+
+
+  const transformedIngredients = Object.keys(props.ingredients)
+  .map(igKey => {
+    return [...Array(props.ingredients[igKey])].map(
+
+      ( _, i ) => {
+        return <BurgerIngredient key={igKey + i} type={igKey} />
+      }
+    
+
+    
+    )
+  }
+
+
+  )
+
+
+  return (
+  
+
+
+
+    
+    <div className={BurgerStyle.Burger}>
+      {/* <BurgerIngredient type="bread-top" />
+      <BurgerIngredient type="cheese" />
+      <BurgerIngredient type="meat" />
+      <BurgerIngredient type="bread-bottom" /> */}
+      {transformedIngredients}
+    </div>
+  );
+};
+
+
+
+
+
+
+
+
+---------------------------------------
+
+OBS: _nÃO EXISTE__ um 'array overall'''' --> o que existe é APENAS UM MONTE DE ARRAYS RETORNADOS PELO CÓDIGO DE '.map()'...
+
+
+Ok... o flow do código seria assim:
+
+
+
+
+
+''''
+.map(igKey => {
+    return [...Array(props.ingredients[igKey])]
+
+''''''''''''
+
+
+
+
+
+ISSO VAI __RETORNAR ___ UM 
+
+MONTE DE 
+
+ARRAYS ASSIM:
+
+
+
+[ , ] 
+
+
+[ ,  , ] 
+
+
+[ , ]
+
+[  , ] 
+
+
+
+
+
+
+OU SEJA,
+
+
+__aRRAYS__ SEM NADA DEFINIDO NO SEU INTERIOR... (Serão preenchidos 
+
+COM CADA INGREDIENT, identificados por 'igKey', mais tarde no flow do código)...
+
+
+
+
+
+
+DEPOIS 
+
+DISSO,
+
+
+PASSA-SE 
+
+AO SEGUNDO 
+
+'.map()' CALL... ---------> IMAGINE QUE 
+
+
+__CADA __ UM DOS ARRAYS VAZIOS ___ TEm esse código 
+
+
+
+.map(
+
+      ( _, i ) => {
+        return <BurgerIngredient key={igKey + i} type={igKey} />
+      }
+    
+
+    
+    )
+
+
+CHAMADO SOBRE SI... -------> 
+
+
+
+esse código vai ___CAGAR___ para o primeiro parâmetro (pq ele JÁ 
+
+TEM O 'igKey', igKey que é utilizado pouco tempo depois, ali no 'return <BURGERINGREDIENT>', NO 'TYPE')...
+
+
+O segundo parâmetro,
+
+
+o indexador,
+ 
+ será usado para a key. É APENAS UM DETALHE (por enquanto)...
+
+
+
+
+JÁ O CÓDIGO de 
+
+'return <BurgerIngredient>' EM CONJUNÇÃO COM O MÉTODO '.map()' 
+
+
+É ___ESSENCIAL___... --> o método '.map()' VAI ___FORRAR__ CADA 
+
+ARRAY (encher o número máximo de slots de cada array) COM 
+
+
+ESSE COMPONENT '<BurgerIngredient />' aí... (ISSO ACONTECE 
+
+
+___PQ O MÉTODO '.MAP()' É __ SEMPRE EXECUTADO __ SOBRE CADA ELEMENTO 
+DE 
+
+UM ARRAY, NÃO IMPORTANDO QUE ELEMENTO SEJA....)
+
+
+
+
+---------------------------------------
+
+
+
+
+
+
+
+
+CERTO...CONTINUEMOS A AULA DO PROFESSOR, pq agora entendi.
+
+
+
+
+
+
+
+
+
+---> NO FINAL DAS CONTAS, O PROFESSOR FEZ O __MAP __ DO OBJETO 
+
+'props.ingredients' 
+
+
+
+EM __UM ARRAY __ DE INGREDIENTS___..
+
+
+
+
+
+
+--> ISSO PODE PARECER SUPER COMPLEXO... (e é)... --> mas, no final das contas,
+
+isso é SÓ UMA 
+
+__MANEIRA__ DE TRANSFORMAR UM __OBJETO __  COM VÁRIOS KEY-VALUE PAIRS__ 
+
+
+
+EM UM __aRRAY__ DE BURGERINGREDIENTs, em que 
+
+O 
+
+___VALOR____ DO OBJETO (de cada PROPRIEDADE de cada key-value pair,
+representado por 'props.ingredients[igKey]'....) É IMPORTANTE PARA DETERMINAR QUANTOS 
+
+INGREDIENTS EU PRECISO.... e 
+
+
+
+a KEY (do key-value pair) É IMPORTANTE 
+
+PARA 
+
+DETERMINAR __QUAL TIPO __ DE INGREDIENT EU PRECISO...
+
+
+
+
+--------------------------------------------
+
+
+
+PROFESSOR EXPLICA QUE 
+
+___eLE SEMPRE ___ TERÁ __ 
+
+
+'bread-top' e 'bread-bottom',
+
+por isso essas partes do código, no render de 'Burger',
+
+ficarão intactas... ---> mas 
+
+
+as linhas 
+
+
+<BurgerIngredient type="cheese"/>
+
+
+E AFINS
+ 
+
+ devem 
+
+ ser SUBSTITUÍDAS 
+
+ POR UM OUTPUT 
+
+ DINÂMICO DE 
+
+
+ {transformedIngredients}'...
+
+
+
+EX:
+
+
+
+
+
+
+  return (
+  
+
+
+
+    
+    <div className={BurgerStyle.Burger}>
+      <BurgerIngredient type="bread-top" />
+            {transformedIngredients}
+      <BurgerIngredient type="bread-bottom" />
+    </div>
+  );
+};
+
+
+
+
+
+-------------------------------
+
+
+
+CERTO,
+
+
+AGORA TEMOS UM 
+
+HAMBURGER 
+
+
+COM OS ELEMENTOS/INGREDIENTS TODOS POSICIONADOS...
+
+
+
+
+--> COM ISSO, NÓS DEMOS O PRIMEIRO GRANDE PASSO 
+
+
+NA DIREÇÃO DE UM CONSTRUTOR DE HAMBURGER...
+
+
+
+
+--> NOSSO APLICATIVO AINDA ___NÃO É PROPRIAMENTE DINÂMICO__,
+
+mas pelo menos NÓS JÁ TEMOS UM
+
+MEIO 
+
+DE FAZER OUTPUT DE INGREDIENTS... (do meio do hamburger) ---> 
+
+
+
+DEPOIS DISSO, 
+
+
+temos que achar um meio de fazer com que o usuário 
+
+possa 
+
+ADICIONAR __E REMOVER__ INGREDIENTS__...

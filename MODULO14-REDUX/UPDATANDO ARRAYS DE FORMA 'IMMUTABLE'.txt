@@ -1,0 +1,1065 @@
+
+
+Ainda não consegui fazer funcionar 
+
+
+esse código de 'ejetar'/remover o 
+
+
+item 
+
+
+de 
+
+
+id 
+
+'action.id' (ou algo do gênero) daquela LISTA (ul),
+
+
+
+remover 
+
+
+o id 
+
+com essa key aí...
+
+
+
+
+
+
+
+
+
+
+ESTE CÓDIGO ___NÃO FUNCIONA__:
+
+
+
+
+
+        case 'DELETE_RESULT':
+            return {
+                ...state,
+                results: state.results.splice(action.resultId, 1)
+            }
+
+-----------------------------------
+
+
+
+--> NÃO FUNCIONA PQ __TODOS OS ELEMENTOS 'LI' ESTÃO SENDO DELETADOS,
+
+
+não só aquele que é clicado...
+
+
+
+
+
+
+
+
+-----> isso provavelmente está ocorrendo pq __NÃO ESTAMOS UPDATANDO NOSSO ARRAY 
+
+DE FORMA 'IMMUTABLE' (ou seja,
+
+o RESTO DOS 
+
+elementos no ARRAY estão sendo PERDIDOS....)
+
+
+
+
+--> OK, NÃO CONSEGUI...
+
+
+
+
+
+
+
+
+----------------------------------
+
+
+1o APPROACH PARA REMOVER UM ITEM DE UM ARRAY NO STATE DE FORMA 'IMMUTABLE'... (sem alterar o 'array' no state inicial...)
+
+
+Professor começa 
+
+
+a 'solução'
+
+por 
+
+
+meio 
+
+da
+
+
+ESCRITA DO REDUCER...
+
+
+
+
+--> 
+
+
+ele 
+
+escreve:
+
+
+
+
+'
+
+
+case 'DELETE_RESULT':
+
+
+
+
+-----------------------------------
+
+
+
+
+--> PROFESSOR NOS DIZ QUE PARA REMOVER UM ARRAY ___dEVEMOS __cOMEÇAR PELO 
+
+'get' 
+
+DO 
+
+
+__INDEX___ do item que queremos remover... --------> POR ISSO professor vai colocar 
+
+um 
+
+index PLACEHOLDER, um index de '2', armazenado em uma constante de nome 'id'...
+
+
+
+ex
+
+
+
+case 'DELETE_RESULT':
+    const id = 2;
+
+        return {
+            ...state,
+
+        }
+
+------------------------------------------------------
+
+
+
+
+
+ISSO FEITO,
+
+
+PODEMOS 
+
+ESCREVEr 
+
+
+
+
+'state.results.splice(id, 1)' ---------> ISSO, DIZ O PROFESSOR, ___ DEVE NOS DAR UM NOVO ARRAY, ARRAY SEM ESSE ELEMENTO com esse indexador de 'id'....
+
+
+
+
+
+
+
+
+
+---> ENTRETANTO, DIZ O PROFESSOR,
+
+
+ESSE 
+
+
+'state.results.splice(id, 1)' É
+
+
+
+___________UM CÓDIGO___ BOSTA, ___ UM CÓDIGO QUE ___ VAI 
+
+
+
+_______MUTAR________O ANTIGO ARRAY__....
+
+---------------------------------------------------------
+
+
+
+
+
+Eu vou lá e escrevi isso daqui:
+
+
+
+        case 'DELETE_RESULT':
+        let updatedResults = [...state.results];
+        console.log(updatedResults)
+        updatedResults.splice(action.id, 1);
+        console.log(updatedResults);
+            return {
+                ...state,
+                results: updatedResults
+            }
+        break;
+
+-----------------------------------------
+
+
+
+MAS ISSO TAMBÉM ME DÁ UM COMPORTAMENTO INDESEJADO:
+
+
+os 
+
+
+'<li>' em que clicamos não vão ser deletados.... apenas o elemento mais de cima/baixo 
+
+na lista será 
+
+deletado, e o resto permanecerá igual (comportamento indesejado).
+
+
+
+
+
+
+
+
+
+--> O PRIMEIRO APPROACH PEDE QUE VOCê 
+
+CRIE 
+
+UMA 
+
+
+_____CÓPIA __ DO SEU ARRAY.... ----->  vocÊ vai CRIAR UM NOVO ARRAY COM O 'SPREAD OPERATOR', tipo 
+
+assim:
+
+
+
+
+
+case 'DELETE_RESULT':
+    const id = 2;
+
+    const newArray = [...state.results]; ////////EIS O CÓDIGO EM QUESTÃO.
+        return {
+            ...state,
+
+        }
+
+
+
+
+------------------------------------
+
+
+
+(OBS::: NÓS JÁ TENTAMOS FAZER ISSO, E NÃO FUNCIONOU...)
+
+
+
+
+
+
+
+--IMPORTANTE!!!!! ---> AH, ACHO QUE É AQUI QUE FIZ A CAGADA.... ------> 
+
+
+
+
+
+
+PROFESSOR EXPLICA:
+
+
+''''se os objetos DENTRO DO ARRAY __sÃO OBJETOS___ (como eles DE FATO SÃO, NESSE NOSSO EXEMPLO),
+nós SOMOS OBRIGADOS A USAR O __SPREAD OPERATOR NELES TAMBÉM__...'''''
+
+
+
+
+
+
+--> criar um array de forma 'simples', assim: '''''''[...state.results]'''''', __NÃO É O SUFICIENTE___... ------> 
+
+
+PARA 
+
+CONSEGUIR UMA 
+
+'DEEP COPY' (ou seja, para conseguir que os objetos dentro desse NOVO ARRAY SEJAM __rEALMENTE NOVOS OBJETOS,
+
+E NÃO ___'''POINTERS'''' APONTANDO A OBJETOS ANTIGOS, você precisa fazer a maracutaia 
+
+que o professor nos relembrará agora....)
+
+
+
+-----> MAS SE VOCÊ QUER __REMOVER UM OBJETO__, ISSO ESTÁ/É OK,
+
+PQ 
+
+VOCê 
+
+NÃO VAI QUERER TOCAR NO OBJETO, apenas  vai querer o REMOVER DO ARRAY (essa é a diferença)...
+
+
+
+
+
+
+
+
+É POR ISSO QUE VAMOS CRIAR UMA CÓPIA DESSE ARRAY de 'state.results' por meio do SPREAD OPERATOR...
+
+
+
+ex:
+
+
+
+
+case 'DELETE_RESULT':
+    const id = 2;
+
+    const newArray = [...state.results]; ////////EIS O CÓDIGO EM QUESTÃO.
+        return {
+            ...state,
+
+        }
+
+
+
+--------------------------------
+
+
+
+DEPOIS DISSO,
+ 
+ PROFESSOR 
+ VAI 
+
+ ESCRVER:
+
+
+
+
+
+
+ 
+case 'DELETE_RESULT':
+    const id = 2;
+
+    const newArray = [...state.results]; 
+    newArray.splice(id, 1);
+        return {
+            ...state,
+            results: newArray
+
+        }
+
+
+
+
+
+--------------------------------------
+
+
+PROFESSOR EXPLICA QUE __ESSA (^^^^) É UMA DAS MANEIRAS DE UPDATAR O 
+
+'OLD ARRAY' 
+
+de forma IMMUTABLE....
+
+
+
+------------------------------------
+
+
+
+EU NÃO SEI QUE CAGADA EU ESTAVA FAZENDO, 
+
+
+MAS 
+
+
+AGORA 
+
+O CÓDIGO FUNCIONA...
+
+
+
+
+
+
+
+
+EIS O CÓDIGO QUE FUNCIONA:
+
+
+
+
+
+
+          const resultToBeDeleted = state.results.find((result) => {return result.resultId === action.resultId})
+            const indexOfResult = state.results.indexOf(resultToBeDeleted)
+            const newArray = [...state.results];
+            newArray.splice(indexOfResult, 1);
+            return {
+              ...state,
+              results: newArray
+            }
+
+
+
+------------------------
+
+
+funciona, agora podemos remover exatamente o <li> item em que clicamos...
+
+
+
+
+------------------------------------------
+
+
+Certo, ESSE __FORMATO DE CÓDIGO AÍ ___FUNCIONA___.... (é um approach viável...)
+
+
+
+
+
+
+
+
+
+CONTUDO, 
+
+O 
+
+APPROACH MAIS 
+
+UTILIZADO 
+
+
+
+__PARA __ DELETAR__ ALGUM elemento/item de um array (como OBJETOS) é 
+
+
+UTILIZAR 
+
+
+
+_______o MÉTODO 
+
+'.filter()'....
+
+
+
+
+
+----------------------
+
+
+
+2o APPROACH: 
+
+MÉTODO 
+
+FILTER ------> 
+
+
+
+
+
+
+
+
+
+
+código inicial:
+
+
+
+
+
+case 'DELETE_RESULT':
+    return {
+        ...state,
+        results: newArray
+    }
+
+---------------------------
+
+
+PARA 
+
+
+ESSE APPROACH DO 'FILTER',
+
+vocÊ 
+
+SIMPLESMENTe 
+
+
+
+
+PODE 
+
+
+CRIAR UMA NOVA CONSTANTE,
+
+
+
+que você pode chamar 
+
+de 
+
+
+'updatedArray',
+
+ou qualquer outro nome de sua escolha....
+
+
+
+
+
+ex:
+
+
+
+
+
+case 'DELETE_RESULT':
+
+const updatedArray
+    return {
+        ...state,
+        results: newArray
+    }
+
+
+--------------------------------
+
+
+
+
+
+NESSA CONSTANTE 
+
+
+
+VOCÊ 
+
+VAI 
+
+
+PEGAR 
+
+
+____o ARRAY ___ ORIGINAL
+
+
+
+e ENTÃO __vAI CHAMAR 
+
+
+'.filter()'
+
+
+EM CIMA 
+
+DELE... ---------> você vai poder chamar '.filter()' diretamente 
+
+
+PQ 
+
+
+
+'filter' É UM MÉTODO/FUNÇÃO 
+
+
+DE 
+
+ARRAYS 
+
+__qUE ___rETORNA UM NOVO ___ ARRAY (novo array com um/vários elementos 
+
+FILTRADOS/DELETADOS...)
+
+
+
+--> E FILTER EXIGE/ACEITA UMA __FUNÇÃO INTERNA___....
+
+
+
+
+
+O método filter() cria um novo array com todos os elementos que passaram no teste implementado pela função fornecida.
+
+
+function isBigEnough(value) {
+  return value >= 10;
+}
+
+var filtered = [12, 5, 8, 130, 44].filter(isBigEnough);
+// filtrado é [12, 130, 44]
+
+
+
+
+------------------------------------------
+
+Parâmetros
+
+callback
+
+Função é um predicado, para testar cada elemento do array. Retorna true para manter o elemento, false caso contrário, recebendo três argumentos:
+
+(1)
+element
+O elemento que está sendo processado no array.
+(2)
+index
+O índice do elemento atual que está sendo processado no array.
+(3)
+array
+O array para qual filter foi chamada.
+
+thisArg Optional
+Opcional. Valor a ser usado como this durante a execução do callback.
+
+
+
+----------------------------------
+
+
+
+------------------------
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+case 'DELETE_RESULT':
+
+const updatedArray = state.results.filter(
+    () => {
+ 
+    }
+    )
+
+
+    return {
+        ...state,
+        results: newArray
+    }
+
+
+
+-----------------------------------------
+
+
+
+
+CERTO... ----> e nessa FUNÇÃO INTERNA 
+
+'filter()',
+
+nós vamos 
+
+
+qeurer 
+
+escrever 
+
+'(result) => {}' ----------> ESSA FUNÇÃO INTERNA SERÁ 
+
+
+EXECUTADA ___ EM CADA __ ITEM DE DENTRO DO ARRAY de 'state.results'...
+
+
+
+
+
+
+COMO 
+
+QUEREMOS QUE SEJA DELETADO UM ELEMENTO COM 1 DETERMINADO ID,
+
+devemos 
+
+
+RETORNAR 'false' para esse DETERMINADO ELEMENTO, e true para o resto (o elemento
+
+com 
+esse 
+
+id 
+
+DEVE RETORNAR 'false'...) 
+
+
+
+
+
+
+--> PARA CONSEGUIR ESSE IDENTIFICADOR, vamos precisar 
+
+DO _______INDEX___________ DO ELEMENTO 
+
+
+EM QUE 
+ESTAMOS NO PRESENTE... (e esse será O __sEGUNDO ARGUMENTO DESSA CALLBACK FUNCTION/FUNÇÃO INTERNA DE 'filter'...)
+
+
+
+ex:
+
+
+
+
+case 'DELETE_RESULT':
+
+const updatedArray = state.results.filter(
+    (result, index) => {
+        
+    }
+    )
+
+
+    return {
+        ...state,
+        results: newArray
+    }
+
+
+    -------------------------
+
+
+
+
+
+    CERTO, E NO BODY DESSA CALLBACK FUNCTION/FUNÇÃO INTERNA,
+
+    vamos querer 
+
+    verificar/dizer 
+
+
+
+    'retorne TRUE se o 'index' DESSE NOSSO 
+    ELEMENTO ESPECÍFICO __NÃO FOR IGUAL__ AO 'id' do elemento que 
+    QUEREMOS REMOVER...' 
+
+    (isso fará com que 
+    
+    TODOS OS ELEMENTOS/OBJETOS CUJO INDEX __NÃO É IGUAL__ ao 'id' do elemento 
+    que queremos remover SEJAM ___ RETORNADOS EM UM NOVO ARRAY___...)
+
+
+
+    
+
+    ---> MAS ESSE CÓDIGO ACIMA AÍ __NÃO FUNCIONA COM NOSSA VERSÃO DO CÓDIGO... --> não 
+
+
+    funciona 
+
+
+    PQ NO NOSSO CASO, 
+
+    nós temos 
+
+    ______UM STATE____ (redux state) DE __oBJETOS/ELEMENTOS___ em que 
+
+    TEMOS 
+
+    OBJETOS COM 
+
+    O __FORMATO 
+
+
+    '{
+        id: new Date(), 
+        value: state.counter
+    }'
+
+
+
+    -------------------------------
+
+
+
+    OU SEJA, TEMOS UM 'VALUE' e um 'UNIQUE ID' para cada elemento, criado 
+
+    a partir de uma 'new Date()' --------> e é por isso que NÃO FUNCIONA essa versão do 
+    'state.results.filter()'...
+
+
+
+
+    ---> isso quer dizer que esse 'id' aí ___NÃO É UM INDEXADOR/POSIÇÃO EXATA DO ELEMENTO 
+    NO ARRAY__, E SIM É __UM 
+
+    ID__, um unique identifier...
+
+
+    ---> E COMO ESSA FUNÇÃO 
+
+
+
+    '(result, index) => index !== id);'
+
+
+
+
+    É __eXECUTADA EM TODO E QUALQUER ELEMENTO NO ARRAY___, 
+
+    NÓS ___ ACTUALLY __ NÃO 
+
+    PRECISAMOS __ DESSE PARÂMETRO 
+    DE 
+
+    'index'....
+
+
+
+    Ex:
+
+
+
+(result) => {
+    ...
+}
+
+---------------------------
+
+
+
+
+
+AQUI, PORTANTO, PROFESSOR NOS ESCLARECE QUE NA VERDADE __NÓS VAMOS QUERER ___ RETORNAR 
+
+'true' 
+
+___SÓ SE__ O ID DO ELEMENTO 
+
+EM 
+
+SI 
+
+
+(ou seja, '''result.resultId'''')  NO ARRAY 
+
+QUE ESTAMOS OLHANDO  _____NÃO FOR_ __ IGUAL ___ (!==)
+
+AO ID, DO ELEMENTO, QUE ESTAMOS CONSEGUINDO POR MEIO 
+DESSA ''''ACTION''''.... ------>
+
+Isso, em outras palavras, vai ficar 
+
+ASSIM:
+
+
+
+
+
+---------------------------------------
+
+case 'DELETE_RESULT':
+
+const updatedArray = state.results.filter(
+    (result) => {
+        return result.resultId !== action.resultId; /////////////EIS O CÓDIGO EM QUESTÃO.
+    }
+    )
+
+
+    return {
+        ...state,
+        results: updatedArray
+    }
+
+-----------------------------------
+
+
+
+Ok, mas essa versão de MERDA ainda não funciona... -----> não funciona, pois quando 
+
+eu CLICO EM 1 DOS ELEMENTS, ___tODOS SÃO DELETADOS___...
+
+
+
+
+
+--> ok, consertei.... ---> faltou o 'return' em 
+
+
+
+'return result.resultId !== action.resultId;'
+
+
+
+
+
+---------------------------
+
+
+Professor faz a mesma coisa que fizemos 
+
+mais cedo hoje/nas aulas,
+
+
+ele 
+escreve um GET 
+
+de um parâmetro 
+
+'id'
+
+
+em 
+
+
+
+
+''''
+
+  onDeleteResult: (id) => {
+        dispatch(
+          {
+            type: 'DELETE_RESULT',
+            resultId: id
+          }
+        )
+      }
+
+
+'''''''
+
+
+
+
+Coisa bem normal...
+
+
+
+
+
+'onClick={() => this.props.onDeleteResult(result.id)}' 
+
+
+--------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+---> NOSSOS '<LI>' vão ser removidos quando clicarmos neles... ------>
+
+E ELES SERÃO REMOVIDOS DO STATE __dE FORMA ___iMMUTABLE__ (por meio do 
+
+approach do 'filter'/approach do 'splice'), O QUE 
+
+É O IDEAL.........
+
+
+
+
+
+--> E NESSA LIÇÃO, APRENDEMOS COISAS MUITO IMPORTANTES:
+
+
+1) aprendemos A DELETER OBJETOS/ELEMENTOS DE UM ARRAY (o que reflete na nossa página), POR MEIO DE '.filter(() => {})',
+
+
+
+
+
+
+2) APRENDEMOS A PASSAR 'ARGUMENTOS' (como o parâmetro 'id' em 'onDeleteResult') DE DENTRO DE NOSSA 'UI' A UMA 'action' ---> para fazer isso,
+
+
+basta escrevermos o EXPECT 
+
+desse argumento 
+
+lá na action, como visto no código de 
+
+
+''''''''''''''''''''''''''''''''
+
+'onDeleteResult: (id) => dispatch( ////////AQUI...
+    {
+        type: 'DELETE_RESULT',
+        resultId: id
+    }
+)
+
+'
+
+''''''''''''''''''''''''''''''
+
+
+
+
+
+
+
+
+
+ESSE APPROACH/MÉTODO DE FAZER O PASS DE parâmetros AOS 'ACTIONS' é __SUPER IMPORTANTE,
+
+E É OUTRO 'CORE BUILDING BLOCK'... ---->
+
+
+
+
+
+RESUMINDO:
+
+
+É ESSENCIAL
+ 
+
+ 1) SABER TRABALHAR IMUTAVELMENTE COM DELETES
+
+
+ 2) PASSAR 'action payloads' COMEÇADOS NA UI (nos button, por exemplo), PASSANDO 
+ PELAS ACTIONS (referenciados/esperados nas actions) PARA ENTÃO 
+
+ ALCANÇAR O REDUCER....

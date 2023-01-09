@@ -1,0 +1,18 @@
+{
+    "presets": [
+        ["@babel/preset-env", {
+            "targets": {
+                "browsers": [
+                    "> 1%",  //ver aula 'introduzindo babel'
+                    "last 2 versions"
+                ]
+            }
+        }]
+        ,
+        "@babel/preset-react"
+        // "@babel/preset-stage-2"
+    ],
+    "plugins": [
+        "@babel/plugin-syntax-dynamic-import"
+    ]
+}

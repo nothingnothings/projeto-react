@@ -1,0 +1,1527 @@
+
+
+
+
+
+
+
+
+
+
+-----> NA ÚLTIMA LIÇÃO,
+
+
+conseguimos fazer o SWITCH ENTRE ''''PÁGINAS''',
+
+mas NOSSA 
+
+PÁGINAS
+
+
+
+SEMPRE É RECARREGADA (reloaded) QUANDO 
+
+O 'SWITCH' ACONTECE....
+
+
+
+
+
+
+--> NOSSO APLICATIVO ESTÁ CONSTANTEMENTE SENDO RECARREGADO... --> e não queremos issO....
+
+
+
+
+
+
+
+
+
+
+
+
+---> QUEREMOS ASSEGURAR 
+
+QUE
+
+FIQUEMOS 
+
+'DENTRO DO APLICATIVO'
+
+
+quando 
+
+
+aqueles 'links da toolbar' 
+
+são clicados...
+
+
+
+
+
+
+--> é claro que se chegarmos DE FORA do aplicativo,
+
+
+e então 
+
+
+digitarmos a url de 'new-post' e apertarmos 
+
+
+enter,
+
+
+
+VAMOS ENVIAR UM NOVO REQUEST 
+
+
+à PÁGINA, E NOSSO APP VAI RECARREGAR... --> isso é óbvio....
+
+
+--> esse é o funcionamento BÁSICO DA INTERNET....
+
+
+
+
+
+---> MAS __dENTRO DE NOSSO APLICATIVO___, QUANDO
+
+LINKS 
+
+SÃO CLICADOS,
+
+
+NÓS 
+
+
+
+NÃO PRECISAMOS NECESSARIAMENTE RECARREGAR 
+
+
+NOSSA PÁGINA para mostrar novo conteúdo.... ---> não 
+
+é preciso 
+
+
+esse reload 
+
+
+PQ 
+
+
+ESSENCIALMENTE 
+
+
+__ESTAMOS DENTRO DO NOSSO APP____ ---> e é por isso que 
+
+PODEMOS ____PREVENIR___ ESSE DEFAULt (lembro: 'preventDefault()'...)
+
+
+
+
+
+
+PODEMOS PREVENIR ESSE DEFAULT, FAZER COM QUE NENHUM REQUEST SEJA ENVIADO A NOSSA PÁGINA 
+
+
+PELO BROWSER, E PODEMOS ENTÃO 
+
+
+FAZER COM QUE 
+
+
+ESSE CLICK NO LINK QUE ALTERA O PATH 
+
+SEJA 
+
+
+HANDLADO __INTERNAMENTE___---> nosso app vai HANDLAR esse click 
+
+
+E ENTÃO 
+
+RE-RENDERIZAR NOSSA PÁGINA 
+
+COM/POR MEIO DE JAVASCRIPT...
+
+
+
+
+------------------------
+
+
+PARA ISSO, 
+
+
+
+PRECISAMOS __ESPECIFICAMENTE___ ALTERAR 
+
+
+A ESTRUTURA/SINTAXE DE 
+
+NOSSOS ___lINKS___ ------> por enquanto, 
+
+
+estamos 
+
+
+usando 
+
+
+
+
+ANCHOR TAGS.... ('a href=xxx'... ) ------------> 
+
+
+
+
+
+CONTUDO, 
+
+
+
+
+
+ANCHOR TAGS PADRÃO _______NÃO SÃO AS COISAS ___ UTILIZADAS POR NÓS___, 
+
+
+
+QUANDO CODAMOS/ESCREVEMOS NOSSA PÁGINA 
+
+COM 
+
+O 
+
+
+'REACT ROUTER'... ----------> QUANDO 
+
+
+
+USAMOS 
+
+
+O 
+
+'REACT ROUTER',
+
+
+
+
+
+HÁ 
+
+UM 
+
+
+COMPONENT ESPECIAL 
+
+
+____ QUE DEVE __ SER UTILIZADO PARA ___sETTAR OS LINKS____... ------> 
+
+
+
+
+O COMPONENT DE QUE 
+
+FALAMOS 
+
+
+É 
+
+
+O COMPONENT/OBJETO 'Link'...
+
+
+
+
+
+
+ELE PODE SER IMPORTADO 
+
+
+DA PACKAGE 'react-router-dom', 
+
+assim como fizemos, anteriormente, com 'Route'....
+
+
+ex:
+
+
+
+
+import { Route, Link } from 'react-router-dom';
+
+
+
+
+
+
+-----------------------------------------------------
+
+
+
+
+
+
+VAMOS IMPORTAR 
+
+ESSE NEGÓCIO LÁ EM 
+
+'Blog.js'... (que é onde nossos links ESTÃO SENDO DEFINIDOS... ---> É O CONTAINER 
+
+
+QUE ESTÁ 
+SEGURANDO
+
+
+TODOS OS OUTROS CONTAINERS/PÁGINAS, é o ALICERCE de nosso 
+
+aplicativo, neste caso...)
+
+
+
+
+
+
+
+
+
+
+
+
+COMO O NOME NOS SUGERE,
+
+
+
+
+
+'LINK' nos permite 
+
+
+
+__cRIAR __ UM LINK/LINKS... -------->  NÓS USAMOS 
+
+
+
+
+
+ESSE OBJETO/COMPONENT 
+
+
+'Link' 
+
+
+
+em 
+
+VEZ 
+
+DAS ANCHOR TAGS TRADICIONAIS...
+
+
+
+
+ou seja,
+
+
+
+
+antes, naquele lugar 
+
+em que 
+
+tínhamos 
+
+
+
+'<li><a href="/">Home</a></li>',
+
+
+
+
+AGORA 
+
+TEREMOS:
+
+
+<li><Link>Home</Link></li>
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+CERTO...
+
+
+MAS 
+
+
+É EVIDENTE 
+
+QUE 
+
+
+ESSE 'Link' aí, esse component,
+
+PRECISA 
+
+DE UM PROP PARA 
+
+
+DEFINIR 
+
+
+O 
+
+'PATH' em si... -----> pq por SI PRÓPRIO, ele não faz muita coisa... 
+
+
+
+
+
+
+---> DEVEMOS DIZER AO 
+REACT ROUTER,
+
+INFORMAR A ELE 
+
+O 
+
+___dESTINO__ A QUE DEVERÁ CONDUZIR ESSE LINK,
+
+A QUAL PATH 
+
+ELE DEVERÁ 
+LEVAR...
+
+
+
+
+
+
+
+
+PARA ISSO, 
+
+USAMOS 
+
+
+A ESTRANHA PROPRIEDADE (nome estranho) 
+
+
+de 
+
+
+'to'...
+
+
+
+OU SEJA,
+
+nosso código vai ficar 
+
+
+<Link to=...>Home</Link>
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+A PROPRIEDADE 
+
+
+'to=', 
+
+
+
+
+NA
+
+SUA FORMA
+
+MAIS
+
+
+SIMPLES,
+
+
+É 
+
+
+___UMA STRING__... seu valor é uma string... --> 
+
+
+
+nesse 
+
+caso, neste exemplo,
+
+
+vamos
+
+definir:
+
+
+
+<li><Link to="/">Home</Link></li>
+
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+CERTO.... AGORA ISSO ESTÁ CORRETO,
+
+
+ESSE LINK AÍ,posicionado 
+
+
+em 
+
+'<li>'
+
+
+VAI NOS CONDUZIR 
+
+AO 
+
+
+'localhost:3000/'... (Que é nosso HOME).
+
+
+
+
+---------------------------
+
+
+
+
+CERTO,
+
+AGORA ISSO REALMENTE FUNCIONOU...
+
+
+
+
+Nosso código ficou:
+
+
+
+
+
+
+    return (
+            <div className={BlogStyle.Posts}>
+                <header>
+                    <nav>
+                        <ul  style={{
+                            listStyle: 'none',
+                            margin: '0',
+                            padding: '0', 
+                            display: 'flex row',
+                            justifyContent: 'center'
+                        }}>
+                            <li style={{
+                                    display: "inline-block",
+                                    margin: "20px"
+                            }}><Link to="/" style={{
+                                textDecoration: 'none', 
+                                color: 'black'
+                            }}   >Home</Link></li>
+                            <li style={{
+                                    display: "inline-block",
+                                    margin: "20px"
+                            }}><Link to="/new-post"  style={{
+                                textDecoration: 'none', 
+                                color: 'black'
+                            }} >New Post</Link></li>
+                        </ul>
+                    </nav>
+                </header>
+                   {/* <Posts /> */}
+                                                
+                 <Route exact path="/" component={Posts} />
+
+
+                <Route path="/new-post" component={NewPost}  />
+
+
+
+==================================================
+
+
+
+
+
+
+CERTO... --> 
+
+
+e professor 
+
+
+explica que 
+
+
+
+'<Link to=.... />'
+
+
+
+
+
+É 
+
+
+
+____eSSENCIALMENTE___ 'KINDOF'
+
+
+A MESMA 
+
+COISA QUE 
+
+
+
+' <a href=... />',
+
+
+
+
+É 
+
+
+A MESMA COISA, SIM, MAS 
+
+A DIFERENÇA 
+
+É 
+
+
+___QUE O REACT___ ROUTER__ É QUE VAI
+
+CRIAR 
+
+
+ESSA ANCHOR TAG PARA NÓS,
+
+E É ELE 
+
+
+QUE VAI ENTÃO FAZER O 'PREVENTDEFAULT' PARA NÓS... (
+
+    previne o default, que seria o send de um request 
+
+    quando clicamos 
+
+
+    em uma anchor tag... --------> outro DEFAULT é o handle 
+
+    do 
+
+    'click' 
+
+
+    no A HREF 
+
+
+    PELO 
+
+
+    ELEMENTO EM Si...
+)
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+--> 
+
+
+e 
+
+'to'
+
+
+pode, SIM,
+
+
+
+SER UM 
+
+
+
+
+____ELEMENTO MAIS COMPLEXO___... ------> ele pode ser, por exemplo,
+
+
+
+UM OBJETO JAVASCRIPT... --> se voce for outputtar 
+
+
+conteúdo dinâmico,
+
+terá 
+
+de 
+usar 
+
+
+
+'{}'
+
+
+
+
+
+
+
+
+
+
+
+-----> MAS NÃO SÓ ISSO, 
+
+
+COMO O CONTEÚDO DINÂMICO EM SI É UM OBJETO JAVASCRIPT (obrigatoriamente, nesse 'to'),
+
+VOCÊ 
+
+
+É 
+
+OBRIGADO A USAR MAIS UM PAR DE 
+
+CURLY BRACES..
+
+
+tipo 
+
+assim:
+
+
+
+<Link to={{}}    />    //////////SIM, ISSO É NECESSÁRIO.
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+
+----> nós utilizamos a versão 'simples' 
+
+
+
+do 'to=...',
+
+
+
+
+mas agora 
+
+
+o professor 
+
+
+quer nos 
+
+
+
+mostrar 
+
+
+a versão 
+
+'elaborada',
+
+
+
+com 
+
+
+aquele OBJETO fancy lá 
+
+servindo de path...
+
+
+
+
+ou seja,
+
+ele 
+
+vai 
+escrever 
+
+
+'<Link to={
+    
+    {
+
+    }
+}'
+
+
+
+
+
+DENTRO 
+
+desse 
+
+
+objeto (
+    o 
+    '{}' mais interno
+),
+
+
+
+
+O PROFESSOR 
+
+
+
+DIZ QUE PODEMOS DEFINIR UMA PROPRIEDADE 
+
+
+chamada 
+
+de 
+
+'pathname:'  ------> 
+
+
+
+essa propriedade 
+
+
+
+É SIMPLESMENTE 
+
+
+
+A ___STRING____ DO PATH A QUE QUEREMOS 
+
+
+QUE O USUÁRIO
+
+
+SEJA 
+
+CONDUZIDO, 
+
+QUANDO 
+
+
+esse 'Link' for clicado por ele... --->
+
+
+
+
+aqui, o professor 
+
+
+vai definir 
+
+'/new-post'
+
+
+como 
+
+
+
+o pathname 
+
+desse objeto interno do 'to'...
+
+
+
+ex:
+
+
+
+'<Link to={
+    
+    {
+        pathname: '/new-post'
+    }
+}'
+
+/>
+
+
+--------------------------------------
+
+
+
+
+
+CERTO, 
+
+MAS ISSO É A COISA MAIS BÁSICA 
+
+
+QUE PODEMOS FAZER 
+
+
+COM ESSE OBJETO INTERNO... ---> 
+
+
+outra 
+
+
+
+coisa que 
+
+
+PODEMOS 
+
+
+__FAZER___, QUE O PROFESSOR NOS ENSINA AGORA,
+
+
+
+É ___aDICIONAR____ UMA propriedade/tag 
+
+de 
+
+'hash'... depois 
+
+dessa propriedade 
+
+'pathname'... ---------> 
+
+
+
+
+nessa propriedade 
+
+
+'hash'
+
+
+podemos
+
+
+
+colocar um
+
+valor de nossa escolha,
+
+
+como 
+
+
+'#submit'...
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+'<Link to={
+    
+    {
+        pathname: '/new-post',
+        hash: '#submit'
+    }
+}
+
+/>'
+
+
+
+
+----------------------------------
+
+
+OK,
+
+MAS O QUE DIABOS
+
+
+
+'hash'
+
+
+faz...
+
+
+
+
+É bem simples:
+
+
+
+
+ele age como 'subdivisória' 
+
+
+daquele path que settamos em  'pathName'... -------> professor 
+
+
+explica que 
+
+
+esse 
+
+
+valor 
+
+
+de 
+'#submit'
+
+
+NOS PERMITE 
+
+__PULAR___ PARA QUALQUER
+
+ID de 
+
+
+"#submit" que tivermos 
+
+
+
+em algum elemento...  ----> ISSO É USADO 
+
+
+COM aquela 
+FEATURE 
+
+
+DE 
+
+FAZER 
+
+'APPEND' DE UM __''FRAGMENTO DE UMA URL''' ---------> 
+
+
+
+
+
+AAAAAH, AGORA ENTENDI... ---> 
+
+
+
+é uma feature que 
+
+
+conheço há pouco tempo:
+
+
+
+é uma feature acessada quando 
+
+
+colocamos '#' na url ---> isso
+
+
+
+faz com que 
+
+
+NOSSA PÁGINA/o browser 
+
+PULE __PARA A PARTE __ DA PÁGINA 
+
+
+EM QUE 
+
+FOI DEFINIDO 
+
+
+ESSE 
+
+'#'.. ---> isso é visto em páginas como a WIKIPEDIA,
+
+e em páginas como gamefaqs,
+
+
+em que  
+
+temos longas 
+
+listas, com vários tópicos, que podem 
+
+
+ser acessados por um índice, no topo da página...
+
+
+
+
+
+RESUMINDO: se o usuário clicar nesse link aí, no 'Link',
+
+
+ele será 
+
+DIRECIONADO 
+
+
+AO 
+
+
+'path' 
+
+
+de 
+
+'/new-post',
+
+
+E AO MESMO 
+
+
+TEMPO 
+
+
+
+
+TERÁ SEU BROWSER 'pulando'/teletransportado 
+
+
+para 
+
+
+
+A SEÇAO DAQUELA PÁGINA/CÓDIGO em que 
+
+foi definido aquele '#', que nesse caso seria 
+
+um trecho 
+
+que tenha 
+
+'#submit' no seu id...
+
+
+
+
+
+
+
+
+
+FICARIA/FICA ASSIM, POR ENQUANTo:
+
+
+
+'<Link to={
+    
+    {
+        pathname: '/new-post',
+        hash: '#submit'
+    }
+}
+
+/>'
+
+
+
+
+-------------------------------
+
+
+
+além
+
+desses 2, existe uma terceira propriedade,
+
+
+
+'search:',
+
+que 
+
+
+TE DEIXA 
+
+
+____aDICIONAR___ 'queryParams'... ---> esses queryParams....
+
+
+
+
+
+O QUE SÃO QUERYPARAMS:
+
+Query params allow for additional
+ application state to be serialized into the
+  URL that can't otherwise fit into the path of the URL
+   (i.e. everything to the left of the ?). Common use cases
+    for query params include representing
+     the current page number in a paginated collection,
+      filter criteria, or sorting criteria.
+
+
+
+
+
+
+
+
+CERTO... E O PROFESSOR AQUI 
+
+VAI DEFINIR UM 
+
+'QUERYPARAM' 
+
+
+de 
+
+
+'?quick-submit=true'.....
+
+
+
+
+
+
+ELE EXPLICA QUE ESSES VALORES AÍ DE STRINGS 
+
+SÃO 
+
+
+SÓ EXEMPLOS,
+
+mas exemplos que
+poderiam
+
+
+ser encontrados na vida real...
+
+
+
+ex:
+
+
+'<Link to={
+    
+    {
+        pathname: '/new-post',
+        hash: '#submit',
+        search: "?quick-submit=true"
+    }
+}
+
+/>'
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+Essas propriedades nao farao nada no nosso app,
+
+
+mas 
+
+sao configuracoes avancadas 
+
+que 
+
+podem
+
+
+NOS AJUDAR
+ 
+ A ESTABELECER BEM
+
+ O LOCAL ONDE QUEREMOS 
+
+
+ IR 
+
+
+ QUANDO 
+
+
+ ESSE LINK AÍ FOR CLICADO...
+
+
+
+
+
+ ---> com esses nossos LINKS implementados,
+
+
+ RECARREGAMOS NOSSO APLICATIVO,
+
+ E PERCEBEMOS
+
+
+ QUE 
+
+ A PÁGINA 
+
+ NÃO MAIS RECARREGA 
+
+ QUANDO CLICAMOS NOS LINK's 
+
+
+ na 
+
+'''' TOOLBAr''''/navbar... ---> PODEMOS OBSERVAR 
+
+
+ISSO 
+
+
+
+POR MEIO 
+
+DO 
+
+ÍCONE DE 'RELOAD',
+
+que nunca vai MUDAR, vai 
+
+ficar constante (sinalizando que nossa página NÃO FOI RECARREGADA)...
+
+
+
+
+
+
+
+
+
+
+---> TAMBÉM PODE-SE CONSTATAR 
+
+
+QUE 
+
+
+
+
+QUANDO CLICAMOS Em 'New Post',
+
+nesse link aí,
+
+
+NOSSA URL/patH da url
+É 
+
+ALTERADO 
+
+
+__PARA VIRAR___ 
+
+
+'localhost:3000/new-posts?quick-submit=true#submit"
+
+
+
+
+
+
+
+
+
+
+OU SEJA,
+
+
+AS COISAS 
+
+DEFINIDAS 
+
+
+NO OBJETO 
+
+
+
+do 'to={
+
+}' 
+
+
+
+
+
+
+REALMENTE 
+
+FORAM 
+
+ADICIONADAS 
+
+
+
+À 
+
+NOSSA URL..
+
+
+
+
+
+
+
+----> agora, portanto, 
+
+
+NÓS NÃO ESTAMOS PROPRIAMENTE 
+
+
+__RECARREGANDO A PÁGINA__... ---> 
+
+
+
+nossa 
+
+página
+
+
+
+PODE 
+
+TER 
+
+A MESMA APARÊNCIA DE ANTES,
+
+
+
+MAS 
+
+
+AGORA O REACT ESTÁ __RE-RENDERIZANDO__ AS 
+
+
+PARTES 
+
+DA PÁGINA
+
+QUE PRECISAM
+
+
+SER RE-RENDERIZADAS,
+
+
+
+E MANTENDO O RESTO que não precisa de re-render... (a toolbar)...
+
+
+OU SEJA,
+
+
+NOSSO STATE 
+ 
+NÃO É MAIS PERDIDO.... ---> NOSSO STATE AGORA É 
+
+
+'contido',
+
+nós não perdemos mais o nosso state...
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+
+E É ASSIM QUE DEVEMOS 
+
+
+CODAR NOSSOS REACT APPs,
+
+de preferenciA:
+
+
+devemos 
+
+OS 
+
+CODAR TENDO EM MENTE 
+
+
+UMA 
+
+
+ESTRUTURA 
+
+'SINGLE-PAGE APP',
+
+
+e com o 
+
+
+react-router-dom 
+
+
+NOS AJUDANDO 
+
+
+A
+ TROCAR 
+
+
+ ENTRE 
+
+ DIFERENTES
+
+
+
+ 'containers/páginas' de nosso app....

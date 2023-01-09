@@ -1,0 +1,698 @@
+
+
+
+
+
+
+
+
+
+
+
+
+------> DEVEMOS VER ESSES 'LIFECYCLE HOOKS DOS FUNCTIONAL COMPONENTS' 
+
+
+
+por meio de um exemplo.
+
+
+
+Usaremos o 
+
+
+
+'Cockpit'... ----------> ELE 
+
+
+
+É UM FUNCTIONAL COMPONENT.... --------> NÓS PODEMOS 
+
+
+USAR 
+
+
+
+'reacthooks' nele 
+
+
+SE NÓS ESTIVERMOS USANDO A VERSÃO CORRETA DO 
+
+REACT, QUE USA reacthooks... 
+
+
+
+-------------------------------
+
+
+CÓDIGO DE 'COCKPIT':
+
+
+
+import React from 'react';
+
+
+
+import Cockpit from './Cockpit.module.css'
+
+
+
+
+
+const cockpit = (props) => {
+
+
+
+    const classes = [];
+    let btnClass = '';
+ 
+    if (props.showPersons) {
+      btnClass = Cockpit.red;
+    }
+
+
+
+
+
+    if(props.persons.length <= 2) {
+    
+      
+      classes.push(Cockpit.red); 
+    }
+    
+    
+    
+    
+    if(props.persons.length <= 1) {
+      classes.push(Cockpit.bold);
+    }
+
+
+
+
+    return (
+        <div className={Cockpit.Cockpit}>
+        <h1>{props.title}</h1> 
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={props.clicked}>Show/Hide Persons</button> 
+        </div>
+    );
+    
+
+
+---------------------------------------
+
+
+
+
+
+É EVIDENTE QUE DENTRO DE 
+
+'cockpit' 
+
+
+NÃO PODEMOS USAR 
+
+
+um lifecycle hook de class-based components, como 
+
+
+'componentDidMount' ou qualquer coisa do gênero, 
+
+
+ 
+ __MAS NÓS PODEMOS FAZER ___MANAGE DO STATE__ desse functional component 
+
+
+ por meio 
+
+ de 
+
+ 'useState()'... (apesar de que ISSO NÃO NOS AJUDA quanto aos lifecycle hooks...) --------->
+  
+
+
+  MAS O QUE PODEMOS USAR, NESSE FUNCTIONAL COMPONENT, É 
+
+
+  _______OUTRO HOOK/MÉTODO___________....
+
+
+
+
+
+  ANTES DE USÁ-LO, NO ENTANTO, SOMOS OBRIGADOS A IMPORTÁ-LO 
+
+
+
+lá nos imports 
+
+no início do documento... (pq é um HOOK ESPECIAL do react)...
+
+
+
+
+o nome desse hook/objeto importado 
+
+
+é 
+
+
+'useEffect'....
+
+
+
+
+EX:
+
+
+
+
+import React, { useEffect } from 'react';
+
+
+
+
+
+--------------------------------------------
+
+
+
+USEEFFECT ---------> É O ___SEGUNDO REACTHOOK __________ MAIS IMPORTANTE DE TODOS. ELE SÓ PERDE PARA O 'useState' (que é o negócio que altera/updata STATE dos functional components...)  -------> ISSO 
+
+PQ O 'useEffect' 
+
+BASICAMENTE ___COMBINA___ A FUNCIONALIDADE/USE-CASES de 
+
+
+__________tODOS ____________ ESSES 'CLASS-BASED LIFECYCLE HOOKS' EM 
+
+
+1 ÚNICO REACThook, o 'useEffect'.......
+
+
+
+
+
+
+
+
+TECNICAMENTE, ELE NÃO É 
+
+UM 
+
+
+'LIFECYCLE HOOK', 
+
+e sim 
+
+É um 
+
+
+__REACTHOOK____....
+
+
+
+
+(É BASICAMENTE UMA __FUNÇÃO GIGANTE__ QUE TEM TODAS 
+
+AS FUNCIONALIDADES/LIFECYCLE HOOKS DOS COMPONENTS CLASS-BASED, é 
+
+um 'tudo em um'...)
+
+
+
+
+
+
+-------------------------------
+
+
+
+Certo,
+
+
+e como ele funciona?
+
+
+
+
+
+
+
+NÓS PODEMOS O ADICIONAR EM QUALQUER LUGAR NO BODY 
+
+DO SEU FUNCTIONAL COMPONENT...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const cockpit = (props) => {
+
+
+
+
+
+    useEffect();
+}
+
+
+
+---------------------------------
+
+
+
+
+
+COMO UM DEFAULT,
+
+
+
+O 'useEffect()' ACEITA/EXIGE UMA 
+
+__FUNÇÃO__ INTERNA (arrow function)
+
+___ QUE SERÁ 
+
+
+____EXECUTADA___ PARA CADA __ RENDER CYCLE ___ DO NOSSO COMPONENT__...
+
+
+
+
+
+ex:
+
+
+
+
+
+const cockpit = (props) => {
+
+
+
+
+
+    useEffect( () => {
+
+    });
+}
+
+
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+AQUI, NESSE EXEMPLO, O PROFESSOR 
+
+VAI FAZER UM CONSOLE.LOG 
+
+
+
+de 
+'[Cockpit.js] useEffect'
+
+
+
+
+EX:
+
+
+
+
+
+const cockpit = (props) => {
+
+
+
+
+
+    useEffect( () => {
+        console.log('[Cockpit.js] useEffect');
+    });
+}
+
+
+
+-------------------------------------------
+
+
+
+
+SE SALVARMOS ESSE CÓDIGO 
+
+E RECARREGARMOS A PÁGINA (automatico),
+
+
+NÓS 
+
+
+VEREMOS QUE 
+
+JÁ ESTARÁ OUTPUTTADA 
+
+
+A MENSAGEM 
+
+'[Cockpit.js] useEffect'  NO CONSOLE...
+
+
+
+
+(OBS: tive que renomear 'cockpit' para 'Cockpit' porque 
+
+o react estava me incomodando, dizendo que 
+
+eu estava nomeando os components de forma errada....)
+
+
+
+
+React components (both functional as well as class) 
+must begin with a capital letter
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+COMO O OUTPUT JÁ APARECEU,
+isso significa 
+
+QUE 
+
+A FUNÇÃO QUE 
+
+PASSAMOS A 'useEffect' (e nós SEMPRE PASSAMOS UMA FUNÇÃO INTERNA A 'useEffect') 
+
+
+
+É 
+EXECUTADA ___PARA CADA ____ 'RENDER CYCLE' DO ___ COCKPIT... -------> ISSO SIGNIFICA QUE 
+
+
+
+SE NÓS 
+
+
+
+CLICARMOS EM 
+
+'toggle persons', no botão, 
+
+
+NÓS VEREMOS 
+
+
+____eSSE OUTPUT __ MAIS UMA VEZ____.... (ISSO ACONTECE 
+
+PQ NÓS ___MUDAMOS ALGO___ NO NOSSO APP, NO NOSSO COCKPIT, E ISSO 
+
+RE-RENDERIZOU NOSSO COCKPIT,
+
+o que 
+
+triggou 
+
+o 
+
+'useEffect'....) ------------> E SE DIGITARMOS 
+
+
+ALGO NOS INPUT FIELDS DAS 'person',
+ 
+
+ NÓS VEREMOS 
+
+
+ 'USEEFFECT' 
+
+ MAIS UMA VEZ.... 
+
+
+
+
+
+ *** É CLARO QUE NADA MUDOU __NO COCKPIT EM SI___ quando eu digitei no input field,
+
+ MAS COMO/EM RAZÃO DE NÃO TERMOS ADICIONADO 
+
+ ____NENHUMA___ 'PERFORMANCE OPTIMIZATION' NO NOSSO CÓDIGO ATÉ AGORA,
+
+
+ o react vai BASICAMENTE ___RE-RENDERIZAR___ O 'APP.JS' __INTEIRO___ quando 
+
+ nós digitamos algo nos input fields (em 'person/persons'...) -------> isso acontece pq 
+
+
+ EM 'app.js '
+
+ NÓS ESTAMOS FAZENDO MANAGE DO 
+
+ 'state' DAS 'PERSONS' (aquele array de objetos)..... e aquele array de objetos 'person'
+
+
+ __MUDA__ QUANDO NÓS DIGITAMOS, 
+
+
+O QUE POR SUA VEZ TRIGGA 
+
+O MÉTODO 
+
+'render()' 
+
+
+do APP.JS,
+
+
+E NELE, É CLARO, NÓS INCLUÍMOS 
+
+
+
+__o NOSSO PRECIOSO 'cockpit', QUE TAMBÉM É RE-RENDERIZADO (E por ser re-renderizado, trigga aquela função/método/reacthook 'useEffect', que tem o console.log...)
+
+
+
+
+
+
+
+
+**** PROFESSOR RESSALTA QUE QUANDO ELE DIZ 're-renderizado', ele NÃO QUER DIZER 
+
+
+
+'RE-RENDERIZADO NO DOM DE VERDADE', E SIM 'RE-RENDERIZADO' NO  __VIRTUAL DOM__ do react... -----> 
+
+
+PQ é por meio desse 're-render' no dom VIRTUAL que o REACT __CHECA___ SE ELE VAI PRECISAR 
+
+RE-RENDERIZAR ALGUMA COISA DE VERDADE, NO DOM DE VERDADE... (real dom).... ----------->
+
+
+NÓS PODEMOS __PREVENIR__ ESSE RE-RENDER DO REACT A PARTIR DESSA COMPARAÇÃO (e vamos fazer isso mais 
+tarde), 
+
+
+MAS POR ENQUANTO 'it is what it is'...
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+CERTO,
+
+
+então 
+
+
+o 'useEffect' roda dentro 
+
+do cockpit... ---> roda para CADA UPDATE... -----> e isso 
+
+
+JÁ 
+
+
+
+___SIGNIFICA __ QUE NÓS PODEMOS O UTILIZAR PARA __tODAS AS COISAS___ QUE 
+
+NÓS JÁ ESTÁVAMOS FAZENDO 
+
+EM 
+
+'componentDidUpdate()'....   (e, de fato, isso é ok...) -------> se vocÊ precisa,
+ 
+
+ POR EXEMPLO,
+
+
+
+ ENVIAR UM HTTP REQUEST  ou QUALQUER COISA DO GÊNERO, 
+
+
+ VOCÊ PODE FAZÊ-LO 
+
+
+ __dentro do 'useEffect', sem problemas... -----> contudo, você deve usar esse 'useEffect' de forma hábil... ------> 
+
+
+ pq ele traz algumas IDIOSSINCRASIAS. --------> 
+
+
+ POR EXEMPLO,
+
+
+
+ temos que 
+
+ saber 
+
+ QUE ____O  'useEffect' 
+
+ É EXECUTADO 
+
+ __TAMBÉM___ SEMPRE 
+
+
+ QUE O 
+
+
+ COMPONENT EM QUESTÃO 
+
+
+ __É CRiado... (podemos ver isso pelo primeiro output do 'useEffect' no console, que demonstra 
+ 
+ QUE ELE É EXECUTADO PARA CADA RENDER CYCLE DESSE COMPONENT, ATÉ MESMO DO PRIMEIRO DE TODOS...)
+
+
+
+
+
+
+
+
+
+ ---> RESUMINDO:
+
+
+
+
+useEffect
+
+é 
+
+
+ 'componentDidMount' e 'componentDidUpdate' 
+
+
+ COMBINADOS EM 1 
+
+
+ ÚNICO   '''''EFEITO''''' ('effect')...        (o estranho aqui é que o professor não mencionou 'shouldComponentUpdate'... será que ele não é contemplado pelo 'useEffect'?)
+
+
+
+
+
+
+
+
+
+ CERTO... MAS ALGUNS HOOKS, 
+
+ COMO 
+
+
+ 'getDerivedStateFromProps' ,
+
+
+
+
+ __NÃO ESTÃO INCLUÍDOS/NÃO EXISTEM 
+
+ DENTRO 
+
+ DESSE 
+ 
+ 'useEffect'...  (MAS VOCÊ NEM MESMO PRECISA DESSES HOOKS...) ------> você NÃO PRECISA DESSES HOOKS pq, se você tiver 'props' aqui (e você tem, pq esse é um functional component), 
+
+ E VOCÊ 
+
+ QUER BASEAR SEU STATE A PARTIR DESSE 'props',
+
+
+
+ você pode simplesmente usar 
+
+
+ 'useState()' E ENTÃO 
+
+
+ PASSAR 
+
+
+ ALGUMA 
+ 
+
+
+ 'data' (alguns dados) 
+
+
+
+DE SEU 'props' 
+
+
+COMO 
+
+PARÂMETRO 
+'initial State' 
+
+
+DESSE MÉTODO 'useState()'... ---------> (por isso você nem precisa do 'getDerivedStateFromProps' com os functional components, 
+
+você JÁ TEM ESSA FEATURE BUILTIN no 'useEffect' JUSTAMENTE EM RAZÃO 
+
+DA ___ESSÊNCIA___ DOS FUNCTIONAL COMPONENTS...  )
+
+
+
+
+
+
+
+useEffect -----> É USADO PARA REPLICAR O FUNCIONAMENTO DOS LIFECYCLE HOOKS MAIS __ÚTEIS__...
+
+
+
+
+-------------------------------------------------------

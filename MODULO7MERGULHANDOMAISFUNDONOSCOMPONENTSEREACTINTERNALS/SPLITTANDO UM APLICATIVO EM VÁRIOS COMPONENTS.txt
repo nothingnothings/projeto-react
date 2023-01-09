@@ -1,0 +1,3302 @@
+
+
+
+
+
+
+
+
+
+--> na última lição, críamos uma nova estrutura de código...
+
+
+
+
+
+
+
+
+
+-----> AGORA NÓS DEVEMOS PREENCHER OS COMPONENTS/ARQUIVOS .Js 
+
+
+'Cockpit' 
+
+
+e 'Persons.js'
+
+
+
+COM 
+
+
+CÓDIGO...
+
+
+
+---------------------------------------
+
+
+
+
+Persons.js ---> ESSE COMPONENTE 
+
+
+
+PODERÁ SER 
+
+UM 
+
+
+'FUNCTIONAL COMPONENT' ----> func component pq NÓS NÃO PLANEJAMOS 
+
+
+
+FAZER 'MANAGE' DO STATE DO NOSSO APLICATIVO NESSE COMPONENT... (apesar de que, se usássemos 
+
+o approach 'reactHooks', esse manage seria possível ATÉ MESMO 
+NESSE 'FUNCTIONAL COMPONENT'... ) -------> 
+
+
+
+
+
+
+
+
+mAS O PROFESSOR VAI MANTER AQUELA ESTRUTURA EM QUE 
+
+
+USAMOS 
+
+
+OS 'FUNCTIONAL COMPONENTS' PARA APRESENTAÇÃO DE CONTEÚDO,
+
+
+E OS 
+
+
+'CLASS-BASED COMPONENTS' para STATE MANAGEMENT...
+
+
+
+------------------------------------
+
+
+
+
+
+FUNCTIONAL COMPONENT ----> 
+
+
+
+professor 
+
+
+
+escreve 
+
+
+
+
+
+const persons = (props) => {
+
+
+return();
+
+
+}
+
+
+-----------------------------------------
+
+
+
+PROFESSOR APONTA QUE 
+
+
+__HÁ OUTRA FORMA__ DE ESCREVER 
+
+
+
+O __BODY___ DESSA FUNÇÃO... ------> até agora,
+ 
+
+ nós sempre usamos 
+
+
+ 'return();'.... --------> NÓS SEMPRE 
+
+
+
+ RETORNÁVAMOS ALGO ALI... --------> E NÓS __DEFINITIVAMENTE PODEMOS FAZER ISSO___, PODEMOS RETORNAR ALGO, 
+
+ AQUI... ----------> CONTUDO, 
+
+ SE NÓS 
+
+ APENAS 
+
+
+ ____QUEREMOS __ RETORNAR ____ALGO __DENTRO DESSE FUNCTION BODY, 
+
+
+
+ DEVIDO À SINTAXE  DO ES6 E O SETUP DO NOSSO PROJETO (next-gen features), 
+
+
+ NÓS 
+
+ PODEMOS 
+
+
+
+
+
+ SIMPLIFICAR ESSA ESCRITA DE 'const persons = (props) => { 
+     return ();
+ }'
+
+
+ PARA 
+
+
+
+
+ A FORMA:
+
+
+
+
+
+ const persons = (props) => ();    //////////////SIM, ESSA SINTAXE É VÁLIDA.
+
+
+
+ ------------------------------
+
+
+
+
+
+
+ ISSO FUNCIONA SIMPLESMENTE DEVIDO à MANEIRA PELA QUAL 'ARROW FUNCTIONS' FUNCIONAM.... -------->
+
+
+
+
+ Se você escrever todo CO´DIGO DAS ARROW FUNCTION em APENAS 1 ÚNICA LINHA (contudo, isso 
+ 
+ 
+ NÃO SIGNIFICA QUE VOCÊ NÃO PODE SPLITAR O CÓDIGO DE DENTRO DOS PARÂMETROS 
+ EM MÚLTIPLAS LINHAS, ISSO É POSSÍVEL, SIM...)
+
+
+
+ EX:
+
+
+
+ const persons = (props) => (
+
+ ); //////////SIM, ESSA SINTAXE É POSSÍVEL.
+
+
+
+
+ -------------------------------------------
+
+
+
+  const persons 
+  = (props) => (
+
+ ); /////////ESSA SINTAXE, POR SUA VEZ, NÃO É POSSÍVEL/PERMITIDA.
+
+
+
+
+ ---------------------------------------------------
+
+
+
+
+
+ ISTO:
+
+
+  const persons = (props) => (
+
+ );
+
+
+
+
+ é lido como ISTO:
+
+
+
+
+
+  const persons = (props) => (
+      return ;
+ );
+
+
+
+ -----------------------------------------------
+
+
+
+
+ CERTO, 
+
+
+ ESSA É A ''DEFAULT ES6 ARROW NOTATION''...
+
+
+ ------------------------------------------------
+
+
+
+
+
+----> certo,
+
+
+dentro do 
+
+
+  const persons = (props) => (
+
+ );
+
+
+
+
+ VOCÊ 
+
+
+ COLOCA 
+
+ SEU CÓDIGO JSX DIRETAMENTE....
+
+
+
+
+
+ ---------------------------------------
+
+
+
+
+
+ MAS ISSO NÃO É TUDO, É CLARO... pq nós PRECISAMOS IMPORTAR 'React' (aquele objeto),
+
+ nesse código, 
+
+ COMO SEMPRE___...
+
+
+
+
+ -----------------------------------------
+
+
+
+
+
+ ----> Certo... -----> COMO NÓS __saBEMOS___ QUE 
+
+
+ ESSE COMPONENT 'persons' VAI TER 'PROPS', 'props' é o negócio 
+
+
+ QUE VAI 
+
+ SEGURAR 
+
+
+ UM ARRAY/O ARRAY DE PERSONS, O ARRAY QUE 
+
+ VAMOS QUERER 
+
+
+ TRANSFORMAR 
+
+
+ ______eM UM ARRAY __ DE ELEMENTOS 'JSX', 
+
+
+ EXATAMENTE COMO FIZEMOS 
+
+
+
+EM 'App.js'... ----------->  ISSO SIGNIFICA QUE 
+
+
+NÓS PODEMOS 
+
+
+___bASICAMENTE ____ COPIAR 
+
+O 
+
+CÓDIGO 
+
+
+
+de 
+
+
+
+
+
+''
+
+
+
+
+
+
+
+if (this.state.showPersons) {
+
+
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        
+      
+        
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+    
+      })}
+
+
+    
+    </div>
+  );
+
+  btnClass = classes2.red;
+
+
+
+}
+
+
+''
+
+
+
+
+
+
+
+
+------------------------------------------
+
+
+
+
+COPIAMOS 
+
+O CÓDIGO 
+
+
+
+persons.map( (person, index) => {
+        
+      
+        
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+    
+      })}
+
+
+
+
+
+OU SEJA,
+ 
+
+
+ O CÓDIGO 
+
+
+
+ 'persons.map()',
+  
+  QUE É O 
+
+  MÉTODO QUE FAZ A CONVERSÃO 
+
+  DO ARRAY 
+
+
+
+
+
+  EM UM MONTE DE ELEMENTOS 'Person' JSX...
+
+
+
+
+  -----------------------------------
+
+
+
+
+PODEMOS COPIAR ESSE CÓDIGO, É CLARO, MAS AINDA TEMOS QUE O AJUSTAR....
+
+
+
+
+
+
+
+FICARIA ASSIM:
+
+
+
+
+
+
+const persons = (props) => (
+
+
+
+
+    persons.map( (person, index) => {
+        
+      
+        
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+    
+      })
+
+
+
+);
+
+
+
+
+------------------------------------
+
+
+
+
+CERTO...
+
+
+
+MAS aí o professor vai ter que ajustar o call de 'persons.map'... ------> ele vai 
+
+
+COLOCAR 
+
+'props' 
+
+
+NA FRENTE DE 
+
+
+'persons'... --> para que fique 
+
+'props.persons.map()'...
+
+
+
+--------------------------------------------
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const persons = (props) => (
+
+
+
+
+    props.persons.map( (person, index) => { //////eis o código em questão.
+        
+      
+        
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+    
+      })
+
+
+
+);
+
+
+
+----------------------------------------------
+
+
+
+O QUE DEVEMOS TER EM MENTE É QUE 
+
+TODO ESSE CÓDIGO AQUI:
+
+
+''''
+    props.persons.map( (person, index) => { 
+        
+      
+        
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+    
+      })
+
+'''''''
+
+
+
+
+
+__JÁ É CÓDIGO JSX__, 
+
+SÓ NÃO 
+
+VAMOS TER O return statement ao final desse functional component (pois esse return statement está IMPLÍCITO).
+
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+ 
+
+ Uma coisa estranha que o professor faz 
+
+ é 
+
+
+ __REMOVER___ o () que 
+
+
+ está 
+
+
+ WRAPPANDO O NOSSO 'body' desse functional component:
+
+
+
+
+
+
+
+
+
+
+
+const persons = (props) => props.persons.map( (person, index) => { //////eis o código em questão.
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+    
+      })
+
+
+
+
+
+
+--------------------------------------------------------
+
+
+
+
+Professor diz que isso é possívelpq 
+
+O 
+
+
+
+'props.persons.map()' NÃO É PROPRIAMENTE 
+
+CÓDIGO JSX, e sim é CÓDIGO JAVASCRIPT NORMAL...  (apesar de que ele CONTÉM JSX ('<Person>') BEM NO INTERIOR DA FUNÇÃO 'MAP'...) ---> isso não vai obstar o fato de QUE 'PROPS.PERSONS.MAP' AINDA É CÓDIGO JAVASCRIPT COMUM...( e não jsx).
+
+
+
+
+
+
+
+
+CERTO... E AQUI NÓS ESTAMOS USANDO/RETORNANDO 
+
+O component 
+
+'Person',
+ 
+ por isso 
+
+ PRECISAMOS 
+
+ IMPORTAR ESSE PERSON POR MEIO DA SINTAXE 'import ...'....
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+import Person from './Person/Person'; /////eis o código em questão.
+
+
+
+
+const persons = (props) =>  props.persons.map( (person, index) => {
+        
+      
+        
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+    
+      }
+
+
+
+);
+
+
+
+
+
+
+
+
+export default persons;
+
+
+--------------------------------
+
+
+
+
+COM ISSO, 
+
+
+
+NÓS TEMOS AGORA UMA 
+VERSÃO 
+
+
+MUITO CONCISA E OPTIMIZADA 
+
+
+DA ESCRITA DESSE CÓDIGO QUE FAZ O RETURN 
+
+
+do component 'person'....
+
+
+
+
+
+
+
+--> professor explica que nós conseguimos nosso array 'PERSONS', o qual ESPERAMOS (expect) 
+
+
+OBTER DENTRO  DOS NOSSOS 'PROPS' ('props.persons')... nós 
+
+então 
+
+USAMOS 
+
+'.map()' PARA CONVERTER ESSE 
+
+ARRAY DE 
+
+'persons' 
+
+
+EM UMA LISTA DE COMPONENTS/ELEMENTOS 'JSX' de 'Person'... -----> ENTRETANTO, 
+
+
+UMA COISA QUE 
+
+AINDA PRECISAMOS 
+
+FAZER É AJUSTAR 
+
+OS PROPS/HANDLERS DE 
+
+'click' 
+
+
+e 
+
+'changedHandler'
+
+
+
+-----------------------------------
+
+
+
+PRECISAMOS 
+
+AJUSTAR ESSES 
+
+PROPS/HANDLERS.... ---> 
+
+
+código deles:
+
+----------------------------------------------
+
+click={() => this.deletePersonHandler (index) }
+
+
+
+
+changed={(event) => this.nameChangedHandler( event, person.id)}
+
+
+---------------------------------------------
+
+
+
+
+
+CONTUDO, 
+
+ESSES 2 HANDLERS NÃO VÃO MAIS FUNCIONAR PQ 
+
+
+_____NÓS __ NÃO TEMOS MAIS 
+
+
+
+
+NOSSO 'CLASS-BASED COMPONENT' (que é onde o 'this' funcionava, 
+
+e onde 
+
+esses métodos/handlers funcionavam...) ---> nós agora 
+
+
+APENAS 
+
+TEMOS ESSA FUNÇÃO/COMPONENT 
+
+SIMPLES,
+ 
+ e nada mais....
+
+
+
+
+
+----> É EVIDENTE QUE PODERÍAMOS CRIAR/ESCREVER NOSSO COMPONENT 'PERSONS' 
+
+COMO UMA CLASSe (ou seja, como um 'smart' component') aqui,
+
+
+
+MAS NÓS DEVEMOS TER EM MENTE QUE 
+
+_____CLASS-BASED___ COMPONENTS 
+
+
+DEVEM SER USADO COM PARCIMÔNIA; apenas 
+
+alguns CONTAINERS devem ter essa sintaxe... (e não em 
+
+todos os seus components...) ------->
+
+
+
+
+------> É POR ISSO 
+
+
+
+QUE NÃO DEVEMOS 
+
+
+
+EXECUTAR UM CÓDIGO 
+
+COMO 
+
+
+
+
+
+''                                           ''
+click={() => this.deletePersonHandler (index) },
+
+
+
+
+E SIM 
+
+
+
+DEVEMOS 
+
+
+EXECUTAR 
+
+
+
+CÓDIGOS 
+
+
+
+COMO 
+
+
+''                                          ''
+
+click={() => props.deletePersonHandler (index) }
+
+
+ -----------------------------------
+
+
+ (OU SEJA, CHAMAR 'props.deletePersonHandler'...) ----------> MAS 
+
+
+ É EVIDENTE 
+
+ QUE 
+
+
+ ESSE 'deletePersonHandler' NÃO EXISTE NOS NOSSOS PROPS, NO MOMENTO... ----> professor 
+
+ explica que PROVAVELMENTE NÓS 
+
+ NÃO VAMOS USAR esse 'deletePersonHandler', e sim usaremos 
+
+ O __NOME DA PROPRIEDADE__ QUE VAMOS QUERER USAR, como 
+'props.clicked(index) ' 
+
+
+e 
+
+
+'props.changed( event, person.id) '...
+
+
+
+
+
+EX(resultado da mudança):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+import Person from './Person/Person'; 
+
+
+
+
+const persons = (props) =>  props.persons.map( (person, index) => {
+        
+      
+        
+        return <Person 
+        click={() => props.clicked(index) } ////////// EIS O CÓDIGO EM QUESTÃO.
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => props.changed( event, person.id )}/>  
+        
+    
+      }
+
+
+
+);
+
+
+
+
+-----------------------------------------
+
+
+
+Certo.... com essa mudanças no lugar, 
+
+
+DEVEMOS 
+
+
+___EXPORTAR__ NOSSA FUNÇÃO 
+
+
+'persons' nesse arquivo aí.... (export default persons;)
+
+
+
+
+
+EX:
+
+
+
+
+
+import React from 'react';
+import Person from './Person/Person'; 
+
+
+
+
+const persons = (props) =>  props.persons.map( (person, index) => {
+        
+      
+        
+        return <Person 
+        click={() => props.clicked(index) } ////////// EIS O CÓDIGO EM QUESTÃO.
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => props.changed( event, person.id )}/>  
+        
+    
+      }
+
+
+
+);
+
+
+
+
+export default persons;
+
+
+
+---------------------------------
+
+
+
+
+Ok... estou pensando:
+
+
+o 'clicked' 
+
+
+e o 
+
+
+'changed'...
+
+
+
+
+os 
+
+DOIS 
+
+
+estão agora ___eXECUTANDO MÉTODOS___ QUE AINDA NÃO 
+
+EXISTEM EM 'props'... (vamos ter que PASSAR esses métodos por meio do ARQUIVO APP.js, supostamente)...
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+Certo... agora 
+
+
+NÓS VOLTAMOS PARA 
+
+
+
+
+O CÓDIGO 
+
+
+DE 
+
+'App.js'... 
+
+
+
+LÁ, NÓS OBVIAMENTE 
+
+NÃO PRECISAREMOS MAIS 
+
+
+DAQUELE 
+
+
+
+CÓDIGO 
+
+
+'''''
+
+
+ {this.state.persons.map( (person, index) => {
+        
+      
+        
+        return <Person 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => this.nameChangedHandler(event, person.id)}/>  
+        
+    
+      })}
+
+
+
+
+''''''
+
+-------------------------------------------------
+
+
+
+
+ESSE CÓDIGO 
+
+NÃO PRECISA MAIS SER USADO AÍ,
+
+pois 
+
+agora 
+
+
+ELE ESTÁ COLOCADO EM OUTRO COMPONENT, ESTÁ COLOCADO 
+
+NO COMPONENT 'persons.js'...
+
+
+
+------------------------------
+
+
+É POR ISSO 
+
+QUE EM 'App.js'
+
+NÓS VAMOS SUBSTITUIR ESSE 
+
+
+CÓDIGO 
+
+
+PELO __cALL___ DO COMPONENTE 'Persons'....
+
+
+
+
+
+ex:
+
+
+
+if (this.state.showPersons) {
+    persons = (
+        <div>   
+            <Persons />
+        </div>
+    )
+}
+
+---------------------------------
+
+
+
+
+
+Depois de importar nosso component 'persons'  em 
+
+
+'App.js' 
+
+
+
+e passar/invocar 
+
+
+
+esse component dentro daquela div, 
+
+
+
+
+DEVEMOS 
+
+
+
+ENTÃO 
+
+
+PASSAR ____3 PEDAÇOS __ DE INFORMAÇÃO ___ ÀQUELA 
+
+CALL DE 'Persons'... (àquele component)...
+
+
+
+
+
+PRECISAMOS PASSAR OS 3 ''PROPS'' QUE ESTAMOS USANDO... (que são 
+
+'persons',
+'changed' e o 'clicked')
+
+
+
+
+--> ESSES SÃO OS 3 PROPS 
+
+QUE ESTAMOS ACESSANDO 
+
+
+NO NOSSO COMPONENT 'PERSONS.JS'...  
+
+(PQ 
+
+os 'name', 'age' e 'key' NÃO INTERESSAM 
+
+PARA 
+
+
+'persons', POIS SÃO PROPRIEDADES/PROPS DE __OUTRA COISA__, SÃO 
+
+PROPRIEDADES 
+
+DAQUELA 
+
+
+'PERSON' INDIVIDUAL QUE 
+
+ESTAMOS 
+
+LOOPANDO 
+
+POR MEIO 
+
+
+DO MÉTODO 'map'.)........
+
+
+
+
+
+
+
+Certo... vamos precisar, portanto, 
+
+
+dOS 
+
+
+PROPS 
+
+
+
+'persons',
+ 
+
+
+ 'clicked' 
+
+
+
+ e 
+
+ 'changed'...
+
+
+
+ ESSES SÃO OS 3 
+
+
+ PROPS QUE ESTAREMOS ACESSANDO NO 'Persons.js'...
+
+
+
+ ------------------------------------------------
+
+
+
+
+
+ --> DE VOLTA AO 
+
+ 'APP.JS',
+
+
+
+ NÓS DEVEMOS PASSAR ESSES PROPS AO 
+
+ COMPONENT 
+
+ 'Persons'... ------------> 
+
+
+
+
+
+ ESCREVEMOS:
+
+
+
+
+ <Persons persons={this.state.persons}
+
+
+
+
+
+
+ />
+
+
+
+
+ -----------------------------------
+
+
+
+ OU SEJA,
+
+ ESCREVEMOS/PASSAMOS O __PRIMEIRO PROP___, 'persons', 
+ por meio 
+
+ desse código...
+
+
+
+
+ DEPOIS PASSAMOS 
+
+
+ 'clicked'...
+
+
+ 
+
+ 'clicked' 
+
+ DEVERÁ 
+
+ PASSAR UMA REFERÊNCIA 
+
+ à FUNÇÃO 
+
+
+ QUE QUEREMOS 
+
+ EXECUTAR QUANDO 
+
+ 'clicked' for disparado, DIRETAMENTE DO COMPONENT 'persons'....... ------> 
+
+ É por isso que o professor vai passar 
+
+
+ aquela função que já definimos, aquele 
+
+
+ 'deletePersonHandler'.... (com o 'this')
+
+
+
+
+ ex:
+
+
+
+
+
+
+
+  <Persons persons={this.state.persons}
+    clicked={this.deletePersonHandler}
+
+
+
+
+
+ />
+
+
+
+
+
+
+ ------------------------------------------
+
+
+ POR FIM,
+
+
+
+ 'CHANGED'
+
+
+ DEVERÁ 
+
+ Passar 
+
+
+ 'this.nameChangedHandler'
+
+
+
+
+
+ EX:
+
+
+
+
+
+
+
+   <Persons persons={this.state.persons}
+    clicked={this.deletePersonHandler}
+    changed={this.nameChangedHandler}
+
+
+
+
+
+ />
+
+
+
+--------------------------------
+
+
+DEPOIS DISSO TESTAMOS SE ESSE NEGÓCIO FUNCIONA.
+
+
+
+
+
+
+
+CERTO,
+
+TUDO O QUE TEMOS AQUI, AGORA, EM 'App.js',
+
+É O NOSSO COMPONENT 'persons', 
+
+QUE 
+
+FAZ O RENDER __dAQUELA LISTA __ DE ELEMENTOS 
+
+'Person'...
+
+
+
+
+E ESSE CÓDIGO 
+
+
+DA LISTA 'Persons' 
+
+está definido CONDICIONALMENTE, 
+
+ora nós O mostramos, ora não, dependendo 
+
+do 
+
+true/false do 
+
+
+'showPersons'...
+
+
+-------------------------------------------------------------
+
+
+
+Certo, mas tem uma coisa que AINDA NÃO FAZ SENTIDO PARA MIM (o 'clicked' e o 'click'...)
+
+
+
+Ok, isso não fez o menor sentido.
+
+
+
+
+Pera, agora fez sentido....
+
+
+
+
+
+Fluxo do código:
+
+
+
+
+App.js          -->                              Persons.js                                                                   ------> Person.js.
+
+
+
+clicked         --> 'click' é um PARÂMETRO/prop QUE PASSA 'clicked' (que é deletePersonHandler) para o COMPONENT 'Person'.... ------> 'props.click' FAZ COM QUE A FUNÇÃO 'deletePersonHandler' SEJA EXECUTADA AQUI...
+(passa 
+'this.deletePerson
+Handler')
+
+
+
+
+--------------------------------
+
+
+
+
+ESSE É O FLOW/ESTRUTURA DO NOSSO CÓDIGO, BASICAMENTE. (a respeito de 'clicked')
+
+
+
+
+
+
+
+
+
+----------------------------
+
+
+
+CERTO, PROSSEGUINDO...
+
+
+
+
+
+NÓS TEMOS NOSSO CÓDIGO FUNCIONANDO COMO ANTES,
+
+
+mas se agora 
+
+
+nós abrirmos o REACT DEV TOOLS no chrome,
+
+
+NÓS VEREMOS 
+
+QUE AGORA 
+
+
+TEMOS O COMPONENT 'Persons' SEGURANDO O COMPONENT 'person'...
+
+
+
+
+
+
+MELHORAMOS A ESTRUTURA, 
+BASICAMENTE, 
+
+POIS AGORA NÃO TEMOS QUE NOS PREOCUPAR COM A CRIAÇÃO 
+
+DA 'LIST' (por meio de .map() ) NAQUELE 
+
+
+
+COMPONENT 
+
+'App.js'... , não,
+
+NÓS CONSEGUIMOS 
+
+
+___OUTSOURCEAR ESSA TAREFA DE 'CRIAR A LISTA A PARTIR DE UM ARRAY' 
+
+AO COMPONENT DE 'Persons', que é o COMPONENT DO FLOW DE NOSSO APLICATIVO QUE 
+
+POSSUI O MÉTODO 
+
+'.MAP()'... (
+
+    E ESSA É A 'BEST PRACTICE' PARA CRIAR ___'GRANULAR PIECES'____  --------> 
+
+
+    CADA COMPONENT DEVE TER UM ___fOCO BEM CLARO___...
+)
+
+
+
+
+
+
+
+
+  CADA COMPONENT DEVE TER UM ___fOCO BEM CLARO___... ----------> O MESMO 
+
+
+
+  SE APLICA 
+
+  PARA 
+
+  O 
+
+
+
+  'COCKPIT'... ------> nele, NÓS TAMBÉM VAMOS QUERER OUTSOURCEAR ALGUMA 
+
+  LÓGICA DO NOSSO ARQUIVO 
+
+
+  'App.js'... -------> NO COCKPIT,
+   
+   NÓS 
+
+   VAMOS BASICAMENTE 
+
+
+   OUTSOURCEAR 
+
+
+   A <H1> TAG, 
+
+   o 
+
+   '<p> de 'this is really working' 
+
+
+
+   E O 
+
+
+   BUTTON de toggle...
+
+
+   OU SEJA, 
+
+   VAMOS OUTSOURCEAR 
+
+   O SEGUINTE CÓDIGO:
+
+
+
+
+
+
+       <h1>Hi, I'm a React App</h1>
+    <p className={classes.join(' ')}>This is really working!</p>
+    <button 
+    className={btnClass}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+
+
+
+----------------------------------------
+
+
+
+PODEMOS FAZER ISSO BEM FACILMENTE, NA VERDADE.
+
+
+
+Vamos até o 
+
+
+'Cockpit' 
+
+
+e fazemos um código provisório.
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+const cockpit = (props) => {
+    
+
+
+    return () ;
+}
+
+
+export default cockpit;
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+NO COCKPIT,
+
+VAMOS 
+
+CRIAR UM FUNCTIONAL COMPONENT.
+
+
+
+
+O professor explica que 
+
+ELE poderia 
+
+CRIAR 
+
+UM 
+
+
+'SMART' component 
+
+se ele quisesse,
+
+
+MAS QUE ELE 
+
+NÃO VAI QUERER 
+
+FAZER ISSO, 
+
+
+POIS 
+
+
+ELE NÃO QUER CRIAR MAIS UMA FUNÇÃO/COMPONENTS 
+
+
+COM STATE...
+
+
+
+
+DESSA VEZ, 
+
+O PROFESSOR 
+
+
+
+USA 
+
+A SINTAXE 
+
+PADRÃO 
+
+
+DAS ARROW FUNCTION (com o '{}'), 
+
+POIS DESSA 
+
+VEZ ELE 
+
+
+SENTE QUE 
+
+USARÁ 
+
+MAIS LÓGICA 
+
+nesse cockpit...
+
+---------------------------
+
+
+
+ELE USARÁ MAIS LÓGICA PQ SERÁ 
+
+
+NECESSÁRIO 
+
+
+____eSTILIZAR AQUELE BUTTON____...
+
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+
+
+CERTO.... --------------> O QUE DEVERÁ IR DENTRO DO 
+
+'COCKPIT'?
+
+
+
+
+
+
+
+----> BEM É 
+
+
+BASICAMENTE 
+
+ESTE CÓDIGO :
+
+
+      <h1>Hi, I'm a React App</h1>
+    <p className={classes.join(' ')}>This is really working!</p>
+    <button 
+    className={btnClass}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+
+
+-------------------------------------------------------
+
+
+
+
+
+
+
+DEVEMOS CORTAR 
+
+
+ESSE CÓDIGO E COLAR 
+
+DENTRO 
+
+DO RETURN STATEMENT DO COCKPIT...
+
+
+
+
+
+
+E ISSO, É CLARO, 
+
+VAI 
+NOS 
+
+DAR 
+
+
+
+
+UM 
+
+___ERRO DE SINTAXE___.... --> vai nos dar um erro de sintaxe 
+
+
+
+PQ NÓS 
+
+ESTAREMOS/ESTAMOS 
+
+
+RETORNANDO 
+
+MAIS 
+
+DE 
+
+1 ÚNICO ELEMENTO (uma 'div', por exemplo) 
+
+NESSE RETURN STATEMENT DESSE FUNCTIONAL COMPONENT...
+
+
+
+
+---------------------------------
+
+
+
+
+PRECISAMOS DE UM 'ROOT NODE', BASICAMENTE... (depois veremos COMO ESCREVER CÓDIGO QUE FAZ BYPASS DESSA NECESSIDADE DE UM 'ROOT NODE'...)
+
+
+
+
+
+
+
+
+-----> POR ENQUANTO, PARA FAZER 'BYPASS' DESSA LIMITAÇÃO, 
+
+O PROFESSOR SIMPLESMENTE 
+
+WRAPPA TODO ESSE TRECHO DE CÓDIGO EM UMA DIV...
+
+
+
+ex:
+
+
+
+
+
+
+const cockpit = (props) => {
+
+
+
+
+    return (
+        <div>
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+        </div>
+    );
+}
+
+
+
+
+-----------------------------
+
+
+
+CERTO...
+
+
+
+
+BTW,
+ 
+
+ NÓS JÁ VIMOS UMA MANEIRA DE SUPORTAR MÚLTIPLOS ELEMENTOS EM UM 'RETURN STATEMENT'... ----->
+
+ foi aquele 
+
+ código visto em 'persons',
+
+ aquele código 
+
+ de 
+
+
+
+''''''''''
+
+
+        return <Person 
+        click={() => props.clicked(index)}
+        key={person.id}
+        name={person.name} 
+        age={person.age} 
+        changed={(event) => props.changed(event, person.id)}/>  
+
+'''''''''''
+
+
+--------------------------------
+
+
+
+ALI, 
+
+NESSE CÓDIGO, 
+
+NÓS HAVÍAMOS 
+
+
+RETORNADO UMA 'LIST', e é óbvio que ISSO SIGNIFICA 
+
+QUE NESSE EXEMPLO NÓS ESTÁVAMOS COM __UMA LISTA DE ELEMENTOS___, TODOS 
+
+SENTADOS 1 DO LADO DO OUTRO (e ainda assim NÃO RECEBEMOS ESSE ERRO DE SINTAXE... --> 
+POR ISSO 
+
+QUE ESSA É UMA DAS FORMAS DE 'BYPASS' DA RESTRIÇÃO DE 
+
+'APENAS 1 ELEMENTO POR RETURN STATEMENT'...)  -------> mesmo 
+
+tendo essa 
+
+LISTA de elementos proporcionada pelo '.map()' lá no COMPONENT 'persons' (que ENGLOBA/retorna 
+o component 'person'), O REACT 
+
+NÃO NOS DÁ O ERRO DE 'APENAS O RETURN DE 1 ELEMENTO POR RETURN STATEMENT' ----> Esse fenômeno 
+
+ocorre/funciona 
+
+GRAÇAS 
+
+
+àS NOVAS FEATURES DO REACT 16,
+
+
+que suporta ___RETURNS___ DE LISTAS __ em 1 return statement... (mas não suporta MÚLTIPLOS
+ELEMENTOS HARDCODADOS, um ao lado do outro; ISSO AINDA É IMPOSSÍVEL, COMO VEMOS NESSE EXEMPLO DO COCKPIT... 
+)
+
+
+
+
+-----------------------------------------------------------
+
+
+
+CERTO....
+
+
+
+
+E NESSE 
+
+COCKPIT,
+
+
+nós ainda 
+
+temos aquele 
+
+troço
+
+
+
+'assignedClasses'... ----------> 'assignedClasses' -----> FAZIA/FAZ O 
+
+
+'MANAGE' DAS __CSS CLASSES___ QUE AQUELE ELEMENTO '<p>' DEVERÁ/DEVERIA
+ 
+
+ TER...
+
+
+
+
+
+
+
+ E o cockpit também 
+
+ está 
+
+ com 
+
+ 'className={btnClass}' no 
+
+ BUTTON,
+
+ e 
+
+ esse 
+ 'btnClass' 
+
+
+ ERA AQUELA VARIÁVEL/CONST QUE 
+
+ DEFINIA O ESTILO DO BUTTon... ( e que não existe nesse cockpit, pelo menos por enquanto...)
+
+
+
+
+
+
+
+ --> esses códigos de ESTILO __AINDA ESTÃO NO 'App.js'__... ---> nós precisamos 
+
+
+ agarrar esse código e o transpor para 
+
+ 'cockpit.js'... 
+
+
+
+
+
+ --> POR EXEMPLO, PODEMOS 
+
+ PEGAR O CÓDIGO DE 
+
+
+
+
+
+ '''''''''''''
+
+
+
+
+ const classes = [];
+
+
+if(this.state.persons.length <= 2) {
+
+  
+  classes.push(classes2.red); 
+}
+
+
+
+
+if(this.state.persons.length <= 1) {
+  classes.push(classes2.bold);
+}
+
+
+
+''''''''''''''''''''''''''''
+
+
+
+
+nesse código aí, 
+
+nós LEVÁVAMOS EM CONSIDERAÇÃO 
+
+O TAMANHO (length) 
+
+DO ARRAY DE PERSONS PARA DEFINIR O ESTILO DE 
+
+'classes'...
+
+Pegamos 
+
+
+esse código e o colocamos dentro de 
+
+'cockpit'...
+
+
+
+
+----------------------
+
+
+
+
+CERTO... FICAMOS COM O SEGUINTE CÓDIGO EM 
+
+'Cockpit.js':
+
+
+
+
+
+
+
+import React from 'react';
+
+
+import classes2 from '../../../App.module.css'
+
+
+const cockpit = (props) => {
+
+
+
+    const classes = [];
+
+
+    if(this.state.persons.length <= 2) {
+    
+      
+      classes.push(classes2.red); 
+    }
+    
+    
+    
+    
+    if(this.state.persons.length <= 1) {
+      classes.push(classes2.bold);
+    }
+
+
+
+    return (
+        <div>
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+        </div>
+    );
+    
+
+}
+
+
+
+export default cockpit;
+
+
+
+----------------------------------------------
+
+
+
+
+
+O PROFESSOR EXPLICA QUE ESSE CÓDIGO AÍ _NÃO FUNCIONARÁ_.
+
+
+
+
+----> não funcionará PQ O NOSSO CÓDIGO ESTÁ 
+
+TENTANDO 
+
+ACESSAR O STATE (visto em 'if (this.state.persons.length <= 2)' ) ---> 
+
+
+
+E ISSO NÃO ADIANTA NEM UM POUCO, 
+
+POIS 
+
+NÃO EXISTE STATE DENTRO DESSE 
+
+
+
+'FUNCTIONAL COMPONENT' de 'cockpit'... -------> 
+
+É POR ISSO QUE, 
+
+
+
+DE NOVO, 
+
+
+NÓS DEVEMOS 
+
+
+ESPERAR (expect) 
+
+RECEBER
+ 
+
+ 'persons'
+
+
+ COMO ___PROPS____ PASSADOS PELO 'App.js'/outro componente (talvez)....
+
+
+
+
+
+
+
+ RESULTADO (da alteração/alterações):
+
+
+
+
+
+
+
+ import React from 'react';
+
+
+import classes2 from '../../../App.module.css'
+
+
+const cockpit = (props) => {
+
+
+
+    const classes = [];
+
+
+    if(props.persons.length <= 2) { /////////EIS O CÓDIGO EM QUESTÃO
+    
+      
+      classes.push(classes2.red); 
+    }
+    
+    
+    
+    
+    if(props.persons.length <= 1) { ////////EIS O CÓDIGO EM QUESTÃO.
+      classes.push(classes2.bold);
+    }
+
+
+
+    return (
+        <div>
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+        </div>
+    );
+    
+
+}
+
+
+
+export default cockpit;
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+Professor também explica que 
+
+o 
+
+
+'classes' (arquivo css MODULAR) 
+
+também 
+
+deve ser importado... --> MAS JÁ FIZEMOS ISSO... ('import classes2 from '../../../App.module.css')....
+
+
+
+
+
+
+Contudo, o professor tem OCD,
+
+por isso 
+
+
+ele cria um 
+
+
+
+NOVO ARQUIVO '.CSS',
+
+CHAMADO 
+
+
+
+DE 
+
+'COCKPIT.css'... (e aí ele vai importar esse estilo aí, é claro).
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+
+
+ import React from 'react';
+
+
+import Cockpit from 'Cockpit.module.css';
+
+
+const cockpit = (props) => {
+
+
+
+    const classes = [];
+
+
+    if(props.persons.length <= 2) { /////////EIS O CÓDIGO EM QUESTÃO
+    
+      
+      classes.push(Cockpit.red); 
+    }
+    
+    
+    
+    
+    if(props.persons.length <= 1) { ////////EIS O CÓDIGO EM QUESTÃO.
+      classes.push(Cockpit.bold);
+    }
+
+
+
+    return (
+        <div>
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+        </div>
+    );
+    
+
+}
+
+
+
+export default cockpit;
+
+
+
+-------------------------
+
+
+
+Claro que isso é bem óbvio, 
+
+mas nem preciso dizer que 
+
+ele vai pegar todos os códigos de estilo 
+
+
+em 
+
+'App.module.css'
+
+
+
+E COLAR EM 
+
+'Cockpit.module.css'...
+
+
+
+
+
+
+CERTO,
+
+
+
+E A ÚNICA ALTERAÇÃO QUE O PROFESSOR FAZ NESSE ARQUIVO 
+
+'Cockpit.module.css'
+
+
+É NA CLASSE 
+
+DE 
+
+'.App button', 
+
+
+QUE ELE DIZ QUE ESTÁ INCORRETA.... -----> ELE DIZ QUE 
+
+
+
+ESSA CLASSE PROVAVELMENTE 
+
+DEVERÁ 
+
+FICAR COMO 
+
+
+'.Cockpit button', e não '.App button'... ------->  ISSO PQ 
+
+NÓS 
+
+
+__NÃO VAMOS MAIS ''NESTEAR'' ESSE 
+
+BUTTON 
+
+
+DENTRO 
+
+
+DA CLASSE 'App' (que não existe mais, agora, pois 
+
+ESTAMOS DEFININDO/USANDO ESTILOS __NO 'COCKPIT'__, NESSE NOVO elemento/component 'functional'...)
+
+
+
+
+---------------------------------------
+
+
+
+PROFESSOR 
+
+
+EXPLICA QUE, 
+
+DEVIDO AO 
+
+'SCOPING' (proporcionado pelo '.module.css'),
+
+
+
+SE NÓS 
+
+FOSSEMOS 
+
+
+REFERENCIAR
+
+
+'.App' NESSE 
+
+
+ARQUIVO 
+
+
+
+'Cockpit.module.css',
+
+
+ISSO 
+
+__NÃO FUNCIONARIA___ (não vai aplicar estilo em lugar algum), 
+
+
+POIS ESTAMOS 
+
+USANDO 
+
+ESTILOS SCOPADOS...
+
+
+
+
+--------------------------
+
+Certo,
+
+
+com isso 
+
+nós 
+
+teremos 
+
+nossas classes .css 
+
+de COCKPIT 
+
+
+definidos nesse local...
+
+
+
+-------------------------------
+
+
+
+DEPOIS DE IMPORTAR os estilos 
+
+de 'Cockpit'
+
+
+POR MEIO 
+
+
+DO CÓDIGO 
+
+
+import Cockpit from './Cockpit.module.css'       (professor escreveu diferente, escreveu 'import classes from './Cockpit.module.css';)
+
+
+
+
+
+
+AGORA PODEMOS USAR 
+
+CLASSES NO ARQUIVO 
+
+
+'cockpit'...
+
+
+
+-----------------------------
+
+
+
+PROFESSOR TAMBÉM 
+
+VAI EM FRENTE 
+
+
+E CRIA/assigna 
+
+
+UM NOVO 
+
+
+'className' 
+
+
+
+
+NAQUELA DIV QUE WRAPPA nossos elementos de 'cockpit'...
+
+
+
+Ou seja, ESTE CÓDIGO AQUI:
+
+
+
+
+    return (
+        <div>
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+        </div>
+    );
+
+
+
+
+
+
+ELE VAI COLOCAR 
+
+
+UM 'className' nessa div...
+
+
+
+
+ex:
+
+
+
+
+
+
+    return (
+        <div className={Cockpit.Cockpit}>
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+        </div>
+    );
+
+
+
+--------------------------------
+
+
+
+COM ISSO, 
+
+NÓS PASSAREMOS A TER 
+
+SCOPING 
+
+
+DE CLASSES CSS 
+
+NO NOSSO 
+
+
+COMPONENTE COCKPIT, 
+
+também...
+
+
+
+--------------------------
+
+
+
+MAS O QUE FALTOU AQUI FOI DEFINIR 
+
+
+A 
+
+
+CLASSE DO 
+
+
+BOTÃO... 
+
+('btnClass'...) -
+
+
+
+
+
+-----> DE VOLTA AO 
+
+'App.js', NÓS 
+
+
+ESTÁVAMOS 
+
+
+TROCANDO 
+
+'btnClass'
+
+
+
+___CONDICIONALMENTE___.... ------> estávamos o alterando 
+
+
+DE ACORDO com o 'show/hide' 
+
+DE PERSONS (showPersons = true/false)....
+
+
+
+
+ex:
+
+
+
+
+
+ render = () => {
+    
+
+
+
+
+
+let persons = null;
+
+let btnClass = '';
+
+
+
+
+
+
+
+if (this.state.showPersons) {
+ btnClass = classes2.red;
+
+}
+
+
+ }
+
+
+
+---------------------------------
+
+
+
+
+
+NÓS TEREMOS 
+
+
+DE COLOCAR ESSA LÓGICA CONDICIONAL DO ESTILO DE BUTTON no nosso 
+
+componente 
+'cockpit' 
+
+também... -------->  vamos ter que usar aquele 'let btnClass = '';', usado na CONDIÇÃO, lá também...
+
+
+
+
+
+
+
+
+NOSSO COMPONENTE COCKPIT FICARÁ ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+
+const cockpit = (props) => {
+
+
+
+    const classes = [];
+    let btnClass = ''; /////////////EIS O CÓDIGO EM QUESTÃO, provisório.
+    btnClass = Cockpit.red; ///////EIS O OUTRO CÓDIGO EM QUESTÃO.
+
+  
+
+
+    if(this.state.persons.length <= 2) {
+    
+      
+      classes.push(Cockpit.red); 
+    }
+    
+    
+    
+    
+    if(this.state.persons.length <= 1) {
+      classes.push(Cockpit.bold);
+    }
+
+
+
+
+    return (
+        <div className={Cockpit.Cockpit}> ///eis outro código em questão.
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+        </div>
+    );
+    
+
+
+
+
+
+}
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+ESSE CÓDIGO AÍ, CONDICIONAL, SERÁ IMPORTANTE 
+
+PARA FAZER O 'SWITCH' 
+
+DO ESTILO 
+
+
+'red' 
+
+
+
+DO NOSSO BOTÃO...
+
+
+
+
+
+
+COM ISSO, 
+
+
+AGORA NÓS PRECISAMOS 
+
+
+
+ADICIONAR UM IF STATEMENT PARA ADICIONAR A LÓGICA DE ESTILO CONDICIONAL AO BUTTON EM 'cockpit'...
+
+
+
+
+
+
+
+PROFESSOR EXPLICA, ANTES DE MAIS NADA, QUE VAMOS PRECISAR 
+
+RECEBER 
+
+AQUELA INFORMAÇÃO/VALOR DE 
+
+
+'showPersons',
+
+
+USADA LÁ EM 
+
+'App.js',
+
+
+DENTRO 
+
+DESSE 
+
+IF CHECK 
+
+
+que estamos escrevendo 
+
+
+no 
+
+cockpit... -----------> ele 
+
+vai escrever:
+
+
+
+-------------------------------------
+
+let btnClass = '';
+
+
+'if (props.showPersons) {
+  btnClass = Cockpit.red; 
+}'
+
+------------------------------------
+
+
+ISSO SERÁ 
+
+O NOSSO CÓDIGO CONDICIONAL... (certo ,MAS 
+
+
+NÓS 
+
+AINDA PRECISAMOS 
+
+
+DO 
+
+PROP/PROPRIEDADE/COISA 'showPersons'...)
+
+
+
+
+
+
+-----------------------------------
+
+
+
+
+O CÓDIGO INTEIRO FICARÁ ASSIM:
+
+
+
+
+
+
+import React from 'react';
+
+
+import Cockpit from './Cockpit.module.css'
+
+
+
+
+
+const cockpit = (props) => {
+
+
+
+    const classes = [];
+    let btnClass = '';
+ 
+    if (props.showPersons) {
+
+      btnClass = Cockpit.red;
+    }
+
+
+
+    if(this.state.persons.length <= 2) {
+    
+      
+      classes.push(Cockpit.red); 
+    }
+    
+    
+    
+    
+    if(this.state.persons.length <= 1) {
+      classes.push(Cockpit.bold);
+    }
+
+
+
+
+    return (
+        <div className={Cockpit.Cockpit}>
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+        </div>
+    );
+    
+
+}
+
+
+export default cockpit;
+
+-----------------------------------
+
+
+
+
+CERTO. 
+
+MAS PRECISAMOS 
+
+PASSAR 
+
+'showPersons' COMO PROP a esse component 'cockpit'...  ------> e fazemos exatamente isso, por conta própria...
+
+
+
+
+
+
+NÓS PASSAMOS OS PROPS DENTRO DO COMPONENT 'COCKPIT' INVOCADO NO APP.JS:
+
+
+
+EX:
+
+
+
+
+return (
+
+  <Cockpit showPersons={this.state.showPersons}> /////////EIS O CÓDIGO EM QUESTÃO.
+  {/* <div className={classes2.App}>   */}
+    {/* <h1>Hi, I'm a React App</h1>
+    <p className={classes.join(' ')}>This is really working!</p>
+    <button 
+ 
+    className={btnClass}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button>  */}
+    {persons}
+
+   
+
+  {/* </div> */}
+  </Cockpit>
+);
+
+
+
+
+
+
+E DEPOIS 
+
+NÓS USAMOS 
+
+
+ESSE PROP 
+
+
+
+LÁ NO COMPONENTE 'COCKPIT',
+ por meio de 
+
+ 'props.showPersons':
+
+
+
+
+
+
+     return (
+        <div className={Cockpit.Cockpit}>
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button 
+     
+        className={btnClass}
+        onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+        </div>
+    );
+    
+
+
+--------------------------------
+
+
+
+
+
+Certo... mas o código vai nos dar um ERRO (que não tem relação com isso... --> nos dá um 
+
+erro por conta de ''this.state.persons.length <= 2'', que deveria ter sido substituído 
+por 
+
+
+'props.persons.length'...)
+
+
+
+
+------------------------
+
+
+
+EU SUBSTITUO UM MONTE DE COISAS, 
+
+E DEIXO O CÓDIGO CERTINHO... ENTRETANTO, 
+
+ELE AINDA NÃO FUNCIONA DIREITO... --> quando clico no BUTTON, 
+
+
+ELE MUDA DE COR, MAS O ELEMENTO 'PERSONS'/'persons' que cria uma lista de 'person' 
+
+
+NÃO APARECE....
+
+
+
+
+--------------------------------
+
+
+
+
+
+DESCOBRI O PROBLEMA. ERA ALGO ___RIDÍCULO__:
+
+
+
+
+EU ESTAVA ESCREVENDO ASSIM:
+
+
+
+
+
+return (
+
+  <div className={classes.App}>
+  <Cockpit 
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+    {persons} //////////EIS O PROBLEMA
+  </Cockpit>
+
+  </div>
+);
+
+
+
+E ERA PARA ESCRVER ASSIm:
+
+
+
+
+
+return (
+
+  <div className={classes.App}>
+  <Cockpit 
+  showPersons={this.state.showPersons}
+  persons={this.state.persons}
+  clicked={() => {this.togglePersonsHandler()}}
+  >
+ 
+  </Cockpit>
+     {persons} //////////PROBLEMA, RESOLVIDO. PROFESSOR QUERIA QUE COLOCÁSSEMOS O 'persons' ___FORA___ do conteúdo do COCKPIT...
+  </div>
+);
+
+
+
+
+
+
+ou seja,
+
+
+era um problema 
+
+de 
+
+LEITURA.... ---------> problema de leitura/olhos humanos 
+
+
+com as escritas 
+
+'''
+<Cockpit>
+</Cockpit> 
+{persons}      
+'''
+
+
+ e 
+ 
+ 
+ <Cockpit/>
+{persons}
+
+
+
+(OS 2 SÃO A MESMA COISA)...
+--------------------------------------------------
+
+
+
+
+CERTO, AGORA CONSEGUIMOS A MESMA COISA 
+
+
+DO CÓDIGO ANTIGO, 
+
+
+MAS AGORA COM UMA ESTRUTURA BEM MELHOR.... ---> e é assim que devemos pensar e estruturar nosso APLICATIVO.
+
+
+
+
+
+
+--> NOSSOS COMPONENTS DEVEM TER RESPONSABILIDADES CLARAS, FOCADAS...
+
+
+
+---> DEVEMOS CRIAR ''COMPONENTES GRANULADOS''''....
+
+
+---> SEMPRE DEVEMOS CRIAR NOSSOS COMPONENTS 
+
+
+DA FORMA 
+
+MAIS 'LEAN' possível, em relação ao 
+
+CÓDIGO JSX RETORNADO E AO STYLING....
+
+
+
+
+
+
+---> ALGUNS CONTAINERS MUITAS VEZES __NEM MESMO___ TERÃO CÓDIGOS 
+
+DE STYLE, DEIXANDO 
+
+QUE OUTROS COMPONENTS TENHAM ESTILOS 
+
+
+E ENTÃO ENFEITEM A PÁGINA...
+
+

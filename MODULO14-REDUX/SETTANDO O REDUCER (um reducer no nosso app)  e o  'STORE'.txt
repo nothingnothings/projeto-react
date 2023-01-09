@@ -1,0 +1,2162 @@
+
+
+
+
+
+--> PARA NOS MOSTRAR COMO O 'REDUX' FUNCIONA, O PROFESSOR 
+
+
+ANEXOU UM 'PROJETO DE DEMONSTRAÇÃO'
+
+
+NESTE MÓDULO....
+
+
+
+
+
+
+
+
+---> É UM PROJETO BEM SIMPLES, COM 1 CONTAINER,
+
+
+
+container chamado de 
+
+
+'Counter',
+
+
+
+
+E 
+
+
+
+2 COMPONENTS... ('CounterControl' e 'CounterOutput'...)
+
+
+
+
+
+
+
+
+-------------------> NO FINAL DAS CONTAS, O QUE ESSE APP FAZ É 
+
+
+MT SIMPLES:
+
+
+
+ELE TEM UM CONTADOR EM CIMA ('current Counter') ,
+
+
+
+
+
+e embaixo temos botões...
+
+
+
+
+
+botões 
+
+
+
+
+Increment 
+
+
+
+Decrement 
+
+
+
+Add 5 
+
+
+Subtract 5...
+
+
+
+
+
+
+
+-------------------------
+
+
+--> ESSE COUNTER LÁ DE CIMA PODE SER 
+
+
+
+MANIPULADO POR MEIO DESSES BOTÕES...
+
+
+
+
+--> E ESSES BOTÕES, NO INÍCIO DESTE MÓDULO,
+
+
+
+USAM
+ 
+ SIMPLESMENTE 
+
+
+ A 
+
+
+ VERSÃO 
+
+
+ 'NORMAL' DE '''STATE',,,
+
+
+
+ a versão 
+
+ que 
+
+
+ o react nos dá...
+
+
+
+
+
+
+ (
+
+     devemos criar um 
+
+     projeto agora, e imitar a estrutura do professor...
+
+
+
+ )
+
+
+ -----------------------
+
+
+
+
+
+
+
+
+
+como sempre:
+
+
+
+
+'create-react-app',
+
+
+e aí 
+
+
+criamos 
+
+os 
+
+folders 
+
+
+e subfolders... (components e containers)....
+
+
+
+
+
+
+--> temos uma propriedade 
+
+'STATE'
+,
+
+
+E 
+
+AÍ 
+
+vários 
+
+métodos,
+
+
+como 
+
+'counterChangedHandler' (que utiliza o método 'switch()'...)
+
+
+
+
+
+
+
+
+
+
+É UM PROJETO NORMAL, COM STATE NORMAL,
+
+
+nada de 'redux' sobre isso tudo....
+
+
+
+
+
+--------------------------------
+
+
+
+CERTO.... SETTEI TODO O PROJETO....
+
+
+
+eis 
+
+o código 
+
+
+de 
+
+
+
+'Counter.js',
+
+
+para referência:
+
+
+
+
+------------------------------------------------------------
+
+
+import React, { Component } from 'react';
+
+
+
+
+
+import CounterControl from '../../components/CounterControl/CounterControl';
+import CounterOutput from '../../components/CounterOutput/CounterOutput';
+
+
+
+
+
+
+class Counter extends Component {
+    state = {
+        counter: 0
+    }
+
+
+    counterChangedHandler = (action, value) => {
+        switch (action) {
+
+        case 'inc': 
+            this.setState( (prevState) => { return { counter : prevState.counter + 1}})
+            break;
+        case 'dec':
+            this.setState( (prevState) => { return { counter : prevState.counter - 1}})
+            break;
+        case 'add':
+            this.setState( (prevState) => { return { counter : prevState.counter + value}})
+            break;
+        case 'sub':
+            this.setState( (prevState) => { return { counter : prevState.counter - value}})
+        break;
+
+            default: return;
+        }
+
+
+    }
+
+
+
+
+    render() {
+        return (
+            <div>
+                <CounterOutput value={this.state.counter} />
+                <CounterControl label="Increment" clicked={() => this.counterChangedHandler('inc')} />
+                <CounterControl label="Increment" clicked={() => this.counterChangedHandler('dec')} />
+                <CounterControl label="Increment" clicked={() => this.counterChangedHandler('add', 5)} />
+                <CounterControl label="Increment" clicked={() => this.counterChangedHandler('sub', 5)} />
+            </div>
+        )
+    }
+
+
+
+
+
+
+}
+
+
+export default Counter;
+
+
+
+
+--------------------------------------------------------------
+
+
+
+
+
+
+(UMa diferença desse projeto para o outro é que aqui O PROFESSOR 
+
+NÃO USOU UM '.MAP()' para transformar todos 
+
+os 
+
+'CASES' em diferentes botões... -----> não, aqui ele simplesmente 
+
+repetiu 
+
+
+
+a invocação de 
+
+
+'CounterControl' múltiplas vezes, uma para cada tipo de 'OPERAÇÃO' que ele queria que 
+
+o botão fizesse...)
+
+
+
+
+
+-----------------------
+
+
+
+
+AQUI, O REDUX NEM MESMO FOI INSTALADO AINDA.... ----------> 
+
+
+PARA 
+
+
+
+INSTALAR O REDUX EM ALGUM DOS NOSSOS PROJETOS,
+
+
+DEVEMOS 
+
+CHAMAR, no terminal,
+
+
+
+
+
+'npm install --save redux'...  ------------> E COMO O PROFESSOR MENCIONOU,
+
+
+
+A 
+
+LIBRARY 
+
+'REDUX' 
+
+FUNCIONA 
+
+
+DE 
+FORMA 
+
+STANDALONE, É INDEPENDENTE DO 
+
+'REACT'... 
+
+
+
+
+
+
+
+
+
+
+
+
+--> e nós, DE FATO, 
+
+vamos o utilizar de forma ___sTANDALONE, POR ENQUANTO... -----------> 
+
+
+
+
+
+MAS POSTERIORMENTE VAMOS O ADICIONAR AO NOSSO 
+
+APLICATIVO 
+
+'REACT',
+
+para 
+
+ver como 
+
+o 
+
+redux funciona com ele...
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+
+
+
+--> COM O REDUX INSTALADO, O PROFESSOR VAI CRIAR UM NOVO ARQUIVO, NO NOSSO ROOT FOLDER (no folder 'src'),
+
+
+
+
+
+O QUAL ELE CHAMARÁ 
+
+DE 
+
+
+'redux-basics.js'... ----------------------> CERTO.
+
+
+
+
+
+
+
+
+
+
+
+
+E ESSE ARQUIVO AÍ, esse 'redux-basics',
+
+
+NÃO __VAI SEGURAR __ CÓDIGO REACT... nada de react será inserido nele...
+
+
+
+
+
+
+
+
+--> E NÓS NÃO VAMOS INCLUIR 
+
+
+ESSE 
+
+
+'redux-basics' no nosso projeto react.... -----------> EM VEZ DISSO, 
+
+
+PROFESSOR 
+
+
+
+NOS APONTA QUE 
+
+ELE VAI EXECUTÁ-LO COM O NODE.JS,
+
+em vez disso....  -------> ele vai fazer isso apenas 
+
+PARA 
+
+NOS 
+
+
+MOSTRAR 
+
+OS DIFERENTES 
+
+CONCEITOS DE REDUX em 1 único arquivo,
+
+e também 
+
+para 
+
+
+NOS 
+
+DEMONSTRAR/MOSTRAR QUE 
+
+
+__ELE REALMENTE É __INDEPENDENTE EM RELAÇÃO AO REACT....
+
+
+
+
+-------------------------------
+
+
+
+CERTO..
+
+
+NESSE 
+
+ARQUIVO 
+
+'REDUX',
+
+
+o professor QUER CRIAR TUDO QUE PRECISAMOS CRIAR PARA USAR O REDUX...
+
+
+
+
+
+
+
+----------->  DENTRO DESSE ARQUIVO 'redux-basics.js',
+
+
+VEREMOS 
+
+
+__aS 4 PARTES __ DO USO 
+
+
+DO 'REDUX' em um aplicativo... 
+
+
+
+
+veremos:
+
+
+
+
+
+
+
+//Store
+
+
+
+
+
+
+
+
+//Reducer
+
+
+
+
+
+
+
+
+
+// CODE THAT DISPATCHES AN ACTION...
+
+
+
+
+
+
+
+//Subscription
+
+
+
+------------------------------------
+
+
+
+ESSAS 
+
+
+SÃO 
+
+AS 
+
+4 
+
+'SEÇÕES'
+
+
+
+que são utilizadas para 
+
+EFETIVAMENTE 
+
+IMPLEMENTAR O REDUX EM UM PROJETO (seja ele react ou não...)
+
+
+-----------------------------------
+
+
+
+
+
+
+
+Começamos, é claro, pelo 
+
+
+
+
+
+
+
+
+'STORE'... ---------> PARA IMPLEMENTAR/ADICIONAR UM 'GLOBAL STORE' 
+
+
+
+no seu PROJETO,
+
+
+
+VOCÊ PRECISA 
+
+
+___IMPORTAR_ _ UM 
+
+NEGÓCIO 
+
+
+DO 
+
+'REDUX'... ---------------> 
+
+
+
+
+e 
+
+a 
+
+sintaxe 
+
+de 
+
+'import'
+
+AINDA 
+
+SERÁ 
+
+UTILIZADA, MAS SÓ NO FUTURO.... (pq o REACT SÓ ACEITA IMPORTS COM A SINTAXE 'import {} from ...' ) 
+
+
+
+
+
+
+
+
+
+
+MAS COMO __eSTAMOS USANDO NODE.JS__ (por causa desse arquivo 'redux-basics.js', que o professor 
+quer usar como demonstração), VAMOS TER QUE 
+
+USAR 
+
+
+
+A SINTAXE DE IMPORTS 
+
+
+DO 
+
+'node.js',
+
+que 
+
+é aquela 
+
+que 
+
+se utiliza de 
+
+
+'require'...
+
+
+
+
+
+ex (não sei se é assim, estou CHUTANDO):
+
+
+
+'''''''                        '''''
+const redux = require('redux');
+
+
+
+
+
+----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+E EU ESTAVA CERTO!!! era exatamente isso aí...
+
+
+
+
+
+
+
+
+
+
+const redux = require('redux');
+
+
+
+
+
+
+
+------------------------------
+
+
+
+
+
+SINTAXE DE 'REQUIRE' ---> é uma sintaxe DO NODE.JS...
+
+
+
+-------------------
+
+
+
+
+
+--> aqui, então, o professor vai criar uma constante chamada 
+
+de 
+
+
+'createStore' 
+
+
+
+
+----> essa constante vai se referir a 'redux.createStore'... ---> ESSE CREATESTORE É UMA FUNÇÃO,
+
+mas 
+
+não devemos a executar ainda.... ---> 
+
+
+
+'.createStore' nos permite CRIAR 
+
+UM 
+
+
+NOVO 
+
+REDUX STORE... ---> professor 
+
+vai ARMAZENAR 
+
+
+O 
+
+
+
+
+
+NOSSO STORE 
+
+
+EM UMA 
+
+
+CONSTANTE 
+
+
+CHAMADA 
+
+
+DE 
+
+'store',
+
+
+mas é claro que 
+
+VOCÊ PODE ESCOLHER QUALQUER NOME QUE VOCÊ QUISER...
+
+
+
+
+
+
+---> e nessa constante de nome 'store',
+
+o professor vai SIMPLESMENTE 
+
+EXECUTAR 
+
+
+aquele 
+
+
+
+'createStore' que criamos lá em cima, antes...
+
+
+(
+    ''''const store = createStore();''''
+)
+
+
+
+
+
+
+
+
+ex:
+
+
+--------------------------------------------
+
+
+const redux = require('redux');
+
+
+
+const createStore = redux.createStore();
+
+
+
+
+const store = createStore();
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+PORTANTO, SEMPRE VAMOS PRECISAR:
+
+
+
+1) do IMPORT (seja ele de NODE.JS ou de REACT; 'require' ou 'import'...)
+
+
+
+
+
+
+2) ESSA CONSTANTE 'createStore' (que depois será EXECUTADA para criar um store, logo abaixo...)
+
+
+
+3) UMA CONSTANTE 'store' (ou qualquer outro nome) QUE __VAI ARMAZENAR UMA EXECUÇÃO (provavelmente a ÚNICA) de 'createStore', tipo 'createStore()'....
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ENTRETANTO, 
+
+
+
+PROFESSOR 
+
+
+NOS 
+
+EXPLICA QUE 
+
+
+UM CREATESTORE executado assim, 
+
+meio 
+
+solto tipo 
+
+
+
+'createStore();',
+
+
+
+
+
+NÃO 
+
+
+VAI FAZER MUITA COISA por si só....... ------------------> PARA QUE 
+
+
+
+
+UM 
+
+
+
+STORE SIRVA ALGUM PROPÓSITO, FAÇA ALGUMA COISA,
+
+
+ele __PRECISA SER INICIALIZADO COM __ UM 
+
+
+_____________REDUCER__________________... ----------> ISSO PQ 
+
+
+
+______ O REDUCER ___ É O NEGÓCIO/FUNÇÃO PURA __ (e, lembre-se, TEMOS APENAS 1 ÚNICO REDUCER POR PROJETO NORMAL/PROJETO REACT, MESMO SE COMBINARMOS MÚLTIPLOS REDUCERS, eles serão combinados EM 1 SÓ....)
+
+
+
+
+
+
+QUE FICA ___fORTEMENTE____ CONECTADO AO 
+
+'STORE'... ------------> ELE É 
+
+A 
+
+
+ÚNICA COISA QUE 
+
+
+
+VAI CONSEGUIR __UPDATAR ___ O STATE DO 'STORE', no final das contas....
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------->E É ___eXATAMENTE POR ESSA RAZÃO QUE PRECISAMOS ___ PASSAR 
+
+
+ESSE 
+
+REDUCER TÃO ESPECIAL __ a nossa execução de 
+
+
+'createStore()',
+
+
+nessa 
+
+
+constante 
+
+'store'... -----------> precisa ser passado o reducer a essa função PQ __ELE __ É ABSURDAMENTE 
+
+CONECTADO AO STATE...
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+E É POR ISSO, EXPLICA O PROFESSOR, QUE 
+
+SEMPRE 
+
+
+TEMOS QUE 
+
+CRIAR 
+
+O 
+
+REDUCER ___ANTES __ DA STORE__, 
+
+
+
+colocá-lo no código __ANTES__ DO STORE....
+
+
+
+
+E ele nos mostra essa 'ordem' de códigos 
+
+por meio da constante 'rootReducer', que SERÁ O NOSSO REDUCER...
+
+
+
+
+
+ex(isso mostra a ordem CORRETA de execução/escrita das linhas no nosso código...):
+
+
+
+--------------------------------------------------
+
+
+
+
+const redux = require('redux');
+const createStore = redux.createStore;
+
+//Reducer (1)
+
+const rootReducer = ...
+
+
+
+
+
+
+
+
+//Store (2)
+
+const store = createStore();
+
+
+
+
+
+
+
+
+
+
+
+
+// CODE THAT DISPATCHES AN ACTION... (3)
+
+
+
+
+
+
+
+
+//Subscription (4)
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+O PROFESSOR EXPLICA QUE 
+
+
+
+ESSE 
+
+
+
+'const rootReducer',
+
+o  seu 
+
+valor 
+
+
+PODE 
+
+
+SER CRIADO 
+
+
+TANTO 
+
+
+COM 
+
+
+
+
+
+A KEYWORD 'FUNCTION' (como funções normais javascript, ES5),
+
+
+
+
+
+MAS 
+
+VOCÊ TAMBÉM PODE USAR UMA ARROW FUNCTION (é o ideal)...
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+const rootReducer = () => {
+
+}
+
+
+
+
+-------------------------
+
+
+
+ESSA FUNÇÃO AÍ 
+
+
+
+
+___RECEBE___ 2 ARGUMENTS... ------> o primeiro argument 
+
+
+é 
+
+
+
+o 
+
+'CURRENTSTATE'... (pq, como o professor mencionou, 
+
+
+O __REDUCER_ ACEITA 2 ARGUMENTOS, O 'STATE' E A 'ACTION' EM SI... -------> E O STATE QUE ELE RECEBE É SEMPRE O __OLDSTATE__... o oldstate que então será updatado por ele...
+)
+
+
+
+
+
+
+
+OK, PRIMEIRO ARGUMENTO É O STATE/OLDSTATE,
+
+E o segundo 
+
+
+é 
+
+
+
+A
+
+
+ACTION...
+
+
+
+
+
+
+eX:
+
+
+
+
+''''''''''''
+const rootReducer = (state, action) => {
+
+}
+
+'''''''''''''''
+
+
+
+
+
+
+
+
+
+
+OU (sintaxe alternativa):
+
+
+
+
+const rootReducer = (curState, action) => {
+
+}
+
+
+
+
+
+-------------------------------------
+
+
+
+
+CERTO,
+
+
+E AÍ 
+
+
+ESSA FUNÇÃO 
+
+
+'rootReducer' (que é o nosso reducer, na verdade),
+
+
+TEM QUE 
+
+
+__RETORNAR 1 ÚNICA COISA __, 
+
+
+E 
+
+ESSA 
+
+COISA 
+
+É 
+O NOSSO 
+
+'UPDATED STATE'.... ----------> E O 
+
+
+
+REDUCER 
+
+
+
+MAIS SIMPLES QUE VOCê 
+
+
+
+PODE 
+
+
+ESCREVER 
+
+
+É UM 
+
+
+REDUCER 
+
+
+assim:
+
+
+
+const rootReducer = (curState, action) => {
+
+            return state;
+}
+
+--------------------------------------------
+
+
+
+OU SEJA,
+
+O REDUCER MAIS SIMPLES QUE VOCê PODE SETTAR É __UM REDUCER___ QUE SIMPLESMENTE 
+
+
+____RETORNA___ O VELHO STATE... 
+
+
+(e esse reducer que só tem 'return state' é __OBVIAMENTE UM REDUCER __vÁLIDO__, MAS ELE 
+
+NÃO FAZ COISA ALGUMA... ('does nothing')...) --> ele só faz return do state, oldstate QUE NÓS JÁ TINHAMOS....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> MAS MESMO USANDO ESSE REDUCER 'INÚTIL',
+
+
+podemos 
+
+
+o passar 
+
+
+como parâmetro de 
+
+'createStore()', em 
+
+'store'...
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const redux = require('redux');
+const createStore = redux.createStore;
+
+//Reducer (1)
+
+const rootReducer = (state, action) => {
+    return state;  //////////////ESSE É O REDUCER MAIS SIMPLES QUE VOCê PODE ESCREVER. ELE SÓ VAI SIMPLESMENTE RETORNAR O 'OLDSTATE' (o que é completamente inútil, pq o OLDSTATE VAI ENTRAR NESSA FUNÇÃO PURA/REDUCER E ENTÃO VAI SIMPLESMENTE SAIR DA MESMA FORMA...) -> o professor só usa esse modelo de reducer, esse modelo que só possui esse 'return state', PQ ELE QUER NOS MOSTRAR QUE MESMO UM REDUCER __INÚTIL___ pode ser utilizado/passado como parâmetro ao 'createStore()' mais abaixo (que é uma função/execução de função que __EXIGE___ ESSE PARÂMETRO, EXIGE UM REDUCER...) 
+}
+
+
+
+//Store (2)
+
+const store = createStore(rootReducer);
+
+
+
+
+// CODE THAT DISPATCHES AN ACTION... (3)
+
+
+
+
+//Subscription (4)
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+
+COM 
+
+ISSO,
+
+COM 
+
+ESSA ESCRITA/SINTAXE,
+
+
+NOSSO 
+
+
+STORE ___SERÁ CRIADO __ COM AQUELE 
+
+'REDUCER' 
+vinculado a ele.... ----------> FINALMENTE,
+
+TEREMOS 
+
+
+UMA 
+
+
+'CREATED STORE'... ----------> PORÉM,
+
+
+COM ISSO SURGE UM OUTRO PROBLEMA:
+
+
+
+ESSE 
+
+STORE 
+
+VAI 
+
+SEGURAR UM 
+
+
+STATE QUE ESTARÁ 
+
+'UNDEFINED'... (this store will hold an 'UNDEFINED STATE'...).
+
+
+
+
+
+
+
+
+--> podemos verificar que 
+
+essa store 
+
+ESTÁ SEGURANDO UM STATE 'undefined'
+
+
+
+POR MEIO DO ____CONSOLE.LOG__ 
+
+
+DO 'store.getState()' -----------------------> 
+
+
+
+
+
+''''''''''''''''getState()'''''''''''''' -------> é uma função que 
+
+PODE SER EXECUTADA EM CIMA/NO 'store' (que é essa constante que segura 'createStore(rootReducer)')....
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+const redux = require('redux');
+const createStore = redux.createStore;
+
+
+const rootReducer = (state, action) => {
+    return state;  
+}
+
+
+
+const store = createStore(rootReducer);
+
+console.log(store.getState()); //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+
+
+
+
+--------------------------------------
+
+
+
+TEREMOS UM STORE, MAS ESSE STORE AÍ VAI 
+
+
+SEGURAR (hold) um 
+
+
+'UNDEFINED STATE'... ---> para executar nosso app e 
+
+
+então 
+
+
+
+EXAMINAR ESSE STORE QUE TEM UM VALOR DE 'UNDEFINED',
+
+
+
+
+devemos __EXECUTAR NOSSO ARQUIVO 'redux-basics.js'
+
+
+
+POR MEIO 
+
+DO COMANDO (no terminal)
+
+
+
+'node redux-basics.js'... ------------>  ISSO VAI EXECUTAR 
+
+
+
+O ARQUIVO, 
+
+o que 
+
+
+fará 
+
+com que 
+
+TODOS 
+
+NOSSOS 
+
+
+CONSOLE.LOGS 
+
+
+SEJAM 
+
+
+OUTPUTTADOS 
+
+
+no terminal... (no terminal do IDE...)
+
+
+
+
+
+
+
+
+--> E, DE FATO,
+ 
+ SE EXECUTARMOS ESSE NOSSO ARQUIVO, IMEDIATAMENTE 
+
+ VAMOS 
+
+ VER 
+
+ 'undefined',
+
+ que 
+
+ é um 
+
+
+ valor 
+
+ console.loggado 
+
+ naquela 
+
+ linha 
+
+ '
+ console.log(store.getState());' 
+
+
+
+
+
+ ------------------------------------------
+
+
+
+
+
+ VAMOS RECEBER 'UNDEFINED' PQ __ NOSSO 'rootReducer' SÓ __ FAZ O RETURN DO NOSSO 
+
+
+ 'OLDSTATE',
+
+ e 
+
+ esse 
+
+ OLDSTATE __________NUNCA FOI INICIALIZADO POR NÓS__ (basta vocÊ examinar 
+ 
+ o código 
+ 
+ 
+ de 
+ 
+ 'redux-basics.js'... ----> nesse arquivo, não encontramos NENHUMA DEFINIÇÃO DO STATE...)
+
+
+
+
+ -----------------------------------------------------
+
+
+
+
+
+
+
+
+
+ PARA INICIALIZAR O STATE NESSE ARQUIVO 
+
+
+ 'redux-basics.js',
+
+
+
+ O PROFESSOR 
+ VAI 
+
+
+ SETTAR 
+
+
+
+
+ UMA NOVA CONSTANTE, que ele chamará 
+
+
+ de 
+
+
+ 'initialState'...
+
+
+
+
+
+
+
+
+ --> 
+
+
+ eX:
+
+
+
+
+
+ const initialState = ...
+
+
+
+
+
+ ----------------------------------
+
+
+
+
+
+
+
+ --> ESSA CONSTANTE SERÁ/VAI SEGURAR UM ___JAVASCRIPT OBJECT___...
+
+
+
+ ex:
+
+
+  const initialState = {} 
+
+
+
+
+
+
+
+
+  ----------------------------
+
+
+
+  VAI SER UM OBJETO JAVASCRIPT, mas teoricamente ele 
+  
+
+
+  poderia ser um número, ou qualquer outra coisa do gênero... (não precisa ser 
+  
+  obrigatoriamente um objeto... ) ------> MAS FREQUENTEMENTE É UM OBJETO, 
+
+  pq ____ VOCê GERALMENTE__ TEM MAIS DE 1 ÚNICO 'GLOBAL FIELD' no seu state... (isso na grande maioria dos casos...)
+
+
+
+   
+
+
+mas você poderia, é claro, escrever algo assim:
+
+
+
+
+const initialState = 1;
+
+
+
+
+
+-------------------------
+
+
+
+MAS O PROFESSOR VAI SETTAR UM OBJETO MESMO... 
+
+
+
+
+
+
+
+
+--> e esse objeto aí vai segurar uma propriedade 
+
+
+de 
+
+'counter'.... ------> E O VALOR INICIAL DESSE STATE/PROPRIEDADE 
+
+SERÁ 
+
+
+de '0'....
+
+
+
+ex:
+
+
+
+
+const initialState = {
+    counter: 0
+}
+
+
+
+------------------------------
+
+
+
+
+
+--> ISSO FEITO,
+
+
+
+O PROFESSOR VAI IR ATÉ 
+
+O 
+
+'rootReducer' (const rootReducer)
+ 
+
+ E ENTÃO USARÁ 
+
+
+ UMA 
+
+ FEATURE 
+
+ PROVIDENCIADA 
+
+ PELO 
+
+
+ ES6... --------------> ESSA FEATURE DEIXA 
+
+
+ O PROFESSOR 
+
+ INICIALIZAR 
+
+ O ARGUMENTO 
+
+ 'state' (
+
+
+
+''''''''''''''''''''''''''
+     const rootReducer = (state, action) => {
+         return state;
+     }
+     '''''''''''''''
+ )
+
+
+
+
+
+ ELE PODE INICIALIZAR ESSE ARGUMENTO 
+
+ 'state'
+
+
+ COM/COMO UM __________VALOR ___ DEFAULT___ (feature do ES6...) -------> isso quer 
+
+
+ dizer que, quando 
+
+
+
+ ESSA FUNÇÃO 
+
+
+ 'rootReducer' FOR CHAMADA NO NOSSO CÓDIGO, se esse argumento 
+
+ 'state' 
+
+
+ estiver como 
+
+
+
+ 'UNDEFINED',
+
+
+ o javascript/redux vai AUTOMATICAMENTE PEGAR/USAR, EM VEZ DISSO,
+
+
+ O VALOR
+
+
+ DEFAULT DEFINIDO DENTRO DOS PARÂMETROS...
+
+
+
+
+
+ ok, mas como é a grafia disso?
+
+
+
+
+ É ASSIM:
+
+
+
+ -------------------------------------
+
+
+const initialState = {
+    counter: 0
+}
+
+
+const rootReducer = (state = initialState, action) => { ////////////SIM, O 'VALOR DEFAULT'/PARÂMETRO COM VALOR DEFAULT é esse parâmetro 'state = initialState'....
+
+    return state;
+}
+
+
+
+
+
+
+ ---------------------------------
+
+ ISSO SIGNIFICA QUE 
+
+
+ O 
+
+ 'rootReducer' 
+
+ VAI ACEITAR 
+
+
+ 'initialState' como 
+
+
+
+ ____PARÂMETRO__/VALOR DO PRIMEIRO PARÂMETRO 'state', quando 
+
+ 'state'
+  
+
+ESTIVER COMO 
+
+'undefined' (quando o valor de 'state' for 'undefined', em outras palavras...) --------> 
+
+
+
+
+
+E 
+
+É EXATAMENTE ISSO QUE ACONTECE, O VALOR DE 'state' é settado como 'undefined',
+
+
+quando 
+
+
+
+A STORE ESTIVER SENDO CRIADA PELA PRIMEIRA VEZ, por meio do código 
+
+
+'const store = createStore(rootReducer);', em que 
+
+
+A STORE ESTARÁ EXECUTANDO O 'rootReducer' pela primeira vez.... ---------> MAS ISSO AÍ 
+
+
+VAI 
+
+
+ACONTECER 
+
+______sÓ NA PRIMEIRA 'RUN', na primeira execução/criação 
+
+da 'store'........... --> EM TODAS AS SUBSEQUENTES 
+
+
+'ACTIONS',
+
+
+
+O 
+
+state JÁ ESTARÁ DEFINIDO COMO 'initialState' (que é, afinal de contas, o ''''VALOR DEFAULT''' 
+
+do state), 
+
+
+
+e por isso 
+
+
+o nosso console.log 
+
+(
+
+    ''''console.log(store.getState())''' 
+)
+
+
+
+não vai mais RETORNAR UNDEFINED, 
+
+
+
+POIS O VALOR 'state'
+
+JÁ ESTARÁ 
+
+SETTADO COMO 
+
+sendo aquele 
+
+'initialState = {
+    counter: 0
+}'
+
+
+
+
+
+-----------------------------
+
+
+
+
+E, DE FATO, 
+
+
+
+SE AGORA 
+
+
+EXECUTARMOS 
+
+
+NOSSO ARQUIVO 
+
+'redux-basics.js'
+
+
+COM 
+
+
+O 
+
+comando 
+
+'node redux-basics.js' 
+
+
+DE NOVO, 
+
+
+
+VEREMOS QUE ELE PRINTARÁ, NO CONSOLE,
+
+
+
+
+um objeto de 
+
+'{ counter: 0}',  CONFIRMANDO QUE 
+
+AQUELE 
+
+STATE 
+
+ALI 
+
+FOI SETTADO COM SUCESSO (o state que foi passado como 'DEFAULT PARAMETER VALUE' de nosso rootReducer...)
+
+
+
+----------------------------------------------------------------------------------
+
+
+
+
+CERTO... AGORA TEMOS UM 
+
+
+'initialState' 
+
+
+de 
+
+
+
+'{counter: 0}' 
+
+
+SENDO RETORNADO 
+
+POR ESSE 'rootReducer',
+
+
+
+
+E TAMBÉM 
+
+UM 
+
+
+state 
+
+de 
+
+
+'{ counter: 0 }' 
+
+
+
+ENFIADO DENTRO DE NOSSA 'CENTRALSTORE'...
+
+
+
+ 
+
+
+
+ '{ counter: 0}' ---> ESSE É O NOSSO __ INITIAL STATE__, basicamente...
+
+
+
+
+
+
+
+
+
+
+
+-> CERTO, NÓS VIMOS, NESTA AULA,
+
+
+
+1) COMO CRIAR UM 'STORE' com um __rEDUCER____ 
+
+
+
+
+2) COMO INICIALIZAR O __sTATE___ NESSE 'Store'....
+
+
+
+
+
+-------------------------------
+
+
+
+O PRÓXIMO PASSO É DESCOBRIR/APRENDER 
+
+SOBRE 
+
+
+
+____cOMO ____   
+
+
+
+
+_____ FAZER SUBSCRIBE AO 'STATE', 
+
+
+
+E COMO FAZER 'DISPATCH' DE ACTIONS.... (que são enfiadas no 
+
+'rootReducer') ----> VEREMOS ISSO NA PRÓXIMA AULA...

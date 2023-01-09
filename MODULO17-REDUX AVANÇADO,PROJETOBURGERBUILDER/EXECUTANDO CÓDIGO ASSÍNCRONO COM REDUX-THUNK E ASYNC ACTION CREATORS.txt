@@ -1,0 +1,2067 @@
+
+
+
+
+
+
+
+
+---> professor nos explica que nas últimas aulas NÓS ADICIONAMOS/ESCREVEMOS
+ 
+
+ 'ACTION CREATORS'
+
+ para dentro do nosso projeto... --> action creators
+
+
+
+ __PODEM SER USADOS __ PARA RODAR CÓDIGO _SÍNCRONO,
+
+ MAS 
+
+
+ A 
+
+ IDEIA PRINCIPAL POR TRÁS DELES
+  
+  É 
+
+
+  __TE PERMITIR__ EXECUTAR __ CÓDIGO ASSÍNCRONO.... (vamos usar isso para o HANDLE DE __ORDERS___...)
+
+
+
+
+
+  -------------------------> antes de fazermos/escrevermos isso;
+
+
+
+  professor 
+
+
+  diz que 
+
+  HÁ 
+  UM 
+
+
+  PEDAÇO DE 
+
+  'ASYNC CODE'
+
+  que 
+
+  podemos escrever 
+
+  DE CARA,
+
+   na verdade...
+
+
+
+
+
+
+
+
+   ---> LÁ NO CONTAINER 
+
+   'BurgerBuilder',
+
+
+
+   NÓS 
+
+
+   COSTUMÁVAMOS 
+
+
+
+   __fETCHEAr___ 
+   OS INGREDIENTS 
+
+   por meio 
+
+
+   de 
+
+   'componentDidMount()',
+
+
+   por meio deste código:
+
+
+
+
+    componentDidMount() {
+    console.log(this.props);
+
+    axios
+      .get(
+        'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json'
+      )
+      .then((response) => {
+        console.log(response);
+        console.log('test');
+
+        this.setState({
+          ingredients: response.data,
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          error: true,
+        });
+      });
+  }
+
+
+
+
+
+  ------------------------------------------
+
+
+  (NA VERDADE, EU AINDA FAÇO ISSO...) ----> professor 
+
+
+  diz que 
+
+
+  HAVIA '''PAUSADO''' ESSE CÓDIGO TEMPORARIAMENTE, quando trocamos 
+
+
+   O
+
+
+   framework
+    
+    DO NOSSO CÓDIGO PARA __SER __ O REDUX...
+
+
+
+
+
+
+
+--> MAS AGORA É __HORA __dE FETCHEAR ESSES DADOS, MAIS UMA VEZ... (devemos readicionar esse código 
+
+no nosso projeto....)
+
+
+
+
+
+
+
+
+--> para fetchear esses dados/ingredients,
+
+
+Professor 
+NOS CONTA 
+
+QUE 
+
+__EXISTEM 2 ROUTES QUE PODEMOS ESCOLHER...
+
+
+
+
+
+
+
+ROUTE 1 ---------> VOCê comenta para dentro do projeto AQUELE CÓDIGO ANTIGO DO 'axios.get'........ 
+
+
+
+
+E O CÓDIGO VAI FICAR ASSIM, INICIALMENTE:
+
+
+
+
+
+   componentDidMount() {
+    axios
+      .get(
+        'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json'
+      )
+      .then((response) => {
+        console.log(response);
+        console.log('test');
+
+        this.setState({
+          ingredients: response.data,
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          error: true,
+        });
+      });
+  }
+
+
+
+-----------------------------
+
+
+
+
+
+CERTO.... 
+
+
+MAS 
+
+
+EM VEZ 
+
+
+DE 
+VOCê 
+
+SETTAR 
+
+
+'this.setState(
+    {
+        ingredients: response.data
+    }
+)',
+
+
+
+VOCê 
+
+
+VAI 
+
+
+
+ESCREVER/DISPATCHAR UMA 
+
+
+'TO BE CREATED ACTION', uma 
+
+
+action que SERÁ DISPATCHADA AQUI MESMO, DE FORMA __iNLINE__... -------> E ESSA 
+
+
+ACTION __ VAI __UPDATAR__ 
+
+OS 
+
+'ingredients' que temos 
+
+DENTRO DO NOSSO REDUX STORE..... (que está vinculado ao container 'BurgerBuilder', na verdade...)
+
+
+
+
+----------------> SE VOCÊ FIZER ISSO/OPTAR POR ESSE APPROACH, o CÓDIGO ASSÍNCRONO QUE PRECISA SER EXECUTADO (Esse FETCH de dados de um servidor)
+
+VAI 
+
+SER __EXECUTADO__ DIRETAMENTE NO NOSSO CONTAINER 'BurgerBuilder', O QUE SIGNIFICA QUE 
+
+__VOCÊ __NEM MESMO PRECISARIA USAR 
+
+
+'ACTION CREATORS' 
+para 
+
+handlar o código assíncrono de 'axios'... -----> PQ, NESSE CASO, VOCê SÓ VAI TER QUE DISPATCHAR UMA 'NORMAL ACTION', uma vez que a 'response' FOR EFETIVAMENTE RECEBIDA nesse código de 'axios.get', nesse componentDidMount de 'BurgerBuilder'...
+
+
+
+
+
+
+
+---> e esse approach aí, o approach nº1, é 
+
+
+'COMPLETELY FINE TO DO'... ---> ENTRETANTO,
+
+
+
+
+A VANTAGEM
+ 
+
+
+ DOS 
+
+
+
+ 'ACTION CREATORS' É JUSTAMENTE 
+
+ QUE 
+
+
+ VOCÊ PODE UTILIZAR/ESCREVER 
+
+ CÓDIGO ASSÍNCRONO NELES, é a vantagem 
+
+ de 
+
+
+ PODER 
+
+ __ESCREVER __ CÓDIGO ASSÍNCRONO/dispatches de actions ASSÍNCRONOS 
+
+
+
+ DENTRO DO 'MUNDO DO REDUX'... ------> E É EXATAMENTE ISSO QUE VAMOS FAZER AQUI...
+
+
+
+
+
+
+
+
+
+
+ --> Mas para começar a usar ACTION CREATORS 
+
+ para 
+
+ criar 
+
+
+ ACTIONS QUE 
+
+ SERÃO 
+
+
+ DISPATCHEADAS DE FORMA ASSÍNCRONA,
+
+ O PROFESSOR 
+
+
+ PRECISA 
+
+ INSTALAR O REDUX-THUNK NO NOSSO PROJETO, POR MEIO DO TERMINAL E POR MEIO DE NPM...
+
+
+
+
+ --------------------------------
+
+
+
+---> ok, ele instala 
+
+essa package do 'redux-thunk'.... --> isso feito, ele precisa adicionar 'REDUX-THUNK' como 
+
+
+__MIDDLEWARE__ de nosso app.... ---> ele faz isso em 
+
+'index.js'... ---> 
+
+
+ELE VAI ESCREVER:
+
+
+
+
+import thunk from 'redux-thunk';
+
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
+const store = createStore(
+  reducer,
+  composeEnhancers(applyMiddleware(logger, thunk)) //código redux (REDUX AVANÇADO ---> é o segundo parâmetro, que vai IMPLEMENTAR/APLICAR AQUELES MIDDLEWARES NO FLOW DE NOSSO CÓDIGO.... --> OBS: middlewares são sempre executados/exercem efeitos __ENTRE A ETAPA DO __DISPATCH__ DA ACTION __ E O EFETIVO RECEBIMENTO DESSA ACTION LÁ NO REDUCER...)
+); 
+
+
+--------------------------------------------------
+
+
+
+
+
+E ISSO VAI REALMENTE FUNCIONAR...
+
+
+
+
+-------------------------
+
+OK, AGORA TEMOS O 'REDUX THUNK' instalado...
+
+
+
+
+
+---> devemos ir até 
+
+
+
+
+'actionTypes' 
+
+E ENTÃO 
+
+
+DEVEMOS __cRIAR__ UM 'ACTION IDENTIFIER' para 
+
+nossa
+ 
+
+ action de 'order_post'....
+
+
+
+
+TIPO ASSIM:
+
+
+export const ORDER_POST = 'ORDER_POST';
+
+
+--------------------------------
+
+
+
+
+ISSO FEITO,
+
+vamos 
+
+
+até 
+
+'order.js'
+
+
+
+E ESCREVEMOS O SEGUINTE CÓDIGO:
+
+
+
+
+--------------------------------------------------
+
+
+
+import * as actionTypes from './actionTypes';
+
+
+
+
+
+
+
+
+
+
+
+export const order_post = () => {
+        return {
+                type: actionTypes.ORDER_POST
+        };
+};
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+---> OK.... PRECISAMOS criar um dispatch em 'mapDispatchToProps'... --> mas eu NÃO SEI SE ESSE 'mapDispatchToProps' SERÁ 
+
+O 
+
+DE 
+
+'BurgerBuilder'...
+
+
+
+
+
+--------------------------
+
+
+
+
+
+
+---> PERA.
+
+NA VERDADE,
+
+
+essa é uma order de 'axios.get',
+
+PQ 
+
+NÓS 
+
+
+VAMOS ___FAZER FETCH__ DE INFORMAÇÕES (os ingredients) LÁ 
+
+
+NO NOSSO DATABASE/SERVIDOR DO FIREBASE...
+
+
+
+
+
+---> para isso, precisamos 
+
+de uma 
+
+
+
+action de 
+
+
+identificador 
+
+
+'ORDER_INITIAL_INGREDIENTS_GET',
+ 
+
+ ou algo assim...
+
+
+
+
+
+
+
+ ---------------------
+
+
+
+ EU ESCREVI UM MONTE DE CÓDIGO, MAS COMETI UM ERRO.... --> 
+
+
+
+ NÃO É POSSÍVEL VINCULAR UM MESMO 'STATE'/propriedade no 
+
+ STATE 
+
+ 
+
+
+
+ A 
+
+
+ DOIS 
+
+
+ REDUCERS DISTINTOS... (não posso conectar, por exemplo, 'burger', ao reducer de 'burgerBuilderRedcuer' e ao mesmo tempo ao reducer de 'orderReducer', por exemplo...) --> deve-se escolher apenas 1...
+
+
+
+
+ ------------------------
+
+
+
+
+
+ Tentei codar uma solução, mas não deu certo... --> vou continuar assistindo as aulas 
+
+ do professor,
+
+
+ este projeto aqui já não adianta, vou ter de criar outro...  -> antes disso, conserto todos os '''problemas''' que existiam no meu código....
+
+
+ (vou tentar copiar a versão do professor nos seus mínimos detalhes...)
+
+
+
+
+
+
+
+
+
+
+ --> o professor até agora faz EXATAMENTE A MESMA COISA QUE EU FIZ,
+
+
+ até 
+
+ mesmo 
+
+ o 
+
+
+ setup 
+
+ dos 
+
+ 'action creators'... 
+
+
+
+
+
+
+
+ ---> a única coisa que ele mudou um pouco foi este trecho aqui:
+
+
+
+
+
+ export const orderInitialIngredientsGet = (ingredients) => {
+        return {
+                type: actionTypes.ORDER_INITIAL_INGREDIENTS_GET,
+                ingredients: ingredients
+        };
+};
+
+
+
+export const asyncOrderInitialIngredientsGet = () => {
+        return (dispatch) => {
+                axios.get(
+                            'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json'
+                          )
+                          .then((response) => {
+                                  console.log(response.data);
+                                  
+                                const ingredients = response.data;
+                                dispatch(orderInitialIngredientsGet(ingredients));
+                          })
+                        //   .catch((error) => {
+                        //     this.setState({
+                        //       error: true,
+                        //     });
+                        //   });
+              
+        }
+}
+
+
+
+
+--------------------------------------------
+
+
+
+como ele queria fazer o HANDLING DE ERROS,
+
+
+
+
+
+ele usou um código/sintaxe especial 
+
+para 
+
+o 
+
+'.catch' block.... --------> 
+
+
+
+ele 
+
+
+
+comentou que 
+
+lá 
+
+
+no 
+
+'BurgerBuilder'
+
+
+NÓS 
+
+
+TÍNHAMOS AQUELE 
+
+STATE 
+
+de 
+
+'error' 
+
+no 
+
+
+state interno...
+
+
+ex:
+
+
+
+state: {
+  purchasing: false,
+  loading: false,
+  error: false
+}
+
+
+--------------------------
+
+
+
+
+TODAS ESSAS COISAS ERAM 
+
+USADAS
+ 
+
+ NO 
+
+ 'BurgerBuilder'...
+
+
+
+
+
+--> vamos PEGAR TODAS ELAS...
+
+
+
+
+
+
+---> professor imediatamente se livra 
+
+de 
+
+
+'error'
+
+e 
+
+'loading'
+
+
+no state do burgerbuilder...  ---------> ISSO PQ __NÓS NÃO VAMOS mais GERENCIAR 
+
+ESSES 
+
+'STATES'
+
+nesse arquivo
+
+ --------------------------
+
+
+
+
+
+
+---------> CERTO... E 'loading' SÓ ERA USADO 
+
+PARA __MOSTRAR __ UM PEQUENO SPINNER ___ DE LOADING.... --> ele era mostrado 
+
+
+NO LUGAR
+
+
+DE 
+
+'Order Summary',
+
+nos casos 
+
+em que 
+
+ainda estávamos 
+
+'loading'... --------> MAS ISSO 
+
+
+NÃO 
+
+
+É MAIS 
+
+NECESSÁRIO 
+
+
+
+COM 
+
+NOSSA 
+
+VERSÃO 
+
+
+DO 
+
+REDUX,
+
+
+pq 
+
+
+
+nós 
+
+não 
+
+
+teremos
+ 
+ mais 
+
+ uma possibilidade 
+
+ de 
+
+ 'loading'
+
+ quando 
+
+ 
+
+ vamos fazer show do modal...
+
+
+
+
+
+
+
+
+ --> é por isso que o professor remove o state 'loading' 
+
+ e 
+
+
+  o código de 
+
+
+
+
+  ''''
+
+      if (this.state.loading) {
+      //3
+      modalContent = <Spinner />;
+    }
+
+
+'''
+
+,
+
+
+LÁ NO BURGER BUILDER...
+
+
+
+
+
+
+
+
+
+
+
+
+
+----> MAS O IMPORTANTE, AQUI, 
+
+É 
+
+
+
+A 'ORDER EM SI'... -------> professor fala daquele 
+
+código 
+
+
+de 
+
+
+
+'''''''''''''
+
+
+    let burger = this.state.error ? (
+      <p>Ingredients can't be loaded</p>
+    ) : (
+      <Spinner />
+    );
+
+''''''''''''''''
+
+
+
+
+
+
+---> 
+
+
+ESSE ERRO AÍ CUMPRIA UMA TAREFA IMPORTANTE... ---> caso ocorresse algum 
+
+ERRO no nosso código ('error = true'),
+
+
+NÓS IMEDIATAMENTE VERÍAMOS 
+
+
+'ingredients cant be loaded'.... ----> 
+
+
+e 
+
+
+
+SE O ERROR ESTIVER COMO 'false',
+
+
+VAMOS 
+
+VER 
+
+O __SPINNER___ DE CARREGANDO... -------> MAS COMO NÓS __REMOVEMOS___ 
+
+ESSE 
+
+
+STATE 
+
+
+DE 
+
+'LOADING'.........
+
+
+
+
+
+
+
+
+
+
+
+
+OUTRO PROBLEMA É O CÓDIGO QUE DEFINE/RENDERIZA UM BURGER se 'this.props.ingr' estiver como TRUE(se os ingredients estiverem carregados, basicamente)...
+
+
+
+ex:
+
+
+
+
+
+
+    if (this.props.ingr){
+      burger = (
+        <Aux>
+          <Burger ingredients={this.props.ingr} />
+          <BuildControls
+            disabled={disabledInfo} 
+            price={this.props.price}
+            ingredientAdded={(ingredientId) => {this.props.onIngredientAdd(ingredientId)}}
+            ingredientRemoved={(ingredientId) => {this.props.onIngredientRemove(ingredientId)}}
+            purchasable={this.updatePurchaseState(this.props.ingr)} 
+            ordered={this.purchaseHandler}
+          />
+        </Aux>
+      );
+
+  
+----------------------------------
+
+
+
+
+
+ISSO SIGNIFICA QUE 
+
+NÓS ___DEFINITIVAMENTE PRECISAMOS 'SETTAR' essa propriedade 
+
+de 
+
+
+'error', mas devemos settar EM ALGUM LUGAR 
+
+
+QUE 
+
+NÃO 
+
+
+SEJA 
+
+
+O
+ 
+
+ 'STATE TRADICIONAL' 
+
+
+ de burger builder....
+
+
+
+
+
+----> ISSO QUER DIZER, ESSENCIALMENTE, QUE VAMOS QUERER 
+
+PASSAR 
+
+
+'error'
+
+
+como 
+
+PROPS, como um PROPS 
+
+
+
+CRIADO lá 
+
+no
+
+REDUX.... (lá nos nossos reducers...)
+
+
+
+
+
+
+
+
+---> PARA ISSO, 
+
+PRECISAMOS FAZER 'HANDLE' DESSE ERRO __COMO PARTE DE NOSSO 'REDUX STATE', 
+
+diz o professor...
+
+
+
+
+
+
+
+
+
+---> PARA ISSO, PROFESSOR VAI ATÉ O REDUCER 'burgerBuild'.....
+
+
+
+
+
+
+
+
+--> ali, A PRIMEIRA COISA QUE 
+
+O PROFESSOR 
+
+
+VAI 
+
+__FAZER __ É MUDAR __ OS INGREDIENTS:
+
+
+ele 
+
+vai 
+
+colocá-los como 
+
+'NULL', inicialmente, em 
+
+vez 
+
+
+de 
+
+'ingredients: {
+  salad: 0,
+  meat: 0, 
+  etcetc'
+}'''......
+
+
+
+
+
+
+
+
+
+
+(e ISSO FOI __EXATAMENTE O QUE EU FIZ NA MINHA VERSÃO DO CÓDIGO, SOZINHO... --> mas ainda assim deu errado, na minha tentativa)......
+
+
+
+
+
+ex:
+
+
+
+
+
+
+const initialState = {
+  burger: {
+    
+  //   ingredients: {
+  //   bacon: 0,
+  //   salad: 0,
+  //   cheese: 0,
+  //   meat: 0,
+  // },
+
+  ingredients: null,
+
+
+
+
+
+
+  totalPrice: 4,
+  
+}
+};
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+---> O PROFESSOR DIZ QUE 
+
+OS INGREDIENTS 
+
+PODEM FICAR COMO 
+
+'null' INICIALMENTE __pq nós vamos OS FETCHEAR___ DO 
+
+SERVIDOR/BACKEND DO FIREBASE....
+
+
+
+
+
+
+
+----> E ESSES INGREDIENTS REALMENTE SERÃO 'null' ATÉ O MOMENTO 
+
+EM QUE 
+
+OS INGREDIENTS REALMENTE SÃO FETCHEADOS DO SERVIDOR...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----> E ISSO SERVE TAMBÉM PARA ESTE CÓDIGO AQUI (em burgerBuilder):
+
+
+
+
+    if (this.props.ingr){
+      burger = (
+        <Aux>
+          <Burger ingredients={this.props.ingr} />
+          <BuildControls
+            disabled={disabledInfo} 
+            price={this.props.price}
+            ingredientAdded={(ingredientId) => {this.props.onIngredientAdd(ingredientId)}}
+            ingredientRemoved={(ingredientId) => {this.props.onIngredientRemove(ingredientId)}}
+            purchasable={this.updatePurchaseState(this.props.ingr)} 
+            ordered={this.purchaseHandler}
+          />
+        </Aux>
+      );
+
+
+    }
+
+
+
+
+-----------------------------------
+
+
+
+
+
+OU SEJA,
+
+
+SERVE 
+
+PARA 
+
+QUE 
+
+ESSE 'CHECK' AÍ  ___fALHE__ sE NÓS REALMENTE NÃO TIVERMOS INGREDIENTS... ----> ISSO SERVE PARA QUE 
+
+
+
+O 
+
+__SPINNER REALMENTE __ APAREÇA NA NOSSA PÁGINA, NO LUGAR DO BURGER que deveria ter sido carregado 
+
+(
+
+  código:
+
+
+    let burger = this.state.error ? (
+      <p>Ingredients can't be loaded</p>
+    ) : (
+      <Spinner />
+    );
+
+
+)
+
+
+
+
+
+
+
+-----> MAS O PROFESSOR TAMBÉM PRECISA 
+
+ADICIONAR 
+
+UM 
+
+NOVO 
+
+STATE 
+
+AO 
+
+
+
+STATE 
+
+DE 
+
+
+'burgerBuild',
+
+
+
+QUE SERÁ 
+
+O STATE 
+
+DE 
+
+
+
+'error'.... -------> E O PROFESSOR VAI DEFINIR 
+
+ESSE 
+
+STATE/PROPRIEDADE COMO __fALSE___ INICIALMENTE...
+
+
+
+ex:
+
+
+
+
+const initialState = {
+  burger: {
+  ingredients: null,
+  totalPrice: 4,
+  error: false /////////EIS O CÓDIGO EM QUESTÃO.
+  
+}
+};
+
+
+
+
+
+------------------------------
+
+
+
+
+
+---> E O PROFESSOR VAI QUERER, ADEMAIS,
+
+
+
+__dEFINIR___ ESSE ERROR COMO 'true'
+ 
+
+
+ SE 
+
+ NOSSO 
+
+
+ LOADING 
+
+
+ DO 
+
+
+ __BURGER___ rEALMENTE __ FALHAR.... --------> para isso,
+
+
+ ELE 
+
+
+
+ ___PROVAVELMENTE ___ VAI SE UTILIZAR DO 
+
+
+
+ '.catch()' 
+
+ block 
+
+
+
+ LÁ NO 
+
+
+
+ ACTION CREATOR ASSÍNCRONO 
+
+
+ de 
+
+
+
+ 'asyncOrderInitialIngredientsGet'..
+
+
+
+
+
+
+
+
+---> OK... MAS EU TENHO UM ___GRANDE__ PROBLEMA NO MEU CÓDIGO.... -------> 
+
+
+
+
+a action que 
+
+
+
+
+PEGA 
+
+OS 'INGREDIENTS INICIAIS' 
+
+
+la´
+
+
+da database do firebase 
+
+
+
+
+SIMPLESMENTE ESTÁ NO ARQUIVO ERRADO... ---> está 
+
+
+em 
+
+'order.js',
+
+ou seja,
+
+
+EM UM ARQUIVO DIFERENTE DE 'burgerBuild.js'.... -------> e também está em um REDUCER DIFERENTE... 
+
+
+
+
+
+---> vou ter que reorganizar todos esses arquivos...
+
+
+-------------------------------------------
+
+
+
+
+CERTO, ACHO QUE CONSEGUI...
+
+
+
+------------------------------
+
+
+
+
+
+CONTINUANDO,
+
+
+professor 
+
+
+diz que 
+
+
+
+PROVAVELMENTE 
+
+__TAMBÉM PRECISAMOS DISPATCHAR UMA ACTION __ NAQUELE 
+
+
+'.catch()' 
+
+
+BLOCK 
+
+___PARA __ UPDATAR __ O VALOR 
+
+
+DO STATE 'error' no GLOBAL STORE DO REDUX/state global do redux... (que está como 'false', deve ser mudado para 'true')...
+
+
+
+
+
+
+
+
+
+
+o código que temos até agora é este:
+
+
+
+
+
+export const asyncOrderInitialIngredientsGet = () => {
+        return (dispatch) => {
+                axios.get(
+                            'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json'
+                          )
+                          .then((response) => {
+                                  console.log(response.data);
+                                  
+                                const ingredients = response.data;
+                                dispatch(orderInitialIngredientsGet(ingredients));
+                          })
+                          .catch(
+                            error => {
+
+                            }
+                          )
+           
+              
+        }
+}
+
+
+
+-----------------------------------------------
+
+
+
+
+O erro é importante,
+
+
+
+pois 
+
+
+
+
+será mostrado 
+
+QUANDO NÃO FOR POSSÍVEL 
+
+FETCHEAR
+
+
+OS DADOS DE NOSSO SERVIDOR --> e quando isso não é possível, 
+
+
+
+'error' no state global do REDUX 
+deve ser 
+
+trocado para 'true',
+
+o 
+
+que, por sua vez,
+
+
+FARÁ COM QUE 
+
+O 
+
+SPINNER 
+IMPORTADO 
+
+LÁ 
+
+
+EM 
+
+
+'BurgerBuilder'
+
+
+SEJA 
+
+RENDERIZADO NA PÁGINA junto com a mensagem 'could not load xxxx'....
+
+
+
+
+--> PARA ISSO, PARA REALIZAR ESSA MUDANÇA NO __sTATE__ DO REDUX, PROVAVELMENTE 
+
+
+VAMOS 
+
+
+TER QUE 
+
+DISPARAR (dispatchear) 
+
+
+
+UMA 
+
+
+ACTION 
+
+
+__DENTRO 
+
+DAQUELE CATCH__ BLOCK 
+
+
+
+de 
+
+'asyncOrderInitialIngredientsGet'...
+
+
+
+
+
+---> pode ser uma action de 
+
+nome 
+
+
+'UPDATE_ERROR_STATUS'... (ou algo do gênero...)
+
+
+
+
+
+
+VAI SER TIPO ISTO AQUI:
+
+
+
+export const FETCH_INGREDIENTS_FAILED = 'FETCH_INGREDIENTS_FAILED';
+
+
+
+------------------------------------
+
+
+
+
+
+---> provavelmente vamos ter de CRIAR UM ACTION CREATOR 
+
+que 
+
+
+definirá 
+
+
+o 'error' do state do redux como sendo TRUE,
+
+
+
+e esse 
+
+action creator PROVAVELMENTE VAI SER ENTÃO CHAMADO 
+
+NAQUELE 
+
+'.catch()' block....
+
+
+
+
+
+
+
+
+
+
+EIS O 
+
+
+ACTION CREATOR 
+
+de 
+
+'fetchIngredientsFailed':
+
+
+
+export const fetchIngredientsFailed = () => {
+        return {
+                type: actionTypes.FETCH_INGREDIENTS_FAILED
+        }
+}
+
+
+
+---------------------------------
+
+
+OU SEJA,
+
+A ÚNICA COISA QUE ELE VAI FAZER É __rETORNAR__ UMA ACTION COM UM TYPE 
+
+de 
+
+'actionTypes.FETCH_INGREDIENTS_FAILED'... ------> 
+
+
+
+
+E NÓS VAMOS USAR 
+
+
+ESSE 'type' NO REDUCER, como condição PARA __MUDAR __ O 'error' no state 
+
+DE 
+
+'false' PARA __TRUE (o que vai então engatilhar/carregar nosso SPINNER no lugar do burger...).
+
+
+
+
+----------------------------------------
+
+
+
+
+
+FICOU TIPO ASSIM(lá no arquivo dos action creators de 'burgerBuild'):
+
+
+
+
+
+export const orderInitialIngredientsGet = (ingredients) => {
+        return {
+                type: actionTypes.ORDER_INITIAL_INGREDIENTS_GET,
+                ingredients: ingredients
+        };
+};
+
+
+export const fetchIngredientsFailed = () => {
+        return {
+                type: actionTypes.FETCH_INGREDIENTS_FAILED
+        }
+}
+
+
+
+export const asyncOrderInitialIngredientsGet = () => {
+        return (dispatch) => {
+                axios.get(
+                            'https://burgerbuilder201051-default-rtdb.firebaseio.com/ingredients.json'
+                          )
+                          .then((response) => {
+                                  console.log(response.data);
+                                  
+                                const ingredients = response.data;
+                                dispatch(orderInitialIngredientsGet(ingredients));
+                          })
+                          .catch(
+                                  error => {
+                                          console.log(error);
+                                        dispatch(fetchIngredientsFailed()); ////EIS O CÓDIGO EM QUESTÃO.
+                                  }
+                          )
+                      
+
+              
+        }
+}
+
+
+
+------------------------------------------------------------------
+
+
+
+
+
+
+
+CERTO... ESSE 'dispatch()'
+
+AÍ VAI 
+
+ASSEGURAR 
+
+que 
+
+essa action 
+
+de 
+'
+fetchIngredientsFailed'
+
+
+
+ALCANCE 
+
+O 
+
+
+'reducer'
+
+
+SEMPRE QUE 
+
+OCORRER UM ___eRRO __ DURANTE O RUNTIME 
+
+DE NOSSO 
+
+APLICATIVO...
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> DEVEMOS ESCREVER A LÓGICA DESSA ACTION 
+
+de 
+
+'fetchIngredientsFailed' LÁ NO REDUCER...  ------> E NÓS __TAMBÉM PRECISAMOS __CONECTAR__ NOSSO 
+
+BURGER BUILDER,
+
+aquelas partes 
+
+condicionais,
+
+
+AO 
+
+TRECHO 
+
+
+DO 
+
+STATE DE REDUX (o state 'error') QUE GOVERNA O SHOW 
+
+DA MENSAGEM DE ERRO/SPINNER/BURGER....
+
+
+
+
+
+
+----------------
+
+LÁ NO REDUCER,
+
+
+
+NO CASO, 
+
+
+EU 
+
+ESCREVI ISTO AQUI:
+
+
+    case actionTypes.FETCH_INGREDIENTS_FAILED: 
+    return updateObject(state, {error: true});
+
+
+
+
+
+(MAS NÃO SEI SE ESTÁ CERTO...)
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+CERTO.... MESMO COM TODOS ESSES AJUSTES,
+
+nossa página ainda está com um problema:
+
+
+
+ELA inicializa 
+
+
+COM UM SPINNER INFINITO,
+
+E NOSSO BURGER NUNCA CARREGA...
+
+
+
+
+ACHO QUE É PORQUE NOSSOS 'ingredients' no state ainda estão como 'NULL'...
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> É A LÓGICA QUE FALTA NO REDUCER 'BURGER BUILD' o problema.... --> preciso da lógica 
+
+que 
+
+__VAI UPDATAR __ MEU STATE __ COM OS 'ingredients' OBTIDOS 
+
+LÁ 
+
+
+
+DO 
+
+
+
+HTTP REQUEST ENVIADO AO AXIOS por meio da action 'asyncOrderInitialIngredientsGet'...
+
+
+
+
+-------------------------------
+
+
+
+HAHA, eu CONSEGUI.
+
+
+Sou muito foda.
+
+
+
+
+
+FICOU ASSIM:
+
+
+
+
+
+
+(código do reducer de 'BurgerBuild'):
+
+
+
+const orderInitialIngredientsGet = (state, action) => {
+
+    return updateObject(state, {
+      burger: { totalPrice: 6.9,
+      ingredients: {
+        ...action.ingredients
+      }}
+    })
+}
+
+
+
+const burgerBuilderReducer = (state = initialState, action) => {
+
+
+
+
+
+    switch (action.type) {
+
+    case actionTypes.FETCH_INGREDIENTS_FAILED: 
+    return updateObject(state, {error: true});
+
+
+
+
+
+
+    case actionTypes.ORDER_INITIAL_INGREDIENTS_GET:
+          return orderInitialIngredientsGet(state, action);
+
+
+
+    }
+
+}
+
+
+
+------------------------------------
+
+
+
+
+CÓDIGO 
+
+
+
+DE 
+
+'BurgerBuilder' (container):
+
+
+
+
+
+
+class BurgerBuilder extends Component {
+
+
+
+
+componentDidMount() {
+
+   this.props.onIngredientGet()
+
+
+
+  }
+
+
+
+
+
+
+  let burger = this.props.error ? (
+      <p>Ingredients can't be loaded</p>
+    ) : (
+      <Spinner />
+    );
+
+    
+
+
+}
+
+
+
+
+
+
+
+const mapStateToProps = state => {
+        return {
+            ingr: state.burger.burger.ingredients,
+            price: state.burger.burger.totalPrice,
+            purchasable: state.burger.burger.purchasable,
+            // initialIngr: state.order.initialIngr.ingredients
+            error: state.burger.error
+        }
+
+}
+
+
+
+
+
+
+
+
+const mapDispatchToProps = (dispatch) => {
+
+            return {
+              onIngredientAdd: (ingredientId) => {
+                dispatch(
+                  actionsCreators.ingredient_add(ingredientId)
+                )
+              },
+              onIngredientRemove: (ingredientId) => {
+                dispatch(
+                    actionsCreators.ingredient_remove(ingredientId)
+                )
+              },
+              onIngredientGet: () => {
+                dispatch(
+                      actionsCreators.asyncOrderInitialIngredientsGet()
+                )
+              }
+            }
+}
+
+
+
+
+
+---------------------------------

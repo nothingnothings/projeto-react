@@ -1,0 +1,325 @@
+
+
+
+
+
+
+
+
+
+
+--> OK, O QUE É O 'STATE'?
+
+
+
+
+
+
+
+
+
+
+--> professor nos dá uns exemplos:
+
+
+
+
+
+
+STATE É :
+
+
+
+
+
+
+1) os INGREDIENTS ADICIONADOS A 'Burger'... (isso, esses 'ingredients', é parte DE NOSSO 
+
+'APPLICATION STATE', o 'application state' 
+DE NOSSO 
+
+APLICATIVO 
+
+'BURGER BUILDER'...) -------> A INFORMAÇÃO, OS DADOS 
+
+
+RELATIVOS 
+
+A 
+
+_QUAIS __ INGREDIENTS ADICIONAMOS ___ EM UM DETERMINADO MOMENTO É __CRUCIAL__, 
+
+é crucial pq 
+
+DETERMINA 
+
+
+AS COISAS 
+
+QUE 
+
+PRECISAM
+
+
+
+SER RENDERIZADAS na tela,
+
+
+
+E TAMBÉM 
+
+DETERMINA COMO NOSSO 'BURGER PREVIEW' 
+
+deve 
+
+se 
+parecer...
+
+
+
+
+
+
+---> mas é evidente que 
+
+
+O __STATE__ NÃO TRABALHA/NÃO NOS AJUDA SOMENTE COM ___ELEMENTOS 'VISUAIS' DE 
+
+NOSSOS PROJETOS... ------> não, ele também 
+
+TRABALHA 
+
+'BEHIND THE SCENES', pq como vimos em aulas anteriores, ele faz coisas interessantes,
+
+
+como 
+
+NOS 
+
+AJUDAR 
+
+
+A 
+
+ARMAZENAR DADOS ____ EM UM SERVIDOR (os dados de burger, por exemplo) --------->
+
+
+
+ele nos ajuda 
+
+a 
+
+passar 
+
+ESSES INGREDIENTS ARMAZENADOS EM SI MESMO (no 'state') 
+
+A UM 
+
+
+'HTTP REQUEST', que por sua vez é enviado
+ 
+ AO SERVIDOR...
+
+
+
+
+
+
+
+
+2) A INFORMAÇÃO __ DE __ AUTENTICAÇÃO DO USUÁRIO... ('Is User Authenticated?') -----> 
+
+
+É ELE QUE NOS DIZ SE O USUÁRIO ESTÁ/É AUTENTICADO PARA 
+
+ACESSAR 
+
+AQUELE CONTEÚDO DE NOSSO SITE (seja ele um 'component' ou um 'container', uma página inteiramente nova....)
+
+
+-----------> ESSA INFORMAÇÃO DE AUTENTICAÇÃO É SUPER IMPORTANTE,
+pq é isso que vai determinar 
+
+
+AS OPÇÕES QUE MOSTRAMOS EM UM MENU, POR EXEMPLO, ou então 
+
+
+O ACESSO A CERTOS COMPONENTS...
+
+
+
+
+
+
+
+
+3) O STATE TAMBÉM É AS INFORMAÇÕES 
+
+RELATIVAS 
+
+ 
+AOS ESTADOS 'OPEN'/'CLOSE' de modais...  --> ou seja,
+
+
+'UI STATES', pq 
+
+é 
+
+o state que nos diz 
+
+SE UM 
+
+CERTO ELEMENTO, como por exemplo um BACKDROP ou um MODAL, 
+
+está aberto... (
+
+
+    além de nos informar/deixar armazenada a informação 
+
+
+    de 
+
+    'ele está aberto/fechado',
+
+    ELE 
+
+    TAMBÉM 
+
+
+    NOS 
+
+    DEIXA 
+
+    DEFINIR 
+
+
+    PROPRIEDADES 
+
+    COMO 
+
+    'shouldOpen: true/false', 
+
+
+    PROPRIEDADES 
+
+    QUE 
+
+    NOS 
+
+    DEIXAM 
+
+    MANIPULAR 
+
+
+    SE 
+
+    DETERMINADOS 
+
+    ELEMENTOS/MODAIS/BACKDROPS
+
+
+    __dEVERIAM ___ ''OPEN'' OU NÃO NA NOSSA PÁGINA...
+)
+
+
+
+---> E ISSO É SUPER IMPORTANTE TAMBÉM... ----> mesmo não sendo sobre propriamente 
+
+
+'USER CRITICAL DATA', dados relativos ao usuário, 
+
+ESSE STATE MANAGEMENT (de elementos da UI) É IMPORTANTE 
+
+TAMBÉM... ------> É O NOSSO 'PURE UI-ONLY STATE' -------> esse state aí, state específico,
+
+PODE 
+
+SER 
+
+
+__iMPORTANTE PARA APENAS 1 SINGELO ELEMENTO/COMPONENT NA NOSSA PÁGINA, mas ainda 
+
+assim,
+ 
+ ELE É IMPORTANTE... (
+
+
+Isso ainda é um exemplo de STATE; não é um state propriamente 
+
+'application-wide'/global,
+
+
+E SIM 
+
+UM STATE '__LOCAL__', mais 'focused'...
+
+
+
+ ) ---------> AINDA É 'A STATE THAT DETERMINES WHAT GETS RENDERED TO THE SCREEN'...
+
+
+
+
+
+ -------------------------------------------------------------------
+
+
+
+
+
+ STATE --> INFLUENCIA AS COISAS QUE VOCê VÊ NA TELA... 
+
+
+
+
+
+
+
+
+
+ 4) STATE TAMBÉM É __UMA LISTA __ DE 'BLOG POSTS'... -------> 
+
+PODE SER UMA LISTA DE BLOG 
+
+POSTS que renderizamos, blog posts que 
+
+PODEMOS/PROVAVELMENTE VAMOS __fILTRAR__,
+
+
+e em que talvez 
+
+QUEIRAMOS 
+
+
+SABER __qUAIS DESSES ___ 'POSTS'__ FORAM CRIADOS PELO USUÁRIO/usuários...
+
+(e, por isso, é outro STATE IMPORTANTE QUE MUITAS VEZES É NECESSÁRIO 
+
+NO NOSSO APLICATIVO...)
+
+
+
+
+
+
+
+
+5) ... --------> A LISTA É ENORME, EXISTEM MUITOS E MUITOS EXEMPLOS...
+
+
+
+
+
+
+------------------------------------
+
+
+OK, MAS O QUE DIABOS É TÃO COMPLEXO 
+
+
+SOBRE O 'STATE'? Por que precisamos DE UMA 
+
+'EXTRA LIBRARY' só por causa dele, só por causa do state?
+
+
+--> logo vamos descobrir...

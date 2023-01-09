@@ -1,0 +1,1194 @@
+
+
+
+
+
+
+
+
+
+
+--> AO LONGO DAS ÚLTIMAS LIÇÕES,
+
+
+APRENDEMOS 
+
+
+UM BOCADO SOBRE REDUX-SAGA...
+
+
+
+
+
+
+
+
+--> mas o professor quer nos mostrar mais algumas coisas...
+
+
+
+
+
+
+
+
+--> voltamos ao nosso 
+
+arquivo 
+
+de sagas 
+
+
+'authSaga'.... --> 
+
+
+
+
+
+
+
+ALI NÓS USAMOS/ACESSAMOS 
+
+A 
+
+'LOCALSTORAGE'...  -------> 
+
+
+
+
+ALI,
+
+PROFESSOR USOU ESTE CÓDIGO:
+
+
+
+
+
+  yield localStorage.removeItem('token'); //'YIELD' DEVE SER CHAMADO EM CADA 'step' DE __FUNÇÕES DE TIPO 'GENERATOR' (generator functions).... (generator functions === SÃO OBJETOS 'SAGA', na verdade...)
+  yield localStorage.removeItem('expirationDate');
+  yield localStorage.removeItem('email');
+  yield localStorage.removeItem('userId');
+
+
+
+
+
+  DEPOIS,
+
+  PROFESSOR 
+
+
+  NOS 
+
+  EXPLICOU QUE 
+
+
+  'localStorage',
+
+  esse código aí,
+
+  É UM CÓDIGO __SÍNCRONO__,
+
+
+   e que 
+
+   NÃO PRECISAMOAS 
+
+   NECESSARIAMENTE 
+
+   'wait for it',
+
+
+   como OUTROS CÓDIGOS ASSÍNCRONOS... (códigos ASSÍNCRONOS PRECISAM DE 'yield', da keyword YIELD, 
+   pq 
+
+    DEMORAM UM CERTO TEMPO PARA terminar,
+
+    e a keyword' yield' faz com que o CÓDIGO __ESPERE___ essa 
+    operação 
+
+    terminar/dar resolve ou reject
+     
+
+     ANTES __ DE PROSSEGUIR COM O RESTO DAS LINHAS...)  -------> 
+
+
+
+
+
+     ENTRETANTO,
+
+
+     'localStorage' é um CÓDIGO SÍNCRONO, 
+     por isso 
+
+     tecnicamente 
+
+     não precisamos 'wait for it'... (poderíamos tirar o 'yield')..
+
+
+
+
+
+
+
+
+
+----> MAS UMA COISA QUE PODERÍAMOS AQUI É USAR UM OUTRO 'HELPER METHOD/FUNCTION' providenciado pelo redux-saga... ------>
+
+
+
+
+É O MÉTODO 
+
+'call',
+
+
+extraído 
+
+de 
+
+'redux-saga/effects'...
+
+
+
+
+
+ex: 
+
+
+
+
+import { call } from 'redux-saga/effects';
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+'call' te deixa 
+
+CHAMAR 
+
+
+
+
+____UMA FUNÇÃO QUALQUEr__ EM UM 
+
+OBJETO QUALQUER__... -----> isso significa que 
+
+PODERÍAMOS
+
+
+
+REFORMATAR UMA LINHA COMO 
+
+
+''''yield localStorage.removeItem('token'); '''
+
+
+
+ASSIM:
+
+
+''yield call()''....
+
+
+
+
+
+
+
+----> DENTRO DESSE CALL,
+
+VAMOS PASSAR, COMO PRIMEIRO ARGUMENTO,
+
+__ UM ARRAY___ 
+
+
+EM QUE 
+__ O PRIMEIRO ELEMENTO 
+
+é 
+
+
+
+'localStorage',
+
+
+
+
+E AÍ 
+
+__o  SEGUNDO ____ELEMENTO __ DESSE ARRAY QUE 
+É O PRIMEIRO ARGUMENTO __ SERÁ/É __ A FUNÇÃO 
+
+__ QUE 
+
+VOCÊ QUER 
+
+QUE SEJA 
+
+EXECUTADA 
+
+NESSE OBJETO....
+
+
+ex:
+
+
+
+
+yield call([localStorage, 'removeItem'])
+
+
+
+
+
+
+
+----------------------------------
+
+
+DEPOIS DISSO,
+
+VOCê 
+
+SIMPLESMENTE 
+
+
+PASSA 
+
+UM SEGUNDO PARÂMETRO,
+
+diferente 
+DESSE 
+
+ARRAY... ------> 
+
+
+
+E 
+ESSE 
+
+ARGUMENTO É UM ARGUMENTO/ARGUMENTOS QUE VOCê 
+PASSA/PASSARIA 
+
+
+A ESSE 
+'.removeItem()'... ----> NO NOSSO CASO,
+
+
+VAMOS QUERER 
+
+PASSAR 
+
+
+______ 'token', A NOSSA TOKEN que é removida com 'localStorage.removeItem'...
+
+
+
+
+
+ex:
+
+
+
+
+yield call([localStorage, 'removeItem'], "token");
+
+
+
+
+
+---------------------------------------
+
+
+
+
+VOCÊ PODE SE PERGUNTAR:
+
+
+QUAL É A VANTAGEM DISSO? NÃO É MAIOR E MAIS CLUNKY DO QUE 
+
+O CÓDIGO DE ANTEs? --------> 
+
+
+
+BEM,
+
+ A VANTAGEM É QUE 
+
+
+ ESSA 
+
+ ESCRITA 
+
+ AÍ 
+
+ ________TORNA__ SEUS GENERATORS/SAGAS 
+
+
+ 'TESTABLE'.... (podem ser testadas FACILMENTE)...
+
+
+
+
+
+ ex:
+
+
+
+
+export function* logoutSaga(action) {
+//   yield localStorage.removeItem('token'); //'YIELD' DEVE SER CHAMADO EM CADA 'step' DE __FUNÇÕES DE TIPO 'GENERATOR' (generator functions).... (generator functions === SÃO OBJETOS 'SAGA', na verdade...)
+//   yield localStorage.removeItem('expirationDate'); // ----> DENTRO DESSE CALL,  VAMOS PASSAR, COMO PRIMEIRO ARGUMENTO, __ UM ARRAY___  EM QUE   __ O PRIMEIRO ELEMENTO  é  'localStorage', E AÍ   __o  SEGUNDO ____ELEMENTO __ DESSE ARRAY QUE  É O PRIMEIRO ARGUMENTO __ SERÁ/É __ A FUNÇÃO __ QUE VOCÊ QUER  QUE SEJA  EXECUTADA  NESSE OBJETO.... ex: yield call([localStorage, 'removeItem'])
+//   yield localStorage.removeItem('email');
+//   yield localStorage.removeItem('userId');
+     yield call([localStorage, 'removeItem'], 'token'); ////É A MESMA COISA QUE O CÓDIGO DE CIMA, código de 'yield localStorage.removeItem('token)', MAS ____ TEM A VANTAGEM__ NO QUESITO TESTING.... ---> ESSA EXPRESSÃO DEIXA NOSSO CÓDIGO 'TESTABLE'... deixa as sagas TESTABLE... ---> tudo graças à helper function de 'call'...
+     yield call([localStorage, 'removeItem'], 'expirationDate');
+     yield call([localStorage, 'removeItem'], 'email');
+     yield call([localStorage, 'removeItem'], 'userId');
+
+----------------------------------------------
+
+
+
+
+
+ISSO DEIXA 
+
+
+
+O NOSSO CÓDIGO FACILMENTE 'TESTABLE' 
+
+pq 
+
+você 
+
+
+PODE 
+
+FACILMENTE 
+
+'MOCKAR' (fingir que está executando)
+
+ESSA FUNÇÃO 
+
+DE 
+
+'call'... ---> MOCKAR ESSE NEGÓCIO, E AÍ 
+
+DEIXAR 
+
+
+DE EXECUTAR ESSE CÓDIGO DE VERDADE (o que é definitivamente uma VANTAGEM em relação a EXECUTAR O CÓDIGO DE VERDADE, QUE É O QUE ACONTECE COM O CÓDIGO DE 'yield localStorage.removeItem('xxx')', por exemplo..)
+
+
+
+
+
+
+
+
+--> CERTO.... --> É POR ISSO QUE 
+
+É PREFERÍVEL  USAR 
+
+
+'call' 
+
+NO LUGAR 
+
+
+DESSES STORE 
+
+EM 
+LOCALSTORAGE... 
+
+
+
+
+
+
+
+
+--> E VOCÊ PODE USAR 'CALL '
+
+
+__EM TODOS OS LUGARES EM QUE __ VOCÊ _ 
+
+
+
+'''CHAMA UMA FUNÇÃO DENTRO DE UM OBJETO''''....
+
+
+
+
+
+(EX:
+
+
+PODEMOS 
+
+USAR 
+
+
+
+PARA 
+
+EXECUTAR 
+
+'axios.post(...)',
+
+
+
+E TAMBÉM OUTROS OBJETOS...
+
+)
+
+
+
+
+
+
+--> E SE VOCÊ QUER/VAI TESTAR __ GENERATORS/SAGAS, 
+
+VOCÊ 
+
+
+__TEM QUE __ FAZER ISSO...
+
+
+
+ex:
+
+
+
+ISTO:
+
+//     yield localStorage.setItem('token', response.data.idToken);
+//     yield localStorage.setItem('expirationDate', expirationDate);
+//     yield localStorage.setItem('userId', response.data.localId);
+//     yield localStorage.setItem('email', response.data.email);
+
+
+
+
+
+VIROU ISTO:
+
+
+
+
+
+
+    yield call([localStorage, 'setItem'], 'token', response.data.idToken)
+    yield call([localStorage, 'setItem'], 'expirationDate', expirationDate)
+    yield call([localStorage, 'setItem'], 'userId', response.data.localId)
+    yield call([localStorage, 'setItem'], 'email', response.data.email)
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+CERTO... 
+
+
+E HÁ 
+
+MAIS UMA COISINHA QUE 
+
+VOCÊ PODE FAZER 
+
+ ----------> 
+
+
+
+
+
+LÁ EM 
+
+
+
+'index.js' 
+DOS SAGAS,
+
+
+nós 
+
+temos 
+
+aqueles 
+
+CÓDIGOS 
+
+DE 
+
+'takeEvery',
+
+QUE 
+SÃO 
+
+USADOS
+ 
+ PARA 
+
+ DEFINIR 
+
+ 'WATCHERS',
+
+ watchers 
+
+ que possuem 
+
+ cada um daqueles statement 
+
+ de 
+ 'takeEvery'... 
+
+
+
+ eX:
+
+
+
+
+ export function* watchAuth() {
+
+  
+  yield takeEvery(authActionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+  yield takeEvery(authActionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+  yield takeEvery(authActionTypes.AUTH_ATTEMPT, authAttemptSaga); ///código que DE FATO FAZ  O LOGIN....
+  yield takeEvery(authActionTypes.AUTH_INITIALIZE_AUTHCHECK_STATE, authCheckStateSaga);
+}
+
+
+
+
+------------------------------
+
+
+
+
+--> SÃO NOSSAS DIVERSAS 'SAGAS' 
+
+que 
+
+
+executamos 
+
+
+DE ACORDO COM CADA ACTIOn...
+
+
+
+
+
+
+
+
+----> NESSE ARQUIVO DE 'SAGAS',
+
+podemos 
+
+importar 
+
+'all',
+
+
+LÁ DO 
+
+'redux-saga/effects'....
+
+
+
+
+
+
+
+
+
+---> LÁ EM 
+
+
+'watchAuth',
+
+
+
+PROFESSOR 
+
+DIZ QUE 
+
+PODEMOS SIMPLESMENTE 
+
+ESCREVER 
+
+
+'yield all()',
+
+
+
+E ENTÃO 
+
+
+PASSAR 
+
+DENTRO 
+
+DO PARÂMETRO 
+
+DESSA HELPER FUNCTION 
+
+
+
+
+
+_______ UM ARRAY __ COM TODAS AS 
+
+
+
+'ACTIONS'/WATCHERS/EXPRESSÕES que queremos 
+
+'YIELD'...
+
+
+
+
+
+
+
+
+ISSO QUER DIZER, ESSENCIALMENTE,
+
+QUE 
+
+
+ISTO:
+
+
+
+
+
+export function* watchAuth() {
+
+  
+  yield takeEvery(authActionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+  yield takeEvery(authActionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+  yield takeEvery(authActionTypes.AUTH_ATTEMPT, authAttemptSaga); ///código que DE FATO FAZ  O LOGIN....
+  yield takeEvery(authActionTypes.AUTH_INITIALIZE_AUTHCHECK_STATE, authCheckStateSaga);
+}
+
+
+
+
+
+VIRA ISTO:
+
+
+
+
+
+
+
+import { all } from 'redux-saga/effects';
+
+
+
+export function* watchAuth() {
+
+    yield all(
+        [
+                   takeEvery(authActionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); 
+                     takeEvery(authActionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+                    takeEvery(authActionTypes.AUTH_ATTEMPT, authAttemptSaga); 
+                    takeEvery(authActionTypes.AUTH_INITIALIZE_AUTHCHECK_STATE, authCheckStateSaga);
+        ]
+    )
+  
+}
+
+
+
+
+------------------------------------
+
+
+
+ESSES 
+
+2 CÓDIGOS FAZEM A MESMA COISA, MAS 
+
+ESSE DE BAIXO É MAIS 'LEAN'...
+
+
+
+
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+export function* watchAuth() {
+
+  
+  // yield takeEvery(authActionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+  // yield takeEvery(authActionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+  // yield takeEvery(authActionTypes.AUTH_ATTEMPT, authAttemptSaga); ///código que DE FATO FAZ  O LOGIN....
+  // yield takeEvery(authActionTypes.AUTH_INITIALIZE_AUTHCHECK_STATE, authCheckStateSaga);
+
+
+
+
+      yield all( ////MESMA COISA QUE O CÓDIGO DE CIMA, MAS MAIS ABREVIADO...
+          [
+                     takeEvery(authActionTypes.AUTH_INITIATE_LOGOUT, logoutSaga),
+                       takeEvery(authActionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga),
+                      takeEvery(authActionTypes.AUTH_ATTEMPT, authAttemptSaga),
+                      takeEvery(authActionTypes.AUTH_INITIALIZE_AUTHCHECK_STATE, authCheckStateSaga),
+          ]
+      )
+    
+  
+}
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+SE RECARREGARMOS NOSSO APP,
+
+VEREMOS QUE 
+
+
+TUDO 
+
+
+ESTARÁ FUNCIONANDO NORMALMENTE.. --> NOSSOS AUTH-RELATED 
+
+WATCHERS 
+
+AINDA 
+
+ESTARÃO 
+
+FUNCIONANDO,
+
+
+mas agora 
+
+TODOS 
+
+ESTARÃO 
+
+'RUNNING CONCURRENTLY'... ---> mas 
+
+isso 
+
+não importa 
+
+nem um pouco, 
+pq 
+
+todos 
+
+os 
+
+nossos 
+
+sagas/listeners de saga aqui NÃO PAUSAM 
+A EXECUÇÃO 
+
+
+1 DO OUTRO.... (pq são ASYNC...)
+
+
+
+
+----------------------------
+
+
+--> E VOCÊ PODE CHAMAR 
+
+
+
+ESSE 
+
+'yield all(....)'
+
+
+
+EM 
+
+TODOS OS LUGARES EM QUE 
+VOCê 
+
+TEM 
+MÚLTIPLOS 
+
+CALLS 
+
+DE 
+
+'yield ' 
+
+SIMULTANEAMENTE... (em CÓDIGOS __ ASSÍNCRONOS __ SOMENTE... --> por isso não podemos usar 'yield all()' LÁ NOS CALLS de 'localStorage'...)
+
+
+
+
+
+
+
+EX: SE VOCÊ TEM 2 
+
+REQUESTS
+ 
+
+ DE AXIOS E OS QUER 
+
+ RODAR SIMULTANEAMENTE,
+
+
+
+ VOCê PODE USAR 
+
+
+
+ 'yield all()'
+
+ PARA 
+
+ FAZER EXATAMENTE ISSO....
+
+
+
+
+
+
+
+
+
+
+
+ --> OK... RESUMINDO:
+
+ 'all' é ótimo 
+ PARA QUANDO 
+
+ VOCÊ QUER 
+
+ RODAR 
+
+ MÚLTIPLAS __TASKS___
+
+
+
+ SIMULTANEAMENTE...
+
+
+
+ (você até pode O UTILIZAR PARA RODAR SEUS WATCHERS simultaneamente,
+ 
+ MAS ISSO 
+ 
+ não é obrigatório....
+ )
+
+
+
+
+
+
+
+
+
+
+
+ --> OUTRA COISA:
+
+
+ NÓS, ATÉ AGORA,
+
+
+ USAMOS 
+ APENAS 
+
+ 'takeEvery'.. --> 
+
+
+
+
+ ISSO PODE 
+
+ SER 
+
+ TRADUZIDO 
+ PARA 
+
+
+ 'TAKE EVERY action of this type AND ___ EXECUTE___ THIS SAGA'.... --------> 
+
+
+
+
+ e no nosso aplicativo, __ISSO É 'ALRIGHT'... ---> ok... --> MAS 
+
+ E 
+
+
+ SE VOCÊ QUISESSE,
+
+ EM ALGUM APLICATIVO,
+
+
+ QUE 
+
+APENAS 1 SAGA_ FICASSE __ RODANDO O TEMPO TODO___? (durante todo o runtime)?
+ 
+
+
+
+ (por exemplo,
+ 
+ se o professor METRALHA O BOTÃO 
+ 
+ 
+ 'purchase' de nossa página... ) ---------> nesse caso,
+
+
+ nós talvez 
+
+ queiramos 
+
+
+ APENAS 
+
+ __USAR O 
+
+ 'LATEST CLICK'... --> é por isso 
+
+ QUE 
+
+ ALÉM 
+
+ DE 
+
+ 'takeEvery',
+
+
+ HÁ TAMBÉM 
+
+ O 
+
+ 'takeLatest'... ---------> 
+
+
+
+
+
+
+
+ A DIFERENÇA 
+
+ DE 
+
+ 'takeEvery'
+
+ PARA 
+
+ 'takeLatest'
+
+ É QUE 
+
+ ESTE ÚLTIMO __ VAI SEMPRE __ CANCELAR ___ 
+
+
+ AUTOMATICAMENTE 
+
+
+
+ QUALQUER 'ongoing execution' DA SAGA QUE 
+ ELE EXECUTA/está vinculado,
+
+ E AÍ __ APENAS ___ EXECUTARÁ __A 
+
+
+ VERSÃO/INSTÂNCIA MAIS 'LATEST' (mais recente)
+
+
+ DESSA SAGA A QUE ESTÁ VINCULADO...
+
+
+ Ex:
+
+
+
+
+ yield takeLatest(actionTypes.PURCHASE_BURGER_ATTEMPT, purchaseBurgerSaga); //////ISSO VAI CONSIDERAR 
+
+
+
+ __APENAS __ A 
+
+
+ EXECUÇÃO MAIS _RECENTE__ 
+
+
+ do 
+
+ 'purchaseBurgerSaga',
+
+ E VAI CANCELAR 
+
+ TODAS AS 
+
+ EXECUÇÕES QUE O ANTECEDEM/ANTECEDERAM....
+
+
+
+
+
+ -------------->E ESSA É OUTRA ADIÇÃO BOA,
+
+
+
+ ADIÇÃO DE QUE VOCÊ TALVEZ PRECISE DE TEMPOS EM TEMPOS,
+
+ PARA 
+
+ GARANTIR QUE __ APENAS 1 PROCESSO 'saga' FIQUE SENDO EXECUTADO 
+
+ 'AT A GIVEN TIME'... 
+
+
+
+
+
+ (é a diferença entre EXECUTAR MÚLTIPLOS SAGAS a partir DE MÚLTIPLOS 'DISPATCHES DE UMA ACTION' e 
+ 
+ 
+ DISPARAR/CONSIDERAR APENAS O ÚLTIMO DISPATCH/ULTIMA SAGA DISPARADA A PARTIR DO DISPATCH DE UMA ACTION...)
+
+
+
+
+
+ ---------------------------------------------
+
+
+
+
+
+
+ E É CLARO QUE 
+
+ HÁ 
+ MAIS 
+
+
+
+
+FUNCTIONS 
+
+EXPOSTAS POR 
+
+'redux-saga'... --> pode parecer que existem muitas, mas a grande maioria quase nunca é utilizada...
+
+
+
+
+
+
+
+
+
+
+
+--> VOCÊ TAMBÉM 
+
+
+PODE VER UNS CONCEITOS MAIS AVANÇADOS NESSES DOCS....
+
+
+
+
+
+
+
+
+--> A IDEIA POR TRÁS DO REDUX-SAGA É ASSEGURAR QUE 
+
+SEUS 
+
+ACTION CREATORS FIQUE LEAN,
+
+e que 
+
+NENHUM SIDE EFFECT SEJA RODADO DENTRO DELES,
+
+E QUE 
+
+VOCÊ 
+
+
+EM VEZ DISSO 
+
+
+FAÇA HANDLE DESSES SIDE EFFECTS 
+
+NAS SUAS 
+
+'SAGAS'.... 
+
+
+(sem mistureba de action creators e código assíncrono/código de sideeffects...)
+
+
+
+
+
+
+
+EX:
+
+
+
+
+Redux Saga: Full Documentation => https://redux-saga.js.org/
+Advanced Concepts: https://redux-saga.js.org/docs/advanced/
+API Reference: https://redux-saga.js.org/docs/api/
+Pros & Cons for Redux Saga vs Thunks: https://stackoverflow.com/questions/34930735/pros-cons-of-using-redux-saga-with-es6-generators-vs-redux-thunk-with-es2017-asy/34933395
+
+
+
+
+--------------------------------
+
+
+

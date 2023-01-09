@@ -1,0 +1,1950 @@
+
+
+
+
+DEVEMOS COLOCAR OS 
+
+ELEMENTOS 
+
+'input'
+
+
+EM SEU/SEUS PRÓPRIO/PRÓPRIOS COMPONENTS...
+
+
+
+
+
+
+
+
+
+
+
+--> para isso o professor vai até 
+
+o 
+
+
+folder de 
+
+'components' 
+
+e vai adicionar 
+
+UM NOVO FOLDER DENTRO DO FOLDER 
+
+
+
+DE 
+
+
+'UI'.... ----> DENTRO DALI ELE VAI CRIAR UM NOVO ___SUBFOLDER__,
+
+
+
+que ele chamará de 'Input'...
+
+
+
+
+(PROFESSOR EXPLICA QUE, SE QUISÉSSEMOS, PODERÍAMOS CRIAR UM 
+
+FOLDER 
+
+
+DE 
+
+'FormData' dentro de 'UI', e aí colocar o Folder de 'Input' COMO UMA SUBDIVISÃO DESSE 
+
+FOLDER AÍ.... mas n faremos isso...)
+
+
+
+
+
+
+
+
+
+
+--> o professor então cria um arquivo 
+
+
+'Input.js'
+
+
+e 
+
+
+'Input.module.css'....
+
+
+
+---------------------------
+
+
+
+
+
+ISSO FEITO, PROFESSOR DIZ QUE DEVEMOS 
+
+PENSAR 
+
+
+NO 
+
+
+COMPONENT 
+
+'Input', 
+
+
+no código jsx que ele retornará... 
+
+
+
+
+--> ELE VAI CRIAR UM PRESENTATIONAL COMPONENT,
+com a sintaxe dos functional components...
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+const input = (props) => {
+
+    return (
+        <div>
+            <input></input>
+        </div>
+    )
+
+}
+
+
+export default input;
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+PROFESSOR REALMENTE COMEÇA COM UMA 
+
+'<div>'
+
+
+wrappando esse INPUT... ------> mas é evidente que O PROFESSOR NÃO VAI QUERER 
+
+__aPENAS___ UM ELEMENTO 'INPUT'... -----> não, ele também vai querer um 
+
+LABEL (que vai indicar ao usuário qual campo será esse...)
+
+
+
+
+
+
+---> É EVIDENTE QUE ESSE 'LABEL' será settado DO LADO DE FORA desse component (ele será settado em 'ComponentData', que é o LOCAL ONDE INVOCAREMOS ESSES COMPONENTS 'Input', e onde passaremos/settaremos seus PROPS...)
+
+
+
+
+
+
+
+
+
+
+FICARÁ PROVAVELMENTE ASSIM:
+
+
+
+
+
+import React from 'react';
+
+
+const input = (props) => {
+
+    return (
+        <div>
+            <label>{props.label}</label>
+            <input></input>
+        </div>
+    )
+
+}
+
+
+export default input;
+
+
+
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+certo... e depois dessa 'label', é claro que o professor vai querer 
+
+
+UM 
+
+
+___INPUT ELEMENT__ ------> ele então nos explica que 
+
+esse 
+
+ELEMENTO 
+
+INPUT 
+
+nem mesmo poderá ter são flexível assim...  -------> não poderá 
+
+
+ser tão flexível pq ESSE INPUT AÍ 
+
+
+___VAI APENAS __ PODER SER UM ''''INPUT'''' 
+
+
+Se 
+
+
+tentarmos o definir assim, meio 'nu e cru'... ------------->
+
+
+
+
+
+
+SE QUISERMOS DEIXAR ESSE COMPONENT 'INPUT' mais amplo/flexível, 
+
+
+PROFESSOR EXPLICA QUE 
+
+
+
+DEVEMOS 
+
+
+TIRAR VANTAGEM DE IF CHECKS, IF CHECKS __aNTES __ DO 'RETURN()' DE CÓDIGO 
+
+
+JSX,
+
+pq isso 
+
+vai 
+
+nos 
+
+deixar 
+
+
+fazer o código 'se decidir' entre QUAL 
+
+MÉTODO/TIPO de input deverá 
+
+ser utilizado em cada situação de sua invocação... 
+
+
+
+
+
+
+
+
+--> PARA ISSO, PROFESSOR DIZ QUE PODERÍAMOS/PODEMOS (e vamos) 
+
+TER UM 
+
+
+SWITCH STATEMENT NO INÍCIO 
+
+DESSE 
+
+
+FUNCTIONAL COMPONENT...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+const input = (props) => {
+
+
+    switch(); ////////EIS O CÓDIGO EM QUESTÃO...
+
+    return (
+        <div>
+            <label>{props.label}</label>
+            <input></input>
+        </div>
+    )
+
+}
+
+
+export default input;
+
+
+
+
+
+
+
+
+----------------------------
+
+
+
+
+ISSO FEITO,
+ 
+ professor vai usar 
+
+
+ O CÓDIGO 
+
+
+
+ DE 
+
+
+ SWITCH DE SEMPRE,
+
+ aquele 
+
+
+ negócio com 
+
+
+ 'case: ..... 
+
+ break;
+
+
+case: ....
+
+
+break;
+
+
+default:
+return
+
+;
+
+
+
+
+
+
+
+
+
+
+
+COMO CONDICIONAL/CONDIÇÃO DESSE SWITCH, professor vai definir 
+
+
+um valor de 
+
+'props.inputType' (que será passado PELA INVOCAÇÃO DE CADA OCORRÊNCIA DO COMPONENT 'Input', lá em 
+
+'ContactData'...)
+
+
+
+
+
+ex:
+
+
+import React from 'react';
+
+
+const input = (props) => {
+
+
+    switch(props.inputType ); ////////EIS O CÓDIGO EM QUESTÃO...
+
+    return (
+        <div>
+            <label>{props.label}</label>
+            <input></input>
+        </div>
+    )
+
+}
+
+
+export default input;
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+O PRIMEIRO 
+
+''''CASE ''''
+
+
+SERÁ, É CLARO, 
+
+
+'input'...
+
+
+
+
+
+ex:
+
+
+
+import React from 'react';
+
+
+const input = (props) => {
+
+
+    switch(props.inputType ) {
+     case ('input'):               ////////EIS O CÓDIGO EM QUESTÃO...
+    } 
+
+    return (
+        <div>
+            <label>{props.label}</label>
+            <input></input>
+        </div>
+    )
+
+}
+
+
+export default input;
+
+
+
+
+
+
+
+
+
+-----------------------------
+
+
+QUANDO O CASE FOR 'input' (quando o 'props.inputType' for 'input', essa string aí),
+
+
+
+VAMOS QUERER 
+
+DEFINIR/REDEFINIR 
+
+UMA 
+
+VARIÁVEL 
+
+
+De 
+
+
+'inputElement' (definida inicialmente como 'null') 
+
+
+PARA 
+SER 
+
+
+UM CÓDIGO ESPECÍFICO QUE 
+
+O PROFESSOR VAI QUERER ESCREVER... (provavelmente um '<input />'...)
+
+
+
+
+
+EX:
+
+
+
+
+
+import React from 'react';
+
+
+const input = (props) => {
+
+
+    let inputElement = null;   ////////EIS O CÓDIGO EM QUESTÃO...
+
+
+    switch(props.inputType ) {
+     case ('input'):  
+     InputElement = (<input />)    ////////EIS O CÓDIGO EM QUESTÃO...
+    } 
+
+    return (
+        <div>
+            <label>{props.label}</label>
+            <input></input>
+        </div>
+    )
+
+}
+
+
+export default input;
+
+
+
+
+-------------------------------------
+
+
+
+
+OU SEJA, POR MEIO 
+
+DESSA ESCRITA AÍ,
+
+O PROFESSOR PROVIDENCIA UM 
+
+
+COMPONENT/MÉTODO 
+
+MAIS 
+
+'GENÉRICO'/FLEXÍVEL, mais 
+
+reutilizável... (mais reutilizável do que apenas escrever um component que faria 
+
+return de um código jsx de '<input />'...)
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> A VANTAGEM DESSE 'FORMATO' DE COMPONENT 'Input' que o professor 
+
+está nos ensinando NESSE INSTANTE é que 
+
+____ESSE COMPONENT AÍ ___ PODE ALCANÇAR __ QUALQUER 
+
+
+NÍVEL DE COMPLEXIDADE QUE DESEJAMOS,
+
+
+ele poderá 
+
+
+ser ELEMENTOS DE DIVERSOS TIPOS, cada um completamente distinto do outro....
+
+
+
+
+
+
+--> por exemplo, se você quisesse/quiser UM
+
+
+ELEMENTO DE TIPO '<textarea />', 
+
+
+VOCê 
+
+
+SIMPLESMENTE 
+
+
+
+ESCREVERIA UM CASE ASSIm:
+
+
+
+switch (props.inputType) {
+        case('textArea'):
+        inputElement = (<textarea />)
+}
+
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+E É EVIDENTE QUE VOCÊ PODE ESCRVER QUANTOS 
+
+DESSES 'CASES' VOCÊ QUISER,
+
+dentro desse 
+
+SWITCH STATEMENT...
+
+
+
+
+
+'''textarea''', por exemplo, é um ELEMENTO HTML QUE ___NÃO ACEITA___  os mesmos 
+
+
+inputs e attributes que um ELEMENTO HTML 'INPUT' COMUM 
+
+aceita...
+
+
+(e é por isso que o professor vai settar um switch case para os inputs de tipo 'textarea'...)
+
+
+
+
+ex:
+
+
+
+
+import React from 'react';
+
+
+const input = (props) => {
+
+
+    let inputElement = null;   
+
+
+    switch(props.inputType ) {
+     case ('input'):  
+     InputElement = (<input />)
+     break;
+     
+
+          case('textArea'):
+        inputElement = (<textarea />)   ////////EIS O CÓDIGO EM QUESTÃO...
+    } 
+
+    return (
+        <div>
+            <label>{props.label}</label>
+            <input></input>
+        </div>
+    )
+
+}
+
+
+export default input;
+
+
+
+
+------------------------------
+
+
+PROFESSOR EXPLICA QUE 
+
+
+
+ESSA É UMA CERTA COMPLEXIDADE QUE 
+
+
+__TEREMOS DE HANDLAR__, essa complexidade de DIFERENTES TIPOS DE INPUT ELEMENT...
+
+
+
+---> essa COMPLEXIDADE 
+
+poderá/deverá ser enfrentada 
+
+
+OU:
+
+
+1) pela criação de MÚLTIPLOS 'CUSTOM COMPONENTS', 1 para __cADA __ TIPO ___dE 'input element' ('input', 'textarea', etc etc....)
+
+
+
+
+2) POR MEIO DESSE APPROACH QUE O PROFESSOR NOS MOSTROU AGORA MESMO, ESSE APPROACH DE 
+
+CRIAR UM COMPONENT ''''GERAL''', COMO ESSE 'Input.js', QUE FARÁ __ O HANDLE __ DOS 
+
+DIFERENTES__ TIPOS DE 'INPUT'__ POR MEIO DE UM __ SWITCH STATEMENT__....
+(Bem mais conveniente, e customizável....)  (OBS::: SÓ SEMPRE SE LEMBRE DE DEFINIR 'BREAKS' depois de cada 'case'...)
+
+
+
+
+
+
+NOTA:::: '<textarea />' É UMA SELFCLOSING TAG, no react...
+
+
+
+
+
+
+
+
+
+
+
+
+----> POR FIM, PROFESSOR DEFINE UM 
+
+'default' 
+
+desse 
+
+switch statement como sendo 
+
+um RETURN DE 
+
+'<input />'...
+
+
+
+
+
+
+ex(RESULTADO FINAL):
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+const input = (props) => {
+
+
+    let inputElement = null;   
+
+
+    switch(props.inputType ) {
+     case ('input'):  
+     InputElement = (<input />)
+     break;
+     
+
+          case('textArea'):
+        inputElement = (<textarea />);
+    
+    break;
+
+    default:
+            inputElement = (<input />);
+
+    } 
+
+
+    return (
+        <div>
+            <label>{props.label}</label>
+            <input></input>
+        </div>
+    )
+
+}
+
+
+export default input;
+
+
+
+
+
+-----------------------------------
+
+
+
+
+CERTO... 
+
+
+
+
+
+
+
+
+---> OS PROPS QUE EU VOU ESPERAR RECEBER EM CADA INVOCAÇÃO Do component 
+
+'Input' 
+
+SERÃO USADOS NESSE SWITCH STATEMENT AÍ...  
+
+
+
+
+
+
+
+
+--> isso feito, professor explica que 
+
+ELE VAI USAR 
+
+O 
+
+
+SPREAD OPERATOR nesses elementos; fará isso para 
+
+DISTRIBUIR TODOS OS PROPS PASSADOS 
+
+por 
+
+'ContactData' 
+
+
+AO __ELEMENTO 'input'/'textarea'/qualquercoisa QUE 
+
+CRIAREMOS...
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+const input = (props) => {
+
+
+    let inputElement = null;   
+
+
+    switch(props.inputType ) {
+     case ('input'):  
+     InputElement = (<input {...props} />) ///////////EIS O CÓDIGO EM QUESTÃO.
+     break;
+     
+
+          case('textArea'):
+        inputElement = (<textarea />);
+    
+    break;
+
+    default:
+            inputElement = (<input />);
+
+    } 
+
+
+    return (
+        <div>
+            <label>{props.label}</label>
+            <input></input>
+        </div>
+    )
+
+}
+
+
+export default input;
+
+
+
+
+
+------------------------
+
+
+
+'{...props}' -----> isso é MUITO ÚTIL, 
+
+pois todos 
+
+OS PROPS QUE 
+
+VAMOS ESCREVER 
+
+em 
+
+
+'<Input />', lá em 
+
+'ContactData',
+
+SERÃO 
+
+
+__PASSADOS __ AO ELEMENTO INPUT/TEXTAREA que vamos criar por meio 
+
+desse 
+
+
+switch statement....
+
+
+
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+import React from 'react';
+
+
+const input = (props) => {
+
+
+    let inputElement = null;   
+
+
+    switch(props.inputType ) {
+     case ('input'):  
+     InputElement = (<input {...props} />) ///////////EIS O CÓDIGO EM QUESTÃO.
+     break;
+     
+
+          case('textArea'):
+        inputElement = (<textarea {...props} />); /////EIS O CÓDIGO EM QUESTÃO.
+    
+    break;
+
+    default:
+            inputElement = (<input {...props}/>); ///...
+
+    } 
+
+
+    return (
+        <div>
+            <label>{props.label}</label>
+            {inputElement}
+        </div>
+    )
+
+}
+
+
+export default input;
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+
+--> AGORA, PORTANTO, PODEMOS USAR ESSE WRAPPER 'Input' 
+
+
+DE MANEIRAS ABSURDAS,
+ 
+ podemos 
+
+ passar 
+
+ quaisquer attributes/props 
+
+ aos nossos 
+
+
+ elementos que queremos criar a partir desse wrapper/switcher.... -------> 
+
+
+
+ESSA É UMA MANEIRA DE _rEDUZIR ___ A COMPLEXIDADE __ 
+
+DA CRIAÇÃO 
+
+DE ELEMENTOS 'INPUT' 
+
+NO SEU CÓDIGO, 
+
+é algo MUITO ÚTIL...
+
+
+
+
+--> ou seja, 
+
+o 'switch statement' 
+
+
+'TAKES CARE OF' qual elemento será 
+
+criado, 
+
+e nós 
+
+APENAS 
+
+TEMOS QUE CUIDAR/PENSAR 
+
+SOBRE OS __PROPS___ DESSE ELEMENTO (e do prop 'inputType', que é essencial  para o funcionamento desse switch statement...)
+
+
+
+
+
+
+
+------------------------
+
+Ok.... dei uma ajeitada no código, e usei a sintaxe/WRAPPER de 'Input' que o professor nos recomendou... é bom, e funciona...
+
+
+
+
+
+
+---> agora nosso/nossos component/components
+
+
+'input' estão sendo renderizados lá em 
+
+'ContactData'.... ----> os estilos ainda podem ser melhorados, é claro.
+
+
+
+
+
+
+
+
+
+--> professor explica que É GRANDE O POTENCIAL DESSE 'Wrapper' dos inputs... ------> podemos 
+
+
+
+
+colocar OUTROS SWITCH CASES,
+
+
+como 
+
+
+um elemento
+
+'dropdown',
+
+um 
+
+elemento 
+
+
+'select', qualquer 
+
+tipo de input element, na verdade...
+
+
+
+
+
+
+Mas, por enquanto, vamos usar esse setup básico aí...
+
+
+
+
+
+-------------------------
+
+
+
+Ok...
+
+
+Professor diz que 
+
+OBVIAMENTE 
+
+ele vai querer 
+
+ESTILIZAR ESSE COMPONENT 
+
+'Input'... ---> por isso ele vai 
+
+até 
+
+'Input.module.css'...
+
+
+
+
+
+
+
+
+
+
+--> aí ele 
+
+escreve 
+
+
+
+
+.Input {
+
+
+
+....
+
+
+
+}
+
+
+
+
+
+
+
+
+A PRIMEIRA COISA QUE ELE QUER FAZER É ___ASSEGURAR__ QUE 
+
+A 
+
+'<div>' que está segurando 
+
+A ___LABEL____ E O INPUT__ OCUPE __ TODO O ESPAÇO HORIZONTAL DA TELA....
+
+
+
+
+
+
+por isso vai escrever:
+
+
+
+
+.Input {
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+---> ELE TAMBÉM VAI QUERER DEFINIR UMA PADDING DE 
+
+
+10px (isso fará com que sempre exista um espaço ACIMA E ABAIXO DOS NOSSOS INPUTS...)
+
+
+
+
+
+
+
+
+
+
+
+--> TAMBÉM VAI DEFINIR UM 'BOX-SIZING' 
+
+de 
+'''border-box''''....
+
+
+
+
+
+------------------------
+
+
+COM ISSO DEFINIDO,
+
+PROFESSOR APONTA QUE 
+
+AGORA ELE PODE COMEÇAR 
+
+
+A ESTILIZAR 
+
+OS ELEMENTOS ESPECÍFICOS DENTRO 
+
+DESSE 
+
+ELEMENTO 
+
+'Input'...
+
+
+
+----------------------
+
+PROFESSOR EXPLICA QUE 
+
+VAI USAR 
+
+CLASSES 
+
+DIFERENTES 
+PARA 
+
+
+CADA 
+'TIPO DE INPUT' 
+
+
+que tivermos na página 
+
+'Checkout'...
+
+
+
+
+
+
+
+
+
+
+--> ex:
+
+
+
+
+.Label {
+    font-weight: bold;
+    display: block;  ////////PROFESSOR COLOCARÁ 'display:block' para fazer com que A LABEL __TOME TODA A WIDTH __  DE SUA LINE/ROW no código...
+}
+
+
+
+
+-----------------------------
+
+
+PROFESSOR 
+
+
+TAMBÉM COLOCARÁ UMA 
+
+'MARGIN-BOTTOM'  em 'label'
+
+de 
+
+8px....---------->
+
+
+
+
+
+DEPOIS DISSO 
+
+ELE 
+
+VAI 
+
+
+
+adicionar 
+
+um 
+
+
+estilo 
+
+
+de 
+
+
+
+'.InputElement {
+
+
+}
+
+'
+
+
+
+
+
+------------------------------
+
+
+
+
+Ele então nos explica que dentro de 'InputElement' 
+
+NÓS TALVEZ 
+
+PRECISEMOS 
+
+DE DIFERENTES CLASSES 
+
+DE ESTILOS PARA DIFERENTES TIPOS DE 
+
+'InputElement', 
+
+
+mas por enquanto ele vai 
+
+
+apenas 
+
+colocar 
+UM ESTILO 
+
+
+GENÉRICO... ------> nesse estilo genérico 
+
+ele 
+
+definirá 
+
+
+'outline' como 'none',
+
+
+e 
+
+a 
+
+'border'
+
+
+como 
+
+sendo 
+
+1px solid #ccc.... 
+
+
+
+
+background-color será white,
+
+
+
+
+
+e a fonte será inherit... --------> 
+
+
+
+
+ele também 
+vai querer 
+
+definir 
+
+um 
+
+
+padding 
+
+
+de 
+
+'6px 10px'...
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+.InputElement {
+    outline: none;
+    border: 1px solid #ccc;
+    background-color: white;
+    font: inherit;
+    padding: 6px 10px;
+}
+
+
+
+
+
+----------------------
+
+
+
+
+
+
+É EVIDENTE QUE ELE TBM VAI QUERER UM ESTILO CUSTOMIZADO 
+
+QUANDO DERMOS 
+
+'FOCUS'
+ 
+
+ nesse 
+
+ InputElement....  ------> 
+
+
+ ele usará um pseudoseletor de 'focus',
+
+
+ e aí 
+
+ vai definir 
+
+ 'outline: none',
+
+
+ e um background-color 
+
+
+ de 
+
+
+ cor 
+
+
+ #ccc;
+
+
+
+
+
+
+
+ ------> PROFESSOR EXPLICA QUE É EVIDENTE QUE PODEMOS DEFINIR 
+
+ MUITO MAIS ESTILOS; podemos definir um estilo de 
+
+ 'disable', também... (qualquer coisa que quisermos, na verdade...) ------->
+
+
+
+
+
+ ENTRETANTO, PROFESSOR ADMITE QUE NÃO VAI CRIAR/ESTILIZAR NOSSOS ELEMENTOS 
+
+ DE FORMA 
+
+ SUPER COMPLEXA, 
+
+ ele vai 
+
+ deixar meio básico,
+
+ MAS QUE PODEMOS 
+
+ ESTILIZAR DE FORMA SUPER COMPLEXA,
+
+ fazer um realmente bem fancy... 
+
+
+
+
+
+
+
+ -------> Certo.... realizada a criação dessa classe 
+
+ '.InputElement',
+
+ o professor 
+
+
+ vai até 
+
+ o
+  
+
+  arquivo 
+
+
+  'Input.js'
+
+
+
+   E ENTÃO ESCREVERÁ 'input className=...':
+
+
+
+
+   
+
+--------------------------------------------------------------
+
+
+
+   import InputStyle from './Input.module.css'
+
+
+
+const input = (props) => {
+
+    let inputElement = null;
+
+
+        switch (props.inputType) {
+            case('input'): 
+            inputElement = (<input className={InputStyle.InputElement} {...props}/>) /////eis o código em questão(OS CÓDIGOS abaixo, também....)
+            break;
+            case('textarea'):
+            inputElement = (<textarea className={InputStyle.InputElement} {...props}/>)
+            break;
+            default:
+                inputElement = (<input className={InputStyle.InputElement} {...props}/>)
+        }
+
+
+
+    return (
+        <div className={InputStyle.Input}>
+            <label>{props.label}</label>
+            {inputElement}
+        </div>
+    )
+
+
+
+}
+
+------------------------------------
+
+
+
+POR FIM, 
+
+O PROFESSOR 
+
+
+VAI ESCREVER O CÓDIGO DE return no RENDER ASSIM:
+
+
+
+
+
+    return (
+        <div className={InputStyle.Input}>
+            <label className={InputStyle.Label}>{props.label}</label>
+            {inputElement}
+        </div>
+    )
+
+
+---------------------------------------
+
+
+
+
+
+
+
+PROFESSOR ENTÃO NOS RELATA QUE ESQUECEU ALGUNS ESTILOS 
+
+
+PARA A CLASSE DE 
+
+
+'.InputElement'... -----> ele nos diz que 
+
+
+ELE ESQUECEU 
+
+
+DE DEFINIR 
+
+'display: block',
+
+
+e 
+
+'width: 100%'... --------> FARÁ ISSO PARA QUE ESSES ELEMENTOS 'INPUT' TOMEM O ESPAÇO TOTAL QUE PODEM OCUPAR....
+
+
+
+
+
+-----------------------------
+
+
+COM TUDO ISSO SETTADO, VAMOS EM FRENTE E EXAMINAMOS O RESULTADO...
+
+
+
+
+
+
+
+
+----> mesmo com tudo isso settado, vamos ver que 
+
+os elementos 'input' vão estar meio MAL ALINHADOS/BUGGADOS... ------>
+
+
+
+para consertar o alinhamento, professor nos conta que 
+
+ELE ESQUECEU 
+
+DE DEFINIR, LÁ EM '.InputElement', Um 
+
+
+ESTILO DE 
+
+
+' box-sizing: border-box;' -------> aplicado esse estilo,
+
+
+o styling ficará regular, melhor... 
+
+
+
+
+'border-box' ----> isso faz a WIDTH SER CALCULADA CORRETAMENTE....
+
+
+
+
+
+
+----------------------------------------
+
+
+
+Certo, o styling está ok... ----> mas e quanto 
+
+A 
+
+ESSE 
+
+
+___ERRO___ QUE 
+
+VEOMS 
+
+
+NO CONSOLE?? 
+
+
+
+
+
+'''Warning: React does not recognize the 'inputType' prop 
+on a DOM element. If you intentionally want it to appear in the DOM as a custom 
+attribute, spell it as lowercase 'inputtype' instead. If you accidentally 
+passed it from a parent component, remove it from the DOM element.'
+
+
+'''
+
+
+
+
+
+
+ESSE ERRO (mensagem de erro)
+
+
+FOI INTRODUZIDA COM 
+
+
+O ___rEACT 16__... -------> 
+
+
+
+
+Professor nos explica que 
+
+o 
+
+
+'inputType' 
+
+em 
+
+
+'props.inputType' 
+
+__NÃO É __ USÁVEL__ como 
+
+
+UM 
+
+
+
+'DEFAULT HTML PROP', DEVIDO AO SEU __Casing__ ('inputType', em vez de 'inputtype'...)
+
+
+
+
+
+--> isso acontece pq 
+
+
+HTML, NO DOM, É SEMPRE 'CASE INSENSITIVE' (não considera diferença entre maiúsculas e minúsculas)
+
+
+
+
+----------------------------------------------
+
+
+
+
+
+
+---> ISSO SIGNIFICA QUE, NO PASSADO (antes do react 16),
+
+
+
+O REACT __ NÃO TERIA PASSADO 
+
+
+ESSE 
+
+PROP DE 
+
+'inputType' que passamos/definimos lá em 'ContactData'... ----->
+
+
+
+mas hoje em dia, ele passa, mas 
+
+
+nos 
+
+ALERTA QUE 
+
+ESSE CASING ESTÁ __INCORRETO___.... ----------> 
+
+
+
+UMA MANEIRA DE 
+
+
+____CONSERTAR__ ESSA MENSAGEM DE ERRO___ é 
+
+
+SIMPLESMENTE 
+
+
+MUDAR 
+
+
+O NOME DESSE PROP, mudar para 
+
+'inputtype' (sem o CAMELCASE....)
+
+
+
+--------------------------
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+import React from 'react';
+
+
+import InputStyle from './Input.module.css';
+
+
+
+
+
+
+const input = (props) => {
+
+    let inputElement = null;
+
+
+        switch (props.inputtype) { ///////SIM, ESSE PROP DEVE SER DEFINIDO/SETTADO ASSIM MESMO, SEM 'CamelCase', POIS SE NÃO FIZERMOS ISSO, SERÁ MOSTRADO UM ERRO CHATO NO CONSOLE DIZENDO QUE 'DEFAULT HTML PROPS' (como esse inputtype) NÃO PODEM SER DEFINIDOS COM CAMEL CASE QUANDO ELES FOREM REPRESENTADOS NO DOM, pq o __DOM__ em si, o código html em si, SEMPRE É __ CASE INSENSITIVE__ (ao contrário do javascript/react, que é CASE SENSITIVE.)
+            case('input'): 
+            inputElement = (<input {...props} className={InputStyle.InputElement}/>)
+            break;
+            case('textarea'):
+            inputElement = (<textarea {...props} className={InputStyle.InputElement}/>)
+            break;
+            default:
+                inputElement = (<input {...props} className={InputStyle.InputElement}/>)
+        }
+
+
+
+    return (
+        <div className={InputStyle.Input}>
+            <label>{props.label}</label>
+            {inputElement}
+        </div>
+    )
+
+
+
+}
+
+
+
+export default input;
+
+
+
+
+
+
+
+
+
+
+E ASSIM:
+
+
+
+      <Input label="Name" inputtype='input' type="text" placeholder="Your Name" onChange={(event) => { this.contactDataHandler(event, "name")}} />
+      <Input label="Email" inputtype='input' type="text" placeholder="Your Mail" onChange={(event) => { this.contactDataHandler(event, "email")}} />
+      <Input label="Street" inputtype='input' placeholder="Street" onChange={(event) => { this.contactDataHandler(event, "street")}} />
+      <Input label="Postal Code" inputtype='input' onWheel={event => event.preventDefault()} placeholder="Postal Code" onChange={(event) => { this.contactDataHandler(event, "postal")}} />
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+É CLARO QUE, APLICADO ESSE FIX, não veremos resultados visíveis,
+
+mas 
+
+o erro/aviso no console vai sumir (o que é bom)....
+
+
+
+
+
+
+
+
+
+
+OK, NOSSO 'WRAPPING INPUT ELEMENT' foi criado, 
+
+agora 
+
+
+é 
+
+hora 
+
+
+
+
+DE VER COMO PODEMOS FAZER HANDLE DE __DIFERENTES TIPOS __ DE 
+
+DATA_ __ nesses input elements 
+
+(
+
+
+    e aí vamos criar uma FORM DE VERDADE, FUNCIONAL, com os dados de que 
+    realmente precisamos...
+)

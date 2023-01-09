@@ -1,0 +1,1236 @@
+
+
+
+
+
+
+
+--> ATÉ O PRESENTE MOMENTO, 
+VOCÊ PROVAVELMENTE 
+
+
+
+JÁ DEVE 
+
+TER PERCEBIDO ATÉ 
+
+
+
+onde estamos indo... ----> 
+
+
+QUANDO 
+
+
+
+
+__USAMOS HOOKS__ (é o provável futuro do react),
+
+
+
+
+NÓS USAMOS __SÓ FUNCTIONAL COMPONENTS___ --> 
+
+não se utiliza 
+
+
+mais 
+
+
+CLASS-BASED 
+
+COMPONENTS.... -------> 
+
+
+
+
+
+isso nos impõe a pergunta:
+
+
+
+
+COMO PODEMOS TRANSFERIR FEATURES 
+USADAS 
+
+
+EM 
+
+CLASS-BASED 
+
+COMPONENTS 
+
+
+EM
+
+
+
+FUNCTIONAL COMPONENTS?  --------> bem, 
+
+para 
+
+o 
+
+
+'this.setState()'
+
+NÓS 
+
+JÁ VIMOS COMO ISSO FUNCIONA.... ------> 
+
+
+vimos como isso funciona, com coisas como 
+'useState()'... 
+
+
+
+
+
+
+
+
+
+
+--> PARA LIFECYCLE HOOKS,
+
+
+
+já vimos que 
+
+'useEffect()'
+
+NOS DÁ 
+
+
+ACESSO 
+
+AOS 
+
+LIFECYCLE HOOKS __MAIS IMPORTANTES___...
+
+
+
+
+
+
+
+--> ALGUNS OUTROS QUE ___ VIMOS AO LONGO DESTE CURSo (lifecycle hooks) 
+
+
+
+SERÃO 
+
+DELIBERADAMENTE DEIXADOS PARA TRÁS,
+
+pois 
+
+
+
+HÁ MELHORES MANEIRAS DE FAZER 'HANDLE' DE 
+suas 
+
+
+features... -----------> MAS 
+
+
+1 HOOK 
+
+QUE 
+
+PODE 
+
+SER BEM 
+
+
+__IMPORTANTE __ PARA 
+
+OPTIMIZAÇÕES DE PERFORMANCE 
+
+É 
+
+O HOOK 
+
+DE 
+
+'shouldComponentUpdate()'... ------->
+
+
+
+EM UM CLASS-BASED COMPONENT,
+
+
+ESSE 
+
+
+HOOK NOS DEIXA DEFINIR LÓGICA __ QUE 
+
+DECIDE __ SE 
+
+ESSE 
+
+COMPONENT 
+
+E SEUS 
+
+CHILD COMPONENTS (child component tree)
+
+
+DEVERÃO/DEVEM 
+
+
+___ SER RE-RENDERIZADOS OU NÃO__ ....  --> e o uso CORRETO DISSO 
+
+
+
+
+__pode nos dar uM BOOST_ _ DE PERFORMANCE__... 
+
+
+
+
+
+
+
+--> NÓS TAMBÉM __podemos ___ assegurar __qUE , COM FUNCTIONAL COMPONENTS,
+
+
+
+
+SÓ FAÇAMOS O RE-RENDER DE ALGUNS COMPONENTS __ SE OS SEUS VALORES MUDAREM (quase igual À 'shouldComponentUpdate')...
+
+
+
+
+
+---> UM BOM EXEMPLO DISSO 
+É 
+
+JUSTAMENTE 
+
+
+A NOSSA 
+
+
+'todoList'
+
+
+
+
+em 
+
+'Todo.js'...
+
+
+
+------------------
+
+
+
+
+--> PARA MOSTRAR BEM O QUE 
+
+ELE 
+
+
+QUER DIZER,
+
+
+O PROFESSOR 
+
+VAI 
+
+OUTSOURCEAR ESSA NOSSA 'LIST'
+ 
+
+ EM UM NOVO ARQUIVO,
+
+
+
+ EM UM ARQUIVO 
+
+ CHAMADO DE 
+
+ 'List.js'...
+
+
+
+
+
+
+
+--> LÁ DENTRO, 
+
+professor vai importar 
+
+
+o 
+
+REACT,
+
+
+E AÍ 
+
+VAI RENDERIZAR 
+
+
+
+
+A list 
+
+e tals...
+
+
+ex:
+
+
+
+import React from 'react';
+
+
+
+const list = (props) => {
+
+}
+
+
+
+
+export default list;
+
+
+
+
+--------------------------
+
+
+
+O PROFESSOR VAI ESCREVER UM CONSOLE.LOG 
+
+
+
+
+DE DENTRO 
+
+
+DO CÓDIGO DESSA 'LIST',
+
+
+
+PARA __NOS MOSTRAR__ O MOMENTO/AS HIPÓTESES 
+
+EM QUE 
+
+ESSA 
+
+LIST 
+
+
+
+ACABA 
+
+ ___ SENDO 'RE-RENDERED'...
+
+
+
+
+
+
+
+
+
+
+ --> E AÍ O PROFESSOR PEGA O CÓDIGO DA 'list'
+ LÁ 
+
+
+ EM 
+
+ 'Todo'
+
+ E TRANSFERE 
+
+ PARA 
+
+
+ ESSE NOVO COMPONENT 'List'...
+
+ EX:
+
+
+         {todoList.map(todo => (
+          <li key={todo.id} onClick={todoRemoveHandler.bind(this, todo.id)} style={{listStyle: 'none'}}>
+            {todo.name}
+          </li>
+        ))}
+
+
+---------------------------------------
+
+
+
+
+
+
+--> É CLARO QUE PARA FAZER ESSE NEGÓCIO FUNCIONAR,
+
+ELE 
+
+PRECISA __ RECEBER ESSE OBJETO 'todoList' 
+
+de alguma forma;
+
+
+ELE ENTÃO NOS INFORMA QUE VAI 
+
+'expect' 
+
+RECEBER ESSA LIST COMO PROPS, aqui neste component....
+
+
+
+--> ele vai querer 
+
+esse 
+
+objeto 'todoList' passado por meio de um PROP de nome 
+
+'items'...
+
+
+
+ficará tipo assim:
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+import React from 'react';
+    
+
+
+const list = (props) => {
+    console.log('Rendering the List....')
+    return <ul>
+
+        
+         {props.items.map(todo => (/////EIS O CÓDIGO EM QUESTÃOA.
+          <li key={todo.id} onClick={todoRemoveHandler.bind(this, todo.id)} style={{listStyle: 'none'}}>
+            {todo.name}
+          </li>
+        ))}
+
+    </ul>
+}
+
+
+
+
+export default list;
+
+
+
+---------------------------
+
+
+CERTO, MAS NÃO ACABAMOS POR AQUI... --> professor precisa adaptar 
+
+
+O 
+MÉTODO,
+
+
+E ENTÃO 
+
+
+PASSAR 
+
+
+ESSA 
+
+'todoList' como 
+
+prop 
+
+de nome 
+
+'items'....
+
+
+
+
+
+
+
+
+-> pROFESSOR ESCREVE ESTA LINHA 
+
+LÁ EM 
+
+
+'Todo.js':
+
+
+    <List items={todoList}  clicked={todoRemoveHandler}/>  //////OU SEJA, ELE PASSOU O 'todoList' que temos em ''  const [todoList, dispatch] = useReducer(todoListReducer, []);''' , e o 'clicked' VAI SER JUSTAMENTE O MÉTODO DE 'todoRemoveHandler', que tem o código de ' onClick={props.clicked.bind(this, todo.id)}' LÁ NO 'List.js'....[
+  
+
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+SALVAMOS TUDO ISSO E TESTAMOS.... --> NOSSA LIST AINDA FUNCIONA... --> 
+
+
+
+o 
+
+
+
+ADD DE ITEMS AINDA FUNCIONA,
+E O DELETE TAMBÉM...
+
+
+
+
+
+--> AGORA, VAMOS QUERER USAR O 
+
+EQUIVALENTE 
+
+
+DE 
+
+'shouldComponentUpdate()', do REACTHOOKS,
+
+
+
+PARA 
+
+OPTIMIZAR 
+
+O 
+
+RE-RENDER DE NOSSA LIST.....
+
+
+
+
+
+
+
+-----------> PROFESSOR DEMONSTRA QUE 
+
+O 
+
+
+CONSOLE SMEPRE 
+
+
+
+
+VAI OUTPUTTAR 
+
+
+'Rendering the list' QUANDO 
+
+
+ADICIONARMOS ALGUM ELEMENTO 
+
+
+NA 
+
+'LIST' (isso pq A LISTA EM SI SERÁ RE-RENDERIZADA...)
+
+
+
+
+
+
+
+---> ok.... ---> MAS O QUE PODEMOS OPTIMIZAR QUANTO A ISSO? ---> atualmente,
+
+
+nosso 
+
+SETUP É BEM OPTIMAL... --> neste 
+
+presente 
+
+estado,
+
+não há muito o que optimizar.... --> MAS 
+
+
+
+DIGAMOS QUE 
+
+QUEREMOS 
+
+
+ADICIONAR 
+
+__VALIDATION__ 
+NO 
+ 
+ NOSSO INPUT... ----------> 
+
+
+
+
+
+
+
+ CÓDIGO DO INPUT, NO MOMENTO, É ESTE:
+
+
+
+
+
+       <input
+        type="text"
+        placeholder="Todo"
+        ref={todoInputRef}
+      />
+
+
+  ----------------------------
+
+
+
+  PROFESSOR NOS EXPLICA QUE 
+
+
+  ELE AINDA VAI QUERER USAR O 'REF',
+
+
+
+  MAS 
+
+  QUE ELE VAI 
+
+  QUERER 
+
+  ESCREVER 
+
+  UM 
+
+
+  ONCHANGE HANDLER,
+
+
+
+  EM QUE 
+
+  ELE 
+
+  IRÁ 
+
+  CHAMAR 
+
+  O HANDLER 
+
+  DE 
+
+  'inputValidationHandler', que criaremos agora....
+
+
+  -----------------
+
+
+  EX:
+
+
+
+
+
+const inputValidationHandler = (event) => {
+
+}
+
+
+        <input
+        type="text"
+        placeholder="Todo"
+        ref={todoInputRef} 
+        onChange={inputValidationHandler}
+      />
+
+
+
+
+---------------------------------
+
+
+
+
+
+ISSO FEITO,
+
+
+
+VAMOS QUERER 
+
+
+__DETERMINAR/FAZER O CÓDIGO VERIFICAR __ SE 
+
+MEU 
+
+INPUT 
+É 
+
+
+__VÁLIDO__ OU NÃO.... -------> PARA ISSO,
+
+
+
+
+
+PARA 
+
+FAZER 
+
+O 'CHECK' DESSE 'STATE DE VALIDATION',
+
+
+O PROFESSOR 
+
+VAI REINTRODUZIR 
+
+O 
+
+HOOK 
+
+
+
+DE 
+'useState()' 
+
+
+NO NOSSO CÓDIGO (ele vai lá e o reimporta....).
+
+
+
+
+
+COMEÇAMOS, EVIDENTEMENTE, COM UM VALOR 
+
+DE FALSE 
+
+PARA 
+
+ESSE 
+
+STATE DE VALIDATION...
+
+
+
+
+
+EX:
+
+
+
+const Todo = (props) => {
+
+
+  const [] = useState(false);
+}
+
+
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+PROVAVELMENTE O PROFESSOR 
+
+
+USARÁ UM NOME COMO 'auth' e 'setAuthState'... ----> ERRADO.
+
+
+
+ELE ESCOLHE 
+
+
+'inputIsValid' 
+
+e 
+
+'setInputIsValid'...
+
+
+------------------------------------------------
+
+
+
+
+
+--------> ISSO FEITO, ELE PRECISA DA LÓGICA DE VALIDAÇÃO,
+
+QUE 
+
+VAI ___ENTÃO FAZER MANAGE (mudar para false/true) 
+
+
+DESSE STATE DE VALIDAÇÃO, A PARTIR 
+
+
+
+DO CALL DE 'setInputIsValid'... ---------> 
+
+
+
+
+
+DENTRO 
+
+DO 'inputValidationHandler',
+
+
+
+
+
+O PROFESSOR VAI ADICIONAR UM IF CHECK,
+
+que 
+
+checará 
+
+por 
+
+
+'SE ESSE event.target.value FOR __tRIMMADO (tirados os espaços em brancos),
+
+MESMO TRIMMADO FOR IGUAL A "" (empty string), VOU QUERER QUE 
+
+setInputIsValid SEJA DEFINIDO COMO 'FALSE'...
+
+
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+const Todo = (props) => {
+
+
+  const [inputIsValid, setInputIsValid] = useState(false);
+}
+
+
+
+
+
+    const inputValidationHandler = (event) => {
+      if (event.target.value.trim() === '') {
+        setInputIsValid(false);
+      } else {
+        setInputIsValid(true);
+      }
+    }
+
+
+
+
+
+        <input
+        type="text"
+        placeholder="Todo"
+        ref={todoInputRef} 
+        onChange={inputValidationHandler}
+      />
+
+
+
+  }
+
+
+---------------------------------------------
+
+
+
+
+
+
+---> COM ISSO,
+
+AGORA PODEMOS USAR 
+
+ESSA INFORMATION (do state)
+ 
+ PARA 
+
+ DETERMINAR 
+
+
+ SE 
+
+ O ESTILO 
+
+
+ DE 
+
+
+ NOSSO INPUT VAI FICAR 
+
+ 'red' ou 'normal'...
+
+
+
+
+
+
+ --> professor escreve uma tag de 'style' DENTRO 
+
+
+ do 
+
+ <input>,
+
+
+ E 
+ AÍ 
+
+ ele 
+
+ escreve 
+
+
+
+
+
+ style={{
+   backgroundColor: inputIsValid ? 'transparent' : 'red'
+ }}
+
+
+
+
+ ------------------------------------------------------
+
+
+
+
+SALVAMOS ISTO.... --> NOSSO INPUT FIELD VAI COMEÇAR COMO ___VERMELHO__, 
+
+
+MAS SE DIGITARMOS ALGO , 
+
+
+
+ELE MUDARÁ 
+
+___PARA __ TRANSPARENT (nada no fundo...) 
+
+
+
+
+
+
+
+
+
+--> fiz tudo que o professor pediu... --> entretanto,
+
+mesmo assim,
+
+
+
+O ESTILO INICIAL DE 
+
+MINHA LIST NÃO FICA COMO 'RED'... (significa que 
+
+algo está errado aqui.... talvez o código de execução do reacthooks tenha se alterado com o tempo? É estranho...)
+
+
+
+
+
+
+
+
+
+--> ENTENDI O PROBLEMA.... --> ERA BURRICE MINHA... --->  se o elemento DO INPUT STYLE TEM UM VALOR INICIAL ('value') 
+
+
+de 
+
+'Todo',
+
+ELE NUNCA VAI 
+
+FICAR 
+
+VERMELHO INICIALMENTE... ---> esse é o problema... (pq teoricamente ELE POSSUI ALGO NO SEU INTERIOR...)
+
+
+
+
+
+
+
+---> se eu tirar 'Todo' (o 'placeholder' desse negócio, provavelmente o style vai ficar RED mesmo....)
+
+
+
+
+
+
+--> ERREI DE NOVO... ESSE NÃO ERA O PROBLEMA...
+
+
+
+
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+Consertei.... o fix foi bem IDIOTA.
+
+
+
+EX:
+
+
+      style={
+          {
+            backgroundColor: inputIsValid === false ? 'transparent' : 'red'
+                                  	  ^^^^^^^ISTO CONSERTOU.
+          }
+        }
+
+
+
+
+
+
+  ---> mas QUEBROU OUTRA COISA... --> agora 
+
+
+
+  a cor do background fica SEMPRE VERMELHA....
+
+
+
+
+
+
+
+  ----> 
+
+
+  reverti o código para a sintaxe anterior... --> não sei como resolver
+   
+   este problema... --> talvez a solução esteja no módulo 
+
+   dos INPUTS....
+
+
+
+
+
+
+
+
+
+
+   OK... foda-se....
+
+  
+
+
+  não sei como consertar isso...
+
+
+
+
+
+  --> O IMPORTANTE É QUE __ ENQUANTO VAMOS DIGITANDO 
+
+  __ 
+
+  NO INPUT FIELD,
+
+
+  VAMOS 
+
+
+
+
+PRINTANDO VÁRIAS VEZES NO CONSOLE 
+
+a mensagem 
+
+de 
+
+
+'Rendering the list'... --> 
+
+
+e 
+isso 
+
+
+é um PROBLEMA EM QUESTÃO DE PERFORMANCE___... ---> 
+
+
+
+
+É CLARO, EXPLICA O PROFESSOR,
+
+
+QUE 
+
+'RE-RENDER' NO REACT NÃO SIGNIFICA QUE 
+
+__NECESSARIAMENTE_ _ 
+
+O 
+
+DOM INTEIRO 
+
+FOI RE-RENDERIZADO,
+
+mas o que 
+
+interessa é 
+
+que 
+
+O  VIRTUAL DOM 
+
+FOI RE-RENDERIZADO... --> e O 
+
+
+REACT DE FATO É OBRIGADO __A CHECAR __ SE 
+
+O 
+
+ 
+ DOM 
+
+ DE VERDADE 
+
+ REALMENTE FOI ALTERADo, quando isso acontece... ----> 
+
+ 
+
+
+ ESSE 
+
+ CHECK É TOTALMENTE REDUNDANTE; NÓS sabemos (mas a máquina, não)
+
+
+ QUE 
+
+
+ É TOTALMENTE IRRELEVANTE/INÚTIL PENSAR EM 
+
+
+ RE-RENDERIZAR ESSA LIST DE NOSSA 
+ PÁGINA 
+ QUANDO 
+
+ A ÚNICA COISA QUE 
+
+ FOI ALTERADA FOI O 
+
+ input field em si...
+
+
+
+
+
+
+
+ ------> E ISSO,
+
+
+ ESSE PROBLEMA DE PERFORMANCE,
+
+ NÃO É ALGO QUE AFETA __ SÓ ___ O INPUT FIELD... --> não,
+
+
+ __SEMPRE__ QUE VOCÊ SETTA ALGUM 
+
+ STATE 
+
+
+ NESSE 
+
+ COMPONENT 
+
+ de 
+
+ 'Todo',
+
+
+
+ __o  REACT___ VAI RE-RENDERIZAR TUDO__... ------> 
+ 
+
+
+ E 
+
+ SE ESSE RE-RENDER NÃO AFETA DIRETAMENTE ESSA LIST (no caso, o re-render do INPUT FIELD em relação à LIST),
+
+
+
+ VOCê 
+ VAI QUERER 
+
+ ASSEGURAR 
+
+
+
+ QUE 
+
+ ESSA LIST __ NÃO SEJA __ DESNECESSARIAMENTE 
+
+ _ RE-RENDERIZADA...
+
+
+
+
+
+
+ --> ok, mas COMO PODEMOS SOLUCIONAR ESSE PROBLEMA?

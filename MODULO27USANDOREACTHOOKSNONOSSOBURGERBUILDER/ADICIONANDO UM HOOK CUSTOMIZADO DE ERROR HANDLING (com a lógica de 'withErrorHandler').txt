@@ -1,0 +1,1045 @@
+
+COM O 
+
+
+MODAL 
+
+
+
+CONVERTIDO,
+
+
+AGORA FICAMOS SÓ COM FUNCTIONAL COMPONENTS NO NOSSO PROJETO...
+
+
+
+
+--> PARA CONCLUIR ESTE MÓDULO,
+
+O PROFESSOR 
+
+QUER 
+AGORA 
+
+CONSTRUIR 
+
+UM 
+
+CUSTOM HOOK... ---> pq até agora, neste módulo,
+
+
+só usamos 
+
+'
+useState'
+
+
+
+e 
+
+'useEffect', justamente 
+
+pq 
+
+esses 
+
+
+são 
+
+os 
+
+2 hooks mais comuns/mais utilizados...
+
+
+
+
+
+
+
+-----> foi bom vê-los em ação.... --> ver como 
+
+
+
+roles assumidos por class-based components são substituídos 
+
+por esses hooks...
+
+
+
+
+
+
+
+--> MAS NÓS TAMBÉM PODEMOS CRIAR UM 'CUSTOM HOOK'... --> 
+
+
+E 
+
+
+ESSE 
+
+HOOK 
+
+CUSTOM 
+
+
+TEM 
+
+RELAÇAÕ 
+
+COM 
+
+NOSSO 
+
+COMPONENT 
+
+
+'withErrorHandler'... -------> OBVIAMENTE,
+
+PODEMOS 
+
+deixar 
+
+
+ESSE COMPONENT 
+
+COMO ESTÁ,
+ 
+
+ MAS 
+
+ A LÓGICA 
+
+ DELE 
+
+
+
+ PODE ___ SER __ OUTSOURCEADA 
+
+ EM 
+ UM 
+
+
+
+ CUSTOM HOOK... --> 
+
+ e aí 
+
+ esse hook pode 
+
+
+ ser 
+
+
+ USADO 
+ EM QUALQUER 
+
+
+ COMPONENT 
+
+ QUE 
+
+ DESEJARMOS; ESSE HOOK 
+
+ VAI 
+
+ NOS 
+
+ DIZER SE 
+
+ TIVEMOS 
+
+ UM 
+
+ ERRO 
+
+
+ DE 
+
+ TIPO 'http-request'
+
+ OU NÃO...
+
+
+
+
+
+
+
+----> E AÍ PODEMOS DECIDIR, DENTRO DO COMPONENT EM QUE TEMOS 
+
+ESSE HOOK UTILIZADO,
+
+
+__ O QUE FAZER A PARTIR DESSE ERRO: não somos obrigados a fazer return 
+de um 
+
+error; podemos fazer qualquer coisa que desejarmos...
+
+
+
+
+--> para isso, vamos criar um novo folder, chamado de 'hooks'... ---> 
+
+
+
+dentro disso vamos criar um arquiv O
+
+'http-error-handler.js'...
+
+
+
+
+
+
+
+--> dentro disso, vamos importar 
+
+
+
+xxx do react... --> 
+
+
+
+vamos usar 
+
+
+
+
+'useState' 
+
+
+e 
+
+'useEffect',
+
+
+
+PQ ___ ESSES SÃO OS HOOKS QUE ESTOU USANDO NO CÓDIGO DE 
+
+'withErrorHandler',
+
+QUE ESTÁ ASSIm:
+
+
+
+
+const withErrorHandler = (WrappedComponent, axios) => {
+  //versão que RETORNA UM FUNCTIONAL COMPONENT desse withErrorHandler... (versão reacthooks)...
+
+  return props => {
+    const [error, setError] = useState(null);
+
+    const errorConfirmedHandler = () => {
+      setError(null);
+    };
+
+    const reqInterceptor = axios.interceptors.request.use((req) => {
+      setError(null);
+      return req;
+    });
+
+    const resInterceptor = axios.interceptors.response.use(
+      (res) => res,
+      (error) => {
+        setError(error);
+        console.log('Error: ' + error.message);
+      }
+    );
+
+    useEffect(() => {
+      return () => {
+        axios.interceptors.request.eject(reqInterceptor);
+
+        axios.interceptors.response.eject(resInterceptor);
+      };
+    }, [reqInterceptor, resInterceptor]);
+
+    return (
+      <Aux>
+        <Modal show={error} modalClosed={errorConfirmedHandler}>
+          {error ? error.message : null}
+        </Modal>
+        <WrappedComponent {...props} />
+      </Aux>
+    );
+  };
+};
+
+export default withErrorHandler;
+
+
+
+
+------------------------------------------------
+
+
+
+
+Certo...
+
+
+
+
+
+---> dentro 
+
+disso, 
+
+
+vamos 
+
+
+
+export default httpClient (ou qualquer nome de nossa escolha).... 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> FICARÁ ASSIM:
+
+
+
+
+
+export default httpClient => {
+
+          const [error, setError] = useState(null);
+
+
+          const reqInterceptor = httpClient.interceptors.request.use((req) => {
+            setError(null);
+            return req;
+          });
+
+              
+          const resInterceptor = httpClient.interceptors.response.use(
+            (res) => res,
+            (error) => {
+              setError(error);
+              console.log('Error: ' + error.message);
+            }
+          );
+
+
+      
+          const errorConfirmedHandler = () => {
+            setError(null);
+          };
+    
+      
+          useEffect(() => {
+            return () => {
+              httpClient.interceptors.request.eject(reqInterceptor);
+      
+              httpClient.response.eject(resInterceptor);
+            };
+          }, [reqInterceptor, resInterceptor]);
+      
+          return (
+            <Aux>
+              <Modal show={error} modalClosed={errorConfirmedHandler}>
+                {error ? error.message : null}
+              </Modal>
+              <WrappedComponent {...props} />
+            </Aux>
+          );
+        
+      
+}
+
+
+
+
+
+
+
+----------------------------
+
+
+
+
+ou seja,
+ 
+ nesse 
+
+ 'httpClient'
+
+ VAMOS ENFIAR QUALQUER 
+
+ 'HTTP CLIENT' ( no caso, 'axios') de nossa 
+
+ escolha.... -----------> ESSE HTTP CLIENT DEVERÁ OBRIGATORIAMENTE 
+
+ TER UM 
+
+ FIELD 
+
+ DE 
+
+ 'interceptors' (como 'axios' tem).... ---------> 
+
+
+
+
+
+ E AÍ,
+
+ LÁ NO FINAL,
+
+
+ O 
+
+
+
+ PROFESSOR 
+
+ VAI 
+
+ FAZER UM 
+
+ RETURN 
+
+ __de 'error' ( o error em si)  E 
+
+
+
+ UMA __FUNÇÃO QUE __ NOS DEIXA 'CLEAR THE ERROR'... 
+
+
+
+
+
+ ex:
+
+
+ return [error, errorConfirmedHandler];
+
+
+
+ ----------------------------------------
+
+
+
+ EX:
+
+
+
+
+ export default httpClient => {
+
+          const [error, setError] = useState(null);
+
+
+          const reqInterceptor = httpClient.interceptors.request.use((req) => {
+            setError(null);
+            return req;
+          });
+
+              
+          const resInterceptor = httpClient.interceptors.response.use(
+            (res) => res,
+            (error) => {
+              setError(error);
+              console.log('Error: ' + error.message);
+            }
+          );
+
+
+      
+          const errorConfirmedHandler = () => {
+            setError(null);
+          };
+    
+      
+          useEffect(() => {
+            return () => {
+              httpClient.interceptors.request.eject(reqInterceptor);
+      
+              httpClient.response.eject(resInterceptor);
+            };
+          }, [reqInterceptor, resInterceptor]);
+      
+          return (
+            <Aux>
+              <Modal show={error} modalClosed={errorConfirmedHandler}>
+                {error ? error.message : null}
+              </Modal>
+              <WrappedComponent {...props} />
+            </Aux>
+          );
+        
+        
+return [error, errorConfirmedHandler];
+}
+
+
+
+----------------------------
+
+
+
+
+FICOU TIPO ASSIM:
+
+
+
+
+
+export default (httpClient) => {
+  const [error, setError] = useState(null);
+
+  const reqInterceptor = httpClient.interceptors.request.use((req) => {
+    setError(null);
+    return req;
+  });
+  const resInterceptor = httpClient.interceptors.response.use(
+    (res) => res,
+    (err) => {
+      setError(err);
+    }
+  );
+
+  useEffect(() => {
+    return () => {
+      httpClient.interceptors.request.eject(reqInterceptor);
+      httpClient.interceptors.response.eject(resInterceptor);
+    };
+  }, [reqInterceptor, resInterceptor]);
+
+  const errorConfirmedHandler = () => {
+    setError(null);
+  };
+
+  return [error, errorConfirmedHandler];
+};
+
+
+
+
+
+
+------------------------------
+
+
+COM ISSO,
+
+
+PODEMOS/DEVEMOS 
+
+
+IMPORTAR 
+
+ESSE 
+
+'CUSTOM HOOK' 
+
+LÁ 
+
+NO NOSSO 
+
+CUSTOM ERROR HANDLER,
+
+lá em 
+
+'withErrorHandler',
+
+essencialmente... -----------> 
+
+
+LÁ,
+
+
+
+VAMOS 
+
+
+
+escrever 
+
+
+'import useHttpErrorHandler from '../../hooks/http-error-handler';
+
+
+-----------------------------------------
+
+
+
+O CÓDIGO DO 
+
+'withErrorHandler',
+
+por enquanto,
+
+está assim:
+
+
+
+const withErrorHandler = (WrappedComponent, axios) => {
+  //versão que RETORNA UM FUNCTIONAL COMPONENT desse withErrorHandler... (versão reacthooks)...
+
+  return props => {
+    const [error, setError] = useState(null);
+
+    const errorConfirmedHandler = () => {
+      setError(null);
+    };
+
+    const reqInterceptor = axios.interceptors.request.use((req) => {
+      setError(null);
+      return req;
+    });
+
+    const resInterceptor = axios.interceptors.response.use(
+      (res) => res,
+      (error) => {
+        setError(error);
+        console.log('Error: ' + error.message);
+      }
+    );
+
+    useEffect(() => {
+      return () => {
+        axios.interceptors.request.eject(reqInterceptor);
+
+        axios.interceptors.response.eject(resInterceptor);
+      };
+    }, [reqInterceptor, resInterceptor]);
+
+    return (
+      <Aux>
+        <Modal show={error} modalClosed={errorConfirmedHandler}>
+          {error ? error.message : null}
+        </Modal>
+        <WrappedComponent {...props} />
+      </Aux>
+    );
+  };
+};
+
+export default withErrorHandler;
+
+
+
+
+-----------------------------------------------
+
+
+
+
+NÓS 
+
+VAMOS 
+
+
+escrever 
+
+'useHttpErrorHandler()'
+
+
+
+DENTRO 
+
+
+DA PRIMEIRA LINHA DO FUNCTIONAL COMPONNET 
+
+RETORNADO 
+
+por 
+
+ESSE FUNCTIONAL COMPONENT 
+
+DE 
+'withErrorHandler'....
+
+
+ex:
+
+
+
+
+
+const withErrorHandler = (WrappedComponent, axios) => {
+
+
+  return props => {
+    const [error, setError] = useState(null);
+
+    const errorConfirmedHandler = () => {
+      setError(null);
+    };
+
+    const reqInterceptor = axios.interceptors.request.use((req) => {
+      setError(null);
+      return req;
+    });
+
+    const resInterceptor = axios.interceptors.response.use(
+      (res) => res,
+      (error) => {
+        setError(error);
+        console.log('Error: ' + error.message);
+      }
+    );
+
+    useEffect(() => {
+      return () => {
+        axios.interceptors.request.eject(reqInterceptor);
+
+        axios.interceptors.response.eject(resInterceptor);
+      };
+    }, [reqInterceptor, resInterceptor]);
+
+    return (
+      <Aux>
+        <Modal show={error} modalClosed={errorConfirmedHandler}>
+          {error ? error.message : null}
+        </Modal>
+        <WrappedComponent {...props} />
+      </Aux>
+    );
+  };
+};
+
+export default withErrorHandler;
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+Certo...
+
+
+
+
+
+E 
+ESSA 
+
+FUNÇÃO 
+
+'       useHttpErrorHandler();',
+
+
+
+FUNCIONA 
+
+DE FORMA QUE 
+
+elA 
+
+
+__RETORNA ___ ESSE 
+
+ARRAY 
+
+de 
+
+'[error, errorConfirmedHandler]'.... 
+
+
+
+
+
+
+
+-----------------> é por isso que VAMOS ARMAZENAR __ O CALL DESSE HOOK EM UMA CONSTANTE,
+
+
+
+TVZ UMA CONSTANTE DE 'httpErrorHandler',
+
+
+E AÍ VAMOS USAR 
+
+A DOT NOTATION PARA 
+
+ACESSAR 
+
+TANTO 
+
+
+O 'MÉTODO QUE FAZ CLEAR DE ERROS',
+
+
+como o  __ERRO __ EM SI...
+
+
+
+
+
+
+
+
+TIPO ASSIM, 
+TALVEZ:
+
+
+
+
+
+
+
+  return props => {
+
+      const [error, errorConfirmedHandler] =  useHttpErrorHandler(axios); ////EIS O CÓDIGO EM QUESTÃO.
+
+    const reqInterceptor = axios.interceptors.request.use((req) => {
+
+          errorConfirmedHandler(null); ///EIS O CÓDIGO EM QUESTÃO.
+      return req;
+    });
+
+    const resInterceptor = axios.interceptors.response.use(
+      (res) => res,
+      (error) => {
+        errorConfirmedHandler(error); //EIS O CÓDIGO EM QUESTÃO.
+        console.log('Error: ' + error.message);
+      }
+    );
+
+    useEffect(() => {
+      return () => {
+        axios.interceptors.request.eject(reqInterceptor);
+
+        axios.interceptors.response.eject(resInterceptor);
+      };
+    }, [reqInterceptor, resInterceptor]);
+
+    return (
+      <Aux>
+        <Modal show={error} modalClosed={errorConfirmedHandler}> ////EIS O CÓDIGO EM QUESTÃO.
+          {error ? error.message : null}
+        </Modal>
+        <WrappedComponent {...props} />
+      </Aux>
+    );
+  };
+
+};
+
+
+
+
+
+
+-------------------------------------
+
+
+
+
+
+PROFESSOR DIZ 
+
+
+''YOU CAN NAME THE EXTRACTED ELEMENTS HOWEVER YOU WANT,
+
+YOU DONT HAVE TO USE THE NAMES YOU USE IN YOUR CUSTOM HOOK FUNCTION!'' (mas aqui,  passamos os mesmos nomes, just in case...)
+
+
+
+
+
+
+
+
+
+---->  IMPORTANTE... ---> PROFESSOR   __NÃO ESTÁ __ SENDO '''OBRIGADO''' A USAR 
+
+ARRAY 
+DESTRUCTURING AQUI, COM ESSE HOOK--------> 
+
+O 
+
+
+
+FATO 
+
+DE ISSO 
+
+SE PARECER 
+
+
+UM POUCO COM A MANEIRA PELA QUAL USAMOS 'useState()'
+
+
+__É UMA __ MERA COINCIDÊNCIA__... --> ISSO QUER DIZER QUE 
+
+
+VOCê 
+
+PODE 
+
+RETORNAR 
+
+
+
+__QUALQUER COISA QUE VOCÊ DESEJAR, NOS SEUS HOOKS.... --> isso significa que 
+
+você 
+
+pode 
+
+ter/escrever um 
+
+HOOk 
+
+QUE ___ FAZ ALGUMA COISA __e QUE 
+
+NÃO RETORNA NADA... -->  e vocÊ  
+
+TAMBÉM PODE 
+
+RETORNAR 
+
+UM 
+
+
+_NÚMERO,
+
+UM OBJETO,
+
+UM TEXTO,
+
+UM ARRAY,
+
+ETC, QUALQUER COISa... --> o fato de esse nosso hook retornar um array com 
+
+2 
+
+elementos é só 'a whim', uma __COINCIdÊNCIA... 
+
+
+
+
+
+
+
+
+
+---> ESSE NOSSO NOVO FORMATO 
+
+de 
+'
+withErrorHandler',
+
+que usa esse hook aí.... ---> A VANTAGEM COM ESSA 
+
+DISTRIBUIÇÃO DE LÓGICA AQUI,
+
+DISTRIBUIÇÃO DE LÓGICA/OUTSOURCING
+
+DA LÓGICA DE UM 
+
+HOC 
+
+em um hook,
+
+É QUE 
+
+VOCê 
+
+__PODE JUSTAMNETE__ CHAMAR 
+
+
+'useHttpErrorHandler' (ou QUALQUER OUTRO HOOK, não interessa qual)
+
+
+
+__EM QUALQUER LUGAR __ DO SEU APLICATIVO, SEM PROBLEMAS... -->
+
+
+e o 
+
+
+'useHttpErrorHandler' 
+
+__VAI SEMPRE NOS RETORNAR 1 OBJETO 'error' E __ UM MÉTODO 'CLEAR ERROR'... --> 
+
+
+NÓS 
+
+PODEMOS 
+
+MANTER ISSO 
+NO NOSSO 
+
+HOC de 'withErrorHandler',
+
+
+
+_MAS TAMBÉM __ PODEMOS 
+
+COLOCAR 
+
+EM OUTROS COMPONENTS...--> ex: '''quero colocar essa lógica de error handling 
+
+em 
+
+outro component, diferente de 'withErrorHandler',
+
+
+mas AÍ QUERO SÓ USAR 
+
+
+ESSE HOOK PARA FAZER 
+
+OUTPUT 
+
+DA MENSAGEM 
+
+DE ERRO NA TELA... (ou algo do gênero...)
+
+
+
+
+
+
+
+
+
+
+
+---> com isso,
+
+
+testamos 
+
+
+esse negócio.... --> ELE FUNCIONA. 
+
+O MODAL DE ERRO 
+
+FUNCIONA COMO ANTES,
+
+sinal de que 
+
+esse custom hook funcionou...
+

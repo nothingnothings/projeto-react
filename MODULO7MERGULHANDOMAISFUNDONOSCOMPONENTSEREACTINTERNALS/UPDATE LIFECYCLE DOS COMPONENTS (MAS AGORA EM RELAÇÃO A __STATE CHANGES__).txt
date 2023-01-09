@@ -1,0 +1,716 @@
+
+
+
+CERTO, VIMOS O 'UPDATING LIFECYCLE' 
+
+
+__PARA MUDANÇAS (CHANGES) NOS 
+
+
+__PROPS___ de nossos 
+
+
+components... --------->  O TAKEAWAY MAIS IMPORTANTE 
+
+
+DAQUELA 
+
+LIÇÃO,
+
+
+
+E O 'UPDATE LIFECYCLE/HOOK' que 
+
+mais usaremos 
+
+
+daqueles 
+
+
+lá 
+
+
+
+será 
+
+
+
+o 
+
+
+
+'componentDidUpdate()'.... ------->
+
+
+
+
+
+CÓDIGO DELE:
+
+
+
+
+
+componentDidUpdate(prevProps, prevState, snapshot) {  ////////5a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component). É EXECUTADO DEPOIS DO MÉTODO 'RENDER()', e DEPOIS DO RENDER DE TODOS OS CHILD COMPONENTS RENDERIZADOS POR ELE... (e que terão seu PRÓPRIO UPDATE LIFECYCLE, iniciando em sua própria etapa/método 'getDerivedStateFromProps()')
+  console.log('[Persons.js] componentDidUpdate');
+  console.log(snapshot);
+} /////componentDidUpdate --> é A ÚLTIMA ETAPA/MÉTODO NO CICLO DE UPDATE DE UM COMPONENT....
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+ESSE É O HOOK MAIS IMPORTANTE,
+ 
+
+
+ É NELE QUE 
+
+
+
+
+CAUSAREMOS 'SIDE-EFFECTS' NO NOSSO CÓDIGO, COMO 
+
+
+o envio de HTTP REQUESTS, 'setTimeout'
+
+e outros códigos....... ---------------> 
+
+
+
+
+
+ESSe 'componentDidUpdate' SEMPRE EXECUTA COISAS ___DEPOIS__ que o 'update' do component 
+
+acabou, 
+
+é a tarefa dele... -------->  e nele você pode fazer coisas 
+
+como 
+
+
+'FETCH DATA FROM A SERVER'... ----------> O professor, no seu exemplo, usou 
+
+'console.log(snapshot)' 
+
+PARA FAZER O CONSOLE.LOG 
+
+de um snapshot produzido na etapa que vem logo antes dele (E que é bem menos usada), 
+
+a etapa 
+
+'getSnapshotBeforeUpdate()' ------->   
+
+
+(
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {////////3a ETAPA/MÉTODO no 'update lifecycle' de um component (class-based component). 
+      console.log('[Persons.js] getSnapshotBeforeUpdate');  ///////GETSNAPSHOTBEFOREUPDATE É USADO PARA 'last-minute DOM oprations', como o GET da SCROLLING POSITION DO USUÁRIO anteriormente a um UPDATE dos nossos components...
+    // return null;
+    return { message: 'Snapshot'};
+    }
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
+GETSNAPSHOTBEFOREUPDATE -->   ESSE MÉTODO __CRIA UM SNAPSHOT__, salva 
+
+uma cópia/snapshot do state ANTES DE ELE SER UPDATADO... --> você pode então  
+
+usar esse state para FAZER COISAS em 'componentDidUpdate', como 
+
+MUDAR/RESTAURAR A SCROLLING POSITION DO USUÁRIO PARA O QUE ELA ERA antes 
+
+do update do component ocorrer....
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+CERTO.
+
+
+
+AGORA DEVEMOS DAR UMA OLHADA NO 'LIFECYCLE HOOK' PARA __MUDANÇAS INTERNAS___ ('lifecycle hook for INTERNAL CHANGES'),
+
+ou seja,
+
+
+o 'lifecycle hook/hooks' que 
+
+ocorre 
+
+
+QUANDO O INTERNAL STATE DE UM COMPONENT MUDA.... ------> podemos realizar essa 
+
+demonstração por meio 
+
+
+do 
+
+
+'App.js'... ---> lá no App.js, 
+
+
+
+nós REALMENTE 
+
+
+
+
+__MUDAMOS O STATE___ quando 
+
+
+um usuário 
+
+
+INPUTTA ALGO DENTRO 
+
+
+DAS CAIXAS 
+
+
+de input 
+
+em cada elemento 
+
+
+'Person'...
+
+(
+
+
+
+    código 
+
+
+    'persons = (
+        <Persons 
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler}
+        />
+    )
+)
+
+
+--------------------------------
+
+
+
+
+PORTANTO,
+
+
+
+NESSE 'App.js',
+
+
+
+DEVEMOS 
+
+
+
+adicionar um 
+
+NOVO MÉTODO/LIFECYCLE HOOk,
+
+
+o método 
+
+
+
+
+'componentDidUpdate()'.....          (E também poderíamos adicionar o 'getSnapshotBeforeUpdate', se você quisesse... mas o professor vai adicionar só o 'componentDidUpdate'...)...
+
+
+
+
+
+
+ex:
+
+
+componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
+}
+
+
+
+-------------------------------
+
+
+
+Certo, 
+
+mas além 
+
+desse método aí, 
+
+
+
+O PROFESSOR TAMBÉM 
+
+
+VAI ADICIONAR OUTRO MÉTODO,
+
+
+
+o método 
+
+
+
+'shouldComponentUpdate()'  -------------> nesse método,
+
+
+
+o professor vai conseguir/receber 
+
+
+os props 
+
+
+
+'nextProps' e 'nextState'...
+
+
+
+-------------------------------------
+
+
+EX:
+
+
+
+shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate');
+}
+
+
+
+
+-------------------------------------
+
+
+
+
+FICAM ASSIM, dentro de 'APp.js':
+
+
+
+
+
+
+
+componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
+}
+
+
+
+shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate');
+}
+
+
+----------------------------------------
+
+
+
+ISSO FEITO,
+
+
+
+O PROFESSOR RECARREGA O CÓDIGO PARA VER SE ESSES CONSOLE.LOGS/ESSES HOOKS SÃO 
+
+ATIVADOS/TRIGGADOS TAMBÉM...
+
+
+
+
+
+
+Certo... quando clicamos em 
+
+
+'toggle persons',
+
+
+
+o console.log de 
+
+
+
+
+'getDerivedStateFromProps' 
+
+
+e 
+
+
+
+'shouldComponentUpdate' 
+
+
+
+
+APARECEM
+
+
+
+
+
+NO CONSOLE...
+
+
+
+
+
+(mas 'componentDidUpdate' não aparece...)
+
+
+
+
+
+
+
+ENTRETANTO, PROFESSOR DIZ QUE ELE 'FALHOU', TAMBÉM... ------> ele diz isso 
+
+
+pq 
+
+
+
+no console há um 
+
+
+warning....
+
+
+
+'warning: App.shouldComponentUpdate(): Returned undefined instead 
+of a boolean value. Make sure to return true or false' -------->   NÓS 
+
+
+BASICAMENTE 
+
+
+ESQUECEMOS DE RETORNAR 
+
+'
+TRUE' OU 'FALSE' nessa função aí, 
+
+
+
+que É UMA FUNÇÃO/MÉTODO QUE ESSENCIALMENTE FUNCIONA COMO 'CANCEL' do update do nosso component.
+
+
+
+consertamos assim:
+
+
+
+
+
+
+
+
+componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
+}
+
+
+
+shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate');
+    return true;
+}
+
+
+
+
+----------------------------------------
+
+
+
+
+CERTO... RETORNAMOS 'TRUE' em vez de undefined.... 
+
+
+
+O WARNING SOME...
+
+
+
+(se eu deixasse 'false', o warning TAMBÉM SUMIRIA, mas aí 
+
+EU NÃO CONSEGUIRIA CLICAR EM 'toggle persons', PORQUE 
+
+É O UPDATE QUE FAZ O RENDER DE TODOS 
+
+OS ITEMS/COMPONENTS 'PERSON', e nós acabaríamos o bloqueando por meio de 'shouldComponentUpdate'... ).
+
+
+
+
+
+--------------------------------------
+
+
+
+
+É EVIDENTE QUE __NESTE MÓDULO___ APRENDEREMOS A MANEIRA 'ESPERTA' DE USAR 
+
+
+'shouldComponentUpdate'.... 
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+'return true' --------> é o DEFAULT desse método aí....
+
+
+-----------------------------------
+
+
+
+CERTO... ---> 
+
+
+e agora, 
+
+
+
+se o professor 
+
+DIGITA 
+
+
+APENAS 1 ÚNICO CARACTERZINHO NO INPUT,
+
+
+
+
+o console.log nos outputta:
+
+
+
+
+
+
+[App.js] getDerivedStateFromProps 
+
+App.js shouldComponentUpdate 
+
+
+App.js render 
+
+
+Persons.js  shouldComponentUpdate     //////////ESSE É O UPDATING HOOK DO 'persons.js'...
+
+
+persons.js  rendering...
+
+
+person.js rendering... (3) 
+
+
+persons.js   getSnapshotBeforeUpdate 
+
+
+persons.js   componentDidUpdate /////////FIM DO UPDATING HOOK PARA O 'persons.js'
+
+{message: "Snapshot"}
+
+
+App.js  componentDidUpdate  /////////// FIM DO UPDATNIG HOOK PARA O 'App.js'...
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+NÓS GASTAMOS 
+
+
+BASTANTE TEMPO 
+
+
+NESSES LIFECYCLE HOOKS... fizemos isso pq 
+
+
+
+___SABER SOBRE ELES É IMPORTANTE__... ------> quando você TRABALHA 
+
+
+COM 
+
+
+'CLASS-BASED COMPONENTS', 
+
+
+É IMPORTANTE 
+
+
+SABER A MANEIRA COMO ELES SÃO CRIADOS, e 
+
+OS LUGARES EM QUE 
+
+VOCÊ DEVE EXECUTAR 
+
+SEU CÓDIGO CUSTOMIZADO DENTRO 
+
+
+DESSE EXTENSO 'LIFECYCLE PROCCESS'...
+
+
+
+
+
+
+
+
+
+IMPORTANTE!!!! --------> 'componentDidMount', 'componentDidUpdate' e (para MELHORIAS DE PERFORMANCE) 'shouldComponentUpdate'
+
+SÃO 
+
+OS HOOKS __MAIS IMPORTANTES____... 
+
+
+
+
+Mas pq são os mais importantes?
+
+
+
+
+pq 
+
+
+em 
+
+
+'componentDidMount' 
+
+
+
+e 
+
+
+'componentDidUpdate' 
+
+
+
+
+VOCê ___TIPICAMENTE FARÁ COISAS___ COMO 'O FETCH DE DADOS DE UM SERVIDOR' (http request), 
+
+
+
+
+ENQUANTO QUE 
+
+
+
+O 
+
+'shouldComponentUpdate()' É USADO (pode ser usado)
+ 
+
+
+ PARA __MELHORIAS DE PERFORMANCE__ (bloqueia re-render/update de certos components, se você o utilizar 
+ e retornar 'false'...)
+
+
+---------------------------------
+
+
+
+
+CERTO,
+
+
+
+MAS E QUANTO AOS 
+
+'functional components...?' ----------> o professor mencionou que o lifecycle ESTARIA 
+
+APENAS 
+
+DISPONÍVEL DENTRO DE 
+
+'class-based components'... --------> E ANTES DA CHEGADA DO REACTHOOKS, 
+
+
+
+functional components NÃO TINHAM NADA QUE ERA COMPARÁVEL A esse 'lifecycle' dos 
+class-based components ---------> e isso 
+
+ERA OK, não importava, pq 
+
+NÓS APENAS OS UTILIZÁVAMOS 
+
+PARA 'FINS APRESENTACIONAIS' (presentational purposes )........ mas agora, hoje,
+
+
+com o reacthooks, você 
+
+
+ACTUALLY PODE CONSTRUIR TODO O SEU CÓDIGO/APP COM
+
+
+
+FUNCTIONAL COMPONENTS... (pq você pode FAZER MANAGE DO STATE DENTRO DELES, com o reacthooks...) --------->  É 
+
+
+POR ISSO QUE VOCÊ DEVE/DEVE TER UMA 
+
+
+TOOL QUE RODA __ALGUNS CÓDIGOS___ SEMPRE QUE UM 
+
+
+COMPONENTE FOR UPDATADO, ou quando é críado... ------> portanto, qual seria o equivalente 
+
+DESSES LIFECYCLE HOOKS, nos functional components/reacthook?
+
+
+
+
+VEREMOS ISSO AGORA.

@@ -1,0 +1,2226 @@
+
+
+
+
+
+
+
+
+Vou ver se consigo CONSERTAR AQUELES ERROS...
+
+
+
+
+
+
+--> Consegui consertar... --> o erro era EXTREMAMENTE IDIOTA... --> não podemos 
+
+colocar 
+
+
+''  
+
+
+( ou seja, coisas como IRONIA não são admitidas em file names... não podemos escrever 'sagas' por exemplo...)
+
+
+
+
+NOS NOSSOS FILENAMES.... --> isso interfere com o PATHING de execução 
+
+de nossos 
+
+
+arquivos javascript, e caga tudo. 
+
+
+
+
+
+
+
+
+COLOQUE NOMES SIMPLES NOS SEUS ARQUIVOS. Isso é tudo.
+
+
+
+---------------------------------
+
+
+
+
+
+
+
+HAHAHAH mas o saga AINDA __NÃO FUNCIONA__... é uma merda... Vou comparar o código do professor com o meu.
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> por alguma razão, O 'REDUX-SAGA' ___ FUNCIONA___ QUANDO 
+
+EU 
+
+
+
+FAÇO 
+
+'LOGOUT' (clico no botão de logout),
+
+MAS 
+
+__NÃO FUNCIONA __ QUANDO MEU COMPONENT 
+
+
+
+'index' 
+
+É EXECUTADO...
+
+
+---------------------------------
+
+
+
+
+DESCOBRI O __MALDITO__ PROBLEMA... foi uma burrice do professor...
+
+
+
+
+era o código 
+
+de 'auth.js',
+
+com 
+
+
+nossos 
+
+
+ACTION CREATORS,
+
+que havia sido ___ ALTERADO__.... ---> o código de 'authAttempt' 
+
+HAVIA SIDO 
+
+ALTERADO, havíamos comentado para fora dispatches de 'authLogout',
+
+E ERA ISSO QUE ESTAVA CAUSANDO 
+O PROBLEMA 
+
+
+DE 
+
+AS ORDERS NÃO ESTAREM SENDO DISPATCHEADAS no 
+
+STARTUP de nosso app (execução de 'index.js'...)
+
+
+
+EX:
+
+
+
+
+export const authCheckState = () => {
+  return dispatch => {
+      const token = localStorage.getItem('token');
+      if(!token) {
+        dispatch(authLogout()); //ainda é usado COM __ 'REDUX-SAGA'... /////////EIS O ´CODIGO EM QUES~TAO.
+      } else {
+        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate <= new Date()) {
+          dispatch(authLogout()); //AINDA É USADO COM 'REDUX-SAGA'.... ////////EIS O CÓDIGO EM QUESTÃO.
+        } 
+        else {
+          const userId = localStorage.getItem('userId');
+          const email = localStorage.getItem('email');
+          dispatch(authSuccess(token, userId, email)); 
+          dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 )); 
+        }
+  
+      }
+  }
+}
+
+
+-
+---------------------------------
+
+
+
+
+
+
+
+OK... 
+
+
+AGORA 
+
+
+DEVEMOS 
+
+TENTAR 
+
+TRANSPLANTAR __ MANUALMENTE__ A LÓGICA __DE NOSSOS ACTION CREATORS DESVINCULADA 
+
+AO 
+
+
+'DISPATCH' de actions 
+
+(coisas como TIMERS, código assíncrono, etc) 
+
+
+
+PARA 
+
+__NOSSOS __'SAGAS',
+
+para então 
+
+
+'FREE UP' os nossos 
+
+action creators....
+
+
+---------------
+
+
+
+
+
+
+
+
+BEM... ERA ESSA MINHA INTENÇÃO,
+ 
+MAS 
+
+PARECE 
+
+QUE 
+
+A SINTAXE 
+
+DE 
+
+'redux-saga'
+ 
+ É ALGO BEM MAIS COMPLEXO DO QUE EU IMAGINAVA (códigos como 'put' e 'delay', que devem ser APRENDIDOS....)
+
+
+
+--------------------------------------------------
+
+
+
+
+professor 
+
+VAI USAR
+ 
+ COMO MOLDE 
+
+
+
+ DE SAGAS 
+
+ aquela 
+
+ saga 
+
+ de 
+
+ 'watchAuth',
+
+ que 
+
+ tem este código:
+
+
+
+------------------------------------------------
+
+
+ export function* watchAuth() {
+  yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+
+}
+
+
+-------------------------------------------
+
+
+
+
+-----> ESSE 'LISTENER' FAZ LISTEN A UMA CERTA ACTION ('AUTH_INITIATE_LOGOUT'), 
+
+e então 
+
+EXECUTA 
+
+'logoutSaga' 
+
+QUANDO 
+
+
+ESSA ACTION OCORRE....
+
+
+
+
+
+------>   O professor 
+
+
+
+ NOS DIZ UM DETALHE.... --> ELE NOS CONTA 
+ QUE 
+
+
+ ELE 
+
+ IMPORTOU 
+
+ 'takeEvery'
+
+ LÁ 
+
+ DE 
+
+ 'redux-saga/effects',
+
+ E QUE 
+
+
+ ESSE NEGÓCIO __ SETTA _ UM LISTENER__  ---------> COM ISSO ,
+
+
+
+
+
+ DEVEMOS 
+
+ CONTINUAR,
+
+
+ FAZER COM QUE 
+
+
+
+
+
+
+TODOS OS 
+
+'SIDE EFFECTS' 
+
+DE NOSSO CÓDIGO SEJAM __'MANAGED' POR 'SAGAS'.... --->  
+
+
+
+
+
+
+SE 
+
+NÓS OLHARMOS 
+
+O CÓDIGO 
+
+DE 
+
+'auth.js',
+
+dos action creators,
+
+
+PODEMOS 
+
+VER O QUE 
+
+
+___DEVE __ SER COLOCADO EM SAGAS... --> 
+
+
+
+
+OK... 
+
+
+
+'authStart' __NÃO PRECISA DE UMA 'SAGA' --> n precisa 
+
+pq 
+
+É UM 
+
+ACTION CREATOR 
+
+
+
+QUE 
+
+SÓ FAZ RETURN DE UMA ___ACTION__,
+
+ele é puro,
+
+e não 
+
+TEM 
+
+NENHUM 
+
+SIDE EFFECT NO 
+SEU INTERIOR...
+
+
+
+ex:
+
+
+
+export const authStart = () => {
+  return {
+    type: authActionTypes.AUTH_START,
+  };
+};
+
+
+
+---------------------
+
+
+
+
+
+E PODEMOS DIZER O MESMO 
+
+
+
+de 
+
+'authSuccess' 
+
+E 
+
+'authFail',
+
+PQ ELES 
+
+TÊM OS SEGUINTES CÓDIGOS:
+
+
+
+
+export const authSuccess = (token, userId, email) => {
+  return {
+    type: authActionTypes.AUTH_SUCCESS,
+    // authData: authData
+    token: token,
+    userId: userId,
+    email: email
+  };
+};
+
+export const authFail = (error) => {
+  return {
+    type: authActionTypes.AUTH_FAIL,
+    error: error,
+  };
+};
+
+
+
+-----------------------------------
+
+
+
+
+TODOS ESSES ACTION CREATORS JÁ FAZEM O __CREATE__ DE ACTIONS, por isso 
+
+não precisam 
+
+ser mexidos/incorporados em sagas...
+
+
+
+
+
+--> JÁ 
+
+
+'AUTHATTEMPT',
+
+
+
+'checkAuthTimeout'
+
+
+
+E 
+
+'authCheckState'
+
+
+
+
+PODEM __ TER PARTE DE SUA LÓGICA (ou toda ela) 
+
+T
+RANSPORTADA 
+
+
+
+PARA 
+
+'SAGAS'....
+
+
+
+
+
+
+
+
+-------> o logout já não precisa de mais 'cleanup', pq já TIRAMOS 
+
+AQUELE CÓDIGO DE 
+
+'REMOVE STORAGEITEM' e colocamos em uma 
+
+SAGA.... -----> mas professor 
+
+nos diz que 
+
+
+AINDA HÁ 
+
+UMA PEQUENA 
+
+COISA QUE 
+
+PODEMOS 
+
+FAZER 
+
+COM ESSE ACTION CREATOR... ------->  
+
+
+
+
+
+PROFESSOR NOS DIZ QUE LÁ EM 
+
+
+
+
+'authSaga',
+
+
+NÓS 
+
+
+
+
+COLOCAMOS/ESCREVEMOS O 'PUT' (o dispatch FEITO por uma saga, na verdade... É ISSO QUE É UM 'put'...) --> 
+
+
+NÓS COLOCAMOS/ESCREVEMOS UM 'put' 
+
+ASSIM:
+
+
+''''''''''''''''''''''
+
+
+yield put {
+    type: actionTypes.AUTH_LOGOUT
+}
+
+
+
+'''''''''''''''''''''
+
+
+PROFESSOR NOS EXPLICA QUE SIM, PODERÍAMOS USAR ESSE APPROACH AÍ, essa forma 
+
+de escrever O __dISPATCH/PUT de uma action lá em um ARQUIVO SAGA... 
+
+
+
+
+
+--> ele nos explica que, mais do que isso,
+
+SE QUISÉSSEMOS, PODERÍAMOS ___ NOS LIVRAR __ DE TODOS OS ACTION CREATORS__, 
+
+poderíamos usar APENAS O 'REDUX-SAGA', teoricamente.... -----> MAS 
+
+
+AINDA ASSIM, DIZ O PROFESSOR,
+
+
+
+PODE-SE DIZER QUE É __BOM TER__ o 'REDUX-THUNK' E O 'REDUX-SAGA' 
+
+__aO MESMO TEMPO EM UM PROJETO,
+
+PQ 
+
+AÍ __ TEMOS UMA MANEIRA CONFIÁVEL DE __ CRIAR ACTIONS A PARTIR 
+DE ACTION CREATORS, que 
+então
+FAZEM DISPATCH DE ACTIONS SIMPLES ('redux-thunk'...), ACTIONS SIMPLES QUE 
+
+SÃO TIPICAMENTE 
+
+'INITIALIZE_XXXX', que são então LIDAS POR SAGAS CRIADAS POR NÓS,
+que 
+
+então 
+
+GERENCIAM 
+
+CÓDIGOS/LÓGICA __dESVINCULADA___ DO puro 'DISPATCH' de actions, que 
+
+é um trabalho que DEVE SER FEITO PELOS ACTION CREATORS, é sua atribuição...
+
+
+
+
+
+
+
+
+
+
+
+---> E É EXATAMENTE POR ISSO QUE É UMA 
+
+__bOA IDEIA___ USAR 
+
+__ UM ACTION CREATOR__ 
+
+LÁ 
+
+NA NOSSA 'saga',
+
+LÁ 
+NO ARQUIVO 
+
+'authSaga.js'... (faremos isso __ NO LUGAR __ DAQUELE HARDCODE da action de 'actionTypes.AUTH_LOGOUT'.... )
+
+
+
+
+
+
+
+
+
+--> PARA ISSO,
+
+
+PROFESSOR 
+
+NOS DIZ QUE 
+
+__VAI CRIAR __ UM NOVO __ ACTION CREATOR __ LÁ EM 
+
+'auth.js' (arquivo onde criamos nossos action creators de AUTH),
+
+CHAMADO 
+
+DE 
+
+
+
+
+'logoutSucceed'....
+
+
+
+
+ex:
+
+
+
+
+export const logoutSucceed = () => {
+
+}
+
+
+
+
+
+-------------------------------------
+
+
+
+
+E ESSE NEGÓCIO VAI __RETORNAR__ O OBJETO QUE NÓS HAVÍAMOS HARDCODADO 
+
+DENTRO 
+
+
+DAQUELA 
+
+'saga'...
+
+ex:
+
+
+
+
+
+export const authLogoutSucceed = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    }
+}
+
+
+--------------------------------------
+
+
+
+
+
+--> É EVIDENTE QUE 
+VOU __EXPORTAR__ esse 
+
+'authLogoutSucceed',
+
+
+PARA 
+
+ENTÃO 
+
+
+___ O COLOCAR ___ NAQUELE 
+
+'index.js'
+
+
+
+DOS ARQUIVOS QUE 
+
+SEGURAM ACTIONS/ACTION CREATORS,
+
+
+
+
+que tem este código:
+
+
+
+
+export {
+  ingredient_add,
+  ingredient_remove,
+  asyncOrderInitialIngredientsGet,
+} from './burgerBuild';
+
+export {
+  // orderPost
+  purchaseBurgerAttempt,
+  purchaseBurgerLoading,
+  asyncFetchOrdersStart,
+  fetchOrdersFail,
+  fetchOrdersStart,
+  fetchOrdersSuccess,
+  redirectToHomeResetter,
+} from // asyncFetchBurgerOrders //antigo approach nosso de conseguir fazer 'fetch' das ORDERS no servidor...
+
+//purchaseInit /////approach do PROFESSOR de redirect do usuário depois da execução de actions, nas nossas páginas...
+// purchaseBurgerSuccess,
+// purchaseBurgerFail
+
+'./order';
+
+export {
+  authAttempt,
+  authLogout,
+  // burgerCreate,
+  // burgerFinished,
+  setAuthRedirectPath,
+  authCheckState,
+  authLogoutSucceed,
+} from './auth';
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+ISSO FEITO,
+
+VOU SIMPLESMENTE
+ 
+
+ ESCREVER O CÓDIGO 
+
+ DE 
+
+ 'authSaga.js'
+
+ ASSIM:
+
+
+
+
+
+ 
+import { put } from 'redux-saga/effects'; //USADO PARA FAZER _dISPATCH__ DE ACTIONS com o 'sagas', nesse arquivo nosso....
+
+
+
+import * as authActions from '../actions/index'; /////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+ export function* logoutSaga(action) {
+    yield localStorage.removeItem('token'); 
+    yield localStorage.removeItem('expirationDate');
+    yield localStorage.removeItem('email');
+    yield localStorage.removeItem('userId');
+    yield console.log('test');
+    yield put(
+            // {
+            //     type: actionTypes.AUTH_LOGOUT ////VERSÃO __HARDCODADA__ DO DISPATCH DE UMA ACTION COM 'put'... --> devemos usar a VERSÃO LOGO ABAIXO, que USA UM ACTION CREATOR do 'redux-thunk' PARA __ CRIAR __ UMA ACTION AQUI em 'authSaga.js'... -> e essa 'action' criada por esse action creator VAI ENTÃO SER DISPATCHEADA por esse método de 'put'....
+            // }
+
+            authActions.authLogoutSucceed()  ////////EIS O CÓDIGO EM QUESTÃO.
+            
+    )
+
+
+}
+
+
+
+
+-----------------------
+
+
+
+É EVIDENTE QUE 
+
+
+esse 
+
+'authLogoutSucceed'
+
+DEVE 
+
+SER CHAMADO,
+
+em 
+
+
+'authSaga.js',
+
+
+
+COM OS (),
+
+PQ QUEREMOS __eXECUTAR__ ESSE ACTION CREATOR,
+
+QUEREMOS 
+PEGAR 
+
+A 
+ACTION 
+QUE 
+ELE VAI CRIAR,
+para ENTÃO 
+DISPATCHEAR 
+
+com 
+'put()'...
+
+
+
+------------------------------
+
+
+COM ISSO,
+
+AGORA TEMOS UMA 
+
+MANEIRA DE USAR 
+
+ACTION CREATORS 
+
+
+
+dentro 
+
+de nosso 'saga'... (e aí, deixamos de precisar de um import de 'actionTypes' nesse arquivo de authSaga.js)
+
+
+
+---------------
+
+
+
+
+
+
+
+CERTO... MAS QUEREMOS __ OUTRAS ACTIONS PARA 'REPLACE' COM 'sagas',
+
+certo? 
+
+
+
+
+-->
+
+
+
+queremos 
+
+fazer a mesma coisa com 
+
+'checkAuthTimeout'
+
+
+
+
+e 
+
+'authAttempt'...
+
+
+
+
+
+-------------------
+
+
+
+
+checkAuthTimeout --> temos ASYNC CODE dentro 
+
+
+desse 
+
+action creator....
+
+
+
+
+EX:
+
+
+export const checkAuthTimeout = (expirationTime) => {
+  return (dispatch) => {  ////este formato 'return(dispatch, getState) => {}' É O __fORMATO __ QUE NOS É DADO PELO 'redux-thunk'... --> esse formato NÃO EXISTE no redux comum.... --> e o REDUX-THUNK É USADO JUSTAMENTE PARA FAZER 'HANDLE' de CÓDIGO ASSÍNCRONO dentro de nossos action creators... (mas o código às vezes fica uma bagunça, por isso usamos REDUX-SAGA...)
+    setTimeout(() => {
+      dispatch(authLogout());
+    }, expirationTime * 1000);
+  };
+};
+
+
+
+--------------------------
+
+
+OK,
+
+nesse 
+
+
+negócio aí,
+
+
+NÓS 
+
+FAZEMOS 
+
+
+
+__SET DE UM TIMER __ EM QUE 
+
+FAZEMOS ___DISPATCH __ DE UMA ACTION ('dispatch(logout())' )
+
+
+
+ASSIM QUE 
+
+
+O TIMER (setTimeout())
+
+CONCLUI.... --_> E ISSO, esse código async do TIMEOUT, É CÓDIGO QUE CERTAMENTE 
+
+PODEMOS 
+
+
+FAZER 
+
+'MANAGE' EM UM SAGA,
+
+
+por isso 
+
+é justamente o que 
+
+vamos fazer...
+
+
+
+
+
+
+
+
+
+
+
+--> professor cria uma nova GENERATOR FUNCTION 
+LÁ 
+
+em 
+
+'authSaga.js',
+
+
+GENERATOR FUNCTION QUE __ SERÁ___ 
+
+UMA 
+
+NOVA 
+
+SAGA... -->
+
+ex:
+
+
+
+
+
+export function* xxxxx() {
+
+
+}
+
+
+
+---------------------------------
+
+
+
+
+
+O NOME 
+
+DESSE NEGÓCIO 
+
+
+VAI 
+
+SER 
+
+
+
+'export function* checkAuthTimeoutSaga() {
+
+}
+'
+
+
+
+---------------------------
+
+
+
+
+
+
+DENTRO DESSA SAGA,
+
+também 
+
+faremos 
+
+o 
+GET 
+
+
+da ACTION como parâmetro...
+
+
+
+ex:
+
+export function* checkAuthTimeoutSaga(action) {
+
+}
+
+
+
+-------------------------------------
+
+
+
+
+
+
+AGORA, DENTRO DESSA FUNCTION, VAMOS QUERER 
+
+
+ESCREVER CÓDIGO 'KINDOF' IGUAL AO 
+
+QUE 
+
+TÍNHAMOS 
+
+ESCRITO 
+
+
+LÁ NO ACTION CREATOR 
+
+de 
+
+
+'checkAuthTimeout'... ---> 
+
+
+
+
+
+
+o código do action creator era:
+
+
+
+  return (dispatch) => {  ////este formato 'return(dispatch, getState) => {}' É O __fORMATO __ QUE NOS É DADO PELO 'redux-thunk'... --> esse formato NÃO EXISTE no redux comum.... --> e o REDUX-THUNK É USADO JUSTAMENTE PARA FAZER 'HANDLE' de CÓDIGO ASSÍNCRONO dentro de nossos action creators... (mas o código às vezes fica uma bagunça, por isso usamos REDUX-SAGA...)
+    setTimeout(() => {
+      dispatch(authLogout());
+    }, expirationTime * 1000);
+  };
+
+
+
+
+----------------------------------
+
+
+
+
+
+
+
+OK... PRECISAMOS EXECUTAR ESSE CÓDIGO ___ ASSÍNCRONO__ 
+
+desse 
+
+'timer'.... -------> 
+
+
+
+
+
+
+
+
+primeiramente,
+
+copiamos esse código no nosso generator/saga....
+
+
+ex:
+
+
+
+
+
+
+export function* checkAuthTimeoutSaga(action) {
+
+
+      setTimeout(() => {
+      dispatch(authLogout());
+    }, expirationTime * 1000);
+}
+
+
+
+
+
+
+
+
+
+
+MAS É 
+
+CLARO QUE 
+
+NÃO É ASSIM QUE 
+
+VAMOS QUERER 
+
+EXECUTAR ESSE CÓDIGO AÍ.... ---> não, pq nos FALTAM 
+
+KEYWORDS... (talvez não seja 'yield'; talvez seja 'await', ou algo assim...)
+
+
+
+
+
+
+
+
+--> EM UM GENERATOR,
+
+
+VAMOS PRECISAR __ REESCREVER __ 
+ 
+
+ESSA EXPRESSÃo... ------->  E PARA 
+
+ESCREVER 
+
+
+ESSA 
+
+
+
+EXPRESSÃO ASYNC DESSE TIMER AÍ,
+
+
+PROFESSOR 
+
+DIZ QUE 
+
+
+É 
+
+
+MELHOR IMPORTARMOS UMA 
+
+___HELPER__ FUNCTION__ DE UM PACOTE AÍ.... ---> 
+
+
+ele 
+
+nos explica que 
+
+
+ESSE PACOTE 
+
+
+__NÃO FAZ PARTE DO REDUX-SAGA/EFFECTS,
+
+
+
+
+E SIM 
+QUE 
+
+FAZ 
+PARTE 
+
+DO 
+
+'redux-saga'...
+
+
+
+
+
+--> ELE VAI ESCREVER 
+
+
+
+'import { delay } from 'redux-saga';
+
+
+
+
+
+
+
+---------------------------------
+
+
+
+
+ESSE PACOTE, COMO VOCÊ DEVE TER PERCEBIDO, É O PACOTE 
+
+'delay'... --> o objetivo dessa expressão/objeto 
+
+é 
+
+
+___aTRASAR___ o cumprimento __ DA ETAPA QUE 
+
+O SUCEDE.... --------> OU SEJA,
+ 
+
+
+ É __ _ESSENCIALMENTE___ A MESMA COISA QUE 
+
+ 'setTimeout()',
+
+
+ MAS 
+
+ COM UM NOME 
+
+ DIFERENTE...
+
+
+
+
+
+
+
+
+ ---> e o professor vai escrever assim:
+
+
+
+
+'import { delay } from 'redux-saga';
+
+
+ export function* checkAuthTimeoutSaga(action) {
+    yield delay(); /////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+      setTimeout(() => {
+      dispatch(authLogout());
+    }, expirationTime * 1000);
+}
+'
+
+
+
+----------------------------------
+
+
+
+
+
+
+---> CERTO... MAS AÍ SURGE OUTRO PROBLEMA... --> 
+
+
+NÃO HÁ COMO CONSEGUIRMOS 
+
+'expirationTime', essa variável AÍ,
+
+
+DENTRO 
+
+DESSA 
+NOSSA 
+
+'SAGA'... --------> professor diz que 
+
+PARA 
+
+CONSEGUIRMOS 
+
+ESSE 
+
+VALOR,
+
+TEMOS DE DEPENDER
+ 
+
+DO PARÂMETRO 
+
+DE 
+
+'action',
+
+
+__DA ___ ACTION__ QUE É RECEBIDA __ POR NOSSA 
+
+'saga'.... -----------> 
+
+
+
+PARA 
+
+ISSO,
+
+PROFESSOR SIMPLESMENTE 
+
+VAI 
+
+ESCREVER 
+
+'yield delay(action.expirationTime)',
+
+
+
+PQ 
+
+_ELE 
+
+VAI 
+
+'EXPECT' 
+QUE 
+__ 
+
+ESSA ACTION_ QUE NOS É PASSADA 
+
+À 
+
+'checkAuthTimeoutSaga'
+
+
+__REALMENTE __ TENHA UMA PROPRIEDADE 
+
+DESSAS 
+
+DEFINIDA 
+
+
+NO SEU MEIO....
+
+
+
+
+
+
+EM RESUMO,
+
+
+ESSA SAGA FICARÁ ASSIM:
+
+
+
+ex:
+
+
+
+
+
+
+
+import { delay } from 'redux-saga';
+
+
+ export function* checkAuthTimeoutSaga(action) {
+    yield delay(action.expirationTime); /////EIS O CÓDIGO EM QUESTÃO.
+    yield put(actions.logoutSucceed()); ////ISSO VAI FAZER O LOGOUT, transcorrido aquele período que o antecede, definido em 'delay()'...
+}
+
+
+
+
+
+
+-----------------------------------
+
+
+
+CERTO... MAS É EVIDENTE QUE 
+
+__PRECISAMOS ___ DESSE 
+
+VALOR__ , PRECISAMOS 
+
+DO 
+
+VALOR 
+
+de 
+'
+expirationTime',
+
+essa propriedade aí,
+
+
+
+DENTRO 
+
+DA ACTION 
+
+
+
+que será dispatcheada JUNTO DESSE 'checkAuthTimeoutSaga'... (provavelmente em 'index.js' dos sagas...)
+
+
+
+
+
+
+
+---------------------
+
+
+OK, 
+
+MAS 
+
+ANTES DISSO,
+
+ESCREVEMOS ALGO ERRADO... na verdade, NOSSA LÓGICA FICOU ERRADA....
+
+
+
+observe o seguinte código:
+
+
+
+
+
+
+
+
+import { delay } from 'redux-saga';
+
+
+ export function* checkAuthTimeoutSaga(action) {
+    yield delay(action.expirationTime); 
+    yield put(actions.logoutSucceed()); ////ISSO ESTÁ ERRADO.
+}
+
+
+
+
+
+
+
+
+
+
+colocamos um YIELD ___ ERRADO___... --> devemos fazer put,
+
+AQUI,
+
+
+ 
+
+
+ DE 'authLogout()',
+
+ DO __LOGOUT__ QUE 
+
+ EXISTE 
+ LÁ EM 
+
+ 'authActions.authLogout()',
+
+
+ JUSTAMENTE 
+
+ PQ 
+
+ ISSO 
+
+ VAI 
+
+ LEVAR 
+
+
+ à 
+
+ EXECUÇAÕ 
+
+
+ DE 
+
+
+
+'logoutSaga',
+
+desse 
+
+logoutSaga que possui um código de 
+
+
+
+
+
+'''''
+
+
+ export function* logoutSaga(action) {
+    yield localStorage.removeItem('token'); //'YIELD' DEVE SER CHAMADO EM CADA 'step' DE __FUNÇÕES DE TIPO 'GENERATOR' (generator functions).... (generator functions === SÃO OBJETOS 'SAGA', na verdade...)
+    yield localStorage.removeItem('expirationDate');
+    yield localStorage.removeItem('email');
+    yield localStorage.removeItem('userId');
+    yield console.log('test');
+    yield put(
+            authActions.authLogoutSucceed()  //versão OPTIMIZADA do código de cima...
+    )
+
+
+}
+
+
+
+'''''
+
+,
+
+
+QUE É MUITO MAIS PRÁTICO PARA NÓS,
+
+PQ VAI ___DELETAR OS DADOS de 'localStorage' 
+
+do usuário,
+
+E AÍ TAMBÉM JÁ VAI DISPATCHEAR 
+
+
+'authLogoutSucceed()'... (ou seja, chamar  'authLogoutSucceed()' diretamente, nessa hipótese,
+
+é uma grande burrice... devemos chamar o 'authActions.AauthLogout()'....)
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+export function* checkAuthTimeoutSaga(action) {
+        yield delay(action.expirationTime);
+        yield put(
+                authActions.authLogout() /////ISTO 
+        )
+}
+
+
+
+
+
+
+LEVA  
+
+A ISTO:
+
+
+
+
+
+
+export const authLogout = () => { 
+  return {
+      type: authActionTypes.AUTH_INITIATE_LOGOUT ////ISTO
+  };
+};
+
+
+
+
+,
+
+
+
+QUE POR SUA VEZ,
+
+
+LEVA A ISTO:
+
+
+
+
+
+ export function* logoutSaga(action) {
+    yield localStorage.removeItem('token'); 
+    yield localStorage.removeItem('expirationDate');
+    yield localStorage.removeItem('email');
+    yield localStorage.removeItem('userId');
+    yield console.log('test');
+    yield put(
+            authActions.authLogoutSucceed()  //QUE TERMINA NISTO.
+            
+    )
+
+
+}
+
+
+
+-----------------------------------------
+
+
+
+
+
+OK....
+
+
+
+ACHO QUE ENTENDI.
+
+
+
+MAS 
+
+AINDA 
+
+PRECISO 
+
+
+DO 
+
+CÓDIGO 
+
+
+DE 
+
+
+'action.expirationTime'...
+
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+
+
+MAS ANTES DISSO,
+
+O PROFESSOR 
+
+
+VAI ___aLTERAR__ O ACTION CREATOR ___ DE 
+
+
+'
+checkAuthTimeout', lá em 'auth.js'.... -->
+
+
+ELE VAI 
+
+TIRAR 
+
+A LÓGICA 
+
+
+De 
+
+
+'
+
+
+
+  return (dispatch) => {  ////este formato 'return(dispatch) => {}' É O __fORMATO __ QUE NOS É DADO PELO 'redux-thunk'... --> esse formato NÃO EXISTE no redux comum.... --> e o REDUX-THUNK É USADO JUSTAMENTE PARA FAZER 'HANDLE' de CÓDIGO ASSÍNCRONO dentro de nossos action creators... (mas o código às vezes fica uma bagunça, por isso usamos REDUX-SAGA...)
+    setTimeout(() => {
+      dispatch(authLogout());
+    }, expirationTime * 1000);
+  };
+
+
+
+''' 
+
+
+NO SEU INTERIOR,
+
+
+PQ 
+ESSA 
+
+LÓGICA 
+
+AÍ 
+
+
+__eRA/É DO REDUX-THUNK,
+
+é código assíncrono escrito no modelo do REDUX-THUNK...
+
+
+
+
+PROVAVELMENTE,
+PROFESSOR 
+
+
+ESCREVERÁ ALGO ASSIM:
+
+
+
+
+export const checkAuthTimeout = (expirationTime) => {
+    return {
+        type: authActionTypes.INITIALIZE_CHECK_AUTH_TIMEOUT,
+        expirationTime: expirationTime
+
+    }
+}
+
+
+
+
+--------------------------------
+
+
+
+TIPO ISSO AÍ...
+
+
+
+
+OK....
+
+
+
+
+
+MAS DEVO VER A VERSÃO DO PROFESSOR, E TAMBÉM COMO É FEITO O VÍNCULO A ESSA SAGA,
+LÁ 
+
+EM 
+
+'index.js'
+
+
+
+
+
+----------------------
+
+Professor fez exatamente a mesma coisa que nós fizemos...
+
+
+
+
+
+
+
+
+
+--> lá em 
+
+'index.js',
+
+
+
+NÓS 
+
+
+TEMOS 
+
+
+''''''                                                    ''''
+yield (takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga))'
+
+
+
+
+
+
+BEM,
+
+
+AGORA 
+
+O PROFESSOR 
+VAI ADICIONAR 
+
+
+UM
+
+
+NOVO 
+'takeEvery',
+
+
+ELE
+
+VAI ESCREVER 
+
+
+'yield takeEvery(actionTypes.AUTH_INITIALIZE_CHECK_TIMEOUT, checkAuthTimeoutSaga);'
+
+
+
+
+
+
+
+
+
+
+
+E TUDO ISSO, É CLARO,
+
+É COLOCADO 
+
+DENTRO 
+DE 
+
+
+'watchAuth',
+
+
+NO NOSSO 
+
+
+
+INDEX.JS....
+
+
+
+ex:
+
+
+
+
+
+
+export function* watchAuth() {
+  yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+  yield takeEvery(actionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+
+
+}
+
+
+
+
+
+--------------------------
+
+
+com ISSO,
+
+AGORA 
+
+TESTAMOS 
+
+
+NOSSOS 
+
+'saga'
+
+
+nesse 
+
+'watchAuth()'... ---> voltamos 
+
+ao nosso 
+
+aplicativo....
+
+
+recarregamos,
+
+
+
+ele 
+
+
+
+dá 
+
+
+'AUTH_INITIATE_LOGOUT'...
+
+
+
+
+
+
+
+---> Quando fizermos isso, veremos 
+
+que 
+
+
+NOSSO EXPIRATIONTIME dura __MUITO POUCO___... --> isso ocorre pq 
+
+TODOS 
+
+OS VALORES 
+
+em
+
+
+'delay()'
+
+
+SÃO __ EM ms (milissegundos),
+
+
+
+POR ISSO 
+
+VAMOS TER QUE 
+
+MULTIPLICAR 
+
+
+
+'expirationTime'
+
+POR 
+
+1000,
+como
+
+
+
+havíamos feito antes....
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+export function* checkAuthTimeoutSaga(action) {
+        yield delay(action.expirationTime * 1000); /////////EIS O CÓDIGO EM QUESTÃO.
+        yield put(
+                authActions.authLogout()
+        )
+}
+
+
+
+------------------------------------------
+
+
+
+
+
+VOCÊ PODE PERCEBER, LOGO DE CARA,
+ 
+ que 
+
+ cada 
+
+ EXECUTE 
+
+ de 
+
+ 'takeEvery'
+
+ ESTÁ 
+
+ SENDO EXECUTADO 
+
+ 'back-to-back'... ----> 
+
+ isso 
+
+ significa que 
+
+ TODOS 
+
+ ESSES 
+
+ 'WATCHS'
+
+
+ estão ocorrendo SIMULTANEAMENTE... 
+
+
+(isso significa que 
+
+
+NÃO ESTAMOS 
+
+ESPERANDO 
+POR 
+
+o yield ANTERIOR acabar ANTES 
+
+DE COMEÇAR/RODAR OUTRO YIELD.... ) ------> 
+
+
+
+
+
+ISSO FICA 
+
+AINDA MAIS 
+
+CLARO 
+
+
+SE 
+
+NÓS 
+
+
+ALTERARMOS 
+A POSIÇÃO DOS 2:
+
+
+
+
+
+
+ANTES ESTAVAM ASSIM:
+
+
+
+
+export function* watchAuth() {
+  yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+  yield takeEvery(actionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+
+
+}
+
+
+
+
+
+
+
+AGORA FICAM ASSIM:
+
+
+
+
+export function* watchAuth() {
+  yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga); ////sempre que uma action de tipo 'AUTH_INITIATE_LOGOUT' for detectada/listened to (SE ESSE LISTENER DE 'watchAuth()' for settado/chamado, é claro), A SAGA de 'logout', naquele arquivo 'auth.js', ___SERÁ EXECUTADA___...
+  yield takeEvery(actionTypes.AUTH_INITIALIZE_CHECKAUTH_TIMEOUT, checkAuthTimeoutSaga);
+
+
+}
+
+
+
+
+---------------------------
+
+
+
+MESMO 
+
+SE ALTERARMOS 
+
+A 
+
+ORDEM 
+
+DOS 
+
+2 (colocar o 'AUTH_INITIATE_LOGOUT' ANTES 
+
+
+do 'checkauth_timeout'),
+
+
+
+
+
+AS SAGAS/códigos rodados a partir DOS __LISTENERS__ settados através de 'watchAuth()' 
+
+
+__ainda ___ VÃO SER EXECUTADOS QUANDO cada listener '''encontrar''' o input de sua determinada action....
+
+
+
+
+
+RESUMINDO: 
+
+
+1 listener NÃO VAI ESPERAR__ PELO LISTENER ANTERIOR __ ANTES DE DISPARAR O SEU PRÓPRIO CÓDIGO...
+
+
+
+(ou seja,
+
+AUTH_INITIALIZE_CHECKAUTH_TIMEOUT SEMPRE 
+
+VAI 
+
+SER EXECUTADO __ ANTES __de 'AUTH_INITIATE_LOGOUT', 
+
+
+pq 
+
+essa é a ORDEM 
+
+das coisas no nosso código, quando estamos autenticados...)
+
+
+
+
+
+
+
+
+-------------------------------
+
+
+OK,
+
+
+
+
+AGORA PRECISAMOS 
+
+
+VER 
+
+
+O 
+
+
+CÓDIGO 
+
+
+DE 
+
+'authAttempt',
+
+
+fazer com que 
+
+
+sua lógica 
+
+__TAMBÉM __ SEJA TRANSPLANTADO EM UMA 
+
+'SAGA'...

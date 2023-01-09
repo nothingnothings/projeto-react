@@ -1,0 +1,1520 @@
+
+
+
+
+
+
+
+
+
+--> na última lição SETTAMOS 
+
+O 
+
+
+OBJETO JAVASCRIPT QUE DEVERÁ/VAI ___REPRESENTAR A NOSSA 'FORM':
+
+
+
+ state = {
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+      },
+
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Street',
+        },
+        value: '',
+      },
+
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+      },
+
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          placeholder: 'Country',
+        },
+        value: '',
+      },
+
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+      },
+
+      deliveryMethod: {
+        elementType: 'select',
+                        elementConfig: {
+                                options:  [
+                                    {value: 'fastest', displayValue: 'Fastest'},
+                                    {value: 'cheapest', displayValue: 'Cheapest'}
+                                ]
+                        },
+                        value: ''
+    
+    
+    } },
+
+    loading: false,
+  };
+
+
+
+
+
+
+
+
+  --------------------------------
+
+
+
+
+
+  CERTO... 
+
+
+  E 
+
+  AGORA É horaA 
+
+
+
+
+  DE OUTPUTTAR 
+
+  ISSO NO MÉTODO RENDER 
+
+
+  DE 
+
+
+  'ContactData'... -----> professor vai querer 
+
+  CRIAR 
+
+
+
+  TODOS 
+
+
+  AQUELES 
+
+  ELEMENTOS 
+
+  <Input />
+
+
+  DINAMICAMENTE...
+
+
+
+
+
+
+
+
+
+
+
+
+  eX:
+
+
+
+
+
+
+
+        <Input
+          
+          elementType="..." 
+          elementConfig="..."
+          value="..."
+
+      />
+
+<Input
+          
+          elementType="..." 
+          elementConfig="..."
+          value="..."
+
+      />
+
+<Input
+          
+          elementType="..." 
+          elementConfig="..."
+          value="..."
+
+      />
+
+<Input
+          
+          elementType="..." 
+          elementConfig="..."
+          value="..."
+
+      />
+
+<Input
+          
+          elementType="..." 
+          elementConfig="..."
+          value="..."
+
+      />
+
+
+
+----------------------------------
+
+
+
+
+
+Certo... 
+
+
+a primeira coisa que ele faz
+
+
+ 
+
+ é 
+
+
+
+ SE LIVRAR DE TODAS AS 'CÓPIAS' 
+
+
+ desse mesmo 'Input'....
+
+
+ ex:
+
+
+
+         <Input ////Sim, ficará só este, por enquanto....
+          
+          elementType="..." 
+          elementConfig="..."
+          value="..."
+
+      />
+
+
+
+
+---------------------------
+
+
+ISSO FEITO,
+
+A COISA QUE 
+
+O PROFESSOR PRECISA FAZER, AGORA, 
+
+É:
+
+
+
+1) 
+
+
+
+
+_________tRANSFORMAR ___ O NOSSO OBJETO DENTRO DO STATE,
+
+AQUELE 
+
+
+'orderForm',
+
+
+EM __ UM ARRAY___ DE OBJETOS.... ------> professor 
+
+
+quer 
+
+que ele 
+
+VIRE UM
+
+
+
+'AN ARRAY WE CAN LOOP THROUGH'... ---> ou seja,
+
+
+um 
+
+array 
+
+
+em que 
+
+BASICAMENTE 
+
+
+
+TEREMOS 
+
+
+OBJETOS JAVASCRIPT, em que 
+
+
+
+A '''KEY''' DESSE ARRAY SERÁ BASICAMENTE 
+
+
+UMA PROPRIEDADE ('identifier property'),
+
+
+UMA PROPRIEDADE 
+
+EM QUE 
+
+
+TEREMOS MAIS PROPRIEDADES, NO SEU INTERIOR... (
+
+    como 
+
+    'name: {
+        ......
+    }
+    '
+)
+
+
+
+
+
+
+
+
+--------> PROFESSOR VAI ATÉ O MÉTODO 'render() {}' 
+
+
+
+de 
+
+
+'ContactData'... -------->
+
+
+ele 
+
+nos 
+
+diz 
+
+que 
+
+SERÁ RELATIVAMENTE __sIMPLES___ CRIAR UM ARRAY DESSES, nesse 
+
+nosso component... 
+
+
+
+------------>
+
+para isso,
+
+
+ele diz que 
+
+
+
+CRIARÁ UMA CONSTANTE 
+
+CHAMADA 
+
+
+DE 
+
+'formElementsArray'....
+
+
+
+
+
+ESSE ARRAY AÍ SERÁ __INICIALMENTE___ UM ARRAY VAZIO...
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+render() {
+        const formElementsArray = [];
+
+                      let form = (
+        <form>
+                 <Input
+          
+          elementType="..." 
+          elementConfig="..."
+          value="..."
+
+      />
+
+
+
+
+
+
+            return(
+
+            
+
+            )
+}
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+Isso feito, 
+
+professor vai simplesmente usar 
+
+UM 
+
+FOR IN LOOP,
+
+
+
+
+um for in loop 
+
+em que 
+
+ELE 
+
+VAI LOOPAR __POR DENTRO __ DE 
+
+'this.state.orderForm'....
+
+
+
+
+
+
+
+
+
+
+--> ex:
+
+
+
+const formElementsArray = [];
+
+for (let key in this.state.orderForm) {
+
+
+}
+
+
+
+-----------------------------------------------
+
+
+
+
+ISSO VAI BASICAMENTE ENTREGAR AO PROFESSOR AS 
+
+'keys' (key) 
+
+
+dentro 
+
+do objeto 
+
+'orderForm'... -----> ou seja, 
+
+serão 
+
+entregues 
+
+
+as keys de 
+
+'name', 
+
+'email', 'street',
+
+'zipcode',
+ 
+ etc etc....
+
+
+
+
+
+
+-------------------> 
+
+E DENTRO DE CADA UMA DESSAS KEYS,
+
+TEREMOS 
+
+ESSES VALORES AQUI, como propriedades:
+
+
+name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+
+}
+
+
+
+
+------------------------------------
+
+
+
+
+
+
+
+COM ISSO, 
+
+PROFESSOR VAI simplesmente 
+
+
+
+
+FAZER PUSH DE UM ___NOVO OBJETO ({})__ PARA 
+
+
+DENTRO 
+
+
+
+DAQUELE 
+
+
+ARRAY 
+
+'formElementsArray'... (e serão empurrados MULTIPLOS OBJETOS, 1 OBJETO PARA CADA ITEM DO LOOP... para cada PROPERTY do loop, como 'name', 'email', 'street', etc...)
+
+
+
+
+
+
+
+--------> 
+
+Certo... 
+
+código está assim:
+
+
+
+
+
+const formElementsArray = [];
+
+for (let key in this.state.orderForm) {
+    formElementsArray.push(
+        {
+
+        }
+    )
+
+}
+
+
+
+-------------------------------------
+
+
+
+
+
+
+CERTO, E DENTRO DESSE OBJETO QUE CRIAREMOS A PARTIR DE 
+
+'this.state.orderForm',
+
+
+
+
+VAMOS QUERER, PRIMEIRAMENTE,
+
+UMA PROPRIEDADE 
+
+DE 
+
+
+'id: key'  (será 'email', 'street', etc etc... os IDENTIFIERS).
+
+
+
+
+
+
+depois 
+
+uma propriedade 
+
+
+de 
+
+
+'config:', 
+
+QUE TERÁ UM VALOR 
+
+DE 
+
+'this.state.orderForm[key]'   (SERÁ 'orderForm' '''FOR A GIVEN KEY'''....  -----------------------> ISSO SIGNIFICA QUE ESSE 'orderForm[key]' SERÁ BASICAMENTE O ____LADO DIREITO___ da propriedade/objeto 'orderForm.algumaKey'.......... ----> será, essencialmente, coisas como 'name: {elementType: 'input', elementConfig:{type: 'text', placeholder: 'Your Name'}, value: '' },  E ETC...)
+
+
+
+
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+
+
+
+
+const formElementsArray = [];
+
+for (let key in this.state.orderForm) {
+    formElementsArray.push(
+        {
+            id: key,
+            config: this.state.orderForm[key], //////////EIS O CÓDIGO EM QUESTÃO.
+        }
+    )
+
+}
+
+
+
+-------------------------------
+
+
+
+
+e 
+
+é 
+
+claro que 
+
+
+
+esse 
+
+'this.state.orderForm[key]' SERÁ 
+
+TÃO DINÂMICO QUANTO 
+
+'id:key',
+
+PQ 
+
+
+__cADA__ UM DOS OBJETOS/PROPRIEDADES 
+
+dentro de 
+
+
+'ordeForm' ('name', 'street', 'email', etc) 
+
+
+TERÁ 
+
+SEU 
+
+OBJETO 'config' (
+    aquele objeto que é 
+
+    {
+
+ elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+
+
+    }
+
+
+
+
+
+    ENFIADO __DENTRO DESSE ARRAY de 
+
+
+    ''formElementsArray'''...
+)
+
+
+
+
+
+
+
+
+
+
+
+E O professor então 
+
+nos diz que podemos 
+
+
+definir 
+
+o nome que 
+
+quisermos 
+
+nesse 
+
+'config'; podemos nomeá-lo 'setup', ou qualquer outra coisa...
+
+
+
+
+
+
+
+
+
+CERTO.... COM ESSE FOR IN LOOP e esse array vazio, 
+
+AGORA 
+
+TEREMOS UM ___ARRAY__ DE OBJETOS JAVASCRIPT__.... ----->E 
+
+
+
+NÓS PODEMOS TRABALHAR COM ESSE ARRAY....
+
+
+
+
+
+
+
+--> PROFESSOR DIZ QUE PODE TRABALHAR COM ELE, PODE CRIAR 
+
+
+A 
+
+___fORM __ DELE NO RENDER __ DE 
+
+'ContactData'.... --------> 
+
+
+
+ELE DIZ QUE 
+
+PODERÁ 
+
+
+CRIAR 
+
+
+OS INPUT ELEMENTS QUE DESEJA ___POR MEIO ___ DO LOOP ___ POR DENTRO ___ 
+
+
+DE TODOS OS ELEMENTOS (objetos) DENTRO 
+
+DESSE 
+
+ARRAY 
+
+'formElementsArray'... (com um .map(), talvez?)
+
+
+
+
+
+
+
+---------------------------
+
+
+
+NOSSA 'form' (a constante que segura código jsx RENDERIZADOR DE NOSSOS INPUTS NA FORM...) está assim:
+
+
+
+
+
+let form = (
+
+     <form>
+        <Input
+          
+          elementType="..." 
+          elementConfig="..."
+          value="..."
+
+      />
+    <Button btnType="Success" clicked={this.orderHandler}>ORDER</button>
+
+
+    
+</form>
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+-------------------------------
+
+
+PARA ISSO, 
+
+PROFESSOR NOS EXPLICA QUE 
+
+ELE 
+
+VAI 
+
+ADICIONAR 
+
+UM 
+
+'{}' 
+
+
+no meio 
+
+
+
+da 
+
+'FORM'...
+
+
+
+
+ex:
+
+
+
+let form = (
+
+     <form>
+    {} ////////EIS O CÓDIGO EM QUESTÃO.
+    <Button btnType="Success" clicked={this.orderHandler}>ORDER</button>
+
+
+    
+</form>
+
+
+
+
+
+
+
+)
+
+
+-----------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dentro dessa marcação dinâmica, professor nos explica que 
+
+ELE VAI QUERER ___LOOPOAR____ POR DENTRO DE 
+
+
+TODOS 
+
+OS ELEMENTOS 
+
+DENTRO DO 
+
+ARRAY 
+
+
+'formElementsArray'... --------> 
+
+
+
+E  ELE FARÁ ESSA OPERAÇÃO COM A AJUDA 
+
+DO 
+
+MÉTODO 
+
+'.map()'....
+
+
+
+
+
+
+
+
+
+
+--> PQ O MÉTODO 
+
+'.map()'
+
+VAI ___GERAR __ UM NOVO ARRAY____.........
+
+
+
+
+Aí vamos escrever um código tradicional de 
+
+'.map()'...
+
+
+
+
+
+
+
+-------->
+
+
+
+
+vamos escrever 
+
+
+
+formElementsArray.map(
+    formElement => {
+                console.log(formElement);
+    }
+)
+
+
+
+
+--------------------------
+
+
+
+
+
+
+ESSE MAP VAI RECEBER UM 
+
+
+ELEMENTO/objeto 
+
+'formElement',
+
+
+QUE 
+
+SERÁ/SERÃO JUSTAMENTE 
+
+OS 
+
+OBJETOS 
+
+
+dentro de 
+
+
+
+'formElementsArray'...
+
+
+
+
+------> isso feito,
+ 
+
+ PROFESSOR __PROVAVELMENTE__ VAI QUERER RETORNAR UM CÓDIGO JSX 
+
+ QUE 
+
+
+ TERÁ UNS PROPS SETTADOS ESPECIFICAMENTE PARA TIRAR 
+
+ VANTAGEM 
+
+
+
+ dos objetos de 'formElementsArray', representados 
+
+ pela 
+
+ variável/constante/coisa 
+
+
+ 'formElement' nesse 'map'...
+
+
+
+
+ -------->
+
+
+
+ ele provavelmente vai escrever:
+
+
+
+
+
+
+ formElementsArray.map(
+    formElement => {
+                console.log(formElement);
+
+                return(
+                    <Input elementType={formElement.config.elementType} elementConfig={formElement.config.elementConfig} value={formElement.value} />
+                )
+    }
+)
+
+
+
+
+
+
+-------------------------
+
+
+SIM, E FOI EXATAMENTE ISSO QUE ELE ESCREVEU...
+
+
+
+
+Com isso, professor diz que agora 
+devemos 
+
+
+TER CONSEGUIDO CRIAR 
+
+DINAMICAMENTE 
+
+NOSSO OBJETO/COMPONENT 
+
+'Input'
+
+
+naquela form (repetido várias vezes, 1 para cada objeto dentro  do state de 'ContactData'...)
+
+
+
+
+
+-----------------------------
+
+
+
+ENTRETANTO, 
+
+
+ele nos diz que, 
+
+
+'COMO SEMPRE',
+
+ELE 
+
+
+__SE ESQUECEU DE DEFINIR UM prop 'key' 
+
+PARA 
+
+CADA 
+
+INPUT ELEMENT...
+
+
+
+
+
+
+
+
+
+---> outro problema, mostrado no console, 
+
+é que 
+
+NÓS 
+
+
+NÃO TEMOS NENHUM HANDLER assignado a 
+
+
+
+'onChange' 
+
+para 
+
+esses 
+
+
+COMPONENTS 
+
+'Input',
+
+ O QUE 
+
+ QUER DIZER QUE 
+
+ __NÃO PODEMOS __ ESCREVER 
+
+ COISA ALGUMA NELES...
+
+ (problemão)...
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ --> OUTRO PROBLEMA:
+
+
+
+ NOSSO 
+
+ 'PLACEHOLDER'
+
+
+ não está sendo extraído direito... (o problema é no 'value'; mas é coisa do professor, é ele que fez cagada, e não eu.)
+
+
+
+
+----------------------------
+
+
+Certo.... ------> contudo, 
+
+
+
+agora tenho um problema. (e o professor não, pois ele ainda não adicionou esse tipo de input...)
+
+
+
+-----> o problema está 
+no 
+
+input de 
+
+tipo 
+
+'<select />' (DROPDOWN),
+
+
+que NÃO ESTÁ APARECENDO COMO DROPDOWN,
+
+está apenas 
+
+aparecendo um INPUT FIELD VAZIO, sem nada 
+
+no interior (nem 
+
+
+
+mesmo 
+
+é 
+um 
+
+DROPDOWN, na verdade...)
+
+
+
+
+
+
+--> não sei como fazer isso, na verdade... (
+
+    é alguma coisa lá em 'ContactData', que eu ainda não sei como fazer....
+)
+
+
+
+
+
+
+
+
+
+
+
+--> professor diz que 
+
+estamos 
+
+tendo problemas com o placeholder 
+
+pq ele 
+
+está 
+
+sendo considerado como um 'OBJECT', e não como uma 'string'...
+
+
+
+
+
+
+
+
+
+
+
+--> ele também diz que estamos SEM EVENTHANDLERS/sem um 'handler' 
+
+
+anexado 
+
+
+a cada
+
+
+
+input element...
+
+
+
+
+
+--------------------
+
+
+
+A primeira coisa é resolver a 
+
+'key'... --> professor vai definir 
+
+o valor 
+
+da 
+
+key 
+
+
+como 
+
+
+sendo 
+
+
+'formElement.id' (pq isso já será a nossa key, é aquela propriedade que criamos naquele loop de 'for (let key in this.state.orderForm) { formElementsArray.push({id: key, config: this.state.orderForm[key]})})...
+
+
+
+ex:
+
+
+
+<Input 
+
+  key={formElement.id}
+
+
+  />
+
+
+
+
+
+---------------------------
+
+
+
+
+QUANTO 
+
+AO 
+
+HANDLER 
+
+'.onChange'
+
+que está 
+
+faltando nesses 
+
+
+'
+<Input />',
+
+
+
+
+PROFESSOR VAI CUIDAR DISSO EM UM SEGUNDO... 
+
+
+
+
+
+
+
+
+
+
+
+------> professor quer primeiramente resolver a questão do PLACEHOLDER. ---> o erro é que ele estava passando UM VALOR ERRADO, estava passando 'value={formElement.config.elementConfig}', quando deveria ser 'value={formElement.config.value}'...
+
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+
+
+CERTO, PRÓXIMO PASSO É RESOLVER O EVENT HANDLER,
+
+fazer com que consigamos reagir A 
+
+'CHANGES'... nesses input fields...
+
+
+
+
+
+
+
+
+
+
+
+--------> também TEMOS QUE 
+
+DAR UM JEITO DE FAZER 'HANDLE' DE NOSSO DROPDOWN/select,
+
+pq até agora, até o momento,
+
+esse dropdown 
+
+está sendo criado como um input field tradicional (e sem nenhuma ''option'' no seu meio...).
+
+
+
+
+
+
+
+
+
+
+
+--> ISSO ACONTECE, EXPLICA O PROFESSOR, PQ 
+
+
+ESTAMOS 
+
+
+FAZENDO 
+
+HANDLE 
+
+DE 
+
+'input' 
+
+e 
+
+'textarea' 
+
+
+cases 
+
+lá 
+
+
+NO 
+
+SWITCH 
+
+em 
+
+
+'Input.js',
+
+
+MAS 
+
+
+__NÃO ESTAMOS___ fAZENDO 
+HANDLE __ 
+
+
+
+DE 
+
+'dropdown'/'select'... cases...
+
+
+
+
+
+
+
+
+
+-----------------------> O DROPDOWN/SELECT será 
+
+basicamente 
+
+
+aquela propriedade 
+
+no 
+
+state de 'ContactData' 
+que é 
+
+
+'deliveryMethod: 
+{
+  elementType: 'select',
+  elementConfig: {
+    options: [
+      {value: 'fastest', displayValue: 'Fastest'},
+      {value: 'cheapest', displayValue: 'Cheapest'}
+    ]
+  },
+
+  value: ''
+}
+
+
+'
+
+
+
+----------------------------------
+
+
+
+
+DEVEMOS 
+
+AJUSTAR NOSSO COMPONENT 
+
+'Input'
+ 
+ para 
+
+ também 
+
+ CONSEGUIR 
+
+ CRIAR 
+
+
+ UM INPUT DESSA ESPÉCIE AÍ...
+
+
+
+
+
+
+
+
+
+
+ ---> o próximo passo, depois disso,
+  
+  é assegurar que 
+
+CONSIGAMOS FAZER O 'GET' DOS DADOS QUE O USUÁRIO INPUTTA/seleciona no dropdown...

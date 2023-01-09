@@ -1,0 +1,1097 @@
+
+
+
+
+NA ÚLTIMA LIÇÃO, 
+
+NÓS RODAMOS 
+
+'CREATE-REACT-APP' 
+
+
+
+e críamos o nosso projeto react na pasta 'projetoreact'...
+
+
+
+
+--------------------------------------
+
+
+
+--> o programa que usaremos é o VISUAL STUDIO CODe.
+
+
+
+
+-----> WEBSTORM é uma alternativa, subline, adam, etc etc....
+
+
+
+
+
+
+
+
+---> PROFESSOR deixa um guia de como settar os themes do visual studio code para ficar igual ao dele...
+
+
+
+
+
+no root level,
+
+
+
+vemos 
+
+
+arquivos 'lock' ---> esses arquivos apenas LOCKAM A VERSÃO DAS DEPENDENCIES QUE ESTAMOS USANDO...
+
+
+
+
+
+
+
+as 'general dependencies' que nosso projeto tem ficam no 
+
+
+'package.json'...
+
+
+
+professor está 
+
+usando 
+
+
+'react' de versão 
+
+16.0.0-rc.3...
+
+
+estamos usando 
+
+
+a versão 
+
+
+
+'17. alguma coisa'....
+
+
+
+Nós também 
+
+temos 
+
+scripts 
+
+
+do react 
+
+nesse folder...
+
+
+
+scripts 
+
+
+como 
+
+
+
+'start'
+
+'build' 
+
+
+
+'test'
+
+e 
+
+
+'eject'..
+
+
+
+------------------
+
+
+OBS: nós instalamos 
+
+
+
+a extensão 
+
+'bracket pair colorizer', que 
+
+
+faz a identificação 
+
+de brackets e parênteses 
+
+nos nossos projetos ser MAIS FÁCIL...
+
+
+
+--------------------------
+
+
+
+VOCÊ RODA 
+
+
+
+ESSES scripts 
+
+COM 
+
+'npm + nome do script'....
+
+
+
+
+
+
+----> 'npm start' ---> executa 'react-scripts start'.... --> 
+
+ESSE COMANDO 
+
+INICIA ESSE DEV SERVER E FAZ WATCH DE TODO NOSSO CÓDIGO... TAMBÉM COMPILA 
+
+E OPTIMIZA O NOSSO CÓDIGO... --> 
+
+
+quando estamos 
+
+SATISFEITOS 
+
+COM NOSSO CÓDIGO,
+
+SIMPLESMENTE 
+
+RODAMOS 
+
+'npm build'
+
+
+PARA COMPILAR NOSSO CÓDIGO PARA PRODUÇÃO (testing E ENTÃO DEPLOYMENT)...
+
+
+------------------------------------
+
+
+
+POR ENQUANTO EXPLICA O PROFESSOR, NÓS NÃO VEMOS O NOSSO CÓDIGO COMPILADO EM LUGAR ALGUM 
+
+DOS FOLDERS DO NOSSO PROJETO; ELE SE ENCONTRA NA ___MEMÓRIA___ ('its stored in memory'...).
+
+
+
+
+
+
+----> dentro do 'node_modules' TEMOS TODAS AS DEPENDENCIES E SUBDEPENDENCIES DO NOSSO PROJETO...
+
+
+
+
+
+
+--> só temos 'react', 'reactDOM' e 'react-scripts', mas 
+
+
+'REACT SCRIPTS' TEM UM MONTE DE OUTRAS DEPENDENCIES,
+
+como build tools que compilam código e assim por diante....
+
+
+
+
+
+
+---> não edite nada no 'node_modules', todas as coisas que estão ali 
+
+agora foram adicionadas pelo REACT... ('npm start' --> create-react-scripts..)
+
+
+
+
+
+O FOLDER 'PUBLIC' é mais interessante... --->
+ 
+
+
+
+ esse folder É BASICAMENTE O ROOT FOLDER QUE ACABA
+
+
+ __sERVIDO___ PELO WEBSERVER, no final das contas.... 
+
+
+
+
+ mas o 'public' só tem o 'index.html' que é importante...
+
+
+
+
+
+JÁ OS 
+
+
+
+ARQUIVOS SCRIPTS NOSSOS SÃO EDITADOS 
+
+NO FOLDER 
+'src' (source)....
+
+
+
+
+----------------------------
+
+
+
+
+INDEX.HTML --> esse é A ÚNICA PÁGINA QUE 
+
+
+TEMOS NESSE FOLDER, NÓS NUNCA VAMOS ADICIONAR MAIS 
+
+PÁGINAS HTML NESSE NOSSO PROJETO
+
+ ---> se você 
+
+estiver 
+
+
+criando um projeto 'múlti-página', 
+
+VOCÊ TERIA DE CRIAR __MÚLTIPLOS___ 'PROJETOS' aqui com 
+
+
+'create-react-app' (UM PARA CADA PÁGINA DO SEU SITE...)... isso quer dizer 
+
+QUE VOCÊ NÃO FARIA SIMPLESMENTE O ADD DE MAIS 'INDEX.HTML's nesse folder 'public', aqui... 
+não,  se você fosse escrever  uma MULTI PAGE APPLICATION, vocÊ teria de CRIAR MÚLTIPLOS 
+PROJETOS dentro da sua 'pasta geral de projetos' (nesse nosso caso, essa pasta seria 'projetosreact', por exemplo.... )
+
+
+
+(na verdade, você até pode jogar vários index.html ali dentro em MPAs, mas 
+
+isso só vai surtir algum efeito SE VOCÊ TIVER UM BUILD WORKFLOW COMPLEXO 
+JÁ DEFINIDO, UM BUILD WORKFLOW QUE PEGA ESSES ARQUIVOS html e faz coisas específicas com eles...)
+
+--------------------------
+
+
+
+
+MAS ESTE NOSSO EXEMPLO É __SINGLE PAGE___, por isso não vamos 
+
+
+ESCREVER MAIS NENHUM HTML, EM NENHUM LUGAR....
+
+
+
+
+----------------------------------
+
+
+
+NESSA 
+PÁGINA 
+
+OS NOSSOS SCRIPTS 
+
+SERÃO
+
+ 
+ INJETADOS 
+
+
+
+ pelo nosso 'build workflow' (E É POR ISSO QUE NÃO VEMOS 
+ 
+ NENHUM 'SCRIPT IMPORT' NESSE ARQUIVO HTML, por isso que não vemos 
+ 
+ '<script src="xxx" defer></script>' NO MEIO DESSE ARQUIVO )
+
+
+
+ ----------------------------------------------------
+
+
+
+ E VOCê ___PODE ____ EDITAR ESSE ARQUIVO 
+
+
+ HTML, 
+
+
+ mas 
+
+
+ __NÓS NÃO VAMOS __ ESCREVER___ CÓDIGO HTML ALGUM DENTRO 
+
+ DESSE ARQUIVO...
+
+
+
+
+
+ ----> o que o professor quer DESTACAR para nós  é aquela 
+
+ div de 
+
+ id 'root'...
+
+
+ essa div aqui:
+
+
+
+
+
+'<div id="root"></div>'
+
+
+
+
+ESSA DIV SE TORNARÁ IMPORTANTE NO FUTURO... ---> PQ 
+
+É NESSA DIV 
+
+
+QUE NÓS ACTUALLY 
+
+
+MONTAREMOS 
+
+
+nosso react app mais tarde... (e nós vamos, é claro, 
+
+trabalhar no react....)
+
+
+----------------------------------
+
+
+
+
+
+
+MAS SE VOCÊ PRECISA ADICIONAR OUTROS IMPORTS, IMPORTS 
+
+
+A OUTRAS COISAS COMO CSS LIBRARIES, você 
+
+deve as adicionar 
+
+LÁ 
+
+NO <head></head>.... 
+
+
+e se você 
+
+quiser colocar umas META TAGS, você pode as colocar 
+
+
+NO ARQUIVO HTML...
+
+
+
+---> vocÊ pode, na verdade, colocar 
+
+
+mais html 
+
+
+ali 
+
+
+embaixo
+
+do 
+
+
+'<div id="root"></div>',
+
+
+
+MAS É EVIDENTE QUE 
+
+
+VOCê VAI QUERER 
+
+
+FAZER ISSO POR MEIO DO REACT, E NÃO aqui...
+
+
+-------------------------------
+
+
+
+O arquivo 
+
+
+'manifest.json'
+
+
+está 
+
+ali 
+
+
+PQ 'create-react-app' NOS 
+
+
+DÁ UM WEBAPP PROGRESSIVO '''OUT OF THE BOX''' (um webapp BEM BÁSICO, mas ainda é um 
+
+WEBAPP...) --------->  e esse webapp 
+
+NOS DÁ 
+
+ESSE ARQUIVO 
+
+'manifest.json',
+
+
+ONDE PODEMOS  DEFINIR ALGUNS 
+
+METADADOS ACERCA 
+
+
+DE NOSSO APLICATIVO...
+
+
+------------------------------
+
+
+
+
+INTERESSANTE PARA NÓS, NO ENTANTO, 
+
+
+É O FOLDER 
+
+'SRC' (source)....
+
+
+
+ALI NÓS 
+
+
+TEMOS UM MONTE DE ARQUIVOS (
+    App.css 
+    App.js
+    App.test.js
+    index.css 
+    index.js 
+    logo.svg
+    registerServiceWorker.js
+
+)
+
+
+
+
+VAMOS TRABALHAR COM ESSES ARQUIVOS,
+
+
+ESSES ARQUIVOS SÃO EFETIVAMENTE NOSSA 
+
+'REACT APPLICATION'...
+
+
+
+
+Mais importante para nós, agora, é 
+
+
+o 'index.js'... ---> 
+
+
+
+
+CÓDIGO DE INDEX.JS:
+
+
+
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+
+ReactDOM.render(<App />, document.getElementById('root')); 
+registerServiceWorker();
+
+
+
+
+
+
+
+
+-------------------------------------------------
+
+
+
+OU SEJA, 
+
+ESSE CÓDIGO 
+
+
+__GANHA ACESSO__ AO ELEMENTO 'root' ('document.getElementById('root');')   (QUE É AQUELA DIV do nosso index.html...)
+
+NO NOSSO 
+
+DOM.... (no nosso arquivo index.html)...
+
+
+
+
+
+E ELE ENTÃO RENDERIZA '<App />' 
+
+NESSE LUGAR AÍ DO DOM...
+
+
+
+------------------------------------
+
+
+
+e 
+
+
+o 'index.js',
+ 
+
+
+
+ por meio do método 
+
+ '.render()' em 'ReactDOM', faz 
+
+
+ o efetivo RENDER DE NOSSO APLICATIVO NAQUELE LUGAR....
+ 
+
+ ---------------------------------------------------
+
+
+
+
+ esse método referencia um objeto '<App />',
+
+
+ o qual 
+
+ é IMPORTADO 
+
+
+ POR MEIO 
+
+ DA SINTAXE 
+
+
+
+ 'import App from './App';   ---------> ESSA SINTAXE IMPORTA ESSE ELEMENTO/REACT COMPONENT DE 'App' lá do aquivo 'App.js'...
+
+ QUE VEMOS LOGO ACIMA....
+
+
+
+(colocamos só './App'... não colocamos '.js' POIS ISSO É ADICIONADO AUTOMATICAMENTE PELO NOSSO BUILD WORKFLOW/ADICIONADO PELO NODE... )
+
+ ---------------------------------------
+
+
+
+
+
+E SE FORMOS 
+
+
+ATÉ O 
+
+
+
+
+ARQUIVO 
+
+
+
+'App.js',
+
+
+
+É ALI QUE VEREMOS 
+
+
+NOSSO APLICATIVO DE VERDADE, 
+
+O REACT COMPONENT 
+
+que é o nosso aplicativo react, 
+
+basicamente...   ---> É O PRIMEIRO E ÚNICO REACT COMPONENT QUE TEMOS NO NOSSO PROJETO, POR ENQUANTO...
+
+
+
+-------------------------------------
+
+
+
+CÓDIGO DE 'App.js':
+
+
+
+
+
+
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to React</h1>
+        </header>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+
+
+
+--------------------------------------------
+
+
+
+DESCOBRIREMOS 
+
+EXATAMENTE O QUE ESSE CÓDIGO TODO SIGNIFICA NAS PRÓXIMAS LIÇÕEs...
+
+
+
+ESSE CÓDIGO, BTW, É 
+
+
+'JSX'... (enhanced javascript...)
+
+
+podemos 
+
+ver isso 
+
+
+pela 
+
+
+
+sintaxe de 
+
+
+'return(
+     <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to React</h1>
+        </header>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+      </div>
+    );
+)'
+
+
+-------------------------------------------------
+
+
+
+
+POR ENQUANTO, EXPLICA O PROFESSOR, DEVEMOS REMOVER ___ TODO O CÓDIGO ___ DE DENTRO 
+
+
+DAQUELA '<div className="App">...</div>'....
+
+
+
+
+
+EX:
+
+
+
+
+
+
+'return(
+     <div className="App">
+ 
+      </div>
+    );
+)'
+
+
+
+
+
+RESULTADO:
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+  
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+
+
+-------------------------------------------
+
+
+
+CERTO....
+
+
+REMOVEMOS TODO O CONTEÚDO DESSA 'WRAPPING DIV'...
+
+
+
+
+Agora o professor vai simplesmente 
+
+adicionar 
+
+
+
+uma h1 tag dentro dela...
+
+
+
+
+vamos colocar 'Hi, I'm a React App' ali dentro...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+    <h1>Hi, I'm a React App</h1>
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+
+----------------------------------
+
+
+
+
+COMO NÓS ESTAMOS COM O REACT APP RODANDO (npm start), 
+
+
+ISSO VAI AUTOMATICAMENTE TRIGGAR  uma 
+
+MUDANÇA NA PÁGINA,
+
+
+
+A PÁGINA SERÁ RECOMPILADA 
+
+
+E APARECERÁ
+
+
+'HI, I'm a react APP' na sua página...
+
+
+
+
+A PRÓXIMA COISA QUE O PROFESSOR FAZ É REMOVER O 'logo.svg', pois 
+
+nós não vamos mais o utilizar no nosso projeto.
+
+
+-----------------------------------------------
+
+
+
+AGORA TEMOS UM SOURCE FOLDER MAIS 'LEAN'...
+
+
+
+--> mas o que mais 'create-react-app' criou para nós?
+
+
+
+
+BEM, ele criou 
+
+
+um arquivo 
+
+
+'App.css'... 
+
+
+
+
+
+NESSE ARQUIVO ESTÃO OS ESTILOS QUE USAMOS 
+
+NESSE ARQUIVO 
+
+'App.js'... --->  MAS O PROFESSOR APONTA QUE 
+
+
+___ESSES ESTILOS__ NÃO ESTÃO 'SCOPADOS' (scoped) 
+
+APENAS 
+
+NO 
+
+'App.js'...;
+
+NÃO,
+ 
+ ESSES ESTILOS 
+
+
+ DO ARQUIVO 
+
+ 'App.css'
+
+ POSSUEM SCOPE 
+
+ GLOBAL, podem ser aplicados POR MEIO 
+
+ DE QUALQUER ARQUIVO 
+
+
+ .JS 
+
+ do nosso projeto...
+
+
+
+ ------------------------------------
+
+
+
+
+ O professor vai remover ___TODOS OS CÓDIGOS DE ESTILO 
+
+
+ DESSE ARQUIVO CSS, 
+
+
+ A ÚNICA COISA QUE ELE MANTERÁ 
+
+
+ SERÁ 
+
+
+ aquele 
+
+
+
+ '.App {
+     text-align: center;
+ }' -------------------------------> ESSA CLASS DEFINITION FICARÁ...
+
+
+
+ ----------------------------------------
+
+
+
+
+ NÓS TAMBÉM 
+
+ TEMOS UM 
+
+
+
+ ARQUIVO 
+
+
+ 'index.css'... --> esse arquivo também APLICA ESTILOS 
+
+ GLOBALMENTE, e que deve ser USADO PARA 
+
+ UM 'GENERAL SETUP', como para o ____BODY____ de nosso aplicativo...
+
+
+
+ eis o seu código:
+
+
+
+
+ body {
+     margin: 0;
+     padding: 0;
+     font-family: sans-serif;
+ }
+
+
+
+ ----------------------------------------------
+
+
+
+
+JÁ O ARQUIVO 
+
+
+'registerServiceWorker.js' 
+
+
+É IMPORTANTE, COMO DIZ O NOME,
+ PARA 
+
+ ___REGISTRAR UM ''''SERVICE WORKER''''____...
+
+
+
+ SERVICE WORKERS SÃO IMPORTANTES.
+
+
+
+esse 'registerServiceWorker' É GERADO AUTOMATICAMENTE, 
+
+ELE FAZ 
+
+PARTE 
+
+DESSE 
+
+'PROGRESSIVE WEBAPP' que recebemos 
+
+'OUT OF THE BOX'...
+
+
+ -------------------------------------------------
+
+
+
+
+ ELE VAI BASICAMENTE RECACHAR nossos SCRIPT FILES...
+
+
+ Nós não precisamos configurar nada nele...
+
+
+ -------------------------------------------
+
+
+
+ O ARQUIVO 
+
+
+ 'App.test.js'
+
+
+
+ BASICAMENTE NOS PERMITE CONSTRUIR 
+
+
+ __UNIT TESTS___ PARA OS DIFERENTES 
+
+ REACT COMPONENTS DE NOSSO WEBAPP...  (é como o jest, mas É DIFERENTE, possui 
+ 
+ keywords como 'it'... )
+
+
+
+
+ -----> ESSE É O SETUP GERAL DO REACT, e pela maior parte de nosso curso, 
+
+ trabalharemos 
+
+
+ em 
+
+ 'App.js'
+
+ OU EM OUTROS COMPONENTES QUE CRÍARMOS....
+
+
+
+
+ O professor se LIVRA DO IMPORT DO LOGO EM 'App.js',
+
+
+ E NOS INFORMA QUE DEVEMOS ENTENDER A SINTAXE QUE RESIDE NESSE ARQUIVO...
+
+
+
+
+
+
+
+
+ VAMOS VER O QUE É JSX, O QUE ELE É, e como ADICIONAR MAIS COMPONENTS AO NOSSO APLICATIVO...

@@ -1,0 +1,882 @@
+
+
+
+
+NA ÚLTIMA LIÇÃO,
+
+
+
+adicionamos RADIUM no nosso projeto. 
+
+
+
+
+Isso feito, 
+
+
+utilizamo-lo para  MUDAR NOSSO BUTTON, para colocar 
+
+
+UM PSEUDOSELETOR DE 'HOVER' AO NOSSO BUTTOn....
+
+
+----> AGORA, 
+
+
+NÓS VAMOS USAR O RADIUM PARA ADICIONAR MEDIA QUERIES....
+
+
+
+
+
+
+--> professor explica que NÓS 
+
+JÁ TEMOS UM 
+
+ARQUIVO DE ESTILO (.css) 
+
+
+DE 'Person', e que 
+
+poderíamos 
+
+
+facilmente 
+
+adicionar 
+
+
+um media 
+
+query ali...
+
+
+
+
+ex:
+
+
+
+
+
+
+.Person {
+    width: 60%;
+    margin: 16px auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 16px;
+    text-align: center;
+}
+
+
+
+
+@media (min-width: 500px) {
+    .Person {
+        width: 450px;
+
+    }
+}
+
+
+---------------------------------
+
+
+
+
+Poderíamos escrever isso 
+
+no nosso arquivo 
+
+de estilos,
+
+é claro.
+
+
+
+
+
+---> MAS O PROFESSOR COMENTA ISSO PARA FORA DO CÓDIGO, POIS 
+
+
+ELE QUER NOS MOSTRAR ___cOMO FAZER ISSO COM O RADIUM___, 
+
+
+E NÃO COM 
+
+O IMPORT CLÁSSICO DE CLASSES (e media queries) dos 
+
+arquivos .css...
+
+
+
+
+
+
+
+---> mas PQ USAR O RADIUM com media queries? ------> VOCÊ 
+
+TALVEZ EVENTUALMENTE PRECISE O UTILIZAR EM CASOS 
+
+NOS QUAIS VOCê QUER SCOPAR 
+
+UM MEDIA QUERY A UM COMPONENT ESPECÍFICO (E não deixar esse media query disponível globalmente), OU ENTÃO 
+
+____EM CASOS 
+EM QUE VOCÊ QUER 
+ FAZER O 'CHANGE' DESSE MEDIA QUERY ___DINAMICAMENTE___ (isso só é possível 
+
+com o RADIUM)
+
+
+
+------------------------------------------
+
+
+
+
+PARA ISSO,
+
+O PROFESSOR 
+
+VAI ADICIONAR UM 
+
+NOVO 
+
+
+'INLINE STYLE' 
+
+
+ao component de Person...
+
+
+
+ex:
+
+
+
+
+
+
+const person = (props) => { 
+  
+    
+    const style = { ///////eis o código em questão.
+
+    }
+  
+  
+  return (
+    
+  
+  <div className="Person">
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+--------------------------------------------
+
+
+
+DENTRO DESSE OBJETO STYLE,
+
+
+O PROFESSOR 
+
+VAI USAR 
+
+
+UM SELETOR 
+
+ESPECIAL,
+
+
+um seletor 
+
+__QUE VAI PARECER ____MUITO ESTRANHO____ ('looks really strange') ,
+
+MAS QUE 
+
+
+VAI FUNCIONAR ____GRAÇAS AO RADIUM___... 
+
+
+
+
+
+a sintaxe é 
+
+
+'@media()'    (ASSIM MESMO, com os '')....
+
+
+
+
+
+EX:
+
+
+
+
+
+
+const person = (props) => { 
+  
+    
+    const style = { 
+        
+        '@media ()' ////////EIS O CÓDIGO EM QUESTÃO.
+    }
+  
+  
+  return (
+    
+  
+  <div className="Person">
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+---------------------------------------
+
+
+
+
+O professor então complementa esse código:
+
+
+
+
+'@media (min-width: 500px)': {
+
+}' 
+
+
+
+
+---> OU SEJA, 
+
+ELE VAI PRIMEIRO DEFINIR OS PARÂMETROS DO MEDIA ('min width deverá ser de 500px') PARA 
+
+ENTÃO, DEPOIS, 
+
+
+DIZER QUAIS ESTILOS DEVERÃO SER APLICADOS QUANDO AQUELA CONDIÇÃO FOR SATISFEITA (é o código dentro do objeto '{}')....
+
+
+
+(E, SIM, ISSO TUDO AQUI AINDA É CÓDIGO JAVASCRIPT VÁLIDO).
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+const person = (props) => { 
+  
+    
+    const style = { 
+        
+        '@media (min-width: 500px)': {
+
+        }
+    }
+  
+  
+  return (
+    
+  
+  <div className="Person">
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+
+----------------------------------
+
+
+
+
+
+'@media (min-width: 500px)' ------------> ISSO É UM CONSIDERADO UM 'JAVASCRIPT PROPERTY NAME', mesmo com essa aparência terrível.
+
+
+-----------------------------------------
+
+
+
+
+O RADIUM VAI PARSEAR ESSE NEGÓCIO E TRATÁ-LO COMO UMA MEDIA QUERY.... 
+
+
+
+NESSE EXEMPLO, 
+
+VAMOS QUERER 
+
+DEFINIR 
+
+
+A WIDTH DO NOSSO ELEMENTO COMO 
+
+'450px' ( ou seja, uma WIDTH __FIXA__ DE 450PX, que fará com que o objeto DEIXE DE CRESCER DINAMICAMENTE).
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+const person = (props) => { 
+  
+    
+    const style = { 
+        
+        '@media (min-width: 500px)': {
+            width: '450px'
+        }
+    }
+  
+  
+  return (
+    
+  
+  <div className="Person">
+  <p onClick={props.click}>Hi, I'm {props.name} and I am {props.age} years old!</p>
+  <p>{props.children}</p>
+  <input type="text" onChange={props.changed} value={props.name}/>
+  </div>
+
+
+
+  )
+};
+
+
+
+
+--------------------------------------
+
+
+
+Feito isso, 
+
+
+o professor vai querer assignar 
+
+esse negócio ao component 'person'
+
+
+
+por meio do código 
+
+
+
+'<div className="Person" style={style} />'
+
+
+
+-------------------------------------------
+
+
+
+
+EITA, AQUI SURGE UM PROBLEMA.... ---> 
+
+
+
+a definição de 'style' ('style={style}' ) 
+
+NESSA 
+
+DIV vai 
+
+___FAZER OVERWRITE___ DE 
+
+MINHA CLASSE 
+
+
+de 'Person' -------> e isso vai gerar PROBLEMAS NO NOSSO CÓDIGO, 
+
+
+POIS ESSE 
+
+
+
+'className="Person" 
+
+
+CUMPRE UMA FUNÇÃO MUITO IMPORTANTE 
+
+NO REACT... -----------> ISSO, ESSE COMPORTAMENTO 
+CHATO, 
+
+
+
+É COISA ___dO CSS EM SI___, E NÃO PROPRIAMENTE DO RADIUM_____....
+
+
+
+
+
+
+
+---> o professor salva o código e recarrega a página... ---> 
+
+
+VEMOS NO CONSOLE UM MONTE DE MENSAGENS DE ERRO, 
+
+E NOSSO PROJETO FICA COM UMA PÁGINA EM BRANCO --> algo deu bem errado.
+
+
+
+
+
+----> O ERRO É ESTE:
+
+
+'Uncaught Error: To use plugins requiring `addCSS`
+(e.g. keyframes, media queries), please 
+
+WRAP YOUR APPLICATION IN THE STYLEROOT component. Component name: `person`.
+'
+
+
+
+
+
+
+
+---->  ESSE ERRO NOS DIZ QUE 
+
+DEVEMOS 
+
+WRAPPAR NOSSO APLICATIVO 
+
+
+COM O COMPONENT 'StyleRoot' ----------->
+
+
+-------->
+
+
+
+------>'StyleRoot' ----> É UM COMPONENTE DISPONIBILIZADO 
+
+
+__PELO 'RADIUM'____... -----------> isso significa, explica o professor, 
+
+
+que 
+
+
+ENQUANTO QUE O 'WRAP' 
+
+do RADIUM EM VOLTA DO NOSSO APLICATIVO (ex: 'export default Radium(person)' ) É SUFICIENTE 
+
+___PARA USAR PSEUDOSELETORES COM 'INLINE STYLES', 
+
+
+
+O MESMO NÃO SE APLICA PARA MEDIA QUERIES... ---> se queremos 
+
+USAR MEDIA QUERIES DINAMICAMENTE/DEFINIR MEDIA QUERIES COM O RADIUM, dentro 
+
+DE INLINE STYLES,
+
+
+nós DEVEMOS 
+
+
+____WRAPPAR____ NOSSO COMPONENT NESSE component 'StyleRoot'...
+
+
+
+
+
+
+---> PARA SELECTORS QUE FAZEM ''''TRANSFORM'''', como MEDIA QUERIES E 
+
+___ANIMATIONS (com key frames)____, 
+
+
+NÓS SOMOS 
+
+
+___oBRIGADOS ____ A WRAPPAR __ TODO NOSSO APLICATIVO/PROJETO EM 
+
+
+UM COMPONENTE ESPECIAL,
+
+
+PROVIDENCIADO PELO RADIUM...
+
+
+
+
+
+
+---> esse component especial, 
+
+
+VITAL para o que queremos fazer, 
+
+é chamado 
+
+
+de 
+
+'StyleRoot',
+
+e ELE É IMPORTADO 
+
+DE ___RADIUM___ por meio 
+
+
+da sintaxe 
+
+
+'import { StyleRoot } from 'radium';
+
+
+
+(E É EXATAMENTE ISSO QUE ESCREVEMOS, LÁ EM 'App.js',
+
+QUE É BASICAMENTE NOSSO APLICATIVO INTEIRO.)
+
+
+
+
+EX:
+
+
+
+
+
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
+import Radium, { StyleRoot } from 'radium';
+
+
+
+
+
+
+---------------------------
+
+
+COM ESSE IMPORT NO LUGAR,
+
+
+O QUE DEVEMOS FAZER 
+
+AGORA 
+
+
+É 
+
+____WRAPPAR TODO NOSSO APLCIATIVO COM 
+
+ESSE 'StyleRoot'_________... 
+(
+
+
+    ISSO QUER DIZER QUE 
+
+    O PROFESSOR 
+
+    VAI QUERER 
+
+    WRAPPAR 
+
+    TODA AQUELA NOSSA 
+
+    'DIV' DE 'App'  no 'return' (
+
+
+
+        código de 
+
+
+            '
+
+
+            
+return (
+
+
+
+  <div className={"App"}>
+    <h1>Hi, I'm a React App</h1>
+    <p className={classes.join(' ')}>This is really working!</p>
+    <button 
+    style={style}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    {persons}
+
+   
+
+  </div>
+);
+
+
+'
+
+
+    ),
+
+
+
+    VAI QUERER 
+
+    WRAPPAR TUDO ISSO 
+
+
+    COM O 
+
+    'StyleRoot'....
+
+
+)
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+return (
+
+
+    <StyleRoot> //////////EIS O CÓDIGO EM QUESTÃO.
+
+
+  <div className="App"> /// '''aplicativo inteiro'''', a ser wrappado.
+    <h1>Hi, I'm a React App</h1>
+    <p className={classes.join(' ')}>This is really working!</p>
+    <button 
+    style={style}
+    onClick={this.togglePersonsHandler}>Show/Hide Persons</button> 
+    {persons}
+
+   
+
+  </div>
+);
+
+</StyleRoot> /////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+-----------------------------------
+
+
+
+
+
+
+
+AGORA, SE SALVARMOS TUDO ISSO E RECARREGARMOS NOSSO APP, 
+
+
+essa feature dos media queries VAI FUNCIONAR SEM NENHUM ERRO...
+
+
+
+
+
+Certo... isso funcionou. ---> as caixas DIMINUEM PARA '450px' 
+
+QUANDO EU REDUZO O TAMANHO DA MINHA JANELA PARA 
+
+500px...
+
+
+----------------------------------------------
+
+
+
+ IMPORTANTE!!!!  ---> DEVEMOS SEMPRE 
+
+
+ ___WRAPPAR ___ TODO NOSSO APLICATIVO ('App'), 
+
+ APENAS ALI, 
+
+
+ NAQUELE 
+
+ 'CÓDIGO ESQUELETO', QUE SEGURA TUDO, 
+
+
+ COM O 
+
+
+ COMPONENT 
+
+
+ 'STYLEROOT', providenciado PELO RADIUM...
+
+
+ (
+
+<StyleRoot>
+
+<conteúdo></conteúdo>
+
+</StyleRoot>
+
+
+ )
+
+
+ ---------------------------------------
+
+
+  COM O 
+
+
+ COMPONENT 
+
+
+ 'STYLEROOT', providenciado PELO RADIUM... ------> você 
+
+
+
+ FAZ ISSO PARA QUE VOCÊ 
+
+
+ CONSIGA ACESSAR 
+
+ AS FEATURES 
+
+ AVANÇADAS 
+
+ DO 
+
+
+ RADIUM, como MEDIA QUERIES E ANIMAÇÕES...
+
+
+
+
+ (PARA PSEUDOSELECTORS EM SI, FEATURE MAIS SIMPLES, 
+ 
+ VOCÊ NÃO PRECISA FAZER ISSO.)
+
+
+
+
+MAS TODAS AS FEATURES DO RADIUM OBRIGAM VOCÊ 
+
+
+A WRAPPAR O COMPONENT/COISA COM 
+
+
+O OBJETO 
+
+'Radium', 
+
+como visto 
+
+
+em 
+
+
+'export default Radium(person);'
+
+
+e 
+
+
+'export default Radium(App);'
+
+
+
+
+
+E SEJA QUAL FOR A FEATURE DESEJADA POR VOCÊ, 
+
+
+
+VOCÊ AINDA PRECISA 
+IMPORTAR 
+
+O RADIUM COM A SINTAXE 
+
+
+'import Radium from 'radium'; 
+
+
+NOS ARQUIVOS EM QUE VOCÊ 
+
+
+VAI O UTILIZAR.
+
+
+
+ --------------------------------------------------
+
+
+
+
+ CERTO,
+
+ COM O RADIUM PODEMOS USAR INLINE STYLES (muito práticos e dinâmicos) 
+
+ AO MESMO TEMPO EM QUE USAMOS 
+
+
+ FEATURES MODERNAS COMO PSEUDOSELECTORS 
+
+ E MEDIA QUERIES...( e animações).
+
+
+ 

@@ -1,0 +1,1453 @@
+
+
+
+
+
+REDUX AO RESGATE ---> 
+
+
+
+
+
+
+
+
+
+
+REDUX É O MÁXIMO, NÉ...
+
+
+
+
+
+
+
+
+Ok, mas como ele funciona?
+
+
+
+
+
+
+
+
+
+---> primeiramente devemos nos lembrar daquela ideia 
+
+de 
+ter 
+
+'um lugar central em que vocÊ faz manage do STATE INTEIRO...' ---> quanto a isso,
+
+
+
+O PROFESSOR 
+
+
+
+NOS 
+
+DISSE 
+
+
+
+
+
+
+______qUE NÃO PODEMOS USAR UMA VARIÁVEL GLOBAL ___ PARA FAZER ESSE MANAGE... --------> 
+
+
+
+E, BEM,
+ 
+
+
+___DE FATO__, NÃO PODEMOS... -------------> 
+
+
+
+
+
+É IMPOSSÍVEL 
+
+
+
+FAZER 
+
+O MANAGE 
+
+DE 
+
+
+__tODO O STATE __ DE NOSSO APLICATIVO __ POR MEIO DE UMA 
+
+ÚNICA 
+
+VARIÁVEL... --------------> ENTRETNATO,
+
+
+
+
+
+o 
+
+
+REDUX 
+
+
+
+
+
+NOS 
+
+
+DÁ 
+
+UM 
+
+CERTO 
+
+'flow of data', 
+
+
+uma 
+
+determinada 
+
+
+MANEIRA 
+
+DE 
+
+
+'MANAGING DATA', 
+
+
+que 
+
+então 
+
+
+nos 
+
+deixa 
+
+
+
+INTEGRAR ___DE FORMA LEGAL (POR MEIO DE __OUTRA PACKAGE QUE DEVE SER INSTALADA) 
+
+
+NO 
+
+
+'REACT APP'... (create-react-app)... --------> faremos essa integração 
+
+
+
+________pARA QUE O REACT___ DE FATO CONSIGA REAGIR 
+
+
+
+a 'CHANGES OF DATA'.... -------> E O PROFESSOR 
+
+VAI NOS MOSTRAR 
+
+
+A MANEIRA PELA QUAL 
+
+ESSA 
+
+INTEGRAÇÃO É FEITA/SETTADA,
+
+
+mas 
+
+
+
+antes 
+
+disso 
+
+
+ele 
+
+
+quer 
+
+
+
+NOS DESCREVER 
+
+
+COMO __ O REDUX FUNCIONA___....--------->  
+
+
+
+
+
+
+
+1) COMO O REDUX FAZ MANAGE DE 'DATA'?
+
+
+
+
+
+2) COMO O REDUX FAZ UPDATE DA DATA? 
+
+
+
+
+
+
+------------------------------------------------
+
+
+
+
+
+NO FINAL DAS CONTAS, 
+
+
+'its all about' uma  ____STORAGE CENTRAL__ ('central store') QUE 
+
+
+TEMOS 
+
+
+
+EM 
+
+
+________CADA 'REDUX APPLICATION'...________ ------------> 
+
+
+E, AGORA, 
+
+PROFESSOR QUER 
+
+RELEMBRAR: 
+
+
+REDUX É UMA TPL (third party library)
+
+
+
+QUE FUNCIONA DE FORMA TOTALMENTE INDEPENDENTE 
+
+DO 
+
+'React'............... --> ela é vista frequentemente com o react,
+
+
+MAS 
+
+
+TEORICAMENTE É INDEPENDENTE...
+
+
+
+------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+---> certo,
+
+
+'ITS ALL ABOUT THE CENTRAL STORE'....  -----> essa 
+
+'central store'
+ 
+
+ ARMAZENA 
+
+
+ ___tODA A APPLICATION STATE_... 
+
+
+
+
+
+ É BEM ASSIM, SIMPLES ASSIM... ----> você pode imaginar 
+
+ esse 
+
+ 'central store'
+
+ como 
+
+ sendo 
+
+
+ UM 
+
+
+ ___ENORME OBJETO JAVASCRIPT__ 
+
+
+ (
+     {
+
+     }
+ )
+
+
+ ............ ---------> BEM... E EM UMA 
+
+ 'REACT APPLICATION',
+
+
+
+
+
+
+
+
+ __NÓS TEMOS __COMPONENTS____... ------> e um component 
+
+
+
+ SEMPRE (na verdade, PROVAVELMENTE)
+
+
+
+ VAI 
+
+
+ QUERER 
+
+
+ ____MANIPULAR O STATE DE NOSSO APP__... (quando ele não quiser MANIPULAR O STATE,
+ 
+ ELE VAI QUERER 
+ 
+ FAZER 
+ 
+ 'GET' desse state...) ------------->  CONTUDO, 
+
+
+
+ ESSE 
+
+
+
+ COMPONENT (qualquer component que o seja)
+
+
+
+ __________NÃO VAI FAZER ISSO, ESSA OPERAÇÃO/MANIPULAÇÃO
+  
+
+
+
+  __pela MANIPULAÇÃO ___ DIRETA 
+
+  DAQUELE  
+
+
+  'CENTRAL JAVASCRIPT OBJECT' (o 'Central Store').... -----------> 
+
+
+
+
+  isso significa que, nativamente,
+
+  NÃO 
+
+  HÁ UMA MANEIRA 
+
+  DE FAZER 
+
+  O 
+
+  'REACT's reactivity system'
+
+
+  'PICKUP' o comando 
+
+  de que 
+
+  VAMOS 
+
+  QUERER 
+
+  MEXER 
+
+  NAQUELE 
+
+  'Central Store' 
+
+
+
+  de 
+
+
+  nosso aplicativo...  --------> E É BOM QUE ISSO NÃO OCORRA NATIVAMENTE,
+
+
+  PQ 
+
+
+  SE 
+
+  ESSE 
+
+
+  CENTRAL 
+
+  STORE 
+
+  FOSSE 
+
+  AFETADO POR TODO E QUALQUER COMPONENT DE NOSSO APP,
+
+  isso o tornaria 
+
+
+  ABSURDAMENTE 
+
+
+  ___iMPREVISÍVEL__.... --> imagine assim:
+
+
+
+
+  imagine que vocÊ tem LIBERDADE COMPLETA PARA EDITAR O SEU STATE,
+  editá-lo DE __QUALQUER LUGAR DE SEU APLICATIVO__.... ------> isso parece bom, mas 
+
+BASTA SURGIR UM ERRO PARA CAGAR TUDO -------> quando surge um ERRO/CÓDIGO QUEBRADO POR UM ERRO,
+
+FICA 
+MUITO 
+
+MAIS DIFÍCIL DETERMINAR __ QUAL LUGAR DO CÓDIGO __ FOI RESPONSÁVEL POR AQUELE 
+
+STATE CHANGE 
+
+E POR 
+
+AQUELE 
+
+
+'BREAK' NO CÓDIGO/ERRO... ('we'll never be able to see where we made some change that broke the app, for example')...
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> ISSO SIGNIFICA QUE 
+
+
+__NÓS PRECISAMOS TER UM PROCESSO __SIMPLES___ E CLARO__ 
+
+DE 
+
+
+___UPDATE__ DO NOSSO STATE___... ----> UM PROCESSO SIMPLES 
+
+
+EM QUE PODEMOS CONFIAR... ------------------> E ESSE PROCESSO 
+
+
+___DEVERÁ __ SER 
+
+O 
+
+
+__ÚNICO __ PROCESSO __ QUE PODERÁ __MUDAR___ O NOSSO STATE__... ----------> 
+
+
+
+E É EXATAMENTE ISSO 
+
+
+o
+
+'REDUX',
+ 
+
+
+ ele 
+
+
+ é um processo de 
+
+ UPDATE DO STATE de forma CONFIÁVEL, SIMPLES E CLARA.... 
+
+
+
+
+
+
+ 'REDUX' === 'ALL ABOUT HAVING A CLEARLY DEFINED PROCCESS OF HOW YOUR STATE MAY CHANGE'...
+
+
+
+
+
+ -------------------------------
+
+
+
+******* O PRIMEIRO 'BUILDING BLOCK',
+
+
+além 
+
+
+daquele 
+
+
+'CENTRAL STORE' (que é a viga, o ALICERCE CENTRAL do flow de dados dessa feature),
+
+
+
+SÃO 
+
+
+
+AS 
+
+
+
+'____________aCTIONS_______________'...
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+
+Actions  ---------> SÃO COISAS 
+
+
+'DISPATCHED FROM YOUR JAVASCRIPT CODE'... ----------> 
+
+
+
+
+EM UM APLICATIVO REACT,
+
+
+as 
+'Actions' 
+
+SÃO 
+
+'DISPATCHED' 
+
+
+
+de 
+
+__DENTRO DOS SEUS COMPONENTS____... 'dispatched from within your components'...
+
+
+
+
+ex:
+
+
+
+Action
+^^
+|
+|
+dispatches
+|
+|
+|
+
+Component 
+
+---------------------------
+
+
+OK, MAS O QUE É UMA 
+
+'ACTION'?
+
+
+
+
+
+
+
+--> ela é, NO FINAL DAS CONTAS,
+
+uma simples 
+
+
+'INFORMATION PACKAGE'... 
+
+
+
+
+
+
+
+Action === 'pre-defined information package' (possibly with payload)... (é opcional)
+
+
+
+
+
+
+
+
+
+----------------------------------
+
+
+
+E ESSAS 'information packages',
+
+essas 
+
+'Actions',
+
+
+GERALMENTE 
+
+POSSUEM 
+
+UM 
+
+
+__TYPE___... -------> esse type, diz o professor, pode ser algo como 
+
+
+'addIngredient', ou 
+
+
+'removeIngredient',
+
+
+ALGO ASSIM....  -----------> EM OUTRAS PALAVRAS,
+
+
+
+
+O SEU 'type'
+
+
+SERÁ 
+
+
+UMA 
+
+
+___dESCRIÇÃO__ do que 
+aquela 
+
+'ACTIOn' faz.... 
+
+
+
+
+
+
+
+
+
+UMA ACTION TAMBÉM PODE, OCASIONALMENTE (não é incomum),
+
+
+
+SEGURAR 
+
+UM 
+
+
+___PAYLOAD___... -----------> POR EXEMPLO,
+
+
+
+
+SE 
+
+
+A ACTION É 
+
+'addIngredient',
+
+NÓS 
+
+
+__SOMOS OBRIGADOS, TAMBÉM_, A PASSAR A INFORMAÇÃO de 'QUAL INGREDIENT ADICIONAR?' ( e isso também seria/É PARTE DA ACTIOn...)
+
+
+
+
+
+
+
+
+
+
+
+
+RESUMINDO:
+
+
+
+ACTION = É UMA INFORMATION PACKAGE..., INFORMATION PACKAGE QUE ESTAREMOS MANDANDO AO MUNDO... (ao redux, para ser mais preciso...)
+
+
+
+
+--------------------------
+
+
+
+ESSA 
+
+
+
+'ACTION', CONTUDO, 
+
+
+__não vai __ATINGIR DIRETAMENTE 
+
+A 
+
+
+
+'CENTRAL STORE'... -------------> 
+
+
+
+E ESSA ACTION 
+
+
+___NÃO SEGURA NENHUMA LÓGICA, e por isso 
+
+
+ela 
+
+
+
+não ''''SABE COMO ATINGIR O CENTRAL STORE'''', não tem lógica para isso.... ------->
+ 
+
+
+ NÃO, A ÚNICA COISA 
+
+ QUE 
+
+ UMA 
+
+
+ 'ACTION' tem é ___INFORMAÇÃO__... 
+
+
+
+
+
+
+
+ uma 
+
+
+ action é um 'MESSENGER', é um simples MENSAGEIRO.
+
+
+
+
+
+
+
+
+
+ ---> OK, MAS O QUE DIABOS MUDA 
+
+
+ O 
+
+ 'STORE', ENTÃO? --------> o responsável 
+
+
+ POR 
+
+ CHANGES 
+
+
+ na 
+
+
+ STORE 
+
+
+
+ é 
+
+
+ um negócio/negócios chamados 
+
+
+
+
+ ____________REDUCER___________.....
+
+
+
+
+
+ Ou seja,
+
+ o flow 
+
+
+ de informação/alteração no 'central store' fica assim:
+
+
+
+
+
+
+
+
+
+
+ Component --- '''dispatches''' --> ACTION ------ '''reaches'''' -----> REDUCERS ----- ''''spits out UPDATED STATE and alters''''----> CENTRAL STORE (stores old state, that is overwritten by new state spat out by 'reducer')...
+
+
+
+-------------------------------------
+
+
+
+
+DETALHE:
+
+
+
+
+NÃO É SEMPRE 1 ÚNICO REDUCER PARA SEU APLICATIVO... -------> 
+
+
+professor nos explica que 
+
+
+É POSSÍVEL COMBINAR ___MÚLTIPLOS __ REDUCERS EM 1 REDUCER ÚNICO... -----> 
+
+
+ou seja,
+
+
+isso de 
+
+'REDUCER' é 50% correto (
+
+
+
+  50% correto pq ___NÓS REALMENTE VAMOS SEMPRE ACABAR COM 
+
+  1 ÚNICO REDUCER PARA NOSSO APP INTEIRO; 50% errado 
+
+  PQ 
+
+
+  ESSE REDUCER ÀS VEZES/FREQUENTEMENTE 
+
+
+  VAI TER ___MÚLTIPLOS 'REDUCERS' COMBINADOS NO SEU INTERIOR...
+)
+
+
+
+
+
+
+
+
+
+
+
+--> certo, TEREMOS 1 ÚNICO ROOT REDUCER----> E ESSE REDUCER 
+
+
+sempre 
+
+
+estará/ficará ____DIRETAMENTE 
+
+CONECTADO A
+
+
+SEU 
+
+'CENTRAL STORE'...
+
+
+
+
+
+
+
+
+---> E COMO A 'ACTION' ALCANÇA O REDUCER,
+
+e como ela possui um 'TYPE',
+
+
+
+__o_ REDUCER __ PODE __CHECAR ___ O TYPE___  DA 'ACTION' (por exemplo, ele pode 
+
+checar/constatar que a 'action' é de 'addIngredient').... checado esse type,
+
+
+
+NÓS PODEMOS __eNTÃO ___dEFINIR __ O CÓDIGO/LÓGICA __PARA AQUELE __ TIPO (type) 
+
+
+DE 
+
+'ACTION', lá no REDUCER...
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+Ok, mas O QUE É O REDUCER? ------> O reducer é, no final das contas,
+
+
+
+UMA 
+
+
+
+____________PURE FUNCTION____________(ou seja, trabalha apenas com as variáveis/objetos 
+que lhe foram fornecidos...)
+
+
+
+
+
+
+O REDUCER É UMA ___PURE FUNCTION__________ QUE 
+
+RECEBE 
+
+
+'Action' (uma action/múltiplas action) 
+
+
+E 
+
+
+
+____ O 'OLD STATE'.... COMO INPUTS... 
+
+
+
+
+
+
+
+
+
+
+RECEBIDOS ESSES NEGÓCIOS COMO __INPUTS__, ELE VAI 'CUSPIR'/output para 
+
+
+fora 
+
+
+
+UM ____UPDATEDSTATE___, que será o OLD STATE ____Alterado pela 'AÇÃO' da action...
+
+
+
+
+
+
+
+REDUCER -------> IS A PURE FUNCTION... ----> ALWAYS A PURE, SYNC FUNCTION; NO SIDE EFFECTS...
+
+
+
+
+
+----------------------------------------
+
+
+
+
+
+IMPORTANTE!!!!!! ---> ESSA É A PARTE MAIS IMPORTANTE:
+
+
+
+O 
+
+
+
+REDUCER 
+
+
+
+__SEMPRE__ SÓ PODE EXECUTAR CÓDIGO ___SÍNCRONO___...
+
+
+
+isso quer 
+
+dizer que 
+
+código assíncrono 
+
+É 
+
+
+__TOTALMENTE PROIBIDO NELE... (promises, códigos que geram side-effects, como 
+
+http requests e timers...  também location.)
+
+
+
+
+
+
+
+
+
+
+
+
+ENTRETANTO, MAIS TARDE VEREMOS COMO PODEMOS IMPLEMENTAR (ALGUNS) ASYNC CODES 
+
+
+com os reducers.... 
+
+
+
+
+
+
+
+
+
+
+--> mas NOS REDUCERS EM SI, é sempre assim:
+
+INPUT IN, OUTPUT OUT. NADA NO MEIO DA EXECUÇÃO, NENHUM DELAY...
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+OK... -------> ISSO É O REDUCER...
+
+
+
+
+
+
+
+
+
+
+--> E O REDUCER COSPE UM 'UPDATED STATE', updated state que 
+
+
+É 
+
+ARMAZENADO
+
+
+NA CENTRAL 
+
+
+STORE, substituindo o 
+
+
+OLD STATE...  ( E ESSE PROCESSO, ____IMPORTANTE____, DEVE 
+
+SEMPRE 
+
+
+
+
+SER FEITO 
+
+DE UMA 
+
+MANEIRA 
+
+
+'''''IMMUTABLE''''.... (ou seja, com spread operators e com 
+
+a 
+
+
+'MANUTENÇÃO' do state velho, que não é deletado...))
+
+
+
+
+
+
+
+
+
+ESSA SUBSTITUIÇÃO DO VELHO STATE PELO NOVO STATE __________DEVE ___ SER FEITA __ DE UMA 
+
+MANEIRA 'IMMUTABLE'___... (it has to be done in a immutable way...) ----> ISSO SIGNIFICA QUE 
+
+
+NÓS SEMPRE VAMOS RETORNAR UM 'NEW STATE', um 
+
+
+'new state' que __tECNICAMENTE PODE SER BASEADO NO ANTIGO STATE__, mas 
+
+que 
+
+realmente 
+
+
+SERÁ __UM NOVO __ OBJETO JAVASCRIPT... (
+
+  isso pq 
+
+
+  OBJECTS SÃO 'REFERENCE TYPES' no javascript,
+
+  E É POR ISSO 
+
+  QUE 
+
+  NÃO QUEREMOS 
+
+  QUE O ANTIGO STATE SEJA 
+
+  SUBSTITUÍDO POR INTEIRO...
+)
+
+
+----------------------------
+
+
+
+
+
+
+Certo... é assim que 
+
+o 
+
+REDUCER 
+
+faz 
+
+HANDLE 
+
+de 
+
+
+nossas actions.... ----------> e realizada a OPERAÇÃO
+
+do 
+
+
+'reducer',
+
+
+
+o 
+
+
+
+'central store' 
+
+ESTARÁ 
+
+'UP TO DATE', atualizado...
+
+
+
+
+
+CERTO....
+
+
+
+
+O FLOW FICOU ASSIM, MAIS OU MENOS:
+
+
+
+
+
+
+Component --- '''dispatches''' --> ACTION ------ '''reaches'''' -----> REDUCERS ----- ''''updates ''''----> CENTRAL STORE (stores old state, that is overwritten IMMUTABLY by new state spat out by 'reducer')...
+
+
+
+
+
+------------------------------------------
+
+
+
+
+
+
+OK, MAS AINDA FALTA UMA ETAPA/PASSO...:
+
+
+
+como diabos 
+
+esse 
+
+'new State' (alterado pelos Reducer e actions enfiadas no reducer) 
+
+
+SERÁ PASSADO AO NOSSO COMPONENT/COMPONENTS? -------------> BEM, PARA ISSO, 
+
+
+
+EXPLICA O PROFESSOR,
+
+
+
+É NECESSÁRIO UTILIZAR 
+
+UM 
+
+
+
+
+'SUBSCRIPTION MODEL'...  -------> como assim?
+
+
+
+
+
+
+
+
+
+
+
+
+--> professor nos explica que 
+
+O 
+
+
+
+'CENTRAL STORE'  ________TRIGGA___ (trigger) 
+
+
+TODAS 
+
+
+AS 
+
+'SUBSCRIPTIONS' ___SEMPRE __ QUE 
+
+O 
+
+STATE 
+
+NO SEU INTERIOR 
+
+
+___MUDA__... (changes)....  --> ou seja, sempre que o 
+
+
+state é UPDATADO NO STORE,
+ 
+
+
+ as SUBSCRIPTIONS SÃO __TRIGGADAS___... --------> 
+
+
+
+
+
+ E NOSSO COMPONENT, É CLARO, ___PODE/É CAPAZ__ DE 
+
+
+ FAZER 
+
+
+ 'SUBSCRIBE' AOS 
+
+
+ UPDATES 
+
+ DO 
+
+
+
+ 'STORE'.... (ele pode se 'vincular' a esses updates do central store...)...
+
+
+
+
+
+
+
+
+
+
+
+ISSO QUER DIZER QUE _____o STATE _______UPDATADO__, lá no Central Store,
+
+
+VAI SER __PASSADO/PODE SER PASSADO/PODERÁ SER PASSADO __COMO 
+
+
+'PROPS'___  AOS 
+
+NOSSOS COMPONENTS...
+
+
+
+
+
+
+
+SE O __NOSSO COMPONENT/COMPONENTS 
+
+
+FAZ/FAZEM 
+
+SUBSCRIBE
+
+
+
+A ALGUM
+
+
+
+'STORE UPDATE', 
+
+
+
+ELES vão RECEBER 
+
+
+O 
+
+'NEW STATE', o STATE UPDATADO,
+
+
+__DE FORMA AUTOMÁTICA__ (automatically)....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PARECE COMPLICADO, MAS NÃO É TANTO ASSIM....
+
+
+
+
+
+
+
+
+
+
+FLOW DE DADOS É ESTE:
+
+
+
+
+
+Component --- '''dispatches''' --> ACTION ------ '''reaches'''' -----> REDUCERS ----- ''''updates ''''----> CENTRAL STORE (stores old state, old state that is overwritten IMMUTABLY by new state spat out by 'reducer')...  ----- ''''TRIGGA''''  ------- (Automatic) SUBSCRIPTION  -------- ''''passa state UPDATADO como props aos nossos components'''' -------> COMPONENT (recebe o state updatado como 'props'...)
+
+
+
+
+
+------------------------------------------------------
+
+
+
+
+É ESSE O FLOW/PROCESSO.... ---> ELE FUNCIONA POR MEIO
+
+DE 
+
+UM 
+
+
+
+'SUBSCRIPTION MODEL', e nós, no component, simplesmente dizemos:
+
+
+'''''ei, eu quero ser notificado sempre que um STATE mudar....'''' 
+
+
+
+
+
+
+
+--> a outra parte disso, é claro, é 
+
+
+
+nossa diretriz informada pela Action, que simplesmente diz '''ei, eu quero mudar o STATE de tal e tal forma, aqui ESTÁ UMA ACTION DESCREVENDO MEUS PLANOS, os execute....'''
+
+
+
+
+
+
+
+
+
+
+
+
+ESTE É O REDUX, O SEU FLOW... ---> agora devemos ver seu funcionamento, para saírmos da teoria...

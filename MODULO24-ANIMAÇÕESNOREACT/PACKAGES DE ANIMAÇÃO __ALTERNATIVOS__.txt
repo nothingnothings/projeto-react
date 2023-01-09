@@ -1,0 +1,740 @@
+
+
+
+
+
+
+
+
+
+
+
+--_> NESTE MÓDULO,
+ 
+
+ APRENDEMOS 
+
+ UM MONTE 
+ SOBRE 
+
+
+
+
+ 'react-transition-group' --> É UMA 
+
+ PACKAGE 
+
+ QUE 
+
+ NOS 
+
+ DÁ 
+
+
+
+
+ TODOS ESSES COMPONENTS QUE 
+
+ USAMOS 
+
+ PARA 
+
+
+ ANIMAR 
+
+
+COISAS EM REACT... --> especialmente QUANDO 
+
+
+ESTAMOS 
+
+__REMOVENDO__ E ADICIONANDO __ 
+
+ELEMENTOS 
+
+AO 
+DOM...
+
+
+--------------------------
+
+
+
+
+
+É EVIDENTE QUE 
+
+_EXISTEM __ ALTERNATIVAS __a ESSE PACKAGE__.... --> 
+
+
+
+
+VOCê 
+PODE 
+
+GOOGLAR
+ 
+ POR 
+
+
+
+ 'REACT-MOTION'...
+
+
+
+
+ ---> 
+
+
+
+VOCê PODE 
+
+
+LER O REPO 
+
+dele 
+
+no github,
+
+
+
+
+EM QUE 
+
+VOCÊ 
+
+ENCONTRA 
+
+
+INSTRUÇÕES 
+
+SOBRE ELE...
+
+
+
+
+-------------------
+
+
+
+MAS 
+
+O 
+
+REACT-MOTION 
+
+
+
+
+SEGUE 
+
+UM 
+
+
+
+___APPROACH ___ TOTALMENTE___ DIFERENTE DAQUELE __ 
+
+DE 
+
+'react-transition-group'...
+
+
+
+
+
+
+
+COM O REACT-MOTION,
+
+VOCÊ 
+
+
+
+__NÃO DEFINE __ MANUALMENTE__ O TEMPO QUE __ UMA ANIMAÇÃO 
+
+DEVERÁ 
+
+LEVAR.... --> em vez disso,
+
+
+
+
+O REACT-MOTION ___TENTA___ EMULAR_ _ 
+
+
+'REAL-WORLD PHYSICS'... ------> TENTA 
+
+
+DETERMINAR ___ O MELHOR TEMPO E ANIMAÇÃO QUE __ UM DETERMINADO 
+
+
+ELEMENTO 
+
+DEVE TOMAR,
+
+
+
+
+E ELE É BEM SIMPLIFICADO.... --> 
+
+ele 
+
+te 
+
+deixa 
+
+
+definir 
+
+
+'END' E 'START' 
+
+states,
+
+
+E 
+
+AÍ 
+
+TENTA 
+
+
+O SEU MELHOR 
+PARA 
+
+
+EMULAR/INTERPOLATE 
+
+O 
+
+STATE, de acordo com real world physics...
+
+
+
+https://github.com/chenglou/react-motion
+
+
+
+
+
+
+-------------------------------------
+
+
+
+--> AÍ, É CLARO, VOCÊ DEVE VER OS DOCS 
+
+PARA 
+
+
+
+
+ENTÃO APRENDER SOBRE ESSA LIBRARY... --> pode 
+
+
+ser 
+
+difícil 
+
+de começar 
+
+a usar 
+
+essa library,
+
+
+pq 
+
+
+
+é meio inortodoxa... --> E ALGUMAS ANIMATIONS SÃO DIFÍCEIS 
+
+DE 
+
+FAZER COM ELE... --> mas 
+
+
+
+pode 
+
+ser 
+
+bem legal para 
+
+
+CASOS MAIS ESPECÍFICOS,
+
+
+
+
+te dar um 
+
+LOOK de animação MAIS NATURAL
+ 
+ para 
+
+ algumas coisas...
+
+
+
+
+
+
+ ---> OUTRA 
+
+
+ ALTERNATIVA 
+
+ É 
+
+
+ 'react-move'.... ------> 
+
+
+
+
+ https://react-move.js.org/ -----> 
+
+
+
+
+
+
+ REACT-MOVE TE 
+
+ DÁ 
+
+
+ 2 COMPONENTS COM OS QUAIS VOCÊ TRABALHA...
+
+
+
+
+
+
+ --->  ESSES COMPONENTS TE DEIXAM 
+
+
+ ANIMAR 
+
+
+ * single items 
+
+
+ * GROUPS OF ITEMS... 
+
+
+
+
+
+
+
+ OS COMPONENTS 
+
+ SÃO 
+
+ 'animate' 
+
+
+ e 
+
+ 'NodeGroup'...
+
+
+
+
+
+
+
+ --> E COM 'REACT-MOVE',
+
+ VOCê 
+
+
+
+ ___SEMPRE __ TRABALHA __ COM OBJECTS__ __ QUE 
+
+
+ DESCREVEM 
+
+ ___ O 'STATE' DE UMA 
+
+ ANIMAÇÃO___... ---> REACT-MOVE 
+
+ É 
+
+ ___FORTEMENTE INSPIRADO
+  
+  PELAS
+   
+
+   TRANSIÇÕES/ANIMAÇÕES 
+
+   DO 
+
+
+'Three.js'... 
+
+
+
+
+
+EX:
+
+
+
+https://threejs.org/
+
+
+
+
+
+
+
+
+
+--> VOCÊ PODE ENCONTRAR DOCS MAIS ELABORADOS SOBRE SUA UTILIZAÇÃO...
+
+
+
+
+
+
+
+
+---> COM O REACT-MOVE, VOCÊ TAMBÉM DEFINE DURAÇÕES,
+
+MAS 
+
+VOCÊ 
+
+
+DEFINE MAIS DO QUE COISAS SIMPLES COMO 'OPACITY' e movimentação,
+
+
+
+
+
+VOCÊ DEFINE COISAS MAIS COMPLEXAS, 
+
+ANIMAÇÕES BEM MAIS COMPLETAS E COMPLEXAS...
+
+
+
+
+
+
+
+
+---> ISSO TALVEZ SEJA MAIS INTERESSANTE A VOCÊ SE VOCê TIVER 
+
+ANIMAÇÕES MAIS COMPLEXAS NO SEU APP...
+
+
+
+
+
+----> E ALGUNS EXEMPLOS,
+
+
+
+
+como 
+
+
+o 
+
+'Flubber',
+
+
+PODEM SER ENCONTRADOS NA SUA PÁGINA...
+
+
+
+
+
+---> É UMA LIBRARY MAIS COMPLEXA,
+
+
+
+e o professor 
+
+RECOMENDA
+ 
+ começar 
+
+
+
+ COM 
+
+ 'react-transition-group'...
+
+
+
+
+
+
+ ---> MAS SE VOCÊ PRECIAS DE MAIS CONTROLE,
+
+
+ REACT-MOVE 
+
+ É 
+
+  A 
+
+  ALTERNATIVA 
+
+
+  QUE 
+
+  VOCÊ VAI QUERER USAR....
+
+
+
+
+
+
+  --------------------------
+
+
+
+
+
+-----> FINALMENTE,
+
+TEM 
+
+A 
+
+'react-router-transition' ... --> É A ÚLTIMA 
+
+LIBRARY 
+
+
+QUE O PROFESSOR QUER 
+
+NOS MOSTRAR (mas existem MUITAS libraries de animação react...)
+
+
+
+
+
+
+
+
+---> react-router-transition ---> É UMA 
+
+
+
+PACKAGE/LIBRARY MUITO ESPECIAL ---> ELA 
+
+TE 
+
+DEIXA 
+
+
+___CRIAR ___ FACILMENTE 
+
+'ROUTE TRANSITIONS' (ou seja,
+
+ANIMAÇÕES __ POR ENTRE __ DIFERENTES 
+
+ROUTES...) ------> 
+
+
+
+
+O 
+
+'react-router-transition' 
+
+
+
+TEM COMO BASE O 'react-motion',
+
+
+
+E 
+
+
+BASICAMENTE 
+
+
+
+TE DÁ 
+
+
+ESSE 
+
+COMPONENT 
+
+ESPECIAL 
+'<AnimatedSwitch />',
+
+
+
+
+O QUAL VOCê 
+
+
+USA ___ PARA __ SUBSTITUIR__ ESSENCIALMENTE_ _ O 
+
+
+SEU 
+
+
+
+'<Switch />'
+
+NORMAL
+ 
+
+ DO 
+
+ REACT-ROUTER... ----------> 
+
+
+ E 
+
+ ELE 
+
+ É 
+ FEITO/CONSTRUÍDO 
+
+ PARA 
+
+ FUNCIONAR 
+
+
+ COM 
+
+ REACT-ROUTER v4,
+
+QUE 
+
+
+É O QUE UTILIZAMOS 
+
+AO LONGO DESTE CURSO....
+
+
+---------------------------------
+
+
+
+
+
+
+--> E O '<AnimatedSwitch />'
+
+
+
+FAZ ESSENCIALMENTE 
+
+A 
+
+MESMA COISa 
+
+
+
+
+QUE 
+O 
+
+'<Switch />'
+
+
+FAZ,
+
+
+
+
+MAS 
+
+TE 
+
+
+DEIXA 
+
+DEFINIR 
+
+PROPRIEDADES 
+
+como 
+
+
+'atEnter',
+
+'atLeave',
+
+'atActive',
+
+
+
+
+E AÍ UM 'className={}',
+
+
+
+PARA 
+
+ENTÃO 
+
+TE 
+
+PERMITIR 
+
+__ANIMAR __ 
+
+A 
+'ROUTING' (essencialmente __ O SWITCHING ___ DE PÁGINAS __ DO SEU APP...)
+
+
+
+
+--> VOCÊ 
+
+
+DEVE 
+
+
+
+___EXAMINAR ___ ESSE REPOSITÓRIO MAIS A FUNDO..
+
+
+
+
+
+----------------------------
+
+
+
+
+
+ANIMATING ROUTE TRANSITIONs
+ PODE SER BEM difícil
+
+ COM 
+
+
+ 'react-transitions-group',
+
+ E É POR ISSO 
+
+ QUE 
+
+ 'React ROUTER TRANSITIOn' 
+
+ pode 
+
+ ser BEM ÚTIL A NÓS...
+
+
+
+(deixa isso bem mais fácil...) ----> ESSA PACKAGE NOS DEIXA CONSTRUIR 
+
+UM 
+
+'NICE LOOKING, HIGHLY DYNAMIC APPLICATION, com essas route transitions'...
+

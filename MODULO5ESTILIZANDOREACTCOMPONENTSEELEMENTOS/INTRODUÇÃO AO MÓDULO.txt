@@ -1,0 +1,127 @@
+
+
+
+
+
+
+
+
+--> MAIS UM MÓDULO.
+
+
+
+
+
+--> ESTILIZANDO COMPONENTS REACT....
+
+
+
+
+
+--> APRENDEMOS MUITO SOBRE COMO CRIAR COMPONENTS E USAR 
+
+AS DIVERSAS FEATURES NATIVAS JAVASCRIPT 
+
+E FEATURES 
+
+DO REACT 
+
+PARA FAZER NOSSAS 
+
+
+TAREFAS... ---> para fazer display DE CONTEÚDO DINÂMICO, OUTPUTTAR CONTEÚDO 
+DINÂMICO EM CÓDIGO JSX  E MUITO MAIS....
+
+
+
+
+------------------------
+
+
+
+
+
+--> NÓS DISCUTIMOS BREVEMENTE O ASSUNTO DO STYLING DOS REACT COMPONENTS ---> 
+
+
+O PROFESSOR EXPLICOU QUE É POSSÍVEL
+ 
+ ESTILIZAR 
+
+
+
+COMPONENTS TANTO PELO APPROACH DO 'INLINE-STYLES'
+
+
+
+como pelo 
+
+
+approach 
+
+
+DOs 
+
+
+'IMPORTS'... --> import de arquivos css...
+
+
+
+
+---> professor também mencionou que esses arquivos importados nunca ficam 'SCOPADOS' 
+
+
+em 1 único arquivo Component do nosso código, 
+
+eles sempre ficam disponíveis globalmente. 
+
+
+---------------------------
+
+
+
+
+
+
+
+NESTE MÓDULO, 
+
+VAMOS FOCAR 
+
+NO STYLING, POIS HÁ MAIS 
+
+COISAS A DISCUTIR SOBRE ISSO...
+
+
+
+Vamos ver:
+
+
+
+1) COMO PODEMOS AJUSTAR __DINAMICAMENTE__ ESTILOS/classNames....
+
+
+
+
+
+2) COMO PODEMOS fazer um 'WORKAROUND' dessa restrição de 
+
+'OU USO INLINE STYLES, QUE FICAM SCOPADOS ÀQUELE ELEMENTO, OU USO IMPORTS, E FICO 
+COM UM ARQUIVO QUE SEMPRE ESTARÁ DISPONÍVEL GLOBALMENTE AO MEU CÓDIGO (e pesará)...'
+
+
+
+INLINE-STYLES ---> são bons, mas introduzem LIMITAÇÕES como A INCAPACIDADE DE USAR 
+MEDIA-QUERIES ou pseudoseletores... (isso se não usarmos o 'WORKAROUND'...)
+
+
+
+
+CSS-FILES --> PESAM.
+
+
+
+
+HÁ um punhado de maneiras de gerenciar 
+
+estilos, você as verá neste módulo.

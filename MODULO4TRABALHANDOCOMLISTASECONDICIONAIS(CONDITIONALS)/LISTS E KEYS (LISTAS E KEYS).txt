@@ -1,0 +1,754 @@
+
+
+
+
+---> JÁ TRABALHAMOS UM BOCADO COM 'LISTS'....
+
+
+
+
+--> nós melhoramos nossas listas.. --> melhoramos 
+
+
+
+nossas lists, por exemplo,
+
+por meio do USO 
+
+
+DO 
+
+'INDEX' DOS ELEMENTOS...
+
+(
+
+
+
+
+
+
+    professor quer dizer 
+
+
+    o código 
+
+
+    de 
+
+
+
+
+
+'
+    if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person name={person.name} 
+        age={person.age} 
+        click={() => {this.deletePersonHandler(index)}}/>
+      })}
+    </div>
+  )
+', 
+
+
+
+
+aquele 
+
+
+trecho de 
+
+'.map((person, index) => {})'
+
+
+)
+
+
+
+
+
+NÓS TIRAMOS VANTAGEM
+
+
+DO 'INDEX' DE UM ELEMENTO PARA RODAR CÓDIGO (o código 'click={() => this.deletePersonHandler(index)}')
+QUE LEVA EM CONSIDERAÇÃO 
+
+____ EM QUAL __ ELEMENTO ELE RODA....
+
+-----------------------------------
+
+
+
+
+---> entretanto, ainda podemos 
+
+
+
+MELHORAR ESSE CÓDIGO... ----> podemos TENTAR 
+
+
+ACABAR ____ COM AQUELA MENSAGEM DE ERRO QUE ESTAMOS RECEBENDO___....
+
+
+
+
+acabar com aquela 
+
+
+mensagem de erro que diz que 
+
+o prop
+ 
+
+
+ 'key' ESTÁ FALTANDO ('child in an array or iterator should have a unique "key" prop')...
+
+
+---------------------------------------------
+
+
+
+
+
+
+
+prop 'KEY' -------> É UM PROP __MUITO IMPORTANTE__  QUE DEVEMOS 
+
+
+___SEMPRE ADICIONAR ___ QUANDO CRÍAMOS 
+
+LISTAS DE DADOS ('lists of data')....
+
+
+
+
+
+......Nos nossos calls do component 'Person', 
+
+NÓS NÃO 
+
+PASSAMOS 
+
+
+NENHUMA 
+
+propriedade/prop 
+
+'key'... --------------> e essa propriedade/prop é, ACTUALLY,
+
+
+um prop 
+
+
+__DEFAULT___ QUE É SEMPRE ESPERADO 
+
+PELO REACT... EM UM COMPONENT... --> não interessa 
+
+
+se é um 'CUSTOM COMPONENT' ou UM 'ELEMENTO DEFAULT HTML', SE VOCê 
+
+
+ESTIVER __RENDERIZANDO ESSES NEGÓCIOS POR MEIO DE UMA 'LIST',
+
+
+O REACT ___SEMPRE VAI ESPERAR __ POR ESSA PROPRIEDADE/prop de nome 'key'....
+
+
+
+
+
+
+
+---> React SEMPRE ESPERA POR ESSA PROPRIEDADE/PROP 'key' QUANDO 
+
+
+RENDERIZAMOS COMPONENTS/ELEMENTOS HTML EM UMA LIST...
+
+
+(E sim, mappear ('.map()') UM ARRAY (como 'persons') EM UMA LISTA DE COMPONENTS/elementos JSX
+
+CONTA COMO ISSO, CONTA COMO 'RENDERIZAR COMPONENTS/ELEMENTOS HTML EM UMA LIST'...  )
+
+
+
+
+
+-----------------------------
+
+
+
+
+OK, MAS QUAL É A UTILIDADE DESSE PROP/PROPRIEDADE 
+
+
+DE NOME 
+
+
+'key'? ---------------> ELA AJUDA O REACT A 
+
+UPDATAR A LISTA/AS LISTAS ___DE FORMA EFICIENTE___...
+
+
+
+------------------------------
+
+
+
+
+Como assim?
+
+
+
+Bem, considere o nosso presente caso, 
+
+
+em que __DELETAMOS ELEMENTOS ___ DE NOSSA LISTA.... --> é claro 
+que 
+
+o 
+
+
+DELETE __FUNCIONA__;
+
+
+mas, por trás das cenas,
+ 
+
+
+O ____REACT____ PRECISA DESCOBRIR A COISA QUE ELE REALMENTE ('actually') 
+
+PRECISA DELETAR NO OVERALL DOM.... -------> E a propriedade 
+
+'key' AJUDA COM ISSO....
+
+
+
+
+
+--->Depois nós vamos estudar 
+
+O QUE EXATAMENTE O REACT FAZ,
+
+
+em uma seção específica no curso, 
+
+
+em que 
+
+o professor nos dá uma olhada por trás das cenas...
+
+
+
+
+
+
+--> BASICAMENTE, O REACT TEM UMA COISA CHAMADA 
+
+
+'DOM VIRTUAL' ---> nesse DOM VIRTUAL O REACT 
+
+
+
+__ COMPARA O QUE ELE RENDERIZARIA AGORA/naquele momento __  SE 
+
+
+ELE CHAMASSE O MÉTODO  .render() naquele instante... (ou seja,
+
+
+SE ELE REALMENTE FOSSE 'AJUSTAR O DOM DE VERDADE COM O RESULTADO DO MÉTODO 'render()' )
+
+
+COM 
+
+O 
+
+
+DOM QUE ELE RENDERIZOU ANTERIORMENTE.... 
+
+
+
+
+
+
+
+
+Ou seja, o  react 
+
+
+
+COMPARA 
+
+
+
+
+''O DOM DO FUTURO (renderizado pelo método render()  )''''' VS     '''''O DOM DO PASSADO''''' (renderizado anteriormente pelo REACT).
+
+
+
+------------------------------------------
+
+
+
+
+-----> comparação entre o FUTURO E O PASSADO, BASICAMENTE...
+
+
+
+
+
+----> e para lists, particularmente, 
+
+O ___REACT___ TEM QUE CHECAR  ____QUAIS ELEMENTOS DE FATO MUDARAM___... --------->
+
+-----> E O REACT __NÃO É UM HUMANO___, ELE NÃO 'VÊ AS COISAS' COMO NÓS VEMOS,
+
+
+
+ELE NÃO PERCEBE/NÃO SABE QUE NÓS TEMOS AQUI, NESSE EXEMPLO, 
+
+3 DIFERENTES ELEMENTOS COM 3 DIFERENTES PROPRIEDADES 'name' sendo renderizados...
+
+
+
+
+Isso significa que 
+
+o REACT 
+
+
+NÃO CONSEGUE VER 
+
+QUE 
+
+
+TEMOS AQUI 
+
+
+'Max' 
+
+
+'Manu'
+ 
+
+ e 
+
+
+ 'Stephanie'...
+
+
+
+
+-----------------------
+
+
+Isso quer dizer que, para o react, ele apenas 
+
+VÊ QUE NÓS 
+
+
+TEMOS UM PUNHADO DE 
+
+Components 
+
+'person'... e ele NÃO OS INSPECIONA DE FORMA 'DEEP'.... ---> pq se ele fizesse 
+
+essa inspeção, 
+
+SEU FUNCIONAMENTO SERIA 
+
+
+___SUPER___ INEFETIVO___...
+
+
+
+-----------------------------
+
+Isso quer dizer que, PELO COMPORTAMENTO DEFAULT,
+ 
+
+ O 
+
+
+ ___REACT___ VAI SEMPRE ___ 
+
+ RE-RENDERIZAR ___ A LISTA INTEIRA____ QUANDO updatamos 
+
+
+ a página/o state/o app.... --------> E PARA LISTAS ___MUITO LONGAS____,
+
+
+ ISSO É ___TERRIVELMENTE ___ INEFICIENTE...  --------> E É POR ISSO 
+
+
+ QUE A PROPRIEDADE/PROP 
+
+ 'key'
+
+
+
+ EXISTE para ser usada 
+
+ nos nossos components...
+
+
+
+ ---------------------------------------
+
+
+
+
+ PROPRIEDADE 'key' ---> EXISTE PARA QUE O REACT 
+
+ CONSIGA 'KEEP TRACK OF' dos 
+
+
+ ELEMENTOS INDIVIDUAIS ----> ela existe 
+
+
+ para QUE ELE TENHA UMA 'PROPRIEDADE CLARA' QUE ELE ENTÃO 
+
+ PODE COMPARAR ENTRE OS 
+
+ DIFERENTES elementos ('that it can then compare between the different elements') 
+
+ PARA DESCOBRIR 
+
+ __qUAIS____ ELEMENTOS_ MUDARAM OU NÃO, 
+
+ PARA QUE 
+
+ ELE SAIBA 
+
+ EXATAMENTE 
+
+
+QUAIS ELEMENTOS ELE DEVE RE-RENDERIZAR.... ---> isso então possibilita que 
+
+ELE APENAS RE-RENDERIZE OS ELEMENTOS __QUE ___ PRECISAM ___ SER RE-RENDERIZADOS....  O 
+
+resto permanecerá 
+
+intacto...   (evitamos o re-render da LISTA INTEIRA...)
+
+
+
+
+
+------------------------
+
+
+Certo... é por isso que vamos adicionar um prop de 
+
+'key' naquele if statement 
+
+
+em 'render()'...
+
+
+
+
+ex:
+
+
+
+
+'
+    if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person name={person.name} 
+        age={person.age} 
+        click={() => {this.deletePersonHandler(index)}}
+        key={}
+    />
+      })}
+    </div>
+  )
+    }
+'
+
+
+
+--------------------------------
+
+
+
+OK, MAS O QUE DEVEREMOS COLOCAR NESSE SLOT 'key'?
+
+
+
+
+---> ???? --->   DEVEMOS ADICIONAR ALGO 'UNIQUE'... ---> ok, mas O QUE?
+
+
+--> tipicamente, nós já vamos ter 
+
+
+ALGUM 'ID' nos nossos elementos... -------> SE NÓS GANHAMOS/OBTEMOS NOSSOS 
+
+OBJETOS
+
+
+
+de algum database, 
+
+
+é BEM PROVÁVEL QUE JÁ TEREMOS ALGUM 'ID' ou identifier para 
+
+cada 
+
+objeto...
+
+
+
+
+Aqui no nosso 'app', a coisa que cumpre essa função 
+
+é a propriedade 
+
+'name' DOS NOSSOS COMPONENTS/objetos.... --------> mas 
+
+isso 
+
+
+NÃO É NECESSARIAMENTE GARANTIDO.
+
+
+
+
+É por isso, explica o professor,
+ 
+ que (NÃO) podemos 
+
+
+ usar OS INDEXADORES ('index') DE NOSSOS 
+
+
+ COMPONENTS/OBJETOS do array 'persons', que 
+
+ conseguimos/obtivemos por meio 
+
+
+ do método '.map()'... -----> (NÃO) PODEMOS USAR O 'INDEX' PQ O INDEX MUDA PARA 
+
+ CADA 
+
+
+ DIFERENTE ELEMENTO no array... ---> isso está certo,
+
+
+ mas o 
+
+ 'index' 
+
+
+
+ TAMBÉM FAZ PARTE DA __LISTA ___ EM SI___...  -----> isso quer 
+
+
+ DIZER QUE 
+
+ SE  A LISTA MUDA, 
+
+CADA ELEMENTO NAQUELA LISTA VAI RECEBER UM ____NOVO 'INDEX'____, cada 
+
+elemento que sobrar VAI RECEBER UM NOVO INDEX, O QUE TORNA O USO DE 'INDEX' COMO KEY 
+
+____TOTALMENTE _ ___ INÚTIL___....
+
+
+
+
+--> é por isso QUE USAR 
+
+'INDEX' COMO __KEY___ de um component É UMA __PÉSSIMA__ IDEIA  ---> NÃO VAI 
+
+AJUDAR NEM 
+
+
+UM POUCO...
+
+
+
+
+
+
+
+--------------------
+
+
+
+
+--> É POR ISSO QUE DEVEMOS 
+
+
+
+sempre tentar definir UM 'UNIQUE IDENTIFIER' PARA CADA ELEMENTO...
+
+
+
+--> como aqui estamos usando 'dummy data',
+
+
+o professor 
+
+
+vai SIMPLESMENTE DEFINIR 
+
+
+UMA PROPRIEDADE 
+
+DE 
+
+'id' com valorES 
+
+
+___ALEATÓRIOS__, STRINGS ALEATÓRIAS PARA TER 1 UNIQUE ID
+
+para cada elemento do nosso array de persons.......
+
+
+(se você JÁ TIVER UM APP/APP DESENVOLVIDO POR UMA EMPRESA,
+ 
+ 
+ É BEM PROVÁVEL QUE VOCÊ JÁ VAI TER UNS 
+ 
+ IDS/algo como id em cada Component, ids 
+ 
+ QUE VOCÊ VAI ENFIAR nesse slot do 'key'...)
+
+
+
+----------------------------------
+
+
+
+ex:
+
+
+
+class App extends Component {
+  state = { ///////MUITO IMPORTANTE.
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', /////ISSO É UM EXEMPLO. ESSA PROPRIEDADE NÃO SERÁ AFETADA PELO NOSSO NOVO STATE DEFINIDO POR 'setState()', pois naquele objeto ({}) que passamos como argumento ao 'setState()', nós APENAS REFERENCIAMOS O ARRAY DE 'persons', e não falamos nada sobre essa propriedade 'otherState'...
+    showPersons: false
+  }
+
+
+
+-------------------------------
+
+
+feito isso, 
+
+
+o professor PODERÁ 
+
+
+ACESSAR ESSES VALORES/STRINGS dos 
+
+
+ids 
+
+lá 
+
+
+NO CALL DE PERSON, simplesmente pela escrita 'key={person.id}'...    (pq esse 'person.id' VAI VARIAR de acordo com o elemento que o código da function body de 'map' estiver executando...)
+
+
+
+ex:
+
+
+
+
+
+class App extends Component {
+  state = { ///////MUITO IMPORTANTE.
+    persons: [
+      { id: 'aspogashpog', name: 'Max', age: 28 },
+      { id: '211251javja', name: 'Manu', age: 29 },
+      { id: 'dasgzjpj', name: 'Stephanie', age: 26 }
+    ],
+    otherState: 'some other value', 
+    showPersons: false
+  }
+
+
+
+
+
+
+if (this.state.showPersons) {
+  
+  persons = (
+    <div>
+      {this.state.persons.map( (person, index) => {
+        return <Person 
+        name={person.name} 
+        age={person.age} 
+        click={() => {this.deletePersonHandler(index)}}
+        key={person.id}/>  ////EIS O CÓDIGO EM QUESTÃO.
+      })}
+    </div>
+  )
+
+
+
+
+  ----------------------------------------
+
+
+
+  ISSO FARÁ 
+
+  COM QUE 
+
+
+  O REACT FINALMENTE 
+  
+
+  TENHA UM 'PARÂMETRO', UMA 'IMAGEM' DOS ELEMENTOS ____DO PASSADO __ PARA 
+
+
+  PODER COMPARAR COM A 'IMAGEM' DO FUTURO... (que é o que ocorre no 'VIRTUAL DOM' 
+  do react)... --> E ISSO AJUDA O REACT A __APENAS A UPDATAR___ OS LUGARES UQE 
+
+  PRECISAM SER UPDATADOS NO NOSSO DOM, e não a lista inteira, por exemplo... (vai re-renderizar apenas 
+  os list items necessários, basicamente)....
+
+
+  --------------------------
+
+
+
+  SALVAMOS E RECARREGAMOS O NOSSO CÓDIGO... ---> 
+
+
+
+  AGORA O WARNING  DE 'key' __SUMIu___.....
+
+
+
+
+
+
+  APARENTEMENTE NADA TERÁ MUDADO NO NOSSO DOM, mas 
+
+
+  POR TRÁS DAS CENAS, ESTAREMOS 
+
+  UPDATANDO NOSSAS 
+
+  LISTS __dE MANEIRA MAIS OPTIMIZADA E EFICIENTE__... --------> O DOM É UPDATADO 
+
+  DE MANEIRA MAIS EFICIENTE E OPTIMIZADA, O QUE É SUPER IMPORTANTE.

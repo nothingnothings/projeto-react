@@ -1,0 +1,1180 @@
+ 
+
+
+
+
+ PROFESSOR DIZ QUE 
+
+ ANTES 
+
+ DE COMEÇARMOS 
+
+ COM 
+
+
+ AS 
+ 
+ 
+
+ ANIMAÇÕES DO REACT,
+
+
+ DEVEMOS 
+
+
+
+ TER UM 'PROJETO DE DEMONSTRAÇÃO'... ---> 
+
+ é um 
+
+ projeto 
+
+ bem 
+
+ SIMPLES
+
+
+ DE DEMONSTRAÇÃO, O QUAL 
+
+ O PROFESSOR CODOU USANDO 
+
+ 'create-react-app'.... ------> 
+
+
+
+
+ NESTE PROJETO,
+
+
+
+
+ TEMOS 
+
+ 1) BACKDROP
+  
+  2) MODAL
+   
+
+
+
+   3) COMPONENT 'LIST'....
+
+
+
+
+----------------------------
+
+
+
+RODAMOS 
+
+
+'create-react-app' e digitamos um folder de 'projetonovo27'...
+
+
+
+
+------------------------------------------
+
+
+
+
+
+CERTO... 
+
+
+
+
+isso feito,
+
+vamos criar folders, em 'src',
+
+
+
+de 
+
+'components' e 
+
+'containers'...
+
+
+
+
+
+---> professor vai querer usar PROVAVELMENTE CSS MODULES... 
+
+
+
+
+
+---> e eu  __ACHO__ QUE ELE  NÃO ESTÁ USANDO REDUX...
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+--> QUANDO RECÉM 
+
+CRIAMOS NOSSO APP,
+
+vemos 
+um 
+
+MODAL 
+que 
+
+NÃO SE MEXE,
+
+FICA PARADO... ---> precisaremos adicionar UMA FUNCIONALIDADE, NO NOSSO APP,
+
+
+PARA 
+
+FAZER 
+
+
+'SHOW/HIDE' 
+
+desse modal...
+
+
+
+
+
+
+
+
+---> e se esse modal for 'hidden',
+
+poderemos 
+
+USAR 
+
+OS 
+
+BUTTONS 
+
+
+para __ ADICIONAR _ OU REMOVER ITEMS...
+
+
+
+
+------------------------------------
+
+
+
+CERTO....
+
+SETTEI O PROJETO... 
+
+É 
+
+
+UM PROJETO BEM BÁSICO...
+
+
+
+
+O PROFESSOR 
+
+USA 
+
+OS 
+
+MÉTODOS 
+
+
+
+'.map()'
+
+
+e 
+
+'.filter()'
+
+
+PARA 
+
+
+
+
+__ADICIONAR/REMOVER___ ITEMS DE NOSSA LIST... (professor faz um manage 
+
+de 
+
+state LOCAL...)
+
+
+
+
+
+
+
+
+
+COMENTAMOS 
+
+
+
+'<Modal />'
+
+e 
+
+
+'<Backdrop />'
+
+
+PARA 
+
+FORA DO CÓDIGO, MOMENTANEAMENTE,
+
+
+
+para que 
+
+consigamos utilizar os botões e features que ficam embaixo deles...
+
+
+
+--------------------
+
+
+OK...
+
+
+podemos 
+
+adicionar __OU REMOVER__ items...
+
+
+
+
+
+
+
+-------> E O ALGORITMO __PARA __ ADICIONAR __ ITEMS É SUPER SIMPLES... (pode ser visto no CÓDIGO DE 'List.js'...)
+
+
+
+
+
+--------------------------
+
+ 
+
+
+ O OBJETIVO 
+
+
+ É 
+
+
+
+ __ANIMAR ___ TANTO __ 
+
+
+
+A APARÊNCIA COMO 
+
+'DISMISSAL' DO 
+
+MODAL,
+
+
+ASSIM 
+
+
+COMO 
+
+
+NOSSA LIST 
+
+DE 
+
+
+
+
+'list items'.... -------> ANTES 
+
+DISSO,
+
+
+DEVEMOS 
+
+
+
+
+
+VER 
+
+AS DIFERENTES OPÇÕES QUE TEMOS 
+
+PARA 
+
+ESSE 
+
+'STYLING'...
+
+------------
+
+
+
+
+ANTES DISSO,
+
+NO ENTANTO,
+
+DEVEMOS 
+
+
+
+CODAR ALGO NO NOSSO CÓDIGO QUE 
+
+FAÇA 
+
+COM QUE 
+
+
+O 
+
+
+
+MODAL CONSIGA SER 'HIDDEN/SHOWN'... (provavelmente 
+um 
+PROP 
+
+
+de 
+
+'closed'...) ----------> 
+
+
+
+
+
+
+
+PROVAVELMENTE 
+
+O MÉTODO 
+
+PARA 
+
+OPEN/CLOSE 
+
+O MODAL 
+
+
+
+___SERÁ __ CODADO __ DENTRO 
+
+
+
+DO 'App.js',
+
+QUE 
+
+
+É 
+NOSSO 
+
+'MAIN CONTAINER',  no final das contas....
+
+
+
+
+
+
+---> PROFESSOR JÁ NOS INFORMA QUE 
+
+EM 
+
+'Modal.js'
+
+
+NÓS __ JÁ TEMOS __ UM 
+
+
+
+
+CLICK LISTENER 
+
+QUE 
+
+ATIVA 
+
+'props.closed'... --> basta CODARMOS UM MÉTODO 
+
+para 
+
+fazer 
+
+'CLOSE' 
+
+
+
+NO __ MODAL __ QUANDO CLICARMOS NELE___....
+
+
+
+
+
+
+
+---------------------------
+
+POR ENQUANTO,
+
+PROFESSOR 
+
+VAI QUERER 
+
+CONTROLAR 
+
+'WHEN THIS 
+
+MODAL IS SHOW OR NOT'
+
+
+
+__DE DENTRO __ DO PRÓPRIO ARQUIVO 
+
+'modal'.... (que é um FUNCTIONAL COMPONENT...) --------> 
+
+
+ELE 
+
+
+FARÁ 
+
+ISSO 
+
+
+POR MEIO 
+DE UM 
+
+SIMPLES 
+
+
+SHOW/HIDE do modal... --> professor diz que podemos 
+
+FACILMENTE 
+
+FAZER ISSO: BASTA 
+
+IRMOS 
+
+
+ATÉ 
+
+O 
+
+'Modal.module.css'
+
+
+E ENTÃO 
+
+
+ADICIONAR 
+
+UMA 
+
+CSS CLASS 
+
+
+
+de 
+
+'.Open' ---------> 
+
+
+
+ESSE 
+
+ESTILO VAI CONTROLAR 
+
+SE NOSSO 
+
+'MODAL' 
+
+
+
+FICA VISÍVEL OU NÃO.... ------> 
+
+
+
+
+ex:
+
+
+
+
+.Open {
+    display: block;
+}
+
+
+.Closed {
+    display: none;
+}
+
+
+
+
+
+-----------------------------
+
+
+
+OK.... ESSA É UMA __MANEIRA __ MT SIMPLES __ DE FAZER 
+'HIDE/SHOW' 
+
+DE UM MODAL..
+
+
+
+
+
+(PODEMOS NOS LEMBRAR DO CÓDIGO DE 
+
+'backdrop' LÁ 
+
+
+NO 
+
+BURGERBUILDER:
+
+
+'''''''''''''''''''''''''''''
+
+const backdrop = (props) => {
+
+   return props.show ? <div className={Backdrop.Backdrop}
+    onClick={props.clicked}
+  
+
+   
+   >
+
+
+
+
+   </div> : null
+
+}
+
+
+'''''''''''''''''''''''''
+
+)
+
+
+
+
+--------------------------
+
+
+
+lá, tinhamos 
+
+'props.show'...
+
+
+------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CERTO... MAS NESSE NOSSO APP,
+
+
+
+
+NÓS VAMOS QUERER TER UM 
+
+STYLE
+ 
+ 'open' e 'close' para o 
+
+ MODAL,
+
+ e 
+
+
+ A MESMA 
+
+ COISA 
+
+ PARA 
+
+ O 
+
+ 'backdrop',
+
+ QUE 
+
+ DEVERÁ
+  
+  TER UM 
+
+  STYLE 
+  DE 'OPEN' 
+
+  E UM 
+
+  DE 'CLOSE' 
+  tbm....
+
+
+
+
+
+  ------------------------------
+
+
+
+
+
+
+AGORA 
+
+SÓ TEMOS QUE ADICIONAR ALGUMA LÓGICA A AMBOS 
+
+ARQUIVOS,
+
+
+
+
+para 
+
+assegurar 
+
+
+que 
+
+esses 
+ESTILOS 
+
+são 
+
+utilizados...
+
+
+---------------------
+
+
+
+
+PROFESSOR COMEÇA 
+
+
+ALTERANDO 
+
+
+
+'Backdrop.js' ---> 
+
+
+
+
+
+ELE CRIA UM __ ARRAY __ DE CLASSES,
+
+
+que 
+
+
+chamará 
+
+
+de 
+
+'cssClasses'... -------> 
+
+
+ISSO 
+
+FEITO,
+
+
+ELE 
+VAI QUERER 
+
+QUE 
+
+SEJA 
+
+ADICIONADO 
+
+
+'Open'/'Closed' 
+
+
+DEPENDENDO 
+
+DO 
+
+
+__VALOR __ DO ___ PROP 
+
+
+'closed'  que 
+
+ELE RECEBER... (que realmente será passado a esse component 'backdrop'...)
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+import BackdropStyle from './Backdrop.module.css';
+
+
+
+
+const backdrop = (props) => {
+        const cssClasses = ['Backdrop', props.show ? 'Open' : 'Closed' ]
+
+        
+
+   return (<div className={BackdropStyle.Backdrop}></div>)
+}
+
+
+
+
+
+export default backdrop;
+
+
+
+
+-----------------
+
+
+OK....
+
+COM ISSO,
+
+
+TEREMOS 
+
+
+
+2 items NO 
+
+ARRAY DE 'cssClasses',
+
+
+__TEREMOS __ TANTO 
+
+
+'Backdrop', 
+
+
+
+como 
+
+'Open'/'Closed'...
+
+
+----------------------------
+
+
+
+----> PROVAVELMENTE O PROFESSOR VAI USAR '.join('') ' 
+
+
+
+__PARA __ UNIR __ ESSES 
+
+
+2 ITEMS,
+
+SEPARADOS POR AQUELE __ESPAÇO__ ENTRE 
+OS 
+
+ITEMS NO ARRAY...
+
+
+
+
+
+
+-------------------------
+
+
+
+
+
+
+CERTO... EU ACHAVA QUE ERA 
+
+O CSS MODULES QUE 
+
+ESTAVA CAGANDO O CÓDIGO DE 'join' 
+
+dos 
+
+ESTILOS 
+de 
+
+
+'Backdrop'/'Modal' e 
+
+
+'Open'/'Closed',
+
+
+MAS 
+
+NÃO ERA ISSO, NÃO...
+
+
+
+
+
+
+
+
+
+--> PROFESSOR NOS DIZ QUE 
+
+
+__PRECISAMOS PASSAR O PROP DE 
+'show'
+
+
+A TANTO 
+
+
+'Backdrop'
+
+COMO 
+
+'modal'... --> 
+
+
+VAMOS 
+
+FAZER 
+
+ESSE 
+PASS 
+
+LÁ 
+
+NO COMPOENNT 
+
+'App.js',
+
+que 
+
+segura 
+
+essess 
+
+2 components...
+
+
+
+------------------------------
+
+
+
+O CÓDIGO QUE 
+
+EU HAVIA ESCRITO PROVISORIAMENTE __ REALMENTE_ _ HAVIA FICADO PARECIDO __COM 
+
+
+ESSE 
+
+DO PROFESSOR,
+
+MAS 
+
+AINDA 
+
+ASSIM OS ESTILOS ESTAVAM CAGADOS.... --> 
+
+
+
+
+ex
+
+
+
+
+
+  state = {
+    modalIsOpen: false,
+  };
+
+  openModalHandler = () => {
+    this.setState({
+      modalIsOpen: true,
+    });
+  };
+
+    closeModalHandler = () => {
+        this.setState(
+            {
+                modalIsOpen: false
+            }
+        )
+    }
+
+
+
+  render() {
+    return (
+      <div className="App">
+        <h1>React Animations</h1>
+        <Modal show={this.state.modalIsOpen} />
+        <Backdrop show={this.state.modalIsOpen} />
+        <button
+          className="Button"
+          onClick={() => {
+            this.openModalHandler();
+          }}
+        >
+          Open Modal
+        </button>
+        <h3>Animating Lists</h3>
+        <List />
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+
+
+-----------------
+
+
+AGORA, POR ALGUMA RAZÃO,
+
+O BACKDROP ESTÁ VISÍVEL (na frente de tudo),
+
+
+MAS 
+
+O MODAL 
+
+
+ESTÁ 
+
+VISÍVEL TAMBÉM... (e atrás, não está na frente...)
+
+
+
+-----
+
+
+NOSSO CÓDIGO ESTÁ __qUASE IGUAL__ AO DO PROFESSOR__... há algo de muito errado aqui... (algo a ver com o STYLING...) -> __PROVAVELMENTE__ É O 'CSS MODULES' interferindo... (a sintaxe de css modules NÃO SE DÁ BEM COM ESSE APPROACH DE 'join' com os nomes dos negócios hardcodados....)
+
+
+
+
+
+
+
+
+
+
+--------
+
+
+ERA ISSO,
+
+
+REALMENTE...
+
+
+
+
+__AMANHÃ__, vou ter de ver 
+
+
+
+
+COMO FAZER ISSO FUNCIONAR _ COM CSS MODULEs___ (já havia feito isso funcionar uma vez, tempos atrás... --> preciso 
+
+fuçar
+ 
+ no código de 
+ 
+ 
+ 'BURGERBUILDER' e encontrar 
+ 
+ o trecho 
+ em que 
+ 
+ o 
+ 
+ PROFESSOR 
+ USA 
+ 
+ ESSE APPROACH 
+ 
+ 
+ de 
+
+ '.Open' 
+
+ e 
+ '.Closed' 
+
+
+ com 
+
+ prop de 
+ 'show' 
+
+ AO MESMO TEMPO QUE __ USA CSS MODULES__...
+ 
+ 
+ )
+
+
+
+
+
+
+
+
+
+ A SOLUÇÃO RESIDE NESTE CÓDIGO AQUI, PROVAVELMENTE (em 'Button'):
+
+
+ className={[Button.Button, Button[props.btnType]].join(' ')}
+
+
+
+
+ ----------------------------------
+
+
+
+
+ E TALVEZ ESTE CÓDIGO AQUI SEJA 
+
+ A VERSÃO 
+
+ CONSERTADA DO NOSSO, DE AGORA:
+
+
+
+ '''
+
+   const cssClasses = [ModalStyle.Modal, props.show ? ModalStyle.ModalOpen : ModalStyle.ModalClosed];
+
+   ''''
+
+
+
+
+
+
+
+DEVO TESTAR AMANHÃ....
+
+-------------------
+
+
+
+Hmmm 
+
+parece
+ 
+
+ que 
+
+ QUASE deu certo.... --> os estilos foram aplicados,
+
+ mas o backdrop SEMPRE ACABA APLICADO/sobre o nosso conteúdo....
+
+
+
+
+ ----------------------
+
+
+
+
+
+ CONSEGUI... ERAM UNS SIMPLES ERROS DE ESCRITA.... (no return do render de 'backdrop', para ser mais exato....):
+
+
+
+
+ import React from 'react';
+
+
+
+import BackdropStyle from './Backdrop.module.css';
+
+// import './Backdrop.css';
+
+
+
+const backdrop = (props) => {
+    const cssClasses = [BackdropStyle.Backdrop, props.show ? BackdropStyle.BackdropOpen : BackdropStyle.BackdropClosed];
+    console.log(BackdropStyle.Backdrop);
+    console.log(BackdropStyle.BackdropOpen);
+    console.log(BackdropStyle.BackdropClosed);
+    console.log(cssClasses.join(' '))
+
+   return (<div className={cssClasses.join(' ')}></div>)
+
+}
+
+
+
+
+
+export default backdrop;
+
+
+
+
+
+
+------------------------
+
+
+
+OK... CONSEGUI IMITAR O PROJETO DO PROFESSOR, DE LEVE....

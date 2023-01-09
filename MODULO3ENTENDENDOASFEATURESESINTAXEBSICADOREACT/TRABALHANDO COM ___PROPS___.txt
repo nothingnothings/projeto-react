@@ -1,0 +1,766 @@
+
+
+---> AGORA QUE SABEMOS 
+
+
+
+COMO OUTPUTTAR CONTEÚDO 
+
+
+DINÂMICO, 
+
+
+
+
+DEVEMOS 
+
+
+ENTENDER COMO FAZER 
+
+NOSSO CONTEÚDO SER 
+
+
+FLEXÍVEL, CONFIGURÁVEL E dinâmico...
+
+
+
+
+
+----> PARA ELEMENTOS HTML NORMAIS, 
+
+
+podemos PASSAR __ATTRIBUTES___ (como 
+
+'className', que podemos passar A QUALQUER
+
+
+ELEMENTO HTML...) --->
+
+
+
+um elemento 'input', por exemplo,
+
+
+
+também 
+
+tem/teria 
+
+
+o atributo 
+
+'VALUE'....
+
+
+--------------------------------
+
+
+
+PARA 'Person', esse nosso React Component, 
+
+
+SERIA LEGAL 
+
+
+SE VOCê PUDESSE 
+
+
+
+passar 
+
+
+um atributo 
+
+
+de 
+
+'name' 
+
+
+e então passar o valor de 'Max'...
+
+
+
+e também 
+
+
+um atributo 
+
+'age', com um valor de '28', talvez...
+
+
+
+
+EX(REPRESENTAÇÃO DESSE CÓDIGO):
+
+
+
+
+
+
+
+
+
+
+class App extends Component {
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <Person name="Max" age="28"/> //////EIS O CÓDIGO EM QUESTÃO....
+        <Person />
+        <Person />
+        <Person />
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+
+-----------------------------------
+
+
+
+PARA O SEGUNDO 
+
+USO/USAGE
+ 
+
+ de 'Person', 
+
+
+ nós 
+
+ talvez queiramos 
+
+
+ passar 
+
+ 'Manu' como atributo 'name', 
+
+
+ e '29' como atributo 'age'....
+
+
+
+ ex:
+
+
+
+
+
+
+ class App extends Component {
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <Person name="Max" age="28" /> //////EIS O CÓDIGO EM QUESTÃO....
+        <Person name="Manu" age="29" />
+        <Person />
+        <Person />
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+
+-------------------------------
+
+
+
+
+NO TERCEIRO USO, PODEMOS USAR 
+
+'Stephanie' 
+
+
+e 
+
+'age= 30'...
+
+
+
+
+EX:
+
+
+
+
+
+ class App extends Component {
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <Person name="Max" age="28" /> //////EIS O CÓDIGO EM QUESTÃO....
+        <Person name="Manu" age="29" />
+        <Person name="Stephanie" age="26" />
+        <Person />
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+SE FIZERMOS ISSO,
+
+
+
+
+QUEREMOS OUTPUTTAR 
+
+
+ESSES ATRIBUTOS/ATTRIBUTES...   --> 
+
+na verdade, 
+
+
+TALVEZ ATÉ QUEIRAMOS 
+
+___FAZER MAIS COISAS ALÉM DISSO___ --> para 
+
+'manu, 
+
+
+por exemplo,
+
+
+podemos 
+
+
+QUERER ADICIONAR ALGO MAIS.... --->  podemos/vamos 
+
+querer 
+
+
+adicionar 
+
+uns DADOS __EXTRAS__, como 'My hobbies: Racing'... 
+
+
+
+Para inserir 
+
+esse texto, 
+
+
+o professor decide 
+
+
+__ABRIR/SPLIT essa 
+
+
+'opening e closing tag' 
+
+
+de 'Person'......
+
+
+
+ele faz isso para enfiar o 'My hobbies: Racing' 
+
+
+NO MEIO DA OPENING E CLOSING TAGS....
+
+
+
+ex:
+
+
+
+
+
+ class App extends Component {
+
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        <Person name="Max" age="28" /> 
+        <Person name="Manu" age="29">My Hobbies: Racing</Person>      //////EIS O CÓDIGO EM QUESTÃO....
+        <Person name="Stephanie" age="26" />
+        
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+
+
+----------------------------------------------
+
+
+
+
+CERTO...
+
+
+com tudo isso no lugar,
+
+
+
+___TEMOS QUE MUDAR ___ ALGO ___ NO NOSSO 
+
+COMPONENTE 
+
+'Person' 
+
+
+PARA GERENCIAR todos esses inputs/atributos... ----> pq 
+
+
+se nós recarregarmos 
+
+essa página agora, 
+
+NÃO VEREMOS MUDANÇA ALGUMA POR DEFAULT... ---> nosso output não vai mudar magicamente SÓ PQ ADICIONAMOS ESSES ATTRIBUTES... (nem mesmo o 'My hobbies: racing' será adicionado....)
+
+
+--------------------------------------------
+
+
+
+N veremos mudança PQ NÓS 
+
+
+NÃO ESTAREMOS USANDO ESSAS INFORMAÇÕES/ATRIBUTOS... ----> como diabos 
+
+react saberia oq fazer com esses negócios?
+
+
+
+
+
+---> BEM, NA VERDADE, 
+
+O REACT __É CAPAZ__ DE ACEITAR/PEGAR
+ 
+
+ ESSES ATTRIBUTES 
+
+
+ E ENTÃO nos 
+ 
+
+ DAR ACESSO, dentro 
+
+ desse COMPONENT QUE ESTÁ OS RECEBENDO, 
+
+ A UM OBJETO 
+
+ MÁGICO 
+
+ CHAMADO 
+
+ 'props'.... ----> esse objeto  (que será O PARÂMETRO recebido nos nossos react components...)
+
+ VAI REUNIR 
+
+
+ TODOS 
+
+
+ OS ___ATTRIBUTES___ PASSADOS 
+
+ __NO CALL ___ DE NOSSO COMPONENT, 
+
+ lá na parte de renderização do nosso código....
+
+
+
+
+ ex:
+
+
+
+
+
+
+import React from 'react'; 
+
+const person = (props) => { ///EIS O CÓDIGO EM QUESTÃO...
+  return <p>Hi, I'm a Person and I am {Math.floor(Math.random() * 30)} years old!</p>;
+};
+
+
+
+export default person;  
+
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+Professor explica que o termo 'props' não é obrigatório 
+
+naquele lugar; mas 
+
+o fato 
+
+É QUE VOCÊ 
+
+
+SEMPRE __RECEBERÁ ____ UM ÚNICO 
+
+__ ARGUMENTO 
+
+
+NA SUA FUNÇÃO... o 'props' --> e esse argumento 
+
+é passado 
+
+
+a essa FUNÇÃO POR DEFAULT, pelo react...
+
+
+
+
+'props' ---> É UM OBJETO 
+
+
+____COM TODAS AS PROPRIEDADES___ 
+
+DO COMPONENT 'Person'.... (das calls desse determinado component...)
+
+
+
+
+
+E 
+
+
+
+'PROPRIEDADES' === ATTRIBUTES... attributes que você adiciona no seu component, como 'name' e 'age'...
+
+
+
+
+-----------------------------------------------
+
+
+
+
+EM 'REACTLAND', o nome 
+
+
+desse negócio 
+
+é 'props', e recomenda-se que você utilize essa expressão....
+
+
+
+
+
+--------------> CERTO... 
+
+
+AGORA QUE TEMOS O 
+
+'props' ,
+
+
+
+
+NÓS TEMOS 
+
+__aCESSO___ ÀQUELAS coisas 
+
+
+'name' e 'age' (os attributes)....
+
+
+
+
+
+PORTANTO, AGORA O PROFESSOR 
+
+
+PODE 
+
+
+USAR 
+
+'{}' 
+
+Dentro do return 
+
+daquele '<p>' 
+
+PARA RETORNAR
+ 
+
+ O VALOR DINÂMICO 
+
+ DESSAS PROPRIEDADES/ATRIBUTOS QUE 
+
+ FORAM PASSADOS PELOS NOSSOS CALLS DO 
+
+ componente 'Person'...
+
+
+
+
+Ele fará o call de 
+
+'props.name' e 'props.age'..., como valores DINÂMICOS a serem outputtados....
+
+
+
+
+
+
+
+ ex:
+
+
+
+
+
+
+import React from 'react'; 
+
+const person = (props) => { ///EIS O CÓDIGO EM QUESTÃO...
+  return <p>Hi, I'm {props.name} and I am {props.age} years old!</p>;
+};
+
+
+
+export default person;  
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+OBS(IMPORTANTE!!!!) ----> QUANDO ESTIVERMOS USANDO
+
+
+'CLASS-BASED COMPONENTS' (sintaxe não recomendada 
+de criação de REACT COMPONENTS),
+
+DEVEMOS SEMPRE USAR ___'THIS.PROPS' em vez de 'props'....
+
+
+
+
+ex (se decidirmos usar os 'class-based components', devemos usar essa sintaxe):
+
+
+
+
+class Person extends Component {
+    render() {
+        return <p>My name is {this.props.name}</p>
+    }
+}
+
+
+
+------------------------------------------------
+
+
+
+
+
+
+
+OU SEJA, 
+
+
+OS '{}' são mantidos, 
+
+
+
+
+MAS USAMOS 
+
+'props.xxx'
+ 
+ no lugar 
+
+ dos cálculos...
+
+
+
+ SALVAMOS ESSE NEGÓCIO E RECARREGAMOS A PÁGINA... 
+
+
+
+
+
+
+
+AGORA VAMOS 
+
+
+VER OS OUTPUTS 
+
+alterados:
+
+
+
+
+'Im max and I am 28 years old!' 
+
+
+'Im manu and i am 29 years old!', 
+
+
+etc etc...
+
+
+
+-----------------------------------------------------
+
+
+
+
+---> CERTO, AGORA 
+
+
+ESTAMOS USANDO O MELHOR DOS 2 MUNDOS:
+
+
+
+
+
+conseguimos um REUSABLE COMPONENT ('Person'), 
+
+
+mas um REUSABLE COMPONENT __ QUE PODE SER CUSTOMIZADO__, 
+
+QUE TEM UM SLOT ONDE É INSERIDO CONTEÚDO __DINÂMICO___... ----> ESSE COMPONENT 
+
+
+TEM UM 
+
+'CLEARLY DEFINED TEMPLATE',
+ 
+ mas um 
+
+
+ TEMPLATE EM QUE
+  USAMOS 
+
+
+  CONTEÚDO DINÂMICO, 
+
+  conteúdo 
+  DINÂMICO 
+
+
+  QUE É SETTADO 
+
+
+
+  'OUTSIDE', ou seja, 
+
+  NO LOCAL 
+
+
+  EM QUE NÓS 
+
+
+  ___EFETIVAMENTE___ USAMOS 
+
+  O NOSSO COMPONENT (em 'App.js', nos 'Person' component calls...) -------> ISSO 
+
+
+  FAZ COM QUE NOSSO CÓDIGO SE TORNE 
+
+
+  __MUITO REUTILIZÁVEL___ ---> 
+
+
+
+
+  DEVEMOS PENSAR __EM TODAS AS POSSIBILIDADES__ 
+
+
+que veremos, nesse curso.... ---> NÓS 
+
+TEMOS UM 
+
+___'INPUT COMPONENT' CUJO 
+
+__TYPE___ É __SETTADO__ POR FORA/DE FORA...
+
+
+
+
+--> NÓS PODEMOS TER __ESSE COMPONENTE 'PERSON', que 
+
+poderá/pode ser estilizado como um CARD para 
+
+OUTPUTTAR CONTEÚDO DIFERENTE/DINÂMICO 
+
+para cada pessoa..... 
+
+
+
+
+
+
+
+--> é a primeira etapa
+ 
+ PARA ESCREVER COMPONENTES FLEXÍVEIS E REUTILIZÁVEIS...
+
+
+
+
+ --> Ok, 
+
+ mas e quanto 
+
+ Àquele 
+
+ 'My Hobbies: Racing' -----> devemos 
+
+
+ VER COMO __PODEMOS USAR __ CONTEÚDO 
+
+ QUE É PASSADO __NÃO COMO UM ATRIBUTO (como 'name' e 'age')__, 
+
+
+ E SIM 
+
+NO __MEIO___ DAS OPENING E CLOSING TAGS... ---> veremos isso na próxima lição....

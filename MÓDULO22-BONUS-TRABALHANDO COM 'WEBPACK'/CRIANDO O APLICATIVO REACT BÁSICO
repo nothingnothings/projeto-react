@@ -1,0 +1,1911 @@
+
+
+
+
+
+
+---> PROFESSOR QUER SETTAR UM APLICATIVO REACT BÁSICO... --> 
+
+
+PARA ISSO,
+
+ELE ADICIONA 
+
+
+2 ARQUIVOS DIFERENTES NO 
+
+
+
+FOLDER 
+DE 
+
+'Containers'... 
+
+
+
+
+
+
+---> o primeiro arquivo será 'Users.js',
+
+
+
+e O
+
+ segundo 
+
+
+ será 
+
+ um 
+
+
+ arquivo 
+
+
+ 'Pizza.js'...
+
+
+
+ --------------------------------------
+
+
+
+
+--> O PROJETO NÃO SERÁ SUPER ÚTIL,
+
+
+MAS 
+
+ELE USARÁ LAZY LOADING E CARREGARÁ UMA IMAGE...
+
+
+
+
+
+
+--> DENTRO DO COMPONENTS,
+
+PROFESSOR CRIARÁ UM 
+
+FOLDER 
+
+
+DE 
+
+
+'PizzaImage',
+
+
+onde 
+
+
+
+teremos 
+
+um 
+arquivo 
+
+
+
+
+'PizzaImage.js',
+
+e um 
+
+
+arquivo 
+
+de 
+
+estilos 
+
+
+'PizzaImage.css'...
+
+
+
+
+
+--> PROFESSOR DIZ QUE ELE PLANEJA USAR CSS MODULES NO NOSSO PROEJTO,
+
+
+POR ISSO RENOMEAMOS 
+
+'PizzaImage.css' PARA 
+
+QUE 
+FIQUE 
+
+
+'PizzaImage.module.css'....
+
+
+
+
+
+
+---> PROFESSOR DIZ QUE 
+
+
+NÃO VAI CRIAR UM 
+
+
+COMPONENT 
+
+'USERS'/'user',
+
+
+que 
+ele 
+
+
+
+
+prefere 
+
+CODAR TUDO DE QUE 
+
+PRECISA DIRETAMENTE 
+
+
+
+NO 
+
+CONTAINER 
+
+'Users.js'...
+
+
+
+------------------------------
+
+
+
+
+OK, VAMOS TRABALHAR SOBRE A 
+
+'PIZZAIMAGE'... -> e para isso, é claro,
+
+
+PRECISAMOS 
+
+
+__DE UMA PIZZA IMAGE__... -----> NA NOSSA LIÇÃO TEMOS 
+
+UMA  
+
+
+IMAGEM DE PIZZA 
+
+ANEXADA....
+
+
+
+
+
+
+
+
+
+
+-->ok, 
+
+dentro 
+
+do 
+
+
+
+'PizzaImage.js',
+
+
+
+O PROFESSOR 
+
+
+VAI 
+
+CRIAR UMA 
+
+
+CONSTANTE 
+
+CHAMADA 
+
+
+DE 
+
+
+'pizza',
+
+
+e 
+
+aí 
+
+
+
+
+ELE 
+
+
+VAI QUERER 
+
+IMPORTAR 
+
+AQUELA 
+
+'Pizza' 
+
+
+ARMAZENADA LÁ EM 
+
+'assets'... 
+
+
+
+
+
+
+
+---> 
+
+
+essa constante 'pizzaImage' 
+
+SERÁ __UM FUNCTIONAL COMPONENT__, 
+
+
+E VAI 
+
+
+SER ESSENCIALMENTE UMA ___DIV ___ COM AQUELA 
+
+
+IMAGEM DA PIZZA...
+
+
+
+
+ex:
+
+
+
+
+
+const pizzaImage = (props) => {
+        <div/></div>
+}
+
+
+
+
+
+--------------------------------------------
+
+
+
+
+OK,
+
+
+MAS 
+
+
+PROFESSOR 
+
+NOS DIZ QUE 
+
+ELE 
+
+VAI QUERER 
+
+USAR 
+
+'className',
+
+
+e então definir 
+esse className 
+COMO 
+
+
+SENDO IGUAL 
+
+
+A 
+
+
+'PizzaImageStyle.PizzaImage',
+
+
+
+EXTRAÍDO LÁ DO 
+
+
+
+ARQUIVO 
+
+
+'PizzaImage.module.css';
+
+
+
+---------------------------------
+
+
+
+
+
+TIPO ISTO AQUI:
+
+import PizzaImageStyle from './PizzaImage.module.css';
+
+
+
+
+
+const pizzaImage = (props) => {
+        <div className={PizzaImageStyle.PizzaImage}></div>
+}
+
+
+
+
+----------------------------------------
+
+
+
+COMO NÓS 
+
+USAMOS 
+
+JSX __ NESSE ___ ARQUIVO 
+
+DE 
+
+
+
+'PizzaImage',
+
+o professor 
+já 
+
+vai em frente 
+
+e 
+IMPORTA 
+
+
+react...
+
+
+
+
+
+
+'import React from 'react';  -------------> 
+
+
+
+
+e 
+
+
+
+AÍ O PROFESSOR TAMBÉM 
+
+EXPORTA
+ 
+ 'pizzaImage'
+  
+
+
+  assim:
+
+
+
+
+  'export default pizzaImage;'
+
+
+
+
+  -----------------------------
+
+
+  OK, 
+
+  MAS AQUI NOS 
+
+  DEPARAMOS COM UM PROBLEMA.... ---> O REACT __ NÃO ESTÁ INSTALADO NO NOSSO BUILD WORFLOW__,
+   
+   E ISSO 
+
+   é 
+
+
+ÓBVIO...
+
+
+
+
+
+
+
+--> NÓS VAMOS INSTALAR O REACT NA PRÓXIMA AULA,
+
+
+QUANDO INSTALAREMOS TODAS AS DEPENDENCIES DE QUE PRECISAMOS...
+
+
+
+
+
+
+
+
+
+--> por enquanto,
+
+o professor 
+
+
+
+não vai importar o react, mas em razão disso,
+
+nada funcionará; porém, isso não é problema,
+
+pois 
+
+não temos nosso build workflow ainda....
+
+
+
+
+
+
+
+
+-----------------------------------------------
+
+
+
+
+
+----> OK... ESTAMOS ESCREVENDO O 'BARE CODE'... -----> 
+
+
+
+DENTRO 
+
+DA 
+
+
+
+div 
+
+DA
+
+PIZZA,
+
+professor 
+
+vai querer 
+
+
+um 
+
+'<img src={} />' ,
+
+
+
+
+
+
+
+QUE 
+
+SERÁ 
+
+
+AQUELA 
+
+
+IMAGEM 
+
+
+DA PIZZA....
+
+
+
+eX:
+
+
+
+
+
+import PizzaImageStyle from './PizzaImage.module.css';
+
+
+
+
+
+const pizzaImage = (props) => {
+        <div className={PizzaImageStyle.PizzaImage}>
+                <img src={} />
+        </div>
+}
+
+
+
+
+
+
+
+export default pizzaImage;
+
+
+
+---------------------------------------
+
+
+
+
+PARA 
+
+
+
+ISSO,
+
+
+PROFESSOR 
+
+
+VAI 
+
+IMPORTAR 
+
+
+A 
+
+PIZZAIMAGE,
+
+o jpg,
+
+
+
+
+
+
+por meio 
+
+da 
+escrita 
+
+de 
+
+
+'import PizzaImage from '../../assets/pizza.jpg';
+
+
+
+
+
+EX:
+
+
+
+
+
+
+import React from 'react';
+
+
+
+import PizzaImageStyle from './PizzaImage.module.css';
+
+
+import PizzaImage from '../../assets/pizza.jpg';
+
+
+
+const pizzaImage = (props) => {
+        <div className={PizzaImageStyle.PizzaImage}>
+                <img src={PizzaImage} />
+        </div>
+}
+
+
+export default pizzaImage;
+
+
+
+
+
+----------------------------
+
+
+
+OK,
+
+
+
+ESSE 
+SERÁ 
+
+MEU 
+
+
+
+
+COMPONENT 
+
+
+'PIZZA IMAGE'...
+
+
+
+
+
+
+--> 
+
+o professor 
+
+também 
+
+dará 
+
+um 
+
+className 
+
+a 
+
+essa imagem dentro 
+
+da 
+div,
+
+
+
+className 
+
+de 
+
+'PizzaImageStyle.PizzaImage'
+
+
+
+(meio errado isso, mas tudo bem....)
+
+(professor renomeou para 'pizzaImg'...)
+
+
+
+EX:
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+import PizzaImageStyle from './PizzaImage.module.css';
+
+
+import PizzaImage from '../../assets/pizza.jpg';
+
+
+
+const pizzaImage = (props) => {
+        <div className={PizzaImageStyle.PizzaImage}>
+                <img src={PizzaImage} className={PizzaImageStyle.PizzaImg}/>
+        </div>
+}
+
+
+
+
+
+
+
+export default pizzaImage;
+
+
+
+
+-------------------------------------------
+
+
+
+
+
+
+
+
+
+OK, 
+
+
+LÁ NO ARQUIVO 
+
+
+DE ESTILOS,
+
+PROFESSOR 
+
+ESCREVE 
+
+
+
+
+.PizzaImage {
+    width: 80%;
+    height: 300px;
+    margin: 20px auto;
+    text-align: center;  ////PROFESSOR QUER QUE QUALQUER TEXTO FIQUE ALINHADO, PQ A IMAGE estará 'inline-style', e isso aí vai centralizar justamente por isso...
+
+}
+
+
+
+
+
+
+E 
+
+
+
+
+.PizzaImg {
+    max-width: 100%;
+    max-height: 100%; ///PROFESSOR FAZ ISSO PARA QUE A PIZZA RESPEITE OS 'BOUNDARIES' do container, daquela classe/elemento '.PizzaImage' que o wrappa....
+}
+
+
+
+
+
+
+
+----------------------------------------
+
+
+
+COM ISSO,
+
+
+
+TEMOS 
+
+
+NOSSA PIZZA IMAGE component...
+
+
+
+
+
+
+
+------------------------------
+
+
+
+AGORA 
+
+PRECISAMOS 
+
+CONFIGURAR 
+
+O 
+
+CONTAINER 
+
+
+DE 
+
+
+'Pizza.js'...
+
+
+
+
+---> professor importa 
+
+React e 
+
+'Component' 
+
+LÁ DO REACT...
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+class Pizza extends Component {
+
+}
+
+
+export default Pizza;
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+
+
+
+OK... 
+
+
+ESSA 
+
+CLASS 
+
+
+aí 
+
+
+terá um método render, como sempre, com return de 
+
+jsx...
+
+
+
+
+
+
+
+---> E AÍ VAMOS QUERER USAR NOSSA 'PIZZA IMAGE',
+
+aquele component lá....
+
+
+
+
+
+TIPO ISTO AQUI:
+
+
+
+
+
+import React, { Component } from 'react';
+
+
+import PizzaImage from '../components/PizzaImage/PizzaImage';
+
+
+
+class Pizza extends Component {
+            render() {
+                return(
+                    <div>
+                    <h1>The Pizza</h1>
+                    <PizzaImage />
+                    </div>
+                )
+            }
+}
+
+
+
+
+export default Pizza;
+
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+O PROFESSOR ENTÃO COPIA ESSE MODELO INTEIRO 
+
+E O COLA 
+
+
+NO ARQUIVO DE 'Users.js',
+
+fazendo os devidos ajustes...
+
+
+
+ex:
+
+
+
+import React, { Component } from 'react';
+
+
+
+class Users extends Component {
+  render() {
+    return (
+      <div>
+          <h1>The Users</h1>
+            <p>Awesome users on board of this course!</p>
+      </div>
+    );
+  }
+}
+
+export default Users;
+
+
+
+
+------------------------------------
+
+
+
+
+
+CERTO,
+
+COM ISSO,
+
+TEREMOS 
+
+
+2 CONTAINERS...
+
+
+-----------------------------------
+
+
+
+
+CERTO,
+
+TEMOS 
+
+
+2 CONTAINERS,
+
+MAS 
+
+
+AGORA O PROFESSOR QUER 
+
+FAZER LOAD DELES, NO NOSSO APLICATIVO,
+
+
+
+__POR MEIO DE ROUTING____....
+
+
+
+
+
+--> e o routing é DEFINIDO LÁ NO 'App.js'...
+
+
+
+
+--> 'App.js',
+
+é claro,
+
+
+é um 
+
+CLASS-BASED COMPONENT (mas não é um CONTAINER, no nosso caso, porque  ainda não faz o PASS DE STATE aos nossos components/containers, nem do state tradicional, nem do store do redux....)
+
+
+
+
+
+
+
+OK...
+
+
+
+
+
+VAMOS
+
+
+escrever:
+
+
+
+
+
+import React, { Component } from 'react';
+
+import { BrowserRouter } from 'react-router-dom';
+
+
+import Users from './containers/Users';
+
+
+import Pizza from './containers/Pizza';
+
+
+
+
+class App extends Component {
+
+
+    render() {
+
+
+
+
+
+                return (
+
+
+                    <BrowserRouter>
+                        <div>
+                            {routes}
+                        </div>
+                    </BrowserRouter>
+                
+                )
+    }
+}
+
+
+
+
+
+
+-------------------------------
+
+
+
+TIPO ISTO AQUI:
+
+
+
+import React, { Component } from 'react';
+
+import { BrowserRouter } from 'react-router-dom';
+
+import Users from './containers/Users';
+
+import Pizza from './containers/Pizza';
+
+class App extends Component {
+
+
+    
+
+
+
+
+
+  render() {
+
+    let routes = (
+                <Switch>
+                    <Route path="" component={Pizza} />
+                    <Route path="" component={Users} />
+                    <Redirect to="/" />
+                </Switch>
+        )
+
+
+
+
+    return (
+      <BrowserRouter>
+        <div>{routes}</div>
+      </BrowserRouter>
+    );
+  }
+}
+
+
+
+
+export default App;
+
+
+
+---------------------------------
+
+
+
+
+OK, 
+
+
+MAS O CÓDIGO DO PROFESSOR JÁ FICOU UM POUCO DIFERENTE DO MEU... --> 
+
+
+
+
+ele 
+
+faz o 
+
+
+render 
+
+de uma 
+
+
+SINGLE div,
+
+UMA DIV 
+
+QUE 
+
+TERÁ 
+OUTRA DIV NO MEIO,
+
+E 
+ESSA DIV
+ TERÁ 
+
+ 2 LINKS...
+
+
+ ex:
+
+
+
+
+
+
+ import React, { Component } from 'react';
+
+import { BrowserRouter } from 'react-router-dom';
+
+import Users from './containers/Users';
+
+import Pizza from './containers/Pizza';
+
+class App extends Component {
+
+
+    
+
+
+
+
+
+  render() {
+
+
+
+
+
+    return (
+        <div>
+            <div>
+            
+            </div>
+        </div>
+    );
+  }
+}
+
+
+
+
+export default App;
+
+
+
+
+
+--------------------------------
+
+
+
+
+O PROFESSOR ENTÃO IMPORTA 
+
+
+o objeto/component 
+
+'Link' 
+
+LÁ DO 'react-router-dom'
+
+
+
+
+
+
+--> ele então 
+
+define 
+
+um 
+
+'Link' 
+
+
+
+'to="/"  ----> E COM ESSE LINK VAMOS QUERER ALCANÇAR 
+
+OS 'Users'...
+
+
+
+
+
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+
+ import React, { Component } from 'react';
+
+import { BrowserRouter } from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
+
+import Users from './containers/Users';
+
+import Pizza from './containers/Pizza';
+
+class App extends Component {
+
+
+    
+
+
+
+
+
+  render() {
+
+
+
+
+
+    return (
+        <div>
+            <div>
+                <Link to="/">Users</Link>
+            </div>
+        </div>
+    );
+  }
+}
+
+
+
+
+export default App;
+
+
+-----------------------------------------
+
+
+
+
+-------------------------------------------------
+
+
+
+
+
+CERTO,
+
+
+E COMO 
+
+
+A PARTE DO SITE RELATIVA 
+
+À 
+
+PIZZA 
+
+DEVERÁ 
+
+SER 
+
+
+'lazy loaded',
+
+
+
+
+PROFESSOR NOS MOSTRA UMA SINTAXE BIZARRA, SINTAXE USANDO 
+
+O SÍMBOLO 
+
+DE 
+
+'pipe ('|')....
+
+
+
+
+---> ELE DIZ QUE O PIPE SYMBOL É USADO PARA ADICIONAR UMA SEPARAÇÃO ENTRE OS LINKS.... (bem gozado).
+
+
+
+eX:
+
+
+
+
+
+ import React, { Component } from 'react';
+
+import { BrowserRouter } from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
+
+import Users from './containers/Users';
+
+import Pizza from './containers/Pizza';
+
+class App extends Component {
+
+
+    
+
+
+
+
+
+  render() {
+
+
+
+
+
+    return (
+        <div>
+            <div>
+                <Link to="/">Users</Link> |   ////EIS O CÓDIGO EM QUESTÃO.
+                <Link to="/pizza">Pizza</Link>
+            </div>
+        </div>
+    );
+  }
+}
+
+
+
+
+export default App;
+
+
+
+
+
+---------------------------------
+
+
+
+
+PROFESSOR 
+
+
+EXPLICA QUE 
+
+
+ESSE 
+
+
+CONTAINER 
+
+
+
+'Pizza' 
+
+DEVERÁ 
+
+SER __lAZY LOADED___...
+
+
+
+
+
+
+
+
+
+MAS A PARTE INTERESSANTE 
+
+VEM 
+
+EMBAIXO
+ 
+
+
+
+ DESSA 
+
+
+ DIV 
+
+
+
+ COM OS 
+
+
+ LINKS.... --> PQ 
+
+ nessa div 
+
+ MAIS INFERIOR,
+
+ O PROFESSOR 
+
+ VAI QUERER 
+
+
+ RENDERIZAR 
+
+ AS 
+
+ ___ROUTES___....
+
+
+
+ -----------------------
+
+
+
+
+
+ PARA ISSO,
+ É CLARO,
+
+
+ O PROFESSOR 
+ VAI IMPORTAR 
+
+
+ 'Route' 
+
+ LÁ 
+
+ DO 
+
+
+ 'react-router-dom'....
+
+
+
+
+
+ 'import { Route } from 'react-router-dom';
+
+
+
+ ------------------------------------
+
+ OK...
+
+
+
+ NESSA 
+
+
+
+ OUTRA 
+
+ DIV,
+
+
+ PROFESSOR 
+
+ DIZ QUE 
+
+
+ AS 
+
+
+ ROUTES 
+
+ DEVERÃO 
+
+ SER 
+
+
+ SIMPLES... ----> 
+
+
+
+
+
+ professor vai colocar  
+
+ uma route com um 
+
+ path de 
+
+ '/',
+
+ o qual deverá 
+ ser MATCHEADO 
+
+ EXATAMAENTE ('exact')
+
+ PARAA
+
+
+
+ QUE 
+
+ SEJA ESCOLHIDO/SEGUIDo... ---> E O COMPONENT 
+
+ QUE 
+
+ SERÁ 
+
+ CARREGADO 
+
+ SERÁ O COMPONENT 
+
+
+ 'Users'...
+
+
+ ex:
+
+
+
+ <Route path="/" exact component={Users} />
+
+
+
+
+
+
+ --------------------------------
+
+
+
+ EX:
+
+
+
+
+
+ import React, { Component } from 'react';
+
+import { BrowserRouter } from 'react-router-dom';
+
+import { Route } from 'react-router-dom';
+
+import Users from './containers/Users';
+
+import Pizza from './containers/Pizza';
+
+class App extends Component {
+
+
+    
+  render() {
+
+    return (
+        <div>
+            <div>
+                <Link to="/">Users</Link> | 
+                <Link to="/pizza">Pizza</Link>
+            </div>
+            <div>
+            <Route path="/" exact component={Users} /> 
+            </div>
+        </div>
+    );
+  }
+}
+
+
+export default App;
+
+
+
+----------------------------------
+
+
+
+
+OK... 
+
+
+
+MAS O PROFESSOR TAMBÉM VAI QUERER IMPORTAR 
+
+A PIZZA,
+
+
+
+
+
+
+
+---> ELE VAI COLOCAR 
+
+A SEGUNDA ROUTE, a route de 
+
+path 
+
+'/pizza',
+
+
+
+
+COMO CARREGADORA DO COMPONENT 
+
+'pizza'... ------> ENTRETANTO,
+
+ESSE COMPONENT 
+
+
+'PIZZA' DEVERÁ ___SER LAZYLOADED__.... --> 
+
+
+E 
+
+
+NÓS 
+
+JÁ 
+
+APRENDEMOS 
+
+SOBRE COMO 
+
+FAZER O LAZY LOADING DE UMA ROUTE 
+
+EM 
+NOSSOS APPS.... ---> devemos tentar fazer isso 
+
+sozinhos...
+
+
+
+
+
+
+
+
+--> PRECISAMOS DE UM 
+
+
+COMPONENT 
+
+'hoc',
+
+
+UM HIGHER ORDER COMPONENT.... --> para isso,
+
+PRECISAMOS 
+
+DE UM 
+
+FOLDER 
+
+
+chamado 
+
+de 
+
+'hoc',
+
+
+onde criaremos aquele 
+
+arquivo 
+
+
+'AsyncComponent.js'...
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+
+import { BrowserRouter } from 'react-router-dom';
+
+import { Route } from 'react-router-dom';
+
+import Users from './containers/Users';
+
+// import Pizza from './containers/Pizza';
+
+import asyncComponent from './hoc/AsyncComponent/AsyncComponent'; ///EIS O CÓDIGO EM QUESTÃO.
+
+const AsyncPizza = asyncComponent(() => {
+  return import('../src/containers/Pizza');
+});
+
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <div>
+          <Link to="/">Users</Link> |<Link to="/pizza">Pizza</Link>
+        </div>
+        <div>
+          <Route path="/" exact component={Users} />
+          <Route path="/pizza" component={AsyncPizza} />  ////EIS O CÓDIGO EM QUESTÃO.
+        </div>
+      </div>
+    );
+  }
+}
+
+export default App;
+
+
+
+
+
+
+
+-----------------------------
+
+
+
+OK,
+
+AGORA 
+
+A PIZZA é
+
+
+CARREGADA ASSÍNCRONAMENTE/ COM LAZY LOADING... 
+
+
+
+
+
+
+
+
+
+---> CERTO, AGORA JÁ TEMOS 
+
+O 
+
+'App' settado... ---> só precisamos MONTAR ESSE
+
+
+
+'App' 
+
+lá 
+
+
+no arquivo 
+
+'index.js'...
+
+
+-------------------------------
+
+
+PROVAVELMENTE VAMOS TER DE ESCREVER (em 'index.js'):
+
+
+
+
+
+
+import React from 'react';
+
+
+import ReactDOM from 'react-dom';
+
+import App from './App';
+
+
+
+----------------------------------------
+
+
+
+
+
+TIPO ISTO:
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+
+import './index.css';
+
+
+
+
+
+
+
+
+
+
+ReactDOM.render(
+    <BrowserRouter>
+    <App />
+    </BrowserRouter>,
+    document.getElementById('root')
+)
+
+
+
+
+
+----------------------------------
+
+
+
+
+COM ISSO,
+
+
+NOSSO 
+
+REACT APP ESTARÁ MONTADO... DEVE FUNCIONAR,
+
+
+DEPOIS QUE 
+INSTALARMOS O REACT 
+
+
+NO NOSSO BUILD WORKFLOW...

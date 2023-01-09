@@ -1,0 +1,1149 @@
+
+
+
+
+
+AGORA PRECISAMOS DE BOTÕES NO NOSSO ORDERSUMMARY ---> Queremos isso 
+
+
+para que tenhamos 
+
+uma escolha entre CONTINUAR OU CANCELAR MEU PEDIDO.
+
+
+
+
+
+
+
+
+
+
+----> vou adicionar 2 botões lá no component 
+
+'OrderSummary'....:
+
+
+
+
+import React from 'react';
+
+
+import Aux from '../../../hoc/Auxiliary';
+
+
+
+const orderSummary = (props) => {
+
+
+
+
+
+    
+    const capitalizeFirstLetter = string =>  {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+
+
+    const ingredientSummary = Object.entries(props.ingredients);
+    console.log(ingredientSummary);
+ 
+
+
+
+    return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        <ul>
+            <li>{capitalizeFirstLetter(ingredientSummary[0][0])}: {props.ingredients.salad}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[1][0])}: {props.ingredients.bacon}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[2][0])}: {props.ingredients.cheese}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[3][0])}: {props.ingredients.meat}</li>
+        </ul>
+        <h2>Price: $ {props.price.toFixed(2)}</h2>
+        <button>CANCEL</button>
+        <button>CONTINUE</button>
+
+        </Aux>
+
+
+
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+export default orderSummary
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+
+OU SEJA,
+
+
+'CANCEL' 
+
+
+E 'CONTINUE' --->        <button>CANCEL</button>
+        <button>CONTINUE</button>
+
+
+
+
+
+
+
+
+---> O cancel vai BASICAMENTE FAZER A MESMA COISA ____ QUE 
+
+CLICAR ___ NO BACKDROP, NO ELEMENTO 'BACKDROP'... (isso vai FECHAR nosso 
+
+ordersummary e nosso backdrop)... ----> talvez precisemos 
+
+
+do CONTEXT 
+
+nesse negócio, para acessar 
+
+
+o 
+
+'clicked' 
+
+
+de 
+
+'Backdrop'... 
+
+
+
+
+
+(JÁ O CONTINUE NÃO VAI TER NADA POR ENQUANTO....) ----> adicionaremos essa lógica mais tarde...
+
+
+
+--------------------------------------------
+
+
+
+
+PARA CONSEGUIR FAZER O 
+
+
+BOTÃO 'CANCEL'
+
+
+FECHAR O BACKDROP
+
+
+E O 
+
+
+MODAL,
+
+
+eu 
+
+
+coloquei o prop de 'clicked' lá no 
+
+
+CALL DE 'MODAL', no component BurgerBuilder...
+
+
+
+ex:
+
+
+
+
+ <OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice} clicked={this.purchaseCancelHandler}></OrderSummary>
+
+
+
+
+
+ -----------------------------------------
+
+
+
+
+
+ ENTRETANTO, UM PROBLEMA DESSES BUTTON É QUE AINDA 
+
+
+ PRECISAMOS OS ESTILIZAR....  ---> e professor admite 
+ 
+
+
+ QUE ELE VAI REUTILIZAR ALGUNS DOS BUTTON STYLES QUE 
+
+
+ ELE USOU ANTES... ------> 
+
+
+ 
+
+ TER UM BOTÃO DE 'CANCEL' E DE 'CONTINUE' ___sempre___ é algo que 
+
+ FAZ MUITO SENTIDO... ---> e é por isso, diz o professor, 
+
+
+ que 
+
+
+ faz sentido 
+
+ OUTSOURCEAR
+  
+
+  ESSES 2 BOTÕES, TRANSFORMÁ-LOS EM SEUS PRÓPRIOS COMPONENTS...
+
+
+
+
+  (esse elemento html de 'button', elemento padrão, não é suficiente para nós.)
+
+
+
+
+
+
+
+
+
+
+
+
+------> devemos COLOCAR ESSES BUTTONS EM COMPONENTS AUTÔNOMOS 
+
+
+PQ AÍ TEREMOS UM ESTILO QUE SEMPRE SERÁ APLICADO A ELES, NÃO VAMOS TER 
+
+QUE 
+
+'STYLE FROM SCRATCH'
+ 
+ cada vez 
+
+ que 
+
+ criarmos um 
+
+ elemento button em alguma parte do nosso código...
+
+
+
+
+
+
+
+
+
+-----> PARA ISSO, O PROFESSOR VAI ATÉ O FOLDER 'UI' 
+
+e cria 
+
+
+um 
+
+FOLDER/COMPONENT 
+
+'Button'...
+
+
+
+
+
+
+
+
+FICARÁ ASSIM:
+
+
+
+import React from 'react';
+
+
+
+const button = (props) => {
+    
+
+    return (
+        <button>{}</button>
+    )
+}
+
+
+
+
+export default button; 
+------------------------------------------------------------
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+
+
+
+COM ISSO, 
+
+PRECISAMOS 
+
+ESCREVER UM CÓDIGO JSX DIFERENTEZINHO...
+
+
+vamos 
+
+
+escrever 
+
+<button></button>, sim,
+
+
+MAS ___vAMOS PRECISAR __DEFINIR ALGUNS PROPS NESSE 
+
+ELEMENTO 
+
+'BUTTON'...
+
+
+
+
+
+
+--> e a primeira coisa que o professor faz é OUTPUTTAR 
+
+
+'{props.children}' NO MEIO DA OPENING E CLOSING TAGS DESSE BUTTOn...
+
+
+
+
+ex:
+
+
+
+import React from 'react';
+
+
+
+const button = (props) => {
+    
+
+    return (
+        <button>{props.children}</button>
+    )
+}
+
+
+
+
+export default button; 
+
+
+
+
+
+------------------------------------------------------
+
+
+
+
+
+'{PROPS.CHILDREN}' ----> professor escreve isso 
+
+
+PARA QUE 
+
+
+SEJA POSSÍVEL USAR ESSE BUTTON COMO UM 'NORMAL BUTTON',
+
+e para que ele possa simplesmente 
+
+
+
+___WRAPPAR____ O CONTEÚDO QUE VAI DENTRO DESSE COMPONENT 
+
+'BUTTON' 
+
+com o MEU
+
+
+'custom button element' em si...
+
+
+
+
+
+
+
+
+
+-----> PROFESSOR TAMBÉM EXPLICA QUE 
+
+ELE VAI PRECISAR 
+
+
+DE UM 
+
+
+listener 
+
+de 
+
+'onClick' nesse prop aí.... -----> ele vai colocar 
+
+
+um placeholder de 
+
+'props.clicked' no slot do valor...
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+import React from 'react';
+
+
+
+const button = (props) => {
+    
+
+    return (
+        <button onClick={ props.clicked }
+        
+        >{props.children}</button>
+    )
+}
+
+
+
+
+export default button; 
+
+
+
+
+----------------------------------------------------------
+
+
+
+
+--> E, É CLARO, 
+
+
+A PARTE IMPORTANTE: 
+
+
+vou precisar 
+
+
+DE DIFERENTES 'STYLINGS' PARA DIFERENTES 
+
+
+TIPOS DE BUTTONS....
+
+
+
+(um para o botão de continue, outro para o de cancel, etc etc...)
+
+
+
+
+
+
+
+
+-------> PRIMEIRAMENTE, 
+
+
+DEVEMOS CRIAR UM 
+
+
+
+
+ARQUIVO CSS DE 
+
+'Button.module.css'...
+
+
+
+
+
+
+
+
+
+
+--> COMO ANTES,
+
+PROFESSOR NOS DÁ ALGUNS BUTTON STYLES... -------> 
+
+
+
+
+
+'SUCCESS' E 'DANGER'....
+
+
+
+
+
+
+
+-------> AGORA, PORTANTO, 
+
+ADICIONAR 
+
+
+'className={}' 
+
+
+
+nesse elemento button..
+
+
+
+
+
+
+
+
+----> antes disso, importamos 'Button from './Button.css'...
+
+
+
+---------------------------------
+
+
+
+
+NO CLASSNAME,
+
+
+devemos 
+
+passar 
+
+uma 
+
+__sTRING____... (tem que ser uma STRING)... ----> 
+
+
+
+o professor diz que devemos passar um __aRRAY___ ---> UÉ, MAS PQ UM ARRAY? -------> 
+
+
+
+UM ARRAY PQ __NÓS VAMOS SEMPRE __ QUERER O ESTILO 
+
+DE 
+
+'.Button', mas nós vamos querer CONDICIONALMENTE os estilos 
+
+
+
+de 
+
+'.Danger' e 'Success' -------> 
+
+
+
+aí ficará 
+
+
+
+
+'className={[Button.Button]}'   (ISSO __INICIALMENTE__... )
+
+
+
+
+
+
+
+
+MAS DEPOIS DISSO, ELE VAI USAR A ''MÁGICA'' DOS INDEXADORES ___ para 'puxar___ um certo tipo de estilo do arquivo de estilos.... --> para isso, ele vai usar um código de 'Button/Classes(depende do NOME DO OBJETO DE ESTILO QUE VOCÊ ESCOLHEU)'[props.btnType] -------> ficaria 'classes[props.btnType]'... 
+
+
+
+fica 
+
+
+
+'''className={[Button.Button, Button[props.btnType]]}''''
+
+
+
+
+--------------------------------------------
+
+
+
+
+
+o 
+
+
+
+'btnType' 
+
+
+
+TEM QUE 
+
+
+
+SER ____OU 'DANGER' ___ OU 'SUCCESS', 
+
+
+dependendo do button que você quer, e em que lugar você o quer...
+
+
+---------------------------------
+
+
+
+
+CERTO,
+
+
+CÓDIGO FICOU ASSIM:
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+import Button from './Button.module.css';
+
+
+
+
+
+const button = (props) => {
+    
+
+    return (
+        <button className={[Button.Button, Button[props.btnType]]}
+        onClick={props.clicked}
+        >
+            
+            
+            {props.children}
+            </button>
+    )
+}
+
+
+
+export default button; 
+
+
+
+
+----------------------------------
+
+
+
+E ASSIM:
+
+
+
+
+
+ return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        <ul>
+            <li>{capitalizeFirstLetter(ingredientSummary[0][0])}: {props.ingredients.salad}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[1][0])}: {props.ingredients.bacon}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[2][0])}: {props.ingredients.cheese}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[3][0])}: {props.ingredients.meat}</li>
+        </ul>
+        <h2>Price: $ {props.price.toFixed(2)}</h2>
+        {/* <button onClick={props.clicked}>CANCEL</button>
+        <button>CONTINUE</button> */}
+        <Button clicked={props.clicked} btnType=".Success">
+        CONTINUE
+        </Button>
+        <Button clicked={props.clicked} btnType=".Danger">
+        CANCEL
+        </Button>
+
+        </Aux>
+
+
+
+    )
+
+
+----------------------------------
+
+
+
+
+MAS ISSO __NÃO FUNCIONOU__, AINDA... OS ESTILOS DO BUTTON AINDA NÃO FORAM APLICADOS... --->
+
+
+professor explica que 
+
+
+a razão para os estilos ainda não estarem aplicados 
+
+
+ESTÁ 
+
+
+LÁ NAQUELE ARRAY MALUCO
+ 
+
+
+ em 'className' ----> 
+
+
+
+
+ <button className={[Button.Button, Button[props.btnType]]}.... --------->
+
+
+
+
+
+
+
+
+
+ FALTA EXECUTAR UM MÉTODO em cima de 
+
+
+ 'Button[props.btnType]'...
+
+
+ ---------------------------------
+
+
+
+ (professor explica que poderíamos usar outro approach para adicionar estilos 
+ 
+ aos nossos buttons, mas que ele prefere este pq é mt flexível e rápido.)
+
+
+
+
+
+
+
+
+ OK: A RAZÃO DO PROBLEMA:
+
+
+
+ aquele array de 
+
+
+ [Button.Button, Button[props.btnType]], É __JUSTAMENTE___ UM ARRAY... 
+
+
+
+ e em 'className' PRECISAMOS ___DE UMA __STRING__.... -------> 
+
+
+
+ E É POR ISSO QUE 
+
+ O PROFESSOR 
+
+ VAI USAR 
+
+
+ O 
+
+ método '.join' EM CIMA DESSE ARRAY, para unir 
+
+
+ esses 2 pedaços, unir 
+
+ o 
+
+
+ 'Button.Button' 
+
+ e o 
+
+ 'Button[props.btnType]'...
+
+
+
+
+---------------------------
+
+
+
+
+''''.join(' ') ''''' --------> ISSO VAI UNIR OS NOMES DAS 2 CLASSES E ENTÃO deixar um wide space entre os estilos...
+
+
+
+ex:
+
+
+
+
+
+
+
+
+
+import React from 'react';
+
+
+
+
+import Button from './Button.module.css';
+
+
+
+
+
+const button = (props) => {
+    
+
+    return (
+        <button className={[Button.Button, Button[props.btnType]].join(' ')} //////EIS O CÓDIGO EM QUESTÃO.
+        onClick={props.clicked}
+        >
+            
+            
+            {props.children}
+            </button>
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export default button; 
+
+
+
+
+---------------------------
+
+
+
+
+
+CERTO,
+
+
+ERA TUDO PROBLEMA 
+
+
+DE SINTAXE... ('.' antes do valor do className, etc etc...)
+
+
+
+
+
+
+
+
+
+
+
+
+---> em orderSummary já havíamos passado 
+
+
+
+
+um prop de 
+
+'clicked' ---> esse prop faz o __CLOSE___ do 
+
+backdrop e 
+
+
+do modal 
+
+quando o botão em que é vinculado (botão que criamos faz pouco) 
+
+
+É CLICADO... ('onClick')...
+
+
+
+
+---> mas precisamos 
+
+
+DE __OUTRO PROP__ ,
+
+
+OUTRO PROP QUE DEVE SER ENFIADO 
+
+
+NO BUTTON DE 'SUCCESS'...  ---------> PARA 
+
+
+ESSA HIPÓTESE,
+
+
+
+O PROFESSOR 
+
+ADICIONA 
+
+
+UM OUTRO MÉTODO 
+
+
+EM 
+
+
+'BURGERBUILDER',
+
+
+O MÉTODO 
+
+
+
+'purchaseContinueHandler'... -----> eX:
+
+
+
+
+
+purchaseContinueHandler = () => {
+    alert('You Continue!');
+}
+
+
+
+---------------------------------
+
+
+
+ISSO É ALGO PROVISÓRIO, É CLARO.
+
+
+
+
+
+
+
+O CÓDIGO FICOU ASSIM (em 'Order Summary'):
+
+
+
+
+
+
+
+
+    return (
+        <Aux>
+        <h3>Your Order</h3>
+        <p>A delicious burger with the following ingredients:</p>
+        <ul>
+            <li>{capitalizeFirstLetter(ingredientSummary[0][0])}: {props.ingredients.salad}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[1][0])}: {props.ingredients.bacon}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[2][0])}: {props.ingredients.cheese}</li>
+            <li>{capitalizeFirstLetter(ingredientSummary[3][0])}: {props.ingredients.meat}</li>
+        </ul>
+        <h2>Price: $ {props.price.toFixed(2)}</h2>
+        {/* <button onClick={props.clicked}>CANCEL</button>
+        <button>CONTINUE</button> */}
+        <Button clicked={props.success} btnType="Success">
+        CONTINUE
+        </Button>
+        <Button clicked={props.clicked} btnType="Danger">
+        CANCEL
+        </Button>
+
+        </Aux>
+
+
+
+    )
+
+
+
+
+
+
+E ASSIM(EM BURGERBUILDER):
+
+
+
+
+
+    return (
+      <Aux>
+        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+        <OrderSummary ingredients={this.state.ingredients} price={this.state.totalPrice} clicked={this.purchaseCancelHandler} success={this.purchaseContinueHandler}></OrderSummary> //////////EIS O CÓDIGO EM QUESTÃO.
+        </Modal>
+       
+        <Burger ingredients={this.state.ingredients}/>
+     
+        <BuildControls 
+        disabled={disabledInfo} 
+        price={this.state.totalPrice}
+        ingredientAdded={this.addIngredientHandler} 
+        ingredientRemoved={this.removeIngredientHandler}
+         disableButton={ingredientCountSum}
+         ordered={this.purchaseHandler}
+      
+         />
+        
+      </Aux>
+    );
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+Certo....
+
+
+
+
+
+-----------------------------
+
+
+
+
+
+
+
+ISSO TUDO ESTÁ FUNCIONANDO.... --> o alert de 'you continued' está funcionando...
+
+
+
+
+
+
+
+
+
+
+---> OK, O 'BURGER BUILDER' EM SI __eSTÁ PRONTO__... (o 'burgerside')...  ------> 
+
+
+
+MAIS TARDE NO CURSO VAMOS VER 
+
+
+SOBRE 
+
+COMO ___REALMENTE FAZER UMA 'PURCHASE' 
+
+E SOBRE COMO __ARMAZENAR ESSA PURCHASE EM UMA ___DATABASE_/servidor de verdade (
+
+    e é nesse lugar que essa 'order' seria processada, caso esse app fosse de verdade.
+)
+
+
+
+
+
+
+---> NÓS TAMBÉM VAMOS VER COMO __ADICIONAR __ MAIS __PÁGINAS_... --> para que 
+
+
+o usuário também 
+
+possa ver uma PÁGINA DAS __oRDERS__ QUE ELE JÁ FEZ/PEDIU...
+
+
+
+
+
+---> NÓS TAMBÉM VAMOS FAZER UM 'OVERHAUL' DESSE APP COM O __REDUX___...
+
+
+--------------------------------------
+
+
+
+
+PRECISAMOS ___AINDA__ FAZER A ___TOOLBAR__, 
+
+O __SIDEDRAWER___ E 
+
+
+
+O ___ BACKDROP ___ PARA O SIDEDRAWER.... (bem, o backdrop nós já temos, mas 
+
+o resto ainda temos que fazer);.......
+
+
+
+
+
+
+
+O PRICE NÓS JÁ ADICIONAMOS NO 'ORDERSUMMARY', POR ISSO PODEMOS __PULAR__ ESSA AULA...

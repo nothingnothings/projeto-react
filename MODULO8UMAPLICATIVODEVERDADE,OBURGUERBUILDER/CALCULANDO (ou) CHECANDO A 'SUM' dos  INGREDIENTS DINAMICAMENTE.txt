@@ -1,0 +1,1381 @@
+ ---> certo.. já 
+
+
+ conseguimos fazer o
+
+
+
+ OUTPUT DE UMA LISTA DE 'BURGER INGREDIENTS' --> elementos jsx 'ingredients'
+
+
+ já são efetivamente outputtados, eles são criados a partir de um monte de key-value pairs 
+
+
+em um objeto dentro da propriedade 'state' em 'BurgerBuilder'....
+
+
+
+
+
+------------------------
+
+
+ISSO SIGNIFICA QUE A PRIMEIRA GRANDE ETAPA JÁ FOI CONCLUÍDA... ------->
+
+
+
+
+CERTO... 
+
+
+
+MAS, E AGORA, COMO FAZEMOS PARA DEFINIR 
+
+
+UM 
+
+__HAMBURGER___ QUE 
+
+COMEÇA COM 
+'0' 
+
+EM TODOS OS 'ingredients' --> 
+
+
+ou seja,
+
+que 
+
+começa com 
+
+
+
+' state = {
+    ingredients: {
+        salad: 0,
+        bacon: 0,
+        cheese: 0,
+        meat: 0
+    }
+}'
+?????
+
+
+
+
+
+
+---------> BEM, SE NÓS FIZERMOS ISSO,
+
+VEREMOS 
+
+
+SÓ UM HAMBURGER SEM NADA. ------> isso 
+
+
+é perfectly fine, pq aí 
+
+isso só significará que 
+
+NÃO TEMOS INGREDIENTS 
+
+
+PARA RENDERIZAR quando todos as propriedades 'ingredient' possuem valor '0'...
+
+
+
+
+
+--> MAS 
+
+SERIA BEM MELHOR SE FOSSE MOSTRADA/OUTPUTTADA/DISPLAYED 
+
+
+UMA MENSAGEM 
+
+
+QUE DISSESSE 
+
+'please add ingredients',
+
+ou algo do gênero.
+
+
+------------------------------
+
+
+
+PARA 
+
+
+
+MOSTRAR 
+
+
+ALGO 
+
+
+
+NA HIPÓTESE DE EU __NÃO TER NENHUM INGREDIENT__,
+
+
+ 
+EU PRECISO/O REACT PRECISA ___DESCOBRIR 
+
+
+
+QUE __NÃO HÁ NENHUM INGREDIENT/ingredients__....
+
+
+
+
+
+CÓDIGO DE BURGER( no momento):
+
+
+
+
+
+import React from 'react';
+
+import BurgerStyle from './Burger.module.css';
+
+import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
+
+const burger = (props) => {
+  const transformedIngredients = Object.keys(props.ingredients).map((igKey) => {
+   
+    return [...Array(props.ingredients[igKey])].map((_, i) => {
+      return <BurgerIngredient key={igKey + i} type={igKey} />;
+    });
+  });
+
+  return (
+    <div className={BurgerStyle.Burger}>
+      <BurgerIngredient type="bread-top" />
+      {transformedIngredients}
+      <BurgerIngredient type="bread-bottom" />
+    </div>
+  );
+};
+
+export default burger;
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+Certo...
+
+
+
+o fato é que 
+
+'transformedIngredients'  __SEMPRE SERÁ, NO ENTANTO, UM __ARRAY__... ----->
+
+
+
+ele sempre será um array,
+
+ __MESMO QUE __ELE SEJA UM ___''ARRAY DE EMPTY ARRAYS'''', no final das contas...
+
+
+
+
+
+ --> MAS ISSO, ESSE 'ESTADO DE SER', O FATO 
+
+ DE 
+
+
+ 'transformedIngredients' ser um ARRAY DE ARRAYS VAZIOS 
+
+ é algo que 
+
+
+ __É BEM DIFÍCIL DE USAR EM 'CHECKS'.... (é bem difícil de fazer um 
+ 
+ 
+ 'CHECK' com um array desses) -----------> 
+
+
+
+ CERTO, ENTÃO COMO DIABOS PODEMOS 
+
+
+ SABER 
+
+ SE NÓS 
+
+ ___rECEBEMOS___ INGREDIENTS OU NÃo? --------------->
+
+
+
+ PROFESSOR 
+
+
+ EXPLICA QUE 
+
+
+
+ A SOLUÇÃO RESIDE 
+
+
+ NO 
+
+ MÉTODO 
+
+
+ '.reduce()'...
+
+
+
+
+
+
+ Antes de fazermos isso, devemos simplesmente 
+
+
+ CONSOLE.LOGGAr 'transformedIngredients'
+
+
+ PARA VER ___COMO ISSO __ SE PARECE __ NO NOSSO CÓDIGO...  (console.loggar __ANTES__ do return desse 'transformedIngredients' lá no nosso método 'render'...)
+
+
+
+ ex:
+
+
+
+
+
+const burger = props => {
+
+  
+
+
+  const transformedIngredients = Object.keys(props.ingredients)
+  .map(igKey => {
+    return [...Array(props.ingredients[igKey])].map(
+
+      ( _, i ) => {
+        return <BurgerIngredient key={igKey + i} type={igKey} />
+      }
+    
+
+    
+    )
+  }
+
+
+
+
+
+
+  )
+
+   console.log(transformedIngredients); ///////EIS O CÓDIGO EM QUESTÃO.
+
+
+
+
+  return (
+  
+
+
+
+    
+    <div className={BurgerStyle.Burger}>
+      <BurgerIngredient type="bread-top" />
+
+            {transformedIngredients}
+      <BurgerIngredient type="bread-bottom" />
+    </div>
+  );
+};
+
+
+
+------------------------------------
+
+
+
+
+
+CERTO,
+
+
+SALVAMOS 
+
+
+ISSO E VEMOS ESTE OUTPUT NO CONSOLE:
+
+
+
+
+0: []
+1: []
+2: []
+3: []
+
+
+-----------------------------------
+
+
+
+OU SEJA, PODE-SE 
+
+PERCEBER QUE 
+
+'transformedIngredients' FUNCIONA, 
+
+
+MAS QUE 
+
+SEUS ARRAYS ESTÃO TODOS VAZIOS (E por isso 
+
+não há o display de coisa alguma) ---> isso aconteceu 
+
+
+PQ __ NÓS DEFINIMOS OS 'INGREDIENTS'__ lá no 
+
+'state' de burgerBuilder 
+
+
+COMO 
+
+TENDO O VALOR 0 (Todos eles estão com o valor 0... ) --->  '''
+
+ state = {
+    ingredients: {
+        salad: 0,
+        bacon: 0,
+        cheese: 0,
+        meat: 0
+    }
+}
+
+''''
+
+
+---------------------------------------
+
+
+
+
+
+CERTO.... ISSO SIGNIFICA QUE 
+
+
+ESCREVER 
+
+'CHECKS' 
+
+COM BASE 
+
+
+NA __LENGTH____ DOS INGREDIENTS __ NÃO VAI FUNCIONAR_.... ---> não 
+
+
+
+vai funcionar A LENGTH DESSE 
+
+
+__gRANDE___ ARRAY É __4____( será SEMPRE 4) ...
+
+
+
+
+
+
+''''[  [], [], [], []   ]'''''
+
+
+
+
+
+
+OU SEJA,
+
+
+NÃO É A LENGTH 
+
+DO ___ ELEMENTO 'EXTERNO' (transformedIngredients') 
+
+QUE 
+NOS INTERESSA; 
+
+O QUE 
+
+NOS INTERESSA É __A LENGTH __ DE CADA COMPONENTE INTERNO (cada um daqueles mini 
+
+arrays, que representam 'cheese', 'meat', 'salad', 'bacon').
+
+
+
+
+
+
+
+--------------------> O QUE PODEMOS FAZER AQUI, DIZ O PROFESSOR, 
+
+É O SIMPLES 
+
+'FLATTENING' DESSE ARRAY de 'transformedIngredients'... --> ou seja,
+
+
+
+
+
+DEVEMOS __ASSEGURAR ___ QUE 
+
+TODOS OS ELEMENTOS 'MINI-ARRAY' DE DENTRO 
+
+DESSE ARRAY GRANDE 
+
+
+
+TENHAM SEUS ELEMENTOS INTERNOS (os components 'ingredient') 
+
+
+EXTRAÍDOS DE 
+
+SEU INTERIOR
+
+
+E ENTÃO LANÇADOS 
+
+
+NESSE ARRAY GRANDE... 
+
+
+
+
+
+RESUMINDO:
+
+
+
+
+QUEREMOS QUE ISTO:
+
+
+
+[  [], [], [], []   ]
+
+
+
+
+
+VIRE ISTO:
+
+
+
+
+[, , , , , , , , , , ]  -------> PQ PODEMOS USAR 
+
+
+A PROPRIEDADE 
+
+'.length' 
+
+EM CIMA 
+
+
+DESSE GRANDE ARRAY AÍ, ALGO QUE NÃO PODEMOS FAZER COM AQUELE FORMATO '[  [], [], [], []   ]'....
+
+
+
+
+
+
+
+
+---> PARA 
+
+
+CONSEGUIR ESSE RESULTADO,
+
+
+DEVEMOS 
+
+
+USAR O MÉTODO 
+
+'.reduce()' 
+
+
+__SOBRE___ O 'transformedIngredients'... (sobre essa constante...)
+
+
+
+
+-----------------------------------
+
+
+
+
+nomeDeArray.REDUCE() --> 
+
+
+
+
+
+O método reduce() executa uma função reducer 
+(fornecida por você) para cada elemento do array, 
+resultando num único valor de retorno.
+
+
+
+
+const array1 = [1, 2, 3, 4];
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+// 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer));
+// expected output: 10
+
+// 5 + 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer, 5));
+// expected output: 15
+
+
+
+
+
+
+A função reducer recebe quatro parâmetros:
+
+Acumulador (acc)
+Valor Atual (cur)
+Index Atual (idx)
+Array original (src)
+
+
+
+
+--------------------------------------
+
+
+NÃO ENTENDI COISA ALGUMA... --> 
+
+
+explicação do professor:
+
+
+
+'reduce()'
+
+
+é uma 
+
+
+FUNCTION __bUILTIN _ EM ARRAYS .... --> ELA 
+
+NOS DEIXA 
+
+
+___tRANSFORMAR UM ___ ARRAY__ EM ALGUMA OUTRA COISA.... (nada específica, essa explicação...).
+
+
+
+
+
+
+
+
+---> nós vamos chamar o '.reduce()', no nosso código,
+
+
+desta forma:
+
+
+
+
+
+
+  const transformedIngredients = Object.keys(props.ingredients)
+  .map(igKey => {
+    return [...Array(props.ingredients[igKey])].map(
+
+      ( _, i ) => {
+        return <BurgerIngredient key={igKey + i} type={igKey} />
+      }
+    
+
+    
+    )
+  }
+
+
+
+
+
+
+  ).reduce();/////////EIS O CÓDIGO EM QUESTÃO, chamado sobre o resultado de '.map()', OU SEJA, SOBRE O RESULTADO DO VALOR de 'const transformedIngredients'....
+
+
+  ---------------------------------------------------
+
+
+
+
+
+
+  --> 'REDUCE()' 
+
+
+
+  RECEBE UMA FUNÇÃO INTERNA (Arrow function)
+
+
+
+
+
+  COMO ARGUMENTO.... --> 
+
+
+  essa função interna,
+
+  POR SUA VEZ,
+
+  RECEBE ___DOIS ___ ARGUMENTOS __ AUTOMATICAMENTE (são passados pelo javascript)...
+
+
+
+  --> ESSES ARGUMENTOS SÃO 
+
+
+  1) O 'previousValue' (aqui o professor chamará de 'arr')
+
+
+
+
+  2) O 'currentValue' (aqui o professor chamará de 'el')
+
+
+
+
+
+  REPRESENTAÇÃO:
+
+
+
+
+.reduce(
+
+    (arr, el) => { }
+
+
+
+)
+
+
+
+
+----------------------------------
+
+
+
+--> ESSA FUNÇÃO INTERNA, É CLARO, É UMA __CALLBACK FUNCTION__.... --> isso significa 
+
+
+que ELA SERÁ EXECUTADA __ EM CADA ELEMENTO ___ EM QUE FIZEMOS 
+
+'RETURN' naquele array de 
+
+'transformedIngredients'... ------> CERTO...
+
+
+
+E ALÉM 
+
+DESSA FUNÇÃO 'CALLBACK'/interna,
+
+esse 
+
+
+MÉTODO 
+
+'.reduce()'
+
+TAMBÉM ___ACEITA UM SEGUNDO VALOR__, 
+
+
+QUE É O '''VALOR INICIAL/INITIALVALUE'''.... ----> o professor 
+
+definirá
+ 
+
+ esse valor inicial como SENDO UM __ARRAY VAZIO____....
+
+
+
+
+ ----------------
+
+
+
+ **OBS::: ACHO QUE ME LEMBREI COMO ESSA 
+
+ FUNÇÃO FUNCIONA... --> ela funciona por VÁRIOS CICLOS DE EXECUÇÃO/adição...
+
+
+ Basta ler esta lógica:
+
+
+ 
+const array1 = [1, 2, 3, 4];
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+// 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer));
+// expected output: 10
+
+// 5 + 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer, 5));
+// expected output: 15
+
+
+MÚLTIPLAS VEZES. ------------------> 
+
+
+SE VOCÊ NÃO PASSA NENHUM SEGUNDO PARÂMETRO (o 'initial value'),
+
+
+A LÓGICA DA FUNÇÃO INTERNA DE '.reduce()' vai SIMPLESMENTE 
+
+__IGNORAR ___ O VALOR DE 'accumulator' 
+
+E ENTÃO ___ADICIONAR O CURRENTVALUE (que, nesse caso, no PRIMEIRO 'CICLO', 
+
+será de 1....) ------>E aí 
+
+o '.reduce()' vai executar ESSA FUNÇÃO INTERNA ___EM CADA ELEMENTO__ DO 
+
+SEU ARRAY, em ordem....
+
+
+(ou seja, 
+
+
+será 
+
+
+
+
++ 1 + 2 + 3 + 4.... = 10
+
+)  ---> isso 
+
+a partir de uma lógica interna 
+
+de 
+
+
+'(accumulator, currentValue) => accumulator + currentValue;'
+
+
+
+
+--------------------
+
+
+
+
+
+CERTO... --------> 
+
+
+
+E 
+
+
+O 
+
+
+MÉTODO '.reduce()'
+
+
+
+NO NOSSO ARRAY 
+
+
+de 
+
+'transformedIngredients',
+
+
+TERÁ UM PARÂMETRO INICIAL DE '[]' (EMPTY ARRAY)....
+
+
+
+
+
+
+
+
+
+
+
+
+---> PROFESSOR EXPLICA QUE É CLARO QUE NÓS VAMOS QUERER 
+
+__AJUSTAR ESSE VALOR 'reduced'/reduzido (do nosso array)
+
+
+POR MEIO DO 
+
+
+
+___rETURN___ DE ALGUMA COISA...
+
+
+
+REPRESENTAÇÃO:
+
+
+
+
+'''código de transformedIngredients.map()''''.reduce( 
+
+    (arr, el) => {
+        return //////EIS O CÓDIGO EM QUESTÃO.
+    }, []
+)
+
+
+
+-----------------------------------------
+
+
+
+
+O QUE O PROFESSOR VAI QUERER 
+
+É QUE 
+
+
+____ A JAVASCRIPT ENGINE __ LOOPE __ POR DENTRO 
+
+
+DE TODOS OS ELEMENTOS NO ARRAY 'transformedIngredients' 
+
+
+E QUE 
+
+
+ENTÃO 
+
+ESSES ELEMENTOS SEJAM
+
+TODOS ADICIONADOS 
+
+
+àQUELE 'initial value' de '[]'.... ---> 
+
+
+
+
+
+
+
+PARA ISSO,
+
+
+O PROFESSOR 
+
+VAI QUERER 
+
+
+
+UM 
+
+
+RETURN 
+
+
+de 
+
+
+
+'arr'   (ARR = É  __O ROOT ARRAY __ SEMPRE ATUALIZADO QUE ___ O PROFESSOR QUER __QUE SEJA RETORNADO/ACUMULADO A CADA LOOP; é o ACCUMULATOR, em outras palavras.)
+
+
+
+
+
+
+
+
+
+Certo... ele vai 
+
+começar escrevendo 
+
+
+'return arr'.... --> 
+
+
+
+MAS ELE ___NÃO ACABA POR AÍ, NÃO... --->
+
+
+
+ele 
+
+
+ainda 
+
+
+
+VAI CHAMAR 
+
+'concat'
+
+
+
+
+SOBRE O ARGUMENTO 'el' (que é o '''CURRENTVALUE''/Current array element) ------> 
+
+
+
+
+
+OK, MAS O QUE FAZ O MÉTODO 
+
+
+'.concat()'?
+
+
+
+
+
+
+
+
+---> ARRAY.CONCAT() --> 
+
+
+
+O método concat() retorna um novo 
+array contendo todos os arrays ou valores passados como parâmetro.
+
+
+
+O código a seguir une dois arrays:
+
+var alpha = ["a", "b", "c"];
+var numeric = [1, 2, 3];
+
+// creates array ["a", "b", "c", 1, 2, 3]; alpha and numeric are unchanged
+var alphaNumeric = alpha.concat(numeric);
+
+
+
+
+----------------------------------------
+
+
+
+
+E É EXATAMENTE ISSO QUE ELE FARÁ AQUI,
+
+ELE CHAMARÁ 
+
+
+
+
+
+'return arr.concat(el)'... (OU SEJA, ELE __ VAI CONCATENAR/MISTURAR/LIGAR) OS 
+
+ELEMENTOS DENTRO DO ARRAY 'ANTERIOR' E 'ATUAL' 
+
+EM 1
+ 
+ ÚNICO GRANDE ARRAY... (os elementos vão se misturar....).
+
+
+
+
+
+ EX(RESULTADO no nosso código):
+
+
+
+
+
+
+
+
+  const transformedIngredients = Object.keys(props.ingredients)
+  .map(igKey => {
+    return [...Array(props.ingredients[igKey])].map(
+
+      ( _, i ) => {
+        return <BurgerIngredient key={igKey + i} type={igKey} />
+      }
+    
+
+    
+    )
+  }
+
+  ).reduce(
+
+      (arr, el) => {
+          return arr.concat(el);
+      }, 
+
+      []
+
+
+  );
+
+
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+ISSO VAI SIMPLESMENTE PEGAR O 
+
+ELEMENTO 
+
+
+'el' PELO QUAL ESTAMOS LOOPANDO (elemento 'futuro' que looparemos) 
+
+
+E ENTÃO O ADICIONA AO ARRAY 
+
+
+DO 
+
+'ELEMENTO ANTIGO' ('arr') ---->
+
+
+E ISSO FARÁ,
+
+
+
+BASICAMENTE,
+
+COM QUE 
+
+NOSSO ARRAY DE ARRAYS 
+
+VIRE UM ÚNICO ARRAY,
+
+
+COM 
+
+OS COMPONENTS/OBJETOS 'COMPONENT' 
+
+TODOS MISTURADOS... (isso se nós mantivermos 
+
+nosso código original, sem ter os ingredients todos como '0'....) ---> 
+
+
+
+SE TIVERMOS TODOS OS INGREDIENTS COM VALOR '0' lá no state,
+
+TEREMOS UM __ARRAY VAZIO__, AGORA...
+
+
+
+
+
+
+
+
+---> CERTO... --> e se eu for no meu state
+
+
+E EU 
+
+
+ESCREVER '2' em algum ingredient,
+
+EU 
+
+
+
+VOU VER RENDERIZADO NA MINHA PÁGINA A QUANTIDADE DE '2' DAQUELE INGREDIENT ESPECÍFICO.... ------>
+
+
+ISSO MOSTRA QUE 
+
+
+O VISUAL/COMPONENTS DE NOSSA 
+PÁGINA 
+
+ESTÃO 
+
+
+___REAGINDO__ A MUDANÇAS NO STATE 
+
+DE 
+
+'BURGERBUILDER'!!!
+
+
+
+
+
+---------> e se eu adicionar '2' desse elemento,
+
+
+
+eu vou 
+
+
+
+ver outputtado 
+
+no console aquele 
+
+
+console.log de 'transformedIngredients'
+
+como 
+
+
+tendo um valor de 
+
+um 
+
+
+array 
+
+
+de 
+
+'[{...], {...}]' -------> ARRAY COM 2 OBJETOS, OU SEJA,
+
+OS 2 
+
+COMPONENTS 'INgredient'
+
+QUE FORAM ADICIONADOS... ---> esses components/objetos são 
+
+
+
+ELEMENTOS JSX HANDLED BY REACT.... -------------->
+
+
+
+
+
+
+CERTO.... --> FOI ASSIM QUE 
+
+
+FIZEMOS 
+
+O 
+
+
+
+'FLATTENING'
+ 
+
+ DO NOSSO ARRAY.... --> usamos 
+
+
+
+ UM MÉTODO COMUM DO JAVASCRIPT,
+
+
+
+ o 
+
+
+ 'reduce()'....
+
+
+
+
+
+
+ MAP E REDUCE ---> 2 FUNÇÕES/MÉTODOS DE ARRAY ____ESSENCIAIS___ DO JAVASCRIPT...
+
+
+
+
+
+ ---------------------------------------
+
+
+
+
+ COM ISSO,
+
+ AGORA TEMOS UM 
+
+
+ ARRAY ('transformedIngredients') 
+
+
+
+ QUE 
+
+ ORA 
+
+
+ FICA VAZIO, ORA FICA PREENCHIDO COM ELEMENTOS JSX....
+
+
+
+
+
+
+
+ ---> COMO TEMOS ESSE NEGÓCIO QUE PODE FICAR VAZIO/CHEIO,
+
+
+ AGORA PODEMOS FINALMENTE ESCREVER UM 
+
+
+ __IF CHECK___ EM 
+
+
+ 'Burger.js',
+
+ no component 
+
+ 'BURGER';
+
+
+
+
+ FAZEMOS UM CHECK 
+
+
+
+ dizendo 
+
+ 'se transformedIngredients.length FOR IGUAL A 0' {...}'....
+
+
+
+
+
+
+SE ESSE FOR O CASO, VOU QUERER MOSTRAR UM ALERT DE 
+
+
+'Add ingredients', ou algo assim... ---> mostramos um 
+paragraph 
+
+
+dizendo 
+
+
+'please add Ingredients'... ----------> 
+
+
+
+
+
+
+
+PARA ISSO,
+
+O PROFESSOR VAI 
+
+
+USAR 
+
+
+O 'transformedIngredients' ---> ELE VAI TRANSFORMAR NOSSA 
+
+CONSTANTE 
+
+'transformedIngredients' EM 
+
+__UMA ___ VARIÁVEL (trocando 'const' por 'let') --------> 
+
+
+ELE FARÁ 
+
+ISSO 
+
+PARA QUE SEJA POSSÍVEL ELE ESCREVER 
+
+
+O SEGUINTE CÓDIGO:
+
+
+---------------------------------------
+
+
+let transformedIngredients = ......
+
+
+
+if (transformedIngredients.length === 0) {
+    transformedIngredients = <p>Please Add Ingredients</p>
+}
+
+
+
+return (
+    <div className={BurgerStyle.Burger}
+    <BurgerIngredient type="bread-top" />
+    {transformedIngredients}
+    <BurgerIngredient type="bread-bottom" />
+</div>
+)
+
+
+
+
+
+------------------------------
+
+
+ALGO ASSIM... -------> 
+
+
+
+E AGORA,
+
+
+
+HÁ 
+
+UM PARAGRAPH BEM BONITO MOSTRANDO 
+
+'please add ingredients'
+
+
+QUANDO 
+
+
+NÃO EXISTIR NENHUM COMPONENT/INGREDIENT 
+
+PRESENTE NO NOSSO ARRAY...
+
+
+
+-------------------------------------------
+
+
+
+
+--> A PRÓXIMA ___ETAPA__ SERÁ __ADICIONAR ___CONTROLES__ PARA 
+
+
+DEIXAR O USUÁRIO___ ADICIONAR E REMOVER__ INGREDIENTS (component 'BurgerIngredient')...
+

@@ -1,0 +1,346 @@
+
+
+
+
+--> PARA CONSERTAR AQUELA 
+
+
+''VALIDATION FLAW''
+ 
+ no código de 
+
+
+
+ 'checkValidity', 
+
+
+
+ que tem este código:
+
+
+
+-------------------------------
+ 
+checkValidity(value, rules) {
+
+  let isValid = false; 
+
+if (rules.required) { 
+isValid = value.trim() !== '';
+}
+
+if (rules.minLength) {
+  isValid = value.length >= rules.minLength
+}
+
+if (rules.maxLength) {
+  isValid = value.length <= rules.maxLength
+}
+
+
+
+return isValid;
+}
+
+
+--------------------
+
+
+
+
+PARA CONSERTAR ESSE CÓDIGO, PROFESSOR EXPLICA QUE 
+
+
+DEVEMOS 
+
+DEFINIR 
+
+A __VARIÁVEL__ 
+
+'isValid'
+
+
+COMO TENDO UM VALOR DE 'true' inicial, e não 'false'...
+
+
+tipo assim:
+
+
+
+
+ 
+checkValidity(value, rules) {
+
+  let isValid = true;  //////////eis o código em questão.
+
+if (rules.required) { 
+isValid = value.trim() !== '';
+}
+
+if (rules.minLength) {
+  isValid = value.length >= rules.minLength
+}
+
+if (rules.maxLength) {
+  isValid = value.length <= rules.maxLength
+}
+
+
+
+return isValid;
+}
+
+
+
+
+
+-------------------------------
+
+
+
+
+
+
+trocado esse código aí, esse valor de 
+
+'false' para 'true',
+
+PROFESSOR 
+
+NOS EXPLICA QUE 
+
+PODEMOS 
+
+
+___ENTÃO__ ADICIONAR UMA 
+
+
+COISA 
+
+ESPECIAL 
+
+
+A CADA UM DOS 
+
+IF CHECKS 
+
+
+em 
+
+'checkValidity'... ------->
+
+
+
+
+nós vamos 
+
+dizer 
+
+
+'isValid deverá ser true se 'value.trim() !== '' ' 
+
+FOR __TRUE........ E ELE SÓ DEVERÁ SER TRUE SE 'isValid' (a variável, 'let isValid =....' ) ____JÁ ESTAVA DEFINIDO COMO 'true'...'
+
+
+
+
+
+ou seja,
+
+as condições serão:
+
+
+
+
+1) value.trim() !==  '' -----> ISSO DEVE SER TRUE 
+
+
+2) isValid JÁ DEVE ESTAR SETTADO COMO 'true' (ou seja, vamos querer que essa variável NÃO TENHA SIDO AFETADA, CONVERTIDA PARA 'false' EM DECORRÊNCIA 
+DE UM INPUT INVÁLIDO DO USUÁRIO/input longo (ou curto) demais... )
+
+
+
+
+
+
+--> Ok, mas como podemos escrever essa condição? ---> como podemos 
+
+
+JUNTAR ESSAS 2 CONDIÇÕES? -----> com o operador '&&'... ------> 
+
+
+vamos 
+
+checar 
+
+
+
+'isValid = value.trim() !== '' && isValid'      (ISSO PQ 'isValid' terá de ser TRUTHY (valor 'true') PARA QUE ESSA EXPRESSÃO INTEIRA RETORNE 'true'...)
+
+
+
+
+
+
+
+---> E NÓS VAMOS COLOCAR ESSE '&& is Valid' EM CADA 
+
+UM DOS CHECKS 
+
+DE 
+
+'isValid' 
+
+DENTRO DO 
+
+'checkValidity'....
+
+
+
+
+
+ex:
+
+
+
+checkValidity(value, rules) {
+
+  let isValid = true;  
+
+if (rules.required) {  
+isValid = value.trim() !== '' && isValid;    //////////EIS O CÓDIGO EM QUESTÃO.
+}
+
+if (rules.minLength) {
+  isValid = value.length >= rules.minLength && isValid
+}
+
+if (rules.maxLength) {
+  isValid = value.length <= rules.maxLength && isValid
+}
+
+
+
+return isValid;
+}
+
+
+----------------------------------------------
+
+
+
+
+
+MAS PQ ISSO FUNCIONARÁ? --> funcionará 
+
+pq 
+
+então 
+
+SÓ AQUELA REGRA, UMA REGRA ESPECÍFICA, fazendo resolve como 'true', 
+
+__NÃO VAI SER SUFICIENTE___... ---> para que seja suficiente, com 
+
+esse '&& isValid' no final da COMPARAÇÃO,
+
+o 
+
+isValid TERÁ DE CONTINUAR SENDO 
+
+'true'... (ou seja, deverá CONTINUAR TENDO SIDO INAFETADO PELOS IF CHECKS QUE ANTECEDERAM 
+
+AQUELE IF CHECK ESPECÍFICO... ---> ex: if check de 'maxLength' só vai retornar true se 
+
+
+o if check de 'minLength' __NÃO RETORNOU FALSE__...)
+
+
+
+
+
+
+--------> O PROFESSOR TESTA 
+
+ISSO 
+
+NO NOSSO CÓDIGO, E FUNCIONA... ---> os códigos 
+
+que 
+
+
+delimitam 
+
+O NÚMERO DE DÍGITOS EM UMA RESPOSTA/INPUT FIELD __ VÃO FUNCIONAR__, 
+
+
+e a 
+
+
+regra de 
+
+'required' (devem ser preenchidos os fields), 
+
+TAMBÉM__.... (e todos esses requisitos deverão 
+
+ser preenchidos, o que é uma situação distinta da de antes, indesejada,
+
+em que 
+
+APENAS 
+
+O SATISFY 
+
+DE 1 DOS IF STATEMENTS JÁ RESULTAVA EM 
+
+'isValid' 
+
+sendo definido como 
+
+'true'...)
+
+
+
+--------------------
+
+
+
+
+
+
+
+--> ISSO SIGNIFICA QUE AGORA TEMOS __NOSSA PRÓPRIA 'VALIDATION' FUNCIONANDO NO NOSSO PROJETO...
+
+
+
+(nós temos nosso próprio 'RULESET' definido dessa forma flexível aí, em 
+
+'checkValidity',  e no state do CONTAINER 'ContactData'...) --------------> 
+
+
+
+
+AGORA, PORTANTO, PODEMOS 
+
+FOCAR 
+
+NA 
+
+SEGUNDA PARTE,
+
+
+NA PARTE EM QUE 
+
+
+___PROVIDENCIAMOS UM FEEDBACK __ AO USUÁRIO __ SOBRE 
+
+
+O RESULTADO DA VALIDATION DOS INPUTS...
+
+
+
+-----------------------------------------------
+
+
+
+
+
