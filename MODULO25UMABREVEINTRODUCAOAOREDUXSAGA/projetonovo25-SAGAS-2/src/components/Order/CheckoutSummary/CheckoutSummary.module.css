@@ -1,0 +1,17 @@
+
+  .CheckoutSummary {
+    text-align: center;
+    width: 100%; 
+    margin: auto;
+  }
+
+
+
+
+
+
+  /* @media(min-width: 600px) {  ////ESTAVA CAUSANDO PROBLEMAS DE ALINHAMENTO...
+    .CheckoutSummary { 
+      width: 500px;
+    }
+} */
