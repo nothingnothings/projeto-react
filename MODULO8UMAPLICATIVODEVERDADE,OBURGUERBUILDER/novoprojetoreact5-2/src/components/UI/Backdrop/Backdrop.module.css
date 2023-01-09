@@ -1,0 +1,26 @@
+
+
+.Backdrop {
+
+
+    width: 100%;
+    height: 100%;
+    position: fixed; /*essa propriedade é usada para DEIXAR UM ELEMENTO NA MESMA POSIÇÃO, MESMO QUANDO SCROLLAMOS A PÁGINA*/
+    z-index: 100; /*ficará acima dos elementos que QUEREMOS QUE ELE FIQUE EM CIMA --> isso se tornará importante mais tarde, quando ADICIONARMOS UMA __TOOLBAR___ ---> e o 'modal' tem um z-index de 500, justamente para ficar POR CIMA DO BACKDROP.*/
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5); /*bem básico*/
+  
+
+
+
+
+
+
+
+
+
+
+
+
+}

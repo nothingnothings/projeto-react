@@ -1,0 +1,68 @@
+.SideDrawerToggleButton {   
+
+    display: block;
+
+
+
+}
+
+
+
+.SideDrawerToggleButton button {
+    box-sizing: border-box;
+    margin: 0;
+    display: inline-block;
+    width: 3rem;
+    border: none;
+    cursor: pointer;
+    padding-top: 0;
+    padding-bottom: 0;
+    vertical-align: middle;
+    background: transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+.SideDrawerToggleButton span {
+    width: 100%;
+    height: 0.2rem;
+    background: black;
+    display: block;
+    margin: 0.6rem 0;
+}
+
+
+
+.SideDrawerToggleButton div {
+    width: 100%;
+    height: 0.188rem;
+    background: black;
+    display: block;
+    margin: 0.6rem 0;
+}
+
+
+
+
+
+
+
+@media(min-width: 500px) {
+        
+    .SideDrawerToggleButton {
+        display: none;
+    }
+
+
+
+
+
+}
