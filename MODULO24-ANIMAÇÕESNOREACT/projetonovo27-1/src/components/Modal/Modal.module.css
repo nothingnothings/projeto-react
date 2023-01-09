@@ -1,0 +1,129 @@
+.Modal {
+    position: fixed;
+    z-index: 200;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 2px #ccc;
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    top: 30%;
+    left: 25%;
+    width: 50%;
+    /* transition: all 0.3s ease-out;   ISSO NÃO É NECESSÁRIO __ SE VOCê USA 'react-transition-group' (mas com javascript e css COMUNS, é necessário, sim...)*/
+    /* USADO PARA ___ REALIZAR ANIMAÇÕES NO REACT/JAVASCRIPT COMUM.. VER AULA 'USANDO CSS TRANSITIONS' deste módulo...  */
+}
+
+
+.ModalOpen {
+    /* display: block;   ///'''DISPLAY''', ESSA PROPRIEDADE AÍ, __NÃO FUNCIONA __ COM TRANSITIONS ('transition: xxxx xxxx xxx'/ANIMAÇÕES CSS....*/
+    /* opacity: 1;
+    transform: translateY(0); */
+     /* animation: openModal 0.4s ease-out forwards;  USE 'animation'/css animations SE VOCÊ ACHAR QUE 'transitions' NÃO DARÃO CONTA DO RECADO... ---> e essa propriedade 'animation' exige UM OBJETO 'animation'/keyframes de uma animation, e AÍ UMA valor de SEGUNDOS EM QUE AQUELA ANIMAÇÃO VAI TOCAR....  */
+     animation: openModal 0.4s ease-out forwards;
+          
+    /*TAMBÉM ACEITA UMA PROPRIEDADE QUE É UMA 'TIMING FUNCTION', um negócio que será BASICAMENTE O 'RITMO' DA ANIMAÇÃO, a distribuição ao longo daqueles 0.3 segundos.... */
+    /* OUTRA PROPRIEDADE/VALOR QUE É NECESSÁRIO, EM 'animation' , é O VALOR FINAL (aqui de forwards), QUE __INFORMA SE VAMOS QUERER __ REPETIR__ AQUELA ANIMAÇÃO INDEFINIDAMENTE, OU SE VAMOS _ _QUERER QUE O ELEMENTO GOVERNADO POR ESSE 'ANIMATION' PARE EM ALGUM LUGAR ESPECÍFICO de seu objeto 'keyframe'... ---> e o professor define 'forwards', que essencialmente COMUNICA QUE __ ELE QUER __ QUE, TERMINADA A ANIMATION, NOSSO ELEMENTO FIQUE/PERMANEÇA NA POSIÇÃO FINAL da animação... */
+}
+
+
+.ModalClosed {
+    /* display: none;   ///'''DISPLAY''', ESSA PROPRIEDADE AÍ, __NÃO FUNCIONA __ COM TRANSITIONS ('transition: xxxx xxxx xxx'/ANIMAÇÕES CSS....*/
+    /* opacity: 0; */
+    /* transform: translateY(-100%); */
+
+    /* animation: closeModal 0.4s ease-out forwards; */
+    animation: closeModal 1s ease-out forwards;
+}
+
+@keyframes openModal {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(50%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+
+
+@keyframes closeModal {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: translateY(60%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+} 
+
+
+
+/* USADOS COM 'CSSTransitions', e com sua propriedade 'classNames'... ----> mais fácil de usar do que '<Transition />' */
+
+
+.exemplo-enter { /* nesse estilo vinculado ao state de '-enter', VAMOS TIPICAMENTE __ INICIALIZAR__ nossa animação, por meio do set de coisas como 'opacity: 0', dentre outros...*/
+
+}
+
+
+.exemplo-enter-active { /* '-enter-active' e 'exit-active' VÃO SEMPRE TOCAR A ''MAIN PART'' DA NOSSA ANIMAÇÃO... --> são eles que vão REALMENTE TOCAR A ANIMAÇÃO... --> já '-enter' e '-exit' SÃO MAIS RESPONSÁVEIS __PELA ___ INICIALIZAÇÃO/TÉRMINO (cleanup) DE NOSSA ANIMAÇÃO.. */
+    animation: openModal 0.4s ease-out forwards;
+}
+
+
+
+/* .exemplo-exit {
+
+} */
+
+
+/* .exemplo-exit-active {
+    animation: closeModal 1s ease-out forwards;
+} */
+
+
+
+
+
+
+/*esta parte mais de baixo é EU FAZEND COM QUE O 'css modules' e 'CSSTransitions' (objeto) FUNCIONEM JUNTOS... */
+
+.ModalEnter {
+
+}
+
+
+.ModalEnterActive {
+    animation: openModal 0.4s ease-in forwards;
+}
+
+
+
+
+
+.ModalExitActive {
+    animation: closeModal 1s ease-in forwards;
+}
+
+.ModalExit {
+
+}
